@@ -42,7 +42,7 @@ public class MemberDAO {
 	 */
 	public void deleteMember(String pw, String reginum) {
 		/* default generated stub */;
-		return null;
+//		return null;
 	}
 
 	/**
@@ -52,6 +52,6 @@ public class MemberDAO {
 	 */
 	public void updateMember(Member member) {
 		/* default generated stub */;
-		return null;
+//		return null;
 	}
 }

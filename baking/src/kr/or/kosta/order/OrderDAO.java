@@ -9,7 +9,7 @@ public class OrderDAO {
 	 */
 	public void insertOrder(Order order) {
 		/* default generated stub */;
-		return null;
+//		return null;
 	}
 
 	/**
@@ -27,7 +27,7 @@ public class OrderDAO {
 	 */
 	public void deleteOrder(int ordernum) {
 		/* default generated stub */;
-		return null;
+//		return null;
 	}
 
 	/**
@@ -37,6 +37,6 @@ public class OrderDAO {
 	 */
 	public void updateOrder(Order order) {
 		/* default generated stub */;
-		return null;
+//		return null;
 	}
 }

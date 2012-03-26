@@ -1,5 +1,7 @@
 package kr.or.kosta.myrecipe;
 
+import java.util.ArrayList;
+
 public class MyrecipeDAO {
 
 	/**
@@ -9,7 +11,7 @@ public class MyrecipeDAO {
 	 */
 	public void insertMember(Myrecipe myrecipe) {
 		/* default generated stub */;
-		return null;
+//		return null;
 	}
 
 	/**
@@ -40,7 +42,7 @@ public class MyrecipeDAO {
 	 */
 	public void deleteMyrecipe(int boardnum) {
 		/* default generated stub */;
-		return null;
+//		return null;
 	}
 
 	/**
@@ -50,6 +52,6 @@ public class MyrecipeDAO {
 	 */
 	public void updateMyrecipe(Myrecipe myrecipe) {
 		/* default generated stub */;
-		return null;
+//		return null;
 	}
 }

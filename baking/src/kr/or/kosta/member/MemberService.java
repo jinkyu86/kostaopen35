@@ -1,5 +1,8 @@
 package kr.or.kosta.member;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 public class MemberService {
 
 	/**
@@ -11,7 +14,7 @@ public class MemberService {
 	public void viewMember(HttpServletRequest request,
 			HttpServletResponse response) {
 		/* default generated stub */;
-		return null;
+//		return null;
 	}
 
 	/**
@@ -23,7 +26,7 @@ public class MemberService {
 	public void editMember(HttpServletRequest request,
 			HttpServletResponse response) {
 		/* default generated stub */;
-		return null;
+//		return null;
 	}
 
 	/**
@@ -35,7 +38,7 @@ public class MemberService {
 	public void editMemberForm(HttpServletRequest request,
 			HttpServletResponse response) {
 		/* default generated stub */;
-		return null;
+//		return null;
 	}
 
 	/**
@@ -47,7 +50,7 @@ public class MemberService {
 	public void removeMember(HttpServletRequest request,
 			HttpServletResponse response) {
 		/* default generated stub */;
-		return null;
+//		return null;
 	}
 
 	/**
@@ -59,7 +62,7 @@ public class MemberService {
 	public void addMember(HttpServletRequest request,
 			HttpServletResponse response) {
 		/* default generated stub */;
-		return null;
+//		return null;
 	}
 
 	/**
@@ -71,7 +74,7 @@ public class MemberService {
 	public void addMemberForm(HttpServletRequest request,
 			HttpServletResponse response) {
 		/* default generated stub */;
-		return null;
+//		return null;
 	}
 
 	/**
@@ -82,7 +85,7 @@ public class MemberService {
 	 */
 	public void login(HttpServletRequest request, HttpServletResponse response) {
 		/* default generated stub */;
-		return null;
+//		return null;
 	}
 
 	/**
@@ -94,7 +97,7 @@ public class MemberService {
 	public void loginForm(HttpServletRequest request,
 			HttpServletResponse response) {
 		/* default generated stub */;
-		return null;
+//		return null;
 	}
 
 	/**
@@ -105,7 +108,7 @@ public class MemberService {
 	 */
 	public void logout(HttpServletRequest request, HttpServletResponse response) {
 		/* default generated stub */;
-		return null;
+//		return null;
 	}
 
 	/**
@@ -117,7 +120,7 @@ public class MemberService {
 	public void checkMemberID(HttpServletRequest request,
 			HttpServletResponse response) {
 		/* default generated stub */;
-		return null;
+//		return null;
 	}
 
 	/**
@@ -129,7 +132,7 @@ public class MemberService {
 	public void searchMemberID(HttpServletRequest request,
 			HttpServletResponse response) {
 		/* default generated stub */;
-		return null;
+//		return null;
 	}
 
 	/**
@@ -141,7 +144,7 @@ public class MemberService {
 	public void searchMemberIDForm(HttpServletRequest request,
 			HttpServletResponse response) {
 		/* default generated stub */;
-		return null;
+//		return null;
 	}
 
 	/**
@@ -153,7 +156,7 @@ public class MemberService {
 	public void searchMemberPW(HttpServletRequest request,
 			HttpServletResponse response) {
 		/* default generated stub */;
-		return null;
+//		return null;
 	}
 
 	/**
@@ -165,7 +168,7 @@ public class MemberService {
 	public void searchMemberPwForm(HttpServletRequest request,
 			HttpServletResponse response) {
 		/* default generated stub */;
-		return null;
+//		return null;
 	}
 
 	/**
@@ -177,7 +180,7 @@ public class MemberService {
 	public void changeMemberPW(HttpServletRequest request,
 			HttpServletResponse response) {
 		/* default generated stub */;
-		return null;
+//		return null;
 	}
 
 	/**
@@ -189,6 +192,6 @@ public class MemberService {
 	public void changeMemberPWForm(HttpServletRequest request,
 			HttpServletResponse response) {
 		/* default generated stub */;
-		return null;
+//		return null;
 	}
 }

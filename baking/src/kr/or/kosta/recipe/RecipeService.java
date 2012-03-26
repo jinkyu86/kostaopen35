@@ -1,5 +1,8 @@
 package kr.or.kosta.recipe;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 public class RecipeService {
 
 	/**
@@ -11,7 +14,7 @@ public class RecipeService {
 	public void viewRecipeList(HttpServletRequest request,
 			HttpServletResponse response) {
 		/* default generated stub */;
-		return null;
+//		return null;
 	}
 
 	/**
@@ -23,7 +26,7 @@ public class RecipeService {
 	public void viewRecipe(HttpServletRequest request,
 			HttpServletResponse response) {
 		/* default generated stub */;
-		return null;
+//		return null;
 	}
 
 	/**
@@ -35,7 +38,7 @@ public class RecipeService {
 	public void addRecipe(HttpServletRequest request,
 			HttpServletResponse response) {
 		/* default generated stub */;
-		return null;
+//		return null;
 	}
 
 	/**
@@ -47,7 +50,7 @@ public class RecipeService {
 	public void addRecipeForm(HttpServletRequest request,
 			HttpServletResponse response) {
 		/* default generated stub */;
-		return null;
+//		return null;
 	}
 
 	/**
@@ -59,7 +62,7 @@ public class RecipeService {
 	public void editRecipe(HttpServletRequest request,
 			HttpServletResponse response) {
 		/* default generated stub */;
-		return null;
+//		return null;
 	}
 
 	/**
@@ -71,7 +74,7 @@ public class RecipeService {
 	public void editRecipeForm(HttpServletRequest request,
 			HttpServletResponse response) {
 		/* default generated stub */;
-		return null;
+//		return null;
 	}
 
 	/**
@@ -83,6 +86,6 @@ public class RecipeService {
 	public void removeRecipe(HttpServletRequest request,
 			HttpServletResponse response) {
 		/* default generated stub */;
-		return null;
+//		return null;
 	}
 }
