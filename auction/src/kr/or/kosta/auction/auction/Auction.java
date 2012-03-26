@@ -46,4 +46,94 @@ public class Auction {
 	private String cuPrice;
 
 	private Bid auction;
+
+	public Member getMember() {
+		return member;
+	}
+
+	public void setMember(Member member) {
+		this.member = member;
+	}
+
+	public Good getGood() {
+		return good;
+	}
+
+	public void setGood(Good good) {
+		this.good = good;
+	}
+
+	public String getaNum() {
+		return aNum;
+	}
+
+	public void setaNum(String aNum) {
+		this.aNum = aNum;
+	}
+
+	public String getsPrice() {
+		return sPrice;
+	}
+
+	public void setsPrice(String sPrice) {
+		this.sPrice = sPrice;
+	}
+
+	public String getImPrice() {
+		return imPrice;
+	}
+
+	public void setImPrice(String imPrice) {
+		this.imPrice = imPrice;
+	}
+
+	public String getsTime() {
+		return sTime;
+	}
+
+	public void setsTime(String sTime) {
+		this.sTime = sTime;
+	}
+
+	public String geteTime() {
+		return eTime;
+	}
+
+	public void seteTime(String eTime) {
+		this.eTime = eTime;
+	}
+
+	public boolean isSold() {
+		return sold;
+	}
+
+	public void setSold(boolean sold) {
+		this.sold = sold;
+	}
+
+	public String getCuPrice() {
+		return cuPrice;
+	}
+
+	public void setCuPrice(String cuPrice) {
+		this.cuPrice = cuPrice;
+	}
+
+	public Bid getAuction() {
+		return auction;
+	}
+
+	public void setAuction(Bid auction) {
+		this.auction = auction;
+	}
+
+	@Override
+	public String toString() {
+		return "Auction [member=" + member + ", good=" + good + ", aNum="
+				+ aNum + ", sPrice=" + sPrice + ", imPrice=" + imPrice
+				+ ", sTime=" + sTime + ", eTime=" + eTime + ", sold=" + sold
+				+ ", cuPrice=" + cuPrice + ", auction=" + auction + "]";
+	}
+	
+	
 }
