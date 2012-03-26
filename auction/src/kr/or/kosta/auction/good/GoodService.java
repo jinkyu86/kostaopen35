@@ -1,5 +1,8 @@
 package kr.or.kosta.auction.good;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 public class GoodService {
 
 	/**

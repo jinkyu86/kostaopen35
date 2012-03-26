@@ -1,28 +1,39 @@
 package kr.or.kosta.auction.good;
 
-import kr.or.kosta.auction.auction.Auction;
-
 public class Good {
 
-	/**
-	 * 물품고유번호
-	 */
-	private String gNum;
-
-	/**
-	 * 물품의 이름
-	 */
-	private String gName;
-
-	/**
-	 * 물품 상세설명
-	 */
-	private String detail;
-
-	/**
-	 * 물품의 이미지(사진)
-	 */
-	private String img;
-
-	private Auction goods;
+	private String gNum;//물품고유번호
+	private String gName;//물품의 이름
+	private String detail;//물품 살세설명
+	private String img;//물품의 이미지
+//	private Auction auction;
+	public String getgNum() {
+		return gNum;
+	}
+	public void setgNum(String gNum) {
+		this.gNum = gNum;
+	}
+	public String getgName() {
+		return gName;
+	}
+	public void setgName(String gName) {
+		this.gName = gName;
+	}
+	public String getDetail() {
+		return detail;
+	}
+	public void setDetail(String detail) {
+		this.detail = detail;
+	}
+	public String getImg() {
+		return img;
+	}
+	public void setImg(String img) {
+		this.img = img;
+	}
+	@Override
+	public String toString() {
+		return "Good [gNum=" + gNum + ", gName=" + gName + ", detail=" + detail
+				+ ", img=" + img + "]";
+	}
 }
