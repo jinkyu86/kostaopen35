@@ -45,7 +45,6 @@ public class Auction {
 	 */
 	private String cuPrice;
 
-	private Bid auction;
 
 	public Member getMember() {
 		return member;
@@ -119,20 +118,12 @@ public class Auction {
 		this.cuPrice = cuPrice;
 	}
 
-	public Bid getAuction() {
-		return auction;
-	}
-
-	public void setAuction(Bid auction) {
-		this.auction = auction;
-	}
-
 	@Override
 	public String toString() {
 		return "Auction [member=" + member + ", good=" + good + ", aNum="
 				+ aNum + ", sPrice=" + sPrice + ", imPrice=" + imPrice
 				+ ", sTime=" + sTime + ", eTime=" + eTime + ", sold=" + sold
-				+ ", cuPrice=" + cuPrice + ", auction=" + auction + "]";
+				+ ", cuPrice=" + cuPrice +"]";
 	}
 	
 	
