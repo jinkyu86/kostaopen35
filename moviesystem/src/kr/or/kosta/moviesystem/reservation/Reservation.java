@@ -2,11 +2,12 @@ package kr.or.kosta.moviesystem.reservation;
 
 import java.util.Date;
 
+import kr.or.kosta.moviesystem.movie.Movie;
+import kr.or.kosta.moviesystem.screentime.ScreenTime;
+
 public class Reservation {
 
 	public ScreenTime screenTime;
-
-	public Member member;
 
 	public Movie movie;
 
