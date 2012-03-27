@@ -12,10 +12,19 @@ public class Reservation {
 	private long resQty;//예매수량
 	private long payState;//결제상태
 	private long totalPrice;//전체가격
+	private long seatnum;//좌석번호
 	public ScreenTime screenTime;
 	public Movie movie;
 	public Member member;
 	
+	
+	
+	public long getSeatnum() {
+		return seatnum;
+	}
+	public void setSeatnum(long seatnum) {
+		this.seatnum = seatnum;
+	}
 	public String getResnum() {
 		return resnum;
 	}
@@ -27,6 +36,7 @@ public class Reservation {
 	}
 	public void setResDate(Date resDate) {
 		this.resDate = resDate;
+		
 	}
 	public long getResQty() {
 		return resQty;
@@ -68,9 +78,11 @@ public class Reservation {
 	public String toString() {
 		return "Reservation [resnum=" + resnum + ", resDate=" + resDate
 				+ ", resQty=" + resQty + ", payState=" + payState
-				+ ", totalPrice=" + totalPrice + ", screenTime=" + screenTime
-				+ ", movie=" + movie + ", member=" + member + "]";
+				+ ", totalPrice=" + totalPrice + ", seatnum=" + seatnum
+				+ ", screenTime=" + screenTime + ", movie=" + movie
+				+ ", member=" + member + "]";
 	}
+	
 
 	
 }
