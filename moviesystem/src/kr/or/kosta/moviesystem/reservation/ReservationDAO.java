@@ -26,18 +26,20 @@ public class ReservationDAO {
 	public static void insertReservation(Reservation reservation) {
 		Connection con=null;
 		PreparedStatement psmt=null;
-		con=ConnectionUtil.getConnection();
+		
 		try{
+			con=ConnectionUtil.getConnection();
 			psmt=con.prepareStatement(
 					"INSERT INTO RESERVATION" +
-					"(RES_NUM, M_NUM,USERID, RES_DATE, SCR_NUM, RES_QTY, TOTAL_PRICE, PAY_STATE)"+
-					"VALUES(res_seq.nextval,?,?,sysdate,?,?,?,?)");
+					"(RES_NUM, M_NUM,USERID, RES_DATE, SCR_NUM, RES_QTY, TOTAL_PRICE, PAY_STATE,SEAT_NUM)"+
+					"VALUES(res_seq.nextval,?,?,sysdate,?,?,?,?,?)");
 			psmt.setString(1,reservation.getMovie().getMnum());
 			psmt.setString(2,reservation.getMember().getUserid());
 		    psmt.setString(3,reservation.getScreenTime().getScrnum());
 			psmt.setLong(4,reservation.getResQty());
 			psmt.setLong(5,reservation.getTotalPrice());
 			psmt.setLong(6, 0);
+			psmt.setLong(7,reservation.getSeatnum());
 			psmt.executeUpdate();
 			
 		}catch(Exception e){
