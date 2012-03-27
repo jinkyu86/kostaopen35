@@ -141,7 +141,7 @@ public class MemberDAO {
 	 * 
 	 * @param email
 	 */
-	public static Member updateMember(Member member) {
+	public static void updateMember(Member member) {
 		/* default generated stub */;
 		Connection con= null;
 		PreparedStatement ps=null;
@@ -159,7 +159,7 @@ public class MemberDAO {
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
-		return member;
+	
 	}
 
 	/**
