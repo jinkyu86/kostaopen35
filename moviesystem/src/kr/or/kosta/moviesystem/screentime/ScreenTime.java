@@ -9,20 +9,18 @@ public class ScreenTime {
 	/**
 	 * 영화시간 번호
 	 */
-	private Number scrnum;
+	private String scrnum;
 
 	/**
 	 * 영화상영시간
 	 */
 	private Date time;
 
-	private Movie screenTime;
-
-	public Number getScrnum() {
+	public String getScrnum() {
 		return scrnum;
 	}
 
-	public void setScrnum(Number scrnum) {
+	public void setScrnum(String scrnum) {
 		this.scrnum = scrnum;
 	}
 
@@ -34,17 +32,9 @@ public class ScreenTime {
 		this.time = time;
 	}
 
-	public Movie getScreenTime() {
-		return screenTime;
-	}
-
-	public void setScreenTime(Movie screenTime) {
-		this.screenTime = screenTime;
-	}
-
 	@Override
 	public String toString() {
 		return "ScreenTime [scrnum=" + scrnum + ", time=" + time
-				+ ", screenTime=" + screenTime + "]";
+				+ "]";
 	}	
 }
