@@ -61,7 +61,7 @@ public class AuctionDAO {
 					"SELECT g.g_num,a.s_price,a.im_price,a.s_time,a.e_time,a.sold,a.cu_price,"+
 							"g.gname,g.detail"+
 					" FROM auction a,good g " +
-					" WHERE a.g_num = g.g_num AND a.a_num=?");
+					" WHERE a.g_num = g.g_num AND a.g_num=?");
 			psmt.setString(1,aNum);
 			ResultSet rs=psmt.executeQuery();
 			if(rs.next()){
