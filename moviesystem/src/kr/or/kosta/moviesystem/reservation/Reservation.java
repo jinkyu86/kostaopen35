@@ -2,6 +2,7 @@ package kr.or.kosta.moviesystem.reservation;
 
 import java.util.Date;
 
+import kr.or.kosta.moviesystem.member.Member;
 import kr.or.kosta.moviesystem.movie.Movie;
 import kr.or.kosta.moviesystem.screentime.ScreenTime;
 
@@ -13,6 +14,7 @@ public class Reservation {
 	private long totalPrice;//전체가격
 	public ScreenTime screenTime;
 	public Movie movie;
+	public Member member;
 	
 	public String getResnum() {
 		return resnum;
@@ -56,13 +58,19 @@ public class Reservation {
 	public void setMovie(Movie movie) {
 		this.movie = movie;
 	}
+	public Member getMember() {
+		return member;
+	}
+	public void setMember(Member member) {
+		this.member = member;
+	}
 	@Override
 	public String toString() {
 		return "Reservation [resnum=" + resnum + ", resDate=" + resDate
 				+ ", resQty=" + resQty + ", payState=" + payState
 				+ ", totalPrice=" + totalPrice + ", screenTime=" + screenTime
-				+ ", movie=" + movie + "]";
+				+ ", movie=" + movie + ", member=" + member + "]";
 	}
-	
+
 	
 }
