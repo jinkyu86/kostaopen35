@@ -14,12 +14,12 @@ public class Buy {
 	/**
 	 * 구매번호
 	 */
-	private Number buynum;
+	private String buynum;
 
 	/**
 	 * 구매수량
 	 */
-	private Number qty;
+	private Long qty;
 
 	/**
 	 * 구매한 날짜
@@ -29,12 +29,12 @@ public class Buy {
 	/**
 	 * 현재 구매 상태(결제 유뮤확인)
 	 */
-	private Number payState;
+	private String payState;
 
 	/**
 	 * 전체 가격
 	 */
-	private Number totalPrice;
+	private Long totalPrice;
 
 	public Good getGood() {
 		return good;
@@ -52,19 +52,19 @@ public class Buy {
 		this.member = member;
 	}
 
-	public Number getBuynum() {
+	public String getBuynum() {
 		return buynum;
 	}
 
-	public void setBuynum(Number buynum) {
+	public void setBuynum(String buynum) {
 		this.buynum = buynum;
 	}
 
-	public Number getQty() {
+	public Long getQty() {
 		return qty;
 	}
 
-	public void setQty(Number qty) {
+	public void setQty(Long qty) {
 		this.qty = qty;
 	}
 
@@ -76,19 +76,19 @@ public class Buy {
 		this.buyDate = buyDate;
 	}
 
-	public Number getPayState() {
+	public String getPayState() {
 		return payState;
 	}
 
-	public void setPayState(Number payState) {
+	public void setPayState(String payState) {
 		this.payState = payState;
 	}
 
-	public Number getTotalPrice() {
+	public Long getTotalPrice() {
 		return totalPrice;
 	}
 
-	public void setTotalPrice(Number totalPrice) {
+	public void setTotalPrice(Long totalPrice) {
 		this.totalPrice = totalPrice;
 	}
 
@@ -98,5 +98,6 @@ public class Buy {
 				+ buynum + ", qty=" + qty + ", buyDate=" + buyDate
 				+ ", payState=" + payState + ", totalPrice=" + totalPrice + "]";
 	}
+
 	
 }
