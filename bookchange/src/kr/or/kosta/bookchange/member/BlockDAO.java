@@ -1,6 +1,11 @@
 package kr.or.kosta.bookchange.member;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
+
+import kr.or.kosta.util.ConnectionUtil;
 
 public class BlockDAO {
 
@@ -8,8 +13,13 @@ public class BlockDAO {
 	 * @param length
 	 * @param page
 	 */
-	public ArrayList<Block> selectBlockList(int length, int page) {
-		/* default generated stub */;
+	public static ArrayList<Block> selectBlockList(int length, int page) {
+		
+		Connection con=null;
+		PreparedStatement ps=null;
+		String sql=null;
+		ResultSet rs=null;
+		
 		return null;
 	}
 
@@ -23,9 +33,23 @@ public class BlockDAO {
 	 * 
 	 * @param block
 	 */
-	public void insertBlock(Block block) {
+	public static void insertBlock(Block block) {
 		/* default generated stub */;
+		Connection con =null;
+		PreparedStatement ps=null;
+		con=ConnectionUtil.getConnection();
 		
+		try {
+			ps=con.prepareStatement(
+					"insert into tb_block " +
+					"(block_no,block_email,register_email,block_content)" +
+					" values(nextval,?,?,?)");
+			ps.setString(1, block.getMember().getEmail());
+			ps.setString(2, block.getBlockContent());
+			ps.executeUpdate();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 	}
 
 	/**
@@ -33,7 +57,7 @@ public class BlockDAO {
 	 * 
 	 * @param blockNo
 	 */
-	public Block updateBlock(String blockNo) {
+	public static Block updateBlock(String blockNo) {
 		/* default generated stub */;
 		return null;
 	}
@@ -43,7 +67,7 @@ public class BlockDAO {
 	 * 
 	 * @param blockNo
 	 */
-	public void deleteBlock(String blockNo) {
+	public static void deleteBlock(String blockNo) {
 		/* default generated stub */;
 		
 	}
@@ -55,7 +79,7 @@ public class BlockDAO {
 	 * @param page
 	 * @param resultNo
 	 */
-	public ArrayList<Block> selectBlockbyResult(int length, int page, String resultNo) {
+	public static ArrayList<Block> selectBlockbyResult(int length, int page, String resultNo) {
 		/* default generated stub */;
 		return null;
 	}
@@ -65,7 +89,7 @@ public class BlockDAO {
 	 * 
 	 * @param resultNo
 	 */
-	public int selectBlockbyResultCount(String resultNo) {
+	public static int selectBlockbyResultCount(String resultNo) {
 		/* default generated stub */;
 		return 0;
 	}

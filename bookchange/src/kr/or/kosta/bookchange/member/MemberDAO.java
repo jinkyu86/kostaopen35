@@ -149,7 +149,7 @@ public class MemberDAO {
 		
 		try {
 			ps=con.prepareStatement(
-					"update tb_member" +
+					"update tb_member " +
 					"set tel=?,pw=?,address=? where email=?");
 			ps.setString(1, member.getTel());
 			ps.setString(2, member.getPw());
@@ -169,6 +169,20 @@ public class MemberDAO {
 	 */
 	public static void deleteMember(String email) {
 		/* default generated stub */;
+		Connection con=null;
+		PreparedStatement ps=null;
+		con=ConnectionUtil.getConnection();
 		
+		try {
+			ps=con.prepareStatement(
+					"delete from tb_member" +
+					" where email=?");
+			ps.setString(1, email);
+			ps.executeUpdate();
+		} catch (Exception e) {
+			// TODO: handle exception
+			
+		}
+	
 	}
 }
