@@ -2,11 +2,21 @@ package kr.or.kosta.moviesystem.screentime;
 
 import java.util.Date;
 
+import kr.or.kosta.moviesystem.movie.Movie;
+
 public class ScreenTime {
 
+	
 	private String scrnum;//영화시간번호
 	private String time;//영화상형시간
+	public Movie movie;	
 	
+	public Movie getMovie() {
+		return movie;
+	}
+	public void setMovie(Movie movie) {
+		this.movie = movie;
+	}
 	public String getScrnum() {
 		return scrnum;
 	}
@@ -21,7 +31,9 @@ public class ScreenTime {
 	}
 	@Override
 	public String toString() {
-		return "ScreenTime [scrnum=" + scrnum + ", time=" + time + "]";
+		return "ScreenTime [scrnum=" + scrnum + ", time=" + time + ", movie="
+				+ movie + "]";
 	}
+
 
 }
