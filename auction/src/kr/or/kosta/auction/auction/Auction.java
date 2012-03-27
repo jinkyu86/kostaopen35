@@ -6,8 +6,6 @@ import kr.or.kosta.auction.member.Member;
 
 public class Auction {
 
-	public Bid bid;
-
 	public Good good;
 
 	/**
@@ -44,14 +42,6 @@ public class Auction {
 	 * 현재 입찰가
 	 */
 	private String cuPrice;
-
-	public Bid getBid() {
-		return bid;
-	}
-
-	public void setBid(Bid bid) {
-		this.bid = bid;
-	}
 
 	public Good getGood() {
 		return good;
@@ -119,9 +109,9 @@ public class Auction {
 
 	@Override
 	public String toString() {
-		return "Auction [bid=" + bid + ", good=" + good + ", aNum=" + aNum
-				+ ", sPrice=" + sPrice + ", imPrice=" + imPrice + ", sTime="
-				+ sTime + ", eTime=" + eTime + ", sold=" + sold + ", cuPrice="
+		return "Auction [good=" + good + ", aNum=" + aNum + ", sPrice="
+				+ sPrice + ", imPrice=" + imPrice + ", sTime=" + sTime
+				+ ", eTime=" + eTime + ", sold=" + sold + ", cuPrice="
 				+ cuPrice + "]";
 	}
 
