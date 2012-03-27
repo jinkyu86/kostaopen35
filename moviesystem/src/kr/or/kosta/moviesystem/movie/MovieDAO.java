@@ -105,6 +105,7 @@ public class MovieDAO {
 			sql="select m_num, m_name, launch_date, genre, poster, end_date, m_price, content from MOVIE "
 					+"where m_num=?";
 			psmt = con.prepareStatement(sql);
+			psmt.setString(1,mnum);
 			rs = psmt.executeQuery();
 			if(rs.next()){
 				String mnum2 = rs.getString(1);
