@@ -22,7 +22,6 @@ public class ChangeService {
 	protected void doPost(HttpServletRequest request, 
 			HttpServletResponse response) throws ServletException, IOException {
 	}
-
 	/**교환리스트에 새로운 교환 추가**/
 	public void addChange(HttpServletRequest request,
 			HttpServletResponse response) {
