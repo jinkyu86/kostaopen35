@@ -13,9 +13,9 @@ public class BoardDAOTestCategory {
 
 	@Test
 	public void test() {
-		ArrayList<Board> board1List=BoardDAO.selectBoardListbyTitle(3, 1, "ȸ");
+		ArrayList<Board> board1List=BoardDAO.selectBoardListbyCategory(3, 1, "4");
 		System.out.println(board1List);
-		ArrayList<Board> board2List=BoardDAO.selectBoardListbyTitle(3, 2, "ȸ");
+		ArrayList<Board> board2List=BoardDAO.selectBoardListbyCategory(3, 1, "4");
 		System.out.println(board2List);
 	}
 

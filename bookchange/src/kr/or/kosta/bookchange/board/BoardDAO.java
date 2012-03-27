@@ -113,7 +113,7 @@ public class BoardDAO {
 		
 		try {
 			con=ConnectionUtil.getConnection();
-			sql=("select board_no, board_title, board_photo, m.email, b.category_no, b.condition_result " +
+			sql=("select board_no, board_title, board_photo, m.email, b.category_no, b.condition_result, c.category_name, c2.condition_ing " +
 				 "from tb_board b, tb_member m, tb_category c, tb_condition c2 " +
 				 "where m.email=b.email " +
 				 "and b.category_no=c.category_no " +
@@ -134,6 +134,8 @@ public class BoardDAO {
 				String email=rs.getString(4);
 				//String categoryNo=rs.getString(5);
 				String conditionResult=rs.getString(6);
+				String categoryName=rs.getString(7);
+				String conditionIng=rs.getString(8);
 				
 				Board board=new Board();
 				board.setBoardNo(Integer.parseInt(boardNo));
@@ -146,10 +148,12 @@ public class BoardDAO {
 				
 				Category category=new Category();
 				category.setCategoryNo(Integer.parseInt(categoryNo));
+				category.setCategoryName(categoryName);
 				board.setCategory(category);
 				
 				Condition condition=new Condition();
 				condition.setConditionResult(Integer.parseInt(conditionResult));
+				condition.setConditionIng(conditionIng);
 				board.setCondition(condition);
 				
 				boardList.add(board);
@@ -202,7 +206,7 @@ public class BoardDAO {
 		
 		try {
 			con=ConnectionUtil.getConnection();
-			sql=("select board_no, board_title, board_photo, m.email, b.category_no, b.condition_result " +
+			sql=("select board_no, board_title, board_photo, m.email, b.category_no, b.condition_result, c.category_name, c2.condition_ing " +
 				 "from tb_board b, tb_member m, tb_category c, tb_condition c2 " +
 				 "where m.email=b.email " +
 				 "and b.category_no=c.category_no " +
@@ -223,6 +227,8 @@ public class BoardDAO {
 				String email=rs.getString(4);
 				String categoryNo=rs.getString(5);
 				String conditionResult=rs.getString(6);
+				String categoryName=rs.getString(7);
+				String conditionIng=rs.getString(8);
 				
 				Board board=new Board();
 				board.setBoardNo(Integer.parseInt(boardNo));
@@ -235,10 +241,12 @@ public class BoardDAO {
 				
 				Category category=new Category();
 				category.setCategoryNo(Integer.parseInt(categoryNo));
+				category.setCategoryName(categoryName);
 				board.setCategory(category);
 				
 				Condition condition=new Condition();
 				condition.setConditionResult(Integer.parseInt(conditionResult));
+				condition.setConditionIng(conditionIng);
 				board.setCondition(condition);
 				
 				boardList.add(board);
@@ -437,7 +445,7 @@ public class BoardDAO {
 		
 		try {
 			con=ConnectionUtil.getConnection();
-			sql=("select board_no, board_title, board_photo, m.email, b.category_no, b.condition_result " +
+			sql=("select board_no, board_title, board_photo, m.email, b.category_no, b.condition_result, c.category_name, c2.condition_ing " +
 				 "from tb_board b, tb_member m, tb_category c, tb_condition c2 " +
 				 "where m.email=b.email " +
 				 "and b.category_no=c.category_no " +
@@ -458,6 +466,8 @@ public class BoardDAO {
 				//String email=rs.getString(4);
 				String categoryNo=rs.getString(5);
 				String conditionResult=rs.getString(6);
+				String categoryName=rs.getString(7);
+				String conditionIng=rs.getString(8);
 				
 				Board board=new Board();
 				board.setBoardNo(Integer.parseInt(boardNo));
@@ -470,10 +480,12 @@ public class BoardDAO {
 				
 				Category category=new Category();
 				category.setCategoryNo(Integer.parseInt(categoryNo));
+				category.setCategoryName(categoryName);
 				board.setCategory(category);
 				
 				Condition condition=new Condition();
 				condition.setConditionResult(Integer.parseInt(conditionResult));
+				condition.setConditionIng(conditionIng);
 				board.setCondition(condition);
 				
 				boardList.add(board);
