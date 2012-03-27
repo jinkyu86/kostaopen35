@@ -2,39 +2,25 @@ package kr.or.kosta.moviesystem.screentime;
 
 import java.util.Date;
 
-import kr.or.kosta.moviesystem.movie.Movie;
-
 public class ScreenTime {
 
-	/**
-	 * 영화시간 번호
-	 */
-	private String scrnum;
-
-	/**
-	 * 영화상영시간
-	 */
-	private Date time;
-
-	public String getScrnum() {
+	private Number scrnum;//영화시간번호
+	private Date time;//영화상형시간
+	public Number getScrnum() {
 		return scrnum;
 	}
-
-	public void setScrnum(String scrnum) {
+	public void setScrnum(Number scrnum) {
 		this.scrnum = scrnum;
 	}
-
 	public Date getTime() {
 		return time;
 	}
-
 	public void setTime(Date time) {
 		this.time = time;
 	}
-
 	@Override
 	public String toString() {
-		return "ScreenTime [scrnum=" + scrnum + ", time=" + time
-				+ "]";
-	}	
+		return "ScreenTime [scrnum=" + scrnum + ", time=" + time + "]";
+	}
+
 }
