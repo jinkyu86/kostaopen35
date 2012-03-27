@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Date;
 
+import kr.or.kosta.betting.loc.Loc;
+import kr.or.kosta.betting.team.Team;
 import kr.or.kosta.betting.util.ConnectionUtil;
 
 
@@ -24,54 +26,66 @@ public class MatchDAO {
 		PreparedStatement ps = null;
 		String sql = null;
 		ResultSet rs =null;
-		ArrayList<Match>studentList=new ArrayList<Match>();
-				
+		ArrayList<Match>matchList=new ArrayList<Match>();
+		Match match = null;
+		
 		try {
 		con=ConnectionUtil.getConnection();
-		sql="SELECT match_num,match_time,match_result_score,home_team_num"+
-				" FROM tb_student s,tb_department d"+
-				" WHERE s.deptno=d.deptno";
+		sql="SELECT match_num,match_time,match_result_score,home_team_num," +
+				"away_team_num,win_team_num,m.loc_num"+
+				" FROM match m,team t,loc l"+
+				" WHERE m.home_team=t.num AND m.away_team_num=t.num" +
+				"	AND m.win_team_num=t.num AND m.loc_num=l.loc_num";
 			
 		//rs.absolute()가 가능하도록 설정
-			psmt=con.prepareStatement(sql,
+			ps=con.prepareStatement(sql,
 					ResultSet.TYPE_SCROLL_INSENSITIVE,
 					ResultSet.CONCUR_READ_ONLY);
-			rs=psmt.executeQuery();
+			rs=ps.executeQuery();
 			
 			if(page>1){
 				rs.absolute((page-1)*length);
 			}
-			//가져온 레코드 개수
+			
 			int getRecordCount=0;
 			while(rs.next()&&getRecordCount<length){
 				getRecordCount++;
-				String studno=rs.getString(1);
-				String name = rs.getString(2);
-				String userid = rs.getString(3);
-				String pw = rs.getString(4);
-				String deptno = rs.getString(5);
-				String dname = rs.getString(6);
-				String loc=rs.getString(7);
+				String matchNum=rs.getString(1);
+				Date matchTime = rs.getDate(2);
+				String matchScore = rs.getString(3);
+				String homeNum = rs.getString(4);
+				String awayNum = rs.getString(5);
+				String winNum = rs.getString(6);
+				String locNum=rs.getString(7);
 				
-				Student student = new Student();
-				student.setStudno(studno);
-				student.setName(name);
-				student.setUserid(userid);
-				student.setPw(pw);
+				match = new Match();
+				match.setNum(matchNum);
+				match.setMatchTime(matchTime);
+				match.setScore(matchScore);
 				
-				Department department = new Department();
-				department.setDeptno(deptno);
-				department.setDname(dname);
-				department.setLoc(loc);
+				Team homeTeam = new Team();
+				homeTeam.setNum(homeNum);
 				
-				student.setDepartment(department);
+				Team awayTeam = new Team();
+				awayTeam.setNum(awayNum);
 				
-				studentList.add(student);
+				Team winTeam = new Team();
+				winTeam.setName(winNum);
+				
+				Loc loc = new Loc();
+				loc.setNum(locNum);
+				
+				match.setTeam(winTeam);
+				match.setTeam(awayTeam);
+				match.setTeam(homeTeam);
+				match.setLoc(loc);
+				
+				matchList.add(match);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return studentList;
+		return matchList;
 	}
 
 	/**
@@ -79,9 +93,64 @@ public class MatchDAO {
 	 * 
 	 * @param Date
 	 */
-	public ArrayList selectMatchByDate(Date Date) {
+	public ArrayList<Match> selectMatchByDate(Date date) {
 		/* default generated stub */;
-		return null;
+		Connection con = null;
+		PreparedStatement ps = null;
+		String sql = null;
+		ResultSet rs =null;
+		ArrayList<Match>matchList=new ArrayList<Match>();
+		Match match = null;
+		
+		try {
+		con=ConnectionUtil.getConnection();
+		sql="SELECT match_num,match_time,match_result_score,home_team_num," +
+				"away_team_num,win_team_num,m.loc_num"+
+				" FROM match m,team t,loc l"+
+				" WHERE m.home_team=t.num AND m.away_team_num=t.num" +
+				"	AND m.win_team_num=t.num AND m.loc_num=l.loc_num" +
+				" AND m.match_time=?";
+			
+			ps=con.prepareStatement(sql);
+			rs=ps.executeQuery();
+			
+			while(rs.next()){
+				String matchNum=rs.getString(1);
+				String matchScore = rs.getString(3);
+				String homeNum = rs.getString(4);
+				String awayNum = rs.getString(5);
+				String winNum = rs.getString(6);
+				String locNum=rs.getString(7);
+				
+				match = new Match();
+				match.setNum(matchNum);
+				match.setMatchTime(date);
+				match.setScore(matchScore);
+				
+				Team homeTeam = new Team();
+				homeTeam.setNum(homeNum);
+				
+				Team awayTeam = new Team();
+				awayTeam.setNum(awayNum);
+				
+				Team winTeam = new Team();
+				winTeam.setName(winNum);
+				
+				Loc loc = new Loc();
+				loc.setNum(locNum);
+				
+				match.setTeam(winTeam);
+				match.setTeam(awayTeam);
+				match.setTeam(homeTeam);
+				match.setLoc(loc);
+				
+				matchList.add(match);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return matchList;
+	
 	}
 
 	/**
@@ -91,8 +160,33 @@ public class MatchDAO {
 	 * @param score
 	 * @param winNum
 	 */
-	public void updateMatch(String num, String score, String winNum) {
+	public void updateMatch(Match match) {
 		/* default generated stub */;
+		Connection con = null;
+		PreparedStatement ps = null;
+		String sql = null;
+				
+		try {
+		con=ConnectionUtil.getConnection();
+		sql="UPDATE match" +
+				" SET match_num=?, match_time=?, match_result_score=? " +
+				",home_team_num=?, away_team_num=? ,win_team_num=? " +
+				" ,loc_num=?"+
+				" WHERE match_num=?";
+			
+			ps=con.prepareStatement(sql);
+			ps.setString(1, match.getNum());
+			ps.setString(2, match.getMatchTime().toString());
+			ps.setString(3, match.getScore());
+			ps.setString(4, match.getHomeNum());
+			ps.setString(5, match.getAwayNum());
+			ps.setString(6, match.getWinNum());
+			ps.setString(7, match.getLocNum());
+			ps.setString(8, match.getNum());
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 	}
 
@@ -103,7 +197,30 @@ public class MatchDAO {
 	 */
 	public void insertMatch(Match match) {
 		/* default generated stub */;
-	
+		Connection con = null;
+		PreparedStatement ps = null;
+		String sql = null;
+				
+		try {
+		con=ConnectionUtil.getConnection();
+		sql="INSERT INTO match (match_num, match_time, match_result_score " +
+				",home_team_num, away_team_num ,win_team_num " +
+				" ,loc_num) "+
+				 " VALUES(?,?,?,?,?,?,?)";
+			
+			ps=con.prepareStatement(sql);
+			ps.setString(1, match.getNum());
+			ps.setString(2, match.getMatchTime().toString());
+			ps.setString(3, match.getScore());
+			ps.setString(4, match.getHomeNum());
+			ps.setString(5, match.getAwayNum());
+			ps.setString(6, match.getWinNum());
+			ps.setString(7, match.getLocNum());
+			ps.setString(8, match.getNum());
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
