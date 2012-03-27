@@ -159,7 +159,42 @@ public class GoodDAO {
 	 * @param page
 	 */
 	public static ArrayList<Good> selectGoodList(int length, int page) {
-		/* default generated stub */;
-		return null;
+		Connection con=null;
+		PreparedStatement psmt=null;
+		String sql=null;
+		ResultSet rs=null;
+		Good good=null;
+		ArrayList<Good>goodList=new ArrayList<Good>();
+		con=ConnectionUtil.getConnection();
+		try {
+			sql="SELECT g_num, gname, detail, img "+
+			      "FROM good";
+			psmt=con.prepareStatement(sql,
+				ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+				rs=psmt.executeQuery();
+				if(page>1){
+					rs.absolute((page-1)*length);
+				}
+				int getRecordCount=0;
+				while(rs.next()&&getRecordCount<length){
+					getRecordCount++;
+					String gNum=rs.getString(1);
+					String gName=rs.getString(2);
+					String detail=rs.getString(3);
+					String img=rs.getString(4);
+					
+					good=new Good();
+					
+					good.setgNum(gNum);
+					good.setgName(gName);
+					good.setDetail(detail);
+					good.setImg(img);
+					
+					goodList.add(good);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		return goodList;
 	}
 }
