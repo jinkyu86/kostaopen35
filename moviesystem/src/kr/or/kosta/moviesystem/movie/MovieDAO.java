@@ -1,5 +1,15 @@
 package kr.or.kosta.moviesystem.movie;
 
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+
+import kr.or.kosta.moviesystem.util.ConnectionUtil;
+
 public class MovieDAO {
 
 	/**
@@ -7,9 +17,29 @@ public class MovieDAO {
 	 * 
 	 * @param movie
 	 */
-	public void insertMovie(Movie movie) {
-		/* default generated stub */;
-		return null;
+	public static void insertMovie(Movie movie) {
+		Connection con = null;
+		PreparedStatement psmt = null;
+		String sql = null;
+		
+		System.out.println(movie);
+		try {
+			con = ConnectionUtil.getConnection();
+			sql = "insert into MOVIE(m_num, m_name, launch_date, genre, poster, end_date, m_price, content)"
+					+"values(m_seq.nextval, ?, ?, ?, ?, ?, ?, ?)";
+			psmt = con.prepareStatement(sql);
+			psmt.setString(1, movie.getMname());
+			psmt.setString(2, movie.getLaunchDate());
+			psmt.setString(3, movie.getGenre());
+			psmt.setString(4, movie.getPoster());
+			psmt.setString(5, movie.getEndDate());
+			psmt.setLong(6, movie.getMprice());
+			psmt.setString(7, movie.getContent());
+			
+			psmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -17,17 +47,45 @@ public class MovieDAO {
 	 * 
 	 * @param mnum
 	 */
-	public void deleteMovie(Number mnum) {
-		/* default generated stub */;
-		return null;
+	public static void deleteMovie(String mnum) {
+		Connection con = null;
+		PreparedStatement psmt = null;
+		String sql = null;
+		
+		try{
+			con = ConnectionUtil.getConnection();
+			sql = "delete from MOVIE where m_num=?";
+			psmt = con.prepareStatement(sql);
+			psmt.setString(1, mnum);
+			psmt.execute();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 	}
 
 	/**
 	 * 전체 영화 수를 알 수 있는 메소드
 	 */
-	public int selectMovieCount() {
-		/* default generated stub */;
-		return null;
+	public static int selectMovieCount() {
+		Connection con = null;
+		PreparedStatement psmt = null;
+		String sql = null;
+		ResultSet rs = null;
+		int movieCount = 0;
+		try{
+			con = ConnectionUtil.getConnection();
+			sql = "select count(*) from MOVIE";
+			psmt = con.prepareStatement(sql);
+			rs = psmt.executeQuery();
+			
+			if(rs.next()){
+				int mCount = rs.getInt(1);
+				movieCount = mCount;
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return movieCount;
 	}
 
 	/**
@@ -35,7 +93,7 @@ public class MovieDAO {
 	 * 
 	 * @param mnum
 	 */
-	public Movie selectMovie(Number mnum) {
+	public static Movie selectMovie(Number mnum) {
 		/* default generated stub */;
 		return null;
 	}
@@ -46,9 +104,52 @@ public class MovieDAO {
 	 * @param page
 	 * @param length
 	 */
-	public ArrayList selectMovieList(int page, int length) {
-		/* default generated stub */;
-		return null;
+	public static ArrayList selectMovieList(int page, int length) {
+		Connection con = null;
+		PreparedStatement psmt = null;
+		String sql = null;
+		ArrayList<Movie>movieList = new ArrayList<Movie>();
+		ResultSet rs = null;
+		int num = (page-1)*length;
+		int GetRsCount = 0;
+		try{
+			con = ConnectionUtil.getConnection();
+			sql = "select m_num, m_name, launch_date, genre, poster, end_date, m_price, content from MOVIE";
+			psmt = con.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			
+			rs = psmt.executeQuery();
+			
+			if(num>0){
+				rs.absolute(num);
+			}
+			while(rs.next()&&GetRsCount<length){
+				GetRsCount++;
+				String mnum = rs.getString(1);
+				String mname = rs.getString(2);
+				String lDate = rs.getString(3);
+				String genre = rs.getString(4);
+				String poster = rs.getString(5);
+				String eDate = rs.getString(6);
+				long mprice = rs.getLong(7);
+				String content = rs.getString(8);
+				
+				
+				Movie movie = new Movie();
+				movie.setMnum(mnum);
+				movie.setMname(mname);
+				movie.setLaunchDate(lDate);
+				movie.setGenre(genre);
+				movie.setEndDate(eDate);
+				movie.setMprice(mprice);
+				movie.setContent(content);
+				movie.setPoster(poster);
+				
+				movieList.add(movie);
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return movieList;
 	}
 
 	/**
@@ -58,9 +159,54 @@ public class MovieDAO {
 	 * @param length
 	 * @param mname
 	 */
-	public ArrayList selectMovieListbyMname(int page, int length, String mname) {
-		/* default generated stub */;
-		return null;
+	public static ArrayList selectMovieListbyMname(int page, int length, String mname) {
+		Connection con = null;
+		PreparedStatement psmt = null;
+		String sql = null;
+		ArrayList<Movie>movieList = new ArrayList<Movie>();
+		ResultSet rs = null;
+		int getRsCount = 0;
+		int num = (page-1)*length;
+		
+		try{
+			con = ConnectionUtil.getConnection();
+			sql = "select m_num, m_name, launch_date, genre, poster, end_date, m_price, content "
+					+"from MOVIE where m_name like ?";
+			psmt = con.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			psmt.setString(1, "%"+mname+"%");
+			
+			rs = psmt.executeQuery();
+			
+			if(num>0){
+				rs.absolute(num);
+			}
+			while(rs.next()&&getRsCount<length){
+				getRsCount++;
+				String mnum = rs.getString(1);
+				String mname2 = rs.getString(2);
+				String lDate = rs.getString(3);
+				String genre = rs.getString(4);
+				String poster = rs.getString(5);
+				String eDate = rs.getString(6);
+				long mprice = rs.getLong(7);
+				String content = rs.getString(8);
+				
+				Movie movie = new Movie();
+				movie.setMnum(mnum);
+				movie.setMname(mname2);
+				movie.setLaunchDate(lDate);
+				movie.setGenre(genre);
+				movie.setEndDate(eDate);
+				movie.setMprice(mprice);
+				movie.setContent(content);
+				movie.setPoster(poster);
+				
+				movieList.add(movie);
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return movieList;
 	}
 
 	/**
@@ -68,9 +214,29 @@ public class MovieDAO {
 	 * 
 	 * @param mName
 	 */
-	public int selectMovieListbyMnameCount(String mName) {
+	public static int selectMovieListbyMnameCount(String mName) {
 		/* default generated stub */;
-		return null;
+		Connection con = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		String sql = null;
+		int searchMovieCount = 0;
+		
+		try{
+			con = ConnectionUtil.getConnection();
+			sql = "select count(*) from MOVIE where m_name like ?";
+			psmt = con.prepareStatement(sql);
+			psmt.setString(1, "%"+ mName +"%");
+			
+			rs = psmt.executeQuery();
+			
+			if(rs.next()){
+				searchMovieCount = rs.getInt(1);
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return searchMovieCount;
 	}
 
 	/**
@@ -80,9 +246,54 @@ public class MovieDAO {
 	 * @param length
 	 * @param genre
 	 */
-	public ArrayList selectMovieListbyGenre(int page, int length, String genre) {
-		/* default generated stub */;
-		return null;
+	public static ArrayList selectMovieListbyGenre(int page, int length, String genre) {
+		Connection con = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		int num = (page-1)*length;
+		int getRsCount = 0;
+		String sql = null;
+		ArrayList<Movie>movieList= new ArrayList<Movie>();
+		
+		try{
+			con = ConnectionUtil.getConnection();
+			sql = "select m_num, m_name, launch_date, genre, poster, end_date, m_price, content "
+					+"from MOVIE where genre like ?";
+			psmt = con.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			psmt.setString(1, "%"+genre+"%");
+			
+			rs = psmt.executeQuery();
+			
+			if(num>0){
+				rs.absolute(num);
+			}
+			while(rs.next()&&getRsCount<length){
+				getRsCount++;
+				String mnum = rs.getString(1);
+				String mname2 = rs.getString(2);
+				String lDate = rs.getString(3);
+				String genre2 = rs.getString(4);
+				String poster = rs.getString(5);
+				String eDate = rs.getString(6);
+				long mprice = rs.getLong(7);
+				String content = rs.getString(8);
+				
+				Movie movie = new Movie();
+				movie.setMnum(mnum);
+				movie.setMname(mname2);
+				movie.setLaunchDate(lDate);
+				movie.setGenre(genre2);
+				movie.setEndDate(eDate);
+				movie.setMprice(mprice);
+				movie.setContent(content);
+				movie.setPoster(poster);
+				
+				movieList.add(movie);
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return movieList;
 	}
 
 	/**
@@ -90,9 +301,27 @@ public class MovieDAO {
 	 * 
 	 * @param genre
 	 */
-	public int selectMovieListbyGenreCount(String genre) {
-		/* default generated stub */;
-		return null;
+	public static int selectMovieListbyGenreCount(String genre) {
+		Connection con = null;
+		PreparedStatement psmt = null;
+		String sql = null;
+		int schMovieCount = 0;
+		ResultSet rs = null;
+		try{
+			con = ConnectionUtil.getConnection();
+			sql = "select count(*) from MOVIE where genre like ?";
+			psmt = con.prepareStatement(sql);
+			psmt.setString(1, "%"+ genre +"%");
+			
+			rs = psmt.executeQuery();
+			
+			if(rs.next()){
+				schMovieCount = rs.getInt(1);
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return schMovieCount;
 	}
 
 	/**
@@ -102,10 +331,55 @@ public class MovieDAO {
 	 * @param length
 	 * @param content
 	 */
-	public ArrayList selectMovieListByContent(int page, int length,
+	public static ArrayList selectMovieListByContent(int page, int length,
 			String content) {
-		/* default generated stub */;
-		return null;
+		Connection con = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		String sql = null;
+		int num = (page-1)*length;
+		int getRsCount = 0;
+		ArrayList<Movie>movieList = new ArrayList<Movie>();
+		
+		try{
+			con = ConnectionUtil.getConnection();
+			sql = "select m_num, m_name, launch_date, genre, poster, end_date, m_price, content "
+					+"from MOVIE where content like ?";
+			psmt = con.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			psmt.setString(1, "%"+content+"%");
+			rs = psmt.executeQuery();
+			
+			if(num>0){
+				rs.absolute(num);
+			}
+			
+			while(rs.next()&&getRsCount<length){
+				getRsCount++;
+				String mnum = rs.getString(1);
+				String mname2 = rs.getString(2);
+				String lDate = rs.getString(3);
+				String genre2 = rs.getString(4);
+				String poster = rs.getString(5);
+				String eDate = rs.getString(6);
+				long mprice = rs.getLong(7);
+				String content2 = rs.getString(8);
+				
+				Movie movie = new Movie();
+				movie.setMnum(mnum);
+				movie.setMname(mname2);
+				movie.setLaunchDate(lDate);
+				movie.setGenre(genre2);
+				movie.setEndDate(eDate);
+				movie.setMprice(mprice);
+				movie.setContent(content2);
+				movie.setPoster(poster);
+				
+				movieList.add(movie);
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return movieList;
 	}
 
 	/**
@@ -113,9 +387,28 @@ public class MovieDAO {
 	 * 
 	 * @param count
 	 */
-	public int selectMovieListByContentCount(String count) {
-		/* default generated stub */;
-		return null;
+	public static int selectMovieListByContentCount(String content) {
+		Connection con = null;
+		PreparedStatement psmt = null;
+		String sql = null;
+		ResultSet rs = null;
+		int schMovieCount = 0;
+		
+		try{
+			con = ConnectionUtil.getConnection();
+			sql = "select count(*) from MOVIE where content like ?";
+			psmt = con.prepareStatement(sql);
+			psmt.setString(1, "%"+ content +"%");
+			
+			rs = psmt.executeQuery();
+			
+			if(rs.next()){
+				schMovieCount = rs.getInt(1);
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return schMovieCount;
 	}
 
 	/**
@@ -123,8 +416,27 @@ public class MovieDAO {
 	 * 
 	 * @param movie
 	 */
-	public void updateMovie(Movie movie) {
-		/* default generated stub */;
-		return null;
+	public static void updateMovie(Movie movie) {
+		Connection con = null;
+		PreparedStatement psmt = null;
+		String sql = null;
+		
+		try{
+			con = ConnectionUtil.getConnection();
+			sql = "update MOVIE set m_name=?, launch_date=?, genre=?, poster=?, end_date=?"
+					+", m_price=?, content=? where m_num=?";
+			psmt = con.prepareStatement(sql);
+			psmt.setString(1, movie.getMname());
+			psmt.setString(2, movie.getLaunchDate());
+			psmt.setString(3, movie.getGenre());
+			psmt.setString(4, movie.getPoster());
+			psmt.setString(5, movie.getEndDate());
+			psmt.setLong(6, movie.getMprice());
+			psmt.setString(7, movie.getMnum());
+			
+			psmt.executeUpdate();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 	}
 }
