@@ -6,33 +6,63 @@ import kr.or.kosta.moviesystem.movie.Movie;
 import kr.or.kosta.moviesystem.screentime.ScreenTime;
 
 public class Reservation {
-
+	private String resnum;//예약번호
+	private Date resDate;//예약날짜
+	private long resQty;//예매수량
+	private long payState;//결제상태
+	private long totalPrice;//전체가격
 	public ScreenTime screenTime;
-
 	public Movie movie;
-
-	/**
-	 * 예약번호
-	 */
-	private Number resnum;
-
-	/**
-	 * 예약날짜
-	 */
-	private Date resDate;
-
-	/**
-	 * 예매 수량(영화표 수량)
-	 */
-	private Number resQty;
-
-	/**
-	 * 결제 상태
-	 */
-	private Number payState;
-
-	/**
-	 * 전체 가격
-	 */
-	private Number totalPrice;
+	
+	public String getResnum() {
+		return resnum;
+	}
+	public void setResnum(String resnum) {
+		this.resnum = resnum;
+	}
+	public Date getResDate() {
+		return resDate;
+	}
+	public void setResDate(Date resDate) {
+		this.resDate = resDate;
+	}
+	public long getResQty() {
+		return resQty;
+	}
+	public void setResQty(long resQty) {
+		this.resQty = resQty;
+	}
+	public long getPayState() {
+		return payState;
+	}
+	public void setPayState(long payState) {
+		this.payState = payState;
+	}
+	public long getTotalPrice() {
+		return totalPrice;
+	}
+	public void setTotalPrice(long totalPrice) {
+		this.totalPrice = totalPrice;
+	}
+	public ScreenTime getScreenTime() {
+		return screenTime;
+	}
+	public void setScreenTime(ScreenTime screenTime) {
+		this.screenTime = screenTime;
+	}
+	public Movie getMovie() {
+		return movie;
+	}
+	public void setMovie(Movie movie) {
+		this.movie = movie;
+	}
+	@Override
+	public String toString() {
+		return "Reservation [resnum=" + resnum + ", resDate=" + resDate
+				+ ", resQty=" + resQty + ", payState=" + payState
+				+ ", totalPrice=" + totalPrice + ", screenTime=" + screenTime
+				+ ", movie=" + movie + "]";
+	}
+	
+	
 }
