@@ -64,7 +64,7 @@ public class ReservationDAO {
 					"  FROM  RESERVATION r ,MEMBER mem"+
 					"                   MOVIE m,SCREENING_TIME s " +
 					"  WHERE  m.userid=r.userid AND  r.scr_num=s.scr_num" +
-					"                      AND s.deptno=d.deptno AND r.m_num=m.m_num " +
+					"                      AND r.m_num=m.m_num " +
 					"                      AND  m.userid=?" +
 					"    ORDER BY res_date  DESC";
 			
