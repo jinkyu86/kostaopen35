@@ -14,7 +14,7 @@ public class TeamDAO {
 	/**
 	 * 팀의 모든 정보 리스트를 열람하는 메서드
 	 */
-	public ArrayList<Team> selectTeamList() {
+	public static ArrayList<Team> selectTeamList() {
 		/* default generated stub */;
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -24,7 +24,7 @@ public class TeamDAO {
 		Team team = null;
 		
 		sql = "SELECT team_name,photo,team_num" +
-				  "FROM team";
+				  " FROM team";
 		con = ConnectionUtil.getConnection();
 		try {
 			ps = con.prepareStatement(sql);
@@ -37,14 +37,14 @@ public class TeamDAO {
 				team = new Team();
 				team.setName(name);
 				team.setPhoto(photo);
-				team.setNum(locNum);
+				team.setNum(num);
 				
-				
+				teamList.add(team);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+		return teamList;
 	}
 
 	/**
@@ -52,8 +52,36 @@ public class TeamDAO {
 	 * 
 	 * @param num
 	 */
-	public Team selectTeam(String num) {
+	public static Team selectTeam(String num) {
 		/* default generated stub */;
-		return null;
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		Team team = null;
+		String sql = null;
+		
+		sql = "SELECT team_name,photo" +
+				 " FROM team" +
+				 " WHERE team_num=?";
+		con = ConnectionUtil.getConnection();
+		try {
+			ps = con.prepareStatement(sql);
+			ps.setString(1,num);
+			rs = ps.executeQuery();
+			if(rs.next()){
+				String teamName = rs.getString(1);
+				String 	photo = rs.getString(2);		
+				
+				team = new Team();
+				team.setNum(num);
+				team.setName(teamName);
+				team.setPhoto(photo);
+													
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return team;
+				
 	}
 }
