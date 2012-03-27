@@ -73,7 +73,7 @@ public class MovieDAO {
 		PreparedStatement psmt = null;
 		String sql = null;
 		
-		System.out.println(movie);
+		//System.out.println(movie);
 		try {
 			con = ConnectionUtil.getConnection();
 			sql = "insert into MOVIE(m_num, m_name, launch_date, genre, poster, end_date, m_price, content)"
