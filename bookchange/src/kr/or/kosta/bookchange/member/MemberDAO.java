@@ -152,8 +152,8 @@ public class MemberDAO {
 					"update tb_member" +
 					"set tel=?,pw=?,address=? where email=?");
 			ps.setString(1, member.getTel());
-			ps.setString(2, member.getAddress());
-			ps.setString(3, member.getPw());
+			ps.setString(2, member.getPw());
+			ps.setString(3, member.getAddress());
 			ps.setString(4, member.getEmail());
 			ps.executeUpdate();
 		} catch (Exception e) {
