@@ -413,6 +413,7 @@ public class BoardDAO {
 		Connection con=null;
 		PreparedStatement ps=null;
 		con=ConnectionUtil.getConnection();
+		QaDAO.deleteQabyBoardNo(boardNo);//게시물 삭제됐을때 여기 딸려있던 문의글도 다 삭제해버림
 		
 		try {
 			ps=con.prepareStatement("delete from tb_board where board_no=?");

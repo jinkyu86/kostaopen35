@@ -1,15 +1,15 @@
 package kr.or.kosta.bookchange.board.test;
 
 import static org.junit.Assert.*;
-import kr.or.kosta.bookchange.board.BoardDAO;
+import kr.or.kosta.bookchange.board.QaDAO;
 
 import org.junit.Test;
 
-public class BoardDAOTestDelete {
+public class QaDAOTestDelete1 {
 
 	@Test
 	public void test() {
-		BoardDAO.deleteBoard("23");
+		QaDAO.deleteQabyQaNo("2");
 	}
 
 }
