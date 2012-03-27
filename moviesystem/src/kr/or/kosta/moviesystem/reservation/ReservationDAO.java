@@ -31,12 +31,11 @@ public class ReservationDAO {
 			psmt=con.prepareStatement(
 					"INSERT INTO RESERVATION" +
 					"(RES_NUM, M_NUM,USERID, RES_DATE, SCR_NUM, RES_QTY, TOTAL_PRICE, PAY_STATE)"+
-					"VALUES(?,?,?,sysdate,?,?,?,?)");
-			psmt.setString(1,reservation.getResnum());
-			psmt.setString(2,reservation.getMovie().getMnum());
-			psmt.setString(3,reservation.getMember().getUserid());
-		    psmt.setString(4,reservation.getScreenTime().getScrnum());
-			psmt.setLong(5,reservation.getResQty());
+					"VALUES(res_seq.nextval,?,?,sysdate,?,?,?,?)");
+			psmt.setString(1,reservation.getMovie().getMnum());
+			psmt.setString(2,reservation.getMember().getUserid());
+		    psmt.setString(3,reservation.getScreenTime().getScrnum());
+			psmt.setLong(4,reservation.getResQty());
 			psmt.setLong(5,reservation.getTotalPrice());
 			psmt.setLong(6, 0);
 			psmt.executeUpdate();
