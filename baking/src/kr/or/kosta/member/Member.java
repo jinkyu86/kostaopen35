@@ -6,7 +6,7 @@ import kr.or.kosta.order.Order;
 public class Member {
 
 	/**
-	 * 회원아이디
+	 * 회원아이디 ghgh
 	 */
 	private String memberid;
 
