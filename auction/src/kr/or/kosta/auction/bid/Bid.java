@@ -17,12 +17,12 @@ public class Bid {
 	/**
 	 * 입찰한 시간
 	 */
-	private String cuTime;
+	private String bidTime;
 
 	/**
 	 * 현재입찰가격
 	 */
-	private String cuPrice;
+	private String bidPrice;
 
 	public Member getMember() {
 		return member;
@@ -48,26 +48,26 @@ public class Bid {
 		this.bidNum = bidNum;
 	}
 
-	public String getCuTime() {
-		return cuTime;
+	public String getBidTime() {
+		return bidTime;
 	}
 
-	public void setCuTime(String cuTime) {
-		this.cuTime = cuTime;
+	public void setBidTime(String bidTime) {
+		this.bidTime = bidTime;
 	}
 
-	public String getCuPrice() {
-		return cuPrice;
+	public String getBidPrice() {
+		return bidPrice;
 	}
 
-	public void setCuPrice(String cuPrice) {
-		this.cuPrice = cuPrice;
+	public void setBidPrice(String bidPrice) {
+		this.bidPrice = bidPrice;
 	}
 
 	@Override
 	public String toString() {
 		return "Bid [member=" + member + ", auction=" + auction + ", bidNum="
-				+ bidNum + ", cuTime=" + cuTime + ", cuPrice=" + cuPrice + "]";
+				+ bidNum + ", bidTime=" + bidTime + ", bidPrice=" + bidPrice
+				+ "]";
 	}
-
 }
