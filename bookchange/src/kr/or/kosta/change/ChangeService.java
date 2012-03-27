@@ -1,9 +1,27 @@
 package kr.or.kosta.change;
 
+import java.io.IOException;
+
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class ChangeService {
+	
+	private static final long serialVersionUID = 1L;
+	
+	public ChangeService() {
+	        super();
+	}
+
+	protected void doGet(HttpServletRequest request, 
+			HttpServletResponse response) throws ServletException, IOException {
+		doPost(request,response);
+	}
+
+	protected void doPost(HttpServletRequest request, 
+			HttpServletResponse response) throws ServletException, IOException {
+	}
 
 	/**교환리스트에 새로운 교환 추가**/
 	public void addChange(HttpServletRequest request,
