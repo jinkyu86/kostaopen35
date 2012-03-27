@@ -20,7 +20,7 @@ public class Good {
 	/**
 	 * 상품가격
 	 */
-	private Long gprice;
+	private long gprice;
 
 	/**
 	 * 상품사진
@@ -51,11 +51,11 @@ public class Good {
 		this.detail = detail;
 	}
 
-	public Long getGprice() {
+	public long getGprice() {
 		return gprice;
 	}
 
-	public void setGprice(Long gprice) {
+	public void setGprice(long gprice) {
 		this.gprice = gprice;
 	}
 
