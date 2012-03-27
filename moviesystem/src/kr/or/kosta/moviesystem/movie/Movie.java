@@ -1,6 +1,8 @@
 package kr.or.kosta.moviesystem.movie;
 
-import java.util.Date;
+
+
+import java.sql.Date;
 
 import kr.or.kosta.moviesystem.screentime.ScreenTime;
 
@@ -21,7 +23,7 @@ public class Movie {
 	/**
 	 * 개봉일
 	 */
-	private Date launchDate;
+	private String launchDate;
 
 	/**
 	 * 영화내용
@@ -41,12 +43,14 @@ public class Movie {
 	/**
 	 * 영화 내리는 날짜
 	 */
-	private Date endDate;
+	private String endDate;
 
 	/**
 	 * 영화 가격
 	 */
 	private long mprice;
+	
+	private long mResCount;
 
 	public ScreenTime getScreenTime() {
 		return screenTime;
@@ -72,11 +76,11 @@ public class Movie {
 		this.mname = mname;
 	}
 
-	public Date getLaunchDate() {
+	public String getLaunchDate() {
 		return launchDate;
 	}
 
-	public void setLaunchDate(Date launchDate) {
+	public void setLaunchDate(String launchDate) {
 		this.launchDate = launchDate;
 	}
 
@@ -104,11 +108,11 @@ public class Movie {
 		this.poster = poster;
 	}
 
-	public Date getEndDate() {
+	public String getEndDate() {
 		return endDate;
 	}
 
-	public void setEndDate(Date endDate) {
+	public void setEndDate(String endDate) {
 		this.endDate = endDate;
 	}
 
@@ -120,12 +124,19 @@ public class Movie {
 		this.mprice = mprice;
 	}
 
+	public long getMResCount(){
+		return mResCount;
+	}
+	
+	public void setMResCount(long mResCount){
+		this.mResCount=mResCount;
+	}
 	@Override
 	public String toString() {
 		return "Movie [screenTime=" + screenTime + ", mnum=" + mnum
 				+ ", mname=" + mname + ", launchDate=" + launchDate
 				+ ", content=" + content + ", genre=" + genre + ", poster="
-				+ poster + ", endDate=" + endDate + ", mprice=" + mprice + "]";
+				+ poster + ", endDate=" + endDate + ", mprice=" + mprice + ", mResCount=" + mResCount + "]";
 	}
 	
 	
