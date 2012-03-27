@@ -5,7 +5,7 @@ public class Good {
 	/**
 	 * 상품번호
 	 */
-	private Number gnum;
+	private String gnum;
 
 	/**
 	 * 상품이름
@@ -20,18 +20,18 @@ public class Good {
 	/**
 	 * 상품가격
 	 */
-	private Number gprice;
+	private Long gprice;
 
 	/**
 	 * 상품사진
 	 */
 	private String photo;
 
-	public Number getGnum() {
+	public String getGnum() {
 		return gnum;
 	}
 
-	public void setGnum(Number gnum) {
+	public void setGnum(String gnum) {
 		this.gnum = gnum;
 	}
 
@@ -51,11 +51,11 @@ public class Good {
 		this.detail = detail;
 	}
 
-	public Number getGprice() {
+	public Long getGprice() {
 		return gprice;
 	}
 
-	public void setGprice(Number gprice) {
+	public void setGprice(Long gprice) {
 		this.gprice = gprice;
 	}
 
@@ -73,4 +73,6 @@ public class Good {
 				+ ", gprice=" + gprice + ", photo=" + photo + "]";
 	}
 
+	
+	
 }
