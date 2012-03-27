@@ -1,5 +1,8 @@
 package kr.or.kosta.betting.match;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 public class MatchService {
 
 	/**
@@ -11,7 +14,7 @@ public class MatchService {
 	public void addMatch(HttpServletRequest request,
 			HttpServletResponse response) {
 		/* default generated stub */;
-		return null;
+	
 	}
 
 	/**
@@ -23,7 +26,7 @@ public class MatchService {
 	public void addMatchForm(HttpServletRequest request,
 			HttpServletResponse response) {
 		/* default generated stub */;
-		return null;
+		
 	}
 
 	/**
@@ -35,7 +38,7 @@ public class MatchService {
 	public void editMatchForm(HttpServletRequest request,
 			HttpServletResponse response) {
 		/* default generated stub */;
-		return null;
+
 	}
 
 	/**
@@ -47,7 +50,7 @@ public class MatchService {
 	public void editMatch(HttpServletRequest request,
 			HttpServletResponse response) {
 		/* default generated stub */;
-		return null;
+
 	}
 
 	/**
@@ -59,7 +62,7 @@ public class MatchService {
 	public void removeMatch(HttpServletRequest request,
 			HttpServletResponse response) {
 		/* default generated stub */;
-		return null;
+
 	}
 
 	/**
@@ -71,7 +74,7 @@ public class MatchService {
 	public void veiwMatchList(HttpServletRequest request,
 			HttpServletResponse response) {
 		/* default generated stub */;
-		return null;
+
 	}
 
 	/**
@@ -83,6 +86,6 @@ public class MatchService {
 	public void veiwMatch(HttpServletRequest request,
 			HttpServletResponse response) {
 		/* default generated stub */;
-		return null;
+	
 	}
 }

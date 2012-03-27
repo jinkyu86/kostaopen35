@@ -1,8 +1,10 @@
 package kr.or.kosta.betting.betting;
 
+import kr.or.kosta.betting.match.Match;
+
 public class Betting {
 
-	public Match match;
+	private Match match;
 
 	/**
 	 * 베팅 번호
@@ -39,5 +41,5 @@ public class Betting {
 	 */
 	private String teamNum;
 
-	private MemberBatData Betting;
+
 }

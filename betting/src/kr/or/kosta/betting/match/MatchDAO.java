@@ -1,5 +1,6 @@
 package kr.or.kosta.betting.match;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class MatchDAO {
@@ -34,7 +35,7 @@ public class MatchDAO {
 	 */
 	public void updateMatch(String num, String score, String winNum) {
 		/* default generated stub */;
-		return null;
+		
 	}
 
 	/**
@@ -44,7 +45,7 @@ public class MatchDAO {
 	 */
 	public void insertMatch(Match match) {
 		/* default generated stub */;
-		return null;
+	
 	}
 
 	/**
@@ -52,7 +53,7 @@ public class MatchDAO {
 	 */
 	public int countMatch() {
 		/* default generated stub */;
-		return null;
+		return 0;
 	}
 
 	/**
@@ -60,9 +61,9 @@ public class MatchDAO {
 	 * 
 	 * @param date
 	 */
-	public int countMatchByDate(date date) {
+	public int countMatchByDate(Date date) {
 		/* default generated stub */;
-		return null;
+		return 0;
 	}
 
 	/**

@@ -1,5 +1,8 @@
 package kr.or.kosta.betting.memberbetdata;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 public class MemberBetDataService {
 
 	/**
@@ -11,7 +14,7 @@ public class MemberBetDataService {
 	public void addMemberBetData(HttpServletRequest request,
 			HttpServletResponse response) {
 		/* default generated stub */;
-		return null;
+	
 	}
 
 	/**
@@ -23,7 +26,7 @@ public class MemberBetDataService {
 	public void removeMemberBetData(HttpServletRequest request,
 			HttpServletResponse response) {
 		/* default generated stub */;
-		return null;
+		
 	}
 
 	/**
@@ -35,7 +38,7 @@ public class MemberBetDataService {
 	public void veiwMemberBetDataList(HttpServletRequest request,
 			HttpServletResponse response) {
 		/* default generated stub */;
-		return null;
+		
 	}
 
 	/**
@@ -47,7 +50,7 @@ public class MemberBetDataService {
 	public void resultMemberBet(HttpServletRequest request,
 			HttpServletResponse response) {
 		/* default generated stub */;
-		return null;
+		
 	}
 
 	/**
@@ -59,7 +62,7 @@ public class MemberBetDataService {
 	public void viewMemberBetData(HttpServletRequest request,
 			HttpServletResponse response) {
 		/* default generated stub */;
-		return null;
+		
 	}
 
 	/**
@@ -71,6 +74,6 @@ public class MemberBetDataService {
 	public void viewMemberBetDataForm(HttpServletRequest request,
 			HttpServletResponse response) {
 		/* default generated stub */;
-		return null;
+		
 	}
 }

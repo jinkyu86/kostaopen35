@@ -1,5 +1,8 @@
 package kr.or.kosta.betting.member;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 public class MemberService {
 
 	/**
@@ -11,7 +14,7 @@ public class MemberService {
 	public void addMember(HttpServletRequest request,
 			HttpServletResponse response) {
 		/* default generated stub */;
-		return null;
+		
 	}
 
 	/**
@@ -23,7 +26,7 @@ public class MemberService {
 	public void addMemberForm(HttpServletRequest request,
 			HttpServletResponse response) {
 		/* default generated stub */;
-		return null;
+	
 	}
 
 	/**
@@ -35,7 +38,7 @@ public class MemberService {
 	public void checkMemberID(HttpServletRequest request,
 			HttpServletResponse response) {
 		/* default generated stub */;
-		return null;
+	
 	}
 
 	/**
@@ -47,7 +50,7 @@ public class MemberService {
 	public void editMember(HttpServletRequest request,
 			HttpServletResponse response) {
 		/* default generated stub */;
-		return null;
+		
 	}
 
 	/**
@@ -59,7 +62,7 @@ public class MemberService {
 	public void editMemberForm(HttpServletRequest request,
 			HttpServletResponse response) {
 		/* default generated stub */;
-		return null;
+		
 	}
 
 	/**
@@ -70,7 +73,7 @@ public class MemberService {
 	 */
 	public void login(HttpServletRequest request, HttpServletResponse response) {
 		/* default generated stub */;
-		return null;
+	
 	}
 
 	/**
@@ -81,7 +84,7 @@ public class MemberService {
 	 */
 	public void logout(HttpServletRequest request, HttpServletResponse response) {
 		/* default generated stub */;
-		return null;
+		
 	}
 
 	/**
@@ -93,7 +96,7 @@ public class MemberService {
 	public void removeMember(HttpServletRequest request,
 			HttpServletResponse response) {
 		/* default generated stub */;
-		return null;
+	
 	}
 
 	/**
@@ -105,7 +108,7 @@ public class MemberService {
 	public void viewMemberList(HttpServletRequest request,
 			HttpServletResponse response) {
 		/* default generated stub */;
-		return null;
+
 	}
 
 	/**
@@ -117,7 +120,7 @@ public class MemberService {
 	public void viewMember(HttpServletRequest request,
 			HttpServletResponse response) {
 		/* default generated stub */;
-		return null;
+		
 	}
 
 	/**
@@ -129,7 +132,7 @@ public class MemberService {
 	public void viewMemberRankingList(HttpServletRequest request,
 			HttpServletResponse response) {
 		/* default generated stub */;
-		return null;
+	
 	}
 
 	/**
@@ -141,6 +144,6 @@ public class MemberService {
 	public void viewMemberRankingListForm(HttpServletRequest request,
 			HttpServletResponse response) {
 		/* default generated stub */;
-		return null;
+		
 	}
 }

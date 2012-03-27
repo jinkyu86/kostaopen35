@@ -1,5 +1,6 @@
 package kr.or.kosta.betting.betting;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class BettingDAO {
@@ -32,7 +33,7 @@ public class BettingDAO {
 	 */
 	public void insertBetting(Betting betting) {
 		/* default generated stub */;
-		return null;
+		
 	}
 
 	/**
@@ -46,7 +47,7 @@ public class BettingDAO {
 	public void updateBetting(String num, long batRating, long seleRating,
 			long totMineral) {
 		/* default generated stub */;
-		return null;
+		
 	}
 
 	/**
@@ -56,7 +57,7 @@ public class BettingDAO {
 	 */
 	public long selectBettingRating(String num) {
 		/* default generated stub */;
-		return null;
+		return 0;
 	}
 
 	/**
@@ -66,7 +67,7 @@ public class BettingDAO {
 	 */
 	public long selectBettingSeleRating(String num) {
 		/* default generated stub */;
-		return null;
+		return 0;
 	}
 
 	/**
@@ -76,6 +77,6 @@ public class BettingDAO {
 	 */
 	public long selectBettingTotMineral(String num) {
 		/* default generated stub */;
-		return null;
+		return 0;
 	}
 }

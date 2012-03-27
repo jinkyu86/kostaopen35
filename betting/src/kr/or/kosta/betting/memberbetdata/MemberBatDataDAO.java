@@ -1,5 +1,8 @@
 package kr.or.kosta.betting.memberbetdata;
 
+import java.util.ArrayList;
+import java.util.Date;
+
 public class MemberBatDataDAO {
 
 	/**
@@ -30,7 +33,7 @@ public class MemberBatDataDAO {
 	 */
 	public void insultMemberBatData(MemberBatData memberBatData) {
 		/* default generated stub */;
-		return null;
+		
 	}
 
 	/**
@@ -40,7 +43,7 @@ public class MemberBatDataDAO {
 	 */
 	public void deleteMemberbatData(String num) {
 		/* default generated stub */;
-		return null;
+		
 	}
 
 	/**
@@ -50,7 +53,7 @@ public class MemberBatDataDAO {
 	 */
 	public int countMemberBatData(String ID) {
 		/* default generated stub */;
-		return null;
+		return 0;
 	}
 
 	/**
@@ -59,8 +62,8 @@ public class MemberBatDataDAO {
 	 * @param ID
 	 * @param date
 	 */
-	public int countMemberBatDataByDate(String ID, date date) {
+	public int countMemberBatDataByDate(String ID,Date date) {
 		/* default generated stub */;
-		return null;
+		return 0;
 	}
 }

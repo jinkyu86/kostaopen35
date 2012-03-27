@@ -1,5 +1,7 @@
 package kr.or.kosta.betting.member;
 
+import java.util.ArrayList;
+
 public class MemberDAO {
 
 	/**
@@ -20,7 +22,7 @@ public class MemberDAO {
 	 */
 	public void insultMember(Member member) {
 		/* default generated stub */;
-		return null;
+	
 	}
 
 	/**
@@ -40,7 +42,7 @@ public class MemberDAO {
 	 */
 	public void deleteMember(String ID) {
 		/* default generated stub */;
-		return null;
+		return;
 	}
 
 	/**
@@ -64,7 +66,7 @@ public class MemberDAO {
 	 */
 	public void updateMember(String ID, String PW, String Email, long mineral) {
 		/* default generated stub */;
-		return null;
+		
 	}
 
 	/**
@@ -72,6 +74,6 @@ public class MemberDAO {
 	 */
 	public int countMember() {
 		/* default generated stub */;
-		return null;
+		return 0 ;
 	}
 }
