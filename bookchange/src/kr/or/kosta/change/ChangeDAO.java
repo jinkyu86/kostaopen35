@@ -1,108 +1,59 @@
-package $301_도메인.$301_AN00_분석.AN30_요구사항정의.AN33_클래스모델개발.$35조_중고도서물물교환시스템_클래스모델개발;
+package kr.or.kosta.change;
+
+import java.util.ArrayList;
 
 public class ChangeDAO {
 
-	/**
-	 * 교환리스트 보기
-	 * 
-	 * @param length
-	 * @param page
-	 */
+	/**교환리스트 보기**/
 	public ArrayList selectChangeList(int length, int page) {
 		/* default generated stub */;
 		return null;
 	}
 
-	/**
-	 * 전체 교환 수 리턴
-	 */
+	/**등록 된 교환 수 리턴**/
 	public int selectChangeCount() {
+		int changeCount=0;
 		/* default generated stub */;
-		return null;
+		return changeCount;
 	}
 
-	/**
-	 * 내 게시물번호로 교환리스트 검색(나에게 교환을 요청한 사람들 검색)
-	 * 
-	 * @param length
-	 * @param page
-	 * @param boardNo
-	 */
+	/**내 게시물번호로 교환리스트 검색(나에게 교환을 요청한 사람들 검색)**/
 	public ArrayList selectChangeMyboardList(int length, int page,
 			String boardNo) {
-		/* default generated stub */;
 		return null;
 	}
 
-	/**
-	 * 내 게시물 번호로 검색한 게시물 수 리턴
-	 * 
-	 * @param boardNo
-	 */
+	/**내 게시물 번호로 검색한 게시물 수 리턴**/
 	public int selectChangeMyboardCount(String boardNo) {
-		/* default generated stub */;
-		return null;
+		return 0;
 	}
 
-	/**
-	 * 내가 교환을 신청한 사람 검색(상대방 email로 조회)
-	 * 
-	 * @param length
-	 * @param page
-	 * @param email
-	 */
+	/**내가 교환을 신청한 사람 검색(상대방 email로 조회)**/
 	public ArrayList selectChangeRequestList(int length, int page, String email) {
-		/* default generated stub */;
 		return null;
 	}
 
-	/**
-	 * 내가 교환을 신청한 사람의 수 리턴
-	 * 
-	 * @param email
-	 */
+	/**내가 교환을 신청한 사람의 수 리턴**/
 	public int selectChangeRequestCount(String email) {
-		/* default generated stub */;
-		return null;
+		return 0;
 	}
 
-	/**
-	 * 교환상태 보기
-	 * 
-	 * @param changeNo
-	 */
+	/**교환상태 보기**/
 	public Change selectChange(String changeNo) {
-		/* default generated stub */;
 		return null;
 	}
 
-	/**
-	 * 교환 리스트에 추가(교환신청 클릭시)
-	 * 
-	 * @param change
-	 */
+	/**교환 리스트에 추가(교환신청 클릭시)**/
 	public void insertChange(Change change) {
-		/* default generated stub */;
-		return null;
 	}
 
-	/**
-	 * 교환리스트 수정(교환결과를 수정할때 사용,교환중인지,완료됐는지등등)
-	 * 
-	 * @param changeNo
-	 */
+	/**교환리스트 수정(교환결과를 수정할때 사용,교환중인지,완료됐는지등등)**/
 	public Change updateChange(String changeNo) {
-		/* default generated stub */;
 		return null;
 	}
 
-	/**
-	 * 교환리스트에서 삭제
-	 * 
-	 * @param changeNo
-	 */
+	/**교환리스트에서 삭제**/
 	public void deleteChange(String changeNo) {
-		/* default generated stub */;
-		return null;
+		
 	}
 }
