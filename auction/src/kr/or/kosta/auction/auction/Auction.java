@@ -6,7 +6,7 @@ import kr.or.kosta.auction.member.Member;
 
 public class Auction {
 
-	public Member member;
+	public Bid bid;
 
 	public Good good;
 
@@ -45,13 +45,12 @@ public class Auction {
 	 */
 	private String cuPrice;
 
-
-	public Member getMember() {
-		return member;
+	public Bid getBid() {
+		return bid;
 	}
 
-	public void setMember(Member member) {
-		this.member = member;
+	public void setBid(Bid bid) {
+		this.bid = bid;
 	}
 
 	public Good getGood() {
@@ -120,11 +119,10 @@ public class Auction {
 
 	@Override
 	public String toString() {
-		return "Auction [member=" + member + ", good=" + good + ", aNum="
-				+ aNum + ", sPrice=" + sPrice + ", imPrice=" + imPrice
-				+ ", sTime=" + sTime + ", eTime=" + eTime + ", sold=" + sold
-				+ ", cuPrice=" + cuPrice +"]";
+		return "Auction [bid=" + bid + ", good=" + good + ", aNum=" + aNum
+				+ ", sPrice=" + sPrice + ", imPrice=" + imPrice + ", sTime="
+				+ sTime + ", eTime=" + eTime + ", sold=" + sold + ", cuPrice="
+				+ cuPrice + "]";
 	}
-	
-	
+
 }
