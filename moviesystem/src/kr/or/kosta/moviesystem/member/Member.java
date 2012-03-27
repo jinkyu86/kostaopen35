@@ -12,7 +12,7 @@ public class Member {
 	/**
 	 * 회원번호
 	 */
-	private Number userNum;
+	private String userNum;
 
 	/**
 	 * 이름
@@ -72,11 +72,11 @@ public class Member {
 		this.userid = userid;
 	}
 
-	public Number getUserNum() {
+	public String getUserNum() {
 		return userNum;
 	}
 
-	public void setUserNum(Number userNum) {
+	public void setUserNum(String userNum) {
 		this.userNum = userNum;
 	}
 
@@ -168,7 +168,5 @@ public class Member {
 				+ regDate + ", memState=" + memState + ", dropReason="
 				+ dropReason + ", dropDate=" + dropDate + "]";
 	}
-	
-	
 
 }
