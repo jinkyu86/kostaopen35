@@ -14,26 +14,72 @@ public class MemberDAO {
 	/**
 	 * @param member
 	 */
-	public void insertMember(Member member) {
-		/* default generated stub */;
+	public static void insertMember(Member member) {
+		Connection con = null;
+		PreparedStatement psmt =null;
+		con = ConnectionUtil.getConnection();
+		try{
+		psmt = con.prepareStatement("INSERT INTO MEMBER" +
+		                         " (userid,pw,email,name,coin,emoney)"+
+				                  " VALUES(?,?,?,?,?,?)");
+		psmt.setString(1, member.getUserid());
+		psmt.setString(2, member.getPw());
+		psmt.setString(3, member.getEmail());
+		psmt.setString(4, member.getName());
+		psmt.setString(5, member.getCoin());
+		psmt.setString(6, member.getEmoney());
+		psmt.executeUpdate();
+		}catch (Exception e){
+			e.printStackTrace();
+		}
 	}
+	
 
 	/**
 	 * @param member
 	 */
-	public void updateMember(Member member) {
-		/* default generated stub */;
+	public static void updateMember(Member member) {
+		Connection con = null;
+		PreparedStatement psmt = null;
+		con = ConnectionUtil.getConnection();
+		try {
+			psmt = con.prepareStatement(" UPDATE MEMBER " +
+		                                " SET  pw=?,email=?,name=?,coin=?,emoney=?" + 
+					                    " WHERE userid=? ");
+			
+			
+			psmt.setString(1, member.getPw());
+			psmt.setString(2, member.getEmail());
+			psmt.setString(3, member.getName());
+			psmt.setString(4, member.getCoin());
+			psmt.setString(5, member.getEmoney());
+			psmt.setString(6, member.getUserid());
+			psmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
-
 	/**
 	 * @param userid
 	 */
-	public void deleteMember(String userid) {
-		/* default generated stub */;
+	public static void deleteMember(String userid) {
+		Connection con = null;
+		PreparedStatement psmt = null;
+		con = ConnectionUtil.getConnection();
+		try{
+			psmt=con.prepareStatement(" DELETE FROM MEMBER" +
+		                                " WHERE userid=?");
+		
+		psmt.setString(1, userid);
+		psmt.executeUpdate();
+		}catch (Exception e){
+			e.printStackTrace();
+		}
 	}
 
 	/**
 	 * @param userid
+	 * @return 
 	 */
 	public static Member selectMember(String userid) {
 		Connection con=null;
@@ -43,20 +89,22 @@ public class MemberDAO {
 		Member member=null;
 		try {
 			con=ConnectionUtil.getConnection();
-			sql="SELECT  userid,pw,email,name,coin,emoney" +
-					"  FROM  member " ;
+			sql="SELECT pw,email,name,coin,emoney" +
+					"  FROM  member " +
+					" WHERE userid=?";
 			
 				psmt=con.prepareStatement(sql);
 				psmt.setString(1,userid);
 				rs=psmt.executeQuery();
 				if(rs.next()){
-					String pw=rs.getString(2);
-					String email=rs.getString(3);
-					String name=rs.getString(4);
-					String coin=rs.getString(5);
-					String emoney=rs.getString(6);
+					String pw=rs.getString(1);
+					String email=rs.getString(2);
+					String name=rs.getString(3);
+					String coin=rs.getString(4);
+					String emoney=rs.getString(5);
 					
 					member=new Member();
+					member.setUserid(userid);
 					member.setPw(pw);
 					member.setEmail(email);
 					member.setName(name);
