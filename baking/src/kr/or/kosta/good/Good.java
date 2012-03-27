@@ -8,15 +8,11 @@ public class Good {
 
 	private Good_division good_division;
 	private Recipe recipe;
+	
 	/**
 	 * 상품번호
 	 */
 	private int goodNum;
-
-	/**
-	 * 상품번호
-	 */
-	private int division;
 
 	/**
 	 * 상품가격
@@ -72,14 +68,6 @@ public class Good {
 		this.goodNum = goodNum;
 	}
 
-	public int getDivision() {
-		return division;
-	}
-
-	public void setDivision(int division) {
-		this.division = division;
-	}
-
 	public int getGoodPrice() {
 		return goodPrice;
 	}
@@ -131,10 +119,9 @@ public class Good {
 	@Override
 	public String toString() {
 		return "Good [good_division=" + good_division + ", recipe=" + recipe
-				+ ", goodNum=" + goodNum + ", division=" + division
-				+ ", goodPrice=" + goodPrice + ", qty=" + qty + ", name="
-				+ name + ", explantion=" + explantion + ", img=" + img
-				+ ", option=" + option + "]";
+				+ ", goodNum=" + goodNum + ", goodPrice=" + goodPrice
+				+ ", qty=" + qty + ", name=" + name + ", explantion="
+				+ explantion + ", img=" + img + ", option=" + option + "]";
 	}
 	
 }
