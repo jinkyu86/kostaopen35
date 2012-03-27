@@ -13,6 +13,57 @@ import kr.or.kosta.moviesystem.util.ConnectionUtil;
 public class MovieDAO {
 
 	/**
+	 * 영화 예매 순위
+	 * 
+	 * @parameter 없음
+	 */
+	public static ArrayList rankingMovieList(){
+		Connection con = null;
+		PreparedStatement psmt = null;
+		String sql = null;
+		ResultSet rs = null;
+		ArrayList<Movie>movieRankList = new ArrayList<Movie>();
+		
+		try{
+			con = ConnectionUtil.getConnection();
+			sql = "select m_num, m_name, launch_date, genre, poster, end_date, m_price, content"
+					+", (select count(*) from reservation where m_num=m.m_num) "
+					+"from MOVIE m "
+					+"where rownum<=3 "
+					+"order by (select count(*) from reservation where m_num=m.m_num) desc";
+			psmt = con.prepareStatement(sql);
+			
+			rs = psmt.executeQuery();
+			while(rs.next()){
+				String mnum = rs.getString(1);
+				String mname = rs.getString(2);
+				String lDate = rs.getString(3);
+				String genre = rs.getString(4);
+				String poster = rs.getString(5);
+				String eDate = rs.getString(6);
+				long mprice = rs.getLong(7);
+				String content = rs.getString(8);
+				long RankCount = rs.getLong(9);
+				
+				Movie movie = new Movie();
+				movie.setMnum(mnum);
+				movie.setMname(mname);
+				movie.setLaunchDate(lDate);
+				movie.setGenre(genre);
+				movie.setPoster(poster);
+				movie.setEndDate(eDate);
+				movie.setMprice(mprice);
+				movie.setContent(content);
+				movie.setMResCount(RankCount);
+				
+				movieRankList.add(movie);
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return movieRankList;
+	}
+	/**
 	 * 영화 등록
 	 * 
 	 * @param movie
@@ -137,7 +188,7 @@ public class MovieDAO {
 	 * @param page
 	 * @param length
 	 */
-	public static ArrayList selectMovieList(int page, int length) {
+	public static ArrayList selectMovieList(int page, int length, String gubun) {
 		Connection con = null;
 		PreparedStatement psmt = null;
 		String sql = null;
@@ -145,9 +196,16 @@ public class MovieDAO {
 		ResultSet rs = null;
 		int num = (page-1)*length;
 		int GetRsCount = 0;
+		String schwhere = null;
+		
+		if("screen".equals(gubun)){
+			schwhere = " and launch_date<=sysdate";
+		}else if("schedule".equals(gubun)){
+			schwhere = "and launch_date>sysdate";
+		}
 		try{
 			con = ConnectionUtil.getConnection();
-			sql = "select m_num, m_name, launch_date, genre, poster, end_date, m_price, content from MOVIE";
+			sql = "select m_num, m_name, launch_date, genre, poster, end_date, m_price, content from MOVIE where 1=1 "+ schwhere +" order by launch_date";
 			psmt = con.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			
 			rs = psmt.executeQuery();
