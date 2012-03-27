@@ -27,7 +27,7 @@ public class BoardDAOTest {
 	}
 	
 	@Test
-	public void testUpdateStudent(){
+	public void testUpdateBoard(){
 
 		Board board = new Board();
 		board.setTitle("ÀÕÈş~!");
@@ -38,7 +38,7 @@ public class BoardDAOTest {
 	}
 	
 	@Test
-	public void deleteStudent(){
+	public void deleteBoard(){
 		Board board = new Board();
 		board.setbNum("23");
 		
