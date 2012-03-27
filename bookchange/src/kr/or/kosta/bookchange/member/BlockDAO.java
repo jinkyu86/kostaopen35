@@ -1,4 +1,6 @@
-package $301_도메인.$301_AN00_분석.AN30_요구사항정의.AN33_클래스모델개발.$35조_중고도서물물교환시스템_클래스모델개발;
+package kr.or.kosta.bookchange.member;
+
+import java.util.ArrayList;
 
 public class BlockDAO {
 
@@ -6,14 +8,14 @@ public class BlockDAO {
 	 * @param length
 	 * @param page
 	 */
-	public ArrayList selectBlockList(int length, int page) {
+	public ArrayList<Block> selectBlockList(int length, int page) {
 		/* default generated stub */;
 		return null;
 	}
 
 	public int selectBlockCount() {
 		/* default generated stub */;
-		return null;
+		return 0;
 	}
 
 	/**
@@ -23,7 +25,7 @@ public class BlockDAO {
 	 */
 	public void insertBlock(Block block) {
 		/* default generated stub */;
-		return null;
+		
 	}
 
 	/**
@@ -43,7 +45,7 @@ public class BlockDAO {
 	 */
 	public void deleteBlock(String blockNo) {
 		/* default generated stub */;
-		return null;
+		
 	}
 
 	/**
@@ -53,7 +55,7 @@ public class BlockDAO {
 	 * @param page
 	 * @param resultNo
 	 */
-	public ArrayList selectBlockbyResult(int length, int page, String resultNo) {
+	public ArrayList<Block> selectBlockbyResult(int length, int page, String resultNo) {
 		/* default generated stub */;
 		return null;
 	}
@@ -65,6 +67,6 @@ public class BlockDAO {
 	 */
 	public int selectBlockbyResultCount(String resultNo) {
 		/* default generated stub */;
-		return null;
+		return 0;
 	}
 }

@@ -1,4 +1,4 @@
-package $301_도메인.$301_AN00_분석.AN30_요구사항정의.AN33_클래스모델개발.$35조_중고도서물물교환시스템_클래스모델개발;
+package kr.or.kosta.bookchange.member;
 
 public class Member {
 
@@ -22,11 +22,79 @@ public class Member {
 	 */
 	private String pw;
 
-	private Block member;
+	
 
-	private Board member;
+	private String member;
 
-	private Qa member;
 
-	private Block member;
+
+	@Override
+	public String toString() {
+		return "Member [email=" + email + ", tel=" + tel + ", address="
+				+ address + ", pw=" + pw + ", member=" + member + "]";
+	}
+
+
+
+	public String getEmail() {
+		return email;
+	}
+
+
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+
+
+	public String getTel() {
+		return tel;
+	}
+
+
+
+	public void setTel(String tel) {
+		this.tel = tel;
+	}
+
+
+
+	public String getAddress() {
+		return address;
+	}
+
+
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+
+
+	public String getPw() {
+		return pw;
+	}
+
+
+
+	public void setPw(String pw) {
+		this.pw = pw;
+	}
+
+
+
+	public String getMember() {
+		return member;
+	}
+
+
+
+	public void setMember(String member) {
+		this.member = member;
+	}
+
+
+
+	
 }

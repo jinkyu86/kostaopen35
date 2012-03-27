@@ -1,7 +1,26 @@
-package $301_도메인.$301_AN00_분석.AN30_요구사항정의.AN33_클래스모델개발.$35조_중고도서물물교환시스템_클래스모델개발;
+package kr.or.kosta.bookchange.member;
 
-public class BlockService {
+import java.io.IOException;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+
+public class BlockService extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
+    public BlockService() {
+		super();
+    }
+	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doPost(request,response);
+	}
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	
+	}
 	/**
 	 * 신고리스트에 접수내용 추가
 	 * 
@@ -9,9 +28,9 @@ public class BlockService {
 	 * @param response
 	 */
 	public void addBlock(HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response) throws IOException,ServletException {
 		/* default generated stub */;
-		return null;
+		
 	}
 
 	/**
@@ -21,9 +40,9 @@ public class BlockService {
 	 * @param response
 	 */
 	public void editBlock(HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response) throws IOException,ServletException{
 		/* default generated stub */;
-		return null;
+		
 	}
 
 	/**
@@ -33,9 +52,8 @@ public class BlockService {
 	 * @param response
 	 */
 	public void removeBlock(HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response) throws IOException,ServletException {
 		/* default generated stub */;
-		return null;
 	}
 
 	/**
@@ -45,8 +63,8 @@ public class BlockService {
 	 * @param response
 	 */
 	public void searchBlockList(HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response) throws IOException,ServletException {
 		/* default generated stub */;
-		return null;
+		
 	}
 }

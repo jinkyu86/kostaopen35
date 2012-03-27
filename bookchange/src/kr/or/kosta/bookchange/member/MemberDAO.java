@@ -1,4 +1,14 @@
-package $301_도메인.$301_AN00_분석.AN30_요구사항정의.AN33_클래스모델개발.$35조_중고도서물물교환시스템_클래스모델개발;
+package kr.or.kosta.bookchange.member;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+
+import kr.or.kosta.util.ConnectionUtil;
+
+
+
+import com.sun.corba.se.pept.transport.Connection;
 
 public class MemberDAO {
 
@@ -8,9 +18,23 @@ public class MemberDAO {
 	 * @param length
 	 * @param page
 	 */
-	public ArrayList selectMemberList(int length, int page) {
+	public ArrayList<Member> selectMemberList(int length, int page, String email) {
 		/* default generated stub */;
-		return null;
+		Connection con=null;
+		PreparedStatement psmt=null;
+		String sql=null;
+		ResultSet rs=null;
+		ArrayList<Member> memberList=new ArrayList<Member>();
+		try {
+			con=(Connection) ConnectionUtil.getConnection();
+			sql="select from where";
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		
+		
+		return memberList;
 	}
 
 	/**
@@ -18,7 +42,7 @@ public class MemberDAO {
 	 */
 	public int selectMemberCount() {
 		/* default generated stub */;
-		return null;
+		return 0;
 	}
 
 	/**
@@ -48,7 +72,6 @@ public class MemberDAO {
 	 */
 	public void insertMember(Member member) {
 		/* default generated stub */;
-		return null;
 	}
 
 	/**
@@ -68,6 +91,6 @@ public class MemberDAO {
 	 */
 	public void deleteMember(String email) {
 		/* default generated stub */;
-		return null;
+		
 	}
 }

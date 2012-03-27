@@ -1,20 +1,56 @@
-package $301_도메인.$301_AN00_분석.AN30_요구사항정의.AN33_클래스모델개발.$35조_중고도서물물교환시스템_클래스모델개발;
+package kr.or.kosta.bookchange.member;
 
 public class Block {
 
 	public Member member;
 
 	public BlockCondition blockCondition;
-
-	public Member member;
-
 	/**
 	 * 신고번호
 	 */
 	private int blockNo;
-
 	/**
 	 * 신고내용
 	 */
 	private String blockContent;
+	@Override
+	public String toString() {
+		return "Block [member=" + member + ", blockCondition=" + blockCondition
+				+ ", blockNo=" + blockNo + ", blockContent=" + blockContent
+				+ "]";
+	}
+
+	public Member getMember() {
+		return member;
+	}
+
+	public void setMember(Member member) {
+		this.member = member;
+	}
+
+	public BlockCondition getBlockCondition() {
+		return blockCondition;
+	}
+
+	public void setBlockCondition(BlockCondition blockCondition) {
+		this.blockCondition = blockCondition;
+	}
+
+	public int getBlockNo() {
+		return blockNo;
+	}
+
+	public void setBlockNo(int blockNo) {
+		this.blockNo = blockNo;
+	}
+
+	public String getBlockContent() {
+		return blockContent;
+	}
+
+	public void setBlockContent(String blockContent) {
+		this.blockContent = blockContent;
+	}
+
+
 }

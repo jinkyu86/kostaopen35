@@ -1,4 +1,4 @@
-package $301_도메인.$301_AN00_분석.AN30_요구사항정의.AN33_클래스모델개발.$35조_중고도서물물교환시스템_클래스모델개발;
+package kr.or.kosta.bookchange.member;
 
 public class BlockCondition {
 
@@ -12,5 +12,26 @@ public class BlockCondition {
 	 */
 	private String blockConditionIng;
 
-	private Block blockCondition;
+	public int getBlockConditionResult() {
+		return blockConditionResult;
+	}
+
+	public void setBlockConditionResult(int blockConditionResult) {
+		this.blockConditionResult = blockConditionResult;
+	}
+
+	public String getBlockConditionIng() {
+		return blockConditionIng;
+	}
+
+	public void setBlockConditionIng(String blockConditionIng) {
+		this.blockConditionIng = blockConditionIng;
+	}
+
+	@Override
+	public String toString() {
+		return "BlockCondition [blockConditionResult=" + blockConditionResult
+				+ ", blockConditionIng=" + blockConditionIng + "]";
+	}
+
 }

@@ -1,7 +1,24 @@
-package $301_도메인.$301_AN00_분석.AN30_요구사항정의.AN33_클래스모델개발.$35조_중고도서물물교환시스템_클래스모델개발;
+package kr.or.kosta.bookchange.member;
 
-public class MemberService {
+import java.io.IOException;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+
+public class MemberService extends HttpServlet {
+
+
+	private static final long serialVersionUID = 1L;
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doPost(request,response);
+	}
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+	}
 	/**
 	 * 회원추가
 	 * 
@@ -9,9 +26,8 @@ public class MemberService {
 	 * @param response
 	 */
 	public void addMember(HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response) throws IOException,ServletException{
 		/* default generated stub */;
-		return null;
 	}
 
 	/**
@@ -21,9 +37,9 @@ public class MemberService {
 	 * @param response
 	 */
 	public void addMemberForm(HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response) throws IOException,ServletException {
 		/* default generated stub */;
-		return null;
+	
 	}
 
 	/**
@@ -33,9 +49,9 @@ public class MemberService {
 	 * @param response
 	 */
 	public void checkMemberEmail(HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response)throws IOException,ServletException {
 		/* default generated stub */;
-		return null;
+		
 	}
 
 	/**
@@ -45,9 +61,9 @@ public class MemberService {
 	 * @param response
 	 */
 	public void editMember(HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response) throws IOException,ServletException{
 		/* default generated stub */;
-		return null;
+	
 	}
 
 	/**
@@ -57,9 +73,9 @@ public class MemberService {
 	 * @param response
 	 */
 	public void editMemberForm(HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response)throws IOException,ServletException {
 		/* default generated stub */;
-		return null;
+		
 	}
 
 	/**
@@ -68,9 +84,9 @@ public class MemberService {
 	 * @param request
 	 * @param response
 	 */
-	public void login(HttpServletRequest request, HttpServletResponse response) {
+	public void login(HttpServletRequest request, HttpServletResponse response)throws IOException,ServletException {
 		/* default generated stub */;
-		return null;
+		
 	}
 
 	/**
@@ -80,9 +96,9 @@ public class MemberService {
 	 * @param response
 	 */
 	public void loginForm(HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response)throws IOException,ServletException {
 		/* default generated stub */;
-		return null;
+		
 	}
 
 	/**
@@ -91,9 +107,9 @@ public class MemberService {
 	 * @param request
 	 * @param response
 	 */
-	public void logout(HttpServletRequest request, HttpServletResponse response) {
+	public void logout(HttpServletRequest request, HttpServletResponse response) throws IOException,ServletException{
 		/* default generated stub */;
-		return null;
+		
 	}
 
 	/**
@@ -103,9 +119,9 @@ public class MemberService {
 	 * @param response
 	 */
 	public void removeMember(HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response) throws IOException,ServletException{
 		/* default generated stub */;
-		return null;
+		
 	}
 
 	/**
@@ -115,9 +131,9 @@ public class MemberService {
 	 * @param response
 	 */
 	public void viewMember(HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response)throws IOException,ServletException {
 		/* default generated stub */;
-		return null;
+		
 	}
 
 	/**
@@ -127,9 +143,9 @@ public class MemberService {
 	 * @param response
 	 */
 	public void viewMemberList(HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response) throws IOException,ServletException{
 		/* default generated stub */;
-		return null;
+		
 	}
 
 	/**
@@ -139,8 +155,8 @@ public class MemberService {
 	 * @param response
 	 */
 	public void searchMemberList(HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response) throws IOException,ServletException{
 		/* default generated stub */;
-		return null;
+		
 	}
 }
