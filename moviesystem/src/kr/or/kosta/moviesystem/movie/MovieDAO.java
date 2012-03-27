@@ -202,6 +202,8 @@ public class MovieDAO {
 			schwhere = " and launch_date<=sysdate";
 		}else if("schedule".equals(gubun)){
 			schwhere = "and launch_date>sysdate";
+		}else{
+			schwhere = "";
 		}
 		try{
 			con = ConnectionUtil.getConnection();
