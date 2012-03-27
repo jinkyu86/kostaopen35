@@ -50,7 +50,8 @@ public class GoodDAOTest {
 
 	@Test
 	public void testSelectGoodListIntInt() {
-		fail("Not yet implemented");
+		ArrayList<Good>good1List=GoodDAO.selectGoodList(5, 1);
+		System.out.println("good1List:"+good1List);
 	}
 
 }

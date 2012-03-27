@@ -6,7 +6,7 @@ public class Good {
 	private String gName;//물품의 이름
 	private String detail;//물품 살세설명
 	private String img;//물품의 이미지
-//	private Auction auction;
+
 	public String getgNum() {
 		return gNum;
 	}
