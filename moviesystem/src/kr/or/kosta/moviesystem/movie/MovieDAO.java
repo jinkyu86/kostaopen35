@@ -93,9 +93,41 @@ public class MovieDAO {
 	 * 
 	 * @param mnum
 	 */
-	public static Movie selectMovie(Number mnum) {
-		/* default generated stub */;
-		return null;
+	public static Movie selectMovie(String mnum) {
+		Connection con = null;
+		PreparedStatement psmt = null;
+		String sql = null;
+		ResultSet rs = null;
+		Movie movie = null;
+		
+		try{
+			con = ConnectionUtil.getConnection();
+			sql="select m_num, m_name, launch_date, genre, poster, end_date, m_price, content from MOVIE "
+					+"where m_num=?";
+			psmt = con.prepareStatement(sql);
+			rs = psmt.executeQuery();
+			if(rs.next()){
+				String mnum2 = rs.getString(1);
+				String mname = rs.getString(2);
+				String lDate = rs.getString(3);
+				String genre = rs.getString(4);
+				String poster = rs.getString(5);
+				String eDate = rs.getString(6);
+				long mprice = rs.getLong(7);
+				
+				movie = new Movie();
+				movie.setMnum(mnum);
+				movie.setMname(mname);
+				movie.setLaunchDate(lDate);
+				movie.setGenre(genre);
+				movie.setPoster(poster);
+				movie.setEndDate(eDate);
+				movie.setMprice(mprice);
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return movie;
 	}
 
 	/**
