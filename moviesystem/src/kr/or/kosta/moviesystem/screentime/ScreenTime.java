@@ -4,18 +4,19 @@ import java.util.Date;
 
 public class ScreenTime {
 
-	private Number scrnum;//영화시간번호
-	private Date time;//영화상형시간
-	public Number getScrnum() {
+	private String scrnum;//영화시간번호
+	private String time;//영화상형시간
+	
+	public String getScrnum() {
 		return scrnum;
 	}
-	public void setScrnum(Number scrnum) {
+	public void setScrnum(String scrnum) {
 		this.scrnum = scrnum;
 	}
-	public Date getTime() {
+	public String getTime() {
 		return time;
 	}
-	public void setTime(Date time) {
+	public void setTime(String time) {
 		this.time = time;
 	}
 	@Override
