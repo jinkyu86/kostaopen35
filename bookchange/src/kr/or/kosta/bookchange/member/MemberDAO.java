@@ -141,9 +141,25 @@ public class MemberDAO {
 	 * 
 	 * @param email
 	 */
-	public static Member updateMember(String email) {
+	public static Member updateMember(Member member) {
 		/* default generated stub */;
-		return null;
+		Connection con= null;
+		PreparedStatement ps=null;
+		con=ConnectionUtil.getConnection();
+		
+		try {
+			ps=con.prepareStatement(
+					"update tb_member" +
+					"set tel=?,pw=?,address=? where email=?");
+			ps.setString(1, member.getTel());
+			ps.setString(2, member.getAddress());
+			ps.setString(3, member.getPw());
+			ps.setString(4, member.getEmail());
+			ps.executeUpdate();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return member;
 	}
 
 	/**
