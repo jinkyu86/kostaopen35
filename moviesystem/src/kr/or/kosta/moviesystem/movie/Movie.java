@@ -11,7 +11,7 @@ public class Movie {
 	/**
 	 * 영화번호
 	 */
-	private Number mnum;
+	private String mnum;
 
 	/**
 	 * 영화이름
@@ -46,7 +46,7 @@ public class Movie {
 	/**
 	 * 영화 가격
 	 */
-	private Number mprice;
+	private long mprice;
 
 	public ScreenTime getScreenTime() {
 		return screenTime;
@@ -56,11 +56,11 @@ public class Movie {
 		this.screenTime = screenTime;
 	}
 
-	public Number getMnum() {
+	public String getMnum() {
 		return mnum;
 	}
 
-	public void setMnum(Number mnum) {
+	public void setMnum(String mnum) {
 		this.mnum = mnum;
 	}
 
@@ -112,11 +112,11 @@ public class Movie {
 		this.endDate = endDate;
 	}
 
-	public Number getMprice() {
+	public long getMprice() {
 		return mprice;
 	}
 
-	public void setMprice(Number mprice) {
+	public void setMprice(long mprice) {
 		this.mprice = mprice;
 	}
 
