@@ -1,5 +1,8 @@
 package kr.or.kosta.moviesystem.movie;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 public class MovieService {
 
 	/**
@@ -11,7 +14,7 @@ public class MovieService {
 	public void addMovie(HttpServletRequest request,
 			HttpServletResponse response) {
 		/* default generated stub */;
-		return null;
+		
 	}
 
 	/**
@@ -23,7 +26,7 @@ public class MovieService {
 	public void addMovieForm(HttpServletRequest request,
 			HttpServletResponse response) {
 		/* default generated stub */;
-		return null;
+		
 	}
 
 	/**
@@ -35,7 +38,7 @@ public class MovieService {
 	public void editMovie(HttpServletRequest request,
 			HttpServletResponse response) {
 		/* default generated stub */;
-		return null;
+		
 	}
 
 	/**
@@ -47,7 +50,7 @@ public class MovieService {
 	public void editMovieForm(HttpServletRequest request,
 			HttpServletResponse response) {
 		/* default generated stub */;
-		return null;
+		
 	}
 
 	/**
@@ -59,7 +62,7 @@ public class MovieService {
 	public void removeMovie(HttpServletRequest request,
 			HttpServletResponse response) {
 		/* default generated stub */;
-		return null;
+		
 	}
 
 	/**
@@ -71,7 +74,7 @@ public class MovieService {
 	public void searchMovieList(HttpServletRequest request,
 			HttpServletResponse response) {
 		/* default generated stub */;
-		return null;
+		
 	}
 
 	/**
@@ -83,7 +86,7 @@ public class MovieService {
 	public void viewMovie(HttpServletRequest request,
 			HttpServletResponse response) {
 		/* default generated stub */;
-		return null;
+		
 	}
 
 	/**
@@ -95,6 +98,6 @@ public class MovieService {
 	public void viewMovieList(HttpServletRequest request,
 			HttpServletResponse response) {
 		/* default generated stub */;
-		return null;
+	
 	}
 }
