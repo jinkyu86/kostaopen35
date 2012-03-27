@@ -1,6 +1,15 @@
 package kr.or.kosta.moviesystem.screentime;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
+
+import kr.or.kosta.moviesystem.movie.Movie;
+import kr.or.kosta.moviesystem.reservation.Reservation;
+import kr.or.kosta.moviesystem.util.ConnectionUtil;
 
 public class ScreenTimeDAO {
 
@@ -11,7 +20,7 @@ public class ScreenTimeDAO {
 	 */
 	public void insertScreenTime(Date time) {
 		/* default generated stub */;
-		return null;
+		
 	}
 
 	/**
@@ -19,9 +28,42 @@ public class ScreenTimeDAO {
 	 * 
 	 * @param mnum
 	 */
-	public ArrayList selectScreen(int mnum) {
-		/* default generated stub */;
-		return null;
+	public ArrayList selectScreen(String mnum) {
+		Connection con=null;
+		PreparedStatement psmt=null;
+		String sql=null;
+		ResultSet rs=null;
+		ScreenTime screentime=null;
+		ArrayList<ScreenTime>screentimeList=new ArrayList<ScreenTime>();
+		try {
+			con=ConnectionUtil.getConnection();
+			sql="SELECT m.m_name,s.time" +
+					
+					"  FROM  MOVIE m,SCREENING_TIME s " +
+					"  WHERE  s.m_num=m.m_num " +
+					"                      AND  m.m_num=?";
+			
+			
+				psmt=con.prepareStatement(sql);
+				psmt.setString(1,mnum);
+				rs=psmt.executeQuery();
+				while(rs.next()){
+					String m_name=rs.getString(1);
+					String time=rs.getString(2);
+								
+					Movie movie=new Movie();
+					screentime=new ScreenTime();
+					
+					movie.setMname(m_name);
+					screentime.setMovie(movie);
+					screentime.setTime(time);					
+				
+					screentimeList.add(screentime);
+				}//end while
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return screentimeList;
 	}
 
 	/**
@@ -29,8 +71,39 @@ public class ScreenTimeDAO {
 	 * 
 	 * @param time
 	 */
-	public ArrayList selectScreenTimeList(Date time) {
-		/* default generated stub */;
-		return null;
+	public ArrayList selectScreenTimeList() {
+		Connection con=null;
+		PreparedStatement psmt=null;
+		String sql=null;
+		ResultSet rs=null;
+		ScreenTime screentime=null;
+		ArrayList<ScreenTime>screentimeList=new ArrayList<ScreenTime>();
+		try {
+			con=ConnectionUtil.getConnection();
+			sql="SELECT m.m_name,s.time" +
+					
+					"  FROM  MOVIE m,SCREENING_TIME s " +
+					"  WHERE  s.m_num=m.m_num ";
+			
+			
+				psmt=con.prepareStatement(sql);
+				rs=psmt.executeQuery();
+				while(rs.next()){
+					String m_name=rs.getString(1);
+					String time=rs.getString(2);
+								
+					Movie movie=new Movie();
+					screentime=new ScreenTime();
+					
+					movie.setMname(m_name);
+					screentime.setMovie(movie);
+					screentime.setTime(time);					
+				
+					screentimeList.add(screentime);
+				}//end while
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return screentimeList;
 	}
 }
