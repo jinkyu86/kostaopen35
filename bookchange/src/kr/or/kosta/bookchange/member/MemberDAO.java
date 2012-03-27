@@ -1,14 +1,11 @@
 package kr.or.kosta.bookchange.member;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
 import kr.or.kosta.util.ConnectionUtil;
-
-
-
-import com.sun.corba.se.pept.transport.Connection;
 
 public class MemberDAO {
 
@@ -18,21 +15,40 @@ public class MemberDAO {
 	 * @param length
 	 * @param page
 	 */
-	public ArrayList<Member> selectMemberList(int length, int page, String email) {
+	public static ArrayList<Member> selectMemberList(int length, int page) {
 		/* default generated stub */;
 		Connection con=null;
-		PreparedStatement psmt=null;
+		PreparedStatement ps=null;
 		String sql=null;
 		ResultSet rs=null;
 		ArrayList<Member> memberList=new ArrayList<Member>();
 		try {
-			con=(Connection) ConnectionUtil.getConnection();
-			sql="select from where";
+			con=ConnectionUtil.getConnection();
+			sql="select email,tel,address,pw from tb_member ";
+			ps=con.prepareStatement(sql,ResultSet.TYPE_SCROLL_INSENSITIVE,
+										ResultSet.CONCUR_READ_ONLY);
+			rs=ps.executeQuery();
+			if(page>1){
+				rs.absolute((page-1)*length);
+			}
+			//가져온 레코드 개수
+			int getRecord=0;
+			while (rs.next()&&getRecord<length) {
+				getRecord++;
+				String email=rs.getString(1);
+				String tel=rs.getString(2);
+				String address=rs.getString(3);
+				String pw=rs.getString(4);
+				Member member=new Member();
+				member.setEmail(email);
+				member.setAddress(address);
+				member.setTel(tel);
+				member.setPw(pw);
+				memberList.add(member);
+			}
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
-		
-		
 		
 		return memberList;
 	}
@@ -40,9 +56,25 @@ public class MemberDAO {
 	/**
 	 * 전체 회원수 리턴
 	 */
-	public int selectMemberCount() {
-		/* default generated stub */;
-		return 0;
+	public static int selectMemberCount() {
+		Connection con=null;
+		PreparedStatement ps=null;
+		String sql=null;
+		ResultSet rs=null;
+		int memberCount=0;
+		try {
+			con=ConnectionUtil.getConnection();
+			sql="select count(email) from tb_member "; 
+			ps=con.prepareStatement(sql);
+			rs=ps.executeQuery();
+			if(rs.next()){
+				memberCount=rs.getInt(1);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		return memberCount;
 	}
 
 	/**
@@ -50,28 +82,58 @@ public class MemberDAO {
 	 * 
 	 * @param email
 	 */
-	public Member selectMember(String email) {
-		/* default generated stub */;
-		return null;
+	public static Member selectMember(String email) {
+		Connection con=null;
+		PreparedStatement ps=null;
+		String sql=null;
+		ResultSet rs=null;
+		Member member=null;
+		try {
+			con=ConnectionUtil.getConnection();
+			sql="select email,tel,address from tb_member where email=?";
+			ps=con.prepareStatement(sql);
+			ps.setString(1, email);
+			rs=ps.executeQuery();
+			if (rs.next()) {
+				 email=rs.getString(1);
+				 String tel=rs.getString(2);
+				 String address=rs.getString(3);
+				 
+				 member=new Member();
+				 member.setEmail(email);
+				 member.setTel(tel);
+				 member.setAddress(address);
+				
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return member;
 	}
 
-	/**
-	 * Email로 회원 검색(로그인시 중복 아이디 있는지 검색할 때나 관리자가 회원 검색 시 사용)
-	 * 
-	 * @param email
-	 */
-	public Member selectMemberbyEmail(String email) {
-		/* default generated stub */;
-		return null;
-	}
 
 	/**
 	 * 회원가입시 DB에 추가
 	 * 
 	 * @param member
 	 */
-	public void insertMember(Member member) {
+	public static void insertMember(Member member) {
 		/* default generated stub */;
+		Connection con=null;
+		PreparedStatement ps=null;
+		con=ConnectionUtil.getConnection();
+		try {
+			ps=con.prepareStatement("insert into tb_member " +
+					"(email,tel,address,pw)" +
+					"values(?,?,?,?)");
+			ps.setString(1, member.getEmail());
+			ps.setString(2, member.getTel());
+			ps.setString(3, member.getAddress());
+			ps.setString(4, member.getPw());
+			ps.executeUpdate();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 	}
 
 	/**
@@ -79,7 +141,7 @@ public class MemberDAO {
 	 * 
 	 * @param email
 	 */
-	public Member updateMember(String email) {
+	public static Member updateMember(String email) {
 		/* default generated stub */;
 		return null;
 	}
@@ -89,7 +151,7 @@ public class MemberDAO {
 	 * 
 	 * @param email
 	 */
-	public void deleteMember(String email) {
+	public static void deleteMember(String email) {
 		/* default generated stub */;
 		
 	}
