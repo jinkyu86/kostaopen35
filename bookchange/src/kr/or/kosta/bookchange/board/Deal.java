@@ -1,4 +1,4 @@
-package $301_도메인.$301_AN00_분석.AN30_요구사항정의.AN33_클래스모델개발.$35조_중고도서물물교환시스템_클래스모델개발;
+package kr.or.kosta.bookchange.board;
 
 public class Deal {
 
@@ -12,5 +12,25 @@ public class Deal {
 	 */
 	private String dealWay;
 
-	private Board deal;
+	public int getDealNo() {
+		return dealNo;
+	}
+
+	public void setDealNo(int dealNo) {
+		this.dealNo = dealNo;
+	}
+
+	public String getDealWay() {
+		return dealWay;
+	}
+
+	public void setDealWay(String dealWay) {
+		this.dealWay = dealWay;
+	}
+
+	@Override
+	public String toString() {
+		return "Deal [dealNo=" + dealNo + ", dealWay=" + dealWay + "]";
+	}
+	
 }

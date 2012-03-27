@@ -1,4 +1,4 @@
-package $301_도메인.$301_AN00_분석.AN30_요구사항정의.AN33_클래스모델개발.$35조_중고도서물물교환시스템_클래스모델개발;
+package kr.or.kosta.bookchange.board;
 
 public class Category {
 
@@ -12,5 +12,26 @@ public class Category {
 	 */
 	private String categoryName;
 
-	private Board category;
+	public int getCategoryNo() {
+		return categoryNo;
+	}
+
+	public void setCategoryNo(int categoryNo) {
+		this.categoryNo = categoryNo;
+	}
+
+	public String getCategoryName() {
+		return categoryName;
+	}
+
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
+	}
+
+	@Override
+	public String toString() {
+		return "Category [categoryNo=" + categoryNo + ", categoryName="
+				+ categoryName + "]";
+	}
+
 }

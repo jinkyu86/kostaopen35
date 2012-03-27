@@ -1,6 +1,30 @@
-package $301_도메인.$301_AN00_분석.AN30_요구사항정의.AN33_클래스모델개발.$35조_중고도서물물교환시스템_클래스모델개발;
+package kr.or.kosta.bookchange.board;
 
-public class BoardService {
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+public class BoardService extends HttpServlet {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	 public BoardService() {
+	        super();
+	       
+	    }
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doPost(request,response);
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	}
 
 	/**
 	 * 게시물 추가
@@ -8,10 +32,7 @@ public class BoardService {
 	 * @param request
 	 * @param response
 	 */
-	public void addBoard(HttpServletRequest request,
-			HttpServletResponse response) {
-		/* default generated stub */;
-		return null;
+	public void addBoard(HttpServletRequest request, HttpServletResponse response) {
 	}
 
 	/**
@@ -20,10 +41,8 @@ public class BoardService {
 	 * @param request
 	 * @param response
 	 */
-	public void addBoardForm(HttpServletRequest request,
-			HttpServletResponse response) {
-		/* default generated stub */;
-		return null;
+	public void addBoardForm(HttpServletRequest request, HttpServletResponse response) {
+		
 	}
 
 	/**
@@ -32,10 +51,8 @@ public class BoardService {
 	 * @param request
 	 * @param response
 	 */
-	public void editBoard(HttpServletRequest request,
-			HttpServletResponse response) {
-		/* default generated stub */;
-		return null;
+	public void editBoard(HttpServletRequest request,HttpServletResponse response) {
+		
 	}
 
 	/**
@@ -44,10 +61,8 @@ public class BoardService {
 	 * @param request
 	 * @param response
 	 */
-	public void editBoardForm(HttpServletRequest request,
-			HttpServletResponse response) {
-		/* default generated stub */;
-		return null;
+	public void editBoardForm(HttpServletRequest request,HttpServletResponse response) {
+
 	}
 
 	/**
@@ -56,10 +71,8 @@ public class BoardService {
 	 * @param request
 	 * @param response
 	 */
-	public void removeBoard(HttpServletRequest request,
-			HttpServletResponse response) {
-		/* default generated stub */;
-		return null;
+	public void removeBoard(HttpServletRequest request,	HttpServletResponse response) {
+		
 	}
 
 	/**
@@ -68,10 +81,8 @@ public class BoardService {
 	 * @param request
 	 * @param response
 	 */
-	public void viewBoard(HttpServletRequest request,
-			HttpServletResponse response) {
-		/* default generated stub */;
-		return null;
+	public void viewBoard(HttpServletRequest request,HttpServletResponse response) {
+		
 	}
 
 	/**
@@ -80,10 +91,8 @@ public class BoardService {
 	 * @param request
 	 * @param response
 	 */
-	public void viewBoardList(HttpServletRequest request,
-			HttpServletResponse response) {
-		/* default generated stub */;
-		return null;
+	public void viewBoardList(HttpServletRequest request,HttpServletResponse response) {
+		
 	}
 
 	/**
@@ -92,9 +101,7 @@ public class BoardService {
 	 * @param request
 	 * @param response
 	 */
-	public void searchBoardList(HttpServletRequest request,
-			HttpServletResponse response) {
-		/* default generated stub */;
-		return null;
+	public void searchBoardList(HttpServletRequest request,	HttpServletResponse response) {
+		
 	}
 }

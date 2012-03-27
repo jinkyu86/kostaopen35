@@ -1,4 +1,6 @@
-package $301_도메인.$301_AN00_분석.AN30_요구사항정의.AN33_클래스모델개발.$35조_중고도서물물교환시스템_클래스모델개발;
+package kr.or.kosta.bookchange.board;
+
+import java.util.ArrayList;
 
 public class BoardDAO {
 
@@ -8,8 +10,7 @@ public class BoardDAO {
 	 * @param length
 	 * @param page
 	 */
-	public ArrayList selectBoardList(int length, int page) {
-		/* default generated stub */;
+	public ArrayList<Board> selectBoardList(int length, int page) {
 		return null;
 	}
 
@@ -17,8 +18,7 @@ public class BoardDAO {
 	 * 전체게시물 수 리턴
 	 */
 	public int selectBoardCount() {
-		/* default generated stub */;
-		return null;
+		return 0;
 	}
 
 	/**
@@ -28,9 +28,7 @@ public class BoardDAO {
 	 * @param page
 	 * @param category
 	 */
-	public ArrayList selectBoardListbyCategory(int length, int page,
-			String category) {
-		/* default generated stub */;
+	public ArrayList<Board> selectBoardListbyCategory(int length, int page, String category) {
 		return null;
 	}
 
@@ -40,8 +38,7 @@ public class BoardDAO {
 	 * @param category
 	 */
 	public int selectBoardCategoryCount(String category) {
-		/* default generated stub */;
-		return null;
+		return 0;
 	}
 
 	/**
@@ -51,8 +48,7 @@ public class BoardDAO {
 	 * @param page
 	 * @param title
 	 */
-	public ArrayList selectBoardListbyTitle(int length, int page, String title) {
-		/* default generated stub */;
+	public ArrayList<Board> selectBoardListbyTitle(int length, int page, String title) {
 		return null;
 	}
 
@@ -62,8 +58,7 @@ public class BoardDAO {
 	 * @param title
 	 */
 	public int selectBoardTitleCount(String title) {
-		/* default generated stub */;
-		return null;
+		return 0;
 	}
 
 	/**
@@ -72,7 +67,6 @@ public class BoardDAO {
 	 * @param boardNo
 	 */
 	public Board selectBoard(String boardNo) {
-		/* default generated stub */;
 		return null;
 	}
 
@@ -82,8 +76,7 @@ public class BoardDAO {
 	 * @param board
 	 */
 	public void insertBoard(Board board) {
-		/* default generated stub */;
-		return null;
+
 	}
 
 	/**
@@ -92,7 +85,6 @@ public class BoardDAO {
 	 * @param board
 	 */
 	public Board updateBoard(Board board) {
-		/* default generated stub */;
 		return null;
 	}
 
@@ -102,7 +94,6 @@ public class BoardDAO {
 	 * @param boardNo
 	 */
 	public void deleteBoard(String boardNo) {
-		/* default generated stub */;
-		return null;
+		
 	}
 }

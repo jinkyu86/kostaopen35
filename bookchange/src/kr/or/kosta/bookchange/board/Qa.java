@@ -1,4 +1,6 @@
-package $301_도메인.$301_AN00_분석.AN30_요구사항정의.AN33_클래스모델개발.$35조_중고도서물물교환시스템_클래스모델개발;
+package kr.or.kosta.bookchange.board;
+
+import kr.or.kosta.bookchange.member.Member;
 
 public class Qa {
 
@@ -9,10 +11,50 @@ public class Qa {
 	/**
 	 * 상품문의 내용
 	 */
-	private String qaContent;
+	private String qaContent;	
 
 	/**
 	 * 상품문의 번호
 	 */
 	private int qaNo;
+
+	public Member getMember() {
+		return member;
+	}
+
+	public void setMember(Member member) {
+		this.member = member;
+	}
+
+	public Board getBoard() {
+		return board;
+	}
+
+	public void setBoard(Board board) {
+		this.board = board;
+	}
+
+	public String getQaContent() {
+		return qaContent;
+	}
+
+	public void setQaContent(String qaContent) {
+		this.qaContent = qaContent;
+	}
+
+	public int getQaNo() {
+		return qaNo;
+	}
+
+	public void setQaNo(int qaNo) {
+		this.qaNo = qaNo;
+	}
+
+	@Override
+	public String toString() {
+		return "Qa [member=" + member + ", board=" + board + ", qaContent="
+				+ qaContent + ", qaNo=" + qaNo + "]";
+	}
+	
+	
 }

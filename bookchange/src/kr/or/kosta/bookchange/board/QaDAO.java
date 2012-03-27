@@ -1,4 +1,4 @@
-package $301_도메인.$301_AN00_분석.AN30_요구사항정의.AN33_클래스모델개발.$35조_중고도서물물교환시스템_클래스모델개발;
+package kr.or.kosta.bookchange.board;
 
 public class QaDAO {
 
@@ -8,7 +8,6 @@ public class QaDAO {
 	 * @param boardNo
 	 */
 	public Qa selectQa(String boardNo) {
-		/* default generated stub */;
 		return null;
 	}
 
@@ -18,8 +17,7 @@ public class QaDAO {
 	 * @param qa
 	 */
 	public void insertQa(Qa qa) {
-		/* default generated stub */;
-		return null;
+		
 	}
 
 	/**
@@ -28,7 +26,7 @@ public class QaDAO {
 	 * @param boardNo
 	 */
 	public Qa updateQa(String boardNo) {
-		/* default generated stub */;
+		
 		return null;
 	}
 
@@ -38,7 +36,5 @@ public class QaDAO {
 	 * @param boardNo
 	 */
 	public void deleteQa(String boardNo) {
-		/* default generated stub */;
-		return null;
 	}
 }

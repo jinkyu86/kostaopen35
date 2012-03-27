@@ -1,6 +1,30 @@
-package $301_도메인.$301_AN00_분석.AN30_요구사항정의.AN33_클래스모델개발.$35조_중고도서물물교환시스템_클래스모델개발;
+package kr.or.kosta.bookchange.board;
 
-public class QaService {
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+public class QaService extends HttpServlet {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	public QaService() {
+	        super();
+	       
+	    }
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doPost(request,response);
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	}
 
 	/**
 	 * 상품문의 글 추가
@@ -9,8 +33,7 @@ public class QaService {
 	 * @param response
 	 */
 	public void addQa(HttpServletRequest request, HttpServletResponse response) {
-		/* default generated stub */;
-		return null;
+		
 	}
 
 	/**
@@ -20,8 +43,7 @@ public class QaService {
 	 * @param response
 	 */
 	public void editQa(HttpServletRequest request, HttpServletResponse response) {
-		/* default generated stub */;
-		return null;
+		
 	}
 
 	/**
@@ -30,10 +52,8 @@ public class QaService {
 	 * @param request
 	 * @param response
 	 */
-	public void removeQa(HttpServletRequest request,
-			HttpServletResponse response) {
-		/* default generated stub */;
-		return null;
+	public void removeQa(HttpServletRequest request, HttpServletResponse response) {
+		
 	}
 
 	/**
@@ -43,7 +63,6 @@ public class QaService {
 	 * @param response
 	 */
 	public void viewQa(HttpServletRequest request, HttpServletResponse response) {
-		/* default generated stub */;
-		return null;
+		
 	}
 }

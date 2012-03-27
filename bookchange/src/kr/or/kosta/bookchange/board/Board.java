@@ -1,14 +1,15 @@
-package $301_도메인.$301_AN00_분석.AN30_요구사항정의.AN33_클래스모델개발.$35조_중고도서물물교환시스템_클래스모델개발;
+package kr.or.kosta.bookchange.board;
+
+import kr.or.kosta.bookchange.member.Member;
+import kr.or.kosta.change.Condition;
 
 public class Board {
 
-	public Deal deal;
-
-	public Category category;
-
-	public Member member;
-
-	public Condition condition;
+	private Deal deal;
+	private Category category;
+    private Member member;
+	private Condition condition;
+	private Qa qa;
 
 	/**
 	 * 게시물번호
@@ -35,9 +36,94 @@ public class Board {
 	 */
 	private String boardContent;
 
-	private Change board;
+	public Deal getDeal() {
+		return deal;
+	}
 
-	private Change board;
+	public void setDeal(Deal deal) {
+		this.deal = deal;
+	}
 
-	private Qa board;
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
+	}
+
+	public Member getMember() {
+		return member;
+	}
+
+	public void setMember(Member member) {
+		this.member = member;
+	}
+
+	public Condition getCondition() {
+		return condition;
+	}
+
+	public void setCondition(Condition condition) {
+		this.condition = condition;
+	}
+
+	public Qa getQa() {
+		return qa;
+	}
+
+	public void setQa(Qa qa) {
+		this.qa = qa;
+	}
+
+	public int getBoardNo() {
+		return boardNo;
+	}
+
+	public void setBoardNo(int boardNo) {
+		this.boardNo = boardNo;
+	}
+
+	public String getBoardTitle() {
+		return boardTitle;
+	}
+
+	public void setBoardTitle(String boardTitle) {
+		this.boardTitle = boardTitle;
+	}
+
+	public String getBoardWant() {
+		return boardWant;
+	}
+
+	public void setBoardWant(String boardWant) {
+		this.boardWant = boardWant;
+	}
+
+	public String getBoardPhoto() {
+		return boardPhoto;
+	}
+
+	public void setBoardPhoto(String boardPhoto) {
+		this.boardPhoto = boardPhoto;
+	}
+
+	public String getBoardContent() {
+		return boardContent;
+	}
+
+	public void setBoardContent(String boardContent) {
+		this.boardContent = boardContent;
+	}
+
+	@Override
+	public String toString() {
+		return "Board [deal=" + deal + ", category=" + category + ", member="
+				+ member + ", condition=" + condition + ", qa=" + qa
+				+ ", boardNo=" + boardNo + ", boardTitle=" + boardTitle
+				+ ", boardWant=" + boardWant + ", boardPhoto=" + boardPhoto
+				+ ", boardContent=" + boardContent + "]";
+	}
+
+
 }
