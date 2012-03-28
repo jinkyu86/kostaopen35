@@ -10,7 +10,7 @@ import kr.or.kosta.betting.util.ConnectionUtil;
 
 public class MemberDAO {
 
-	public ArrayList<Member> selectMemberList(int page, int length) {
+	public static ArrayList<Member> selectMemberList(int length, int page) {
 
 		/**
 		 * 멤버의 모든 정보리스트를 조회하는 메서드
@@ -59,7 +59,7 @@ public class MemberDAO {
 		return MemberList;
 	}
 
-	public void insultMember(Member member) {
+	public static void insultMember(Member member) {
 
 		/**
 		 * 멤버 데이터 삽입
@@ -84,7 +84,7 @@ public class MemberDAO {
 		}
 	}
 
-	public Member selectMemberByID(String ID) {
+	public static Member selectMemberByID(String ID) {
 
 		/**
 		 * 아이디를 통해 선택된 멤버데이터 조회
@@ -125,7 +125,7 @@ public class MemberDAO {
 		return member;
 	}
 
-	public void deleteMember(String ID) {
+	public static void deleteMember(String ID) {
 
 		/**
 		 * 아이디로 선택된 데이터 삭제
@@ -147,7 +147,7 @@ public class MemberDAO {
 		}
 	}
 
-	public ArrayList<Member> selectMemberRankingList(int page, int length) {
+	public static ArrayList<Member> selectMemberRankingList(int length, int page) {
 
 		/**
 		 * 미네랄 순으로 오름차순 정열된 멤버리스트
@@ -163,8 +163,8 @@ public class MemberDAO {
 		ArrayList<Member> memberList = new ArrayList<Member>();
 		try {
 			con = ConnectionUtil.getConnection();
-			sql = "SELECT  id,name,pw,email,mineral" + " FROM  member" +
-					  "ORDER BY mineral DESC";
+			sql = "SELECT  id,mineral" + " FROM  member" +
+					  " ORDER BY mineral DESC";
 
 			psmt = con.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE,
 					ResultSet.CONCUR_READ_ONLY);
@@ -176,16 +176,10 @@ public class MemberDAO {
 			while(rs.next()&&getRecordCount<length){
 			    getRecordCount++;
 				String id = rs.getString(1);
-				String name = rs.getString(2);
-				String pw = rs.getString(3);
-				String email = rs.getString(4);
-				Long mineral = rs.getLong(5);
+				Long mineral = rs.getLong(2);
 
 				Member member = new Member();
 				member.setID(id);
-				member.setName(name);
-				member.setPW(pw);
-				member.setEmail(email);
 				member.setMineral(mineral);
 
 				memberList.add(member);
@@ -199,7 +193,7 @@ public class MemberDAO {
 
 	}
 
-	public void updateMember(Member member) {
+	public static  void updateMember(Member member) {
 
 		/**
 		 * 선택된 아이디의 정보를 업데이트 함
@@ -214,8 +208,9 @@ public class MemberDAO {
 		PreparedStatement psmt = null;
 		con = ConnectionUtil.getConnection();
 		try {
-			psmt = con.prepareStatement("UPDATE  SET pw=?," + "email=?,"
-					+ "mineral=? " + "WHERE id=?");
+			psmt = con.prepareStatement("UPDATE  member SET pw=?," + "email=?,"
+					+ "mineral=? " + 
+					"WHERE id=?");
 
 			psmt.setString(1, member.getPW());
 			psmt.setString(2, member.getEmail());
