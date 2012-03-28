@@ -48,9 +48,25 @@ public class MovieService extends HttpServlet{
 			addMovieForm(request, response);
 		}else if("addMovie".equals(method)){
 			addMovie(request, response);
+		}else if("rankingMovieList".equals(method)){
+			rankingMovieList(request, response);
 		}
 	}
 	
+	/**
+	 * 영화 순위
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	public void rankingMovieList(HttpServletRequest request,
+			HttpServletResponse response) throws IOException, ServletException {
+		ArrayList<Movie>movieList = MovieDAO.rankingMovieList();
+		request.setAttribute("MovieList",movieList);
+		
+		RequestDispatcher rd = request.getRequestDispatcher("/movie/viewMovieRank.jsp");
+		rd.forward(request, response);		
+	}
 	/**
 	 * 영화 추가
 	 * 
@@ -58,9 +74,26 @@ public class MovieService extends HttpServlet{
 	 * @param response
 	 */
 	public void addMovie(HttpServletRequest request,
-			HttpServletResponse response) {
-		/* default generated stub */;
+			HttpServletResponse response) throws IOException, ServletException{
+		String mname = request.getParameter("mname");
+		String genre = request.getParameter("genre");
+		String poster = request.getParameter("poster");
+		String content = request.getParameter("content");
+		Date ldate = new Date(request.getParameter("ldate"));
+		Date edate = new Date(request.getParameter("edate"));
 		
+		Movie movie = new Movie();
+		movie.setMname(mname);
+		movie.setGenre(genre);
+		movie.setPoster(poster);
+		movie.setContent(content);
+		movie.setLaunchDate(ldate);
+		movie.setEndDate(edate);
+		
+		MovieDAO.insertMovie(movie);
+		
+		RequestDispatcher rd = request.getRequestDispatcher("/moviesystem/MovieService?method=viewMovieList");
+		rd.forward(request,  response);
 	}
 
 	/**
@@ -70,9 +103,9 @@ public class MovieService extends HttpServlet{
 	 * @param response
 	 */
 	public void addMovieForm(HttpServletRequest request,
-			HttpServletResponse response) {
-		/* default generated stub */;
-		
+			HttpServletResponse response) throws IOException, ServletException{
+		RequestDispatcher rd = request.getRequestDispatcher("/movie/addMovie.jsp");
+		rd.forward(request, response);
 	}
 
 	/**
@@ -105,6 +138,9 @@ public class MovieService extends HttpServlet{
 		
 		MovieDAO.updateMovie(movie);
 		
+		request.setAttribute("mnum", mnum);
+		request.setAttribute("gubun", gubun);
+		
 		RequestDispatcher rd = request.getRequestDispatcher("/movie/viewMovie.jsp");
 		rd.forward(request, response);
 		
@@ -120,6 +156,8 @@ public class MovieService extends HttpServlet{
 			HttpServletResponse response) throws IOException, ServletException{
 		String mnum = request.getParameter("mnum");
 		String gubun = request.getParameter("gubun");
+		
+		request.setAttribute("gubun", gubun);
 		
 		Movie movie = MovieDAO.selectMovie(mnum);
 		
@@ -141,7 +179,7 @@ public class MovieService extends HttpServlet{
 		String gubun = request.getParameter("gubun");
 		MovieDAO.deleteMovie(mnum);
 		
-
+		request.setAttribute("gubun", gubun);
 		
 		RequestDispatcher rd = request.getRequestDispatcher("/MovieService?method=viewMovieList");
 		rd.forward(request, response);
@@ -194,6 +232,7 @@ public class MovieService extends HttpServlet{
 		}
 		
 		request.setAttribute("gubun", gubun);
+		
 		Movie movie = MovieDAO.selectMovie(mnum);
 		//System.out.println(movie);
 		request.setAttribute("Movie", movie);
