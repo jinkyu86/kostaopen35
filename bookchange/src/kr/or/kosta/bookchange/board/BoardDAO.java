@@ -27,7 +27,8 @@ public class BoardDAO {
 				 "from tb_board b, tb_member m, tb_category c, tb_condition c2 " +
 				 "where m.email=b.email " +
 				 "and b.category_no=c.category_no " +
-				 "and b.condition_result=c2.condition_result");
+				 "and b.condition_result=c2.condition_result " +
+				 "order by board_no desc");
 			
 			ps=con.prepareStatement(sql,ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
 			
@@ -118,7 +119,7 @@ public class BoardDAO {
 				 "where m.email=b.email " +
 				 "and b.category_no=c.category_no " +
 				 "and b.condition_result=c2.condition_result " +
-				 "and b.category_no=?");
+				 "and b.category_no=? ");
 			
 			ps=con.prepareStatement(sql,ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
 			ps.setString(1,categoryNo);
@@ -180,7 +181,8 @@ public class BoardDAO {
 				 "where m.email=b.email " +
 				 "and b.category_no=c.category_no " +
 				 "and b.condition_result=c2.condition_result " +
-				 "and b.category_no=?");
+				 "and b.category_no=? " +
+				 "order by board_no desc");
 			
 			ps=con.prepareStatement(sql,ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
 			ps.setString(1,categoryNo);
@@ -211,7 +213,8 @@ public class BoardDAO {
 				 "where m.email=b.email " +
 				 "and b.category_no=c.category_no " +
 				 "and b.condition_result=c2.condition_result " +
-				 "and b.board_title like ?");
+				 "and b.board_title like ? " +
+				 "order by board_no desc");
 			
 			ps=con.prepareStatement(sql,ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
 			ps.setString(1,"%"+title+"%");
@@ -303,12 +306,15 @@ public class BoardDAO {
 			sql=("select board_no, board_title, board_photo, m.email, b.category_no, b.condition_result," +
 				 "b.board_want, b.board_content, d.deal_no, " +
 				 "c.category_name, c2.condition_ing, d.deal_way " +
-					 " from tb_board b, tb_member m, tb_category c, tb_condition c2, tb_deal d " +
-					 "where m.email=b.email " +
+				 //"q.qa_content, q.email " +
+					 "from tb_board b, tb_member m, tb_category c, tb_condition c2, tb_deal d " +
+					 "where b.email=m.email " +
 					 "and b.category_no=c.category_no " +
 					 "and b.condition_result=c2.condition_result " +
 					 "and b.deal_no=d.deal_no " +
+					// "and b.board_no=q.board_no " +
 					 "and b.board_no=?");
+			
 			ps=con.prepareStatement(sql);
 			ps.setString(1, boardNo);
 			
@@ -325,7 +331,9 @@ public class BoardDAO {
 				String dealNo=rs.getString(9);
 				String categoryName=rs.getString(10);
 				String conditionIng=rs.getString(11);
-				String dealWay=rs.getString(12);				
+				String dealWay=rs.getString(12);
+				//String qaContent=rs.getString(13);
+				//String qaEmail=rs.getString(14);
 				
 				board=new Board();
 				board.setBoardNo(Integer.parseInt(boardNo));
@@ -352,6 +360,14 @@ public class BoardDAO {
 				deal.setDealNo(Integer.parseInt(dealNo));
 				deal.setDealWay(dealWay);
 				board.setDeal(deal);
+				
+				/*Qa qa=new Qa();
+				qa.setQaContent(qaContent);
+				Member member2=new Member();
+				member2.setEmail(qaEmail);
+				qa.setMember(member2);
+				
+				board.setQa(qa);*/
 						
 			}
 			
@@ -450,7 +466,8 @@ public class BoardDAO {
 				 "where m.email=b.email " +
 				 "and b.category_no=c.category_no " +
 				 "and b.condition_result=c2.condition_result " +
-				 "and b.email=?");
+				 "and b.email=? " +
+				 "order by board_no desc");
 			
 			ps=con.prepareStatement(sql,ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
 			ps.setString(1,email);

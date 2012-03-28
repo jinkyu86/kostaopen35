@@ -9,7 +9,7 @@ public class BoardDAOTestSelect {
 
 	@Test
 	public void test() {
-		System.out.println(BoardDAO.selectBoard("1"));
+		System.out.println(BoardDAO.selectBoard("17"));
 	}
 
 }

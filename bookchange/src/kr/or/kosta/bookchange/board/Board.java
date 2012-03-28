@@ -9,7 +9,6 @@ public class Board {
 	private Category category;
     private Member member;
 	private Condition condition;
-	private Qa qa;
 
 	/**
 	 * 게시물번호
@@ -68,14 +67,6 @@ public class Board {
 		this.condition = condition;
 	}
 
-	public Qa getQa() {
-		return qa;
-	}
-
-	public void setQa(Qa qa) {
-		this.qa = qa;
-	}
-
 	public int getBoardNo() {
 		return boardNo;
 	}
@@ -119,10 +110,10 @@ public class Board {
 	@Override
 	public String toString() {
 		return "Board [deal=" + deal + ", category=" + category + ", member="
-				+ member + ", condition=" + condition + ", qa=" + qa
-				+ ", boardNo=" + boardNo + ", boardTitle=" + boardTitle
-				+ ", boardWant=" + boardWant + ", boardPhoto=" + boardPhoto
-				+ ", boardContent=" + boardContent + "]";
+				+ member + ", condition=" + condition + ", boardNo=" + boardNo
+				+ ", boardTitle=" + boardTitle + ", boardWant=" + boardWant
+				+ ", boardPhoto=" + boardPhoto + ", boardContent="
+				+ boardContent + "]";
 	}
 
 
