@@ -1,7 +1,7 @@
 package kr.or.kosta.moviesystem.movie;
 
 import java.sql.Connection;
-import java.sql.Date;
+import java.util.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -37,10 +37,10 @@ public class MovieDAO {
 			while(rs.next()){
 				String mnum = rs.getString(1);
 				String mname = rs.getString(2);
-				String lDate = rs.getString(3);
+				Date lDate = rs.getDate(3);
 				String genre = rs.getString(4);
 				String poster = rs.getString(5);
-				String eDate = rs.getString(6);
+				Date eDate = rs.getDate(6);
 				long mprice = rs.getLong(7);
 				String content = rs.getString(8);
 				long RankCount = rs.getLong(9);
@@ -80,10 +80,10 @@ public class MovieDAO {
 					+"values(m_seq.nextval, ?, ?, ?, ?, ?, ?, ?)";
 			psmt = con.prepareStatement(sql);
 			psmt.setString(1, movie.getMname());
-			psmt.setString(2, movie.getLaunchDate());
+			psmt.setString(2, movie.getLaunchDate().toString());
 			psmt.setString(3, movie.getGenre());
 			psmt.setString(4, movie.getPoster());
-			psmt.setString(5, movie.getEndDate());
+			psmt.setString(5, movie.getEndDate().toString());
 			psmt.setLong(6, movie.getMprice());
 			psmt.setString(7, movie.getContent());
 			
@@ -117,15 +117,24 @@ public class MovieDAO {
 	/**
 	 * 전체 영화 수를 알 수 있는 메소드
 	 */
-	public static int selectMovieCount() {
+	public static int selectMovieCount(String gubun) {
 		Connection con = null;
 		PreparedStatement psmt = null;
 		String sql = null;
 		ResultSet rs = null;
 		int movieCount = 0;
+		String schwhere = null;
+		
+		if("screen".equals(gubun)){
+			schwhere = " and launch_date<=sysdate";
+		}else if("schedule".equals(gubun)){
+			schwhere = "and launch_date>sysdate";
+		}else{
+			schwhere = "";
+		}
 		try{
 			con = ConnectionUtil.getConnection();
-			sql = "select count(*) from MOVIE";
+			sql = "select count(*) from MOVIE where 1=1"+schwhere;
 			psmt = con.prepareStatement(sql);
 			rs = psmt.executeQuery();
 			
@@ -161,11 +170,12 @@ public class MovieDAO {
 			if(rs.next()){
 				String mnum2 = rs.getString(1);
 				String mname = rs.getString(2);
-				String lDate = rs.getString(3);
+				Date lDate = rs.getDate(3);
 				String genre = rs.getString(4);
 				String poster = rs.getString(5);
-				String eDate = rs.getString(6);
+				Date eDate = rs.getDate(6);
 				long mprice = rs.getLong(7);
+				String content = rs.getString(8);
 				
 				movie = new Movie();
 				movie.setMnum(mnum);
@@ -175,6 +185,7 @@ public class MovieDAO {
 				movie.setPoster(poster);
 				movie.setEndDate(eDate);
 				movie.setMprice(mprice);
+				movie.setContent(content);
 			}
 		}catch(Exception e){
 			e.printStackTrace();
@@ -219,10 +230,10 @@ public class MovieDAO {
 				GetRsCount++;
 				String mnum = rs.getString(1);
 				String mname = rs.getString(2);
-				String lDate = rs.getString(3);
+				Date lDate = rs.getDate(3);
 				String genre = rs.getString(4);
 				String poster = rs.getString(5);
-				String eDate = rs.getString(6);
+				Date eDate = rs.getDate(6);
 				long mprice = rs.getLong(7);
 				String content = rs.getString(8);
 				
@@ -277,10 +288,10 @@ public class MovieDAO {
 				getRsCount++;
 				String mnum = rs.getString(1);
 				String mname2 = rs.getString(2);
-				String lDate = rs.getString(3);
+				Date lDate = rs.getDate(3);
 				String genre = rs.getString(4);
 				String poster = rs.getString(5);
-				String eDate = rs.getString(6);
+				Date eDate = rs.getDate(6);
 				long mprice = rs.getLong(7);
 				String content = rs.getString(8);
 				
@@ -364,10 +375,10 @@ public class MovieDAO {
 				getRsCount++;
 				String mnum = rs.getString(1);
 				String mname2 = rs.getString(2);
-				String lDate = rs.getString(3);
+				Date lDate = rs.getDate(3);
 				String genre2 = rs.getString(4);
 				String poster = rs.getString(5);
-				String eDate = rs.getString(6);
+				Date eDate = rs.getDate(6);
 				long mprice = rs.getLong(7);
 				String content = rs.getString(8);
 				
@@ -450,10 +461,10 @@ public class MovieDAO {
 				getRsCount++;
 				String mnum = rs.getString(1);
 				String mname2 = rs.getString(2);
-				String lDate = rs.getString(3);
+				Date lDate = rs.getDate(3);
 				String genre2 = rs.getString(4);
 				String poster = rs.getString(5);
-				String eDate = rs.getString(6);
+				Date eDate = rs.getDate(6);
 				long mprice = rs.getLong(7);
 				String content2 = rs.getString(8);
 				
@@ -486,7 +497,7 @@ public class MovieDAO {
 		String sql = null;
 		ResultSet rs = null;
 		int schMovieCount = 0;
-		
+
 		try{
 			con = ConnectionUtil.getConnection();
 			sql = "select count(*) from MOVIE where content like ?";
@@ -520,10 +531,10 @@ public class MovieDAO {
 					+", m_price=?, content=? where m_num=?";
 			psmt = con.prepareStatement(sql);
 			psmt.setString(1, movie.getMname());
-			psmt.setString(2, movie.getLaunchDate());
+			psmt.setString(2, movie.getLaunchDate().toString());
 			psmt.setString(3, movie.getGenre());
 			psmt.setString(4, movie.getPoster());
-			psmt.setString(5, movie.getEndDate());
+			psmt.setString(5, movie.getEndDate().toString());
 			psmt.setLong(6, movie.getMprice());
 			psmt.setString(7, movie.getMnum());
 			
