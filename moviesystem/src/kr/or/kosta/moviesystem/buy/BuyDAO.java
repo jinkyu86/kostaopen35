@@ -28,7 +28,7 @@ public class BuyDAO {
 		con=ConnectionUtil.getConnection();
 		
 		try {
-		String sql="INSERT INTO buy (buy_num,g_num,qty,userid,buy_date,pay_state,total_price) VALUES(SQ_BUY.NEXTVAL,?,?,?,SYSDATE,?,?)";
+		String sql="INSERT INTO buy (buy_num,g_num,qty,userid,buy_date,pay_state,total_price) VALUES(SQ_BUY.NEXTVAL,?,?,?,SYSDATE,0,?)";
 		good=new Good();
 		member=new Member();
 		
@@ -36,8 +36,7 @@ public class BuyDAO {
 		psmt.setString(1, buy.getGood().getGnum());
 		psmt.setLong(2, buy.getQty());
 		psmt.setString(3, buy.getMember().getUserid());
-		psmt.setString(4, buy.getPayState());
-		psmt.setLong(5, buy.getTotalPrice());
+		psmt.setLong(4, buy.getTotalPrice());
 		psmt.executeUpdate();
 		
 		} catch (SQLException e) {
@@ -71,7 +70,7 @@ public class BuyDAO {
 				"g.g_num,g_name,detail,g_price,photo," +
 				"buy_num,qty,buy_date,pay_state,total_price " +
 				"FROM member m,good g, buy b " +
-				"WHERE m.userid=b.userid AND g.g_num=b.g_num AND m.userid=?";
+				"WHERE m.userid=b.userid AND g.g_num=b.g_num AND m.userid=? ORDER BY buy_date DESC ";
 		
 			psmt=con.prepareStatement(sql);
 			psmt.setString(1, userid1);
@@ -208,6 +207,24 @@ public class BuyDAO {
 		}	
 	}
 
+	//결제하기 (buy table의 pay_state를 1로 set, buy_date를 결제날짜로 바꿈)
+	public static void payBuy(String buynum){
+		Connection con=null;
+		PreparedStatement psmt=null;
+		con=ConnectionUtil.getConnection();
+		
+		try {
+			String sql="UPDATE buy SET pay_state=1,buy_date=SYSDATE WHERE buy_num=?";
+			psmt=con.prepareStatement(sql);
+			
+			psmt.setString(1, buynum);
+			psmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}	
+		
+	}
 
 	
 	
