@@ -19,7 +19,7 @@ public class Buy {
 	/**
 	 * 구매수량
 	 */
-	private Long qty;
+	private long qty;
 
 	/**
 	 * 구매한 날짜
@@ -34,7 +34,7 @@ public class Buy {
 	/**
 	 * 전체 가격
 	 */
-	private Long totalPrice;
+	private long totalPrice;
 
 	public Good getGood() {
 		return good;
@@ -60,11 +60,11 @@ public class Buy {
 		this.buynum = buynum;
 	}
 
-	public Long getQty() {
+	public long getQty() {
 		return qty;
 	}
 
-	public void setQty(Long qty) {
+	public void setQty(long qty) {
 		this.qty = qty;
 	}
 
@@ -84,11 +84,11 @@ public class Buy {
 		this.payState = payState;
 	}
 
-	public Long getTotalPrice() {
+	public long getTotalPrice() {
 		return totalPrice;
 	}
 
-	public void setTotalPrice(Long totalPrice) {
+	public void setTotalPrice(long totalPrice) {
 		this.totalPrice = totalPrice;
 	}
 
