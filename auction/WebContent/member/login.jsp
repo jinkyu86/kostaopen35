@@ -18,7 +18,7 @@
 		<tr>
 			<td>비밀번호</td>
 			<td><input type="password" name="pw"/></td>
-		</td>
+		</tr>
 		<tr>
 			<td><input type="submit" value="로그인"/></td>
 		 	<td><input type="reset"  value="취소"/></td>
