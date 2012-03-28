@@ -23,18 +23,18 @@ public class MovieDAO {
 		String sql = null;
 		ResultSet rs = null;
 		ArrayList<Movie>movieRankList = new ArrayList<Movie>();
-		
+		int getRsCnt = 0;
 		try{
 			con = ConnectionUtil.getConnection();
 			sql = "select m_num, m_name, launch_date, genre, poster, end_date, m_price, content"
 					+", (select count(*) from reservation where m_num=m.m_num) "
 					+"from MOVIE m "
-					+"where rownum<=3 "
 					+"order by (select count(*) from reservation where m_num=m.m_num) desc";
 			psmt = con.prepareStatement(sql);
 			
 			rs = psmt.executeQuery();
-			while(rs.next()){
+			while(rs.next()&&getRsCnt<3){
+				getRsCnt++;
 				String mnum = rs.getString(1);
 				String mname = rs.getString(2);
 				Date lDate = rs.getDate(3);
