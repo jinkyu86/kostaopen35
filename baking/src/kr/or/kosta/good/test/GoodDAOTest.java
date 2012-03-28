@@ -1,8 +1,11 @@
 package kr.or.kosta.good.test;
 
+import java.util.ArrayList;
+
 import kr.or.kosta.good.Good;
 import kr.or.kosta.good.GoodDAO;
 import kr.or.kosta.gooddivision.Good_division;
+
 
 import org.junit.Test;
 
@@ -30,12 +33,11 @@ public class GoodDAOTest {
 	public void testDeleteGood(){
 		Good good = new Good();
 		good.setGoodNum(40);		
-		
 		GoodDAO goodDAO = new GoodDAO();
 		goodDAO.deleteGood(good.getGoodNum());
 	}*/
 	
-	@Test
+/*	@Test
 	public void testUpdateGood(){
 		Good good = new Good();
 		Good_division good_division = new Good_division();
@@ -52,5 +54,21 @@ public class GoodDAOTest {
 		
 		GoodDAO goodDAO = new GoodDAO();
 		goodDAO.updateGood(good);
+	}*/
+	
+/*
+	@Test
+	public void testSelectGoodList() {
+		GoodDAO goodDAO = new GoodDAO();
+		ArrayList<Good> page1List=goodDAO.selectGoodList(5, 1);
+		System.out.println("page1List:"+page1List);
+	}*/
+	
+	@Test
+	public void testSelectGood(){
+		GoodDAO goodDAO=new GoodDAO();
+		Good good=goodDAO.selectGood(1);
+		System.out.println(good);
+		
 	}
 }
