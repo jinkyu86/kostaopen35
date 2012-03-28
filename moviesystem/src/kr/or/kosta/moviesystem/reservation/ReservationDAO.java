@@ -10,12 +10,11 @@ import java.util.ArrayList;
 
 
 
-import kr.or.kosta.department.Department;
+
 import kr.or.kosta.moviesystem.member.Member;
 import kr.or.kosta.moviesystem.movie.Movie;
 import kr.or.kosta.moviesystem.screentime.ScreenTime;
 import kr.or.kosta.moviesystem.util.ConnectionUtil;
-import kr.or.kosta.student.Student;
 
 
 
