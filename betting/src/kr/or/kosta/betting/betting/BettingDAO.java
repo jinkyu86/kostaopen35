@@ -9,7 +9,7 @@ import java.util.Date;
 
 import kr.or.kosta.betting.match.Match;
 import kr.or.kosta.betting.util.ConnectionUtil;
-1234
+
 public class BettingDAO {
 
 	public ArrayList<Betting> selectBettingList(int page, int length) {
