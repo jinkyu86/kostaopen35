@@ -1,5 +1,7 @@
 package kr.or.kosta.auction.bid;
 
+import java.sql.Date;
+
 import kr.or.kosta.auction.auction.Auction;
 import kr.or.kosta.auction.member.Member;
 
@@ -17,7 +19,7 @@ public class Bid {
 	/**
 	 * 입찰한 시간
 	 */
-	private String bidTime;
+	private Date bidTime;
 
 	/**
 	 * 현재입찰가격
@@ -48,11 +50,11 @@ public class Bid {
 		this.bidNum = bidNum;
 	}
 
-	public String getBidTime() {
+	public Date getBidTime() {
 		return bidTime;
 	}
 
-	public void setBidTime(String bidTime) {
+	public void setBidTime(Date bidTime) {
 		this.bidTime = bidTime;
 	}
 
@@ -70,4 +72,6 @@ public class Bid {
 				+ bidNum + ", bidTime=" + bidTime + ", bidPrice=" + bidPrice
 				+ "]";
 	}
+
+	
 }
