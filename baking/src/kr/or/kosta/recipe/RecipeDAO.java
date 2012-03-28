@@ -90,6 +90,7 @@ public class RecipeDAO {
 		
 		return recipeList;
 	}	
+	
 	//레시피리스트
 	public static ArrayList<Recipe> selectRecipeList() {
 		Connection con =null;
@@ -97,7 +98,6 @@ public class RecipeDAO {
 		con=ConnectionUtil.getConnection();
 		ResultSet rs =null;
 		ArrayList<Recipe> recipeList = new ArrayList<Recipe>();
-		
 		String sql="";
 		
 		try {
@@ -173,8 +173,42 @@ public class RecipeDAO {
 	}
 
 	//레시피관련상품조회
-	public static ArrayList selectRelationGood(int goodnum) {
-		return null;
+	public static ArrayList<Recipe> selectRelationGood(int recipeNum) {
+		Connection con =null;
+		PreparedStatement psmt =null;
+		con=ConnectionUtil.getConnection();
+		ResultSet rs =null;
+		ArrayList<Recipe> recipeList = new ArrayList<Recipe>();
+		
+		String sql="";
+		
+		try {
+			sql=" select GOOD_NUM, RECIPE_NUM " +
+				" from GOOD_RECIPE_RELATION" +
+				" where RECIPE_NUM=? ";
+			
+			psmt=con.prepareStatement(sql);
+			psmt.setInt(1, recipeNum);
+			
+			rs=psmt.executeQuery();
+			
+			while (rs.next()) {
+				Recipe recipe = new Recipe();
+				Good good = new Good();
+				
+				int good_num=rs.getInt(1);
+				int recipe_num=rs.getInt(2);
+				
+				good.setGoodNum(good_num);
+				
+				recipe.setGood(good);
+				recipe.setRecipeNum(recipe_num);
+			
+				recipeList.add(recipe);
+			}
+		} catch (SQLException e) {	e.printStackTrace();}
+
+		return recipeList;
 	}
 
 	//레시피글삭제
@@ -211,5 +245,11 @@ public class RecipeDAO {
 			psmt.setInt(5, recipe.getRecipeNum());
 			psmt.executeUpdate();
 		} catch (SQLException e) {	e.printStackTrace();}
+	}
+	
+	//상품관련 레시피조회
+	public static ArrayList<Recipe>selectRecipeList(int goodNum){
+	
+		return null;
 	}
 }

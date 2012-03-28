@@ -2,6 +2,8 @@ package kr.or.kosta.recipe.test;
 
 import java.util.ArrayList;
 
+import kr.or.kosta.good.Good;
+import kr.or.kosta.good.GoodDAO;
 import kr.or.kosta.recipe.Recipe;
 import kr.or.kosta.recipe.RecipeDAO;
 
@@ -58,14 +60,26 @@ public class RecipeDAOTest {
 //		System.out.println(recipe);
 //	}
 	
+//	@Test
+//	public void testselectrecipeList(){
+//		ArrayList<Recipe> arrayList = RecipeDAO.selectRecipeList(5,2);
+//
+//		for (int i = 0; i < arrayList.size(); i++) {
+//			Recipe recipe = arrayList.get(i);
+//			System.out.println(recipe);
+//		}
+//	}
+	
 	@Test
-	public void testselectrecipeList(){
-		ArrayList<Recipe> arrayList = RecipeDAO.selectRecipeList(5,2);
-
-		for (int i = 0; i < arrayList.size(); i++) {
-			Recipe recipe = arrayList.get(i);
-			System.out.println(recipe);
+	public void testselectRelationGood(){
+		Recipe recipe=RecipeDAO.selectRecipe(1);
+		ArrayList<Good>recipeRelativeGoodList=GoodDAO.selectRecipeList(1);
+		
+		System.out.println(recipe);
+		for (int i = 0; i < recipeRelativeGoodList.size(); i++) {
+			Good good = recipeRelativeGoodList.get(i);
+			System.out.println(good);
 		}
 	}
-
+	
 }
