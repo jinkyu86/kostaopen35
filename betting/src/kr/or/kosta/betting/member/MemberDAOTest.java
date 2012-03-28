@@ -29,4 +29,42 @@ public class MemberDAOTest {
 		MemberDAO.insultMember(member);
 		
 	}
+	@Test
+	public void testDeleteMember(){
+		
+		MemberDAO.deleteMember("jun123");
+		
+		
+	}
+	@Test
+	public void selectMemberByID(){
+		Member member =MemberDAO.selectMemberByID("jun1");
+		
+		System.out.println(member);
+		
+		
+	}
+	@Test
+	public void selectMemberRankingList(){
+		
+		ArrayList<Member>page1List=
+				MemberDAO.selectMemberRankingList(5, 1);
+		System.out.println("page1List:"+page1List);
+		ArrayList<Member>page2List=
+				MemberDAO.selectMemberRankingList(5, 2);
+		System.out.println("page2List:"+page2List);
+		
+	}
+	@Test
+	public void updateMember(){
+		
+		Member member = new Member();
+		member.setID("jun123");
+		member.setPW("1234");
+		member.setMineral(1000);
+		member.setEmail("jun21");
+		
+		MemberDAO.updateMember(member);
+		
+	}
 }
