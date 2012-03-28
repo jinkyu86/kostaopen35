@@ -1,5 +1,8 @@
 package kr.or.kosta.auction.auction;
 
+
+import java.sql.Date;
+
 import kr.or.kosta.auction.bid.Bid;
 import kr.or.kosta.auction.good.Good;
 import kr.or.kosta.auction.member.Member;
@@ -26,12 +29,12 @@ public class Auction {
 	/**
 	 * 경매 시작시간
 	 */
-	private String sTime;
+	private Date sTime;
 
 	/**
 	 * 경매 마감시간
 	 */
-	private String eTime;
+	private Date eTime;
 
 	/**
 	 * 경매품의 낙찰여부
@@ -75,19 +78,20 @@ public class Auction {
 		this.imPrice = imPrice;
 	}
 
-	public String getsTime() {
+
+	public Date getsTime() {
 		return sTime;
 	}
 
-	public void setsTime(String sTime) {
+	public void setsTime(Date sTime) {
 		this.sTime = sTime;
 	}
 
-	public String geteTime() {
+	public Date geteTime() {
 		return eTime;
 	}
 
-	public void seteTime(String eTime) {
+	public void seteTime(Date eTime) {
 		this.eTime = eTime;
 	}
 
