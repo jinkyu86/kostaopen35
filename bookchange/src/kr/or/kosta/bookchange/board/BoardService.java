@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import kr.or.kosta.bookchange.member.Member;
+import kr.or.kosta.bookchange.member.MemberDAO;
+import kr.or.kosta.change.Condition;
 import kr.or.kosta.util.PageUtil;
 
 public class BoardService extends HttpServlet {
@@ -37,21 +40,70 @@ public class BoardService extends HttpServlet {
 			viewBoard(request,response);
 		}else if("editBoardFrom".equals(method)){
 			editBoardForm(request,response);
+		}else if("editBoard".equals(method)){
+			editBoard(request,response);
 		}else if("removeBoard".equals(method)){
 			removeBoard(request,response);
 		}else if("addBoardForm".equals(method)){
 			addBoardForm(request,response);
+		}else if("addBoard".equals(method)){
+			addBoard(request,response);
+		}else if("searchBoardList".equals(method)){
+			searchBoardList(request,response);
 		}
 	}
 
 	/**
-	 * 게시물 추가	 
-	 * @throws IOException 
-	 * @throws ServletException */
+	 * 게시물 추가 */
 	public void addBoard(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String boardTitle=request.getParameter("boardTitle");
+		String boardWant=request.getParameter("boardWant");
+		String boardPhoto=request.getParameter("boardPhoto");
+		String boardContent=request.getParameter("boardContent");
+		String email=request.getParameter("email");
+		String categoryNo=request.getParameter("categoryNo");
+		String dealNo=request.getParameter("dealNo");
+		//String conditionResult=request.getParameter("conditionResult");
+		
+		Board board=new Board();
+		board.setBoardTitle(boardTitle);
+		board.setBoardWant(boardWant);
+		board.setBoardPhoto(boardPhoto);
+		board.setBoardContent(boardContent);
+		
+		Member member=new Member();
+		member.setEmail(email);
+		board.setMember(member);
+		
+		Category category=new Category();
+		category.setCategoryNo(Integer.parseInt(categoryNo));
+		board.setCategory(category);
+		
+		Deal deal=new Deal();
+		deal.setDealNo(Integer.parseInt(dealNo));
+		board.setDeal(deal);
+		
+		/*Condition condition=new Condition();
+		condition.setConditionResult(Integer.parseInt(conditionResult));
+		board.setCondition(condition);처음 등록시 자동으로 0으로 추가, 필요 없음*/
+		
+		BoardDAO.insertBoard(board);
+		
+		RequestDispatcher rd=request.getRequestDispatcher("/BoardService?method=viewBoardList");
+		rd.forward(request, response);
+		
+	}
+
+	/**
+	 * 게시물 추가 창(물품등록 화면) */
+	public void addBoardForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String email=request.getParameter("email");
+		Member member=MemberDAO.selectMember(email);
+		
 		ArrayList<Category> categoryList=CategoryDAO.selectCategory();//카테고리 정보 조회
 		ArrayList<Deal> dealList=DealDAO.selectDeal();//거래방법 조회
 		
+		request.setAttribute("MEMBER", member);
 		request.setAttribute("CATEGORY_LIST",categoryList);
 		request.setAttribute("DEAL_LIST",dealList);
 		
@@ -59,24 +111,45 @@ public class BoardService extends HttpServlet {
 		rd.forward(request, response);
 	}
 
-	/**
-	 * 게시물 추가 창(물품등록 화면)
-	 * 
-	 * @param request
-	 * @param response
-	 */
-	public void addBoardForm(HttpServletRequest request, HttpServletResponse response) {
+	/**	 * 게시물 수정	 */
+	public void editBoard(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
+		String boardTitle=request.getParameter("boardTitle");
+		String boardWant=request.getParameter("boardWant");
+		String boardPhoto=request.getParameter("boardPhoto");
+		String boardContent=request.getParameter("boardContent");
+		String email=request.getParameter("email");
+		String categoryNo=request.getParameter("categoryNo");
+		String dealNo=request.getParameter("dealNo");
+		String conditionResult=request.getParameter("conditionResult");
+		String boardNo=request.getParameter("boardNo");
 		
-	}
-
-	/**
-	 * 게시물 수정
-	 * 
-	 * @param request
-	 * @param response
-	 */
-	public void editBoard(HttpServletRequest request,HttpServletResponse response) {
+		Board board=new Board();
+		board.setBoardNo(Integer.parseInt(boardNo));
+		board.setBoardTitle(boardTitle);
+		board.setBoardWant(boardWant);
+		board.setBoardPhoto(boardPhoto);
+		board.setBoardContent(boardContent);
 		
+		Member member=new Member();
+		member.setEmail(email);
+		board.setMember(member);
+		
+		Category category=new Category();
+		category.setCategoryNo(Integer.parseInt(categoryNo));
+		board.setCategory(category);
+		
+		Deal deal=new Deal();
+		deal.setDealNo(Integer.parseInt(dealNo));
+		board.setDeal(deal);
+		
+		Condition condition=new Condition();
+		condition.setConditionResult(Integer.parseInt(conditionResult));
+		board.setCondition(condition);
+		
+		BoardDAO.updateBoard(board);
+		
+		RequestDispatcher rd=request.getRequestDispatcher("/BoardService?method=viewBoard&boardNo="+boardNo);
+		rd.forward(request, response);
 	}
 
 	/**
@@ -84,10 +157,7 @@ public class BoardService extends HttpServlet {
 	public void editBoardForm(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
 		String boardNo=request.getParameter("boardNo");
 		Board board=BoardDAO.selectBoard(boardNo);//수정할 게시물 정보 조회
-		
-		String email=request.getParameter("email");
-		MemberDAO
-		
+			
 		ArrayList<Category> categoryList=CategoryDAO.selectCategory();//카테고리 정보 조회
 		ArrayList<Deal> dealList=DealDAO.selectDeal();//거래방법 조회
 		
@@ -101,13 +171,7 @@ public class BoardService extends HttpServlet {
 	}
 
 	/**
-	 * 게시물 삭제
-	 * 
-	 * @param request
-	 * @param response
-	 * @throws IOException 
-	 * @throws ServletException 
-	 */
+	 * 게시물 삭제	 */
 	public void removeBoard(HttpServletRequest request,	HttpServletResponse response) throws ServletException, IOException {
 		String boardNo=request.getParameter("boardNo");
 		BoardDAO.deleteBoard(boardNo);
@@ -148,13 +212,40 @@ public class BoardService extends HttpServlet {
 		rd.forward(request, response);
 	}
 
-	/**
-	 * 게시물 검색
-	 * 
-	 * @param request
-	 * @param response
-	 */
-	public void searchBoardList(HttpServletRequest request,	HttpServletResponse response) {
+	/**	 * 게시물 검색	 */
+	public void searchBoardList(HttpServletRequest request,	HttpServletResponse response) throws ServletException, IOException {
+		int page=1;
 		
+		if(request.getParameter("page")!=null){
+			page=Integer.parseInt(request.getParameter("page"));
+		}
+		
+		int length=5;
+		
+		ArrayList<Board> boardList=null;
+		int boardCount=0;
+		
+		if(request.getParameter("keyword")==null||request.getParameter("keyword").equals("")){
+			boardList=BoardDAO.selectBoardList(length, page);
+			boardCount=BoardDAO.selectBoardCount();
+		}else{
+			if(request.getParameter("column").equals("categoryName")){
+				boardList=BoardDAO.selectBoardListbyCategory(length, page, request.getParameter("keyword"));
+				boardCount=BoardDAO.selectBoardCategoryCount(request.getParameter("keyword"));
+			}else{
+				boardList=BoardDAO.selectBoardListbyTitle(length, page, request.getParameter("keyword"));
+				boardCount=BoardDAO.selectBoardTitleCount(request.getParameter("keyword"));
+			}
+		}
+		
+		request.setCharacterEncoding("utf-8");
+		request.setAttribute("BOARD_LIST", boardList);
+		
+		String pageLinkTag=PageUtil.generate(page, boardCount, length,
+				"/bookchange/BoardService?method=searchBoardList&column="+
+		             request.getParameter("column")+"&keyword="+request.getParameter("keyword"));
+		request.setAttribute("PAGE_LINK_TAG",pageLinkTag);
+		RequestDispatcher rd=request.getRequestDispatcher("/board/viewBoardList.jsp");
+		rd.forward(request,response);
 	}
 }
