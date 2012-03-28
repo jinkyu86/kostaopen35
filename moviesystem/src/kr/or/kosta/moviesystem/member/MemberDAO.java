@@ -99,26 +99,30 @@ public class MemberDAO {
 	 * @param memberid
 	 * @param pw
 	 */
-	public static void editMember(Member member) {
+	public static void editMember(Member member, String userid, String pw) {
 		 Connection con=null;
 		 PreparedStatement psmt=null;
 		 con=ConnectionUtil.getConnection();
+
 		 
 		 try {
 			 psmt=con.prepareStatement
-					  ("UPDATE MEMBER SET pw=?,email=?,phone=?,zipcode=?,addr=? " +
-					  	"WHERE userid=?");
+					  ("UPDATE MEMBER " +
+					  	"SET pw=?,email=?,phone=?,zipcode=?,addr=? " +
+					  	"WHERE userid=? AND pw=?");
 			 psmt.setString(1, member.getPw());
 			 psmt.setString(2,member.getEmail());
 			 psmt.setString(3,member.getPhone());
 			 psmt.setString(4,member.getZipcode());
 			 psmt.setString(5,member.getAddr());
-			 psmt.setString(6,member.getUserid());
+			 psmt.setString(6,userid);
+			 psmt.setString(7,pw);
 			 
 			 psmt.executeUpdate();
 		 }catch (SQLException e) {
 				e.printStackTrace();
 			}
+		
 	}
 
 	/**
@@ -721,4 +725,6 @@ public class MemberDAO {
 		
 		return member;
 	}
+
+
 }
