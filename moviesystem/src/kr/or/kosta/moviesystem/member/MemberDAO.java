@@ -76,7 +76,7 @@ public class MemberDAO {
 			psmt=con.prepareStatement(
 					"INSERT INTO MEMBER" +
 					"(user_num,userid,name,pw,email,phone,zipcode,addr,reg_date,mem_state)" +
-					"VALUES (mem_seq.nextval,?,?,?,?,?,?,?,sysdate,?)"
+					"VALUES (mem_seq.nextval,?,?,?,?,?,?,?,sysdate,'1')"
 					);
 			psmt.setString(1,member.getUserid());
 			psmt.setString(2,member.getName());
@@ -85,7 +85,7 @@ public class MemberDAO {
 			psmt.setString(5,member.getPhone());
 			psmt.setString(6,member.getZipcode());
 			psmt.setString(7,member.getAddr());
-			psmt.setString(8,member.getMemState());
+			
 			psmt.executeUpdate();
 			
 		}catch(Exception e){
