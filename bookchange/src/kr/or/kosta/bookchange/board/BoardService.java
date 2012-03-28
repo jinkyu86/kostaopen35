@@ -174,8 +174,15 @@ public class BoardService extends HttpServlet {
 	 * 게시물 삭제	 */
 	public void removeBoard(HttpServletRequest request,	HttpServletResponse response) throws ServletException, IOException {
 		String boardNo=request.getParameter("boardNo");
-		BoardDAO.deleteBoard(boardNo);
-		RequestDispatcher rd=request.getRequestDispatcher("/board/viewBoardList.jsp");
+		String conditionResult=request.getParameter("conditionResult");
+		
+		if(conditionResult.equals("0")){
+			BoardDAO.deleteBoard(boardNo);
+		}else{
+			System.out.println("교환중이므로 삭제할 수 없습니다.");
+		}
+		
+		RequestDispatcher rd=request.getRequestDispatcher("/bookchange/BoardService?method=viewBoardList");
 		rd.forward(request, response);
 	}
 
@@ -183,8 +190,13 @@ public class BoardService extends HttpServlet {
 	 * 게시물 보기	 */
 	public void viewBoard(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
 		String boardNo=request.getParameter("boardNo");
+		
 		Board board=BoardDAO.selectBoard(boardNo);
+		Qa qa=QaDAO.selectQa(boardNo);
+		
 		request.setAttribute("BOARD",board);
+		request.setAttribute("QA",qa);
+		
 		RequestDispatcher rd=request.getRequestDispatcher("/board/viewBoard.jsp");
 		rd.forward(request, response);
 	}
@@ -208,6 +220,7 @@ public class BoardService extends HttpServlet {
 		String pageLinkTag=PageUtil.generate(page, boardCount, length, "/bookchange/BoardService?" +
 				"method=viewBoardList");
 		request.setAttribute("PAGE_LINK_TAG",pageLinkTag);
+		
 		RequestDispatcher rd=request.getRequestDispatcher("/board/viewBoardList.jsp");
 		rd.forward(request, response);
 	}
@@ -245,6 +258,7 @@ public class BoardService extends HttpServlet {
 				"/bookchange/BoardService?method=searchBoardList&column="+
 		             request.getParameter("column")+"&keyword="+request.getParameter("keyword"));
 		request.setAttribute("PAGE_LINK_TAG",pageLinkTag);
+		
 		RequestDispatcher rd=request.getRequestDispatcher("/board/viewBoardList.jsp");
 		rd.forward(request,response);
 	}
