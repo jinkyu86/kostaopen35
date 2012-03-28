@@ -1,67 +1,215 @@
 package kr.or.kosta.recipe;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+
+import kr.or.kosta.good.Good;
+import kr.or.kosta.gooddivision.GoodDivisionDAO;
+import kr.or.kosta.gooddivision.Good_division;
+import kr.or.kosta.util.ConnectionUtil;
 
 public class RecipeDAO {
 
-	/**
-	 * 레시피추가
-	 * 
-	 * @param recipe
-	 */
-	public void insertRecipe(Recipe recipe) {
-		/* default generated stub */;
-//		return null;
+	
+	//레시피추가
+	public static void insertRecipe(Recipe recipe) {
+		Connection con =null;
+		PreparedStatement psmt=null;
+		con=ConnectionUtil.getConnection();
+		String sql="";
+		
+		try {
+			sql="insert into RECIPE(RECIPE_NUM, TITLE, CONTENT, IMG, MATERIAL) " +
+//				" values(recipe_seq.nextval, ?, ?, ?, ?)";
+				" values(1000, ?, ?, ?, ?)";
+			psmt=con.prepareStatement(sql);
+			psmt.setString(1, recipe.getTitle());
+			psmt.setString(2, recipe.getContent());
+			psmt.setString(3, recipe.getImg());
+			psmt.setString(4, recipe.getMaterial());
+			psmt.executeUpdate();
+			
+		} catch (SQLException e) {	e.printStackTrace();}
 	}
 
-	/**
-	 * 레시피 리스트 보기
-	 * 
-	 * @param length
-	 * @param page
-	 */
-	public ArrayList selectRecipeList(int length, int page) {
-		/* default generated stub */;
+	//레시피리스트_페이징
+	public static ArrayList<Recipe> selectRecipeList(int length, int page) {
+		Connection con =null;
+		PreparedStatement psmt =null;
+		con=ConnectionUtil.getConnection();
+		ResultSet rs =null;
+		ArrayList<Recipe> recipeList = new ArrayList<Recipe>();
+		
+		String sql="";
+		
+		try {
+			sql="select R.RECIPE_NUM ,R.TITLE, R.CONTENT, R.IMG, R.MATERIAL, R.DIVISION, G.g_NAME " +
+			    " from RECIPE R, GOOD_DIVISION G " +
+			    " where R.DIVISION=G.DIVISION ";
+			
+			psmt=con.prepareStatement(sql);
+			psmt=con.prepareStatement(sql,
+					ResultSet.TYPE_SCROLL_INSENSITIVE,
+					ResultSet.CONCUR_READ_ONLY);
+			rs=psmt.executeQuery();
+			
+			if(page>1){
+				rs.absolute((page-1)*length);
+			}
+			int getRecordCount=0;
+			
+			while (rs.next() && getRecordCount<length) {
+				getRecordCount++;
+				Recipe recipe = new Recipe();
+				Good_division good_division = new Good_division();
+				int recipe_num=rs.getInt(1);
+				String title=rs.getString(2);
+				String content=rs.getString(3);
+				String img=rs.getString(4);
+				String material=rs.getString(5);
+				int division=rs.getInt(6);
+				String g_name=rs.getString(7);
+				
+				recipe.setRecipeNum(recipe_num);
+				recipe.setTitle(title);
+				recipe.setContent(content);
+				recipe.setImg(img);
+				recipe.setMaterial(material);
+				
+				good_division.setDivision(division);
+				good_division.setgName(g_name);
+		
+				recipe.setGood_division(good_division);
+				
+				recipeList.add(recipe);
+			}
+		} catch (SQLException e) {	e.printStackTrace();}
+		
+		return recipeList;
+	}	
+	//레시피리스트
+	public static ArrayList<Recipe> selectRecipeList() {
+		Connection con =null;
+		PreparedStatement psmt =null;
+		con=ConnectionUtil.getConnection();
+		ResultSet rs =null;
+		ArrayList<Recipe> recipeList = new ArrayList<Recipe>();
+		
+		String sql="";
+		
+		try {
+			sql="select R.RECIPE_NUM ,R.TITLE, R.CONTENT, R.IMG, R.MATERIAL, R.DIVISION, G.g_NAME " +
+			    " from RECIPE R, GOOD_DIVISION G " +
+			    " where R.DIVISION=G.DIVISION ";
+			
+			psmt=con.prepareStatement(sql);
+			rs=psmt.executeQuery();
+			
+			while (rs.next()) {
+				Recipe recipe = new Recipe();
+				Good_division good_division = new Good_division();
+				int recipe_num=rs.getInt(1);
+				String title=rs.getString(2);
+				String content=rs.getString(3);
+				String img=rs.getString(4);
+				String material=rs.getString(5);
+				int division=rs.getInt(6);
+				String g_name=rs.getString(7);
+				
+				recipe.setRecipeNum(recipe_num);
+				recipe.setTitle(title);
+				recipe.setContent(content);
+				recipe.setImg(img);
+				recipe.setMaterial(material);
+				
+				good_division.setDivision(division);
+				good_division.setgName(g_name);
+		
+				recipe.setGood_division(good_division);
+				
+				recipeList.add(recipe);
+			}
+		} catch (SQLException e) {	e.printStackTrace();}
+		
+		return recipeList;
+	}
+
+	//레시피정보
+	public static Recipe selectRecipe(int recipenum) {
+		Connection con =null;
+		PreparedStatement psmt =null;
+		con=ConnectionUtil.getConnection();
+		ResultSet rs =null;
+		Recipe recipe = new Recipe();
+		Good_division good_division = new Good_division();
+		String sql="";
+		
+		try {
+			sql="select R.RECIPE_NUM ,R.TITLE, R.CONTENT, R.IMG, R.MATERIAL, R.DIVISION, G.g_NAME " +
+				    " from RECIPE R, GOOD_DIVISION G " +
+				    " where R.DIVISION=G.DIVISION and R.RECIPE_NUM=?";
+			psmt=con.prepareStatement(sql);
+			psmt.setInt(1, recipenum);
+			rs=psmt.executeQuery();
+			while(rs.next()){
+				recipe.setRecipeNum(rs.getInt(1));
+				recipe.setTitle(rs.getString(2));
+				recipe.setContent(rs.getString(3));
+				recipe.setImg(rs.getString(4));
+				recipe.setMaterial(rs.getString(5));
+				good_division.setDivision(rs.getInt(6));
+				good_division.setgName(rs.getString(7));
+				
+				recipe.setGood_division(good_division);
+				
+			}
+			} catch (SQLException e) {	e.printStackTrace();}
+			
+		
+		return recipe;
+	}
+
+	//레시피관련상품조회
+	public static ArrayList selectRelationGood(int goodnum) {
 		return null;
 	}
 
-	/**
-	 * 레시피보기
-	 * 
-	 * @param recipenum
-	 */
-	public Recipe selectRecipe(int recipenum) {
-		/* default generated stub */;
-		return null;
+	//레시피글삭제
+	public static void deleteRecipe(int recipenum) {
+		Connection con =null;
+		PreparedStatement psmt=null;
+		con=ConnectionUtil.getConnection();
+		String sql="";
+		
+		try {
+			sql=" delete from RECIPE where RECIPE_NUM=? ";
+			psmt=con.prepareStatement(sql);
+			psmt.setInt(1, recipenum);
+			psmt.executeUpdate();
+		} catch (SQLException e) {e.printStackTrace();}
+		
 	}
 
-	/**
-	 * 레시피과련 상품조회
-	 * 
-	 * @param goodnum
-	 */
-	public ArrayList selectRelationGood(int goodnum) {
-		/* default generated stub */;
-		return null;
-	}
-
-	/**
-	 * 레시피글 삭제
-	 * 
-	 * @param recipenum
-	 */
-	public void deleteRecipe(int recipenum) {
-		/* default generated stub */;
-//		return null;
-	}
-
-	/**
-	 * 레시피내용 수정
-	 * 
-	 * @param recipe
-	 */
-	public void updateRecipe(Recipe recipe) {
-		/* default generated stub */;
-//		return null;
+	//레시피수정
+	public static void updateRecipe(Recipe recipe) {
+		Connection con =null;
+		PreparedStatement psmt=null;
+		con=ConnectionUtil.getConnection();
+		String sql="";
+		
+		try {
+			sql="update RECIPE SET TITLE=?, CONTENT=?, IMG=?, MATERIAL=? " +
+				" where RECIPE_NUM=? ";
+			psmt=con.prepareStatement(sql);
+			psmt.setString(1, recipe.getTitle());
+			psmt.setString(2, recipe.getContent());
+			psmt.setString(3, recipe.getImg());
+			psmt.setString(4, recipe.getMaterial());
+			psmt.setInt(5, recipe.getRecipeNum());
+			psmt.executeUpdate();
+		} catch (SQLException e) {	e.printStackTrace();}
 	}
 }
