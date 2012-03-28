@@ -29,8 +29,8 @@ public class OrderDAO {
 			psmt.setInt(1,order.getOrderNum());
 			psmt.setString(2,order.getMember().getMemberid());
 			psmt.setInt(3,order.getGood().getGoodNum());
-			psmt.setInt(4,order.getGood().getQty());
-			psmt.setInt(5,order.getGood().getGoodPrice());
+			psmt.setInt(4,order.getQty());
+			psmt.setInt(5,order.getQty()*order.getGood().getGoodPrice());
 			psmt.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

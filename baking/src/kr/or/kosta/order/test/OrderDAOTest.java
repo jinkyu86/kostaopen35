@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 import kr.or.kosta.order.Order;
 import kr.or.kosta.order.OrderDAO;
 import kr.or.kosta.good.Good;
+import kr.or.kosta.good.GoodDAO;
 import kr.or.kosta.member.Member;
 
 import org.junit.Test;
@@ -16,12 +17,12 @@ public class OrderDAOTest {
 //	public void testInsertOrder() {
 //		Order order = new Order();
 //		order.setOrderNum(2);
+//		order.setQty(3);
 //		Member member =new Member();
 //		member.setMemberid("yubi");
 //		order.setMember(member);
 //		Good good = new Good();
 //		good.setGoodNum(1);
-//		good.setQty(1);
 //		good.setGoodPrice(13900);
 //		order.setGood(good);
 //		
@@ -51,5 +52,14 @@ public class OrderDAOTest {
 //		order.setOrderNum(1);
 //		
 //		OrderDAO.updateOrder(order);
+//	}
+	
+//	@Test
+//	public void testUpdateQty(){
+//		Order order=new Order();
+//		order.setQty(4);
+//		order.setOrderNum(1);
+//		
+//		OrderDAO.updateQty(order);
 //	}
 }
