@@ -2,7 +2,7 @@ package kr.or.kosta.moviesystem.movie;
 
 
 
-import java.sql.Date;
+import java.util.Date;
 
 import kr.or.kosta.moviesystem.screentime.ScreenTime;
 
@@ -23,7 +23,7 @@ public class Movie {
 	/**
 	 * 개봉일
 	 */
-	private String launchDate;
+	private Date launchDate;
 
 	/**
 	 * 영화내용
@@ -43,7 +43,7 @@ public class Movie {
 	/**
 	 * 영화 내리는 날짜
 	 */
-	private String endDate;
+	private Date endDate;
 
 	/**
 	 * 영화 가격
@@ -76,11 +76,11 @@ public class Movie {
 		this.mname = mname;
 	}
 
-	public String getLaunchDate() {
+	public Date getLaunchDate() {
 		return launchDate;
 	}
 
-	public void setLaunchDate(String launchDate) {
+	public void setLaunchDate(Date launchDate) {
 		this.launchDate = launchDate;
 	}
 
@@ -108,11 +108,11 @@ public class Movie {
 		this.poster = poster;
 	}
 
-	public String getEndDate() {
+	public Date getEndDate() {
 		return endDate;
 	}
 
-	public void setEndDate(String endDate) {
+	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
 
