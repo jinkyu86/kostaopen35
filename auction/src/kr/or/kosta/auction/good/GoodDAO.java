@@ -19,9 +19,9 @@ public class GoodDAO {
 		con=ConnectionUtil.getConnection();
 		try {
 		psmt=con.prepareStatement(
-													"INSERT INTO good "+
-													"(g_num, gname, detail, img) "+
-													"VALUES (GOOD_SEQ.nextval, ?, ?, ?)");
+				"INSERT INTO good "+
+				"(g_num, gname, detail, img) "+
+				"VALUES (GOOD_SEQ.nextval, ?, ?, ?)");
 		psmt.setString(1, good.getgName());
 		psmt.setString(2, good.getDetail());
 		psmt.setString(3, good.getImg());
