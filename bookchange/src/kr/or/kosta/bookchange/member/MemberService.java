@@ -1,7 +1,10 @@
 package kr.or.kosta.bookchange.member;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,7 +20,28 @@ public class MemberService extends HttpServlet {
 		doPost(request,response);
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		request.setCharacterEncoding("utf-8");
+		String method=request.getParameter("method");
+		if(method==null){
+			
+		}if("addMember".equals(method)){
+			addMember(request, response);
+		}else if("addMemberForm".equals(method)){
+			addMemberForm(request, response);
+		}else if("checkMemberEmail".equals(method)){
+			checkMemberEmail(request, response);
+		}else if("editMember".equals(method)){
+			editMember(request, response);
+		}else if("editMemberForm".equals(method)){
+			editMemberForm(request, response);
+		}else if("login".equals(method)){
+			login(request, response);
+		}else if("logout".equals(method)){
+			logout(request, response);
+		}else if("loginForm".equals(method)){
+			loginForm(request, response);
+		}
+	
 	}
 	/**
 	 * 회원추가
@@ -27,7 +51,23 @@ public class MemberService extends HttpServlet {
 	 */
 	public void addMember(HttpServletRequest request,
 			HttpServletResponse response) throws IOException,ServletException{
-		/* default generated stub */;
+		
+		String email=request.getParameter("email");
+		String tel=request.getParameter("tel");
+		String address=request.getParameter("address");
+		String pw=request.getParameter("pw");
+		
+		Member member=new Member();
+		member.setEmail(email);
+		member.setTel(tel);
+		member.setAddress(address);
+		member.setPw(pw);
+		
+		MemberDAO.insertMember(member);
+		
+		RequestDispatcher rd=request.getRequestDispatcher("/MemberService?method=viewMemberList");
+		rd.forward(request, response);
+		
 	}
 
 	/**
@@ -38,7 +78,8 @@ public class MemberService extends HttpServlet {
 	 */
 	public void addMemberForm(HttpServletRequest request,
 			HttpServletResponse response) throws IOException,ServletException {
-		/* default generated stub */;
+		RequestDispatcher rd=request.getRequestDispatcher("/member/addMember.jsp");
+		rd.forward(request, response);
 	
 	}
 
@@ -50,7 +91,23 @@ public class MemberService extends HttpServlet {
 	 */
 	public void checkMemberEmail(HttpServletRequest request,
 			HttpServletResponse response)throws IOException,ServletException {
-		/* default generated stub */;
+		
+		String email=request.getParameter("email");
+		Member member=MemberDAO.selectMember(email);
+		response.setContentType("text/html;charset=utf-8");
+		
+		PrintWriter out=response.getWriter();
+		
+		if (member==null) {
+			System.out.println(email+"는 사용 가능한 아이디입니다.");
+			out.print(email+"는 사용 가능한 아이디 입니다.");
+		} else {
+			System.out.println(email+"이미 사용중인 아이디입니다.");
+			out.print(email+"는 이미 사용중인 아이디 입니다.");
+		}
+		
+		out.flush();
+		out.close();
 		
 	}
 
@@ -63,7 +120,22 @@ public class MemberService extends HttpServlet {
 	public void editMember(HttpServletRequest request,
 			HttpServletResponse response) throws IOException,ServletException{
 		/* default generated stub */;
-	
+		String email=request.getParameter("email");
+		String address=request.getParameter("address");
+		String pw=request.getParameter("pw");
+		String tel=request.getParameter("tel");
+		
+		Member member=new Member();
+		member.setAddress(address);
+		member.setEmail(email);
+		member.setPw(pw);
+		member.setTel(tel);
+		
+		MemberDAO.updateMember(member);
+		
+		RequestDispatcher rd=request.getRequestDispatcher("/MemberService?method=viewMember&email="+email);
+		rd.forward(request, response);
+		
 	}
 
 	/**

@@ -34,11 +34,13 @@ public class MemberDAO {
 			//가져온 레코드 개수
 			int getRecord=0;
 			while (rs.next()&&getRecord<length) {
+				
 				getRecord++;
 				String email=rs.getString(1);
 				String tel=rs.getString(2);
 				String address=rs.getString(3);
 				String pw=rs.getString(4);
+				
 				Member member=new Member();
 				member.setEmail(email);
 				member.setAddress(address);

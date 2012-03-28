@@ -14,10 +14,19 @@ public class BlockDAOTestinsert extends BlockDAO {
 	public void test() {
 		
 		Block block=new Block();
-		block.setBlockContent("신고");
+		
+		block.setBlockContent("신고합니다 ㅋ");
+		
 		Member member=new Member();
-		member.setEmail("homeless@nate.com");
+		member.setEmail("homeless@nate.com");		
+		block.setMember(member);
+		
+		Member member2=new Member();
+		member2.setEmail("hoihoi@nate.com");
+		block.setBlockmember(member2);
+		
 		BlockDAO.insertBlock(block);
 	}
 
 }
+

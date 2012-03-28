@@ -3,7 +3,14 @@ package kr.or.kosta.bookchange.member;
 public class Block {
 
 	public Member member;
+	private Member blockmember;
+	public Member getBlockmember() {
+		return blockmember;
+	}
 
+	public void setBlockmember(Member blockmember) {
+		this.blockmember = blockmember;
+	}
 	public BlockCondition blockCondition;
 	/**
 	 * 신고번호
