@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
+import kr.or.kosta.auction.good.Good;
 import kr.or.kosta.auction.member.Member;
 import kr.or.kosta.auction.util.ConnectionUtil;
 
@@ -143,34 +145,46 @@ public class BoardDAO {
 		PreparedStatement psmt=null;
 		String sql=null;
 		ResultSet rs=null;
-		ArrayList<Board>boardList=
-				new ArrayList<Board>();
-		Board board = null;
+		Board board=null;
+		Member member=null;
+		ArrayList<Board>boardList=new ArrayList<Board>();
+
 		try {
 			con=ConnectionUtil.getConnection();
-			sql=" SELECT b_num, userid, title, content " +
-					"  FROM board ";
+			sql=" SELECT b_num, title, content, userid " +
+					"FROM board ";
 			
-				psmt=con.prepareStatement(sql);
-				rs=psmt.executeQuery();
-				while(rs.next()){
-					String bNum=rs.getString(1);
-					String userid=rs.getString(2);
-					String title=rs.getString(3);
-					String content=rs.getString(4);
-					
-					board = new Board();
-					board.setbNum(bNum);
-					board.setTitle(title);
-					board.setContent(content);
-					
-					Member member = new Member();
-					member.setUserid(userid);
-					
-					board.setMember(member);
-					
-					boardList.add(board);
-				}
+			psmt=con.prepareStatement(sql, 
+					ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			rs=psmt.executeQuery();
+			
+			if(page>1){
+				rs.absolute((page-1)*length);
+			}
+			
+			int getRecordCount=0;
+			
+			while(rs.next()&&getRecordCount<length){
+				getRecordCount++;
+				String bNum=rs.getString(1);
+				String title=rs.getString(2);
+				String content=rs.getString(3);
+				String userid=rs.getString(4);
+				
+				board=new Board();
+				
+				board.setbNum(bNum);
+				board.setTitle(title);
+				board.setContent(content);
+				
+				member=new Member();
+				
+				member.setUserid(userid);
+				board.setMember(member);
+				
+				boardList.add(board);
+			}
+				
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -178,16 +192,81 @@ public class BoardDAO {
 	}
 
 	public static ArrayList<Board> selectBoardListByTitle(int length, int page, String title) {
+		Connection con=null;
+		PreparedStatement psmt=null;
+		String sql=null;
+		ResultSet rs=null;
+		Board board=null;
+		Member member=null;
+		ArrayList<Board>boardList=new ArrayList<Board>();
+		con=ConnectionUtil.getConnection();
+		try {
+		sql="SELECT b_num, title, content, userid "+
+			  "FROM board "+
+			  "WHERE title LIKE ?";
 		
-		return null;
+			psmt=con.prepareStatement(sql, 
+					ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			psmt.setString(1, "%"+title+"%");
+			rs=psmt.executeQuery();
+			
+			if(page>1){
+				rs.absolute((page-1)*length);
+			}
+			
+			int getRecordCount=0;
+			
+			while(rs.next()&&getRecordCount<length){
+				getRecordCount++;
+				String bNum=rs.getString(1);
+				title=rs.getString(2);
+				String content=rs.getString(3);
+				String userid=rs.getString(4);
+				
+				board=new Board();
+				
+				board.setbNum(bNum);
+				board.setTitle(title);
+				board.setContent(content);
+				
+				member=new Member();
+				member.setUserid(userid);
+				board.setMember(member);
+				
+				boardList.add(board);
+				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return boardList;
 	}
 
 	/**
 	 * @param title
 	 */
 	public static int selectBoardListByTitleCount(String title) {
-		/* default generated stub */;
-		return 0;
+		Connection con=null;
+		PreparedStatement psmt=null;
+		String sql=null;
+		ResultSet rs=null;
+		con=ConnectionUtil.getConnection();
+		int boardCount=0;
+		try {
+		sql="SELECT COUNT(b_num) "+
+			  "FROM board " +
+			  "WHERE title LIKE ?";
+		psmt=con.prepareStatement(sql);
+		psmt.setString(1, "%"+title+"%");
+		rs=psmt.executeQuery();
+		
+			if(rs.next()){
+				boardCount=rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return boardCount;
 	}
 
 	/**
@@ -196,16 +275,86 @@ public class BoardDAO {
 	 * @param name
 	 */
 	public static ArrayList<Board> selectBoardListByName(int length, int page, String name) {
-		/* default generated stub */;
-		return null;
+		Connection con=null;
+		PreparedStatement psmt=null;
+		String sql=null;
+		ResultSet rs=null;
+		Board board=null;
+		Member member=null;
+		ArrayList<Board>boardList=new ArrayList<Board>();
+		con=ConnectionUtil.getConnection();
+		try {
+		sql="SELECT b.b_num, b.title, b.content, b.userid, m.name "+
+				  "FROM board b, member m "+
+				  "WHERE b.userid=m.userid AND name LIKE ?";
+			
+				psmt=con.prepareStatement(sql, 
+						ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+				psmt.setString(1, "%"+name+"%");
+				rs=psmt.executeQuery();
+				
+				if(page>1){
+					rs.absolute((page-1)*length);
+				}
+				
+				int getRecordCount=0;
+				
+				while(rs.next()&&getRecordCount<length){
+					getRecordCount++;
+					String bNum=rs.getString(1);
+					String title=rs.getString(2);
+					String content=rs.getString(3);
+					String userid=rs.getString(4);
+					name=rs.getString(5);
+					
+					board=new Board();
+					member=new Member();
+					
+					board.setbNum(bNum);
+					board.setTitle(title);
+					board.setContent(content);
+					
+					member.setUserid(userid);
+					member.setName(name);
+					
+					board.setMember(member);
+					
+					boardList.add(board);
+					
+				}
+					
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			return boardList;
 	}
 
 	/**
 	 * @param name
 	 */
 	public static int selectBoardListByNameCount(String name) {
-		/* default generated stub */;
-		return 0;
+		Connection con=null;
+		PreparedStatement psmt=null;
+		String sql=null;
+		ResultSet rs=null;
+		int boardCount=0;
+		con=ConnectionUtil.getConnection();
+		try {
+		sql="SELECT COUNT(b.b_num) "+
+			  "FROM board b, member m "+
+			  "WHERE b.userid=m.userid AND name LIKE ?";
+			psmt=con.prepareStatement(sql);
+			psmt.setString(1, "%"+name+"%");
+			rs=psmt.executeQuery();
+			
+				if(rs.next()){
+					boardCount=rs.getInt(1);
+				}
+	
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+		return boardCount;
 	}
 
 	/**
@@ -213,16 +362,82 @@ public class BoardDAO {
 	 * @param page
 	 * @param userid
 	 */
-	public ArrayList<Board> selectBoardListByUserid(int length, int page, String userid) {
-		/* default generated stub */;
-		return null;
+	public static ArrayList<Board> selectBoardListByUserid(int length, int page, String userid) {
+		Connection con=null;
+		PreparedStatement psmt=null;
+		String sql=null;
+		ResultSet rs=null;
+		Board board=null;
+		Member member=null;
+		ArrayList<Board>boardList=new ArrayList<Board>();
+		con=ConnectionUtil.getConnection();
+		
+		try {
+		sql="SELECT b.b_num, b.title, b.content, b.userid "+
+			  "FROM board b, member m "+
+			  "WHERE b.userid=m.userid AND b.userid LIKE ?";
+		
+			psmt=con.prepareStatement(sql, 
+				ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			psmt.setString(1, "%"+userid+"%");
+			rs=psmt.executeQuery();
+			
+			if(page>1){
+				rs.absolute((page-1)*length);
+			}
+			
+			int getRecordCount=0;
+			
+			while(rs.next()&&getRecordCount<length){
+				getRecordCount++;
+				String bNum=rs.getString(1);
+				String title=rs.getString(2);
+				String content=rs.getString(3);
+				userid=rs.getString(4);
+				
+				board=new Board();
+				member=new Member();
+				
+				board.setbNum(bNum);
+				board.setTitle(title);
+				board.setContent(content);
+				
+				member.setUserid(userid);
+				board.setMember(member);
+				
+				boardList.add(board);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return boardList;
 	}
 
 	/**
 	 * @param userid
 	 */
 	public static int selectBoardListByUseridCount(String userid) {
-		/* default generated stub */;
-		return 0;
-	}
+		Connection con=null;
+		PreparedStatement psmt=null;
+		String sql=null;
+		ResultSet rs=null;
+		con=ConnectionUtil.getConnection();
+		int boardCount=0;
+		try {
+		sql="SELECT COUNT(b.b_num) "+
+				  "FROM board b, member m "+
+				  "WHERE b.userid=m.userid AND b.userid LIKE ?";
+				psmt=con.prepareStatement(sql);
+				psmt.setString(1, "%"+userid+"%");
+				rs=psmt.executeQuery();
+				
+					if(rs.next()){
+						boardCount=rs.getInt(1);
+					}
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+		return boardCount;
+		}
 }
+
