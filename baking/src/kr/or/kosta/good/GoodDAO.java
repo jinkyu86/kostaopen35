@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import kr.or.kosta.gooddivision.Good_division;
+import kr.or.kosta.recipe.Recipe;
 import kr.or.kosta.util.ConnectionUtil;
 
 public class GoodDAO {
@@ -14,7 +15,7 @@ public class GoodDAO {
 	/**
 	 * 상품추가 
 	 */
-	public void insertGood(Good good) {
+	public static void insertGood(Good good) {
 		Connection con=null;
 		PreparedStatement psmt=null;
 		con=ConnectionUtil.getConnection();
@@ -38,7 +39,7 @@ public class GoodDAO {
 	/**
 	 * 상품리스트 보기
 	 */
-	public ArrayList<Good> selectGoodList(int length, int page) {
+	public static ArrayList<Good> selectGoodList(int length, int page) {
 		Connection con=null;
 		PreparedStatement psmt=null;
 		ResultSet rs=null;
@@ -100,7 +101,7 @@ public class GoodDAO {
 	/**
 	 * 상품상세보기
 	 */
-	public Good selectGood(int goodnum) {
+	public static Good selectGood(int goodnum) {
 		Connection con=null;
 		PreparedStatement psmt=null;
 		ResultSet rs=null;
@@ -146,7 +147,7 @@ public class GoodDAO {
 	/**
 	 * 상품관련레시피보기
 	 */
-	public ArrayList selectRelationRecipe(int recipenum) {
+	public static ArrayList selectRelationRecipe(int recipenum) {
 		/* default generated stub */;
 		return null;
 	}
@@ -154,7 +155,7 @@ public class GoodDAO {
 	/**
 	 * 상품삭제
 	 */
-	public void deleteGood(int goodnum) {
+	public static void deleteGood(int goodnum) {
 		Connection con =null;
 		PreparedStatement psmt=null;
 		con=ConnectionUtil.getConnection();
@@ -172,7 +173,7 @@ public class GoodDAO {
 	/**
 	 * 상품수정
 	 */
-	public void updateGood(Good good) {
+	public static void updateGood(Good good) {
 		Connection con=null;
 		PreparedStatement psmt=null;
 		String sql="update good"+
@@ -194,5 +195,57 @@ public class GoodDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	//레시피관련 상품조회
+	public static ArrayList<Good>selectRecipeList(int recipeNum){
+		Connection con =null;
+		PreparedStatement psmt=null;
+		con=ConnectionUtil.getConnection();
+		ResultSet rs= null;
+		ArrayList<Good> arrayList = new ArrayList<Good>();
+		String sql="";
+		
+		try {
+			sql=" select r.good_num, r.recipe_num, " +
+				 " g.name, g.division, g.good_price, g.qty, g.explantion, g.img, g.g_option " +
+				 " from good_recipe_relation r, good g " +
+				 " where r.good_num=g.good_num and r.recipe_num=? ";
+			psmt=con.prepareStatement(sql);
+			psmt.setInt(1, recipeNum);
+			rs=psmt.executeQuery();
+			
+			
+			while(rs.next()){
+				Good good = new Good();
+				Recipe recipe = new Recipe();
+				Good_division good_division= new Good_division();
+				int good_num =rs.getInt(1);
+				int recipe_num =rs.getInt(2);
+				String name =rs.getString(3);
+				int division =rs.getInt(4);
+				int price =rs.getInt(5);
+				int qty =rs.getInt(6);
+				String explantion =rs.getString(7);
+				String img =rs.getString(8);
+				String gOption =rs.getString(9);
+				
+				good.setGoodNum(good_num);
+				recipe.setRecipeNum(recipe_num);
+				good.setName(name);
+				good_division.setDivision(division);
+				good.setGoodPrice(price);
+				good.setQty(qty);
+				good.setExplantion(explantion);
+				good.setImg(img);
+				good.setOption(gOption);
+				
+				good.setGood_division(good_division);
+				good.setRecipe(recipe);
+
+				arrayList.add(good);
+			}
+		} catch (SQLException e) {e.printStackTrace();}
+		return arrayList;
 	}
 }
