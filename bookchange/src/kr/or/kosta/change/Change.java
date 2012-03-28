@@ -6,17 +6,17 @@ import kr.or.kosta.bookchange.board.Board;
 
 public class Change {
 
-	private Board youBoard;//내가 원하는 물건 보드번호
+	private Board agreeBoard;//내가 원하는 물건 보드번호
 	private Condition condition;//교환가능상태
-	private Board myBoard;//내가 등록한 물건 보드번호
+	private Board demandBoard;//내가 등록한 물건 보드번호
 	private int changeNo;//교환번호
 	private Date changeDate;//교환신청일시
 	
-	public Board getYouBoard() {
-		return youBoard;
+	public Board getAgreeBoard() {
+		return agreeBoard;
 	}
-	public void setYouBoard(Board youBoard) {
-		this.youBoard = youBoard;
+	public void setAgreeBoard(Board agreeBoard) {
+		this.agreeBoard = agreeBoard;
 	}
 	public Condition getCondition() {
 		return condition;
@@ -24,11 +24,11 @@ public class Change {
 	public void setCondition(Condition condition) {
 		this.condition = condition;
 	}
-	public Board getMyBoard() {
-		return myBoard;
+	public Board getDemandBoard() {
+		return demandBoard;
 	}
-	public void setMyBoard(Board myBoard) {
-		this.myBoard = myBoard;
+	public void setDemandBoard(Board demandBoard) {
+		this.demandBoard = demandBoard;
 	}
 	public int getChangeNo() {
 		return changeNo;
@@ -42,13 +42,13 @@ public class Change {
 	public void setChangeDate(Date changeDate) {
 		this.changeDate = changeDate;
 	}
-	
 	@Override
 	public String toString() {
-		return "Change [youBoard=" + youBoard + ", condition=" + condition
-				+ ", myBoard=" + myBoard + ", changeNo=" + changeNo
+		return "Change [agreeBoard=" + agreeBoard + ", condition=" + condition
+				+ ", demandBoard=" + demandBoard + ", changeNo=" + changeNo
 				+ ", changeDate=" + changeDate + "]";
 	}
+	
 	
 	
 }
