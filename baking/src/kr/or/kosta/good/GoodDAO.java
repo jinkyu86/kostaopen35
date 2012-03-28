@@ -38,14 +38,14 @@ public class GoodDAO {
 	/**
 	 * 상품리스트 보기
 	 */
-	public ArrayList selectGoodList(int length, int page) {
+	public ArrayList<Good> selectGoodList(int length, int page) {
 		Connection con=null;
 		PreparedStatement psmt=null;
 		ResultSet rs=null;
 		String sql="select good_num,g.division,good_price,qty,name,explantion,img,g_option,g_name"+
 					 " from good g, good_division gd"+
 					 " where g.division=gd.division";
-		ArrayList goodList = new ArrayList();
+		ArrayList<Good> goodList = new ArrayList<Good>();
 		try {
 			con=ConnectionUtil.getConnection();
 			
@@ -61,7 +61,7 @@ public class GoodDAO {
 			
 			//가져온 레코드 개수
 			int getRecordCount=0;
-			while(rs.next()&&getRecordCount>length){
+			while(rs.next()&&getRecordCount<length){
 				getRecordCount++;
 				int goodNum=rs.getInt(1);
 				int division =rs.getInt(2);
@@ -80,22 +80,67 @@ public class GoodDAO {
 				Good good= new Good();
 				good.setGoodNum(goodNum);
 				good.setGood_division(good_division);
+				good.setGoodPrice(goodPrice);
+				good.setQty(qty);
+				good.setName(name);
+				good.setExplantion(explantion);
+				good.setImg(img);
+				good.setOption(option);
 				
+				goodList.add(good);
 			}
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return null;
+		return goodList;
 	}
 
 	/**
 	 * 상품상세보기
 	 */
 	public Good selectGood(int goodnum) {
-		/* default generated stub */;
-		return null;
+		Connection con=null;
+		PreparedStatement psmt=null;
+		ResultSet rs=null;
+		Good good= new Good();
+		String sql="select g.division,good_price,qty,name,explantion,img,g_option,g_name"+
+					 " from good g, good_division gd"+
+					 " where g.division=gd.division and good_num=?";
+		try {
+			con=ConnectionUtil.getConnection();
+			psmt=con.prepareStatement(sql);
+			psmt.setInt(1, goodnum);
+			rs=psmt.executeQuery();
+			if(rs.next()){
+				int division =rs.getInt(1);
+				int goodPrice=rs.getInt(2);
+				int qty=rs.getInt(3);
+				String name=rs.getString(4);
+				String explantion=rs.getString(5);
+				String img=rs.getString(6);
+				String option=rs.getString(7);
+				String gName=rs.getString(8);
+				
+				Good_division good_division=new Good_division();
+				good_division.setDivision(division);
+				good_division.setgName(gName);
+				
+				good.setGoodNum(goodnum);
+				good.setGood_division(good_division);
+				good.setGoodPrice(goodPrice);
+				good.setQty(qty);
+				good.setName(name);
+				good.setExplantion(explantion);
+				good.setImg(img);
+				good.setOption(option);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return good;
 	}
 
 	/**
