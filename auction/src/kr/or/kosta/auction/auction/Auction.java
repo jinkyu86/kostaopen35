@@ -29,12 +29,12 @@ public class Auction {
 	/**
 	 * 경매 시작시간
 	 */
-	private Date sTime;
+	private String sTime;
 
 	/**
 	 * 경매 마감시간
 	 */
-	private Date eTime;
+	private String eTime;
 
 	/**
 	 * 경매품의 낙찰여부
@@ -77,24 +77,6 @@ public class Auction {
 	public void setImPrice(String imPrice) {
 		this.imPrice = imPrice;
 	}
-
-
-	public Date getsTime() {
-		return sTime;
-	}
-
-	public void setsTime(Date sTime) {
-		this.sTime = sTime;
-	}
-
-	public Date geteTime() {
-		return eTime;
-	}
-
-	public void seteTime(Date eTime) {
-		this.eTime = eTime;
-	}
-
 	public boolean isSold() {
 		return sold;
 	}
@@ -111,6 +93,22 @@ public class Auction {
 		this.cuPrice = cuPrice;
 	}
 
+	public String getsTime() {
+		return sTime;
+	}
+
+	public void setsTime(String sTime) {
+		this.sTime = sTime;
+	}
+
+	public String geteTime() {
+		return eTime;
+	}
+
+	public void seteTime(String eTime) {
+		this.eTime = eTime;
+	}
+
 	@Override
 	public String toString() {
 		return "Auction [good=" + good + ", aNum=" + aNum + ", sPrice="
@@ -118,5 +116,7 @@ public class Auction {
 				+ ", eTime=" + eTime + ", sold=" + sold + ", cuPrice="
 				+ cuPrice + "]";
 	}
+
+
 
 }
