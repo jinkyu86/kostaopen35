@@ -1,7 +1,5 @@
 package kr.or.kosta.betting.team.test;
 
-import static org.junit.Assert.*;
-
 import java.util.ArrayList;
 
 import kr.or.kosta.betting.team.Team;
