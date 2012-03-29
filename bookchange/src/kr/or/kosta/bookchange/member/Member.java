@@ -21,7 +21,7 @@ public class Member {
 	 * 비밀번호
 	 */
 	private String pw;
-
+    
 	public String getEmail() {
 		return email;
 	}

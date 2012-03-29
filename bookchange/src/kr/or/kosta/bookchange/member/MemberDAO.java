@@ -92,7 +92,7 @@ public class MemberDAO {
 		Member member=null;
 		try {
 			con=ConnectionUtil.getConnection();
-			sql="select email,tel,address from tb_member where email=?";
+			sql="select email,tel,address,pw from tb_member where email=?";
 			ps=con.prepareStatement(sql);
 			ps.setString(1, email);
 			rs=ps.executeQuery();
@@ -100,11 +100,12 @@ public class MemberDAO {
 				 email=rs.getString(1);
 				 String tel=rs.getString(2);
 				 String address=rs.getString(3);
-				 
+				 String pw=rs.getString(4);
 				 member=new Member();
 				 member.setEmail(email);
 				 member.setTel(tel);
 				 member.setAddress(address);
+				 member.setPw(pw);
 				
 			}
 		} catch (Exception e) {
@@ -186,5 +187,45 @@ public class MemberDAO {
 			
 		}
 	
+	}
+	public static ArrayList<Member> selectMemberListByEmail(int length, int page, String email) {
+		/* default generated stub */;
+		Connection con=null;
+		PreparedStatement ps=null;
+		String sql=null;
+		ResultSet rs=null;
+		ArrayList<Member> memberList=new ArrayList<Member>();
+		try {
+			con=ConnectionUtil.getConnection();
+			sql="select email,tel,address,pw from tb_member where email like ?";
+			ps=con.prepareStatement(sql,ResultSet.TYPE_SCROLL_INSENSITIVE,
+										ResultSet.CONCUR_READ_ONLY);
+			ps.setString(1, "%"+email+"%");
+			rs=ps.executeQuery();
+			if(page>1){
+				rs.absolute((page-1)*length);
+			}
+			//가져온 레코드 개수
+			int getRecord=0;
+			while (rs.next()&&getRecord<length) {
+				
+				getRecord++;
+				email=rs.getString(1);
+				String tel=rs.getString(2);
+				String address=rs.getString(3);
+				String pw=rs.getString(4);
+				
+				Member member=new Member();
+				member.setEmail(email);
+				member.setAddress(address);
+				member.setTel(tel);
+				member.setPw(pw);
+				memberList.add(member);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		return memberList;
 	}
 }
