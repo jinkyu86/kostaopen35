@@ -9,4 +9,14 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
+   <servlet>
+    <description></description>
+    <display-name>BoardService</display-name>
+    <servlet-name>BoardService</servlet-name>
+    <servlet-class>kr.or.kosta.bookchange.board.BoardService</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>BoardService</servlet-name>
+    <url-pattern>/BoardService</url-pattern>
+  </servlet-mapping>
 </web-app>
