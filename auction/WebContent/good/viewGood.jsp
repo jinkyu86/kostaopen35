@@ -26,5 +26,11 @@
 			<td><img src="auction/gphoto/${GOOD.photo }"></td>
 		</tr>
 	</table>
+	 <p align="center">
+		 <a href="/auction/GoodService?method=editGoodForm&bNum=${GOOD.bNum}">물품정보 수정</a>
+		 </p>
+		 <p align="center">
+		 <a href="/auction/GoodService?method=removeGood&bNum=${GOOD.bNum}">물품 삭제</a>
+	 </p>
 </body>
 </html>
