@@ -5,7 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 
 import kr.or.kosta.betting.betting.Betting;
 import kr.or.kosta.betting.loc.Loc;
