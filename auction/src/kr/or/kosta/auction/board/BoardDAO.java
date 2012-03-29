@@ -190,6 +190,28 @@ public class BoardDAO {
 		}
 		return boardList;
 	}
+	
+	public static int selectBoardCount(){
+		Connection con=null;
+		PreparedStatement psmt=null;
+		String sql=null;
+		ResultSet rs=null;
+		int boardCount=0;
+		try {
+			con=ConnectionUtil.getConnection();
+			sql=" SELECT  count(b_num) " +
+					"  FROM  board ";
+			
+				psmt=con.prepareStatement(sql);
+				rs=psmt.executeQuery();
+				if(rs.next()){
+					boardCount=rs.getInt(1);
+				}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return boardCount;
+	}
 
 	public static ArrayList<Board> selectBoardListByTitle(int length, int page, String title) {
 		Connection con=null;
@@ -242,9 +264,6 @@ public class BoardDAO {
 		return boardList;
 	}
 
-	/**
-	 * @param title
-	 */
 	public static int selectBoardListByTitleCount(String title) {
 		Connection con=null;
 		PreparedStatement psmt=null;
@@ -269,99 +288,6 @@ public class BoardDAO {
 		return boardCount;
 	}
 
-	/**
-	 * @param length
-	 * @param page
-	 * @param name
-	 */
-	public static ArrayList<Board> selectBoardListByName(int length, int page, String name) {
-		Connection con=null;
-		PreparedStatement psmt=null;
-		String sql=null;
-		ResultSet rs=null;
-		Board board=null;
-		Member member=null;
-		ArrayList<Board>boardList=new ArrayList<Board>();
-		con=ConnectionUtil.getConnection();
-		try {
-		sql="SELECT b.b_num, b.title, b.content, b.userid, m.name "+
-				  "FROM board b, member m "+
-				  "WHERE b.userid=m.userid AND name LIKE ?";
-			
-				psmt=con.prepareStatement(sql, 
-						ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-				psmt.setString(1, "%"+name+"%");
-				rs=psmt.executeQuery();
-				
-				if(page>1){
-					rs.absolute((page-1)*length);
-				}
-				
-				int getRecordCount=0;
-				
-				while(rs.next()&&getRecordCount<length){
-					getRecordCount++;
-					String bNum=rs.getString(1);
-					String title=rs.getString(2);
-					String content=rs.getString(3);
-					String userid=rs.getString(4);
-					name=rs.getString(5);
-					
-					board=new Board();
-					member=new Member();
-					
-					board.setbNum(bNum);
-					board.setTitle(title);
-					board.setContent(content);
-					
-					member.setUserid(userid);
-					member.setName(name);
-					
-					board.setMember(member);
-					
-					boardList.add(board);
-					
-				}
-					
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			return boardList;
-	}
-
-	/**
-	 * @param name
-	 */
-	public static int selectBoardListByNameCount(String name) {
-		Connection con=null;
-		PreparedStatement psmt=null;
-		String sql=null;
-		ResultSet rs=null;
-		int boardCount=0;
-		con=ConnectionUtil.getConnection();
-		try {
-		sql="SELECT COUNT(b.b_num) "+
-			  "FROM board b, member m "+
-			  "WHERE b.userid=m.userid AND name LIKE ?";
-			psmt=con.prepareStatement(sql);
-			psmt.setString(1, "%"+name+"%");
-			rs=psmt.executeQuery();
-			
-				if(rs.next()){
-					boardCount=rs.getInt(1);
-				}
-	
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-		return boardCount;
-	}
-
-	/**
-	 * @param length
-	 * @param page
-	 * @param userid
-	 */
 	public static ArrayList<Board> selectBoardListByUserid(int length, int page, String userid) {
 		Connection con=null;
 		PreparedStatement psmt=null;
@@ -413,9 +339,6 @@ public class BoardDAO {
 		return boardList;
 	}
 
-	/**
-	 * @param userid
-	 */
 	public static int selectBoardListByUseridCount(String userid) {
 		Connection con=null;
 		PreparedStatement psmt=null;

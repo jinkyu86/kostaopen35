@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import kr.or.kosta.auction.member.Member;
+import kr.or.kosta.auction.util.PageUtil;
 
 public class BoardService extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -146,7 +147,36 @@ public class BoardService extends HttpServlet {
 	}
 
 	private void searchBoardList(HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response) throws ServletException, IOException {
+		int page=1;
+		if(request.getParameter("page")!=null){
+			page=Integer.parseInt(request.getParameter("page"));
+		}
+		int length=10;
+		
+		ArrayList<Board> boardList=null;
+		int boardCount = 0;
+		if(request.getParameter("keyword")==null||request.getParameter("keyword").equals("")){
+			boardList = BoardDAO.selectBoardList(length, page);
+			boardCount = BoardDAO.selectBoardCount();
+		}else{
+			if(request.getParameter("column").equals("title")){
+				boardList = BoardDAO.selectBoardListByTitle(length, page, request.getParameter("keyword"));
+				boardCount = BoardDAO.selectBoardListByTitleCount(request.getParameter("keyword"));
+			}else{
+				boardList = BoardDAO.selectBoardListByUserid(length, page, request.getParameter("keyword"));
+				boardCount = BoardDAO.selectBoardListByUseridCount(request.getParameter("keyword"));
+			}
+		}
 
+		request.setAttribute("BOARD_LIST", boardList);
+
+		String pageLinkTag=PageUtil.generate(page, boardCount, length, 
+				"/auction/BoardService?method=searchBoardList&column=" +
+				request.getParameter("column") + "&keyword=" + request.getParameter("keyword"));
+		request.setAttribute("PAGE_LINK_TAG", pageLinkTag);
+		RequestDispatcher rd=request.getRequestDispatcher("/board/viewBoardList.jsp");
+
+		rd.forward(request, response);
 	}
 }
