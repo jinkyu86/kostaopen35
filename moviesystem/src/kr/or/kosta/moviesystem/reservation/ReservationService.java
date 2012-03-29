@@ -11,9 +11,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
+
 import kr.or.kosta.moviesystem.member.Member;
 import kr.or.kosta.moviesystem.movie.Movie;
 import kr.or.kosta.moviesystem.movie.MovieDAO;
+import kr.or.kosta.moviesystem.screentime.ScreenTime;
+
 
 
 /**
@@ -63,6 +66,10 @@ public class ReservationService extends HttpServlet {
 
 	private void addReservationForm(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+//				Member member=new Member();
+//				member.setUserid("jun123");
+				String userid=request.getParameter("userid");
+				request.setAttribute("userid",userid);
 				int MovieTotalCnt = MovieDAO.selectMovieCount("");
 				//1.전체영화 리스트 조회
 				ArrayList<Movie>movieList=MovieDAO.selectMovieList(1,MovieTotalCnt, "");
@@ -78,7 +85,47 @@ public class ReservationService extends HttpServlet {
 
 	private void addReservation(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+		//파라미터 정보를 리턴
 		String userid=request.getParameter("userid");
+		String mnum=request.getParameter("mname");
+		String scrnum=request.getParameter("time");
+		String resQty1=request.getParameter("resQty");
+		long resQty=Integer.parseInt(resQty1);
+		
+		
+		//Reservation에 정보저장
+		System.out.println(userid+""+mnum+""+scrnum+""+resQty);
+		Reservation reservation=new Reservation();
+		Member member =new Member();
+		Movie movie =new Movie();
+		ScreenTime screenTime = new ScreenTime();
+		member.setUserid(userid);//id
+		reservation.setMember(member);
+		movie.setMnum(mnum);//영화번호
+		reservation.setMovie(movie);
+		screenTime.setScrnum(scrnum);//상영번호
+		reservation.setScreenTime(screenTime);
+		reservation.setResQty(resQty);//좌석수
+		
+		//ReservationDAO reservationDAO=new ReservationDAO();
+		//내가보는 영화중 가장 최근에 예약한 예약번호를 알아낸후
+		long rnum= ReservationDAO.selectReservationResNum(scrnum);
+		//그 예약번호의 첫번째 좌석과 좌석수를 얻어와서
+		long snum= ReservationDAO.selectReservationSeatNum(rnum);
+		long qty= ReservationDAO.selectReservationQty(rnum);
+		System.out.println("rnum"+rnum+"snum="+snum+" qty="+qty);
+		//지금 예매하는 사람의 좌석을 지정해준다.
+		reservation.setSeatnum(snum+qty);
+		reservation.setTotalPrice(resQty*8000);
+		//DB저장
+		ReservationDAO.insertReservation(reservation);
+		//test.jsp로 이동
+		RequestDispatcher rd=
+				request.getRequestDispatcher(
+						"/ReservationService?method=test");
+		rd.forward(request, response);
+		
+		
 		
 	}
 
