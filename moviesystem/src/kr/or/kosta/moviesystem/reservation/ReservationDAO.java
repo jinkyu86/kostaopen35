@@ -60,14 +60,14 @@ public class ReservationDAO {
 		ArrayList<Reservation>reservationList=new ArrayList<Reservation>();
 		try{
 			con=ConnectionUtil.getConnection();
-			sql="SELECT   m.m_name,s.time,r.seatnum,r.res_date" +
+			sql="SELECT   m.m_name,s.time,r.seat_num,r.res_date" +
 					
-					"  FROM  RESERVATION r ,MEMBER mem"+
+					"  FROM  RESERVATION r ,MEMBER mem,"+
 					"                   MOVIE m,SCREENING_TIME s " +
-					"  WHERE  m.userid=r.userid AND  r.scr_num=s.scr_num" +
+					"  WHERE  mem.userid=r.userid AND  r.scr_num=s.scr_num" +
 					"                      AND r.m_num=m.m_num " +
-					"                      AND  m.userid=?" +
-					"    ORDER BY res_date  DESC";
+					"                      AND  r.userid=?" +
+					"    ORDER BY r.res_date  DESC";
 			//rs.absolute()가  가능하도록 설정
 			psmt=con.prepareStatement(sql,
 					ResultSet.TYPE_SCROLL_INSENSITIVE,
@@ -192,16 +192,99 @@ public class ReservationDAO {
 	}
 
 	/**
-	 * 영화번호와 상영시간으로 예약한 수를 확인할 수 있는 기능
+	 * 예매번호로 예약한 첫번째 좌석번호를 확인 할 수 있는 기능
 	 * 
-	 * @param scrnum
-	 * @param mnum
+	 * 
 	 */
-	public int selectReservationSeatCount(Number scrnum, Number mnum) {
-		/* default generated stub */;
-		return 0;
+	public static long selectReservationSeatNum(long Res_num) {
+		Connection con =null;
+		PreparedStatement psmt=null;
+		String sql=null;//쿼리문 저장할 곳
+		ResultSet rs=null;//커리문의 주소를 받아온다.(rs.next()는 쿼리문이있으면 true 없으면 flase
+		long seatnum=0;
+		try{
+			con=ConnectionUtil.getConnection();
+			sql="SELECT seat_num"+
+			       " From reservation"+
+				   " WHERE res_num=?";
+			//rs.absolute()가  가능하도록 설정
+			psmt=con.prepareStatement(sql);
+			psmt.setLong(1,Res_num);
+			rs=psmt.executeQuery();//쿼리 결과를 rs에 저장
+			if(rs.next()){
+			String seat_num=rs.getString(1);
+			seatnum=Integer.parseInt(seat_num);
+			}
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
+		return seatnum;
 	}
-
+	
+	
+	/**
+	 * 예매번호로 예약한 수를 확인할 수 있는 기능
+	 * 
+	 * 
+	 */
+	public static long selectReservationQty(long res_num) {
+		Connection con =null;
+		PreparedStatement psmt=null;
+		String sql=null;//쿼리문 저장할 곳
+		ResultSet rs=null;//커리문의 주소를 받아온다.(rs.next()는 쿼리문이있으면 true 없으면 flase
+		long Qty=0;
+		try{
+			con=ConnectionUtil.getConnection();
+			sql="SELECT res_qty"+
+			       " From reservation"+
+				   " WHERE res_num=?";
+			//rs.absolute()가  가능하도록 설정
+			psmt=con.prepareStatement(sql);
+			psmt.setLong(1,res_num);
+			rs=psmt.executeQuery();//쿼리 결과를 rs에 저장
+			if(rs.next()){
+			String qty=rs.getString(1);
+			Qty=Integer.parseInt(qty);
+			}
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
+		return Qty;
+	}
+	
+	
+	/**
+	 * SCR_NUM 넘버가 같은 사람중 RES_NUM이 가장 큰사람의 RES_NUM
+	 * 
+	 * 
+	 */
+	public static long selectReservationResNum(String scr_num) {
+		Connection con =null;
+		PreparedStatement psmt=null;
+		String sql=null;//쿼리문 저장할 곳
+		ResultSet rs=null;//커리문의 주소를 받아온다.(rs.next()는 쿼리문이있으면 true 없으면 flase
+		long res_num=0;
+		try{
+			con=ConnectionUtil.getConnection();
+			sql="SELECT max(res_num)"+
+			       " From reservation"+
+				   " WHERE scr_num=?";
+			//rs.absolute()가  가능하도록 설정
+			psmt=con.prepareStatement(sql);
+			psmt.setString(1,scr_num);
+			rs=psmt.executeQuery();//쿼리 결과를 rs에 저장
+			if(rs.next()){
+			 String resnum=rs.getString(1);
+			 res_num=Integer.parseInt(resnum);
+			}
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
+		
+		return res_num;
+	}
+	
+	
 	/**
 	 * 예약번호와 회원번호로 예약된 정보를 찾을 수 있는 기능
 	 * 
