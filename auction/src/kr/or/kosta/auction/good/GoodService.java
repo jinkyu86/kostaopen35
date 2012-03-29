@@ -102,7 +102,7 @@ public class GoodService extends HttpServlet {
 		
 		GoodDAO.updateGood(good);
 		
-		RequestDispatcher rd=request.getRequestDispatcher("/GoodService?method=viewGood"+"&num"+num);
+		RequestDispatcher rd=request.getRequestDispatcher("/GoodService?method=viewGood"+"&gNum"+num);
 		rd.forward(request, response);
 
 	}
@@ -114,9 +114,7 @@ public class GoodService extends HttpServlet {
 		
 		Good good=GoodDAO.selectGood(num);
 		
-		ArrayList<Good>goodList=GoodDAO.selectGoodList();
-		
-		request.setAttribute("GOOD_LIST", goodList);
+		request.setAttribute("GOOD", good);
 		
 		RequestDispatcher rd=request.getRequestDispatcher("/good/editGood.jsp");
 		rd.forward(request, response);
