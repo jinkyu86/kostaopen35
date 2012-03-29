@@ -21,13 +21,11 @@ public class MemberDAO {
 		try{
 		psmt = con.prepareStatement("INSERT INTO MEMBER" +
 		                         " (userid,pw,email,name,coin,emoney)"+
-				                  " VALUES(?,?,?,?,?,?)");
+				                  " VALUES(?,?,?,?,'100','50')");
 		psmt.setString(1, member.getUserid());
 		psmt.setString(2, member.getPw());
 		psmt.setString(3, member.getEmail());
 		psmt.setString(4, member.getName());
-		psmt.setString(5, member.getCoin());
-		psmt.setString(6, member.getEmoney());
 		psmt.executeUpdate();
 		}catch (Exception e){
 			e.printStackTrace();

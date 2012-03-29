@@ -5,10 +5,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<title>멤버추가</title>
+<title>회원추가</title>
 </head>
 <body>
-	<h1 align="center">멤버추가</h1>
+	<h1 align="center">회원추가</h1>
 	<form  action="/member/MemberService" 
 		method="post">
 		<input type="hidden"  name="method"
@@ -31,14 +31,6 @@
 				<td><input type="text" name="name"></td>
 			</tr>
 			<tr>
-				<td>코인</td>
-				<td><input type="text" name="coin"></td>
-				</tr>
-			<tr>
-				<td>E머니</td>
-				<td><input type="text" name="emoney"></td>
-				</tr>	
-				<tr>
 					<td>
 						<input type="submit" value="멥버추가"/>
 					</td>
