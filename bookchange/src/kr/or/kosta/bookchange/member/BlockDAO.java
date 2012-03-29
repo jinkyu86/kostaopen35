@@ -236,7 +236,7 @@ public class BlockDAO {
 	 * 
 	 * @param resultNo
 	 */
-	public static int selectBlockbyResultCount(int resultNo) {
+	public static int selectBlockbyResultCount(String resultNo) {
 		Connection con=null;
 		PreparedStatement ps=null;
 		String sql=null;
@@ -247,16 +247,16 @@ public class BlockDAO {
 			sql="select count(blockcondition_result) from tb_block" +
 				" where blockcondition_result=?";
 			ps=con.prepareStatement(sql);
-			ps.setInt(1, resultNo);
+			ps.setString(1, resultNo);
 			rs=ps.executeQuery();
 			if(rs.next()){
 				blockCount=rs.getInt(1);
 			}
-			resultNo=blockCount;
+			
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
-		return resultNo;
+		return blockCount;
 	}
 	
 }

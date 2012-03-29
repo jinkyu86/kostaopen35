@@ -228,4 +228,31 @@ public class MemberDAO {
 		
 		return memberList;
 	}
+	/**
+	 * 전체 회원수 리턴
+	 */
+	public static int selectMemberCount(String email) {
+		Connection con=null;
+		PreparedStatement ps=null;
+		String sql=null;
+		ResultSet rs=null;
+		
+		int memberCount=0;
+		
+		try {
+			con=ConnectionUtil.getConnection();
+			sql="select count(email) from tb_member where email like ?"; 
+			ps=con.prepareStatement(sql);
+			ps.setString(1, "%"+email+"%");
+			rs=ps.executeQuery();
+			if(rs.next()){
+				memberCount=rs.getInt(1);
+			}
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		return memberCount;
+	}
 }

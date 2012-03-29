@@ -9,7 +9,7 @@ public class BlockDAOTestResultCount {
 
 	@Test
 	public void test() {
-		int blockResultCount=BlockDAO.selectBlockbyResultCount(0);
+		int blockResultCount=BlockDAO.selectBlockbyResultCount("0");
 		System.out.println(blockResultCount);
 	}
 

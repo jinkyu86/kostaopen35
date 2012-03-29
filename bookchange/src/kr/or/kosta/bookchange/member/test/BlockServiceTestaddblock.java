@@ -6,6 +6,10 @@ import java.io.IOException;
 
 import javax.servlet.ServletException;
 
+import kr.or.kosta.bookchange.member.Block;
+import kr.or.kosta.bookchange.member.BlockDAO;
+import kr.or.kosta.bookchange.member.BlockService;
+import kr.or.kosta.bookchange.member.Member;
 import kr.or.kosta.bookchange.member.MemberService;
 
 import org.junit.Test;
@@ -13,26 +17,26 @@ import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.mock.web.MockHttpSession;
 
-public class BlockServiceTestaddmember {
+public class BlockServiceTestaddblock {
 
 	@Test
-	public void test() throws ServletException,IOException {
+	public void test() throws IOException, ServletException {
 		MockHttpServletRequest request=new MockHttpServletRequest();
-		request.addParameter("email", "hogo@nate.com");
-		request.addParameter("tel", "02-123-4531");
-		request.addParameter("address", "°æºÏ Ã¢¿ø");
-		request.addParameter("pw", "1234");
+	
+		request.addParameter("blockno", "21");
+		request.addParameter("blockemail", "gohome@naver.com");
+		request.addParameter("registeremail", "minwoo@naver.com");
 		
 		MockHttpServletResponse response=new MockHttpServletResponse();
 		
 		MockHttpSession session=new MockHttpSession();
 		request.setSession(session);
 		
-		MemberService service=new MemberService();
-		service.addMember(request, response);
+		BlockService service=new BlockService();
+		service.addBlock(request, response);
+		System.out.println(service);
 	
-		System.out.println(request);
-		System.out.println(response);
+		
 	}
 
 }

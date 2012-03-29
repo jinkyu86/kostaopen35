@@ -16,6 +16,7 @@ public class MemberService extends HttpServlet {
 
 
 	private static final long serialVersionUID = 1L;
+	
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request,response);
@@ -179,7 +180,7 @@ public class MemberService extends HttpServlet {
 		//학생정보리턴 값이 null 값이 아니거나 이전 비번과 입력비번이 같지 않을때 비번오류
 		if(member!=null){
 			if(!member.getPw().equals(pw)){
-				request.setAttribute("Error", "비밀번호 오류");
+				request.setAttribute("ERROR", "비밀번호 오류");
 			}else {
 				HttpSession session=request.getSession();
 				session.setAttribute("LOGIN_EMAIL",member);
@@ -313,14 +314,18 @@ public class MemberService extends HttpServlet {
 		}else{
 				memberList=
 							MemberDAO.selectMemberListByEmail(length, page, request.getParameter("keyword"));
-				request.setAttribute("MEMBER_LIST",memberList);				
-		}		
+				memberCount=
+						MemberDAO.selectMemberCount(request.getParameter("keyword"));
+				
+							
+		}
 		
+		request.setCharacterEncoding("utf-8");
+		request.setAttribute("MEMBER_LIST",memberList);	
 		String pageLink=
 				PageUtil.generate(page, memberCount, length, "/MemberService?" +
 						"method=searchMemberList&keyword=" +
-						request.getParameter("keyword")+
-						"&email="+request.getParameter("keyword"));
+						request.getParameter("keyword"));
 		request.setAttribute("PAGE_LINK", pageLink);
 
 		RequestDispatcher rd=request.getRequestDispatcher("/member/viewMemberList.jsp");
