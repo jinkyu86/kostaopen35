@@ -9,6 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import kr.or.kosta.good.Good;
+import kr.or.kosta.good.GoodDAO;
+
 
 
 public class RecipeService {
@@ -80,8 +83,12 @@ public class RecipeService {
 
 //			데이터베이스에서 레시피정보 조회
 			Recipe recipe =RecipeDAO.selectRecipe(recipeNum);
-//			request에 레시피정보 저장
+//			레시피관련 상품정보 조회
+			ArrayList<Good>recipeRelativeGoodList=GoodDAO.selectRecipeList(recipeNum);
+			
+//			request에 레시피정보, 레시피관련 상품정보 저장
 			request.setAttribute("RECIPE", recipe);
+			request.setAttribute("RECIPE_GOODLIST", recipeRelativeGoodList);
 			
 			RequestDispatcher rd =request.getRequestDispatcher("/recipe/viewRecipe.jsp");
 			rd.forward(request, response);
