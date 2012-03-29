@@ -233,21 +233,43 @@ public class BoardService extends HttpServlet {
 			page=Integer.parseInt(request.getParameter("page"));
 		}
 		
-		int length=5;
+		int length=10;
 		
 		ArrayList<Board> boardList=null;
 		int boardCount=0;
 		
-		if(request.getParameter("keyword")==null||request.getParameter("keyword").equals("")){
+		/*if(request.getParameter("keyword")==null||request.getParameter("keyword").equals("")){
 			boardList=BoardDAO.selectBoardList(length, page);
-			boardCount=BoardDAO.selectBoardCount();
-		}else{
-			if(request.getParameter("column").equals("categoryName")){
-				boardList=BoardDAO.selectBoardListbyCategory(length, page, request.getParameter("keyword"));
-				boardCount=BoardDAO.selectBoardCategoryCount(request.getParameter("keyword"));
+			boardCount=BoardDAO.selectBoardCount();		
+		}*/
+		
+		if(!request.getParameter("categoryNo").equals("")){
+			if(request.getParameter("column").equals("title")){
+				if(request.getParameter("keyword")==null||request.getParameter("keyword").equals("")){
+					boardList=BoardDAO.selectBoardListbyCategory(length, page, request.getParameter("categoryNo"));
+					boardCount=BoardDAO.selectBoardCategoryCount(request.getParameter("categoryNo"));
+					}else{
+					boardList=BoardDAO.selectBoardListbyCategoryandTitle(length, page, request.getParameter("categoryNo"), request.getParameter("keyword"));
+					boardCount=BoardDAO.selectBoardCategoryandTitleCount(request.getParameter("categoryNo"), request.getParameter("keyword"));
+					}
+				}else {
+				boardList=BoardDAO.selectBoardListbyCategoryandEmail(length, page,request.getParameter("categoryNo"), request.getParameter("keyword"));
+				boardCount=BoardDAO.selectBoardCategoryandEmailCount(request.getParameter("categoryNo"), request.getParameter("keyword"));
+			}
+		}
+		
+		if(request.getParameter("categoryNo").equals("")){
+			if(request.getParameter("column").equals("title")){
+				if(request.getParameter("keyword")==null||request.getParameter("keyword").equals("")){
+					boardList=BoardDAO.selectBoardList(length, page);
+					boardCount=BoardDAO.selectBoardCount();
+					}else{
+					boardList=BoardDAO.selectBoardListbyTitle(length, page, request.getParameter("keyword"));
+					boardCount=BoardDAO.selectBoardTitleCount(request.getParameter("keyword"));
+					}
 			}else{
-				boardList=BoardDAO.selectBoardListbyTitle(length, page, request.getParameter("keyword"));
-				boardCount=BoardDAO.selectBoardTitleCount(request.getParameter("keyword"));
+				boardList=BoardDAO.selectBoardListbyEmail(length, page, request.getParameter("keyword"));
+				boardCount=BoardDAO.selectBoardEmailCount(request.getParameter("keyword"));
 			}
 		}
 		
