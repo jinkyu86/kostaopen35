@@ -6,43 +6,15 @@ import kr.or.kosta.recipe.Recipe;
 
 public class Good {
 
-	private Good_division good_division;
-	private Recipe recipe;
-	
-	/**
-	 * 상품번호
-	 */
-	private int goodNum;
-
-	/**
-	 * 상품가격
-	 */
-	private int goodPrice;
-
-	/**
-	 * 상품수량
-	 */
-	private int qty;
-
-	/**
-	 * 상품이름
-	 */
-	private String name;
-
-	/**
-	 * 상품구분
-	 */
-	private String explantion;
-
-	/**
-	 * 이미지
-	 */
-	private String img;
-
-	/**
-	 * 상품옵션
-	 */
-	private String option;
+	private Good_division good_division; //디비전: has a
+	private Recipe recipe; //레시피 : 다대다 관계
+	private int goodNum; //상품번호
+	private int goodPrice; //상품가격
+	private int qty; //상품수량
+	private String name; //상품이름
+	private String explantion; //상품구분
+	private String img;//이미지
+	private String option;//상품옵션
 
 	public Good_division getGood_division() {
 		return good_division;
