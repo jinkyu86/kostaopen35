@@ -41,8 +41,8 @@ public class BoardDAO {
 					" content=?" +
 					" WHERE b_num=?" );
 			
-			psmt.setString(1,board.getTitle());
-			psmt.setString(2,board.getContent());
+			psmt.setString(1, board.getTitle());
+			psmt.setString(2, board.getContent());
 			psmt.setString(3, board.getbNum());
 			
 			psmt.executeUpdate();
