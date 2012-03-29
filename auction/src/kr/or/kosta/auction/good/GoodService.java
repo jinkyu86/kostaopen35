@@ -72,7 +72,7 @@ public class GoodService extends HttpServlet {
 		
 		GoodDAO.insertGood(good);
 		
-		RequestDispatcher rd=request.getRequestDispatcher("/GoodService?method=viewGoodList.jsp");
+		RequestDispatcher rd=request.getRequestDispatcher("/GoodService?method=viewGoodList");
 		rd.forward(request, response);
 
 	}
@@ -88,6 +88,7 @@ public class GoodService extends HttpServlet {
 
 	private void editGood(HttpServletRequest request,
 			HttpServletResponse response) throws IOException, ServletException{
+		
 		String num=request.getParameter("gNum");
 		String name=request.getParameter("gName");
 		String detail=request.getParameter("detail");
@@ -102,7 +103,7 @@ public class GoodService extends HttpServlet {
 		
 		GoodDAO.updateGood(good);
 		
-		RequestDispatcher rd=request.getRequestDispatcher("/GoodService?method=viewGood"+"&gNum"+num);
+		RequestDispatcher rd=request.getRequestDispatcher("/GoodService?method=viewGood"+"gNum="+num);
 		rd.forward(request, response);
 
 	}
