@@ -5,15 +5,16 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 
+import kr.or.kosta.betting.loc.Loc;
 import kr.or.kosta.betting.match.Match;
+import kr.or.kosta.betting.team.Team;
 import kr.or.kosta.betting.util.ConnectionUtil;
 
 public class BettingDAO {
 
-	public ArrayList<Betting> selectBettingList(int page, int length) {
-		
+	public static ArrayList<Betting> selectBettingList(int page, int length) {
+	 
 		/**
 		 * 베팅 데이터의 모든 데이터 조회 하는 메서드
 		 * 
@@ -25,17 +26,27 @@ public class BettingDAO {
 		PreparedStatement psmt = null;
 		String sql = null;
 		ResultSet rs = null;
-		ArrayList<Betting> BettingList = new ArrayList<Betting>();
+		ArrayList<Betting> bettingList = new ArrayList<Betting>();
 		try {
 			con = ConnectionUtil.getConnection();
-			sql = "SELECT  b.bat_num, b.bat_rating, b.sele_rating, b.tot_mineral, b.distinguish_team, b.team_num" +
-			         "m.match_num"+
-			         " FROM  b.betting, m.match"+
-					 " Where b.match_num=m.match_num";
+			sql = "SELECT m.match_num,m.match_result_score"+
+					",m.home_team_num,h.team_name,h.photo"+
+					",m.away_team_num,a.team_name,a.photo"+
+					",m.win_team_num,w.team_name,w.photo"+
+					",m.loc_num,l.loc"+
+					",b.bet_num, b.bet_rating, b.sele_rating, b.tot_mineral"+
+			        ",b.distinguish_team,m.match_time"+
+					" FROM betting b,match m,team h,team a,team w,loc l"+
+					 " WHERE m.home_team_num=h.team_num"+
+					 " AND m.away_team_num=a.team_num"+
+					 " AND m.win_team_num=w.team_num(+)"+
+					 " AND m.loc_num=l.loc_num"+
+					 " AND m.match_num=b.match_num";
 			
 			psmt = con.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE,
 					ResultSet.CONCUR_READ_ONLY);
 			rs = psmt.executeQuery();
+			
 			if (page > 1) {
 				rs.absolute((page - 1) * length);
 			}
@@ -43,42 +54,84 @@ public class BettingDAO {
 			while(rs.next()&&getRecordCount<length){
 			    getRecordCount++;
 				
-			    String batNum = rs.getString(1);
-				Long batRating = rs.getLong(2);
-				Long seleRating = rs.getLong(3);
-				Long totMineral = rs.getLong(4);
-				String distinguishTeam = rs.getString(5);
-				String teamNum = rs.getString(6);
-				String matchNum = rs.getString(7);
+			    String matchNum=rs.getString(1);
+				String matchScore = rs.getString(2);
+				String homeNum = rs.getString(3);
+				String hTeamName = rs.getString(4);
+				String hPhoto = rs.getString(5);
+				String awayNum = rs.getString(6);
+				String aTeamName = rs.getString(7);
+				String aPhoto = rs.getString(8);
+				String winNum = rs.getString(9);
+				String wTeamName = rs.getString(10);
+				String wPhoto = rs.getString(11);
+				String locNum=rs.getString(12);
+				String loc1 = rs.getString(13);
+			    String batNum = rs.getString(14);
+				Long batRating = rs.getLong(15);
+				Long seleRating = rs.getLong(16);
+				Long totMineral = rs.getLong(17);
+				String distinguishTeam = rs.getString(18);
+				String matchTime = rs.getString(19);
 				
 				Betting betting = new Betting();
-				betting.setNum(batNum);;
+				betting.setNum(batNum);
 				betting.setBatRating(batRating);
 				betting.setSeleRating(seleRating);
 				betting.setTotMineral(totMineral);
 				betting.setDistnum(distinguishTeam);
-				betting.setTeamNum(teamNum);
-				
-				Match match=new Match();
+											
+				Match match = new Match();
 				match.setNum(matchNum);
-
-				BettingList.add(betting);
+				match.setMatchTime(matchTime);
+				match.setScore(matchScore);
+				
+				Team homeTeam = new Team();
+				homeTeam.setNum(homeNum);
+				homeTeam.setName(hTeamName);
+				homeTeam.setPhoto(hPhoto);
+				
+				Team awayTeam = new Team();
+				awayTeam.setNum(awayNum);
+				awayTeam.setName(aTeamName);
+				awayTeam.setPhoto(aPhoto);
+				
+				Team winTeam = new Team();
+				winTeam.setName(winNum);
+				winTeam.setName(wTeamName);
+				winTeam.setPhoto(wPhoto);
+				
+				Loc loc = new Loc();
+				loc.setNum(locNum);
+				loc.setLoc(loc1);
+				
+				if(distinguishTeam.equals("1")){
+					match.setHomeTeam(homeTeam);
+				}else{
+					match.setAwayTeam(awayTeam);
+				}
+				match.setWinTeam(winTeam);
+				betting.setMatch(match);
+				match.setLoc(loc);
+				
+				bettingList.add(betting);
 
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return BettingList;
+		return bettingList;
 	}
 
 	
-	public ArrayList<Betting> selectBettingListByDate(Date date) {
+	public static ArrayList<Betting> selectBettingListByDate(String date) {
 		
 		/**
 		 * 해당 날짜의 경기의 데이터만 조회하는 메서드
 		 * 
 		 * @param Date
 		 */
+		
 		Connection con = null;
 		PreparedStatement psmt = null;
 		String sql = null;
@@ -87,38 +140,88 @@ public class BettingDAO {
 		try {
 			
 			con = ConnectionUtil.getConnection();
-			sql = "SELECT  b.bat_num, b.bat_rating, b.sele_rating, b.tot_mineral, b.distinguish_team, b.team_num" +
-			         "m.match_num"+
-			         " FROM  b.betting, m.match"+
-					 " Where b.match_num=m.match_num AND m.match_time=?";
+			sql = "SELECT m.match_num,m.match_result_score"+
+					",m.home_team_num,h.team_name,h.photo"+
+					",m.away_team_num,a.team_name,a.photo"+
+					",m.win_team_num,w.team_name,w.photo"+
+					",m.loc_num,l.loc"+
+					",b.bet_num, b.bet_rating, b.sele_rating, b.tot_mineral"+
+			        ",b.distinguish_team,m.match_time"+
+					" FROM betting b,match m,team h,team a,team w,loc l"+
+					 " WHERE m.home_team_num=h.team_num"+
+					 " AND m.away_team_num=a.team_num"+
+					 " AND m.win_team_num=w.team_num(+)"+
+					 " AND m.loc_num=l.loc_num"+
+					 " AND m.match_num=b.match_num"+
+					 " AND TO_CHAR(m.match_time,'YYYY/MM/DD')= ?";
 			
-			psmt = con.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE,
-					ResultSet.CONCUR_READ_ONLY);
+			psmt = con.prepareStatement(sql);
 			
-			psmt.setString(1, date.toString());
+			psmt.setString(1, date);
 			rs = psmt.executeQuery();
 			
 			while(rs.next()){
 			   	
-			    String batNum = rs.getString(1);
-				Long batRating = rs.getLong(2);
-				Long seleRating = rs.getLong(3);
-				Long totMineral = rs.getLong(4);
-				String distinguishTeam = rs.getString(5);
-				String teamNum = rs.getString(6);
-				String matchNum = rs.getString(7);
+				String matchNum=rs.getString(1);
+				String matchScore = rs.getString(2);
+				String homeNum = rs.getString(3);
+				String hTeamName = rs.getString(4);
+				String hPhoto = rs.getString(5);
+				String awayNum = rs.getString(6);
+				String aTeamName = rs.getString(7);
+				String aPhoto = rs.getString(8);
+				String winNum = rs.getString(9);
+				String wTeamName = rs.getString(10);
+				String wPhoto = rs.getString(11);
+				String locNum=rs.getString(12);
+				String loc1 = rs.getString(13);
+			    String batNum = rs.getString(14);
+				Long batRating = rs.getLong(15);
+				Long seleRating = rs.getLong(16);
+				Long totMineral = rs.getLong(17);
+				String distinguishTeam = rs.getString(18);
+				String matchTime = rs.getString(19);
 				
 				Betting betting = new Betting();
-				betting.setNum(batNum);;
+				betting.setNum(batNum);
 				betting.setBatRating(batRating);
 				betting.setSeleRating(seleRating);
 				betting.setTotMineral(totMineral);
 				betting.setDistnum(distinguishTeam);
-				betting.setTeamNum(teamNum);
-				
-				Match match=new Match();
+											
+				Match match = new Match();
 				match.setNum(matchNum);
-
+				match.setMatchTime(matchTime);
+				match.setScore(matchScore);
+				
+				Team homeTeam = new Team();
+				homeTeam.setNum(homeNum);
+				homeTeam.setName(hTeamName);
+				homeTeam.setPhoto(hPhoto);
+				
+				Team awayTeam = new Team();
+				awayTeam.setNum(awayNum);
+				awayTeam.setName(aTeamName);
+				awayTeam.setPhoto(aPhoto);
+				
+				Team winTeam = new Team();
+				winTeam.setName(winNum);
+				winTeam.setName(wTeamName);
+				winTeam.setPhoto(wPhoto);
+				
+				Loc loc = new Loc();
+				loc.setNum(locNum);
+				loc.setLoc(loc1);
+				
+				if(distinguishTeam.equals("1")){
+					match.setHomeTeam(homeTeam);
+				}else{
+					match.setAwayTeam(awayTeam);
+				}
+				match.setWinTeam(winTeam);
+				betting.setMatch(match);
+				match.setLoc(loc);
+				
 				BettingList.add(betting);
 
 			}
@@ -128,36 +231,8 @@ public class BettingDAO {
 		return BettingList;
 	}
 
-//	 public void insertBetting(Betting betting) {
-//		
-//		/**
-//		 * 베팅 데이터 입력하는 메서드
-//		 * 
-//		 * @param betting
-//		 */
-//		
-//		Connection con = null;
-//		PreparedStatement psmt = null;
-//		con = ConnectionUtil.getConnection();
-//		try {
-//			psmt = con.prepareStatement("INSERT INTO betting "
-//					+ "(match_num,bat_rating, sele_rating, tot_mineral, bet_num,distinguish_team,team_num) "
-//					+ " VALUES (?,?,?,?,?,?,?)");
-//			psmt.setString(1, betting.getMatchNum());
-//			psmt.setLong(2, betting.getBatRating());
-//			psmt.setLong(3, betting.getSeleRating());
-//			psmt.setLong(4, betting.getTotMineral());
-//			psmt.setString(5, betting.getNum());
-//			psmt.setString(6, betting.getDistnum());
-//			psmt.setString(7, betting.getTeamNum());
-//			psmt.executeUpdate();
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//		
-//	}
 
-	public void updateBetting(Betting betting){
+	public static void updateBetting(Betting betting){
 
 		/**
 		 * 베팅번호로 선택된 데이터의 업데이트
@@ -172,17 +247,17 @@ public class BettingDAO {
 		PreparedStatement psmt = null;
 		con = ConnectionUtil.getConnection();
 		try {
-			psmt = con.prepareStatement("UPDATE  SET match_num=?," + "bat_rating=?,"
-					+ "sele_rating=? " +"tot_mineral=? "+"distinguish_team=?" +"team_num" + 
-					"WHERE bet_num=?");
+			psmt = con.prepareStatement(
+					"UPDATE betting SET match_num=?,bet_rating=?,sele_rating=?"+
+			         ",tot_mineral=? ,distinguish_team=?" +
+			        "WHERE bet_num=?");
 
-			psmt.setString(1, betting.getMatchNum());
+			psmt.setString(1, betting.getMatch().getNum());
 			psmt.setLong(2, betting.getBatRating());
 			psmt.setLong(3, betting.getSeleRating());
 			psmt.setLong(4, betting.getTotMineral());
 			psmt.setString(5, betting.getDistnum());
-			psmt.setString(6, betting.getTeamNum());
-
+			psmt.setString(6, betting.getNum());
 			psmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -196,13 +271,13 @@ public class BettingDAO {
 	 * 
 	 * @param num
 	 */
-	public long selectBettingRating(String num) {
+	public static long selectBettingRating(String num) {
 		/* default generated stub */;
 		Connection con = null;
 		PreparedStatement ps = null;
 		String sql = null;
 		ResultSet rs =null;
-		sql="SELECT bat_rating"+
+		sql="SELECT bet_rating"+
 				" FROM betting"+
 				" WHERE bet_num=?";
 		long batRating = 0;
@@ -227,7 +302,7 @@ public class BettingDAO {
 	 * 
 	 * @param num
 	 */
-	public long selectBettingSeleRating(String num) {
+	public static long selectBettingSeleRating(String num) {
 		/* default generated stub */;
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -258,7 +333,7 @@ public class BettingDAO {
 	 * 
 	 * @param num
 	 */
-	public long selectBettingTotMineral(String num) {
+	public static long selectBettingTotMineral(String num) {
 		/* default generated stub */;
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -283,4 +358,53 @@ public class BettingDAO {
 		return totMineral;
 		
 	}
+	//베팅 테이블중 홈팀 컬럼 삽입 메서드
+	public static void insertHomeBetting(Betting betting){
+		/* default generated stub */;
+		Connection con = null;
+		PreparedStatement ps = null;
+		String sql = null;
+				
+		try {
+		con=ConnectionUtil.getConnection();
+		sql="INSERT INTO betting (bet_num, bet_rating, sele_rating," +
+				" tot_mineral, distinguish_team, match_num) "+
+				 " VALUES(s_home.nextval,1,0,0,1,?)";
+				 			
+			ps=con.prepareStatement(sql);
+			
+			ps.setString(1, betting.getMatch().getNum());
+						
+			ps.executeUpdate();
+									
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	//베팅 테이블중 어웨이팀 컬럼 삽입 메서드
+	public static void insertAwayBetting(Betting betting){
+		/* default generated stub */;
+		Connection con = null;
+		PreparedStatement ps = null;
+		String sql = null;
+		
+		try {
+		con=ConnectionUtil.getConnection();
+		sql="INSERT INTO betting (bet_num, bet_rating, sele_rating," +
+				" tot_mineral, distinguish_team, match_num) "+
+				 " VALUES(s_away.nextval,1,0,0,2,?)";
+							
+			ps=con.prepareStatement(sql);
+			
+			ps.setString(1, betting.getMatch().getNum());
+				
+			ps.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }
+
+
