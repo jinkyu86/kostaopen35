@@ -19,7 +19,7 @@ public class Bid {
 	/**
 	 * 입찰한 시간
 	 */
-	private Date bidTime;
+	private String bidTime;
 
 	/**
 	 * 현재입찰가격
@@ -50,11 +50,11 @@ public class Bid {
 		this.bidNum = bidNum;
 	}
 
-	public Date getBidTime() {
+	public String getBidTime() {
 		return bidTime;
 	}
 
-	public void setBidTime(Date bidTime) {
+	public void setBidTime(String bidTime) {
 		this.bidTime = bidTime;
 	}
 
@@ -72,6 +72,5 @@ public class Bid {
 				+ bidNum + ", bidTime=" + bidTime + ", bidPrice=" + bidPrice
 				+ "]";
 	}
-
 	
 }

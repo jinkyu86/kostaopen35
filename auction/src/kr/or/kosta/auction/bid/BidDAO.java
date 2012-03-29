@@ -1,7 +1,6 @@
 package kr.or.kosta.auction.bid;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -19,13 +18,14 @@ public class BidDAO {
 		con=ConnectionUtil.getConnection();
 		String sql="INSERT INTO BID " +
 				"(bidnum,a_num,userid,bid_time,bid_price) "+
-				"VALUES (BID_SEQ.NEXTVAL,?,?,sysdate,?)";
+				"VALUES (BID_SEQ.NEXTVAL,?,?,?,?)";
 		
 		try {
 			psmt=con.prepareStatement(sql);
 			psmt.setString(1,bid.getAuction().getaNum());
 			psmt.setString(2,bid.getMember().getUserid());
 			psmt.setString(3,bid.getBidPrice());
+			psmt.setString(4,bid.getBidTime());
 			psmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -47,7 +47,7 @@ public class BidDAO {
 			psmt=con.prepareStatement(sql);
 			psmt.setString(1,bid.getMember().getUserid());
 			psmt.setString(2,bid.getAuction().getaNum());
-			psmt.setDate(3, bid.getBidTime());
+			psmt.setString(3, bid.getBidTime());
 			psmt.setString(4,bid.getBidPrice());
 			psmt.setString(5,bid.getBidNum());
 			psmt.executeUpdate();
@@ -91,13 +91,13 @@ public class BidDAO {
 			if(rs.next()){
 				String aNum=rs.getString(1);
 				String userid=rs.getString(2);
-				Date bidTime=rs.getDate(3);
+				String bidTime=rs.getString(3);
 				String bidPrice=rs.getString(4);
 				String gNum=rs.getString(5);
 				String sPrice=rs.getString(6);
 				String imPrice=rs.getString(7);
-				Date sTime=rs.getDate(8);
-				Date eTime=rs.getDate(9);
+				String sTime=rs.getString(8);
+				String eTime=rs.getString(9);
 				String sold=rs.getString(10);
 				String cuPrice=rs.getString(11);
 				String pw=rs.getString(12);
@@ -168,13 +168,13 @@ public class BidDAO {
 				String bidNum=rs.getString(1);
 				String aNum=rs.getString(2);
 				String userid=rs.getString(3);
-				Date bidTime=rs.getDate(4);
+				String bidTime=rs.getString(4);
 				String bidPrice=rs.getString(5);
 				String gNum=rs.getString(6);
 				String sPrice=rs.getString(7);
 				String imPrice=rs.getString(8);
-				Date sTime=rs.getDate(9);
-				Date eTime=rs.getDate(10);
+				String sTime=rs.getString(9);
+				String eTime=rs.getString(10);
 				String sold=rs.getString(11);
 				String cuPrice=rs.getString(12);
 				String pw=rs.getString(13);
@@ -256,13 +256,13 @@ public class BidDAO {
 				String bidNum=rs.getString(1);
 				String aNum=rs.getString(2);
 				String userid=rs.getString(3);
-				Date bidTime=rs.getDate(4);
+				String bidTime=rs.getString(4);
 				String bidPrice=rs.getString(5);
 				String gNum=rs.getString(6);
 				String sPrice=rs.getString(7);
 				String imPrice=rs.getString(8);
-				Date sTime=rs.getDate(9);
-				Date eTime=rs.getDate(10);
+				String sTime=rs.getString(9);
+				String eTime=rs.getString(10);
 				String sold=rs.getString(11);
 				String cuPrice=rs.getString(12);
 				String pw=rs.getString(13);
@@ -346,13 +346,13 @@ public class BidDAO {
 				String bidNum=rs.getString(1);
 				String aNum=rs.getString(2);
 				userid=rs.getString(3);
-				Date bidTime=rs.getDate(4);
+				String bidTime=rs.getString(4);
 				String bidPrice=rs.getString(5);
 				String gNum=rs.getString(6);
 				String sPrice=rs.getString(7);
 				String imPrice=rs.getString(8);
-				Date sTime=rs.getDate(9);
-				Date eTime=rs.getDate(10);
+				String sTime=rs.getString(9);
+				String eTime=rs.getString(10);
 				String sold=rs.getString(11);
 				String cuPrice=rs.getString(12);
 				String pw=rs.getString(13);
@@ -433,13 +433,13 @@ public class BidDAO {
 				String bidNum=rs.getString(1);
 				aNum=rs.getString(2);
 				String userid=rs.getString(3);
-				Date bidTime=rs.getDate(4);
+				String bidTime=rs.getString(4);
 				String bidPrice=rs.getString(5);
 				String gNum=rs.getString(6);
 				String sPrice=rs.getString(7);
 				String imPrice=rs.getString(8);
-				Date sTime=rs.getDate(9);
-				Date eTime=rs.getDate(10);
+				String sTime=rs.getString(9);
+				String eTime=rs.getString(10);
 				String sold=rs.getString(11);
 				String cuPrice=rs.getString(12);
 				String pw=rs.getString(13);
