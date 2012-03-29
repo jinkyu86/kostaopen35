@@ -25,7 +25,9 @@
 			<td>${good.qty }</td>
 			<td>${good.name }</td>
 			<td>${good.explantion }</td>
-			<td>${good.img }</td>
+			<td>
+			<img src="/baking/img/${good.good_division.gName}/${good.img}"/>
+			</td>
 			<td>${good.option }</td>
 		</tr>
 		</c:forEach>
