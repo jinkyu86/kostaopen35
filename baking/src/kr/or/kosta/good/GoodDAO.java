@@ -39,7 +39,7 @@ public class GoodDAO {
 	/**
 	 * 상품리스트 보기
 	 */
-	public ArrayList<Good> selectGoodList() {
+	public static ArrayList<Good> selectGoodList() {
 		Connection con=null;
 		PreparedStatement psmt=null;
 		ResultSet rs=null;
@@ -188,14 +188,6 @@ public class GoodDAO {
 			e.printStackTrace();
 		}
 		return good;
-	}
-
-	/**
-	 * 상품관련레시피보기
-	 */
-	public static ArrayList selectRelationRecipe(int recipenum) {
-		/* default generated stub */;
-		return null;
 	}
 
 	/**
