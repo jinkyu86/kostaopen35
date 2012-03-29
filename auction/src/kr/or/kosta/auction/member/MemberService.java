@@ -2,12 +2,14 @@ package kr.or.kosta.auction.member;
 
 import java.io.IOException;
 
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
 
 
 
@@ -144,7 +146,18 @@ public class MemberService extends HttpServlet {
 	 */
 	private void editMemberForm(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		/* default generated stub */;
+		// 1.전체 회원 조회
+				Member member=
+						MemberDAO.selectMember("member");
+				//2.request에 저장
+				request.setAttribute("MEMBER",
+						member);
+				//3.회원추가 페이지 이동 객체 생성
+				RequestDispatcher rd=
+						request.getRequestDispatcher(
+								"/member/addMember.jsp");
+				//4.페이지 이동
+				rd.forward(request, response);
 
 	}
 
@@ -154,7 +167,19 @@ public class MemberService extends HttpServlet {
 	 */
 	private void viewMember(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		/* default generated stub */;
+		//1.userid파라메터 리턴받아서 변수에 저장
+				String userid=request.getParameter("userid");
+				//2.DB에서 아이디가 일치하는 회원 조회
+				Member member=MemberDAO.selectMember(userid);
+				//3.request에 2에서 조회한 학생의 정보 저장
+				//   이름-MEMBER
+				request.setAttribute("MEMBER",member);
+				//4./student/viewStudent.jsp로 이동 객체 생성
+				RequestDispatcher rd=
+						request.getRequestDispatcher("/member/viewMember.jsp");
+				//5.4의 JSP로 이동	
+				rd.forward(request, response);
+			
 
 	}
 
@@ -183,7 +208,7 @@ public class MemberService extends HttpServlet {
 		String userid = request.getParameter("userid");
 		// 2.pw파라메터 리턴
 		String pw = request.getParameter("pw");
-		// 3.아이디가 일치하는 학생정보 조회
+		// 3.아이디가 일치하는 회원정보 조회
 		Member member = MemberDAO.selectMember(userid);
 		// 4.3의 리턴값이 null이면
 		// request에 속성명:ERROR 값:존재하지 않는 아이디
@@ -198,7 +223,7 @@ public class MemberService extends HttpServlet {
 				request.setAttribute("ERROR", "비밀번호 오류");
 			} else {
 				// 6.5에서 비밀번호가 일치하면
-				// HttpSession리턴 속성명:LOGIN_STUDENT
+				// HttpSession리턴 속성명:LOGIN_MEMBER
 				// 값:3의 객체
 				HttpSession session = request.getSession();
 				session.setAttribute("LOGIN_MEMBER", member);
