@@ -7,7 +7,7 @@ import org.junit.Test;
 import kr.or.kosta.betting.betting.Betting;
 import kr.or.kosta.betting.betting.BettingDAO;
 import kr.or.kosta.betting.match.Match;
-import kr.or.kosta.betting.team.Team;
+
 
 public class BettingDAOTest extends BettingDAO {
 
