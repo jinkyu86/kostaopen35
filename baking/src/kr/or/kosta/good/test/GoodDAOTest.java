@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 import kr.or.kosta.good.Good;
 import kr.or.kosta.good.GoodDAO;
-import kr.or.kosta.gooddivision.Good_division;
-
+import kr.or.kosta.recipe.Recipe;
+import kr.or.kosta.recipe.RecipeDAO;
 
 import org.junit.Test;
 
@@ -56,19 +56,27 @@ public class GoodDAOTest {
 		goodDAO.updateGood(good);
 	}*/
 	
-/*
-	@Test
+
+	/*@Test
 	public void testSelectGoodList() {
 		GoodDAO goodDAO = new GoodDAO();
 		ArrayList<Good> page1List=goodDAO.selectGoodList(5, 1);
 		System.out.println("page1List:"+page1List);
-	}*/
-	
-	@Test
+	}
+	*/
+	/*@Test
 	public void testSelectGood(){
 		GoodDAO goodDAO=new GoodDAO();
 		Good good=goodDAO.selectGood(1);
 		System.out.println(good);
-		
+	}*/
+	
+	@Test
+	public void testSelectRecipeList(){
+		ArrayList<Recipe> arrayList = RecipeDAO.selectRecipeList(7);
+		for(int i=0;i<arrayList.size();i++){
+			Recipe recipe = arrayList.get(i);
+			System.out.println(recipe);
+		}
 	}
 }
