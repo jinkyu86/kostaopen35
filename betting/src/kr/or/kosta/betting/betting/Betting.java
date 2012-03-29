@@ -4,17 +4,15 @@ import kr.or.kosta.betting.match.Match;
 
 public class Betting {
 
-	private Match match;
-
 	/**
 	 * 베팅 번호
 	 */
 	private String num;
 
 	/**
-	 * 경기 번호
+	 * 매치 속성
 	 */
-	private String matchNum;
+	private Match match;
 
 	/**
 	 * 배팅률
@@ -36,19 +34,6 @@ public class Betting {
 	 */
 	private String distnum;
 
-	/**
-	 * 팀 번호
-	 */
-	private String teamNum;
-
-	public Match getMatch() {
-		return match;
-	}
-
-	public void setMatch(Match match) {
-		this.match = match;
-	}
-
 	public String getNum() {
 		return num;
 	}
@@ -57,12 +42,12 @@ public class Betting {
 		this.num = num;
 	}
 
-	public String getMatchNum() {
-		return matchNum;
+	public Match getMatch() {
+		return match;
 	}
 
-	public void setMatchNum(String matchNum) {
-		this.matchNum = matchNum;
+	public void setMatch(Match match) {
+		this.match = match;
 	}
 
 	public long getBatRating() {
@@ -97,21 +82,11 @@ public class Betting {
 		this.distnum = distnum;
 	}
 
-	public String getTeamNum() {
-		return teamNum;
-	}
-
-	public void setTeamNum(String teamNum) {
-		this.teamNum = teamNum;
-	}
-
 	@Override
 	public String toString() {
-		return "Betting [match=" + match + ", num=" + num + ", matchNum="
-				+ matchNum + ", batRating=" + batRating + ", seleRating="
-				+ seleRating + ", totMineral=" + totMineral + ", distnum="
-				+ distnum + ", teamNum=" + teamNum + "]";
+		return "Betting [num=" + num + ", match=" + match + ", batRating="
+				+ batRating + ", seleRating=" + seleRating + ", totMineral="
+				+ totMineral + ", distnum=" + distnum + "]";
 	}
 
-	
 }
