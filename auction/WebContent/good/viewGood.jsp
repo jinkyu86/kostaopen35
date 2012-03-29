@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -23,14 +22,14 @@
 		</tr>
 		<tr>
 			<td>이미지</td>
-			<td><img src="auction/gphoto/${GOOD.photo }"></td>
+			<td><img src="/auction/gphoto/${GOOD.img }"></td>
 		</tr>
 	</table>
 	 <p align="center">
-		 <a href="/auction/GoodService?method=editGoodForm&bNum=${GOOD.bNum}">물품정보 수정</a>
+		 <a href="/auction/GoodService?method=editGoodForm&bNum=${GOOD.gNum}">물품정보 수정</a>
 		 </p>
 		 <p align="center">
-		 <a href="/auction/GoodService?method=removeGood&bNum=${GOOD.bNum}">물품 삭제</a>
+		 <a href="/auction/GoodService?method=removeGood&bNum=${GOOD.gNum}">물품 삭제</a>
 	 </p>
 </body>
 </html>

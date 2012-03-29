@@ -13,18 +13,24 @@
 			<th>번호</th>
 			<th>이름</th>
 		</tr>
-		<c:forEach var="good" items="${GOOD_LIST}" varStatus="i">
-		<tr>
-			<td>
-				${good.num}
-			</td>
-			<td>
-				<a href="/auction/GoodService?method=viewGood&num=${good.num}">
-				${good.name}
-				</a>
-			</td>
-		</tr>
-		</c:forEach>
-	</table>
+	<c:forEach var="GOOD" items="${GOOD_LIST}">
+<tr>
+	<td>${GOOD.gNum}</td>
+	<td>
+		<a href="/auction/GoodService?method=viewGood&gNum=${GOOD.gNum}">
+		${GOOD.gName}
+		</a>
+	</td>
+</tr>
+</c:forEach>
+</table>
+<p align="center">
+	${PAGE_LINK_TAG}
+</p>
+<p align="center">
+	<a href="/auction/GoodService?method=addGoodForm">
+	물품 추가
+	</a>
+</p>
 </body>
 </html>
