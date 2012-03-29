@@ -10,6 +10,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import kr.or.kosta.auction.good.Good;
+import kr.or.kosta.auction.good.GoodDAO;
+import kr.or.kosta.department.Department;
+import kr.or.kosta.department.DepartmentDAO;
+import kr.or.kosta.student.Student;
+import kr.or.kosta.student.StudentDAO;
 
 public class AuctionService extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -37,8 +42,18 @@ public class AuctionService extends HttpServlet {
 		}
 		if("viewAuctionList".equals(method)){
 			viewAuctionList(request,response);
+		}else if("viewAuction".equals(method)){
+			viewAuction(request,response);
 		}else if("addAuction".equals(method)){
 			addAuction(request,response);
+		}else if("addAuctionForm".equals(method)){
+			addAuctionForm(request,response);
+		}else if("editAuction".equals(method)){
+			editAuction(request,response);
+		}else if("editAuctionForm".equals(method)){
+			editAuctionForm(request,response);
+		}else if("removeAuction".equals(method)){
+			removeAuction(request,response);
 		}
 		
 	}
@@ -84,8 +99,31 @@ public class AuctionService extends HttpServlet {
 	 */
 	private void editAuction(HttpServletRequest request,
 			HttpServletResponse response) {
-		/* default generated stub */;
-
+		//1.파라메터정보 리턴
+		String studno=request.getParameter("studno");
+		String name=request.getParameter("name");
+		String deptno=request.getParameter("deptno");
+		String userid=request.getParameter("userid");
+		String pw=request.getParameter("pw");
+		//2.1의 정보를 이용해서 Student객체 생성
+		Student  student=new Student();
+		student.setStudno(studno);
+		student.setName(name);
+		student.setUserid(userid);
+		student.setPw(pw);
+		
+		Department department=new Department();
+		department.setDeptno(deptno);
+		
+		student.setDepartment(department);
+		//3.학생정보를 수정하는 메서드 호출
+		StudentDAO.updateStudent(student);
+		//4.학생정보 조회화면으로 이동 객체 생성
+		RequestDispatcher rd=
+				request.getRequestDispatcher(
+						"/StudentService?method=viewStudent" +
+						"&studno="+studno);
+		rd.forward(request, response);
 	}
 
 	/**
@@ -94,7 +132,21 @@ public class AuctionService extends HttpServlet {
 	 */
 	private void editAuctionForm(HttpServletRequest request,
 			HttpServletResponse response) {
-		/* default generated stub */;
+		//1.수정할 경매의 경매 번호 리턴
+				String aNum = request.getParameter("aNum");
+				//2.수정할 학생의 정보 조회
+				Auction  auction = AuctionDAO.selectAuction(aNum);
+				//3.전체 물품 리스트 조회
+				ArrayList<Good> goodList=
+						GoodDAO.selectGoodList();
+				//4.request에 저장
+				request.setAttribute("AUCTION", auction);
+				request.setAttribute("GOOD_LIST",
+						goodList);
+				//5./student/editStudent.jsp이동 객체 생성
+				RequestDispatcher  rd=
+						request.getRequestDispatcher(	"/good/editgood.jsp");
+				rd.forward(request, response);
 
 	}
 
@@ -104,14 +156,20 @@ public class AuctionService extends HttpServlet {
 	 */
 	private void viewAuction(HttpServletRequest request,
 			HttpServletResponse response) {
-		/* default generated stub */;
-
+		//1.a_num 파라메터 리턴받아서 변수에 저장
+				String aNum=request.getParameter("aNum");
+				//2.DB에서 학번이 일치하는 학생 조회
+				Auction auction = AuctionDAO.selectAuction(aNum);
+				//3.request에 2에서 조회한 경매의 정보 저장
+				//   이름-STUDENT
+				request.setAttribute("AUCTION",auction);
+				//4./auction/viewAuction.jsp로 이동 객체 생성
+				RequestDispatcher rd=
+						request.getRequestDispatcher("/auction/viewAuction.jsp");
+				//5.4의 JSP로 이동	
+				rd.forward(request, response);
 	}
 
-	/**
-	 * @param request
-	 * @param response
-	 */
 	private void viewAuctionList(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException,IOException{
 		//1.AuctionDAO에서 전체 경매조회 메서드 호출
