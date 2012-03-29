@@ -9,4 +9,24 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
+  <servlet>
+    <description></description>
+    <display-name>MovieService</display-name>
+    <servlet-name>MovieService</servlet-name>
+    <servlet-class>kr.or.kosta.moviesystem.movie.MovieService</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MovieService</servlet-name>
+    <url-pattern>/MovieService</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ReservationService</display-name>
+    <servlet-name>ReservationService</servlet-name>
+    <servlet-class>kr.or.kosta.moviesystem.reservation.ReservationService</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ReservationService</servlet-name>
+    <url-pattern>/ReservationService</url-pattern>
+  </servlet-mapping>
 </web-app>
