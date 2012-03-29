@@ -22,7 +22,7 @@
 		</tr>
 		<tr>
 			<td>юл╧лаЖ</td>
-			<td><img src="/auction/gphoto/${GOOD.img }"></td>
+			<td><img width=src="/auction/gphoto/${GOOD.img }"></td>
 		</tr>
 	</table>
 	 <p align="center">
