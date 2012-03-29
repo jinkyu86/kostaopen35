@@ -39,6 +39,52 @@ public class GoodDAO {
 	/**
 	 * 상품리스트 보기
 	 */
+	public ArrayList<Good> selectGoodList() {
+		Connection con=null;
+		PreparedStatement psmt=null;
+		ResultSet rs=null;
+		String sql="select good_num,g.division,good_price,qty,name,explantion,img,g_option,g_name"+
+					 " from good g, good_division gd"+
+					 " where g.division=gd.division";
+		ArrayList<Good> goodList = new ArrayList<Good>();
+		try {
+			con=ConnectionUtil.getConnection();
+			psmt=con.prepareStatement(sql);
+			rs=psmt.executeQuery();
+			while(rs.next()){
+				int goodNum=rs.getInt(1);
+				int division =rs.getInt(2);
+				int goodPrice=rs.getInt(3);
+				int qty=rs.getInt(4);
+				String name=rs.getString(5);
+				String explantion=rs.getString(6);
+				String img=rs.getString(7);
+				String option=rs.getString(8);
+				String gName=rs.getString(9);
+				
+				Good_division good_division=new Good_division();
+				good_division.setDivision(division);
+				good_division.setgName(gName);
+				
+				Good good= new Good();
+				good.setGoodNum(goodNum);
+				good.setGood_division(good_division);
+				good.setGoodPrice(goodPrice);
+				good.setQty(qty);
+				good.setName(name);
+				good.setExplantion(explantion);
+				good.setImg(img);
+				good.setOption(option);
+				
+				goodList.add(good);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return goodList;
+	}
+	
 	public static ArrayList<Good> selectGoodList(int length, int page) {
 		Connection con=null;
 		PreparedStatement psmt=null;
