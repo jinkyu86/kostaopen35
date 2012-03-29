@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import kr.or.kosta.betting.loc.Loc;
 import kr.or.kosta.betting.util.ConnectionUtil;
 
 public class TeamDAO {
