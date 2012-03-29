@@ -18,18 +18,18 @@
 		</tr>
 		<tr>
 			<td>상세 설명</td>
-			<td>${GOOD.detail }</td>
+			<td><textarea name="detail" >${GOOD.detail}</textarea></td>
 		</tr>
 		<tr>
 			<td>이미지</td>
-			<td><img width=src="/auction/gphoto/${GOOD.img }"></td>
+			<td><img src="/auction/gphoto/${GOOD.img }" height="100" width="100"></td>
 		</tr>
 	</table>
 	 <p align="center">
-		 <a href="/auction/GoodService?method=editGoodForm&bNum=${GOOD.gNum}">물품정보 수정</a>
-		 </p>
-		 <p align="center">
-		 <a href="/auction/GoodService?method=removeGood&bNum=${GOOD.gNum}">물품 삭제</a>
+		 <a href="/auction/GoodService?method=editGoodForm&gNum=${GOOD.gNum}">물품정보 수정</a>
+	</p>
+	<p align="center">
+		 <a href="/auction/GoodService?method=removeGood&gNum=${GOOD.gNum}">물품 삭제</a>
 	 </p>
 </body>
 </html>

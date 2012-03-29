@@ -38,7 +38,7 @@
 </script>
 </head>
 <body>
-	<form id="my_form" action="/wshop/GoodService" method="post">
+	<form id="my_form" action="/auction/GoodService" method="post">
 	<input type="hidden" name="method" value="editGood"/>
 	<input type="hidden" name="img" value="" id="img"/>
 	<h1 align="center">물품 정보 수정</h1>
@@ -47,7 +47,7 @@
 		<input type="hidden" name="method" value="editGood"/>
 		<tr>
 			<td>물품명</td>
-			<td><input type="text" name="gName" value="${GOOD.gName}" readonly="readonly"/>
+			<td><input type="text" name="gName" value="${GOOD.gName}" />
 			</td>
 		</tr>
 		<tr>
@@ -56,12 +56,13 @@
 		</tr>
 		<tr>
 			<td>이미지</td>
-			<td><img src='/auction/gphoto/${GOOD.img}' ></td>
+			<td><img src='/auction/gphoto/${GOOD.img}' height="100" width="100"></td>
 		</tr>
 	</table>
 	<center>
 	<input type="file" name="file" id="uploadify"/>
-	<input type="button" id="editGood" value="물건 수정">
+	<input type="submit" id="editGood" value="물건 수정"/>
+	<input type="reset" value="입력취소"/>
 	</center>
 	</form>
 </body>
