@@ -1,6 +1,9 @@
 package kr.or.kosta.order.test;
 
 import static org.junit.Assert.*;
+
+import java.util.ArrayList;
+
 import kr.or.kosta.order.Order;
 import kr.or.kosta.order.OrderDAO;
 import kr.or.kosta.good.Good;
@@ -62,4 +65,10 @@ public class OrderDAOTest {
 //		
 //		OrderDAO.updateQty(order);
 //	}
+	
+	@Test
+	public void testOrderList(){
+		ArrayList<Order>orderList=OrderDAO.selectOrderList("yubi");
+		System.out.println(orderList);
+	}
 }
