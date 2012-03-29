@@ -16,8 +16,8 @@
     <servlet-class>kr.or.kosta.auction.auction.AuctionService</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>BidService</servlet-name>
-    <url-pattern>/BidService</url-pattern>
+    <servlet-name>AuctionService</servlet-name>
+    <url-pattern>/AuctionService</url-pattern>
   </servlet-mapping>
    <servlet>
     <description></description>
@@ -26,8 +26,8 @@
     <servlet-class>kr.or.kosta.auction.bid.BidService</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>BoardService</servlet-name>
-    <url-pattern>/BoardService</url-pattern>
+    <servlet-name>BidService</servlet-name>
+    <url-pattern>/BidService</url-pattern>
   </servlet-mapping>
    <servlet>
     <description></description>
