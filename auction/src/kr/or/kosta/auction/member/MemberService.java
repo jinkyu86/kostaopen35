@@ -1,6 +1,7 @@
 package kr.or.kosta.auction.member;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 
 import javax.servlet.RequestDispatcher;
@@ -9,8 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-
 
 
 
@@ -35,10 +34,12 @@ public class MemberService extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		String method = request.getParameter("method");
-		if (method == null) {
-			method = "viewMember";
+		if(method==null){
+			method="viewMemberList";
 		}
-		if ("viewMember".equals(method)) {
+		if("viewMemberList".equals(method)){
+			viewMember(request,response);
+		}else if ("viewMember".equals(method)) {
 			viewMember(request, response);
 		} else if ("editMemberForm".equals(method)) {
 			editMemberForm(request, response);
@@ -80,7 +81,7 @@ public class MemberService extends HttpServlet {
 		MemberDAO.insertMember(member);
 		// 4.전체 멤버리스트 이동 객체
 		RequestDispatcher rd = request
-				.getRequestDispatcher("/MemberService?method=viewMember");
+				.getRequestDispatcher("/MemberService?method=viewMemberList");
 		// 5.페이지 이동
 		rd.forward(request, response);
 
@@ -93,11 +94,11 @@ public class MemberService extends HttpServlet {
 	private void addMemberForm(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		// 1.전체 학과 리스트 조회
-		Member viewmember=
-				MemberDAO.selectMember("member");
+		ArrayList<Member>memberList=
+				MemberDAO.selectMemberList();
 		//2.request에 저장
-		request.setAttribute("viewMember",
-				viewmember);
+		request.setAttribute("MEMBER_LIST",
+				memberList);
 		//3.학생추가 페이지 이동 객체 생성
 		RequestDispatcher rd=
 				request.getRequestDispatcher(
@@ -146,17 +147,20 @@ public class MemberService extends HttpServlet {
 	 */
 	private void editMemberForm(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		// 1.전체 회원 조회
-				Member member=
-						MemberDAO.selectMember("member");
-				//2.request에 저장
-				request.setAttribute("MEMBER",
-						member);
-				//3.회원추가 페이지 이동 객체 생성
-				RequestDispatcher rd=
-						request.getRequestDispatcher(
-								"/member/addMember.jsp");
-				//4.페이지 이동
+		//1.수정할 학생의 학번 리턴
+				String userid=request.getParameter("userid");
+				//2.수정할 학생의 정보 조회
+				Member member=MemberDAO.selectMember(userid);
+				//3.전체 학과 리스트 조회
+				ArrayList<Member> memberList=
+						MemberDAO.selectMemberList();
+				//4.request에 저장
+				request.setAttribute("Member", member);
+				request.setAttribute("MEMBER_LIST",
+						memberList);
+				//5./student/editStudent.jsp이동 객체 생성
+				RequestDispatcher  rd=
+						request.getRequestDispatcher(	"/student/editStudent.jsp");
 				rd.forward(request, response);
 
 	}
@@ -193,7 +197,7 @@ public class MemberService extends HttpServlet {
 		MemberDAO.deleteMember(userid);
 		RequestDispatcher rd=
 				request.getRequestDispatcher(
-						"/MemberService?method=viewMember");
+						"/MemberService?method=viewMemberList");
 		rd.forward(request, response);
 
 	}
@@ -209,7 +213,7 @@ public class MemberService extends HttpServlet {
 		// 2.pw파라메터 리턴
 		String pw = request.getParameter("pw");
 		// 3.아이디가 일치하는 회원정보 조회
-		Member member = MemberDAO.selectMember(userid);
+		Member member = MemberDAO.selectMemberById(userid);
 		// 4.3의 리턴값이 null이면
 		// request에 속성명:ERROR 값:존재하지 않는 아이디
 		// 저장

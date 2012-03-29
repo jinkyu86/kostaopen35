@@ -1,6 +1,9 @@
 package kr.or.kosta.auction.member.test;
 
 import static org.junit.Assert.*;
+
+import java.util.ArrayList;
+
 import kr.or.kosta.auction.member.Member;
 import kr.or.kosta.auction.member.MemberDAO;
 
@@ -47,5 +50,15 @@ public class MemberDAOTest {
 		Member member = MemberDAO.selectMember("jung");		
 	    System.out.println(member);
 	}
+	
+	 @Test
+	 public void selectAuctionTest2() {
+	  ArrayList<Member> memberList = MemberDAO.selectMemberList();
+	  for(int i =0; i<memberList.size();i++){
+	   Member member = memberList.get(i);
+	   System.out.println(member);
+	   
+	  }
+	 }
 
 }
