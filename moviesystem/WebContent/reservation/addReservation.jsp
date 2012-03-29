@@ -9,10 +9,25 @@
 </head>
 <body>
 <h1 align="center">예매하기</h1>
-	<form action="/moviesystme/ReservationService" method="post">
+	<form action="/moviesystme12/ReservationService" method="post">
 	<input type="hidden" name="method" value ="addReservation"/>
 		<table>
+
 			<tr>
+				
+				<td>아이디</td>
+				<td>
+				
+				<input type="text"name="userid"value="${userid}"
+					readOnly="readOnly"/> 
+				
+				
+				</td>
+				
+			</tr>
+			
+			<tr>
+				
 				<td>영화명</td>
 				<td>
 					<select name="mname">
@@ -31,11 +46,11 @@
 			</tr>
 			<tr>
 				<td>시간</td>
-				<td><input type="text" name="studno"></td>
+				<td><input type="text" name="time"></td>
 			</tr>
 			<tr>
 				<td>수량</td>
-				<td><input type="text" name="name"></td>
+				<td><input type="text" name="resQty"></td>
 			</tr>
 
 			
