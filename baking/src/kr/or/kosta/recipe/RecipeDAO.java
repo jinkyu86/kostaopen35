@@ -249,7 +249,48 @@ public class RecipeDAO {
 	
 	//상품관련 레시피조회
 	public static ArrayList<Recipe>selectRecipeList(int goodNum){
-	
-		return null;
+		Connection con =null;
+		PreparedStatement psmt=null;
+		ResultSet rs= null;
+		ArrayList<Recipe> goodToRecipeList = new ArrayList<Recipe>();
+		String sql="select grr.good_num,grr.recipe_num,r.recipe_num,r.title,r.content,r.img,r.material,r.division"+
+					" from good_recipe_relation grr,recipe r"+
+					" where grr.recipe_num=r.recipe_num and grr.good_num=?";
+		try {
+			con=ConnectionUtil.getConnection();
+			psmt=con.prepareStatement(sql);
+			psmt.setInt(1, goodNum);
+			rs=psmt.executeQuery();
+			while(rs.next()){
+				int good_num=rs.getInt(1);
+				int recipe_num=rs.getInt(2);
+				int recipeNum=rs.getInt(3);
+				String title=rs.getString(4);				
+				String content=rs.getString(5);	
+				String img	=rs.getString(6);		
+				String material=rs.getString(7);	
+				int division=rs.getInt(8);
+				
+				Good good = new Good();
+				Recipe recipe = new Recipe();
+				Good_division good_division=new Good_division();
+				good.setGoodNum(goodNum);
+				good_division.setDivision(division);
+				recipe.setRecipeNum(recipeNum);
+				recipe.setTitle(title);
+				recipe.setContent(content);
+				recipe.setImg(img);
+				recipe.setMaterial(material);
+				
+				recipe.setGood(good);
+				recipe.setGood_division(good_division);
+				
+				goodToRecipeList.add(recipe);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return goodToRecipeList;
 	}
 }
