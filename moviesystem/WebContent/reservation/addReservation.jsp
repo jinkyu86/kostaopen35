@@ -9,7 +9,7 @@
 </head>
 <body>
 <h1 align="center">예매하기</h1>
-	<form action="/moviesystme12/ReservationService" method="post">
+	<form action="/moviesystme/ReservationService" method="post">
 	<input type="hidden" name="method" value ="addReservation"/>
 		<table>
 
