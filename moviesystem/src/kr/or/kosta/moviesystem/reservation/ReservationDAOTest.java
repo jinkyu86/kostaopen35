@@ -66,14 +66,14 @@ public class ReservationDAOTest {
 ////		StudentDAO.deleteStudent("40101");
 ////		
 ////	}
-	@Test
-	public void testReservationList(){
-		ArrayList<Reservation>reservationList = ReservationDAO.selectReservationList("jun123");
-		for(int i =0;i<reservationList.size();i++){
-			Reservation reservation = reservationList.get(i);
-			System.out.println(reservation);
-		}//end for
-	}//end method
+//	@Test
+//	public void testReservationList(){
+//		ArrayList<Reservation>reservationList = ReservationDAO.selectReservationList("jun123");
+//		for(int i =0;i<reservationList.size();i++){
+//			Reservation reservation = reservationList.get(i);
+//			System.out.println(reservation);
+//		}//end for
+//	}//end method
 ////	@Test
 ////	public void testSelectstudent(){
 ////		
