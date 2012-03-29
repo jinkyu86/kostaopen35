@@ -9,8 +9,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+
 import kr.or.kosta.good.Good;
 import kr.or.kosta.good.GoodDAO;
+import kr.or.kosta.gooddivision.Good_division;
 
 
 
@@ -79,7 +81,7 @@ public class RecipeService {
 	//레시피정보
 	public void viewRecipe(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException{
-			int recipeNum=Integer.parseInt(request.getParameter("num"));
+			int recipeNum=Integer.parseInt(request.getParameter("recipenum"));
 
 //			데이터베이스에서 레시피정보 조회
 			Recipe recipe =RecipeDAO.selectRecipe(recipeNum);
@@ -94,21 +96,65 @@ public class RecipeService {
 			rd.forward(request, response);
 	}
 
-	//레시피추가
+	//레시피추가(미구현)
 	public void addRecipe(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+			String title =request.getParameter("title");
+			String content =request.getParameter("content");
+			String img =request.getParameter("img");
+			String material =request.getParameter("material");
+			int division =Integer.parseInt(request.getParameter("division"));
+	
+			Recipe recipe =new Recipe();
+			Good_division good_division=new Good_division();
+			
+			recipe.setTitle(title);
+			recipe.setContent(content);
+			recipe.setImg(img);
+			recipe.setMaterial(material);
+			good_division.setDivision(division);
+			recipe.setGood_division(good_division);
+			
+			RecipeDAO.insertRecipe(recipe);
+			
+			RequestDispatcher rd = request.getRequestDispatcher("/RecipeService?method=viewRecipeList");
+			rd.forward(request, response);
 	}
 
 	//레시피추가폼
 	public void addRecipeForm(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher rd= request.getRequestDispatcher("/recipe/addRecipe.jsp");
-		rd.forward(request, response);
+			RequestDispatcher rd= request.getRequestDispatcher("/recipe/addRecipe.jsp");
+			rd.forward(request, response);
 	}
 
-	//레시피수정
+	//레시피수정(미구현)
 	public void editRecipe(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+			int recipeNum=Integer.parseInt(request.getParameter("recipenum"));
+			String title =request.getParameter("title");
+			String content =request.getParameter("content");
+			String img =request.getParameter("img");
+			String material =request.getParameter("material");
+			int division =Integer.parseInt(request.getParameter("division"));
+			
+			Recipe recipe =new Recipe();
+			Good_division good_division=new Good_division();
+			
+			recipe.setRecipeNum(recipeNum);
+			recipe.setTitle(title);
+			recipe.setContent(content);
+			recipe.setImg(img);
+			recipe.setMaterial(material);
+			good_division.setDivision(division);
+			recipe.setGood_division(good_division);
+			
+			RecipeDAO.updateRecipe(recipe);
+			
+			RequestDispatcher rd=request.getRequestDispatcher("/RecipeService?method=viewRecipe&recipenum="+recipeNum);
+			rd.forward(request, response);
+
+		
 	}
 
 	//레시피수정폼
