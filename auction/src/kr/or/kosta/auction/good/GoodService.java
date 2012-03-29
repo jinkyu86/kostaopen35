@@ -80,7 +80,7 @@ public class GoodService extends HttpServlet {
 
 	private void addGoodForm(HttpServletRequest request,
 			HttpServletResponse response) throws IOException, ServletException{
-		RequestDispatcher rd=request.getRequestDispatcher("/acution/addGood.jsp");
+		RequestDispatcher rd=request.getRequestDispatcher("/good/addGood.jsp");
 		rd.forward(request, response);
 
 	}
@@ -152,7 +152,7 @@ public class GoodService extends HttpServlet {
 		
 		GoodDAO.deleteGood(num);
 		
-		RequestDispatcher rd=request.getRequestDispatcher("/GoodService?method=viewGoodList.jsp");
+		RequestDispatcher rd=request.getRequestDispatcher("/GoodService?method=viewGoodList");
 		rd.forward(request, response);
 
 	}
