@@ -10,8 +10,13 @@ public class ConnectionUtil {
 		
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
+			/*
 			con = DriverManager.getConnection
 					("jdbc.:oracle:thin:@192.168.43.210:1521:XE","scott","tiger");
+			*/
+			
+			con = DriverManager.getConnection
+					("jdbc.:oracle:thin:@192.168.0.28:1521:XE","scott","tiger");
 			System.out.println("데이터베이스 연결");
 
 			
