@@ -5,7 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 
 import kr.or.kosta.betting.loc.Loc;
 import kr.or.kosta.betting.team.Team;
@@ -135,7 +134,7 @@ public class MatchDAO {
 				" AND m.away_team_num=a.team_num" +
 				" AND m.win_team_num=w.team_num(+)" +
 				" AND m.loc_num=l.loc_num"+
-				" AND m.match_time=?";
+				" AND TO_CHAR(m.match_time,'YYYY/MM/DD')= ?";
 			
 			ps=con.prepareStatement(sql);
 			ps.setString(1, date);

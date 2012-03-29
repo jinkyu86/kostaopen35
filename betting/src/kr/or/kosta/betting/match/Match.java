@@ -1,7 +1,5 @@
 package kr.or.kosta.betting.match;
 
-import java.util.Date;
-
 import kr.or.kosta.betting.loc.Loc;
 import kr.or.kosta.betting.team.Team;
 
