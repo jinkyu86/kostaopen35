@@ -265,7 +265,7 @@ public class MovieService extends HttpServlet{
 		request.setAttribute("MovieList",movieList);
 		
 		int MovieCnt = MovieDAO.selectMovieCount(gubun);
-		String pageLinkTag = PageUtil.generate(page, MovieCnt, length, "MovieService?method=viewMovieList");
+		String pageLinkTag = PageUtil.generate(page, MovieCnt, length, "MovieService?method=viewMovieList&gubun="+gubun);
 		request.setAttribute("page_Link_Tag", pageLinkTag);
 		
 		RequestDispatcher rd = request.getRequestDispatcher("/movie/viewMovieList.jsp");
