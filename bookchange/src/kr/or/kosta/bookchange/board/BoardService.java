@@ -1,7 +1,6 @@
 package kr.or.kosta.bookchange.board;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
@@ -10,9 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import kr.or.kosta.bookchange.change.Condition;
 import kr.or.kosta.bookchange.member.Member;
 import kr.or.kosta.bookchange.member.MemberDAO;
-import kr.or.kosta.change.Condition;
 import kr.or.kosta.util.PageUtil;
 
 public class BoardService extends HttpServlet {

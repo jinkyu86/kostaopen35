@@ -1,7 +1,7 @@
 package kr.or.kosta.bookchange.board;
 
+import kr.or.kosta.bookchange.change.Condition;
 import kr.or.kosta.bookchange.member.Member;
-import kr.or.kosta.change.Condition;
 
 public class Board {
 

@@ -6,8 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import kr.or.kosta.bookchange.change.Condition;
 import kr.or.kosta.bookchange.member.Member;
-import kr.or.kosta.change.Condition;
 import kr.or.kosta.util.ConnectionUtil;
 
 public class BoardDAO {
@@ -282,7 +282,6 @@ public class BoardDAO {
 			ps.setString(1,"%"+title+"%");
 			rs=ps.executeQuery();
 			
-			int getRecordCount=0;
 			if(rs.next()){
 				boardCount=rs.getInt(1);
 			}
