@@ -2,16 +2,13 @@ function menu_hover(obj, num){
 	$('#'+obj).hover(function(){
 		$(this).addClass('hover');
 		$(this).css('background-color','#C4E2FF');
-		$('.sub_table').css('display', 'none');
-		check_display(obj);
-		//alert($(this).css('background-color'));				
+		check_display(obj);		
 		$('.sub_menu').css('display', 'block');
 		$('#'+obj+'_sub').css('display', 'block');
 		$('#'+obj+'_sub').hover(function(){
 			$('#'+obj+'_sub').addClass('hover');
 		},function(){
 			$('#'+obj+'_sub').removeClass('hover');
-			$('.sub_table').css('display', 'block');
 			$('#'+obj).css('background-color','#ffffff');
 			$('.sub_menu').css('display', 'none');
 			$('#'+obj+'_sub').css('display', 'none');
