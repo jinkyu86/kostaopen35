@@ -329,7 +329,7 @@ public class MemberService extends HttpServlet {
 		session.invalidate();
 		RequestDispatcher rd=
 				request.getRequestDispatcher(
-						"/GoodService?method=viewGoodList");
+						"/main.jsp");
 		rd.forward(request, response);
 		
 	}
