@@ -1,6 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
-  <%--@ page import="kr.or.kosta.student.Student" --%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -8,25 +7,29 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>°Ô½Ã¹° Á¶È¸</h1>
-	<table border="1" align="center">
-	  <tr><td>¹øÈ£</td><td>${BOARD.bNum}</td>
+	<h1>ê²Œì‹œë¬¼ ì¡°íšŒ</h1>
+	<table border="1" align="center">  	
+	  <tr>
+	  <td>ë²ˆí˜¸</td><td>${BOARD.bNum}</td>
 	  </tr>
-	  <tr><td>¾ÆÀÌµğ</td><td>${BOARD.member.userid}</td>
+	  <tr>
+	  <td>ì•„ì´ë””</td><td>${BOARD.member.userid}</td>
 	  </tr>
-	  <tr><td>Á¦¸ñ</td><td>${BOARD.title}</td>
+	  <tr>
+	  <td>ì œëª©</td><td>${BOARD.title}</td>
 	  </tr>
-	  <tr><td>³»¿ë</td><td>${BOARD.content}</td>
+	  <tr>
+	  <td>ë‚´ìš©</td><td>${BOARD.content}</td>
 	  </tr>
 	  </table>
 	  <p align="center">
 	    <a href="/auction/BoardService?method=editBoardForm&bNum=${BOARD.bNum }">
-	    °Ô½Ã¹° ¼öÁ¤
+	    ê²Œì‹œë¬¼ ìˆ˜ì •
 	    </a>
 	  </p>
 	  <p align="center">
-	    <a href="/auction/BoardService?method=remove&bNum=${BOARD/bNum }">
-	    °Ô½Ã¹° »èÁ¦
+	    <a href="/auction/BoardService?method=removeBoard&bNum=${BOARD.bNum }">
+	    ê²Œì‹œë¬¼ ì‚­ì œ
 	    </a>
 	  </p>
 </body>

@@ -1,11 +1,8 @@
-<%@ page language="java" 
-           contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
- <%@ page import="kr.or.kosta.auction.board.Board"%>
- <%
-    Board board=
-    			(Board)request.getAttribute("BOARD");
- %>
+<%@ page import="kr.or.kosta.auction.board.Board"%>
+<%@ taglib  prefix="c" 
+             uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -18,29 +15,21 @@
 	  <input  type="hidden" name="method" 
 	    value="editBoard"/>
 	   <table  align="center">
-	   	<tr>
-	   		<td>	게시물번호</td>
-	   		<td>
-	   		     <input type="text" name="b_num" 
-	   		     	value="<%=board.getbNum() %>"/>
-	   		  </td>
+	   		<tr>
+	   			<td>게시물 번호</td>
+	   			<td><input type="text" name="bNum" value="${BOARD.bNum }" readOnly="readOnly"/></td>
 	   		</tr>
 	   		<tr>
 	   			<td>게시물 제목</td>
-	   			<td>
-	   			         <input type="text"   name="title" 
-	   			            value="<%=board.getTitle() %>"/>
-	   			  </td>
+	   			<td><input type="text" name="title" value="${BOARD.title }"/></td>
 	   		</tr>
 	   		<tr>
 	   			<td>게시물 내용</td>
-	   			<td>
-	   				<textarea name="content"><%=board.getContent() %></textarea> 
-	        	</td>
+	   			<td><textarea name="content">${BOARD.content }</textarea></td>
 	        </tr>
 	           <tr>
 	           	<td> <input type="submit"  value="게시물수정"/></td>
-	           	<td><input type="reset"  value="취소"/></td>
+	           	<td> <input type="reset"  value="취소"/></td>
 	           	</tr>
 	           	</table>
 	   </form>

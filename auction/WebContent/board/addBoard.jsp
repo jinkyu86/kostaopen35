@@ -13,10 +13,6 @@
    method="post">
 작성자 ID: 
 <input type="text" size=10 name="userid">
-<select name="userid" size=1>
-<option value="1" selected>특별회원
-<option value="2">일반회원
-</select>
 <br>
 제목:<input type="text" size=20 name="title">
 <br>

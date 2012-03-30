@@ -1,9 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
  <%@ taglib  prefix="c" 
-             uri="http://java.sun.com/jsp/jstl/core" %>   
-<%--@ page import="java.util.ArrayList" --%>
-<%--@ page import="kr.or.kosta.student.Student" --%>
+             uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -28,19 +26,15 @@
 		<th>번호</th>
 		<th>아이디</th>
 		<th>제목</th>
-		<th>내용</th>
 	</tr>
 	<c:forEach  var="board"  items="${BOARD_LIST }">	
-	<tr>
-		<td>${board.b_num}</td>
-		<td>
-			<a href="/auction/BoardService?method=viewBoard&b_num=${board.b_num}">
-		  	</a>
-		  </td>		
+		<tr>
+		<td>${board.bNum}</a></td>		
 		<td>${board.member.userid}</td>
+		<td><a href="/auction/BoardService?method=viewBoard&bNum=${board.bNum}">
+		    ${board.title}</td>
 	</tr>
 	</c:forEach>
-	<%--} --%>
 </table>
 <p align="center">
  ${PAGE_LINK_TAG}
