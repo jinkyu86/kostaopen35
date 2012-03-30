@@ -202,7 +202,11 @@ public class MovieService extends HttpServlet{
 		}
 		
 		String schCode = request.getParameter("schCode");	
+		request.setAttribute("schCode",schCode);
+		
 		String schString = request.getParameter("schString");
+		request.setAttribute("schString",schString);
+		
 		ArrayList<Movie>movieList = null;
 		if("mname".equals(schCode)){
 			movieList = MovieDAO.selectMovieListbyMname(page, length, schString);
@@ -214,6 +218,14 @@ public class MovieService extends HttpServlet{
 			movieList = MovieDAO.selectMovieListByContent(page, length, schString);
 			movieCnt = MovieDAO.selectMovieListByContentCount(schString);
 		}
+		request.setAttribute("MovieList", movieList);
+		
+		String pageLink = "MovieService?method=searchMovieList&schCode="+schCode+"&schString="+schString;
+		String pageLinkTag = PageUtil.generate(page, movieCnt, length, pageLink);
+		request.setAttribute("page_Link_Tag", pageLinkTag);
+		
+		RequestDispatcher rd = request.getRequestDispatcher("/movie/viewMovieList.jsp");
+		rd.forward(request, response);
 	}
 
 	/**
