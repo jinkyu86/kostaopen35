@@ -13,6 +13,8 @@ import javax.servlet.http.HttpSession;
 
 
 
+
+
 public class MemberService extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -35,10 +37,10 @@ public class MemberService extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		String method = request.getParameter("method");
 		if(method==null){
-			method="viewMemberList";
+			method="editMemberForm";
 		}
 		if("viewMemberList".equals(method)){
-			viewMember(request,response);
+			viewMemberList(request,response);
 		}else if ("viewMember".equals(method)) {
 			viewMember(request, response);
 		} else if ("editMemberForm".equals(method)) {
@@ -59,6 +61,11 @@ public class MemberService extends HttpServlet {
 			logout(request, response);
 		}
 	}// end method doPost
+//뭐여 뭐로 디버깅해야되는겨 서버좀 죽여봐 서버기다림죽던데 시벌 왜 호출이 안되 이거 프로젝트 이름이뭐임
+	
+	
+		
+	
 
 	private void addMember(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
@@ -93,12 +100,7 @@ public class MemberService extends HttpServlet {
 	 */
 	private void addMemberForm(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		// 1.전체 학과 리스트 조회
-		ArrayList<Member>memberList=
-				MemberDAO.selectMemberList();
-		//2.request에 저장
-		request.setAttribute("MEMBER_LIST",
-				memberList);
+		
 		//3.학생추가 페이지 이동 객체 생성
 		RequestDispatcher rd=
 				request.getRequestDispatcher(
@@ -136,7 +138,7 @@ public class MemberService extends HttpServlet {
 				//4.학생정보 조회화면으로 이동 객체 생성
 				RequestDispatcher rd=
 						request.getRequestDispatcher(
-								"/MemberService?method=viewmember" +
+								"/MemberService?method=viewMemberList" +
 								"&userid="+userid);
 				rd.forward(request, response);
 	}
@@ -160,7 +162,7 @@ public class MemberService extends HttpServlet {
 						memberList);
 				//5./student/editStudent.jsp이동 객체 생성
 				RequestDispatcher  rd=
-						request.getRequestDispatcher(	"/student/editStudent.jsp");
+						request.getRequestDispatcher(	"/member/editMember.jsp");
 				rd.forward(request, response);
 
 	}
@@ -266,5 +268,15 @@ public class MemberService extends HttpServlet {
 		rd.forward(request, response);
 
 	}
-
+	
+	
+	private void viewMemberList(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		ArrayList<Member> memberList=	MemberDAO.selectMemberList();
+		request.setAttribute("MEMBER_LIST",memberList);
+		RequestDispatcher rd=
+				request.getRequestDispatcher(
+						"/member/viewMemberList.jsp");
+		rd.forward(request, response);
+	}
 }
