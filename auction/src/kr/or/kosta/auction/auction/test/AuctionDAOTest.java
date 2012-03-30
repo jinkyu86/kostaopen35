@@ -43,11 +43,7 @@ public class AuctionDAOTest {
 	
 	@Test
 	public void selectAuctionTest2() {
-		AuctionDAO auctiondao = new AuctionDAO();
-		ArrayList<Auction> auctionList = new ArrayList<Auction>();
-		
-		auctionList = auctiondao.selectAuctionList();
-		
+		ArrayList<Auction> auctionList = AuctionDAO.selectAuctionList();
 		for(int i =0; i<auctionList.size();i++){
 			Auction auction = auctionList.get(i);
 			System.out.println(auction);

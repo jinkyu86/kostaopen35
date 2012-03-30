@@ -11,10 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import kr.or.kosta.auction.good.Good;
 import kr.or.kosta.auction.good.GoodDAO;
-import kr.or.kosta.department.Department;
-import kr.or.kosta.department.DepartmentDAO;
-import kr.or.kosta.student.Student;
-import kr.or.kosta.student.StudentDAO;
 
 public class AuctionService extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -60,18 +56,20 @@ public class AuctionService extends HttpServlet {
 
 	private void addAuction(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException,IOException {
+		String aNum = request.getParameter("anum");
 		String gNum = request.getParameter("gnum");
 		String sPrice = request.getParameter("sprice");
 		String imPrice = request.getParameter("imprice");
 		String sTime = request.getParameter("stime");
 		String eTime = request.getParameter("etime");
 		boolean sold = Boolean.parseBoolean(request.getParameter("sold"));
-		String cuPrice = request.getParameter("cuPrice");
+		String cuPrice = request.getParameter("cuprice");
 	
 		Good good = new Good();
 		good.setgNum(gNum);
 		
 		Auction auction = new Auction();
+		auction.setaNum(aNum);	
 		auction.setsPrice(sPrice);
 		auction.setImPrice(imPrice);
 		auction.setsTime(sTime);
@@ -88,8 +86,19 @@ public class AuctionService extends HttpServlet {
 	}
 	
 	private void addAuctionForm(HttpServletRequest request,
-			HttpServletResponse response) {
-		/* default generated stub */;
+			HttpServletResponse response) throws ServletException,IOException{
+		// 1.전체 물품 리스트 조회
+		ArrayList<Good>goodList=
+				GoodDAO.selectGoodList();
+		//2.request에 저장
+		request.setAttribute("GOOD_LIST",
+				goodList);
+		//3.경매 추가 페이지 이동 객체 생성
+		RequestDispatcher rd=
+				request.getRequestDispatcher(
+						"/auction/addAuction.jsp");
+		//4.페이지 이동
+		rd.forward(request, response);
 
 	}
 
@@ -98,31 +107,44 @@ public class AuctionService extends HttpServlet {
 	 * @param response
 	 */
 	private void editAuction(HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response) throws ServletException,IOException{
 		//1.파라메터정보 리턴
-		String studno=request.getParameter("studno");
-		String name=request.getParameter("name");
-		String deptno=request.getParameter("deptno");
-		String userid=request.getParameter("userid");
-		String pw=request.getParameter("pw");
-		//2.1의 정보를 이용해서 Student객체 생성
-		Student  student=new Student();
-		student.setStudno(studno);
-		student.setName(name);
-		student.setUserid(userid);
-		student.setPw(pw);
+		String aNum = request.getParameter("anum");
+		String gNum = request.getParameter("gnum");
+		String sPrice = request.getParameter("sprice");
+		String imPrice = request.getParameter("imprice");
+		String sTime = request.getParameter("stime");
+		String eTime = request.getParameter("etime");
+		boolean sold = Boolean.parseBoolean(request.getParameter("sold"));
+		String cuPrice = request.getParameter("cuprice");
 		
-		Department department=new Department();
-		department.setDeptno(deptno);
+		//2.1의 정보를 이용해서 Auction객체 생성
+		Good good = new Good();
+		good.setgNum(gNum);
 		
-		student.setDepartment(department);
-		//3.학생정보를 수정하는 메서드 호출
-		StudentDAO.updateStudent(student);
-		//4.학생정보 조회화면으로 이동 객체 생성
+		Auction auction = new Auction();
+		
+		auction.setaNum(aNum);
+		auction.setsPrice(sPrice);
+		auction.setImPrice(imPrice);
+		auction.setsTime(sTime);
+		auction.seteTime(eTime);
+		auction.setSold(sold);
+		auction.setCuPrice(cuPrice);
+		auction.setGood(good);
+		
+		
+		//Department department=new Department();
+		//department.setDeptno(deptno);
+		
+		//student.setDepartment(department);
+		//3.경매정보를 수정하는 메서드 호출
+		AuctionDAO.updateAuction(auction);
+		//4.경매정보 조회화면으로 이동 객체 생성
 		RequestDispatcher rd=
 				request.getRequestDispatcher(
-						"/StudentService?method=viewStudent" +
-						"&studno="+studno);
+						"/AuctionService?method=viewAuction" +
+						"&anum="+aNum);
 		rd.forward(request, response);
 	}
 
@@ -131,7 +153,7 @@ public class AuctionService extends HttpServlet {
 	 * @param response
 	 */
 	private void editAuctionForm(HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response) throws ServletException,IOException{
 		//1.수정할 경매의 경매 번호 리턴
 				String aNum = request.getParameter("aNum");
 				//2.수정할 학생의 정보 조회
@@ -145,7 +167,7 @@ public class AuctionService extends HttpServlet {
 						goodList);
 				//5./student/editStudent.jsp이동 객체 생성
 				RequestDispatcher  rd=
-						request.getRequestDispatcher(	"/good/editgood.jsp");
+						request.getRequestDispatcher("/good/editgood.jsp");
 				rd.forward(request, response);
 
 	}
@@ -155,10 +177,10 @@ public class AuctionService extends HttpServlet {
 	 * @param response
 	 */
 	private void viewAuction(HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response) throws ServletException,IOException{
 		//1.a_num 파라메터 리턴받아서 변수에 저장
 				String aNum=request.getParameter("aNum");
-				//2.DB에서 학번이 일치하는 학생 조회
+				//2.DB에서 경매번호가 일치하는 경매 조회
 				Auction auction = AuctionDAO.selectAuction(aNum);
 				//3.request에 2에서 조회한 경매의 정보 저장
 				//   이름-STUDENT
@@ -182,14 +204,14 @@ public class AuctionService extends HttpServlet {
 		rd.forward(request, response);
 	}
 
-
-	/**
-	 * @param request
-	 * @param response
-	 */
 	private void removeAuction(HttpServletRequest request,
-			HttpServletResponse response) {
-		/* default generated stub */;
-
+			HttpServletResponse response) throws ServletException,IOException{
+		String aNum=request.getParameter("aNum");
+		AuctionDAO.deleteAuction(aNum);
+		RequestDispatcher rd=
+				request.getRequestDispatcher(
+						"/AuctionService?method=viewAuctionList");
+		rd.forward(request, response);
+///AuctionService?method=viewAuctionList
 	}
 }
