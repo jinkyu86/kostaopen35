@@ -7,9 +7,19 @@
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>게시물 목록</title>
 <script type="text/javascript">
+
 <c:if test="${ERROR!=null}">
 	alert("${ERROR}");
 </c:if>
+
+<c:if test="${DELETE!=null}">
+alert("${DELETE}");
+</c:if>
+
+<c:if test="${COMPLETE!=null}">
+alert("${COMPLETE}");
+</c:if>
+
 </script>
 </head>
 <body>
@@ -27,6 +37,7 @@
    	<a href="/bookchange/MemberService?method=logout">
    	로그아웃
    	</a><br/>
+   	<a href="/bookchange/BoardService?method=addBoardForm">물품등록</a><br/>
    </c:otherwise>
  </c:choose>
 <h1 align="center">게시판</h1>	
@@ -73,7 +84,6 @@
 	  <input type="text" name="keyword">
 	  <input type="submit" value="검색"/>
 	 </form>
-	<!--  <a href="/bookchange/BoardService?method=addBoardForm&">물품등록</a> -->
 	</table>
 	
 	 <p align="center">  ${PAGE_LINK_TAG} </p>

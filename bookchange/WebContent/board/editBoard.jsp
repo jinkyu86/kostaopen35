@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<title>게시물등록</title>
+<title>게시물수정</title>
 <link rel="Stylesheet" href="/bookchange/uploadify/uploadify.css"/>
 <script src="http://code.jquery.com/jquery-1.7.js"></script>
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.js"></script>
@@ -14,9 +14,10 @@
 </head>
 <body>
 	<form action="/bookchange/BoardService" method="post">
-		<input type="hidden" name="method" value="addBoard"/>
+		<input type="hidden" name="method" value="editBoard"/>
 		<!-- <input type="hidden" name="photo" value=""/> -->
 		<label>작성자</label> ${sessionScope.LOGIN_EMAIL.email}<br/>
+		<label>게시물번호</label>${BOARD.boardNo}<br/>
 		<select name="categoryNo">
 		 <c:forEach var="category" items="${CATEGORY_LIST}">
 		     <option value="${category.categoryNo}">${category.categoryName}</option>
@@ -32,7 +33,9 @@
 		<label>내용</label><textarea name="boardContent"></textarea><br/>
 		<label>사진</label><input type="text" name="boardPhoto"><br/>
 		<input type="hidden" name="email" value="${sessionScope.LOGIN_EMAIL.email}"/>
-		<input type="submit" value="물건등록"/>
+		<input type="hidden" name="boardNo" value="${BOARD.boardNo}"/>
+		<input type="hidden" name="conditionResult" value="${BOARD.condition.conditionResult}"/>
+		<input type="submit" value="수정"/>
 	</form>	
 </body>
 </html>

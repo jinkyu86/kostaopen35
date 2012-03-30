@@ -29,6 +29,7 @@
    	</a><br/>
    </c:otherwise>
  </c:choose>
+ 
 <h1 align="center">교환 신청할 물건</h1>
 	<table border="3" align="center">
 		 <tr>
@@ -38,15 +39,13 @@
 		  <th>제목</th>
 		  <th>교환상태</th>
 		 </tr>
-		  <c:forEach var="good" items="${BOARD_LIST}">
 	      <tr>
-	       <td>${good.boardNo}</td>
-	       <td>${good.member.email}</td>
-	       <td><img src="/bookchange/bookimg/${good.boardPhoto}" height="100" width="80"></td>
-	       <td><a href="/bookchange/BoardService?method=viewBoard&boardNo=${good.boardNo}">${good.boardTitle}</a></td>
-	       <td>${good.condition.conditionIng}</td>
+	       <td>${BOARD.boardNo}</td>
+	       <td>${BOARD.member.email}</td>
+	       <td><img src="/bookchange/bookimg/${BOARD.boardPhoto}" height="50" width="40"></td>
+	       <td>${BOARD.boardTitle}</a></td>
+	       <td>${BOARD.condition.conditionIng}</td>
 	      </tr>
-	     </c:forEach>
 		 </table>
 
  
@@ -67,35 +66,16 @@
        <td><img src="/bookchange/bookimg/${good.boardPhoto}" height="100" width="80"></td>
        <td><a href="/bookchange/BoardService?method=viewBoard&boardNo=${good.boardNo}">${good.boardTitle}</a></td>
        <td>${good.condition.conditionIng}</td>
+       <td>
+       	<form action="/bookchange/ChangeService" method="post">
+       	<input type="hidden" name="method" value="addChange">
+       	<input type="hidden" name="demandBoardNo" value="${good.boardNo}">
+       	<input type="submit" value="교환신청">
+       	</form>
+       	</td>
       </tr>
      </c:forEach>
 	 </table>
-	 
-	 <table align="center">
-	 <form action="/bookchange/BoardService" method="post">
-	  <input type="hidden" name="method" value="searchBoardList">
-	  <select name="categoryNo">
-	   <option value="">전체</option>
-	   <option value="0">만화/잡지</option>
-	   <option value="1">학습/참고서</option>
-	   <option value="2">취업/수험서</option>
-	   <option value="3">컴퓨터/IT</option>
-	   <option value="4">소설/시/에세이</option>
-	   <option value="5">가정/생활/요리</option>
-	   <option value="6">여행/취미/레저</option>
-	   <option value="7">종교/해외도서</option>
-	   <option value="8">기타도서</option>
-	   <option value="9">유아/아동</option>
-	  </select>
-	  <select name="column">
-	   <option value="title">제목</option>
-	   <option value="email">작성자</option>
-	  </select>
-	  <input type="text" name="keyword">
-	  <input type="submit" value="검색"/>
-	 </form>
-	<!--  <a href="/bookchange/BoardService?method=addBoardForm&">물품등록</a> -->
-	</table>
 	
 	 <p align="center">  ${PAGE_LINK_TAG} </p>
 </body>
