@@ -252,6 +252,7 @@ public class MovieService extends HttpServlet{
 		int page = 1;
 		int length = 5;
 		String gubun = "total";
+		String method = "viewMovieList";
 		
 		if(request.getParameter("page")!=null){
 			page = Integer.parseInt(request.getParameter("page"));
@@ -259,13 +260,20 @@ public class MovieService extends HttpServlet{
 		if(request.getParameter("gubun")!=null){
 			gubun = request.getParameter("gubun");
 		}
+		if(request.getParameter("method")!=null){
+			method = request.getParameter("method");
+		}
 		request.setAttribute("gubun",gubun);
+		request.setAttribute("method", method);
+		String pageLink = "MovieService?method=viewMovieList&gubun="+gubun;
 		
 		ArrayList<Movie>movieList = MovieDAO.selectMovieList(page, length, gubun);
 		request.setAttribute("MovieList",movieList);
-		
+
 		int MovieCnt = MovieDAO.selectMovieCount(gubun);
-		String pageLinkTag = PageUtil.generate(page, MovieCnt, length, "MovieService?method=viewMovieList&gubun="+gubun);
+		
+		//System.out.println(pageLink);
+		String pageLinkTag = PageUtil.generate(page, MovieCnt, length, pageLink);
 		request.setAttribute("page_Link_Tag", pageLinkTag);
 		
 		RequestDispatcher rd = request.getRequestDispatcher("/movie/viewMovieList.jsp");
