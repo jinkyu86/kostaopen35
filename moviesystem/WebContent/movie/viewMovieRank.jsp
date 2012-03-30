@@ -6,24 +6,68 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>영화 순위</title>
+<title>Movie Ranking</title>
+<link rel="stylesheet" href="/moviesystem/css/Layout.css">
+<script src="http://code.jquery.com/jquery-1.7.1.js"></script>
+<script src="/moviesystem/js/common.js"></script>
+<!-- 메뉴 선택 시작 -->
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$('#movie').css('background-color','#C4E2FF');
+			$('.sub_menu').css('display', 'block');
+			$('#movie_sub').css('display', 'block');
+			$("#movie_ranking").css('background-color','#C4E2FF');
+			$("#screen_ranking").css('background-color','#C4E2FF');
+		});
+	</script>
 </head>
+
 <body>
-	<table width="80%" align="center" border="1">
-		<c:forEach var="movieList" items="${MovieList}">
-			<tr>
-				<td rowspan="2">${movieList.poster}</td>
-				<td><a href="/moviesystem/MovieService?method=viewMovie&gubun=${gubun}&mnum=${movieList.mnum}"><b>${movieList.mname}</b></a></td>
-			</tr>
-			<tr>
-				<td>장르 : ${movieList.genre}&nbsp;&nbsp;&nbsp;
-					개봉일 : <fmt:formatDate value="${movieList.launchDate}" pattern="yyyy-MM-dd"/>
-				</td>
-			</tr>
-		</c:forEach>
-	</table>
-	<p align="center">
-		${page_Link_Tag}
-	</p>
+<table width="90%" align="center">
+	<!-- 상단 메뉴 시작 -->
+	<tr>
+		<td colspan="2">
+			<jsp:include page="/common/top.jsp"></jsp:include>
+		</td>
+	</tr>
+	<!-- 상단 메뉴 끝 -->
+	
+	<tr>
+		<!-- 좌측 메뉴 시작 -->
+		<td rowspan="2" valign="top" style="width:20%">
+			<jsp:include page="left.jsp"></jsp:include>
+		</td>
+		<!-- 좌측 메뉴 끝 -->
+		
+		<!-- 본문 내용 시작 -->
+		<td>
+			<div class="menu_title" >Movie Ranking	</div>
+			<table class="table_style" align="right">
+				<c:forEach var="movieList" items="${MovieList}" varStatus="n">
+					<tr>
+						<td rowspan="2">${movieList.poster}</td>
+						<td><a href="/moviesystem/MovieService?method=viewMovie&gubun=${gubun}&mnum=${movieList.mnum}"><b>${movieList.mname}</b></a></td>
+					</tr>
+					<tr>
+						<td>장르 : ${movieList.genre}&nbsp;&nbsp;&nbsp;
+							개봉일 : <fmt:formatDate value="${movieList.launchDate}" pattern="yyyy-MM-dd"/>
+						</td>
+					</tr>
+					<c:if test="${!n.last}">
+						<tr>
+							<td colspan="3" style="background-color:#9191C8;padding-top:1px"></td>
+						</tr>
+					</c:if>
+				</c:forEach>
+			</table>
+		</td>
+	</tr>
+	<!-- 하단 내용 시작 -->
+	<tr>
+		<td colspan="2">
+			<jsp:include page="/common/footer.jsp"></jsp:include>
+		</td>
+	</tr>
+	<!-- 하단 내용 끝 -->
 </body>
 </html>
