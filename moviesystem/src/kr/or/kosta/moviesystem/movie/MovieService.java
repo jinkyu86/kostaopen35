@@ -1,6 +1,7 @@
 package kr.or.kosta.moviesystem.movie;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -12,6 +13,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sf.json.JSONArray;
+
+import kr.or.kosta.moviesystem.screentime.ScreenTime;
+import kr.or.kosta.moviesystem.screentime.ScreenTimeDAO;
 import kr.or.kosta.moviesystem.util.PageUtil;
 
 public class MovieService extends HttpServlet{
@@ -50,9 +55,44 @@ public class MovieService extends HttpServlet{
 			addMovie(request, response);
 		}else if("rankingMovieList".equals(method)){
 			rankingMovieList(request, response);
+		}else if("MovieTimeListForm".equals(method)){
+			MovieTimeListForm(request, response);
+		}else if("MovieTimeList".equals(method)){
+			MovieTimeList(request, response);
 		}
 	}
 	
+	private void MovieTimeList(HttpServletRequest request,
+			HttpServletResponse response) throws IOException, ServletException{
+		String mnum = request.getParameter("mnun");
+		System.out.println(mnum);
+		if(mnum==null){
+			mnum = "1";
+		}
+		ArrayList<ScreenTime> screenTimeList = ScreenTimeDAO.selectScreen(mnum);
+		
+		JSONArray jsonArray = JSONArray.fromObject(screenTimeList);
+		System.out.println("jsonArray : "+jsonArray);
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter out = response.getWriter();
+		out.println(jsonArray.toString());
+		out.flush();
+		out.close();
+	}
+
+	private void MovieTimeListForm(HttpServletRequest request,
+			HttpServletResponse response) throws IOException, ServletException{
+		
+		int Moviecnt = MovieDAO.selectMovieCount("");
+		ArrayList<Movie> movieList = MovieDAO.selectMovieList(1, Moviecnt, "");
+		
+		request.setAttribute("MovieList", movieList);
+		System.out.println(movieList);
+		RequestDispatcher rd = request.getRequestDispatcher("/movie/test1.jsp");
+		rd.forward(request, response);
+		
+	}
+
 	/**
 	 * 영화 순위
 	 * 
