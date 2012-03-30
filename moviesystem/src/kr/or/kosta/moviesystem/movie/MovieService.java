@@ -64,13 +64,11 @@ public class MovieService extends HttpServlet{
 	
 	private void MovieTimeList(HttpServletRequest request,
 			HttpServletResponse response) throws IOException, ServletException{
-		String mnum = request.getParameter("mnun");
+		String mnum = request.getParameter("mnum");
 		System.out.println(mnum);
-		if(mnum==null){
-			mnum = "1";
-		}
-		ArrayList<ScreenTime> screenTimeList = ScreenTimeDAO.selectScreen(mnum);
 		
+		ArrayList<ScreenTime> screenTimeList = ScreenTimeDAO.selectScreen(mnum);
+		System.out.println(screenTimeList);
 		JSONArray jsonArray = JSONArray.fromObject(screenTimeList);
 		System.out.println("jsonArray : "+jsonArray);
 		response.setContentType("text/html;charset=utf-8");
