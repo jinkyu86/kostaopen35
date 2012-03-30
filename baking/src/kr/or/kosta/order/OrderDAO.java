@@ -27,13 +27,11 @@ public class OrderDAO {
 			psmt=con.prepareStatement(
 					"insert into g_order" +
 					" (order_num,memberid,good_num,qty,price,buy_date) " +
-					" values(?, ?, ?, ?, ?, sysdate)");
-			
-			psmt.setInt(1,order.getOrderNum());
-			psmt.setString(2,order.getMember().getMemberid());
-			psmt.setInt(3,order.getGood().getGoodNum());
-			psmt.setInt(4,order.getQty());
-			psmt.setInt(5,order.getQty()*order.getGood().getGoodPrice());
+					" values(order_seq.nextval, ?, ?, ?, ?, sysdate)");
+			psmt.setString(1,order.getMember().getMemberid());
+			psmt.setInt(2,order.getGood().getGoodNum());
+			psmt.setInt(3,order.getQty());
+			psmt.setInt(4,order.getQty()*order.getGood().getGoodPrice());
 			psmt.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -167,6 +165,97 @@ public class OrderDAO {
 			psmt.setString(1,memberid);
 			rs=psmt.executeQuery();
 			while(rs.next()){
+				memberid=rs.getString(1);
+				int ordernum=rs.getInt(2);
+				int qty=rs.getInt(3);
+				int price=rs.getInt(4);
+				Date buydate=rs.getDate(5);
+				int goodnum=rs.getInt(6);
+				String gname=rs.getString(7);
+				String explantion=rs.getString(8);
+				String img=rs.getString(9);
+				String option=rs.getString(10);
+				String password=rs.getString(11);
+				String name=rs.getString(12);
+				String reginumber=rs.getString(13);
+				String zipcode=rs.getString(14);
+				String address=rs.getString(15);
+				String straddress=rs.getString(16);
+				String email=rs.getString(17);
+				String phonenumber=rs.getString(18);
+				String telnumber=rs.getString(19);
+				int division=rs.getInt(20);
+				String dname=rs.getString(21);
+				
+				Order order=new Order();
+				order.setMemberid(memberid);
+				order.setOrderNum(ordernum);
+				order.setQty(qty);
+				order.setPrice(price);
+				order.setBuyDate(buydate);
+				
+				Good good=new Good();
+				good.setGoodNum(goodnum);
+				good.setName(gname);
+				good.setExplantion(explantion);
+				good.setImg(img);
+				good.setOption(option);
+				
+				Member member=new Member();
+				member.setPassword(password);
+				member.setName(name);
+				member.setRegiNumber(reginumber);
+				member.setZipcode(zipcode);
+				member.setAddress(address);
+				member.setStrAddress(straddress);
+				member.setEmail(email);
+				member.setPhoneNumber(phonenumber);
+				member.setTelNumber(telnumber);
+				
+				Good_division gooddivision=new Good_division();
+				gooddivision.setDivision(division);
+				gooddivision.setgName(dname);
+				
+				good.setGood_division(gooddivision);
+				order.setGood(good);
+				order.setMember(member);
+				
+				orderList.add(order);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return orderList;
+	}
+	
+	public static ArrayList<Order>selectOrderList(String memberid, int length, int page){
+		Connection con=null;
+		PreparedStatement psmt=null;
+		ResultSet rs=null;
+		ArrayList<Order>orderList=new ArrayList<Order>();
+		try {
+			con=ConnectionUtil.getConnection();
+			psmt=con.prepareStatement(
+					"select o.memberid,o.order_num,o.qty,o.price,o.buy_date," +
+					"g.good_num,g.name,g.explantion,g.img,g.g_option," +
+					"m.password,m.name,m.regi_number," +
+					"m.zipcode,m.address,m.str_address,m.email,m.phone_number,m.tel_number," +
+					"d.division,d.g_name" +
+					" from g_order o,good g,member m,good_division d" +
+					" where o.good_num=g.good_num and o.memberid=m.memberid" +
+					" and d.division=g.division and o.memberid=?",
+					ResultSet.TYPE_SCROLL_INSENSITIVE,
+					ResultSet.CONCUR_READ_ONLY);
+			psmt.setString(1,memberid);
+			rs=psmt.executeQuery();
+			
+			if(page>1){
+				rs.absolute((page-1)*length);
+			}
+			int getRecordCount=0;
+			while(rs.next() && getRecordCount<length){
+				getRecordCount++;
 				memberid=rs.getString(1);
 				int ordernum=rs.getInt(2);
 				int qty=rs.getInt(3);

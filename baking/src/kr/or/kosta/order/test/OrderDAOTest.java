@@ -19,7 +19,6 @@ public class OrderDAOTest {
 //	@Test
 //	public void testInsertOrder() {
 //		Order order = new Order();
-//		order.setOrderNum(2);
 //		order.setQty(3);
 //		Member member =new Member();
 //		member.setMemberid("yubi");

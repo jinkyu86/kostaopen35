@@ -2,6 +2,7 @@ package kr.or.kosta.order;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -31,10 +32,12 @@ public class OrderService extends HttpServlet {
 		}
 		if("viewOrderList".equals(method)){			//아이디를 이용한 주문리스트 조회
 			viewOrderList(request,response);
-		}else if("viewOrder".equals(method)){		//주문 조회
+		}else if("viewOrder".equals(method)){		//주문조회
 			viewOrder(request,response);
 		}else if("addOrder".equals(method)){		//주문하기
 			addOrder(request,response);
+		}else if("addOrderForm".equals(method)){	//주문하기폼
+			addOrderForm(request,response);
 		}else if("removeOrder".equals(method)){		//주문삭제
 			removeOrder(request,response);
 		}else if("editOrder".equals(method)){		//주문수정
@@ -60,9 +63,9 @@ public class OrderService extends HttpServlet {
 	public void viewOrder(HttpServletRequest request,
 			HttpServletResponse response) throws IOException, ServletException{
 		//클릭한 주문 번호
-		int ordernum=Integer.parseInt(request.getParameter("order_num"));
+		int orderNum=Integer.parseInt(request.getParameter("orderNum"));
 		//번호가 일치하는 데이터 조회
-		Order order=OrderDAO.selectOrder(ordernum);
+		Order order=OrderDAO.selectOrder(orderNum);
 		//request에 주문정보저장
 		request.setAttribute("ORDER",order);
 		//이동 객체 생성
@@ -86,21 +89,34 @@ public class OrderService extends HttpServlet {
 	public void addOrder(HttpServletRequest request,
 			HttpServletResponse response) throws IOException, ServletException{
 		//HttpSession 객체 리턴
-		HttpSession session=request.getSession();
+		//HttpSession session=request.getSession();
 		//로그인 정보 입력
-		Member member=(Member)session.getAttribute("LOGIN");
+		//Member member=(Member)session.getAttribute("LOGIN");
 		//로그인 안한상태
-		if(member==null){
-			RequestDispatcher rd=request.getRequestDispatcher("");
-			rd.forward(request, response);
-			return;
-		}
-		ArrayList<Order>cartList=(ArrayList)session.getAttribute("CART");
-		for(int i=0;i<cartList.size();i++){
-			Order order=cartList.get(i);
-			order.setMember(member);
-			OrderDAO.insertOrder(order);
-		}
+		//if(member==null){
+//			RequestDispatcher rd=request.getRequestDispatcher("");
+//			rd.forward(request, response);
+//			return;
+//		}
+//		ArrayList<Order>cartList=(ArrayList)session.getAttribute("CART");
+//		for(int i=0;i<cartList.size();i++){
+//			Order order=cartList.get(i);
+//			order.setMember(member);
+//			OrderDAO.insertOrder(order);
+//		}
+		String memberid=request.getParameter("memberid");
+		int goodNum=Integer.parseInt(request.getParameter("goodNum"));
+		int qty=Integer.parseInt(request.getParameter("qty"));
+		int price=Integer.parseInt(request.getParameter("price"));
+		
+		Order order=new Order();
+		order.setMemberid(memberid);
+		order.setGoodNum(goodNum);
+		order.setQty(qty);
+		order.setPrice(price);
+		
+		OrderDAO.insertOrder(order);
+		
 		RequestDispatcher rd=request.getRequestDispatcher("/OrderService?method=viewOrderList");
 		rd.forward(request, response);
 	}
@@ -111,19 +127,19 @@ public class OrderService extends HttpServlet {
 	 * @param request
 	 * @param response
 	 */
-//	public void addOrderForm(HttpServletRequest request,
-//			HttpServletResponse response) {
-		/* default generated stub */;
-//		return null;
-//	}
+	public void addOrderForm(HttpServletRequest request,
+			HttpServletResponse response) throws IOException, ServletException{
+		RequestDispatcher rd=request.getRequestDispatcher("/order/addOrder.jsp");
+		rd.forward(request, response);
+	}
 
 	//주문 삭제
 	public void removeOrder(HttpServletRequest request,
 			HttpServletResponse response) throws IOException,ServletException{
 		//삭제할 주문 번호
-		int ordernum=Integer.parseInt(request.getParameter("order_num"));
+		int orderNum=Integer.parseInt(request.getParameter("orderNum"));
 		//주문 삭제
-		OrderDAO.deleteOrder(ordernum);
+		OrderDAO.deleteOrder(orderNum);
 		//주문리스트페이지 이동
 		RequestDispatcher rd=request.getRequestDispatcher("OrderService?method=viewOrderList");
 		rd.forward(request, response);
@@ -147,20 +163,20 @@ public class OrderService extends HttpServlet {
 		String name=request.getParameter("name");
 		String zipcode=request.getParameter("zipcode");
 		String address=request.getParameter("address");
-		String straddress=request.getParameter("straddress");
-		String phonenumber=request.getParameter("phong_number");
-		String telnumber=request.getParameter("tel_number");
+		String strAddress=request.getParameter("strAddress");
+		String phoneNumber=request.getParameter("phoneNumber");
+		String telNumber=request.getParameter("telNumber");
 		int qty=Integer.parseInt(request.getParameter("qty"));
 		int price=Integer.parseInt("price");
-		int ordernum=Integer.parseInt("order_num");
+		int orderNum=Integer.parseInt("orderNum");
 		
 		Member member=new Member();
 		member.setName(name);
 		member.setZipcode(zipcode);
 		member.setAddress(address);
-		member.setStrAddress(straddress);
-		member.setPhoneNumber(phonenumber);
-		member.setTelNumber(telnumber);
+		member.setStrAddress(strAddress);
+		member.setPhoneNumber(phoneNumber);
+		member.setTelNumber(telNumber);
 		
 		Order order=new Order();
 		order.setQty(qty);
@@ -169,15 +185,15 @@ public class OrderService extends HttpServlet {
 		order.setMember(member);
 		
 		OrderDAO.updateOrder(order);
-		RequestDispatcher rd=request.getRequestDispatcher("OrderService?method=viewOrder&order_num="+ordernum);
+		RequestDispatcher rd=request.getRequestDispatcher("OrderService?method=viewOrder&orderNum="+orderNum);
 		rd.forward(request, response);
 	}
 	
 	//주문수정폼
 	public void editOrderForm(HttpServletRequest request,
 			HttpServletResponse response) throws IOException,ServletException{
-		int ordernum=Integer.parseInt(request.getParameter("order_num"));
-		Order order=OrderDAO.selectOrder(ordernum);
+		int orderNum=Integer.parseInt(request.getParameter("orderNum"));
+		Order order=OrderDAO.selectOrder(orderNum);
 		request.setAttribute("ORDER",order);
 		RequestDispatcher rd=request.getRequestDispatcher("/order/editOrder.jsp");
 		rd.forward(request, response);
