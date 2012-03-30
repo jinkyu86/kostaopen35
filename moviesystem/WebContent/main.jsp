@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+6조 영화예매 사이트
 </body>
 </html>
