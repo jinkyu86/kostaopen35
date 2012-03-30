@@ -9,4 +9,14 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
+  <servlet>
+    <description></description>
+    <display-name>MatchService</display-name>
+    <servlet-name>MatchService</servlet-name>
+    <servlet-class>kr.or.kosta.betting.match.MatchService</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MatchService</servlet-name>
+    <url-pattern>/MatchService</url-pattern>
+  </servlet-mapping>
 </web-app>
