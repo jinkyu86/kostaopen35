@@ -1,35 +1,35 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>viewGood</title>
 </head>
 <body>
 	<table border="1" align="center">
 		<tr>
-			<td width="200">¹°°Ç ¹øÈ£</td>
+			<td width="200">ë¬¼ê±´ ë²ˆí˜¸</td>
 			<td>${GOOD.gNum }</td>
 		</tr>
 		<tr>
-			<td >¹°°Ç ÀÌ¸§</td>
+			<td >ë¬¼ê±´ ì´ë¦„</td>
 			<td>${GOOD.gName }</td>
 		</tr>
 		<tr>
-			<td>»ó¼¼ ¼³¸í</td>
+			<td>ìƒì„¸ ì„¤ëª…</td>
 			<td><textarea name="detail" >${GOOD.detail}</textarea></td>
 		</tr>
 		<tr>
-			<td>ÀÌ¹ÌÁö</td>
+			<td>ì´ë¯¸ì§€</td>
 			<td><img src="/auction/gphoto/${GOOD.img }" height="100" width="100"></td>
 		</tr>
 	</table>
 	 <p align="center">
-		 <a href="/auction/GoodService?method=editGoodForm&gNum=${GOOD.gNum}">¹°Ç°Á¤º¸ ¼öÁ¤</a>
+		 <a href="/auction/GoodService?method=editGoodForm&gNum=${GOOD.gNum}">ë¬¼í’ˆì •ë³´ ìˆ˜ì •</a>
 	</p>
 	<p align="center">
-		 <a href="/auction/GoodService?method=removeGood&gNum=${GOOD.gNum}">¹°Ç° »èÁ¦</a>
+		 <a href="/auction/GoodService?method=removeGood&gNum=${GOOD.gNum}">ë¬¼í’ˆ ì‚­ì œ</a>
 	 </p>
 </body>
 </html>

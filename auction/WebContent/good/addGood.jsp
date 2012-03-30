@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -26,13 +26,13 @@ $(document).ready(function(){
 		},
 		messages:{
 			gName:{
-				required: "Á¦Ç°¸íÀ» ÀÔ·ÂÇÏ¼¼¿ä."
+				required: "ì œí’ˆëª…ì„ ì…ë ¥í•˜ì„¸ìš”."
 			},//end name
 			detail:{
-				required:"»ó¼¼¼³¸íÀ» ÀÔ·ÂÇÏ¼¼¿ä."
+				required:"ìƒì„¸ì„¤ëª…ì„ ì…ë ¥í•˜ì„¸ìš”."
 			},//end detail
 			img:{
-				required:"»çÁøÆÄÀÏ¸íÀ» ÀÔ·ÂÇÏ¼¼¿ä. EX)s1.jpg",
+				required:"ì‚¬ì§„íŒŒì¼ëª…ì„ ì…ë ¥í•˜ì„¸ìš”. EX)s1.jpg",
 			}//end price
 		}
 	});
@@ -40,26 +40,26 @@ $(document).ready(function(){
 </script>
 </head>
 <body>
-	<h1 align="center">¹°Ç° Ãß°¡</h1>
+	<h1 align="center">ë¬¼í’ˆ ì¶”ê°€</h1>
 	<form action="/auction/GoodService" method="post" id="my_form">
 	<table border="1" align="center">	
 		<input type="hidden" name="method" value="addGood"/>
 		<tr>
-			<td>¹°Ç°¸í</td>
+			<td>ë¬¼í’ˆëª…</td>
 			<td><input type="text" name="gName" /></td>
 		</tr>
 		<tr>
-			<td>»ó¼¼¼³¸í</td>
+			<td>ìƒì„¸ì„¤ëª…</td>
 			<td><textarea name="detail" ></textarea></td>
 		</tr>
 		<tr>
-			<td>ÀÌ¹ÌÁö</td>
+			<td>ì´ë¯¸ì§€</td>
 			<td><input type="text" name="img"></td>
 		</tr>
 	</table>
 	<center>	
-		<input type="submit"  value="¹°°Ç µî·Ï"/>
-		<input type="reset" value="ÀÔ·ÂÃë¼Ò"/>
+		<input type="submit"  value="ë¬¼ê±´ ë“±ë¡"/>
+		<input type="reset" value="ì…ë ¥ì·¨ì†Œ"/>
 	</center>
 	</form>
 </body>
