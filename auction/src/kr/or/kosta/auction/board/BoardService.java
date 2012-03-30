@@ -86,7 +86,7 @@ public class BoardService extends HttpServlet {
 
 	private void editBoard(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		String bNum=request.getParameter("b_num");
+		String bNum=request.getParameter("bNum");
 		String title=request.getParameter("title");
 		String content=request.getParameter("content");
 		
@@ -100,14 +100,14 @@ public class BoardService extends HttpServlet {
 		RequestDispatcher rd=
 				request.getRequestDispatcher(
 						"/BoardService?method=viewBoard&" +
-						"b_num="+bNum);
+						"bNum="+bNum);
 		
 		rd.forward(request, response);
 	}
 
 	private void editBoardForm(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		String bNum=request.getParameter("b_num");
+		String bNum=request.getParameter("bNum");
 		Board board=BoardDAO.selectBoard(bNum);
 		request.setAttribute("BOARD",board);
 		RequestDispatcher rd=
@@ -117,7 +117,7 @@ public class BoardService extends HttpServlet {
 
 	private void viewBoard(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		String bNum=request.getParameter("b_num");
+		String bNum=request.getParameter("bNum");
 		Board  board=BoardDAO.selectBoard(bNum);
 		request.setAttribute("BOARD",board);
 		RequestDispatcher rd=
@@ -138,7 +138,7 @@ public class BoardService extends HttpServlet {
 
 	private void removeBoard(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		String num=request.getParameter("b_num");
+		String num=request.getParameter("bNum");
 		BoardDAO.deleteBoard(num);
 		RequestDispatcher rd=
 				request.getRequestDispatcher(
