@@ -14,9 +14,9 @@ public class MatchDAOTest {
 
 	@Test
 	public void testSelectMatchList() {
-		ArrayList<Match> page1List = MatchDAO.selectMatchList(5, 1);
+		ArrayList<Match> page1List = MatchDAO.selectMatchList(1, 5);
 		System.out.println("page1List:" + page1List);
-		ArrayList<Match> page2List = MatchDAO.selectMatchList(5, 2);
+		ArrayList<Match> page2List = MatchDAO.selectMatchList(1, 5);
 		System.out.println("page2List:" + page2List);
 
 	}
@@ -85,6 +85,10 @@ public class MatchDAOTest {
 				
 		MatchDAO.updateMatch(match);
 	}
-
+	@Test
+	public void testSelectMatch(){
+		Match match = MatchDAO.selectMatch("10000");
+		System.out.println(match);
+	}
 		
 }
