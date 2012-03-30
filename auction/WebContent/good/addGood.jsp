@@ -5,10 +5,43 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>addGood</title>
+<script src="http://code.jquery.com/jquery-1.7.js"></script>
+<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.js"></script>
+<script>
+$(document).ready(function(){
+	$('#my_form').validate({
+		rules:{
+			gName:{
+				required:true,
+				minlength:1
+			},
+			detail:{
+				required:true,
+				minlength:1
+			},
+			img:{
+				required:true,
+				minlength:1
+			}
+		},
+		messages:{
+			gName:{
+				required: "제품명을 입력하세요."
+			},//end name
+			detail:{
+				required:"상세설명을 입력하세요."
+			},//end detail
+			img:{
+				required:"사진파일명을 입력하세요. EX)s1.jpg",
+			}//end price
+		}
+	});
+});
+</script>
 </head>
 <body>
 	<h1 align="center">물품 추가</h1>
-	<form action="/auction/GoodService" method="post">
+	<form action="/auction/GoodService" method="post" id="my_form">
 	<table border="1" align="center">	
 		<input type="hidden" name="method" value="addGood"/>
 		<tr>
