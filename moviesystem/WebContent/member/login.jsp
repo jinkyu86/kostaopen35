@@ -42,19 +42,20 @@
 		<tr>
 			<td>아이디</td>
 			<td><input type="text" name="userid" ></td>
-			<td>
+			<td rowspan="2">
 			<input type="submit" value="로그인" >
 			</td>
 		</tr>
 		<tr>
 			<td>비밀번호</td>
 			<td><input type="password" name="pw" ></td>
-			<td>
-			<input type="reset" value="취소"/>
-			</td>
+		
 		</tr>
-
-		<p>
+			</form>		
+			</table>
+		</td>
+			<tr>
+			<td colspan="2">
 			<a href="/moviesystem/MemberService?method=addMemberForm">
 			<font size=2 >회원가입 |</font>
 			</a>
@@ -63,10 +64,8 @@
 			<a href="/moviesystem/MemberService?method=findIdForm">
 			<font size=2 >아이디
 			</a>/ <a href="/moviesystem/MemberService?method=findPwForm">비밀번호</a> 찾기</font>
-		</p>
-			</form>		
-			</table>
-		</td>
+			</td>
+		</tr>
 	</tr>
 </body>
 </html>
