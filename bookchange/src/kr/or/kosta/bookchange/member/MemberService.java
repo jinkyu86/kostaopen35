@@ -185,10 +185,11 @@ public class MemberService extends HttpServlet {
 				HttpSession session=request.getSession();
 				session.setAttribute("LOGIN_EMAIL",member);
 				System.out.println(email+"로그인 되었습니다.");
+		
 			}
 		
 		}
-		RequestDispatcher rd=request.getRequestDispatcher("/BoardService?method=viewBoardList");
+		RequestDispatcher rd=request.getRequestDispatcher("/member/loginafter.jsp");
 		rd.forward(request, response);
 	}
 	
@@ -216,7 +217,7 @@ public class MemberService extends HttpServlet {
 		HttpSession session=request.getSession();
 		session.invalidate();//세션 강제 종료
 		System.out.println("로그아웃되었습니다");
-		RequestDispatcher rd=request.getRequestDispatcher("/MemberService?method=viewMember");
+		RequestDispatcher rd=request.getRequestDispatcher("/bookchange/MemberService?method=viewMember");
 		rd.forward(request, response);
 		
 	}
@@ -233,7 +234,7 @@ public class MemberService extends HttpServlet {
 		String email=request.getParameter("email");
 		MemberDAO.deleteMember(email);
 		System.out.println("회원이 삭제 되었습니다.");
-		RequestDispatcher rd=request.getRequestDispatcher("/MemberService?method=viewMemberList");
+		RequestDispatcher rd=request.getRequestDispatcher("/bookchange/MemberService?method=viewMemberList");
 		rd.forward(request, response);
 	}
 
@@ -249,7 +250,7 @@ public class MemberService extends HttpServlet {
 			Member memberList=MemberDAO.selectMember(email);
 			request.setAttribute("MEMBER",memberList);
 			System.out.println(email+"회원정보가 보입니다.");
-			RequestDispatcher rd=request.getRequestDispatcher("/member/viewMember.jsp");
+			RequestDispatcher rd=request.getRequestDispatcher("/bookchange/member/viewMember.jsp");
 			rd.forward(request, response);
 	}
 
@@ -270,14 +271,12 @@ public class MemberService extends HttpServlet {
 			  page=Integer.parseInt(request.getParameter("page"));
 			  //현제 페이지값리턴 
 		  }
-		 request.setAttribute("MEMBER_LIST", memberList);//요청에 멤버리스트를 스트링값으로 리턴
+		 request.setAttribute("MEMBER_LIST", memberList);
 		 
-		 int memberCount=MemberDAO.selectMemberCount();//멤버카운트에 멤버숫자 리턴
-		//다른 페이지로 이동하는 링크 테그 만듬
-		//PageUtil.getnerate(한페이지,전체건수,한페이지당 보여줄 row수,주소)
+		 int memberCount=MemberDAO.selectMemberCount();
 		 String pageLink=PageUtil.generate(page, memberCount, length, 
 				 "/bookchange/MemberService?method=viewMemberList");
-		 request.setAttribute("PAGE_LINK", pageLink);
+		 request.setAttribute("PAGE_LINK_TAG", pageLink);
 		 
 		 RequestDispatcher rd=request.getRequestDispatcher("/member/viewMemberList.jsp");
 		 rd.forward(request, response);
@@ -323,12 +322,12 @@ public class MemberService extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		request.setAttribute("MEMBER_LIST",memberList);	
 		String pageLink=
-				PageUtil.generate(page, memberCount, length, "/MemberService?" +
+				PageUtil.generate(page, memberCount, length, "/bookchange/MemberService?" +
 						"method=searchMemberList&keyword=" +
 						request.getParameter("keyword"));
-		request.setAttribute("PAGE_LINK", pageLink);
+		request.setAttribute("PAGE_LINK_TAG", pageLink);
 
-		RequestDispatcher rd=request.getRequestDispatcher("/member/viewMemberList.jsp");
+		RequestDispatcher rd=request.getRequestDispatcher("/bookchange/member/viewMemberList.jsp");
 		rd.forward(request, response);
 	}
 }
