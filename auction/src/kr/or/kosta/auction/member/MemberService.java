@@ -237,7 +237,7 @@ public class MemberService extends HttpServlet {
 		}// end if
 			// 7. /GoodService?method=viewGoodList∑Œ ¿Ãµø
 		RequestDispatcher rd = request
-				.getRequestDispatcher("/GoodService?method=viewGoodList");
+				.getRequestDispatcher("/AuctionService?method=viewAuctionList");
 		rd.forward(request, response);
 
 	}
@@ -251,7 +251,7 @@ public class MemberService extends HttpServlet {
 		HttpSession session = request.getSession();
 		session.invalidate();
 		RequestDispatcher rd = request
-				.getRequestDispatcher("/GoodService?method=viewGoodList");
+				.getRequestDispatcher("/AuctionService?method=viewAuctionList");
 		rd.forward(request, response);
 
 	}

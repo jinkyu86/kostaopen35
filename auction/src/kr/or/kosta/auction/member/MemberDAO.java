@@ -43,7 +43,7 @@ public class MemberDAO {
 		Member member = null;
 		try {
 			con = ConnectionUtil.getConnection();
-			sql = "SELECT  userid,pw,email,name,coin,emoney"
+			sql = "SELECT  pw,email,name,coin,emoney"
 					+ "  FROM  member " + " WHERE userid=? ";
 
 			psmt = con.prepareStatement(sql);
