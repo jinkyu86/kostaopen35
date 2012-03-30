@@ -90,20 +90,26 @@
 		
 		<!-- 본문 내용 시작 -->
 		<td>
-			<table style="">
+			<table class="sch_style" style="margin-bottom:10px;" align="center">
 				<tr>
-					<td>
-						<select name="sch_code" id="sch_code">
-							<option value="mname">영화제목</option>
-							<option value="genre">장르</option>
-							<option value="content">내용</option>
-						</select>
-						<input type="text" name="sch_string" id="sch_string">
-						<span id="button">검색</span>
+					<td align="center" style="padding:5px 5px 5px 5px;width:100%">
+						<form name="sch_form" id="sch_form" action="/moviesystem/MovieService">
+							<input type="hidden" name="method" value="searchMovieList">
+							<input type="hidden" name="gubun" value="${gubun}">
+							
+							<select name="sch_code" id="sch_code">
+								<option value="mname">영화제목</option>
+								<option value="genre">장르</option>
+								<option value="content">내용</option>
+							</select>
+							<input type="text" name="sch_string" id="sch_string">
+							<span id="button">검색</span>
+						</form>
 					</td>
 				</tr>
 			</table>
-			<table style="border:1px solid #9191C8;width:100%" align="right">
+			
+			<table class="table_style" align="right">
 				<c:forEach var="movieList" items="${MovieList}" varStatus="n">
 				<tr>
 					<td rowspan="2">${movieList.poster}</td>
