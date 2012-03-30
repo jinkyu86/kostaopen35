@@ -14,6 +14,7 @@
 		<th>영화</th>
 		<th>상영시간</th>
 		<th>좌석</th>
+		<th>수량</th>
 		<th>예매날짜</th>
 	</tr>
 
@@ -26,6 +27,7 @@
 		${reservation.screenTime.time}
 		</td>
 		<td>${reservation.seatnum}</td>
+		<td>${reservation.resQty}</td>
 		<td>${reservation.resDate}</td>
 		</tr>
 </c:forEach>		

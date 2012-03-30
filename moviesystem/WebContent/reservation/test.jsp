@@ -10,13 +10,13 @@
 <body>
 
 <p align="center" var=member >
-<a href="/moviesystme/ReservationService?method=viewReservationListById&userid=${member.userid}">
+<a href="/moviesystem/ReservationService?method=viewReservationListById&userid=${member.userid}">
 예약 정보 조회
 </a>
 </p>
 
 <p align="center" var=member >
-<a href="/moviesystme/ReservationService?method=addReservationForm&userid=${member.userid}">
+<a href="/moviesystem/ReservationService?method=addReservationForm&userid=${member.userid}">
 예약 하기
 </a>
 </p>

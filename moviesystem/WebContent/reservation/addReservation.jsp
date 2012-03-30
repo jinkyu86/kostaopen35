@@ -8,39 +8,55 @@
 <title>예매하기</title>
 <script src="http://code.jquery.com/jquery-1.7.1.js"></script>
 <script type="text/javascript">
+
 	$(document).ready(function(){
-		$.getJSON('/moviesystem/ReservationService',
-			{"movies" : "1"},
-			function(data){
-				$("#time").empty();
-				//data에 들어있는 json객체의 수 리턴
-				//alert(data);
-				var length = data.length;
-				for(var i=0; i<length; i++){
-					alert(data[i].scrnum);
-					var option = "<option value="+ data[i].scrnum +">"+ data[i].time +"</option>";
+		var mnum = $("select[name:mnum] option:selected").val();
+		$.getJSON("/moviesystem/ReservationService?method=MovieTimeList",
+				{"mnum" : mnum},
+				function(data){
+					$("#scrnum").empty();
+					//data에 들어있는 json객체의 수 리턴
+				//	alert(data);
+					var length = data.length;
+					for(var i=0; i<length; i++){
+						//alert(data[i].scrnum);
+						var option = "<option value='"+ data[i].scrnum +"'>"+ data[i].time +"</option>";
+						alert(option);
+						$("#scrnum").append(option);
+					}
 					
-					$("#time").append(option);
-				}
-		});
+					
+			});
 		
-		$("#movies").change(function(){
-			var movies = $("#movies").val();
-			$.getJSON('/moviesystem/ReservationService',
-				{"movies" : movies},
+		
+		
+		
+		$("#mnum").change(function(){
+			var mnum = $("#mnum").val();
+			//alert(mnum);
+			//var servlet_url = "";
+			$.getJSON("/moviesystem/ReservationService?method=MovieTimeList",
+				{"mnum" : mnum},
 				function(data){
 					//이이디가 model인 객체의 내용 삭제
-				$("#time").empty();
+				$("#scrnum").empty();
 					//data에 들어있는 json객체의 수 리턴
 				var length = data.length;
 				for(var i=0; i<length; i++){
 					var option = "<option value="+ data[i].scrnum +">"+ data[i].time +"</option>";
-					$("#time").append(option);
+					$("#scrnum").append(option);
 				}
+				
 			});
 		});		
-	});
+
+	
+		
+});
 </script>
+
+
+
 </head>
 <body>
 <h1 align="center">예매하기</h1>
@@ -65,7 +81,7 @@
 				
 				<td>영화명</td>
 				<td>
-					<select name="movies" id="movies">
+					<select name="mnum" id="mnum">
 					
 					<c:forEach var="movie" items="${MOVIE_LIST}">
  		
@@ -81,7 +97,8 @@
 			</tr>
 			<tr>
 				<td>시간</td>
-				<td><select name="time"id="time"></select></td>
+				<td><select name="scrnum" id="scrnum"></select></td>
+				
 			</tr>
 			<tr>
 				<td>수량</td>
@@ -94,7 +111,7 @@
 					<input type="submit" value="예약"/>
 				</td>
 				<td>
-					<input type="reset" calue="취소"/>
+					<input type="reset" value="취소"/>
 				</td>
 			</tr>
 		</table>
