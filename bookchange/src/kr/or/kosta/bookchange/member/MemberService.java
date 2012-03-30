@@ -55,7 +55,7 @@ public class MemberService extends HttpServlet {
 	}
 	/**
 	 * 회원추가
-	 * 
+	 * NGDGJ
 	 * @param request
 	 * @param response
 	 */
