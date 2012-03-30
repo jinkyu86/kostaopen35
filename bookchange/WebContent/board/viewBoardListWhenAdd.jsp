@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<title>게시물 목록</title>
+<title>교환을 원하는 물건을 선택해주세요</title>
 <script type="text/javascript">
 <c:if test="${ERROR!=null}">
 	alert("${ERROR}");
@@ -23,13 +23,34 @@
   </c:when>
   <c:otherwise>
   <p align="right">
- 	${sessionScope.LOGIN_EMAIL.email}님 <br/>
+ 	${sessionScope.LOGIN_EMAIL.email}님<br/>
    	<a href="/bookchange/MemberService?method=logout">
    	로그아웃
    	</a><br/>
    </c:otherwise>
  </c:choose>
-<h1 align="center">게시판</h1>	
+<h1 align="center">교환 신청할 물건</h1>
+	<table border="3" align="center">
+		 <tr>
+		  <th>번호</th>
+		  <th>올린사람</th>
+		  <th>사진</th>
+		  <th>제목</th>
+		  <th>교환상태</th>
+		 </tr>
+		  <c:forEach var="good" items="${BOARD_LIST}">
+	      <tr>
+	       <td>${good.boardNo}</td>
+	       <td>${good.member.email}</td>
+	       <td><img src="/bookchange/bookimg/${good.boardPhoto}" height="100" width="80"></td>
+	       <td><a href="/bookchange/BoardService?method=viewBoard&boardNo=${good.boardNo}">${good.boardTitle}</a></td>
+	       <td>${good.condition.conditionIng}</td>
+	      </tr>
+	     </c:forEach>
+		 </table>
+
+ 
+<h1 align="center">교환할 물건 선택</h1>	
 	
 	 <table border="3" align="center">
 	 <tr>

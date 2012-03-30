@@ -28,6 +28,13 @@
  			<td>${QA.qaContent}</td>
  		</tr>
  	</table>
- 	<a href="/bookchange/ChangeService?method=addChangeForm&
+ 	 <form action="/bookchange/BoardService" method="post">
+	  <input type="hidden" name="method" value="searchBoardListWhenAdd">
+	   <input type="hidden" name="boardNo" value="searchBoardListWhenAdd">
+	  <input type="hidden" name="keyword" value="${sessionScope.LOGIN_EMAIL.email}">
+	  <input type="submit" value="교환신청">
+	 </form>
+ 	<%-- <a href="/bookchange/BoardService?method=searchBoardListWhenAdd&keyword=${sessionScope.LOGIN_EMAIL.email}">
+ 	교환신청</a> --%>
 </body>
 </html>
