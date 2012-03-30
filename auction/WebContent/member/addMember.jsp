@@ -9,10 +9,10 @@
 </head>
 <body>
 	<h1 align="center">회원추가</h1>
-	<form  action="/member/MemberService" 
+	<form  action="/auction/MemberService" 
 		method="post">
 		<input type="hidden"  name="method"
-		  value="addStudent"/>
+		  value="addMember"/>
 		<table>
 			<tr>
 				<td>아이디</td>

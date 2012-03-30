@@ -18,14 +18,16 @@
 		<th>코인</th>
 		<th>E머니</th>
 	</tr>
+	<c:forEach var="member" items="${MEMBER_LIST}">
 	<tr>
-	<td>${MEMBER.userid}</td> 
-	<td>${MEMBER.pw}</td>
-	<td>${MEMBER.email}</td>
-	<td>${MEMBER.name}</td>
-	<td>${MEMBER.coin}</td>
-	<td>${MEMBER.emoney}</td>
+	<td>${member.userid}</td> 
+	<td>${member.pw}</td>
+	<td>${member.email}</td>
+	<td>${member.name}</td>
+	<td>${member.coin}</td>
+	<td>${member.emoney}</td>
 	</tr>
+	</c:forEach>
 
 	
 </table>
@@ -33,7 +35,7 @@
 	${PAGE_LINK_TAG}
 </p>
 <p align="center">
-	<a href="/auction/MemberService?method=addMemberForm">학생추가</a>
+	<a href="/auction/MemberService?method=addMemberForm">회원추가</a>
 </p>
 </body>
 </html>
