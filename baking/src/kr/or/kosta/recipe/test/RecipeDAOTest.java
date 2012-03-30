@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import kr.or.kosta.good.Good;
 import kr.or.kosta.good.GoodDAO;
+import kr.or.kosta.photo.Photo;
+import kr.or.kosta.photo.PhotoDAO;
 import kr.or.kosta.recipe.Recipe;
 import kr.or.kosta.recipe.RecipeDAO;
 
@@ -70,16 +72,28 @@ public class RecipeDAOTest {
 //		}
 //	}
 	
+//	@Test
+//	public void testselectRelationGood(){
+//		Recipe recipe=RecipeDAO.selectRecipe(1);
+//		ArrayList<Good>recipeRelativeGoodList=GoodDAO.selectRecipeList(1);
+//		
+//		System.out.println(recipe);
+//		for (int i = 0; i < recipeRelativeGoodList.size(); i++) {
+//			Good good = recipeRelativeGoodList.get(i);
+//			System.out.println(good);
+//		}
+//	}
+
+	
 	@Test
-	public void testselectRelationGood(){
-		Recipe recipe=RecipeDAO.selectRecipe(1);
-		ArrayList<Good>recipeRelativeGoodList=GoodDAO.selectRecipeList(1);
+	public void testselectGoodPhotoList(){
+		Good good= GoodDAO.selectGood(30);
+		ArrayList<Photo>arrayList=PhotoDAO.selectGoodPhotoList(30);
 		
-		System.out.println(recipe);
-		for (int i = 0; i < recipeRelativeGoodList.size(); i++) {
-			Good good = recipeRelativeGoodList.get(i);
-			System.out.println(good);
+		System.out.println(good);
+		for (int i = 0; i < arrayList.size(); i++) {
+			Photo photo=arrayList.get(i);
+			System.out.println(photo);
 		}
 	}
-	
 }
