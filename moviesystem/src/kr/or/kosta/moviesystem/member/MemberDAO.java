@@ -99,7 +99,7 @@ public class MemberDAO {
 	 * @param memberid
 	 * @param pw
 	 */
-	public static void editMember(Member member, String userid, String pw) {
+	public static void editMember(Member member) {
 		 Connection con=null;
 		 PreparedStatement psmt=null;
 		 con=ConnectionUtil.getConnection();
@@ -109,14 +109,14 @@ public class MemberDAO {
 			 psmt=con.prepareStatement
 					  ("UPDATE MEMBER " +
 					  	"SET pw=?,email=?,phone=?,zipcode=?,addr=? " +
-					  	"WHERE userid=? AND pw=?");
+					  	"WHERE userid=?");
 			 psmt.setString(1, member.getPw());
 			 psmt.setString(2,member.getEmail());
 			 psmt.setString(3,member.getPhone());
 			 psmt.setString(4,member.getZipcode());
 			 psmt.setString(5,member.getAddr());
-			 psmt.setString(6,userid);
-			 psmt.setString(7,pw);
+			 psmt.setString(6,member.getUserid());
+	
 			 
 			 psmt.executeUpdate();
 		 }catch (SQLException e) {
@@ -625,22 +625,24 @@ public class MemberDAO {
 	 * @param email
 	 * @param name
 	 */
-	public static Member findMemberById(String email, String name) {
+	public static Member findMemberId(String email, String name) {
 		Connection con=null;
 		PreparedStatement psmt=null;
 		String sql=null;
 		ResultSet rs=null;
 		Member member=null;
+		con=ConnectionUtil.getConnection();
 		try{
-			con=ConnectionUtil.getConnection();
+			
 			sql="SELECT user_num,userid,name,pw,email,phone,zipcode,addr,reg_date,mem_state " +
 					"FROM member WHERE email=? AND name=?";
 			psmt=con.prepareStatement(sql);
 			psmt.setString(1,email);
 			psmt.setString(2,name);
+			psmt.executeUpdate();
 			rs=psmt.executeQuery();
 			
-			if(rs.next()){
+			while(rs.next()){
 				String userNum=rs.getString(1);
 				String userid=rs.getString(2);
 				name=rs.getString(3);
@@ -678,7 +680,7 @@ public class MemberDAO {
 	 * @param name
 	 * @param id
 	 */
-	public static Member findMemberByPw(String email, String name, String userid) {
+	public static Member findMemberPw(String email, String name, String userid) {
 		Connection con=null;
 		PreparedStatement psmt=null;
 		String sql=null;
