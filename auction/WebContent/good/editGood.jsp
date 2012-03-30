@@ -1,6 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
-	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -8,29 +8,31 @@
 <title>editGood</title>
 </head>
 <body>
-	<h1 align="center">¹°Ç° Á¤º¸ ¼öÁ¤</h1>
+	<h1 align="center">ë¬¼í’ˆ ì •ë³´ ìˆ˜ì •</h1>
 	<form action="/auction/GoodService" method="post">
-		<table border="1" align="center">
-			<input type="hidden" name="method" value="editGood"/>
-			<tr>
-				<td>¹°Ç°¸í</td>
-				<td><input type="text" name="gName" value="${GOOD.gName}" />
-				</td>
-			</tr>
-			<tr>
-				<td>»ó¼¼¼³¸í</td>
-				<td><textarea name="detail" >${GOOD.detail}</textarea></td>
-			</tr>
-			<tr>
-				<td>ÀÌ¹ÌÁö</td>
-				<td><img src='/auction/gphoto/${GOOD.img}' height="100" width="100">
-				<input type="text" name="img"></td>
-			</tr>
-	</table>
-	<center>
-		<input type="submit" value="¹°°Ç Á¤º¸ ¼öÁ¤"/>
-		<input type="reset" value="ÀÔ·ÂÃë¼Ò"/>
-	</center>
+		<input type="hidden" name="method" value="editGood"/>
+				<table border="1" align="center">
+					<tr>
+						<td>ë¬¼í’ˆ ë²ˆí˜¸</td>
+						<td><input type="text" name="gNum" value="${GOOD.gNum}" readonly="readonly"/></td>
+					</tr>
+					<tr>
+						<td>ë¬¼í’ˆëª…</td>
+						<td><input type="text" name="gName" value="${GOOD.gName}" /></td>
+					</tr>
+					<tr>
+						<td>ìƒì„¸ì„¤ëª…</td>
+						<td><textarea name="detail" >${GOOD.detail}</textarea></td>
+					</tr>
+					<tr>
+						<td>ì´ë¯¸ì§€</td>
+						<td><input text="text" name="img" value="${GOOD.img}"/></td>
+					</tr>
+			</table>
+		<center>
+			<input type="submit" value="ë¬¼ê±´ ì •ë³´ ìˆ˜ì •"/>
+			<input type="reset" value="ìž…ë ¥ì·¨ì†Œ"/>
+		</center>
 	</form>
 </body>
 </html>
