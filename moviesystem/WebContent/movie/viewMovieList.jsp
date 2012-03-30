@@ -6,77 +6,73 @@
 <HTML>
 
 <HEAD>
-	<!-- 제목 선택 시작 -->
-	<TITLE> 
+<!-- 제목 선택 시작 -->
+<TITLE> 
+	<c:choose>
+		<c:when test="${gubun eq 'screen'}" >
+			Screening
+		</c:when>
+		<c:when test="${gubun eq 'schedule'}">
+			Screen Schedule
+		</c:when>
+		<c:otherwise>
+			Movie Info
+		</c:otherwise>
+	</c:choose>
+</TITLE>
+<!-- 제목 선택 끝 -->
+<META NAME="Author" CONTENT="">
+<META NAME="Keywords" CONTENT="">
+<META NAME="Description" CONTENT="">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" href="/moviesystem/css/Layout.css">
+<script src="http://code.jquery.com/jquery-1.7.1.js"></script>
+<script src="/moviesystem/js/common.js"></script>
+<!-- 메뉴 선택 시작 -->
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('#movie').css('background-color','#C4E2FF');
+		$('.sub_menu').css('display', 'block');
+		$('#movie_sub').css('display', 'block');
+	});
+</script>
+<c:choose>
+	<c:when test="${method eq 'viewMovieList' || method eq 'searchMovieList'}">
 		<c:choose>
-			<c:when test="${gubun eq 'screen'}" >
-				Screening
+			<c:when test="${gubun eq 'screen'}">
+				<script type="text/javascript">
+					$(document).ready(function(){
+						$('#movie_info').css('background-color','#C4E2FF');
+						$('#movie_screen').css('background-color','#C4E2FF');
+					});
+				</script>
 			</c:when>
 			<c:when test="${gubun eq 'schedule'}">
-				Screen Schedule
+				<script type="text/javascript">
+					$(document).ready(function(){
+						$('#movie_info').css('background-color','#C4E2FF');
+						$('#movie_schedule').css('background-color','#C4E2FF');
+					});
+				</script>
 			</c:when>
 			<c:otherwise>
-				Movie Info
+				<script type="text/javascript">
+					$(document).ready(function(){
+						$('#movie_info').css('background-color','#C4E2FF');
+					});
+				</script>
 			</c:otherwise>
 		</c:choose>
-	</TITLE>
-	<!-- 제목 선택 끝 -->
-	<META NAME="Author" CONTENT="">
-	<META NAME="Keywords" CONTENT="">
-	<META NAME="Description" CONTENT="">
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<link rel="stylesheet" href="/moviesystem/css/Layout.css">
-	<script src="http://code.jquery.com/jquery-1.7.1.js"></script>
-	<script src="/moviesystem/js/common.js"></script>
-	<!-- 메뉴 선택 시작 -->
-	<c:choose>
-		<c:when test="${method eq 'viewMovieList' || method eq 'rankingMovieList' || method eq 'searchMovieList'}">
-			<script type="text/javascript">
-				$(document).ready(function(){
-					$('#movie').css('background-color','#C4E2FF');
-					$('.sub_menu').css('display', 'block');
-					$('#movie_sub').css('display', 'block');
-				});
-			</script>
-		</c:when>
-	</c:choose>
-	<c:choose>
-		<c:when test="${method eq 'viewMovieList' || method eq 'searchMovieList'}">
-			<c:choose>
-				<c:when test="${gubun eq 'screen'}">
-					<script type="text/javascript">
-						$(document).ready(function(){
-							$('#movie_info').css('background-color','#C4E2FF');
-							$('#movie_screen').css('background-color','#C4E2FF');
-						});
-					</script>
-				</c:when>
-				<c:when test="${gubun eq 'schedule'}">
-					<script type="text/javascript">
-						$(document).ready(function(){
-							$('#movie_info').css('background-color','#C4E2FF');
-							$('#movie_schedule').css('background-color','#C4E2FF');
-						});
-					</script>
-				</c:when>
-				<c:otherwise>
-					<script type="text/javascript">
-						$(document).ready(function(){
-							$('#movie_info').css('background-color','#C4E2FF');
-						});
-					</script>
-				</c:otherwise>
-			</c:choose>
-		</c:when>
-	</c:choose>
-	<!-- 메뉴 선택 끝 -->
-	<script>
-		$(document).ready(function(){
-			$('#button').click(function(){
-				$('#sch_form').submit();
-			});
+	</c:when>
+</c:choose>
+<!-- 메뉴 선택 끝 -->
+<script>
+	$(document).ready(function(){
+		$('#button').click(function(){
+			$('#sch_form').submit();
 		});
-	</script>
+	});
+</script>
 </HEAD>
 <BODY>
 <table width="90%" align="center">
@@ -97,10 +93,24 @@
 		
 		<!-- 본문 내용 시작 -->
 		<td>
+			<div class="menu_title" >
+				<c:choose>
+					<c:when test="${gubun eq 'screen'}" >
+						Screening
+					</c:when>
+					<c:when test="${gubun eq 'schedule'}">
+						Screen Schedule
+					</c:when>
+					<c:otherwise>
+						Movie Info
+					</c:otherwise>
+				</c:choose>
+			</div>
+			
 			<table class="sch_style" style="margin-bottom:10px;" align="center">
 				<tr>
 					<td align="center" style="padding:5px 5px 5px 5px;width:100%">
-						<form name="sch_form" id="sch_form" action="/moviesystem/MovieService">
+						<form method="post" name="sch_form" id="sch_form" action="/moviesystem/MovieService">
 							<input type="hidden" name="method" value="searchMovieList">
 							<input type="hidden" name="gubun" value="${gubun}">
 							
@@ -129,7 +139,7 @@
 				</tr>
 				
 				<c:if test="${!n.last}">
-						<tr>
+					<tr>
 						<td colspan="3" style="background-color:#9191C8;padding-top:1px"></td>
 					</tr>
 				</c:if>
