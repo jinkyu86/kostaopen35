@@ -23,15 +23,15 @@
 		</tr>
 		
 		<tr>
-		<td>즉구가</td>
-		<td><input type ="text" name="imPrice"></td>
+		<td>현재가격</td>
+		<td><input type ="text" name="cuPrice"></td>
 		</tr>
 		
 		<tr>
-		<td>경매번호</td>
-		<td><input type ="text" name="aNum"></td>
+		<td>즉구가</td>
+		<td><input type ="text" name="imPrice"></td>
 		</tr>
-		
+			
 		<tr>
 		<td>경매시작시간</td>
 		<td><input type ="text" name="sTime"></td>
@@ -47,10 +47,6 @@
 		<td><input type ="text" name="sold"></td>
 		</tr>
 		
-		<tr>
-		<td>현재가격</td>
-		<td><input type ="text" name="cuPrice"></td>
-		</tr>
 		
 		<tr>
 			<td><input type="submit" value="경매추가"/></td>

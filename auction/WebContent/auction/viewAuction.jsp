@@ -23,12 +23,12 @@
 				<td>${AUCTION.cuPrice}</td>
 			</tr>
 </table>
-			
 	 <p align="center">
-		 <a href="/auction/AuctionService?method=editAuctionForm&aNum=${GOOD.aNum}">물품정보 수정</a>
+		 <p align="center">
+		 <a href="/auction/AuctionService?method=editAuctionForm&aNum=${AUCTION.aNum}">경매정보 수정</a>
 	</p>
 	<p align="center">
-		 <a href="/auction/AuctionService?method=removeAuction&aNum=${GOOD.aNum}">물품 삭제</a>
+		 <a href="/auction/AuctionService?method=removeAuction&aNum=${AUCTION.aNum}">경매 삭제</a>
 	 </p>
 </body>
 </html>
