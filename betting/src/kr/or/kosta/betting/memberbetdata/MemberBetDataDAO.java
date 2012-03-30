@@ -405,4 +405,26 @@ public class MemberBetDataDAO {
 			e.printStackTrace();
 		}
 	}
+	
+	public static int selectMemberbetdataCount() {
+		Connection con = null;
+		PreparedStatement psmt = null;
+		String sql = null;
+		ResultSet rs = null;
+		int memberbetdataCount = 0;
+
+		try {
+			con = ConnectionUtil.getConnection();
+			sql = "SELECT count(personal_betting_num)" + " FROM member_betting_data";
+
+			psmt = con.prepareStatement(sql);
+			rs = psmt.executeQuery();
+			if (rs.next()) {
+				memberbetdataCount = rs.getInt(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return memberbetdataCount;
+	}
 }

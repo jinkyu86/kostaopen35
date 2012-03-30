@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import kr.or.kosta.betting.betting.Betting;
 import kr.or.kosta.betting.member.Member;
+import kr.or.kosta.betting.member.MemberDAO;
 import kr.or.kosta.betting.memberbetdata.MemberBatData;
 import kr.or.kosta.betting.memberbetdata.MemberBetDataDAO;
 
@@ -60,4 +61,9 @@ public class MemberBatDataDAOTest {
 	public void testUpdateMemberBatData(){
 		MemberBetDataDAO.updateMemberBetData("14");
 	}
+	@Test
+	public void selectMemberBetDataCount(){
+		int memberbetadataCount=MemberBetDataDAO.selectMemberbetdataCount();
+		System.out.println(memberbetadataCount);
+}
 }
