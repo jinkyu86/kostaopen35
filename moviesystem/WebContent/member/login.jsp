@@ -1,49 +1,72 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
-<%@ taglib  prefix="c" 
-            uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"  %>
+<%@ taglib  prefix="c"  uri="http://java.sun.com/jsp/jstl/core" %>
  
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<title>·Î±×ÀÎ</title>
-
+<title>ë¡œê·¸ì¸</title>
+<link rel="stylesheet" href="/moviesystem/css/Layout.css">
+<script src="http://code.jquery.com/jquery-1.7.1.js"></script>
+<script src="/moviesystem/js/common.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$("#member_info").css('background-color','#C4E2FF');
+			$("#member_login").css('background-color','#C4E2FF');
+		});
+	</script>
 </head>
 <body>
-	<h4 align="center">·Î±×ÀÎ</h4>
+<table width="90%" align="center">
+	<!-- ìƒë‹¨ ë©”ë‰´ ì‹œì‘ -->
+	<tr>
+		<td colspan="2">
+			<jsp:include page="/common/top.jsp"></jsp:include>
+		</td>
+	</tr>
+	<!-- ìƒë‹¨ ë©”ë‰´ ë -->
 	
-	<table align="center">
-	
+	<tr>
+		<!-- ì¢Œì¸¡ ë©”ë‰´ ì‹œì‘ -->
+		<td rowspan="2" valign="top" style="width:20%">
+			<jsp:include page="left.jsp"></jsp:include>
+		</td>
+		<!-- ì¢Œì¸¡ ë©”ë‰´ ë -->
+		<td>
+			<div class="menu_title" >Login	</div>
+			<table class="table_style" align="right">
 		<form action="/moviesystem/MemberService" method="post">
 		<input type="hidden" name="method" value="login"/>
 		<tr>
-			<td>¾ÆÀÌµğ</td>
+			<td>ì•„ì´ë””</td>
 			<td><input type="text" name="userid" ></td>
 			<td>
-			<input type="submit" value="·Î±×ÀÎ" >
+			<input type="submit" value="ë¡œê·¸ì¸" >
 			</td>
 		</tr>
 		<tr>
-			<td>ºñ¹Ğ¹øÈ£</td>
+			<td>ë¹„ë°€ë²ˆí˜¸</td>
 			<td><input type="password" name="pw" ></td>
 			<td>
-			<input type="reset" value="Ãë¼Ò"/>
+			<input type="reset" value="ì·¨ì†Œ"/>
 			</td>
 		</tr>
 
-		<tr>
-			<td>
+		<p>
 			<a href="/moviesystem/MemberService?method=addMemberForm">
-			<font size=2 >È¸¿ø°¡ÀÔ |</font>
-			</a></td>
-			<td>
+			<font size=2 >íšŒì›ê°€ì… |</font>
+			</a>
+		
+		
 			<a href="/moviesystem/MemberService?method=findIdForm">
-			<font size=2 >¾ÆÀÌµğ/
-			</a><a href="/moviesystem/MemberService?method=findPwForm">ºñ¹Ğ¹øÈ£</a> Ã£±â</font>
-			</td>
-		</tr>
+			<font size=2 >ì•„ì´ë””
+			</a>/ <a href="/moviesystem/MemberService?method=findPwForm">ë¹„ë°€ë²ˆí˜¸</a> ì°¾ê¸°</font>
+		</p>
 			</form>		
 			</table>
+		</td>
+	</tr>
 </body>
 </html>
