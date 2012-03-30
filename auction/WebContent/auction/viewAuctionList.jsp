@@ -11,6 +11,13 @@
 <title>경매리스트</title>
 </head>
 <body>
+
+<script type="text/javascript">
+	<c:if test="${ERROR!=null}">
+		alert("${ERROR}");
+	</c:if>
+</script>
+
 <c:choose>
 	<c:when test="${sessionScope.LOGIN_MEMBER==null}">
 		<p align="right">
@@ -71,15 +78,12 @@
 	</form>
 	</c:forEach>
 	</table>
-<c:choose>
-	<c:when test="${sessionScope.LOGIN_MEMBER.userid=='admin'}">
+<c:if test="${sessionScope.LOGIN_MEMBER.userid=='admin'}">
 		<p align="center">
 		<a href="/auction/AuctionService?method=addAuctionForm">경매추가</a>
 		<a href="/auction/AuctionService?method=editAuctionForm">경매수정</a>	
 		</p>
-	</c:when>
-</c:choose>
-		
+</c:if>
 		
 </body>
 </html>
