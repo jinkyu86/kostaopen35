@@ -12,7 +12,7 @@ public class Good {
 	private int goodPrice; //상품가격
 	private int qty; //상품수량
 	private String name; //상품이름
-	private String explantion; //상품구분
+	private String explantion; //상품설명
 	private String img;//이미지
 	private String option;//상품옵션
 
