@@ -56,22 +56,6 @@ public class BidDAO {
 		}
 	}
 
-	public static void deleteBid(String bidNum) {
-		Connection con=null;
-		PreparedStatement psmt=null;
-		con=ConnectionUtil.getConnection();
-		
-		try {
-			psmt=con.prepareStatement(
-					"DELETE FROM BID " +
-					"WHERE bidnum=?");
-			psmt.setString(1,bidNum);
-			psmt.executeUpdate();		
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}	
-	}
-
 	public static Bid selectBid(String bidNum) {
 		Connection con=null;
 		PreparedStatement psmt=null;
@@ -490,5 +474,21 @@ public class BidDAO {
 			e.printStackTrace();
 		}
 		return bidList;
+	}
+
+	public static void deleteBidById(String userid) {
+		Connection con=null;
+		PreparedStatement psmt=null;
+		con=ConnectionUtil.getConnection();
+		
+		try {
+			psmt=con.prepareStatement(
+					"DELETE FROM BID " +
+					"WHERE userid=?");
+			psmt.setString(1,userid);
+			psmt.executeUpdate();		
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}			
 	}
 }

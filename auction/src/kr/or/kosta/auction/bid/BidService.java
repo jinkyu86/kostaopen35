@@ -9,6 +9,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import kr.or.kosta.auction.auction.Auction;
+import kr.or.kosta.auction.auction.AuctionDAO;
+import kr.or.kosta.auction.member.Member;
+
 public class BidService extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
@@ -28,53 +32,37 @@ public class BidService extends HttpServlet {
 		}
 		if("viewBidList".equals(method)){
 			viewBidList(request,response);
-		}else if("viewBid".equals(method)){
-			viewBid(request,response);
-		}else if("addBidForm".equals(method)){
-			addBidForm(request,response);
 		}else if("addBid".equals(method)){
 			addBid(request,response);
-		}else if("editBidForm".equals(method)){
-			editBidForm(request,response);
-		}else if("editBid".equals(method)){
-			editBid(request,response);
-		}else if("removeBid".equals(method)){
-			removeBid(request,response);
+		}else if("removeBidById".equals(method)){
+			removeBidById(request,response);
 		}
 	}
-	
+
 	private void addBid(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session=request.getSession();
+		Member member=(Member)session.getAttribute("LOGIN_MEMBER");
+		if(member==null){
+			RequestDispatcher rd=request.getRequestDispatcher("/MemberService?method=loginForm");
+			//addBuy 메서드가 끝나고 나서 이동
+			rd.forward(request, response);
+			//메서드 종료
+			return;
+		}
+		String aNum=(String)session.getAttribute("aNum");
 		
-		RequestDispatcher rd=request.getRequestDispatcher("/BidService?method=viewBidList");
+		Auction auction=AuctionDAO.selectAuction(aNum);
+		
+		Bid bid=new Bid();
+		bid.setAuction(auction);
+		bid.setMember(member);
+		bid.setBidPrice(auction.getCuPrice());	
+		
+		BidDAO.insertBid(bid);
+		RequestDispatcher rd=request.getRequestDispatcher("/BidService?method=viewAuction&a_num="+aNum);
 		rd.forward(request, response);
 	}
-
-	private void addBidForm(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher rd=request.getRequestDispatcher("/bid/addBid.jsp");
-		rd.forward(request, response);
-
-	}
-
-	private void editBid(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		String bidnum=request.getParameter("bidnum");
-		RequestDispatcher rd=request.getRequestDispatcher("/BidService?method=viewBid&bidnum="+bidnum);
-		rd.forward(request, response);
-	}
-
-	private void editBidForm(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher rd=request.getRequestDispatcher("/bid/editBid.jsp");
-		rd.forward(request, response);
-	}
-
-	private void viewBid(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher rd=request.getRequestDispatcher("/bid/viewBid.jsp");
-		rd.forward(request, response);
-	}
-
+	
 	private void viewBidList(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		ArrayList bidList=BidDAO.selectBidList();
@@ -85,9 +73,12 @@ public class BidService extends HttpServlet {
 		
 	}
 	
-	private void removeBid(HttpServletRequest request,
+	private void removeBidById(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher rd=request.getRequestDispatcher("/BidService?method=viewBidList");
-		rd.forward(request, response);
+		HttpSession session=request.getSession();
+		Member member=(Member)session.getAttribute("LOGIN_MEMBER");
+		
+		String userid=member.getUserid();
+		BidDAO.deleteBidById(userid);
 	}
 }
