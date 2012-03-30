@@ -70,4 +70,10 @@ public class MemberDAOTest {
 		MemberDAO.updateMember(member);
 		
 	}
+	@Test
+	public void selectMemberCount(){
+		int memberCount=MemberDAO.selectMemberCount();
+		System.out.println(memberCount);
+		
+	}
 }

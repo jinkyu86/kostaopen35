@@ -35,8 +35,8 @@ public class MemberDAO {
 				rs.absolute((page - 1) * length);
 			}
 			int getRecordCount = 0;
-			while(rs.next()&&getRecordCount<length){
-			    getRecordCount++;
+			while (rs.next() && getRecordCount < length) {
+				getRecordCount++;
 				String id = rs.getString(1);
 				String name = rs.getString(2);
 				String pw = rs.getString(3);
@@ -106,12 +106,12 @@ public class MemberDAO {
 			psmt.setString(1, ID);
 			rs = psmt.executeQuery();
 			if (rs.next()) {
-				
+
 				String name = rs.getString(2);
 				String pw = rs.getString(3);
 				String email = rs.getString(4);
 				Long mineral = rs.getLong(5);
-				
+
 				member = new Member();
 				member.setID(ID);
 				member.setName(name);
@@ -155,7 +155,7 @@ public class MemberDAO {
 		 * @param page
 		 * @param length
 		 */
-		
+
 		Connection con = null;
 		PreparedStatement psmt = null;
 		String sql = null;
@@ -163,8 +163,8 @@ public class MemberDAO {
 		ArrayList<Member> memberList = new ArrayList<Member>();
 		try {
 			con = ConnectionUtil.getConnection();
-			sql = "SELECT  id,mineral" + " FROM  member" +
-					  " ORDER BY mineral DESC";
+			sql = "SELECT  id,mineral" + " FROM  member"
+					+ " ORDER BY mineral DESC";
 
 			psmt = con.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE,
 					ResultSet.CONCUR_READ_ONLY);
@@ -173,8 +173,8 @@ public class MemberDAO {
 				rs.absolute((page - 1) * length);
 			}
 			int getRecordCount = 0;
-			while(rs.next()&&getRecordCount<length){
-			    getRecordCount++;
+			while (rs.next() && getRecordCount < length) {
+				getRecordCount++;
 				String id = rs.getString(1);
 				Long mineral = rs.getLong(2);
 
@@ -189,11 +189,10 @@ public class MemberDAO {
 			e.printStackTrace();
 		}
 		return memberList;
-	
 
 	}
 
-	public static  void updateMember(Member member) {
+	public static void updateMember(Member member) {
 
 		/**
 		 * 선택된 아이디의 정보를 업데이트 함
@@ -209,8 +208,7 @@ public class MemberDAO {
 		con = ConnectionUtil.getConnection();
 		try {
 			psmt = con.prepareStatement("UPDATE  member SET pw=?," + "email=?,"
-					+ "mineral=? " + 
-					"WHERE id=?");
+					+ "mineral=? " + "WHERE id=?");
 
 			psmt.setString(1, member.getPW());
 			psmt.setString(2, member.getEmail());
@@ -224,5 +222,25 @@ public class MemberDAO {
 
 	}
 
+	public static int selectMemberCount() {
+		Connection con = null;
+		PreparedStatement psmt = null;
+		String sql = null;
+		ResultSet rs = null;
+		int memberCount = 0;
 
+		try {
+			con = ConnectionUtil.getConnection();
+			sql = "SELECT count(id)" + " FROM member";
+
+			psmt = con.prepareStatement(sql);
+			rs = psmt.executeQuery();
+			if (rs.next()) {
+				memberCount = rs.getInt(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return memberCount;
+	}
 }
