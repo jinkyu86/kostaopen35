@@ -8,11 +8,10 @@
 <title>멤버 리스트</title>
 </head>
 <body>
-<h1 ailgn="center">멤버</h1>
-	
-	 <table border="1" align="center">
-	 <form action="/member/MemberService"method="post">
-		<input type="hidden" name="method" value="viewMemberList">
+<h1 align="center">전체 맴버 리스트</h1>
+	<table border="1" align="center">		 
+	<form action="/bookchange/MemberService" method="post">
+	  <input type="hidden" name="method" value="searchMemberList">
   <tr>
    <th>이메일</th>
    <th>주소</th>
@@ -21,13 +20,26 @@
   </tr>
  <c:forEach var="member" items="${MEMBER_LIST}">
   <tr>
-   <td>${member.getEmail}</td>
-   <td>${member.getAddress}</td>
-   <td>${member.getPw}</td>
-   <td>${member.getTel}</td>
+  <td>
+  <a href="/bookchange/MemberService?method=viewMemberList&email">
+  ${member.email}
+  </a>
+  </td>
+  
+  
+   <td>${member.address}</td>
+  <td> ${member.pw}</td>	
+   <td>${member.tel}</td>
+  
   </tr>
   </c:forEach>
 	</table>
-</form>
+	<p align="center">
+	${PAGE_LINK_TAG }
+	</p>
+	<p align="center">
+		<a href="/MemberService?method=searchMemberList&keyword=keyword">맴버검색</a>
+	</p>
+
 </body>
 </html>

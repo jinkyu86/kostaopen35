@@ -12,26 +12,37 @@
   	<form action="/bookchange/MemberService" method="post">
   	<input type="hidden"name="method"value="login">
 
-  	<tr>
+  	    <tr>
   		<td>아이디</td>
   		<td><input type="text" name="email"/></td>
   		</tr>
   		<tr>
   		<td>비밀번호</td>
   		<td><input type="password" name="pw"/></td>
-  		<tr>
+  		</tr>
   		<td><input type="submit" value="로그인"/></td>
-  		
-  		
   		<td><input type="reset" value="취소"/></td>
-  		</tr> 
-  		  	</form>
-  	<tr>	  
-  	
-  	<a href="/bookchange/member/addmember.jsp">
-  	<td>회원가입</td>
+  		
+  	</form>	  
+  </table>	
+  <table>
+  <tr>
+  	<td>
+	<a href="/bookchange/member/addmember.jsp">
+  	 회원가입</a> 
+  	</td>
+  	   	
+   	<td><p align="center">
+	${PAGE_LINK_TAG}
+	</p>
+   	</td>
+   	
+   	<td>
+   	<a href="/bookchange/MemberService?method=viewMemberList">
+ 	회원정보보기
   	</a>
-  	</tr>
-</table>
+  	</td>
+  </tr>	
+	</table>
 </body>
 </html>
