@@ -38,7 +38,7 @@ public class BoardService extends HttpServlet {
 			viewBoardList(request,response);
 		}else if("viewBoard".equals(method)){
 			viewBoard(request,response);
-		}else if("editBoardFrom".equals(method)){
+		}else if("editBoardForm".equals(method)){
 			editBoardForm(request,response);
 		}else if("editBoard".equals(method)){
 			editBoard(request,response);
@@ -108,7 +108,7 @@ public class BoardService extends HttpServlet {
 		ArrayList<Category> categoryList=CategoryDAO.selectCategory();//카테고리 정보 조회
 		ArrayList<Deal> dealList=DealDAO.selectDeal();//거래방법 조회
 		
-		request.setAttribute("MEMBER", member);
+		/*request.setAttribute("MEMBER", member);*/
 		request.setAttribute("CATEGORY_LIST",categoryList);
 		request.setAttribute("DEAL_LIST",dealList);
 		
@@ -181,13 +181,18 @@ public class BoardService extends HttpServlet {
 		String boardNo=request.getParameter("boardNo");
 		String conditionResult=request.getParameter("conditionResult");
 		
-		if(conditionResult.equals("0")){
+		if(conditionResult.equals("0")||conditionResult.equals("3")){
 			BoardDAO.deleteBoard(boardNo);
+			String complete="삭제되었습니다.";
+			request.setAttribute("COMPLETE",complete);
 		}else{
-			System.out.println("교환중이므로 삭제할 수 없습니다.");
+			request.setCharacterEncoding("utf-8");
+			String delete="교환진행중이므로 삭제할 수 없습니다.";
+			request.setAttribute("DELETE",delete);
+			//System.out.println("교환중이므로 삭제할 수 없습니다.");
 		}
 		
-		RequestDispatcher rd=request.getRequestDispatcher("/bookchange/BoardService?method=viewBoardList");
+		RequestDispatcher rd=request.getRequestDispatcher("/BoardService?method=viewBoardList");
 		rd.forward(request, response);
 	}
 

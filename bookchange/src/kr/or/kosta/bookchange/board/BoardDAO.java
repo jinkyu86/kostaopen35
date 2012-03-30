@@ -421,7 +421,7 @@ public class BoardDAO {
 		try {
 			ps=con.prepareStatement("update tb_board " +
 					                "set board_title=?, board_want=?, board_photo=?, board_content=?," +
-					                "category_no=?, deal_no=? " +
+					                "category_no=?, deal_no=?, condition_result=? " +
 					                " where board_no=?");
 			
 			ps.setString(1, board.getBoardTitle());
@@ -430,7 +430,7 @@ public class BoardDAO {
 			ps.setString(4, board.getBoardContent());
 			ps.setInt(5, board.getCategory().getCategoryNo());
 			ps.setInt(6, board.getDeal().getDealNo());
-			//ps.setInt(7, board.getCondition().getConditionResult());
+			ps.setInt(7, board.getCondition().getConditionResult());
 			ps.setInt(8, board.getBoardNo());
 			ps.executeUpdate();
 			
