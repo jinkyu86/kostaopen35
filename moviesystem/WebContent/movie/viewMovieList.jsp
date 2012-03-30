@@ -30,7 +30,7 @@
 	<script src="/moviesystem/js/common.js"></script>
 	<!-- 메뉴 선택 시작 -->
 	<c:choose>
-		<c:when test="${method eq 'viewMovieList' || method eq 'rankingMovieList'}">
+		<c:when test="${method eq 'viewMovieList' || method eq 'rankingMovieList' || method eq 'searchMovieList'}">
 			<script type="text/javascript">
 				$(document).ready(function(){
 					$('#movie').css('background-color','#C4E2FF');
@@ -41,7 +41,7 @@
 		</c:when>
 	</c:choose>
 	<c:choose>
-		<c:when test="${method eq 'viewMovieList'}">
+		<c:when test="${method eq 'viewMovieList' || method eq 'searchMovieList'}">
 			<c:choose>
 				<c:when test="${gubun eq 'screen'}">
 					<script type="text/javascript">
@@ -70,6 +70,13 @@
 		</c:when>
 	</c:choose>
 	<!-- 메뉴 선택 끝 -->
+	<script>
+		$(document).ready(function(){
+			$('#button').click(function(){
+				$('#sch_form').submit();
+			});
+		});
+	</script>
 </HEAD>
 <BODY>
 <table width="90%" align="center">
@@ -97,12 +104,12 @@
 							<input type="hidden" name="method" value="searchMovieList">
 							<input type="hidden" name="gubun" value="${gubun}">
 							
-							<select name="sch_code" id="sch_code">
-								<option value="mname">영화제목</option>
-								<option value="genre">장르</option>
-								<option value="content">내용</option>
+							<select name="schCode" id="schCode">
+								<option value="mname" <c:if test="${schCode eq 'mname'}">selected</c:if>>영화제목</option>
+								<option value="genre" <c:if test="${schCode eq 'genre'}">selected</c:if>>장르</option>
+								<option value="content" <c:if test="${schCode eq 'content'}">selected</c:if>>내용</option>
 							</select>
-							<input type="text" name="sch_string" id="sch_string">
+							<input type="text" name="schString" id="schString" value="${schString}">
 							<span id="button">검색</span>
 						</form>
 					</td>
