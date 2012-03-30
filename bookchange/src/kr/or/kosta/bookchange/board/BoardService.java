@@ -8,13 +8,14 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import kr.or.kosta.bookchange.change.Condition;
 import kr.or.kosta.bookchange.member.Member;
 import kr.or.kosta.bookchange.member.MemberDAO;
 import kr.or.kosta.util.PageUtil;
 
-public class BoardService extends HttpServlet {
+public class BoardService extends HttpServlet { 
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -96,8 +97,11 @@ public class BoardService extends HttpServlet {
 	/**
 	 * 게시물 추가 창(물품등록 화면) */
 	public void addBoardForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String email=request.getParameter("email");
-		Member member=MemberDAO.selectMember(email);
+		HttpSession session=request.getSession();
+		Member member=(Member)session.getAttribute("LOGIN_EMAIL");
+		
+		/*String email=request.getParameter("email");
+		Member member=MemberDAO.selectMember(email);*/
 		
 		ArrayList<Category> categoryList=CategoryDAO.selectCategory();//카테고리 정보 조회
 		ArrayList<Deal> dealList=DealDAO.selectDeal();//거래방법 조회
