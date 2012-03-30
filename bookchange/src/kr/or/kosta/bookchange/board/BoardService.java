@@ -202,10 +202,29 @@ public class BoardService extends HttpServlet {
 		String boardNo=request.getParameter("boardNo");
 		
 		Board board=BoardDAO.selectBoard(boardNo);
-		Qa qa=QaDAO.selectQa(boardNo);
+		
+		//여기부턴 댓글 리스트
+		int page=1;
+		
+		if(request.getParameter("page")!=null){
+			page=Integer.parseInt(request.getParameter("page"));
+		}
+		
+		int length=10;
+		
+		ArrayList<Qa> qaList=QaDAO.selectQaList(length, page, boardNo);
+		request.setCharacterEncoding("utf-8");
+		request.setAttribute("QA_LIST",qaList);
+				
+		int qaCount=QaDAO.selectQaCount(boardNo);
+		
+		String pageLinkTag=PageUtil.generate(page, qaCount, length, "/bookchange/QaService?" +
+				"method=selectQaList");
+		request.setAttribute("PAGE_LINK_TAG",pageLinkTag);
+		//댓글 리스트 조회 완료
 		
 		request.setAttribute("BOARD",board);
-		request.setAttribute("QA",qa);
+		request.setAttribute("QA_LIST",qaList);
 		
 		RequestDispatcher rd=request.getRequestDispatcher("/board/viewBoard.jsp");
 		rd.forward(request, response);

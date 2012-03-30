@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import kr.or.kosta.bookchange.member.Member;
 import kr.or.kosta.util.ConnectionUtil;
@@ -12,12 +13,12 @@ public class QaDAO {
 
 	/**
 	 * 상품문의 내용 보기	 */
-	public static Qa selectQa(String boardNo) {
+	public static ArrayList<Qa> selectQaList(int length, int page, String boardNo) {
 		Connection con=null;
 		PreparedStatement ps=null;
 		String sql=null;
 		ResultSet rs=null;
-		Qa qa=null;
+		ArrayList<Qa> qaList=new ArrayList<Qa>();
 		
 		try {
 
@@ -26,19 +27,23 @@ public class QaDAO {
 					"from tb_qa q, tb_member m, tb_board b " +
 					"where b.board_no=q.board_no " +
 					"and m.email=q.email " +
-					"and q.board_no=?";
+					"and q.board_no=? " +
+					"order by q.qa_no asc";
 			
-			ps=con.prepareStatement(sql);
+			ps=con.prepareStatement(sql,ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
 			ps.setString(1, boardNo);
 			
 			rs=ps.executeQuery();
 			
-			while(rs.next()){
+			if(page>1){rs.absolute((page-1)*length);}
+			int getRecordCount=0;
+			while(rs.next()&&getRecordCount<length){
+				getRecordCount++;
 				String email=rs.getString(1);
 				String qaContent=rs.getString(2);
 				String qaNo=rs.getString(3);
 				
-				qa=new Qa();
+				Qa qa=new Qa();
 				
 				qa.setQaNo(Integer.parseInt(qaNo));
 				qa.setQaContent(qaContent);
@@ -51,11 +56,12 @@ public class QaDAO {
 				board.setBoardNo(Integer.parseInt(boardNo));
 				qa.setBoard(board);
 				
+				qaList.add(qa);
 			}		
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return qa;
+		return qaList;
 	}
 
 	/**
@@ -138,5 +144,37 @@ public class QaDAO {
 		}
 		
 				
+	}
+
+	/**
+	 * 상품문의 카운트 수	 */
+	public static int selectQaCount(String boardNo) {
+		Connection con=null;
+		PreparedStatement ps=null;
+		String sql=null;
+		ResultSet rs=null;
+		int qaCount=0;
+		
+		try {
+	
+			con=ConnectionUtil.getConnection();
+			sql="select count(qa_no) " +
+					"from tb_qa q, tb_member m, tb_board b " +
+					"where b.board_no=q.board_no " +
+					"and m.email=q.email " +
+					"and q.board_no=?";
+			
+			ps=con.prepareStatement(sql,ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
+			ps.setString(1, boardNo);
+			
+			rs=ps.executeQuery();
+			
+			while(rs.next()){
+				qaCount=rs.getInt(1);
+			}		
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return qaCount;
 	}
 }

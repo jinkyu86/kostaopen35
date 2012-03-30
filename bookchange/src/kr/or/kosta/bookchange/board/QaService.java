@@ -23,6 +23,27 @@ public class QaService extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("utf-8");
+		String method=request.getParameter("method");
+		if(method==null){
+			method="viewQa";
+		}		
+		if("addQa".equals(method)){
+			addQa(request,response);
+		}else if("editQa".equals(method)){
+			editQa(request,response);
+		}else if("removeQa".equals(method)){
+			removeQa(request,response);
+		}else if("searchQaListbyBoardNo".equals(method)){
+			searcheQaListbyBoardNo(request,response);
+		}
+	}
+	
+
+	private void searcheQaListbyBoardNo(HttpServletRequest request,
+			HttpServletResponse response) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	/**	 * 상품문의 글 추가 */
@@ -88,12 +109,12 @@ public class QaService extends HttpServlet {
 	}
 
 	/**	 * 상품문의 보기	 */
-	public void viewQa(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	/*public void viewQa(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String boardNo=request.getParameter("boardNo");
-		Qa qa=QaDAO.selectQa(boardNo);
+		Qa qa=QaDAO.selectQaList(length, page, boardNo);
 		request.setAttribute("QA",qa);
 		
 		RequestDispatcher rd=request.getRequestDispatcher("/BoardService?method=viewBoard&boardNo="+boardNo);
 		rd.forward(request, response);
-	}
+	}*/
 }
