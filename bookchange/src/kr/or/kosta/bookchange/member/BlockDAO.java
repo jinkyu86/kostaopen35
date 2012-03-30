@@ -182,21 +182,26 @@ public class BlockDAO {
 		String sql=null;
 		ResultSet rs=null;
 		ArrayList<Block> BlockList=new ArrayList<Block>();
+		
 		try{
 			con=ConnectionUtil.getConnection();
-			sql="select t.register_email,t.block_email,t.block_no,t.block_content, " +
-					"t.blockcondition_result, b.blockcondition_ing " +
-				"from tb_block t,tb_blockcondition b " +
-				"where t.blockcondition_result=?";
+			
+			sql="select t.register_email, t.block_email, t.block_no, t.block_content, " +
+				"t.blockcondition_result " +
+				"from tb_block t, tb_blockcondition b " +
+				"where b.blockcondition_result=t.blockcondition_result " +
+				"and t.blockcondition_result=?";
 			ps=con.prepareStatement(sql,ResultSet.TYPE_SCROLL_INSENSITIVE,
 									ResultSet.CONCUR_READ_ONLY);
 			ps.setString(1,resultNo);
 			rs=ps.executeQuery();
+			
 			if(page>1){
-				rs.absolute((page)-1*length);
+				rs.absolute((page-1)*length);
 			}
 			
 			int getresult=0;
+			System.out.println("¿Ö¾ÈµÊ");
 			while(rs.next()&&getresult<length){
 				
 				getresult++;
@@ -205,7 +210,7 @@ public class BlockDAO {
 				int blockno=rs.getInt(3);
 				String blockcontent=rs.getString(4);
 				int blockConditionResult=rs.getInt(5);
-				String blockConditionIng=rs.getString(6);
+				//String blockConditionIng=rs.getString(6);
 				
 				Block block=new Block();
 				block.setBlockNo(blockno);
@@ -213,16 +218,19 @@ public class BlockDAO {
 				
 				BlockCondition blockcondition=new BlockCondition();
 				blockcondition.setBlockConditionResult(blockConditionResult);
-				blockcondition.setBlockConditionIng(blockConditionIng);
+				//blockcondition.setBlockConditionIng(blockConditionIng);
 				block.setBlockCondition(blockcondition);
 				
-				Member member=new Member();
-				member.setEmail(blockemail);
-				member.setEmail(registeremail);
-				block.setMember(member);
+				Member member1=new Member();
+				member1.setEmail(blockemail);
+				block.setBlockmember(member1);
 				
+				Member member2=new Member();
+				member2.setEmail(registeremail);
+				block.setMember(member2);				
 				
 				BlockList.add(block);
+				
 			}
 		}catch (Exception e) {
 			// TODO: handle exception

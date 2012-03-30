@@ -25,7 +25,7 @@ public class MemberService extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		String method=request.getParameter("method");
 		if(method==null){
-			
+			loginForm(request, response);
 		}if("addMember".equals(method)){
 			addMember(request, response);
 		}else if("addMemberForm".equals(method)){
@@ -75,7 +75,7 @@ public class MemberService extends HttpServlet {
 		
 		MemberDAO.insertMember(member);
 		
-		RequestDispatcher rd=request.getRequestDispatcher("/MemberService?method=viewMemberList");
+		RequestDispatcher rd=request.getRequestDispatcher("/BoardService?method=viewBoardList");
 		rd.forward(request, response);
 		
 	}
@@ -88,7 +88,7 @@ public class MemberService extends HttpServlet {
 	 */
 	public void addMemberForm(HttpServletRequest request,
 			HttpServletResponse response) throws IOException,ServletException {
-		RequestDispatcher rd=request.getRequestDispatcher("/member/addMember.jsp");
+		RequestDispatcher rd=request.getRequestDispatcher("/member/addmember.jsp");
 		rd.forward(request, response);
 	
 	}
@@ -188,7 +188,7 @@ public class MemberService extends HttpServlet {
 			}
 		
 		}
-		RequestDispatcher rd=request.getRequestDispatcher("/MemberService?method=viewMemberList");
+		RequestDispatcher rd=request.getRequestDispatcher("/BoardService?method=viewBoardList");
 		rd.forward(request, response);
 	}
 	
@@ -276,7 +276,7 @@ public class MemberService extends HttpServlet {
 		//다른 페이지로 이동하는 링크 테그 만듬
 		//PageUtil.getnerate(한페이지,전체건수,한페이지당 보여줄 row수,주소)
 		 String pageLink=PageUtil.generate(page, memberCount, length, 
-				 "/MemberService?method=viewMemberList");
+				 "/bookchange/MemberService?method=viewMemberList");
 		 request.setAttribute("PAGE_LINK", pageLink);
 		 
 		 RequestDispatcher rd=request.getRequestDispatcher("/member/viewMemberList.jsp");

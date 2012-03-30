@@ -64,7 +64,7 @@ public class BlockService extends HttpServlet {
 		
 		BlockDAO.insertBlock(block);
 		
-		RequestDispatcher rd=request.getRequestDispatcher("/BlockService?method=addBlock");
+		RequestDispatcher rd=request.getRequestDispatcher("/BlockService?method=addBlock.jsp");
 		rd.forward(request, response);
 	}
 
@@ -145,7 +145,9 @@ public class BlockService extends HttpServlet {
 							BlockDAO.selectBlockbyResult(length, page, request.getParameter("keyword"));
 				BlockCount=
 						BlockDAO.selectBlockbyResultCount(request.getParameter("keyword"));				
-		}		
+		}
+		
+		request.setCharacterEncoding("utf-8");
 		request.setAttribute("BLOCK_LIST",blockList);
 		String pageLink=
 				PageUtil.generate(page, BlockCount, length, "/BlockService?" +
