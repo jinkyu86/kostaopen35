@@ -11,6 +11,26 @@
 <title>경매리스트</title>
 </head>
 <body>
+<c:choose>
+	<c:when test="${sessionScope.LOGIN_MEMBER==null}">
+		<p align="right">
+			<a href="/auction/MemberService?method=loginForm">
+			로그인
+			</a>
+		</p>
+	</c:when>
+	<c:otherwise>
+		<p align="right">
+			${sessionScope.LOGIN_MEMBER.name }님 안녕<br/>
+			<a href="/auction/MemberService?method=logout">
+			로그아웃
+			</a><br/>
+			<a href="/auction/MemberService?method=viewMember">
+			회원정보보기
+			</a>
+		</p>
+	</c:otherwise>
+</c:choose>
 	<h3 align="center">입찰중인 물품리스트</h3>
 	<table  align="center"  border="1">
 	<th>사진</th><th>상품명</th><th>가격</th><th>마감시간</th><th>상세보기</th>
@@ -51,11 +71,15 @@
 	</form>
 	</c:forEach>
 	</table>
-	
+<c:choose>
+	<c:when test="${sessionScope.LOGIN_MEMBER.userid=='admin'}">
 		<p align="center">
 		<a href="/auction/AuctionService?method=addAuctionForm">경매추가</a>
 		<a href="/auction/AuctionService?method=editAuctionForm">경매수정</a>	
 		</p>
+	</c:when>
+</c:choose>
+		
 		
 </body>
 </html>
