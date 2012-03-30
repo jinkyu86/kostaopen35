@@ -10,12 +10,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
+import net.sf.json.JSONArray;
 
 import kr.or.kosta.moviesystem.member.Member;
 import kr.or.kosta.moviesystem.movie.Movie;
 import kr.or.kosta.moviesystem.movie.MovieDAO;
 import kr.or.kosta.moviesystem.screentime.ScreenTime;
+import kr.or.kosta.moviesystem.screentime.ScreenTimeDAO;
 
 
 
@@ -45,6 +46,33 @@ public class ReservationService extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");//우리는 utf-8로 사용한다.
+		
+		
+		String movies = request.getParameter("movies");
+		String jsonResult = null;
+		
+		ArrayList<ScreenTime> screenTimeList = new ArrayList<ScreenTime>();
+		ScreenTimeDAO screenTimeDAO=new ScreenTimeDAO();
+		ScreenTime screenTime=new ScreenTime();
+		
+		if("1".equals(movies)){
+			screenTimeList = ScreenTimeDAO.selectScreen(1);
+			for(int i =0;i<screenTimeList.size();i++){
+				screenTime = screenTimeList.get(i);
+				System.out.println(screenTime);
+			}//end for
+			//System.out.println(screenTime);
+		}else if("2".equals(movies)){
+			screenTimeList = ScreenTimeDAO.selectScreen(2);
+			for(int i =0;i<screenTimeList.size();i++){
+				screenTime = screenTimeList.get(i);
+				System.out.println(screenTime);
+			}//end for
+			//System.out.println(screenTime);
+		}
+		
+		
+		
 		String method=request.getParameter("method");
 		if(method==null){
 			method="test";
@@ -60,6 +88,14 @@ public class ReservationService extends HttpServlet {
 			addReservationForm(request,response);
 		}
 		
+
+		JSONArray jsonArray = JSONArray.fromObject(screenTimeList);
+		System.out.println("jsonArray : "+jsonArray);
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter out = response.getWriter();
+		out.println(jsonArray.toString());
+		out.flush();
+		out.close();
 		
 		
 	}//end method doPost
