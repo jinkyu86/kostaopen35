@@ -8,39 +8,50 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<title>Insert title here</title>
+<title>경매리스트</title>
 </head>
 <body>
+	<h3 align="center">입찰중인 물품리스트</h3>
 	<table  align="center"  border="1">
-	<tr>
-	<td>물품번호</td><td>상세내용</td><td>이미지</td><td>시작가</td><td>즉구가</td><td>경매번호</td><td>경매시작시간</td>
-	<td>경매마감시간</td><td>판매여부</td><td>현재가격</td>
-	</tr>
-	<%-- 
-		ArrayList<Auction> auctionList=(ArrayList)request.getAttribute("AUCTION_LIST");
-		for(int i=0;i<auctionList.size();i++){
-			Auction auction = auctionList.get(i);
-	--%>	
+	<th>사진</th><th>상품명</th><th>가격</th><th>마감시간</th><th>상세보기</th>
 	<c:forEach var="auction" items="${AUCTION_LIST}">
-	
+	<form action="/auction/AuctionService" method="post">
+	<input type="hidden" name="method" value="viewAuction"/>
+	<input type="hidden" name="aNum" value="${auction.good.gNum }"/>
 	<tr>
-		<tr>
-				<td>${auction.good.gNum}</td>
-				<td>${auction.good.detail}</td>
-				<td>${auction.good.img}</td>
-				<td>${auction.sPrice}</td>
-				<td>${auction.imPrice}</td>
-				<td><a href="/auction/AuctionService?method=viewAuction&aNum=${auction.aNum}">
-				${auction.aNum}</a></td>
-				<td>${auction.sTime}</td>
-				<td>${auction.eTime}</td>
-				<td>${auction.sold}</td>
-				<td>${auction.cuPrice}</td>
-			</tr>
-		</tr>
-		<%--} --%>
-		</c:forEach>
-		</table>
+		<td align="center"><img src="/auction/gphoto/${auction.good.img}" width="130" height="130"></td>
+		<td align="center">${auction.good.gName}</td>
+		<td align="center">
+			<h4>즉시구매가 : ${auction.imPrice }<br/></h4>
+			${auction.cuPrice }
+		</td>
+		<td align="center">${auction.eTime }</td>
+		<td align="center"><input type="submit" value="참여하기"></td>
+	</tr>
+	</form>
+	</c:forEach>
+	</table>
+	
+	<br/><br/>
+	
+	<h3 align="center">낙찰된 물품리스트</h3>
+	<table  align="center"  border="1">
+	<th>사진</th><th>상품명</th><th>가격</th><th>마감시간</th><th>상세보기</th>
+	<c:forEach var="sold" items="${SOLD_LIST}">
+	<form action="/auction/AuctionService" method="post">
+	<input type="hidden" name="method" value="viewAuction"/>
+	<input type="hidden" name="aNum" value="${sold.good.gNum }"/>
+	<tr>
+		<td align="center"><img src="/auction/gphoto/${sold.good.img}" width="130" height="130"></td>
+		<td align="center">${sold.good.gName}</td>
+		<td align="center">${sold.cuPrice }</td>
+		<td align="center">${sold.eTime }</td>
+		<td align="center"><input type="submit" value="참여하기"></td>
+	</tr>
+	</form>
+	</c:forEach>
+	</table>
+	
 		<p align="center">
 		<a href="/auction/AuctionService?method=addAuctionForm">경매추가</a>
 		<a href="/auction/AuctionService?method=editAuctionForm">경매수정</a>	
