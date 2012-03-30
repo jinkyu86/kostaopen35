@@ -14,18 +14,22 @@
 		<th>교환원하는책</th>
 		<th>교환할책</th>
 	</tr>
-	<c:forEach  var="change"  items="${CHANGE_LIST }">	
+	<c:forEach  var="change"  items="${MY_CHANGE_LIST }">	
 	<tr>
-		<td>${change.change_date}</td>
-		<td>${change.condition.condition_ing}</td>
-		<td>${change.agreeboard.board_title}</td>		
-		<td>${change.demandboard.board_title}</td>
+		<td>${change.changeDate}</td>
+		<td>${change.condition.conditionIng}</td>
+		<td>
+		<a href="/bookchange/BoardService?method=viewBoard&boardNo=${change.agreeBoard.boardNo}">
+		${change.agreeBoard.boardTitle}</a></td>
+		<td>
+		<a href="/bookchange/BoardService?method=viewBoard&boardNo=${change.demandBoard.boardNo}">
+		${change.demandBoard.boardTitle}</a></td>
 	</tr>
 	</c:forEach>
-	<%--} --%>
 </table>
 <p align="center">
 	${PAGE_LINK_TAG}
 </p>
+
 </body>
 </html>
