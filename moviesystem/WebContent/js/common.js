@@ -37,4 +37,14 @@ $(document).ready(function(){
 	menu_hover('movie',3);
 	menu_hover('reservation',3);
 	menu_hover('buy',3);
+	
+	if('${sessionScope.LOGIN_MEMBER}'==null){
+		$('#login').append('<a href="/moviesystem/MemberService?method=loginForm">login</a>');
+		$('#join').append('<a href="/moviesystem/MemberService?method=addMemberForm">join</a>');
+		$('#mypage').append('<a href="#">mypage</a>');
+	}else{
+		$('#login').append('<a href="/moviesystem/MemberService?method=logoutMember">logout</a>');
+		$('#join').append('<a href="/moviesystem/MemberService?method=editMemberForm">editMember</a>');
+		$('#mypage').append('<a href="/moviesystem/MemberService?method=editMemberForm">mypage</a>');
+	}
 });
