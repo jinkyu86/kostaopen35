@@ -1,10 +1,12 @@
-.topmenu{width:100%;border:1px solid #9191C8;margin:0 0 0 0;padding:10 0 10 0;}
+.topmenu{width:100%;border:1px solid #9191C8;}
 .top_text{width:8%;font-size:10pt;}
 .topmenu_td{width:33%;}
 .sub_menu{border-left:1px solid #9191C8;border-right:1px solid #9191C8;border-bottom:1px solid #9191C8;width:100%;display:none;}
 .sub_table{width:100%;display:block;height:26px;}
 .sub_menu_tr{display:none;}
-.hover{cursor:hand;}
+.hover{cursor:pointer;}
+.table_style{border:1px solid #9191C8;width:100%;}
+.sch_style{border:1px solid #9191C8;width:100%;}
 .movie_menu{width:50%;text-align:center;}
 .reservation_menu{width:30%;text-align:center;}
 .buy_menu{width:30%;text-align:center;}
@@ -14,3 +16,4 @@ a{text-decoration:none;color:#000000;}
 #movie_schedule{}
 #movie_ranking{border-bottom:1px solid #ffffff;}
 #screen_ranking{}
+#button{cursor:pointer;border:1px solid #9191C8; width:100px; height:60px;font-size:10pt;font-weight:bold;}
