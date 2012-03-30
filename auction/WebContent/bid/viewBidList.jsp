@@ -1,8 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%--@ page import="java.util.ArrayList" --%>
-<%--@ page import="kr.or.kosta.student.Student" --%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -13,27 +11,24 @@
 <table border="1" align="center">
 	<tr>
 		<th>입찰번호</th>
-		<th>이름</th>
-		<th>아이디</th>
-		<th>비밀번호</th>
-		<th>학과</th>
+		<th>물품사진</th>
+		<th>물품명</th>
+		<th>입찰자</th>
+		<th>입찰시간</th>
+		<th>입찰가격</th>
 	</tr>
-	<%-- 
-		ArrayList<Student> studentList=(ArrayList)request.getAttribute("STUDENT_LIST");
-		for(int i=0;i<studentList.size();i++){
-			Student student=studentList.get(i);
-	--%>
-	<c:forEach var="student" items="${STUDENT_LIST}">	
 	
+	<c:forEach var="bid" items="${BID_LIST}">	
 	<tr>
-		<td>${student.studno }</td>
+		<td align="center">${bid.bidNum }</td>
 		<td>
-		<a href="/ex20120305/StudentService?method=viewStudent&studno=${student.studno }">
-		${student.name }</td>
+		<a href="/auction/GoodService?method=viewAuction&aNum=${bid.auction.aNum }">
+		<img src="/auction/gphoto/${bid.auction.good.img }" height="100" width="100"></td>
 		</a>
-		<td>${student.userid }</td>
-		<td>${student.pw }</td>
-		<td>${student.department.dname }</td>
+		<td align="center">${bid.auction.good.gName }</td>
+		<td align="center">${bid.member.userid }</td>
+		<td align="center">${bid.bidTime }</td>
+		<td align="center">${bid.bidPrice }</td>
 	</tr>
 	</c:forEach>
 </table>	
