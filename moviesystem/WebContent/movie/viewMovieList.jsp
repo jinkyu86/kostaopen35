@@ -93,6 +93,7 @@
 		
 		<!-- 본문 내용 시작 -->
 		<td>
+			<!-- 페이지 제목 시작 -->
 			<div class="menu_title" >
 				<c:choose>
 					<c:when test="${gubun eq 'screen'}" >
@@ -106,7 +107,9 @@
 					</c:otherwise>
 				</c:choose>
 			</div>
+			<!-- 페이지 제목 끝 -->
 			
+			<!-- 검색 박스 시작 -->
 			<table class="sch_style" style="margin-bottom:10px;" align="center">
 				<tr>
 					<td align="center" style="padding:5px 5px 5px 5px;width:100%">
@@ -125,11 +128,13 @@
 					</td>
 				</tr>
 			</table>
+			<!-- 검색 박스 끝 -->
 			
+			<!-- 영화 리스트 시작 -->
 			<table class="table_style" align="right">
 				<c:forEach var="movieList" items="${MovieList}" varStatus="n">
 				<tr>
-					<td rowspan="2">${movieList.poster}</td>
+					<td rowspan="2" class="movieList_img">${movieList.poster}</td>
 					<td><a href="/moviesystem/MovieService?method=viewMovie&gubun=${gubun}&mnum=${movieList.mnum}"><b>${movieList.mname}</b></a></td>
 				</tr>
 				<tr>
@@ -145,6 +150,7 @@
 				</c:if>
 			</c:forEach>
 			</table>
+			<!-- 영화 리스트 끝 -->
 		</td>
 	</tr>
 	<!-- 본문 내용 끝 -->
