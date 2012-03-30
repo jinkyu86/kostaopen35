@@ -52,7 +52,7 @@
 	  <input type="text" name="keyword">
 	  <input type="submit" value="검색"/>
 	 </form>
-	 <a href="/bookchange/BoardService?method=addBoardForm&email=hoihoi@nate.com">물품등록</a>
+	 <a href="/bookchange/BoardService?method=addBoardForm&${sessionScope.LOGIN_EMAIL"}>물품등록</a>
 	</table>
 	
 	 <p align="center">  ${PAGE_LINK_TAG} </p>

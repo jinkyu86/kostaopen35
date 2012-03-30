@@ -28,5 +28,6 @@
  			<td>${QA.qaContent}</td>
  		</tr>
  	</table>
+ 	<a href="/bookchange/ChangeService?method=addChangeForm&
 </body>
 </html>
