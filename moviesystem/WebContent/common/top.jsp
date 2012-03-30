@@ -2,9 +2,9 @@
 			<table style="width:100%" align="center">
 				<tr>
 					<td align="right"></td>
-					<td align="right" class="top_text"><a href="/moviesystem/MemberService?method=loginForm">login</a></td>
-					<td align="right" class="top_text"><a href="/moviesystem/MemberService?method=addMemberForm">join</a></td>
-					<td align="right" class="top_text">customer</td>
+					<td align="right" class="top_text" id="login"></td>
+					<td align="right" class="top_text" id="join"></td>
+					<td align="right" class="top_text" id="mypage"></td>
 				</tr>
 				<tr>
 					<td colspan="4" align="center" style="font-size:17pt;font-weight:bold;">Movie</td>
