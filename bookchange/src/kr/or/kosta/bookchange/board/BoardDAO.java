@@ -23,7 +23,7 @@ public class BoardDAO {
 		try {
 			con=ConnectionUtil.getConnection();
 			sql=("select board_no, board_title, board_photo, m.email, b.category_no, b.condition_result, " +
-				 "c.category_name, c2.condition_ing " +
+				 "c.category_name, c2.condition_ing, m.tel, m.address " +
 				 "from tb_board b, tb_member m, tb_category c, tb_condition c2 " +
 				 "where m.email=b.email " +
 				 "and b.category_no=c.category_no " +
@@ -46,6 +46,8 @@ public class BoardDAO {
 				String conditionResult=rs.getString(6);
 				String categoryName=rs.getString(7);
 				String conditionIng=rs.getString(8);
+				String tel=rs.getString(9);
+				String address=rs.getString(10);
 				
 				Board board=new Board();
 				board.setBoardNo(Integer.parseInt(boardNo));
@@ -54,6 +56,8 @@ public class BoardDAO {
 				
 				Member member=new Member();
 				member.setEmail(email);
+				member.setTel(tel);
+				member.setAddress(address);
 				board.setMember(member);
 				
 				Category category=new Category();
@@ -304,7 +308,7 @@ public class BoardDAO {
 			con=ConnectionUtil.getConnection();
 			sql=("select board_no, board_title, board_photo, m.email, b.category_no, b.condition_result," +
 				 "b.board_want, b.board_content, d.deal_no, " +
-				 "c.category_name, c2.condition_ing, d.deal_way " +
+				 "c.category_name, c2.condition_ing, d.deal_way, m.tel, m.address " +
 				 //"q.qa_content, q.email " +
 					 "from tb_board b, tb_member m, tb_category c, tb_condition c2, tb_deal d " +
 					 "where b.email=m.email " +
@@ -331,6 +335,8 @@ public class BoardDAO {
 				String categoryName=rs.getString(10);
 				String conditionIng=rs.getString(11);
 				String dealWay=rs.getString(12);
+				String tel=rs.getString(13);
+				String address=rs.getString(14);
 				//String qaContent=rs.getString(13);
 				//String qaEmail=rs.getString(14);
 				
@@ -343,6 +349,8 @@ public class BoardDAO {
 				
 				Member member=new Member();
 				member.setEmail(email);
+				member.setTel(tel);
+				member.setAddress(address);
 				board.setMember(member);
 				
 				Category category=new Category();

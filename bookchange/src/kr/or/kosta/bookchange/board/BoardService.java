@@ -50,6 +50,8 @@ public class BoardService extends HttpServlet {
 			addBoard(request,response);
 		}else if("searchBoardList".equals(method)){
 			searchBoardList(request,response);
+		}else if("searchBoardListWhenAdd".equals(method)){
+			searchBoardListWhenAdd(request,response);
 		}
 	}
 
@@ -217,7 +219,7 @@ public class BoardService extends HttpServlet {
 		ArrayList<Board> boardList=BoardDAO.selectBoardList(length, page);
 		request.setCharacterEncoding("utf-8");
 		request.setAttribute("BOARD_LIST",boardList);
-		
+				
 		int boardCount=BoardDAO.selectBoardCount();
 		
 		String pageLinkTag=PageUtil.generate(page, boardCount, length, "/bookchange/BoardService?" +
@@ -285,6 +287,42 @@ public class BoardService extends HttpServlet {
 		request.setAttribute("PAGE_LINK_TAG",pageLinkTag);
 		
 		RequestDispatcher rd=request.getRequestDispatcher("/board/viewBoardList.jsp");
+		rd.forward(request,response);
+	}
+
+	/**	 * 게시물 검색(교환신청할때 자기 목록 뜨게하기)	 */
+	public void searchBoardListWhenAdd(HttpServletRequest request,	HttpServletResponse response) throws ServletException, IOException {
+		
+		//내가 원하는 물건 리턴
+		String boardNo=request.getParameter("boardNo");
+		Board board=BoardDAO.selectBoard(boardNo);
+		request.setCharacterEncoding("utf-8");
+		request.setAttribute("BOARD", board);
+		
+		
+		//내 물건 목록 리턴
+		int page=1;
+		
+		if(request.getParameter("page")!=null){
+			page=Integer.parseInt(request.getParameter("page"));
+		}
+		
+		int length=10;
+		
+		ArrayList<Board> boardList=null;
+		int boardCount=0;
+		
+		boardList=BoardDAO.selectBoardListbyEmail(length, page, request.getParameter("keyword"));
+		boardCount=BoardDAO.selectBoardEmailCount(request.getParameter("keyword"));
+				
+		request.setCharacterEncoding("utf-8");
+		request.setAttribute("BOARD_LIST", boardList);
+		
+		String pageLinkTag=PageUtil.generate(page, boardCount, length,
+				"/bookchange/BoardService?method=searchBoardListWhenAdd&keyword="+request.getParameter("keyword"));
+		request.setAttribute("PAGE_LINK_TAG",pageLinkTag);
+		
+		RequestDispatcher rd=request.getRequestDispatcher("/board/viewBoardListWhenAdd.jsp");
 		rd.forward(request,response);
 	}
 }
