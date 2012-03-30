@@ -103,7 +103,7 @@ public class GoodService extends HttpServlet {
 		
 		GoodDAO.updateGood(good);
 		
-		RequestDispatcher rd=request.getRequestDispatcher("/GoodService?method=viewGood"+"gNum="+num);
+		RequestDispatcher rd=request.getRequestDispatcher("/GoodService?method=viewGood&gNum="+num);
 		rd.forward(request, response);
 
 	}

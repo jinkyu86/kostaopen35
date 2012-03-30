@@ -19,10 +19,10 @@ public class GoodDAOTest {
 
 	@Test
 	public void testUpdateGood() {
-		Good good=GoodDAO.selectGood("21");
-		good.setgName("업데이트 테스트");
-		good.setDetail("ㅅㅅㅅㅅㅂㅈㅌ");
-		good.setImg("ss.jpg");
+		Good good=GoodDAO.selectGood("70");
+		good.setgName("editGood");
+		good.setDetail("TEST");
+		good.setImg("s1.jpg");
 		GoodDAO.updateGood(good);
 		
 	}
