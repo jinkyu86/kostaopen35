@@ -34,6 +34,15 @@
 		$('#movie').css('background-color','#C4E2FF');
 		$('.sub_menu').css('display', 'block');
 		$('#movie_sub').css('display', 'block');
+		
+		$('#button').click(function(){
+			if($("#schString").val()=='' || $("#schString").val()==null){
+				alert('검색할 단어를 입력하세요');
+				$("#schString").focus();
+				return false;
+			}
+			$('#sch_form').submit();
+		});
 	});
 </script>
 <c:choose>
@@ -66,13 +75,6 @@
 	</c:when>
 </c:choose>
 <!-- 메뉴 선택 끝 -->
-<script>
-	$(document).ready(function(){
-		$('#button').click(function(){
-			$('#sch_form').submit();
-		});
-	});
-</script>
 </HEAD>
 <BODY>
 <table width="90%" align="center">
@@ -134,15 +136,13 @@
 			<table class="table_style" align="right">
 				<c:forEach var="movieList" items="${MovieList}" varStatus="n">
 				<tr>
-					<td rowspan="2" class="movieList_img">${movieList.poster}</td>
-					<td><a href="/moviesystem/MovieService?method=viewMovie&gubun=${gubun}&mnum=${movieList.mnum}"><b>${movieList.mname}</b></a></td>
-				</tr>
-				<tr>
-					<td>장르 : ${movieList.genre}&nbsp;&nbsp;&nbsp;
-						개봉일 : <fmt:formatDate value="${movieList.launchDate}" pattern="yyyy-MM-dd"/>
+					<td class="movieList_img">${movieList.poster}</td>
+					<td>
+						<a href="/moviesystem/MovieService?method=viewMovie&gubun=${gubun}&mnum=${movieList.mnum}"><b>${movieList.mname}</b></a><br/>
+						장르 : ${movieList.genre}&nbsp;&nbsp;&nbsp;<br/>
+						개봉일 : <fmt:formatDate value="${movieList.launchDate}" pattern="yyyy-MM-dd"/><br/>
 					</td>
 				</tr>
-				
 				<c:if test="${!n.last}">
 					<tr>
 						<td colspan="3" style="background-color:#9191C8;padding-top:1px"></td>
