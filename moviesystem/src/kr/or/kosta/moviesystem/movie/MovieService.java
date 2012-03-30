@@ -36,14 +36,18 @@ public class MovieService extends HttpServlet{
 		if(method==null){
 			method="viewMovieList";
 		}
-		System.out.println(method);
+		//System.out.println(method);
 		if("viewMovieList".equals(method)){
+			// 영화 리스트 출력 메서드 호출
 			viewMovieList(request, response);
 		}else if("viewMovie".equals(method)){
+			// 영화 내용 출력 메서드 호출
 			viewMovie(request, response);
 		}else if("searchMovieList".equals(method)){
+			// 검색 영화 출력 메서드 호출
 			searchMovieList(request, response);
 		}else if("removeMovie".equals(method)){
+			// 영화 데이터 삭제 메서드 호출
 			removeMovie(request, response);
 		}else if("editMovieForm".equals(method)){
 			editMovieForm(request, response);
