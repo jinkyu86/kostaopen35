@@ -2,8 +2,8 @@
 			<table style="width:100%" align="center">
 				<tr>
 					<td align="right"></td>
-					<td align="right" class="top_text">login</td>
-					<td align="right" class="top_text">join</td>
+					<td align="right" class="top_text"><a href="/moviesystem/MemberService?method=loginForm">login</a></td>
+					<td align="right" class="top_text"><a href="/moviesystem/MemberService?method=addMemberForm">join</a></td>
 					<td align="right" class="top_text">customer</td>
 				</tr>
 				<tr>
@@ -14,7 +14,7 @@
 	</tr>
 	<!-- 최 상단 메뉴 끝 -->
 	<tr>
-		<td colspan="2"  height="50px">
+		<td colspan="2"  height="70px" valign="top">
 			<!-- 탑 메뉴 시작 -->
 			<table class="topmenu" align="center">
 				<tr align="center">
@@ -40,14 +40,3 @@
 					<td class="buy_menu">999</td>
 				</tr>
 			</table>
-			<table class="sub_table">
-				<tr>
-					<td style="width: 100%";height:26px;"></td>
-				</tr>
-			</table>
-			<table>
-				<tr>
-					<td height="10px"></td>
-				</tr>
-			</table>
-		
