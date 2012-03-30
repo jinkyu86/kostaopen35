@@ -9,12 +9,13 @@
 <title>Insert title here</title>
 <script src="http://code.jquery.com/jquery-1.7.1.js"></script>
 <script type="text/javascript">
+
 	$(document).ready(function(){
 		$("#mnum").change(function(){
 			var mnum = $("#mnum").val();
-			alert(mnum);
-			var servlet_url = "/moviesystem/MovieService?method=MovieTimeList";
-			$.getJSON(servlet_url,
+			//alert(mnum);
+			//var servlet_url = "";
+			$.getJSON("/moviesystem/MovieService?method=MovieTimeList",
 				{"mnum" : mnum},
 				function(data){
 					//이이디가 model인 객체의 내용 삭제
