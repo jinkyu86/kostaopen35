@@ -76,6 +76,7 @@
 </c:choose>
 <!-- 메뉴 선택 끝 -->
 </HEAD>
+
 <BODY>
 <table width="90%" align="center">
 	<!-- 상단 메뉴 시작 -->
