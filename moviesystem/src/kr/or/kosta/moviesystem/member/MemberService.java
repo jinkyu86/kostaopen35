@@ -66,6 +66,8 @@ public class MemberService extends HttpServlet {
 			   findPwForm(request,response);
 		   }else if("findPw".equals(method)){
 			   findPw(request,response);
+		   }else if("logoutMember".equals(method)){
+			   logoutMember(request, response);
 		   }
 	   }
 			
