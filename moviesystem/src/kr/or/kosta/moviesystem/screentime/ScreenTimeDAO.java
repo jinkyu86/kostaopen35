@@ -28,7 +28,7 @@ public class ScreenTimeDAO {
 	 * 
 	 * @param mnum
 	 */
-	public ArrayList selectScreen(String mnum) {
+	public static ArrayList selectScreen(String mnum) {
 		Connection con=null;
 		PreparedStatement psmt=null;
 		String sql=null;
