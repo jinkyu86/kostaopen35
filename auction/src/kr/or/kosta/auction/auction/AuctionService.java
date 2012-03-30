@@ -56,14 +56,14 @@ public class AuctionService extends HttpServlet {
 
 	private void addAuction(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException,IOException {
-		String aNum = request.getParameter("anum");
-		String gNum = request.getParameter("gnum");
-		String sPrice = request.getParameter("sprice");
-		String imPrice = request.getParameter("imprice");
-		String sTime = request.getParameter("stime");
-		String eTime = request.getParameter("etime");
+		String aNum = request.getParameter("aNum");
+		String gNum = request.getParameter("gNum");
+		String sPrice = request.getParameter("sPrice");
+		String imPrice = request.getParameter("imPrice");
+		String sTime = request.getParameter("sTime");
+		String eTime = request.getParameter("eTime");
 		boolean sold = Boolean.parseBoolean(request.getParameter("sold"));
-		String cuPrice = request.getParameter("cuprice");
+		String cuPrice = request.getParameter("cuPrice");
 	
 		Good good = new Good();
 		good.setgNum(gNum);
@@ -109,14 +109,14 @@ public class AuctionService extends HttpServlet {
 	private void editAuction(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException,IOException{
 		//1.파라메터정보 리턴
-		String aNum = request.getParameter("anum");
-		String gNum = request.getParameter("gnum");
-		String sPrice = request.getParameter("sprice");
-		String imPrice = request.getParameter("imprice");
-		String sTime = request.getParameter("stime");
-		String eTime = request.getParameter("etime");
+		String aNum = request.getParameter("aNum");
+		String gNum = request.getParameter("gNum");
+		String sPrice = request.getParameter("sPrice");
+		String imPrice = request.getParameter("imPrice");
+		String sTime = request.getParameter("sTime");
+		String eTime = request.getParameter("eTime");
 		boolean sold = Boolean.parseBoolean(request.getParameter("sold"));
-		String cuPrice = request.getParameter("cuprice");
+		String cuPrice = request.getParameter("cuPrice");
 		
 		//2.1의 정보를 이용해서 Auction객체 생성
 		Good good = new Good();
@@ -141,10 +141,10 @@ public class AuctionService extends HttpServlet {
 		//3.경매정보를 수정하는 메서드 호출
 		AuctionDAO.updateAuction(auction);
 		//4.경매정보 조회화면으로 이동 객체 생성
+		//RequestDispatcher rd = request.getRequestDispatcher("/AuctionService?method=viewAuctionList");
 		RequestDispatcher rd=
 				request.getRequestDispatcher(
-						"/AuctionService?method=viewAuction" +
-						"&anum="+aNum);
+						"/AuctionService?method=viewAuction&aNum="+aNum);
 		rd.forward(request, response);
 	}
 
@@ -167,7 +167,7 @@ public class AuctionService extends HttpServlet {
 						goodList);
 				//5./student/editStudent.jsp이동 객체 생성
 				RequestDispatcher  rd=
-						request.getRequestDispatcher("/good/editgood.jsp");
+						request.getRequestDispatcher("/auction/editAuction.jsp");
 				rd.forward(request, response);
 
 	}

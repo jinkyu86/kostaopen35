@@ -48,8 +48,7 @@ public class AuctionDAO {
 
 		try {
 			psmt = con.prepareStatement("UPDATE auction " 
-					+ "SET "
-					+ "g_num = ?," 
+					+ "SET g_num = ?," 
 					+ "s_price=?," 
 					+ "im_price=?," 
 					+ "sold=?, "
