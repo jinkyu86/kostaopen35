@@ -65,12 +65,11 @@ public class MovieService extends HttpServlet{
 	private void MovieTimeList(HttpServletRequest request,
 			HttpServletResponse response) throws IOException, ServletException{
 		String mnum = request.getParameter("mnum");
-		System.out.println(mnum);
 		
 		ArrayList<ScreenTime> screenTimeList = ScreenTimeDAO.selectScreen(mnum);
-		System.out.println(screenTimeList);
+
 		JSONArray jsonArray = JSONArray.fromObject(screenTimeList);
-		System.out.println("jsonArray : "+jsonArray);
+
 		response.setContentType("text/html;charset=utf-8");
 		PrintWriter out = response.getWriter();
 		out.println(jsonArray.toString());
@@ -85,7 +84,7 @@ public class MovieService extends HttpServlet{
 		ArrayList<Movie> movieList = MovieDAO.selectMovieList(1, Moviecnt, "");
 		
 		request.setAttribute("MovieList", movieList);
-		System.out.println(movieList);
+		
 		RequestDispatcher rd = request.getRequestDispatcher("/movie/test1.jsp");
 		rd.forward(request, response);
 		
@@ -235,17 +234,17 @@ public class MovieService extends HttpServlet{
 		int page = 1;
 		int length = 5;
 		int movieCnt = 0;
+		String method = request.getParameter("method");
+		String schCode = request.getParameter("schCode");
+		String schString = request.getParameter("schString");
+		ArrayList<Movie>movieList = null;
+		String pageLink = null;
+		String pageLinkTag=null;
+		
 		if(request.getParameter("page")!=null){
 			page = Integer.parseInt(request.getParameter("page"));
 		}
 		
-		String schCode = request.getParameter("schCode");	
-		request.setAttribute("schCode",schCode);
-		
-		String schString = request.getParameter("schString");
-		request.setAttribute("schString",schString);
-		
-		ArrayList<Movie>movieList = null;
 		if("mname".equals(schCode)){
 			movieList = MovieDAO.selectMovieListbyMname(page, length, schString);
 			movieCnt = MovieDAO.selectMovieListbyMnameCount(schString);
@@ -256,10 +255,14 @@ public class MovieService extends HttpServlet{
 			movieList = MovieDAO.selectMovieListByContent(page, length, schString);
 			movieCnt = MovieDAO.selectMovieListByContentCount(schString);
 		}
-		request.setAttribute("MovieList", movieList);
 		
-		String pageLink = "MovieService?method=searchMovieList&schCode="+schCode+"&schString="+schString;
-		String pageLinkTag = PageUtil.generate(page, movieCnt, length, pageLink);
+		pageLink = "MovieService?method=searchMovieList&schCode="+schCode+"&schString="+schString;
+		pageLinkTag = PageUtil.generate(page, movieCnt, length, pageLink);
+		
+		request.setAttribute("schCode",schCode);
+		request.setAttribute("method", method);
+		request.setAttribute("schString",schString);
+		request.setAttribute("MovieList", movieList);
 		request.setAttribute("page_Link_Tag", pageLinkTag);
 		
 		RequestDispatcher rd = request.getRequestDispatcher("/movie/viewMovieList.jsp");
@@ -276,12 +279,14 @@ public class MovieService extends HttpServlet{
 			HttpServletResponse response) throws IOException, ServletException {
 		String mnum = request.getParameter("mnum");
 		String gubun = "total";
+		String method = request.getParameter("method");
 		
 		if(request.getParameter("gubun")!=null){
 			gubun = request.getParameter("gubun");
 		}
 		
 		request.setAttribute("gubun", gubun);
+		request.setAttribute("method", method);
 		
 		Movie movie = MovieDAO.selectMovie(mnum);
 		//System.out.println(movie);
