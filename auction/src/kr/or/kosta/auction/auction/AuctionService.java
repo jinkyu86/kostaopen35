@@ -196,8 +196,10 @@ public class AuctionService extends HttpServlet {
 			HttpServletResponse response) throws ServletException,IOException{
 		//1.AuctionDAO에서 전체 경매조회 메서드 호출
 		ArrayList<Auction> auctionList=AuctionDAO.selectAuctionList();
+		ArrayList<Auction> soldList=AuctionDAO.selectSoldList();
 		//2.request에 1의 전체 경매 정보 저장
 		request.setAttribute("AUCTION_LIST", auctionList);
+		request.setAttribute("SOLD_LIST", soldList);
 		//3. /auction/viewAuctionList.jsp로 페이지이동
 		RequestDispatcher rd=request.getRequestDispatcher("/auction/viewAuctionList.jsp");
 		//4.JSP로 페이지 이동
