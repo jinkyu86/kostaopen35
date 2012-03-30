@@ -8,4 +8,9 @@
 .movie_menu{width:50%;text-align:center;}
 .reservation_menu{width:30%;text-align:center;}
 .buy_menu{width:30%;text-align:center;}
-a{text-decoration:none}
+a{text-decoration:none;color:#000000;}
+#movie_info{border-bottom:1px solid #ffffff;}
+#movie_screen{border-bottom:1px solid #ffffff;}
+#movie_schedule{}
+#movie_ranking{border-bottom:1px solid #ffffff;}
+#screen_ranking{}
