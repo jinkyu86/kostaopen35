@@ -43,10 +43,17 @@ public class ChangeService extends HttpServlet {
 			requestChangeList(request,response);
 		}else if("matchChange".equals(method)){
 			matchChange(request,response);
+		}else if("cancelChange".equals(method)){
+			cancelChange(response,request);
 		}
 	}
 	
 	
+
+	private void cancelChange(HttpServletResponse response,
+			HttpServletRequest request) throws ServletException,IOException{
+		
+	}
 
 	private void matchChange(HttpServletRequest request,
 			HttpServletResponse response) throws IOException,ServletException {
