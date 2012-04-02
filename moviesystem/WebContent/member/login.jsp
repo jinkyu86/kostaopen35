@@ -12,6 +12,9 @@
 <script src="http://code.jquery.com/jquery-1.7.1.js"></script>
 <script src="/moviesystem/js/common.jsp"></script>
 	<script type="text/javascript">
+	 <c:if test="${ERROR!=null}">
+	 	alert("${ERROR}");
+	 </c:if>
 		$(document).ready(function(){
 			$("#member_info").css('background-color','#C4E2FF');
 			$("#member_login").css('background-color','#C4E2FF');
