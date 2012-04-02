@@ -15,7 +15,7 @@
 	</tr>
 	<tr>
 		<td align="center">
-		<a href="/bookchange/ChangeService?method=viewChangeList">교환내역보기</a>
+		<a href="/bookchange/ChangeService?method=viewChange">교환내역보기</a>
 		</td>
 	</tr>
 	<tr>
