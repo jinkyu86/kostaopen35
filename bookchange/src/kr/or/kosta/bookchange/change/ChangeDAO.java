@@ -210,20 +210,20 @@ public class ChangeDAO {
 				int changeAgreeBoardNo=rs.getInt(4);
 				int changeDemandBoardNo=rs.getInt(5);
 				String conditionIng=rs.getString(7);
-				String agreeBoardTitle=rs.getString(9);
-				String agreeBoardWant=rs.getString(10);
-				String agreeBoardPhoto=rs.getString(11);
-				String agreeBoardContent=rs.getString(12);
-				String agreeBoardEmail=rs.getString(13);
-				int agreeBoardConditionResult=rs.getInt(15);
-				int agreeBoardCategoryNo=rs.getInt(16);
-				String demandBoardTitle=rs.getString(18);
-				String demandBoardWant=rs.getString(19);
-				String demandBoardPhoto=rs.getString(20);
-				String demandBoardContent=rs.getString(21);
-				String demandBoardEmail=rs.getString(22);
-				int demandBoardConditionResult=rs.getInt(24);
-				int demandBoardCategoryNo=rs.getInt(25);
+				String demandBoardTitle=rs.getString(9);
+				String demandBoardWant=rs.getString(10);
+				String demandBoardPhoto=rs.getString(11);
+				String demandBoardContent=rs.getString(12);
+				String demandBoardEmail=rs.getString(13);
+				int demandBoardConditionResult=rs.getInt(15);
+				int demandBoardCategoryNo=rs.getInt(16);
+				String agreeBoardTitle=rs.getString(18);
+				String agreeBoardWant=rs.getString(19);
+				String agreeBoardPhoto=rs.getString(20);
+				String agreeBoardContent=rs.getString(21);
+				String agreeBoardEmail=rs.getString(22);
+				int agreeBoardConditionResult=rs.getInt(24);
+				int agreeBoardCategoryNo=rs.getInt(25);
 				String categoryName=rs.getString(27);
 				
 				
@@ -243,9 +243,9 @@ public class ChangeDAO {
 				changeCondition.setConditionIng(conditionIng);
 				
 				Member agreeMember=new Member();
-				agreeMember.setEmail(agreeBoardEmail);
+				agreeMember.setEmail(demandBoardEmail);
 				Member demandMember=new Member();
-				demandMember.setEmail(demandBoardEmail);
+				demandMember.setEmail(agreeBoardEmail);
 				
 				Board agreeBoard=new Board();
 				agreeBoard.setBoardNo(changeAgreeBoardNo);
@@ -342,20 +342,20 @@ public class ChangeDAO {
 				int changeAgreeBoardNo=rs.getInt(4);
 				int changeDemandBoardNo=rs.getInt(5);
 				String conditionIng=rs.getString(7);
-				String agreeBoardTitle=rs.getString(9);
-				String agreeBoardWant=rs.getString(10);
-				String agreeBoardPhoto=rs.getString(11);
-				String agreeBoardContent=rs.getString(12);
-				String agreeBoardEmail=rs.getString(13);
-				int agreeBoardConditionResult=rs.getInt(15);
-				int agreeBoardCategoryNo=rs.getInt(16);
-				String demandBoardTitle=rs.getString(18);
-				String demandBoardWant=rs.getString(19);
-				String demandBoardPhoto=rs.getString(20);
-				String demandBoardContent=rs.getString(21);
-				String demandBoardEmail=rs.getString(22);
-				int demandBoardConditionResult=rs.getInt(24);
-				int demandBoardCategoryNo=rs.getInt(25);
+				String demandBoardTitle=rs.getString(9);
+				String demandBoardWant=rs.getString(10);
+				String demandBoardPhoto=rs.getString(11);
+				String demandBoardContent=rs.getString(12);
+				String demandBoardEmail=rs.getString(13);
+				int demandBoardConditionResult=rs.getInt(15);
+				int demandBoardCategoryNo=rs.getInt(16);
+				String agreeBoardTitle=rs.getString(18);
+				String agreeBoardWant=rs.getString(19);
+				String agreeBoardPhoto=rs.getString(20);
+				String agreeBoardContent=rs.getString(21);
+				String agreeBoardEmail=rs.getString(22);
+				int agreeBoardConditionResult=rs.getInt(24);
+				int agreeBoardCategoryNo=rs.getInt(25);
 				String categoryName=rs.getString(27);
 				
 				
@@ -375,9 +375,9 @@ public class ChangeDAO {
 				changeCondition.setConditionIng(conditionIng);
 				
 				Member agreeMember=new Member();
-				agreeMember.setEmail(agreeBoardEmail);
+				agreeMember.setEmail(demandBoardEmail);
 				Member demandMember=new Member();
-				demandMember.setEmail(demandBoardEmail);
+				demandMember.setEmail(agreeBoardEmail);
 				
 				Board agreeBoard=new Board();
 				agreeBoard.setBoardNo(changeAgreeBoardNo);
@@ -403,8 +403,8 @@ public class ChangeDAO {
 				change.setChangeNo(changeNo);
 				change.setChangeDate(changeDate);
 				change.setCondition(changeCondition);
-				change.setAgreeBoard(demandBoard);
-				change.setDemandBoard(agreeBoard);
+				change.setAgreeBoard(agreeBoard);
+				change.setDemandBoard(demandBoard);
 				
 				changeList.add(change);
 			}
