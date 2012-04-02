@@ -9,7 +9,7 @@
 <title>${Movie.mname}</title>
 <link rel="stylesheet" href="/moviesystem/css/Layout.css">
 <script src="http://code.jquery.com/jquery-1.7.1.js"></script>
-<script src="/moviesystem/js/common.js"></script>
+<script src="/moviesystem/js/common.jsp"></script>
 <!-- 메뉴 선택 시작 -->
 <script type="text/javascript">
 	$(document).ready(function(){
@@ -19,6 +19,11 @@
 		
 		$('#button').click(function(){
 			$('#vieMovie').submit();
+		});
+		$('#reservation').hover(function(){
+			//$('#reservation').addClass('hover');
+		},function(){
+			//$('#reservation').removeClass('hover');
 		});
 	});
 </script>
@@ -70,7 +75,7 @@
 			<div class="menu_title" >Movie</div>
 			<table class="table_style" align="right">
 				<tr>
-					<td rowspan="4" style="border-right:1px solid #9191C8;width:210px;" align="center"><img src="/moviesystem/movieimg/${Movie.poster}.jpg" class="poster_style2"></td>
+					<td rowspan="5" style="border-right:1px solid #9191C8;width:210px;" align="center"><img src="/moviesystem/movieimg/${Movie.poster}.jpg" class="poster_style2"></td>
 					<td>${Movie.mname}</td>
 				</tr>
 				<tr>
@@ -81,6 +86,16 @@
 				</tr>
 				<tr>
 					<td>가격 : ${Movie.mprice}</td>
+				</tr>
+				<tr>
+					<td>
+						<c:choose>
+							<c:when test="${sessionScope.LOGIN_MEMBER eq null}"></c:when>
+							<c:otherwise>
+								<span id="reservation" class="button1">예매하기</span>
+							</c:otherwise>
+						</c:choose>
+					</td>
 				</tr>
 				<tr>
 					<td colspan="2" style="background-color:#9191C8;padding-top:1px"></td>
