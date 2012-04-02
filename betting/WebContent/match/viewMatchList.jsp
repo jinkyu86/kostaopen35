@@ -9,6 +9,8 @@
 </head>
 <body>
 	<h2 align="center">경기 리스트</h2>
+	<form action="/betting/MarchService" method="post">
+	<input type="hidden" name="method" value="addMatch">
 	<table border="1" align="center">
 		<tr>
 			<th>경기번호</th>
@@ -21,18 +23,27 @@
 		</tr>
 		<c:forEach var="match" items="${MATCH_LIST }">
 		<tr>
-			<td>${match.num}</td>
+			<td>
+				<a href="/betting/MatchService?method=editMatchForm&matchno=${match.num }">
+					${match.num}
+				</a>
+			</td>
 			<td>${match.homeTeam.name}</td>
 			<td>${match.awayTeam.name}</td>
 			<td>${match.loc.loc}</td>
 			<td>${match.matchTime}</td>
 			<td>${match.winTeam.name}</td>
 			<td>${match.score}</td>
+			
 		</tr>
 		</c:forEach>
 	</table>
+	</form>
 	<p align="center">
 		${PAGE_LINK_TAG }
 	</p>
+	<a href="/betting/MatchService?method=addMatchForm">
+		경기 데이터 삽입
+	</a>
 </body>
 </html>
