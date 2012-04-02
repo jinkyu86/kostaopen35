@@ -86,10 +86,10 @@ public class BidService extends HttpServlet {
 		longEmoney-=longImPrice;
 		downEmoney=Long.toString(longEmoney);
 				
-		Bid bid=new Bid();	
+		Bid bid=new Bid();
 		
 		member.setEmoney(downEmoney);
-		auction.setSold(true);
+		auction.setSold(1);
 		auction.seteTime(sysdate);
 		auction.setCuPrice(imPrice);
 		
