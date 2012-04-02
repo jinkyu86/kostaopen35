@@ -13,11 +13,11 @@ public class GoodDivisionDAO {
 	/**
 	 * 상품리스트 조회
 	 */
-	public static ArrayList selectGooddivisionList() {
+	public static ArrayList<Good_division> selectGooddivisionList() {
 		Connection con=null;
 		PreparedStatement psmt=null;
 		ResultSet rs=null;
-		ArrayList gooddivisionList=new ArrayList();
+		ArrayList<Good_division> gooddivisionList=new ArrayList<Good_division>();
 		String sql="select division,g_name from good_division";
 		try {
 			con=ConnectionUtil.getConnection();
