@@ -35,8 +35,9 @@
 	<input type="hidden" name="method" value="addBid"/>
 	<input type="hidden" name="aNum" value="${AUCTION.aNum }"/>
 		<tr>
-		<td>물품사진</td><td>물품명</td><td>즉시구매가격</td><td>입찰가격</td><td>경매시작시간</td>
-		<td>경매마감시간</td><c:if test=${AUCTION.sold }==0><td>입찰하기</td></c:if>
+		<td align="center">물품사진</td><td align="center">물품명</td><td align="center">즉시구매가격</td>
+		<td align="center">입찰가격</td><td align="center">경매시작시간</td>
+		<td align="center">경매마감시간</td><c:if test="${AUCTION.sold=='0'}"><td>입찰하기</td></c:if>
 		</tr>
 		<tr>
 			<td align="center"><img src="/auction/gphoto/${AUCTION.good.img}" width="130" height="130"></td>
@@ -45,13 +46,13 @@
 			<td align="center">${AUCTION.cuPrice }</td>
 			<td align="center">${AUCTION.sTime}</td>
 			<td align="center">${AUCTION.eTime }</td>
-			<c:if test=${AUCTION.sold }==0>
+			<c:if test="${AUCTION.sold=='0'}">
 				<td align="center"><input type="submit" value="입찰하기"></td>
 			</c:if>
 		</tr>
 	</form>
 	</table>
-	<c:if test=${AUCTION.sold }==0>
+	<c:if test="${AUCTION.sold=='0'}">
 	<p align="center">
 		 <p align="center">
 		 <a href="/auction/BidService?method=buy&aNum=${AUCTION.aNum }">즉시구매하기</a>
@@ -70,5 +71,6 @@
 		 <a href="/auction/AuctionService?method=removeAuction&aNum=${AUCTION.aNum}">경매 삭제</a>
 	 </p>
 </c:if>
+</script>
 </body>
 </html>
