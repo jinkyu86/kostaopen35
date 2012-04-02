@@ -50,7 +50,7 @@
 					value="<%=member.getEmoney()%>" /></td>
 			</tr>
 			<tr>
-				<td><input type="submit" value="학생수정" /></td>
+				<td><input type="submit" value="회원수정" /></td>
 				<td><input type="reset" value="입력취소" /></td>
 			</tr>
 		</form>
