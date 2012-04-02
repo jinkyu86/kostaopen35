@@ -18,6 +18,25 @@
 		<a href="/bookchange/ChangeService?method=viewChangeList">교환내역보기</a>
 		</td>
 	</tr>
+	<tr>
+		<td align="center">
+		<a href="/bookchange/MemberService?method=editMemberForm">회원정보수정</a>
+		</td>
+	</tr>
+	<tr>
+		<td align="center">
+			<a href="/bookchange/MemberService?method=removeMember&email=${sessionScope.LOGIN_EMAIL.email}">회원탈퇴</a>
+			
+		</td>
+		
+	</tr>
+		<tr>
+		<td align="center">
+			<a href="/bookchange/MemberService?method=viewMember&email=${sessionScope.LOGIN_EMAIL.email}">회원정보보기</a>
+			  
+		</td>
+		
+	</tr>
 	</table>
 </body>
 </html>

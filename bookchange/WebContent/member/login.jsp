@@ -13,19 +13,19 @@
   	<input type="hidden"name="method"value="login">
 
   	    <tr>
-  		<td>아이디</td>
+  		<td align="center">아이디</td>
   		<td><input type="text" name="email"/></td>
   		</tr>
   		<tr>
   		<td>비밀번호</td>
   		<td><input type="password" name="pw"/></td>
   		</tr>
-  		<td><input type="submit" value="로그인"/></td>
-  		<td><input type="reset" value="취소"/></td>
+  		<td align="center"><input type="submit" value="로그인"/></td>
+  		<td align="center"><input type="reset" value="취소"/></td>
   		
   	</form>	  
   </table>	
-  <table>
+  <table align="center">
   <tr>
   	<td>
 	<a href="/bookchange/member/addmember.jsp">
