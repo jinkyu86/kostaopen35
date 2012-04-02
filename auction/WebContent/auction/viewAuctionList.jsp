@@ -44,7 +44,7 @@
 	<c:forEach var="auction" items="${AUCTION_LIST}">
 	<form action="/auction/AuctionService" method="post">
 	<input type="hidden" name="method" value="viewAuction"/>
-	<input type="hidden" name="aNum" value="${auction.good.gNum }"/>
+	<input type="hidden" name="aNum" value="${auction.aNum }"/>
 	<tr>
 		<td align="center"><img src="/auction/gphoto/${auction.good.img}" width="130" height="130"></td>
 		<td align="center">${auction.good.gName}</td>
@@ -58,7 +58,8 @@
 	</form>
 	</c:forEach>
 	</table>
-	
+	<p align="center">
+	${PAGE_LINK_TAG}
 	<br/><br/>
 	
 	<h3 align="center">³«ÂûµÈ ¹°Ç°¸®½ºÆ®</h3>
@@ -67,7 +68,7 @@
 	<c:forEach var="sold" items="${SOLD_LIST}">
 	<form action="/auction/AuctionService" method="post">
 	<input type="hidden" name="method" value="viewAuction"/>
-	<input type="hidden" name="aNum" value="${sold.good.gNum }"/>
+	<input type="hidden" name="aNum" value="${sold.aNum }"/>
 	<tr>
 		<td align="center"><img src="/auction/gphoto/${sold.good.img}" width="130" height="130"></td>
 		<td align="center">${sold.good.gName}</td>
