@@ -1,20 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
 	pageEncoding="EUC-KR"%>
-<%@ page import="java.util.ArrayList"%>
 
-<%@ page import="kr.or.kosta.auction.auction.Auction"%>
-<%@ page import="kr.or.kosta.auction.good.Good"%>
-
-<%
-	Auction auction = (Auction) request.getAttribute("AUCTION");
-	ArrayList<Good> departmentList = (ArrayList) request
-			.getAttribute("GOOD_LIST");
-%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<title>Insert title here</title>
+<title>경매 수정</title>
 </head>
 <body>
 
