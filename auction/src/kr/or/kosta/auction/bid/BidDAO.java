@@ -38,7 +38,6 @@ public class BidDAO {
 		String sql="UPDATE BID " +
 				"SET userid=?," +
 				"a_num=?," +
-				"bid_time=?," +
 				"bid_price=? " +
 				"WHERE bidnum=?";
 		
@@ -46,9 +45,8 @@ public class BidDAO {
 			psmt=con.prepareStatement(sql);
 			psmt.setString(1,bid.getMember().getUserid());
 			psmt.setString(2,bid.getAuction().getaNum());
-			psmt.setString(3, bid.getBidTime());
-			psmt.setString(4,bid.getBidPrice());
-			psmt.setString(5,bid.getBidNum());
+			psmt.setString(3,bid.getBidPrice());
+			psmt.setString(4,bid.getBidNum());
 			psmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
