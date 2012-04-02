@@ -196,7 +196,7 @@ public class MemberService extends HttpServlet {
 		MemberDAO.deleteMember(userid);
 		RequestDispatcher rd=
 				request.getRequestDispatcher(
-						"/MemberService?method=viewMemberList");
+						"/MemberService?method=viewAuctionList");
 		rd.forward(request, response);
 
 	}
