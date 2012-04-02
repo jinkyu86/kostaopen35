@@ -36,7 +36,7 @@ public class MemberService extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		String method = request.getParameter("method");
 		if(method==null){
-			method="editMemberForm";
+			method="viewMemberList";
 		}
 		if("viewMemberList".equals(method)){
 			viewMemberList(request,response);
@@ -156,12 +156,12 @@ public class MemberService extends HttpServlet {
 				ArrayList<Member> memberList=
 						MemberDAO.selectMemberList();
 				//4.request에 저장
-				request.setAttribute("Member", member);
+				request.setAttribute("MEMBER", member);
 				request.setAttribute("MEMBER_LIST",
 						memberList);
 				//5./member/editMember.jsp이동 객체 생성
 				RequestDispatcher  rd=
-						request.getRequestDispatcher(	"/member/editMember.jsp");
+						request.getRequestDispatcher("/member/editMember.jsp");
 				rd.forward(request, response);
 
 	}
@@ -173,11 +173,9 @@ public class MemberService extends HttpServlet {
 	private void viewMember(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		//1.userid 파라메터 리턴받아서 변수에 저장
-				String userid=request.getParameter("userid");
-				//2.DB에서 아이디가 일치하는 회원 조회
-				Member member=MemberDAO.selectMember(userid);
-				//3.request 에 2에서 조회한 회원의 정보 저장
-				//   이름-MEMBER
+		HttpSession session=request.getSession();
+		Member member=(Member)session.getAttribute("LOGIN_MEMBER");
+				
 				request.setAttribute("MEMBER",member);
 				//4./member/viewMember.jsp로 이동 객체 생성
 				RequestDispatcher rd=
