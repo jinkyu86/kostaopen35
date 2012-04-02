@@ -175,6 +175,42 @@ public class ChangeDAO {
 		}
 	}
 
+	/**교환 요청 수락(교환요청 수락버튼 클릭시) 
+	 * TB_BOARD의 condition_result값을 2(교환중)으로 변경**/
+	public static void matchChange(Change change) {
+		Connection con=null;
+		PreparedStatement ps1=null;
+		PreparedStatement ps2=null;
+		PreparedStatement ps3=null;
+		PreparedStatement ps4=null;
+		
+		try {
+			con=ConnectionUtil.getConnection();
+			ps1=con.prepareStatement("Insert into tb_change(change_no, change_date, condition_result, agree_board_no, demand_board_no) " +
+					"values(change_seq.nextval,sysdate,2,?,?)");
+			ps2=con.prepareStatement("Update tb_change set condition_result=2 where agree_board_no=? and demand_board_no=?");
+			ps3=con.prepareStatement("Update tb_board set condition_result=2 where board_no=?");
+			ps4=con.prepareStatement("Update tb_board set condition_result=2 where board_no=?");
+			
+			
+			ps1.setInt(1, change.getDemandBoard().getBoardNo());
+			ps1.setInt(2, change.getAgreeBoard().getBoardNo());
+			
+			ps2.setInt(1, change.getAgreeBoard().getBoardNo());
+			ps2.setInt(2, change.getDemandBoard().getBoardNo());
+			
+			ps3.setInt(1, change.getAgreeBoard().getBoardNo());
+			ps4.setInt(1, change.getDemandBoard().getBoardNo());
+			
+			ps1.executeUpdate();
+			ps2.executeUpdate();
+			ps3.executeUpdate();
+			ps4.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	/**내 게시물번호로 교환리스트 검색(나에게 교환을 요청한 사람들 검색)**/
 	public static ArrayList<Change> selectChangeMyboardList(int length, int page, String email) {
 		Connection con=null;
@@ -403,8 +439,8 @@ public class ChangeDAO {
 				change.setChangeNo(changeNo);
 				change.setChangeDate(changeDate);
 				change.setCondition(changeCondition);
-				change.setAgreeBoard(agreeBoard);
-				change.setDemandBoard(demandBoard);
+				change.setAgreeBoard(demandBoard);
+				change.setDemandBoard(agreeBoard);
 				
 				changeList.add(change);
 			}
