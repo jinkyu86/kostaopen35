@@ -38,6 +38,7 @@ public class BidDAO {
 		String sql="UPDATE BID " +
 				"SET userid=?," +
 				"a_num=?," +
+				"bid_time=?," +
 				"bid_price=? " +
 				"WHERE bidnum=?";
 		
@@ -45,8 +46,9 @@ public class BidDAO {
 			psmt=con.prepareStatement(sql);
 			psmt.setString(1,bid.getMember().getUserid());
 			psmt.setString(2,bid.getAuction().getaNum());
-			psmt.setString(3,bid.getBidPrice());
-			psmt.setString(4,bid.getBidNum());
+			psmt.setString(3, bid.getBidTime());
+			psmt.setString(4,bid.getBidPrice());
+			psmt.setString(5,bid.getBidNum());
 			psmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -79,7 +81,7 @@ public class BidDAO {
 				String imPrice=rs.getString(7);
 				String sTime=rs.getString(8);
 				String eTime=rs.getString(9);
-				String sold=rs.getString(10);
+				int sold=rs.getInt(10);
 				String cuPrice=rs.getString(11);
 				String pw=rs.getString(12);
 				String name=rs.getString(13);
@@ -111,9 +113,8 @@ public class BidDAO {
 				auction.setImPrice(imPrice);
 				auction.setsTime(sTime);
 				auction.seteTime(eTime);
-				boolean bSold=false;
-				if("1".equals(sold)) bSold=true;
-				auction.setSold(bSold);
+
+				auction.setSold(sold);
 				auction.setCuPrice(cuPrice);				
 				
 				bid=new Bid();
@@ -156,7 +157,7 @@ public class BidDAO {
 				String imPrice=rs.getString(8);
 				String sTime=rs.getString(9);
 				String eTime=rs.getString(10);
-				String sold=rs.getString(11);
+				int sold=rs.getInt(11);
 				String cuPrice=rs.getString(12);
 				String pw=rs.getString(13);
 				String name=rs.getString(14);
@@ -188,9 +189,8 @@ public class BidDAO {
 				auction.setImPrice(imPrice);
 				auction.setsTime(sTime);
 				auction.seteTime(eTime);
-				boolean bSold=false;
-				if("1".equals(sold)) bSold=true;
-				auction.setSold(bSold);
+
+				auction.setSold(sold);
 				auction.setCuPrice(cuPrice);				
 				
 				Bid bid=new Bid();
@@ -244,7 +244,7 @@ public class BidDAO {
 				String imPrice=rs.getString(8);
 				String sTime=rs.getString(9);
 				String eTime=rs.getString(10);
-				String sold=rs.getString(11);
+				int sold=rs.getInt(11);
 				String cuPrice=rs.getString(12);
 				String pw=rs.getString(13);
 				String name=rs.getString(14);
@@ -276,9 +276,8 @@ public class BidDAO {
 				auction.setImPrice(imPrice);
 				auction.setsTime(sTime);
 				auction.seteTime(eTime);
-				boolean bSold=false;
-				if("1".equals(sold)) bSold=true;
-				auction.setSold(bSold);
+
+				auction.setSold(sold);
 				auction.setCuPrice(cuPrice);				
 				
 				Bid bid=new Bid();
@@ -334,7 +333,7 @@ public class BidDAO {
 				String imPrice=rs.getString(8);
 				String sTime=rs.getString(9);
 				String eTime=rs.getString(10);
-				String sold=rs.getString(11);
+				int sold=rs.getInt(11);
 				String cuPrice=rs.getString(12);
 				String pw=rs.getString(13);
 				String name=rs.getString(14);
@@ -366,9 +365,8 @@ public class BidDAO {
 				auction.setImPrice(imPrice);
 				auction.setsTime(sTime);
 				auction.seteTime(eTime);
-				boolean bSold=false;
-				if("1".equals(sold)) bSold=true;
-				auction.setSold(bSold);
+				
+				auction.setSold(sold);
 				auction.setCuPrice(cuPrice);				
 				
 				Bid bid=new Bid();
@@ -421,7 +419,7 @@ public class BidDAO {
 				String imPrice=rs.getString(8);
 				String sTime=rs.getString(9);
 				String eTime=rs.getString(10);
-				String sold=rs.getString(11);
+				int sold=rs.getInt(11);
 				String cuPrice=rs.getString(12);
 				String pw=rs.getString(13);
 				String name=rs.getString(14);
@@ -453,9 +451,8 @@ public class BidDAO {
 				auction.setImPrice(imPrice);
 				auction.setsTime(sTime);
 				auction.seteTime(eTime);
-				boolean bSold=false;
-				if("1".equals(sold)) bSold=true;
-				auction.setSold(bSold);
+
+				auction.setSold(sold);
 				auction.setCuPrice(cuPrice);				
 				
 				Bid bid=new Bid();
