@@ -70,12 +70,12 @@ public class AuctionService extends HttpServlet {
 		
 		Auction auction = new Auction();
 		auction.setaNum(aNum);	
-		auction.setsPrice(sPrice);
+		auction.setsPrice("10");
 		auction.setImPrice(imPrice);
 		auction.setsTime(sTime);
 		auction.seteTime(eTime);
 		auction.setSold(sold);
-		auction.setCuPrice(cuPrice);
+		auction.setCuPrice("10");
 		auction.setGood(good);
 		
 		AuctionDAO.insertAuction(auction);
