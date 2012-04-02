@@ -23,8 +23,7 @@ public class MemberService extends HttpServlet {
 	 * @param response
 	 */
 	public MemberService() {
-		super();
-		// TODO Auto-generated constructor stub
+		super();		
 	}
 
 	protected void doGet(HttpServletRequest request,
@@ -61,7 +60,7 @@ public class MemberService extends HttpServlet {
 			logout(request, response);
 		}
 	}// end method doPost
-//뭐여 뭐로 디버깅해야되는겨 서버좀 죽여봐 서버기다림죽던데 시벌 왜 호출이 안되 이거 프로젝트 이름이뭐임
+
 	
 	
 		
@@ -76,7 +75,7 @@ public class MemberService extends HttpServlet {
 		String name = request.getParameter("name");
 		String coin = request.getParameter("coin");
 		String emoney = request.getParameter("emoney");
-		// 2.Student객체 생성 1의 속성을 저장
+		// 2.Member 객체 생성 1의 속성을 저장
 		Member member = new Member();
 		member.setUserid(userid);
 		member.setPw(pw);
@@ -86,7 +85,7 @@ public class MemberService extends HttpServlet {
 		member.setEmoney(emoney);
 		// 3.DB에 저장
 		MemberDAO.insertMember(member);
-		// 4.전체 멤버리스트 이동 객체
+		// 4.전체 회원리스트 이동 객체
 		RequestDispatcher rd = request
 				.getRequestDispatcher("/MemberService?method=viewMemberList");
 		// 5.페이지 이동
@@ -101,11 +100,11 @@ public class MemberService extends HttpServlet {
 	private void addMemberForm(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		
-		//3.학생추가 페이지 이동 객체 생성
+		//1.회원추가 페이지 이동 객체 생성
 		RequestDispatcher rd=
 				request.getRequestDispatcher(
 						"/member/addMember.jsp");
-		//4.페이지 이동
+		//2.페이지 이동
 		rd.forward(request, response);
 
 	}
@@ -123,7 +122,7 @@ public class MemberService extends HttpServlet {
 				String name=request.getParameter("name");
 				String coin=request.getParameter("coin");
 				String emoney=request.getParameter("emoney");
-				//2.1의 정보를 이용해서 Member객체 생성
+				//2.1의 정보를 이용해서 Member 객체 생성
 				Member  member=new Member();
 				member.setUserid(userid);
 				member.setPw(pw);
@@ -133,9 +132,9 @@ public class MemberService extends HttpServlet {
 				member.setEmoney(emoney);
 				
 				
-				//3.학생정보를 수정하는 메서드 호출
+				//3.회원정보를 수정하는 메서드 호출
 				MemberDAO.updateMember(member);
-				//4.학생정보 조회화면으로 이동 객체 생성
+				//4.회원정보 조회화면으로 이동 객체 생성
 				RequestDispatcher rd=
 						request.getRequestDispatcher(
 								"/MemberService?method=viewMemberList" +
@@ -149,18 +148,18 @@ public class MemberService extends HttpServlet {
 	 */
 	private void editMemberForm(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		//1.수정할 학생의 학번 리턴
+		//1.수정할 회원의 학번 리턴
 				String userid=request.getParameter("userid");
-				//2.수정할 학생의 정보 조회
+				//2.수정할 회원의 정보 조회
 				Member member=MemberDAO.selectMember(userid);
-				//3.전체 학과 리스트 조회
+				//3.전체 회원 리스트 조회
 				ArrayList<Member> memberList=
 						MemberDAO.selectMemberList();
 				//4.request에 저장
 				request.setAttribute("Member", member);
 				request.setAttribute("MEMBER_LIST",
 						memberList);
-				//5./student/editStudent.jsp이동 객체 생성
+				//5./member/editMember.jsp이동 객체 생성
 				RequestDispatcher  rd=
 						request.getRequestDispatcher(	"/member/editMember.jsp");
 				rd.forward(request, response);
@@ -173,14 +172,14 @@ public class MemberService extends HttpServlet {
 	 */
 	private void viewMember(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		//1.userid파라메터 리턴받아서 변수에 저장
+		//1.userid 파라메터 리턴받아서 변수에 저장
 				String userid=request.getParameter("userid");
 				//2.DB에서 아이디가 일치하는 회원 조회
 				Member member=MemberDAO.selectMember(userid);
-				//3.request에 2에서 조회한 학생의 정보 저장
+				//3.request 에 2에서 조회한 회원의 정보 저장
 				//   이름-MEMBER
 				request.setAttribute("MEMBER",member);
-				//4./student/viewStudent.jsp로 이동 객체 생성
+				//4./member/viewMember.jsp로 이동 객체 생성
 				RequestDispatcher rd=
 						request.getRequestDispatcher("/member/viewMember.jsp");
 				//5.4의 JSP로 이동	
@@ -210,9 +209,9 @@ public class MemberService extends HttpServlet {
 	 */
 	private void login(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// 1.userid파라메터 리턴
+		// 1.userid 파라메터 리턴
 		String userid = request.getParameter("userid");
-		// 2.pw파라메터 리턴
+		// 2.pw 파라메터 리턴
 		String pw = request.getParameter("pw");
 		// 3.아이디가 일치하는 회원정보 조회
 		Member member = MemberDAO.selectMemberById(userid);
@@ -222,9 +221,9 @@ public class MemberService extends HttpServlet {
 		if (member == null) {
 			request.setAttribute("ERROR", "존재하지 않는 아이디");
 		} else {
-			// 5.3의 리턴값이 null이 아니면 3의 학생의 비번과
+			// 5.3의 리턴값이 null이 아니면 3의 회원의 비번과
 			// 2의 입력한 비번 비교 다르면
-			// request에 속성명:ERROR 값:비밀번호 오류 저장
+			// request 에 속성명:ERROR 값:비밀번호 오류 저장
 			if (!member.getPw().equals(pw)) {
 				request.setAttribute("ERROR", "비밀번호 오류");
 			} else {
