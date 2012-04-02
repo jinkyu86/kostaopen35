@@ -8,7 +8,7 @@
 					<td align="right" class="top_text" id="mypage"></td>
 				</tr>
 				<tr>
-					<td colspan="4" align="center" style="font-size:17pt;font-weight:bold;">Movie</td>
+					<td colspan="4" align="center" style="font-size:17pt;font-weight:bold;"><a href="/moviesystem/MovieService?method=Main">Movie</a></td>
 				</tr>
 			</table>
 		</td>
