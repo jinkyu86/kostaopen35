@@ -41,10 +41,32 @@ public class ChangeService extends HttpServlet {
 			acceptChangeList(request,response);
 		}else if("requestChangeList".equals(method)){
 			requestChangeList(request,response);
+		}else if("matchChange".equals(method)){
+			matchChange(request,response);
 		}
 	}
 	
 	
+
+	private void matchChange(HttpServletRequest request,
+			HttpServletResponse response) throws IOException,ServletException {
+		String agreeBoardNo=request.getParameter("agreeBoardNo");
+		String demandBoardNo=request.getParameter("demandBoardNo");
+		
+		Board agreeBoard=new Board();
+		agreeBoard.setBoardNo(Integer.parseInt(agreeBoardNo));
+		
+		Board demandBoard=new Board();
+		demandBoard.setBoardNo(Integer.parseInt(demandBoardNo));
+		
+		Change change=new Change();
+		change.setAgreeBoard(agreeBoard);
+		change.setDemandBoard(demandBoard);
+		
+		ChangeDAO.matchChange(change);
+		RequestDispatcher rd=request.getRequestDispatcher("/member/loginafter.jsp");
+		rd.forward(request, response);
+	}
 
 	private void requestChangeList(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException,IOException{
@@ -96,7 +118,7 @@ public class ChangeService extends HttpServlet {
 
 	private void addChange(HttpServletRequest request,
 			HttpServletResponse response) throws IOException,ServletException {
-		String agreeBoardNo=request.getParameter("boardNo");
+		String agreeBoardNo=request.getParameter("agreeBoardNo");
 		String demandBoardNo=request.getParameter("demandBoardNo");
 		
 		Board agreeBoard=new Board();
