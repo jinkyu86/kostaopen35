@@ -15,33 +15,30 @@
 	</tr>
 	<tr>
 		<td align="center">
-		<a href="/bookchange/ChangeService?method=viewChange">교환내역보기</a>
-		</td>
-	</tr>
-	<tr>
-		<td align="center">
 		<a href="/bookchange/MemberService?method=editMemberForm">회원정보수정</a>
 		</td>
 	</tr>
 	<tr>
 		<td align="center">
 			<a href="/bookchange/MemberService?method=removeMember&email=${sessionScope.LOGIN_EMAIL.email}">회원탈퇴</a>
-			
 		</td>
 	</tr>
 	<tr>
 		<td align="center">
 			<a href="/bookchange/MemberService?method=logout">로그아웃</a>
 		</td>
-		
 	</tr>
-	
-		<tr>
+	<tr>
 		<td align="center">
 			<a href="/bookchange/MemberService?method=viewMember&email=${sessionScope.LOGIN_EMAIL.email}">회원정보보기</a>
 		</td>
-		
 	</tr>
 	</table>
+	<p align="center">
+	<a href="/bookchange/ChangeService?method=acceptChangeList">나와 교환을 원하는 책 보기</a>
+	</p>
+	<p align="center">
+		<a href="/bookchange/ChangeService?method=requestChangeList">내가 교환을 원하는 책 보기</a>
+	</p>
 </body>
 </html>
