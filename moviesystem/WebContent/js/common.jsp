@@ -46,10 +46,10 @@ $(document).ready(function(){
 	if(loginsession==null || loginsession==''){
 		$('#login').append('<a href="/moviesystem/MemberService?method=loginForm">login</a>');
 		$('#join').append('<a href="/moviesystem/MemberService?method=addMemberForm">join</a>');
-		$('#mypage').append('<a href="#">mypage</a>');
+		$('#mypage').append('<a href="/moviesystem/MemberService?method=mypage">mypage</a>');
 	}else{
 		$('#login').append('<a href="/moviesystem/MemberService?method=logoutMember">logout</a>');
 		$('#join').append('<a href="/moviesystem/MemberService?method=editMemberForm">editMember</a>');
-		$('#mypage').append('<a href="/moviesystem/MemberService?method=editMemberForm">mypage</a>');
+		$('#mypage').append('<a href="/moviesystem/MemberService?method=mypage">mypage</a>');
 	}
 });
