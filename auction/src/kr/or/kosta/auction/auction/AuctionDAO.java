@@ -66,7 +66,7 @@ public class AuctionDAO {
 			psmt.setString(1, auction.getGood().getgNum());
 			psmt.setString(2, auction.getsPrice());
 			psmt.setString(3, auction.getImPrice());
-			psmt.setBoolean(4, auction.isSold());
+			psmt.setInt(4, auction.getSold());
 			psmt.setString(5, auction.getCuPrice());
 			psmt.setString(6, auction.getsTime());
 			psmt.setString(7, auction.geteTime());
@@ -118,15 +118,11 @@ public class AuctionDAO {
 				String imPrice = rs.getString(3);
 				String sTime = rs.getString(4);
 				String eTime = rs.getString(5);
-				String sold = rs.getString(6);
+				int sold = rs.getInt(6);
 				String cuPrice = rs.getString(7);
 				String gName = rs.getString(8);
 				String detail = rs.getString(9);
 				String img = rs.getString(10);
-
-				boolean bSold = false;
-				if ("1".equals(sold))
-					bSold = true;
 
 				Good good = new Good();
 
@@ -137,7 +133,7 @@ public class AuctionDAO {
 				auction = new Auction();
 				
 				auction.setaNum(aNum);
-				auction.setSold(bSold);
+				auction.setSold(sold);
 				auction.seteTime(eTime);
 				auction.setsTime(sTime);
 				auction.setCuPrice(cuPrice);
@@ -175,7 +171,7 @@ public class AuctionDAO {
 				String imPrice = rs.getString(3);
 				String sTime = rs.getString(4);
 				String eTime = rs.getString(5);
-				String sold = rs.getString(6);
+				int sold=rs.getInt(6);
 				String cuPrice = rs.getString(7);
 				String gNum = rs.getString(8);
 				String gname = rs.getString(9);
@@ -191,13 +187,10 @@ public class AuctionDAO {
 
 				Auction auction = new Auction();
 
-				boolean bsold = false;
-				if ("1".equals(sold))
-					bsold = true;
-				
+			
 				auction.setaNum(aNum);
 				auction.setCuPrice(cuPrice);
-				auction.setSold(bsold);
+				auction.setSold(sold);
 				auction.seteTime(eTime);
 				auction.setsTime(sTime);
 				auction.setImPrice(imPrice);
@@ -236,7 +229,7 @@ public class AuctionDAO {
 				String imPrice = rs.getString(3);
 				String sTime = rs.getString(4);
 				String eTime = rs.getString(5);
-				String sold = rs.getString(6);
+				int sold=rs.getInt(6);
 				String cuPrice = rs.getString(7);
 				String gNum = rs.getString(8);
 				String gname = rs.getString(9);
@@ -251,14 +244,10 @@ public class AuctionDAO {
 				good.setImg(img);
 
 				Auction auction = new Auction();
-
-				boolean bsold = false;
-				if ("1".equals(sold))
-					bsold = true;
 				
 				auction.setaNum(aNum);
 				auction.setCuPrice(cuPrice);
-				auction.setSold(bsold);
+				auction.setSold(sold);
 				auction.seteTime(eTime);
 				auction.setsTime(sTime);
 				auction.setImPrice(imPrice);
@@ -306,7 +295,7 @@ public class AuctionDAO {
 				String imPrice = rs.getString(3);
 				String sTime = rs.getString(4);
 				String eTime = rs.getString(5);
-				String sold = rs.getString(6);
+				int sold=rs.getInt(6);
 				String cuPrice = rs.getString(7);
 				String gNum = rs.getString(8);
 				String gname = rs.getString(9);
@@ -321,14 +310,10 @@ public class AuctionDAO {
 				good.setImg(img);
 
 				Auction auction = new Auction();
-
-				boolean bsold = false;
-				if ("1".equals(sold))
-					bsold = true;
 				
 				auction.setaNum(aNum);
 				auction.setCuPrice(cuPrice);
-				auction.setSold(bsold);
+				auction.setSold(sold);
 				auction.seteTime(eTime);
 				auction.setsTime(sTime);
 				auction.setImPrice(imPrice);
@@ -377,7 +362,7 @@ public class AuctionDAO {
 				String imPrice = rs.getString(3);
 				String sTime = rs.getString(4);
 				String eTime = rs.getString(5);
-				String sold = rs.getString(6);
+				int sold=rs.getInt(6);
 				String cuPrice = rs.getString(7);
 				String gNum = rs.getString(8);
 				String gname = rs.getString(9);
@@ -392,14 +377,10 @@ public class AuctionDAO {
 				good.setImg(img);
 
 				Auction auction = new Auction();
-
-				boolean bsold = false;
-				if ("1".equals(sold))
-					bsold = true;
 				
 				auction.setaNum(aNum);
 				auction.setCuPrice(cuPrice);
-				auction.setSold(bsold);
+				auction.setSold(sold);
 				auction.seteTime(eTime);
 				auction.setsTime(sTime);
 				auction.setImPrice(imPrice);

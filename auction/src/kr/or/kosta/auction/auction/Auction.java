@@ -39,7 +39,7 @@ public class Auction {
 	/**
 	 * °æ¸ÅÇ°ÀÇ ³«Âû¿©ºÎ
 	 */
-	private boolean sold;
+	private int sold;
 
 	/**
 	 * ÇöÀç ÀÔÂû°¡
@@ -77,11 +77,13 @@ public class Auction {
 	public void setImPrice(String imPrice) {
 		this.imPrice = imPrice;
 	}
-	public boolean isSold() {
+	
+
+	public int getSold() {
 		return sold;
 	}
 
-	public void setSold(boolean sold) {
+	public void setSold(int sold) {
 		this.sold = sold;
 	}
 
@@ -116,7 +118,4 @@ public class Auction {
 				+ ", eTime=" + eTime + ", sold=" + sold + ", cuPrice="
 				+ cuPrice + "]";
 	}
-
-
-
 }

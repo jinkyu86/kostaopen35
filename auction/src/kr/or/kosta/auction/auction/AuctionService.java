@@ -62,7 +62,7 @@ public class AuctionService extends HttpServlet {
 		String imPrice = request.getParameter("imPrice");
 		String sTime = request.getParameter("sTime");
 		String eTime = request.getParameter("eTime");
-		boolean sold = Boolean.parseBoolean(request.getParameter("sold"));
+		String sold=request.getParameter("sold");
 		String cuPrice = request.getParameter("cuPrice");
 	
 		Good good = new Good();
@@ -74,7 +74,7 @@ public class AuctionService extends HttpServlet {
 		auction.setImPrice(imPrice);
 		auction.setsTime(sTime);
 		auction.seteTime(eTime);
-		auction.setSold(sold);
+		auction.setSold(Integer.parseInt(sold));
 		auction.setCuPrice("10");
 		auction.setGood(good);
 		
@@ -115,7 +115,7 @@ public class AuctionService extends HttpServlet {
 		String imPrice = request.getParameter("imPrice");
 		String sTime = request.getParameter("sTime");
 		String eTime = request.getParameter("eTime");
-		boolean sold = Boolean.parseBoolean(request.getParameter("sold"));
+		String sold=request.getParameter("sold");
 		String cuPrice = request.getParameter("cuPrice");
 		
 		//2.1의 정보를 이용해서 Auction객체 생성
@@ -129,7 +129,7 @@ public class AuctionService extends HttpServlet {
 		auction.setImPrice(imPrice);
 		auction.setsTime(sTime);
 		auction.seteTime(eTime);
-		auction.setSold(sold);
+		auction.setSold(Integer.parseInt(sold));
 		auction.setCuPrice(cuPrice);
 		auction.setGood(good);
 		
