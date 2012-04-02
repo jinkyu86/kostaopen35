@@ -11,10 +11,11 @@
 	<tr>
 		<th>신청일자</th>
 		<th>교환상태</th>
-		<th>교환원하는책</th>
-		<th>교환할책</th>
+		<th>My Book</th>
+		<th>You Book</th>
+		<th>EMAIL</th>
 	</tr>
-	<c:forEach  var="change"  items="${MY_CHANGE_LIST }">	
+	<c:forEach  var="change"  items="${DEMAND_CHANGE_LIST }">	
 	<tr>
 		<td>${change.changeDate}</td>
 		<td>${change.condition.conditionIng}</td>
@@ -24,12 +25,11 @@
 		<td>
 		<a href="/bookchange/BoardService?method=viewBoard&boardNo=${change.demandBoard.boardNo}">
 		${change.demandBoard.boardTitle}</a></td>
+		<td>${change.agreeBoard.member.email}</td>
 	</tr>
 	</c:forEach>
 </table>
 <p align="center">
 	${PAGE_LINK_TAG}
-</p>
-
 </body>
 </html>
