@@ -69,7 +69,9 @@ public class MemberService extends HttpServlet {
 			   findPw(request,response);
 		   }else if("logoutMember".equals(method)){
 			   logoutMember(request,response);
-		   }
+		   }else if("mypage".equals(method)){
+			      mypage(request, response);
+		     }
 	   }
 			
 	   private void findPw(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -382,6 +384,31 @@ public class MemberService extends HttpServlet {
 		rd.forward(request, response);
 		
 	}
+	
+	private void mypage(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
+		  // session 객체 받기
+		  HttpSession session=request.getSession();
+		  // 로그인 세션 정보 받을 객체 생성 
+		  Member member = (Member)session.getAttribute("LOGIN_MEMBER");
+		  // 주소 저장할 객체 생성
+		  String url = null;
+		  
+		  // 생성된 로그인 세션 정보의 값 확인
+		  if(member==null){
+		   // 로그인 세션의 정보가 null일 경우 에러 메시지 request로 넘긴 후
+		   // login 페이지로 이동하도록 url선언
+		   request.setAttribute("ERROR","로그인 후 사용가능한 서비스입니다.");
+		   url = "/member/login.jsp";
+		   
+		  }else{
+		   // 로그인 세션 정보가 null이 아닐 경우
+		   // mypage.jsp로 이동 하도록 url선언
+		   url = "/member/mypage.jsp";
+		  }
+		  // RequestDispatcher 객체 선언하여 페이지 이동
+		  RequestDispatcher rd =request.getRequestDispatcher(url);
+		  rd.forward(request, response);
+		 }
 
 //	/**
 //	 * 검색한 회원리스트
