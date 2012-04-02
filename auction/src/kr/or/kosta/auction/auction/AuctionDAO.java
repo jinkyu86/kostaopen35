@@ -30,14 +30,13 @@ public class AuctionDAO {
 							"e_time," +
 							"sold," +
 							"cu_price) "
-							+ "VALUES(?,?,?,auc_seq.nextval,?,?,?,?)");
+							+ "VALUES(?,?,?,auc_seq.nextval,?,?,'0',?)");
 			psmt.setString(1, auction.getGood().getgNum());
 			psmt.setString(2, auction.getsPrice());
 			psmt.setString(3, auction.getImPrice());
 			psmt.setString(4, auction.getsTime());
 			psmt.setString(5, auction.geteTime());
-			psmt.setBoolean(6, auction.isSold());
-			psmt.setString(7, auction.getCuPrice());
+			psmt.setString(6, auction.getCuPrice());
 					
 			psmt.executeUpdate();
 		} catch (Exception e) {
@@ -61,13 +60,15 @@ public class AuctionDAO {
 					+ "sold=?, "
 					+ "cu_price=?," 
 					+ "s_time=to_date(?,'yyyy-mm-dd hh24:mi:ss')," 
-					+ "e_time=to_date(?,'yyyy-mm-dd hh24:mi:ss') " 
+					+ "e_time=? " 
 					+ "WHERE a_num=?");
 
 			psmt.setString(1, auction.getGood().getgNum());
 			psmt.setString(2, auction.getsPrice());
 			psmt.setString(3, auction.getImPrice());
-			psmt.setBoolean(4, auction.isSold());
+			String sold="0";
+			if(auction.isSold()) sold="1";
+			psmt.setString(4, sold);
 			psmt.setString(5, auction.getCuPrice());
 			psmt.setString(6, auction.getsTime());
 			psmt.setString(7, auction.geteTime());
@@ -164,8 +165,9 @@ public class AuctionDAO {
 			sql = "SELECT a.a_num,a.s_price,a.im_price,a.s_time,a.e_time,a.sold,a.cu_price,"
 					+ "g.g_num,g.gname,g.detail,g.img"
 					+ " FROM auction a,good g "
-					+ " WHERE a.g_num = g.g_num AND sold = '0' " +
-					"order by a.e_time , a.a_num";
+					+ " WHERE a.g_num = g.g_num " +
+					" AND a.e_time>=sysdate AND a.sold='0'" +
+					" ORDER BY a.e_time , a.a_num";
 			psmt = con.prepareStatement(sql);
 
 			rs = psmt.executeQuery();
@@ -224,8 +226,9 @@ public class AuctionDAO {
 			sql = "SELECT a.a_num,a.s_price,a.im_price,a.s_time,a.e_time,a.sold,a.cu_price,"
 					+ "g.g_num,g.gname,g.detail,g.img"
 					+ " FROM auction a,good g "
-					+ " WHERE a.g_num = g.g_num AND sold = '1' " +
-					"order by a.e_time desc, a.a_num";
+					+ " WHERE a.g_num = g.g_num" +
+					" AND a.sold='1'" +
+					" ORDER BY a.e_time desc, a.a_num";
 			psmt = con.prepareStatement(sql);
 
 			rs = psmt.executeQuery();
@@ -288,8 +291,9 @@ public class AuctionDAO {
 			sql = "SELECT a.a_num,a.s_price,a.im_price,a.s_time,a.e_time,a.sold,a.cu_price,"
 					+ "g.g_num,g.gname,g.detail,g.img"
 					+ " FROM auction a,good g "
-					+ " WHERE a.g_num = g.g_num AND sold = '0' " +
-					"order by a.e_time , a.a_num";
+					+ " WHERE a.g_num = g.g_num " +
+					" AND a.e_time>=sysdate AND a.sold='0'" +
+					" ORDER BY a.e_time , a.a_num";
 			psmt = con.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE,
 					ResultSet.CONCUR_READ_ONLY);
 			rs = psmt.executeQuery();
