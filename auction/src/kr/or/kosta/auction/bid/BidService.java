@@ -49,17 +49,23 @@ public class BidService extends HttpServlet {
 			//메서드 종료
 			return;
 		}
-		String aNum=(String)session.getAttribute("aNum");
+		String aNum=(String)request.getParameter("aNum");
 		
 		Auction auction=AuctionDAO.selectAuction(aNum);
 		
 		Bid bid=new Bid();
 		bid.setAuction(auction);
 		bid.setMember(member);
-		bid.setBidPrice(auction.getCuPrice());	
+		String upPrice=auction.getCuPrice();
+		int intBidPrice=Integer.parseInt(upPrice)+10;
+		upPrice=Integer.toString(intBidPrice);
+		bid.setBidPrice(upPrice);	
 		
 		BidDAO.insertBid(bid);
-		RequestDispatcher rd=request.getRequestDispatcher("/BidService?method=viewAuction&a_num="+aNum);
+		
+		auction.setCuPrice(upPrice);
+		AuctionDAO.updateAuction(auction);
+		RequestDispatcher rd=request.getRequestDispatcher("/AuctionService?method=viewAuction&a_num="+aNum);
 		rd.forward(request, response);
 	}
 	

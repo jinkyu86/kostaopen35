@@ -18,14 +18,13 @@ public class BidDAO {
 		con=ConnectionUtil.getConnection();
 		String sql="INSERT INTO BID " +
 				"(bidnum,a_num,userid,bid_time,bid_price) "+
-				"VALUES (BID_SEQ.NEXTVAL,?,?,?,?)";
+				"VALUES (BID_SEQ.NEXTVAL,?,?,sysdate,?)";
 		
 		try {
 			psmt=con.prepareStatement(sql);
 			psmt.setString(1,bid.getAuction().getaNum());
 			psmt.setString(2,bid.getMember().getUserid());
 			psmt.setString(3,bid.getBidPrice());
-			psmt.setString(4,bid.getBidTime());
 			psmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();

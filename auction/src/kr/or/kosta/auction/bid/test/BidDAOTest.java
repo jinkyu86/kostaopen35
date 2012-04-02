@@ -13,7 +13,9 @@ public class BidDAOTest {
 
 	@Test
 	public void testInsertBid() {
+		System.out.println(BidDAO.selectBid("1"));
 		BidDAO.insertBid(BidDAO.selectBid("1"));
+		System.out.println(BidDAO.selectBid("1"));
 	}
 
 	@Test
@@ -26,7 +28,7 @@ public class BidDAOTest {
 
 	@Test
 	public void testDeleteBid() {
-		BidDAO.deleteBid("6");
+		BidDAO.deleteBidById("jung");
 	}
 
 	@Test
