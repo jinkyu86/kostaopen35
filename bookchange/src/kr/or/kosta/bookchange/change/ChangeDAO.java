@@ -211,6 +211,33 @@ public class ChangeDAO {
 		}
 	}
 	
+	/**교환 취소(교환취소 클릭시) 
+	 * TB_BOARD의 condition_result값을 0(교환가능)으로 변경, TB_CHANGE 에서 삭제
+	 * condition_result의 값이 1(교환요청)일때만 실행
+	 * 상대방이 교환요청 수락하였을 경우 취소 불가.... **/
+	public static void cancelChange(int agreeBoardNo, int demandBoardNo) {
+		Connection con=null;
+		PreparedStatement ps1=null;
+		PreparedStatement ps2=null;
+		
+		try{
+			con=ConnectionUtil.getConnection();
+			ps1=con.prepareStatement("Delete from tb_change where agree_board_no=? and demand_board_no=?");
+			ps2=con.prepareStatement("Update tb_board set condition_result=0 where board_no=?");
+
+			ps1.setInt(1, agreeBoardNo);
+			ps1.setInt(2, demandBoardNo);
+			
+			ps2.setInt(1, demandBoardNo);
+			
+			ps1.executeUpdate();
+			ps2.executeUpdate();
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+	
 	/**내 게시물번호로 교환리스트 검색(나에게 교환을 요청한 사람들 검색)**/
 	public static ArrayList<Change> selectChangeMyboardList(int length, int page, String email) {
 		Connection con=null;
