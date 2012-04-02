@@ -393,8 +393,8 @@ public class BoardService extends HttpServlet {
 	/**
 	 * 게시물 보기 취소할때	 */
 	public void viewBoardWhenCancel(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
-		String boardNo=request.getParameter("boardNo");
-		String agreeBoardNo=request.getParameter("agreeBoardNo");
+		String boardNo=request.getParameter("boardNo");//상대방 번호
+		String agreeBoardNo=request.getParameter("agreeBoardNo");//내 번호
 		
 		Board board=BoardDAO.selectBoard(boardNo);
 		
