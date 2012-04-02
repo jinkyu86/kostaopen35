@@ -36,7 +36,7 @@
 	<input type="hidden" name="aNum" value="${AUCTION.aNum }"/>
 		<tr>
 		<td>물품사진</td><td>물품명</td><td>즉시구매가격</td><td>입찰가격</td><td>경매시작시간</td>
-		<td>경매마감시간</td><td>입찰하기</td>
+		<td>경매마감시간</td><c:if test=${AUCTION.sold }==0><td>입찰하기</td></c:if>
 		</tr>
 		<tr>
 			<td align="center"><img src="/auction/gphoto/${AUCTION.good.img}" width="130" height="130"></td>
@@ -45,14 +45,18 @@
 			<td align="center">${AUCTION.cuPrice }</td>
 			<td align="center">${AUCTION.sTime}</td>
 			<td align="center">${AUCTION.eTime }</td>
-			<td align="center"><input type="submit" value="입찰하기"></td>
+			<c:if test=${AUCTION.sold }==0>
+				<td align="center"><input type="submit" value="입찰하기"></td>
+			</c:if>
 		</tr>
 	</form>
 	</table>
+	<c:if test=${AUCTION.sold }==0>
 	<p align="center">
 		 <p align="center">
 		 <a href="/auction/BidService?method=buy&aNum=${AUCTION.aNum }">즉시구매하기</a>
 	</p>
+	</c:if>
 	 <p align="center">
 		 <p align="center">
 		 <a href="/auction/AuctionService?method=viewAuctionList">경매목록 보기</a>
