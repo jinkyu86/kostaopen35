@@ -50,7 +50,7 @@
 	  <input type="hidden" name="method" value="matchChange">
 	   <input type="hidden" name="demandBoardNo" value="${BOARD.boardNo}">
 	   <input type="hidden" name="agreeBoardNo" value="${AGREE_BOARD_NO}">
-	  <input type="submit" value="교환신청수락">
+	  <input type="submit" value="교환신청취소">
 	  </form>
 	</c:otherwise>	
 	</c:choose>	 	
