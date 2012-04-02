@@ -48,6 +48,7 @@
 		 <p align="center">
 		 <a href="/auction/AuctionService?method=viewAuctionList">경매목록 보기</a>
 	</p>
+<c:if test="${sessionScope.LOGIN_MEMBER.userid=='admin'}">
 	 <p align="center">
 		 <p align="center">
 		 <a href="/auction/AuctionService?method=editAuctionForm&aNum=${AUCTION.aNum}">경매정보 수정</a>
@@ -55,5 +56,6 @@
 	<p align="center">
 		 <a href="/auction/AuctionService?method=removeAuction&aNum=${AUCTION.aNum}">경매 삭제</a>
 	 </p>
+</c:if>
 </body>
 </html>
