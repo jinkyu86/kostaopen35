@@ -52,7 +52,12 @@ public class ChangeService extends HttpServlet {
 
 	private void cancelChange(HttpServletResponse response,
 			HttpServletRequest request) throws ServletException,IOException{
+		String agreeBoardNo=request.getParameter("agreeBoardNo");
+		String demandBoardNo=request.getParameter("demandBoardNo");
 		
+		ChangeDAO.cancelChange(Integer.parseInt(agreeBoardNo),Integer.parseInt(demandBoardNo));
+		RequestDispatcher rd=request.getRequestDispatcher("/member/loginafter.jsp");
+		rd.forward(request, response);
 	}
 
 	private void matchChange(HttpServletRequest request,
