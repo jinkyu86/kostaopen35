@@ -31,12 +31,12 @@
 	  </table>
 	  <p align="center">
 	    <a href="/auction/MemberService?method=editMemberForm&userid=${MEMBER.userid}">
-	    멤버수정
+	    회원수정
 	    </a>
 	  </p>
 	  <p align="center">
 	    <a href="/auction/MemberService?method=remove&userid=${MEMBER.userid}">
-	    멤버삭제
+	   회원삭제
 	    </a>
 	  </p>
 </body>
