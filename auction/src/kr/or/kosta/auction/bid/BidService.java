@@ -45,7 +45,7 @@ public class BidService extends HttpServlet {
 
 	private void buy(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session=request.getSession();
-		Member member=(Member)session.getAttribute("LOGIN_MEMBER");
+		Member member=(Member)session.getAttribute("MEMBER");
 		if(member==null){
 			RequestDispatcher rd=request.getRequestDispatcher("/MemberService?method=loginForm");
 			//addBuy 메서드가 끝나고 나서 이동
@@ -107,7 +107,7 @@ public class BidService extends HttpServlet {
 
 	private void addBid(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session=request.getSession();
-		Member member=(Member)session.getAttribute("LOGIN_MEMBER");
+		Member member=(Member)session.getAttribute("MEMBER");
 		if(member==null){
 			RequestDispatcher rd=request.getRequestDispatcher("/MemberService?method=loginForm");
 			//addBuy 메서드가 끝나고 나서 이동
@@ -159,7 +159,7 @@ public class BidService extends HttpServlet {
 	private void removeBidById(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session=request.getSession();
-		Member member=(Member)session.getAttribute("LOGIN_MEMBER");
+		Member member=(Member)session.getAttribute("MEMBER");
 		
 		String userid=member.getUserid();
 		BidDAO.deleteBidById(userid);
