@@ -236,7 +236,7 @@ public class MemberService extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException{
 		String userid=request.getParameter("userid");
 		Member member=MemberDAO.selectMemberById(userid);
-		request.setAttribute("MEMBER",member);
+		request.setAttribute("LOGIN_MEMBER",member);
 		
 		RequestDispatcher rd=request.getRequestDispatcher("member/editMember.jsp");
 		rd.forward(request, response);
@@ -270,8 +270,11 @@ public class MemberService extends HttpServlet {
 		member.setAddr(addr);
 		
 		MemberDAO.editMember(member);
-		RequestDispatcher rd=request.getRequestDispatcher("/MemberService?method=viewMember" +
-				"&userid="+userid);
+		Member member1=MemberDAO.selectMemberById(member.getUserid());
+		request.setAttribute("ERROR","개인정보가 수정되었습니다");
+		request.setAttribute("LOGIN_MEMBER", member1);
+		
+		RequestDispatcher rd=request.getRequestDispatcher("/member/editMember.jsp");
 		rd.forward(request, response);
 	}
 
