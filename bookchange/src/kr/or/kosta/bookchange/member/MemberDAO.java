@@ -9,6 +9,7 @@ import kr.or.kosta.util.ConnectionUtil;
 
 public class MemberDAO {
 
+
 	/**
 	 * (관리자 전용)회원명단 조회
 	 * 
@@ -96,11 +97,14 @@ public class MemberDAO {
 			ps=con.prepareStatement(sql);
 			ps.setString(1, email);
 			rs=ps.executeQuery();
+			
 			if (rs.next()) {
+				 
 				 email=rs.getString(1);
 				 String tel=rs.getString(2);
 				 String address=rs.getString(3);
 				 String pw=rs.getString(4);
+				 
 				 member=new Member();
 				 member.setEmail(email);
 				 member.setTel(tel);
