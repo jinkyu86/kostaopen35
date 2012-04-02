@@ -34,6 +34,7 @@ public class MemberService extends HttpServlet {
 	   protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		   request.setCharacterEncoding("utf-8");
 		   String  method=request.getParameter("method");
+		   System.out.println(method);
 		   if(method==null){
 			   method="viewMemberList";
 		   }if("viewMemberList".equals(method)){
@@ -311,7 +312,7 @@ public class MemberService extends HttpServlet {
 				session.setAttribute("LOGIN_MEMBER", member);
 			}//end else
 		}//end if
-		RequestDispatcher rd=request.getRequestDispatcher("main.jsp");
+		RequestDispatcher rd=request.getRequestDispatcher("/MovieService?method=Main");
 		rd.forward(request, response);
 	}
 
@@ -326,10 +327,11 @@ public class MemberService extends HttpServlet {
 	public void logoutMember(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session=request.getSession();
+		
 		session.invalidate();
 		RequestDispatcher rd=
 				request.getRequestDispatcher(
-						"/main.jsp");
+						"/MovieService?method=Main");
 		rd.forward(request, response);
 		
 	}
