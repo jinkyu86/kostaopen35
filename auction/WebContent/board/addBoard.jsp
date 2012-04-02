@@ -8,10 +8,10 @@
 </head>
 <body>
 <hr noshade>
-<form name="login_form"
-  action="/auction/BoardService"
-   method="post">
+<form name="login_form" action="/auction/BoardService" method="post">
 작성자 ID: 
+<c:if test="${sessionScope.LOGIN_MEMBER.userid=='admin'}">
+</c:if>
 <input type="text" size=10 name="userid">
 <br>
 제목:<input type="text" size=20 name="title">
