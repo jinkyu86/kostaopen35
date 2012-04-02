@@ -42,5 +42,9 @@
 <p align="center">
 	<a href="/auction/BoardService?method=addBoardForm">게시물 작성</a>
 </p>
+<p align="center">
+		 <p align="center">
+		 <a href="/auction/AuctionService?method=viewAuctionList">경매목록 보기</a>
+</p>
 </body>
 </html>

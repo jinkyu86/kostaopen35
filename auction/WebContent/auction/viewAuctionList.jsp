@@ -87,7 +87,7 @@
 </c:if>
 	<br/>
 	<p align="center">
-		<a href="/auction/Boardervice?method=viewBoardList">게시판보기</a>
+		<a href="/auction/BoardService?method=viewBoardList">게시판보기</a>
 	</p>
 		
 </body>
