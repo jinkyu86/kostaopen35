@@ -10,7 +10,7 @@
 <title>회원가입</title>
 <link rel="stylesheet" href="/moviesystem/css/Layout.css">
 <script src="http://code.jquery.com/jquery-1.7.1.js"></script>
-<script src="/moviesystem/js/common.js"></script>
+<script src="/moviesystem/js/common.jsp"></script>
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.js">	
 </script>
 	<script type="text/javascript">
