@@ -74,17 +74,20 @@
 		<td align="center">${sold.good.gName}</td>
 		<td align="center">${sold.cuPrice }</td>
 		<td align="center">${sold.eTime }</td>
-		<td align="center"><input type="submit" value="참여하기"></td>
+		<td align="center"><input type="submit" value="상세보기"></td>
 	</tr>
 	</form>
 	</c:forEach>
 	</table>
 <c:if test="${sessionScope.LOGIN_MEMBER.userid=='admin'}">
-		<p align="center">
+	<p align="center">
 		<a href="/auction/AuctionService?method=addAuctionForm">경매추가</a>
 		<a href="/auction/AuctionService?method=editAuctionForm">경매수정</a>	
-		</p>
+	</p>
 </c:if>
+	<p align="center">
+		<a href="/auction/Boardervice?method=viewBoardList">게시판보기</a>
+	</p>
 		
 </body>
 </html>
