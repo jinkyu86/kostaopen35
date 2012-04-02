@@ -46,6 +46,10 @@
 	</table>
 	 <p align="center">
 		 <p align="center">
+		 <a href="/auction/AuctionService?method=viewAuctionList">경매목록 보기</a>
+	</p>
+	 <p align="center">
+		 <p align="center">
 		 <a href="/auction/AuctionService?method=editAuctionForm&aNum=${AUCTION.aNum}">경매정보 수정</a>
 	</p>
 	<p align="center">
