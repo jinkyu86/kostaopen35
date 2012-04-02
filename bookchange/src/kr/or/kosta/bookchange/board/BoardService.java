@@ -336,8 +336,8 @@ public class BoardService extends HttpServlet {
 		ArrayList<Board> boardList=null;
 		int boardCount=0;
 		
-		boardList=BoardDAO.selectBoardListbyEmail(length, page, request.getParameter("keyword"));
-		boardCount=BoardDAO.selectBoardEmailCount(request.getParameter("keyword"));
+		boardList=BoardDAO.selectBoardListbyEmailWhenAdd(length, page, request.getParameter("keyword"));
+		boardCount=BoardDAO.selectBoardEmailWhenAddCount(request.getParameter("keyword"));
 				
 		request.setCharacterEncoding("utf-8");
 		request.setAttribute("BOARD_LIST", boardList);

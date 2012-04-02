@@ -36,6 +36,8 @@ public class QaService extends HttpServlet {
 			removeQa(request,response);
 		}else if("searchQaListbyBoardNo".equals(method)){
 			searcheQaListbyBoardNo(request,response);
+		}else if("editQaForm".equals(method)){
+			editQaForm(request,response);
 		}
 	}
 	
@@ -106,6 +108,32 @@ public class QaService extends HttpServlet {
 		
 		RequestDispatcher rd=request.getRequestDispatcher("/BoardService?method=viewBoard&boardNo="+boardNo);
 		rd.forward(request, response);
+	}
+
+	/**	 * 상품문의 수정 창  */
+	public void editQaForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+				String qaNo=request.getParameter("qaNo");//수정불가
+				String qaContent=request.getParameter("qaContent");
+				String email=request.getParameter("email");//수정불가
+				String boardNo=request.getParameter("boardNo");//수정불가
+				
+				Qa qa=new Qa();
+				qa.setQaNo(Integer.parseInt(qaNo));
+				qa.setQaContent(qaContent);
+				
+				Member member=new Member();
+				member.setEmail(email);	
+				qa.setMember(member);
+				
+				Board board=new Board();
+				board.setBoardNo(Integer.parseInt(boardNo));
+				qa.setBoard(board);
+				
+				request.setCharacterEncoding("utf-8");
+				request.setAttribute("EDITQA",qa);	
+				
+				RequestDispatcher rd=request.getRequestDispatcher("/board/editQaForm.jsp");
+				rd.forward(request, response);
 	}
 
 	/**	 * 상품문의 보기	 */

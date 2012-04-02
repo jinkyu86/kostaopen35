@@ -747,4 +747,99 @@ public class BoardDAO {
 		}		
 		return boardCount;
 	}
+
+	/**	 * 자기가 올린 게시물 조회 */
+	public static ArrayList<Board> selectBoardListbyEmailWhenAdd(int length, int page, String email) {
+		Connection con=null;
+		PreparedStatement ps=null;
+		String sql=null;
+		ResultSet rs=null;
+		ArrayList<Board> boardList=new ArrayList<Board>();
+		
+		try {
+			con=ConnectionUtil.getConnection();
+			sql=("select board_no, board_title, board_photo, m.email, b.category_no, b.condition_result, c.category_name, c2.condition_ing " +
+				 "from tb_board b, tb_member m, tb_category c, tb_condition c2 " +
+				 "where m.email=b.email " +
+				 "and b.category_no=c.category_no " +
+				 "and b.condition_result=c2.condition_result " +
+				 "and b.condition_result=0 " +
+				 "and b.email like ? " +
+				 "order by board_no desc");
+			
+			ps=con.prepareStatement(sql,ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
+			ps.setString(1,"%"+email+"%");
+			rs=ps.executeQuery();
+			
+			if(page>1){rs.absolute((page-1)*length);}
+			int getRecordCount=0;
+			while(rs.next()&&getRecordCount<length){
+				getRecordCount++;
+				String boardNo=rs.getString(1);
+				String boardTitle=rs.getString(2);
+				String boardPhoto=rs.getString(3);
+				String realEmail=rs.getString(4);
+				String categoryNo=rs.getString(5);
+				String conditionResult=rs.getString(6);
+				String categoryName=rs.getString(7);
+				String conditionIng=rs.getString(8);
+				
+				Board board=new Board();
+				board.setBoardNo(Integer.parseInt(boardNo));
+				board.setBoardTitle(boardTitle);
+				board.setBoardPhoto(boardPhoto);
+				
+				Member member=new Member();
+				member.setEmail(realEmail);
+				board.setMember(member);
+				
+				Category category=new Category();
+				category.setCategoryNo(Integer.parseInt(categoryNo));
+				category.setCategoryName(categoryName);
+				board.setCategory(category);
+				
+				Condition condition=new Condition();
+				condition.setConditionResult(Integer.parseInt(conditionResult));
+				condition.setConditionIng(conditionIng);
+				board.setCondition(condition);
+				
+				boardList.add(board);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}		
+		return boardList;
+	}
+
+	/**
+	 * 자기가 올린 게시물 수 리턴	 */
+	public static int selectBoardEmailWhenAddCount(String email) {
+		Connection con=null;
+		PreparedStatement ps=null;
+		String sql=null;
+		ResultSet rs=null;
+		int boardCount=0;
+		
+		try {
+			con=ConnectionUtil.getConnection();
+			sql=("select count(board_no) " +
+				 "from tb_board b, tb_member m, tb_category c, tb_condition c2 " +
+				 "where m.email=b.email " +
+				 "and b.category_no=c.category_no " +
+				 "and b.condition_result=c2.condition_result " +
+				 "and b.condition_result=0 " +
+				 "and b.email like ?");
+			
+			ps=con.prepareStatement(sql,ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
+			ps.setString(1,email);
+			rs=ps.executeQuery();
+			
+			if(rs.next()){
+				boardCount=rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}		
+		return boardCount;
+	}
 }
