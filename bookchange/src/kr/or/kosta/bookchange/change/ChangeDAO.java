@@ -191,7 +191,7 @@ public class ChangeDAO {
 					"b.board_want, b.board_photo, b.board_content, b.email, b.deal_no, b.condition_result, " +
 					"b.category_no, ca.category_no, ca.category_name " +
 					"FROM tb_change c, tb_board a, tb_board b, tb_condition d, tb_category ca " +
-					"WHERE a.email=? AND c.agree_board_no=a.board_no AND c.demand_board_no=b.board_no " +
+					"WHERE b.email=? AND c.agree_board_no=b.board_no AND c.demand_board_no=a.board_no " +
 					"AND c.condition_result=d.condition_result AND ca.category_no=a.category_no " +
 					"ORDER BY c.change_no";
 			ps=con.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
@@ -323,7 +323,7 @@ public class ChangeDAO {
 					"b.board_want, b.board_photo, b.board_content, b.email, b.deal_no, b.condition_result, " +
 					"b.category_no, ca.category_no, ca.category_name " +
 					"FROM tb_change c, tb_board a, tb_board b, tb_condition d, tb_category ca " +
-					"WHERE b.email=? AND c.agree_board_no=a.board_no AND c.demand_board_no=b.board_no " +
+					"WHERE a.email=? AND c.agree_board_no=b.board_no AND c.demand_board_no=a.board_no " +
 					"AND c.condition_result=d.condition_result AND ca.category_no=a.category_no " +
 					"ORDER BY c.change_no";
 			ps=con.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
@@ -403,8 +403,8 @@ public class ChangeDAO {
 				change.setChangeNo(changeNo);
 				change.setChangeDate(changeDate);
 				change.setCondition(changeCondition);
-				change.setAgreeBoard(agreeBoard);
-				change.setDemandBoard(demandBoard);
+				change.setAgreeBoard(demandBoard);
+				change.setDemandBoard(agreeBoard);
 				
 				changeList.add(change);
 			}

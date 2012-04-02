@@ -32,21 +32,71 @@ public class ChangeService extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		String method=request.getParameter("method");
-		if(method==null){
-			method="viewChangeList";
-		}
-		if("viewChangeList".equals(method)){
-			viewChangeList(request,response);
-		}else if("viewChange".equals(method)){
+		
+		if("viewChange".equals(method)){
 			viewChange(request,response);
 		}else if("addChange".equals(method)){
 			addChange(request,response);
+		}else if("acceptChangeList".equals(method)){
+			acceptChangeList(request,response);
+		}else if("requestChangeList".equals(method)){
+			requestChangeList(request,response);
 		}
 	}
 	
+	
+
+	private void requestChangeList(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException,IOException{
+		HttpSession session=request.getSession();
+		Member member=(Member)session.getAttribute("LOGIN_EMAIL");
+		int page=1;
+		int length=10;
+		if(request.getParameter("page")!=null){
+			page=Integer.parseInt(request.getParameter("page"));
+		}
+		if(member==null){
+			RequestDispatcher rd=request.getRequestDispatcher("");
+			rd.forward(request, response);
+			return;
+		}
+		String memberEmail=member.getEmail();
+		ArrayList<Change>demandList=ChangeDAO.selectChangeRequestList(length, page, memberEmail);
+		session.setAttribute("DEMAND_CHANGE_LIST", demandList);
+		int demandChangeCount=ChangeDAO.selectChangeRequestCount(memberEmail);
+		String pageLinkTag=PageUtil.generate(page, demandChangeCount, length, "/bookchange/ChangeService?method=requestChangeList");
+		request.setAttribute("PAGE_LINK_TAG", pageLinkTag);
+		RequestDispatcher rd=request.getRequestDispatcher("/change/requestChangeList.jsp");
+		rd.forward(request, response);
+	}
+
+	private void acceptChangeList(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException,IOException{
+		HttpSession session=request.getSession();
+		Member member=(Member)session.getAttribute("LOGIN_EMAIL");
+		int page=1;
+		int length=10;
+		if(request.getParameter("page")!=null){
+			page=Integer.parseInt(request.getParameter("page"));
+		}
+		if(member==null){
+			RequestDispatcher rd=request.getRequestDispatcher("");
+			rd.forward(request, response);
+			return;
+		}
+		String memberEmail=member.getEmail();
+		ArrayList<Change>agreeList=ChangeDAO.selectChangeMyboardList(length, page, memberEmail);
+		session.setAttribute("AGREE_CHANGE_LIST", agreeList);
+		int agreeChangeCount=ChangeDAO.selectChangeMyboardCount(memberEmail);
+		String pageLinkTag=PageUtil.generate(page, agreeChangeCount, length, "/bookchange/ChangeService?method=acceptChangeList");
+		request.setAttribute("PAGE_LINK_TAG", pageLinkTag);
+		RequestDispatcher rd=request.getRequestDispatcher("/change/acceptChangeList.jsp");
+		rd.forward(request, response);
+	}
+
 	private void addChange(HttpServletRequest request,
 			HttpServletResponse response) throws IOException,ServletException {
-		String agreeBoardNo=request.getParameter("agreeBoardNo");
+		String agreeBoardNo=request.getParameter("boardNo");
 		String demandBoardNo=request.getParameter("demandBoardNo");
 		
 		Board agreeBoard=new Board();
@@ -60,7 +110,7 @@ public class ChangeService extends HttpServlet {
 		change.setDemandBoard(demandBoard);
 		
 		ChangeDAO.insertChange(change);
-		RequestDispatcher rd=request.getRequestDispatcher("");
+		RequestDispatcher rd=request.getRequestDispatcher("/member/loginafter.jsp");
 		rd.forward(request, response);
 		
 	}
@@ -74,35 +124,4 @@ public class ChangeService extends HttpServlet {
 		rd.forward(request, response);
 	}
 
-	/**전체 교환관련 리스트 보기**/
-	private void viewChangeList(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException,IOException{
-		
-		HttpSession session=request.getSession();
-		Member member=(Member)session.getAttribute("LOGIN_EMAIL");
-		int page=1;
-		int length=7;
-		if(request.getParameter("page")!=null){
-			page=Integer.parseInt(request.getParameter("page"));
-		}
-		if(member==null){
-			RequestDispatcher rd=request.getRequestDispatcher("");
-			rd.forward(request, response);
-			return;
-		}
-		String memberEmail=member.getEmail();
-		ArrayList<Change>agreeList=ChangeDAO.selectChangeMyboardList(length, page, memberEmail);
-		session.setAttribute("MY_CHANGE_LIST", agreeList);
-		ArrayList<Change>demandList=ChangeDAO.selectChangeRequestList(length, page, memberEmail);
-		session.setAttribute("MY_CHANGE_LIST", demandList);
-		int agreeChangeCount=ChangeDAO.selectChangeMyboardCount(memberEmail);
-		int demandChangeCount=ChangeDAO.selectChangeRequestCount(memberEmail);
-		int changeCount=agreeChangeCount+demandChangeCount;
-		String pageLinkTag=PageUtil.generate(page, changeCount, length, "");
-		request.setAttribute("PAGE_LINK_TAG", pageLinkTag);
-		RequestDispatcher rd=request.getRequestDispatcher("");
-		rd.forward(request, response);
-	}
-
-	
 }
