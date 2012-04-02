@@ -137,7 +137,7 @@ public class MemberService extends HttpServlet {
 				//4.회원정보 조회화면으로 이동 객체 생성
 				RequestDispatcher rd=
 						request.getRequestDispatcher(
-								"/MemberService?method=viewMemberList" +
+								"/MemberService?method=viewMember" +
 								"&userid="+userid);
 				rd.forward(request, response);
 	}
