@@ -19,7 +19,7 @@
 </script>
 
 <c:choose>
-	<c:when test="${sessionScope.LOGIN_MEMBER==null}">
+	<c:when test="${sessionScope.MEMBER==null}">
 		<p align="right">
 			<a href="/auction/MemberService?method=loginForm">
 			·Î±×ÀÎ
@@ -28,7 +28,7 @@
 	</c:when>
 	<c:otherwise>
 		<p align="right">
-			${sessionScope.LOGIN_MEMBER.name }´Ô ¾È³ç<br/>
+			${sessionScope.MEMBER.name }´Ô ¾È³ç<br/>
 			<a href="/auction/MemberService?method=logout">
 			·Î±×¾Æ¿ô
 			</a><br/>
@@ -79,7 +79,7 @@
 	</form>
 	</c:forEach>
 	</table>
-<c:if test="${sessionScope.LOGIN_MEMBER.userid=='admin'}">
+<c:if test="${sessionScope.MEMBER.userid=='admin'}">
 	<p align="center">
 		<a href="/auction/AuctionService?method=addAuctionForm">°æ¸ÅÃß°¡</a>
 		<a href="/auction/AuctionService?method=editAuctionForm">°æ¸Å¼öÁ¤</a>	

@@ -40,7 +40,7 @@
 	    </a>
 	   </p> 
 	  
-	  <p align="center">
+	<p align="center">
 	   <a href="/auction/AuctionService?method=viewAuctionList">경매목록보기</a> 
 	  
 		</p>

@@ -30,9 +30,9 @@
 			<tr>
 				<td>이름</td>
 				<td><input type="text" name="name"
-					value="${MEMBER.name}" readOnly="readOnly"/></td>
+					value="${MEMBER.name}"/></td>
 			</tr>
-			<c:if test="${sessionScope.LOGIN_MEMBER.userid=='admin'}">
+			<c:if test="${sessionScope.MEMBER.userid=='admin'}">
 			<tr>
 				<td>코인</td>
 				<td><input type="text" name="coin"

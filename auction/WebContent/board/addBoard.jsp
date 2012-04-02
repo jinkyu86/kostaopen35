@@ -10,7 +10,7 @@
 <hr noshade>
 <form name="login_form" action="/auction/BoardService" method="post">
 작성자 ID: 
-<c:if test="${sessionScope.LOGIN_MEMBER.userid=='admin'}">
+<c:if test="${sessionScope.MEMBER.userid=='admin'}">
 </c:if>
 <input type="text" size=10 name="userid">
 <br>

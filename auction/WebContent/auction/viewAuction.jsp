@@ -14,7 +14,7 @@
 </c:if>
 </script>
 <c:choose>
-	<c:when test="${sessionScope.LOGIN_MEMBER==null}">
+	<c:when test="${sessionScope.MEMBER==null}">
 		<p align="right">
 			<a href="/auction/MemberService?method=loginForm">
 			로그인
@@ -23,7 +23,7 @@
 	</c:when>
 	<c:otherwise>
 		<p align="right">
-			${sessionScope.LOGIN_MEMBER.name }님<br/>
+			${sessionScope.MEMBER.name }님<br/>
 			<a href="/auction/MemberService?method=logout">
 			로그아웃
 			</a>
@@ -62,7 +62,7 @@
 		 <p align="center">
 		 <a href="/auction/AuctionService?method=viewAuctionList">경매목록 보기</a>
 	</p>
-<c:if test="${sessionScope.LOGIN_MEMBER.userid=='admin'}">
+<c:if test="${sessionScope.MEMBER.userid=='admin'}">
 	 <p align="center">
 		 <p align="center">
 		 <a href="/auction/AuctionService?method=editAuctionForm&aNum=${AUCTION.aNum}">경매정보 수정</a>
