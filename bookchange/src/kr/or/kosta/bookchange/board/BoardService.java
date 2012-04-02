@@ -54,6 +54,8 @@ public class BoardService extends HttpServlet {
 			searchBoardListWhenAdd(request,response);
 		}else if("viewBoardWhenAgree".equals(method)){
 			viewBoardWhenAgree(request,response);
+		}else if("viewBoardWhenCancel".equals(method)){
+			viewBoardWhenCancel(request,response);
 		}
 	}
 
