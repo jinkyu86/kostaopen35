@@ -85,6 +85,7 @@
 		<a href="/auction/AuctionService?method=editAuctionForm">경매수정</a>	
 	</p>
 </c:if>
+	<br/>
 	<p align="center">
 		<a href="/auction/Boardervice?method=viewBoardList">게시판보기</a>
 	</p>
