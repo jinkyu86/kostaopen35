@@ -19,4 +19,14 @@
     <servlet-name>MatchService</servlet-name>
     <url-pattern>/MatchService</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>BettingService</display-name>
+    <servlet-name>BettingService</servlet-name>
+    <servlet-class>kr.or.kosta.betting.betting.BettingService</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>BettingService</servlet-name>
+    <url-pattern>/BettingService</url-pattern>
+  </servlet-mapping>
 </web-app>
