@@ -1,11 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<title>π∞∞« ¡∂»∏</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Î¨ºÍ±¥ Ï°∞Ìöå</title>
 </head>
 <body>
 
@@ -13,28 +13,28 @@
   <c:when test="${sessionScope.LOGIN_EMAIL==null}">
 	 <p align="right">
    		<a href="/bookchange/MemberService?method=loginForm">
-   		∑Œ±◊¿Œ
+   		Î°úÍ∑∏Ïù∏
    		</a>
 	 </p>
   </c:when> 
   <c:when test="${sessionScope.LOGIN_EMAIL!=null}">
   <p align="right">
- 	${sessionScope.LOGIN_EMAIL.email}¥‘<br/>
+ 	${sessionScope.LOGIN_EMAIL.email}Îãò<br/>
    	<a href="/bookchange/MemberService?method=logout">
-   	∑Œ±◊æ∆øÙ
+   	Î°úÍ∑∏ÏïÑÏõÉ
    	</a><br/>
    	<c:choose>
    	<c:when test="${sessionScope.LOGIN_EMAIL.email==BOARD.member.email}">
    	 <form action="/bookchange/BoardService" method="post">
 	  <input type="hidden" name="method" value="editBoardForm">
 	  <input type="hidden" name="boardNo" value="${BOARD.boardNo}">
-	  <input type="submit" value="ºˆ¡§">
+	  <input type="submit" value="ÏàòÏ†ï">
 	 </form>	 
 	  <form action="/bookchange/BoardService" method="post">
 	  <input type="hidden" name="method" value="removeBoard"/>
 	  <input type="hidden" name="boardNo" value="${BOARD.boardNo}"/>
 	  <input type="hidden" name="conditionResult" value="${BOARD.condition.conditionResult}"/>
-	  <input type="submit" value="ªË¡¶">
+	  <input type="submit" value="ÏÇ≠Ï†ú">
 	 </form>
 	</c:when>
 	
@@ -43,7 +43,7 @@
 	  <input type="hidden" name="method" value="searchBoardListWhenAdd">
 	   <input type="hidden" name="boardNo" value="${BOARD.boardNo}">
 	  <input type="hidden" name="keyword" value="${sessionScope.LOGIN_EMAIL.email}">
-	  <input type="submit" value="±≥»ØΩ≈√ª">
+	  <input type="submit" value="ÍµêÌôòÏã†Ï≤≠">
 	  </form>
 	</c:otherwise>	
 	</c:choose>	 	
@@ -52,11 +52,11 @@
  </c:choose>
  
  <p align="right">
-  <a href="/bookchange/BoardService?method=viewBoardList">¿¸√º ∏ÆΩ∫∆Æ ∫∏±‚</a>
+  <a href="/bookchange/BoardService?method=viewBoardList">Ï†ÑÏ≤¥ Î¶¨Ïä§Ìä∏ Î≥¥Í∏∞</a>
  </p>
  
  
- <h1 align="center">π∞∞«∏Ìºº</h1>
+ <h1 align="center">Î¨ºÍ±¥Î™ÖÏÑ∏</h1>
  	<table align="center" border="3">
  		<tr>
  			<td>${BOARD.boardNo}</td>
@@ -71,11 +71,28 @@
  			<td align="center" colspan="3"><img src="/bookchange/bookimg/${BOARD.boardPhoto}" height="300" width="200"></td> 			
  	 		<td colspan="4">${BOARD.boardContent}</td> 	 		
  		</tr>
- 		<tr>
- 			<td>¥Ò±€</td>
- 			<td>${QA.member.email}</td>
- 			<td colspan="5">${QA.qaContent}</td>
+ 		
+ 		<c:forEach var="qa" items="${QA_LIST}">
+ 		<tr> 		
+ 			<td>ÏûëÏÑ±Ïûê</td>
+ 			<td colspan="2">${qa.member.email}</td>
+ 			<td colspan="2">${qa.qaContent}</td>
+	 		 <form action="/bookchange/QaService" method="post">
+	 		 <input type="hidden" name="method" value="editQaForm">
+	 		 <input type="hidden" name="qaNo" value="${qa.qaNo}">
+	 		 <input type="hidden" name="qaContent" value="${qa.qaContent}">
+	 		 <input type="hidden" name="email" value="${qa.member.email}">
+	 		 <input type="hidden" name="boardNo" value="${qa.board.boardNo}"> 
+ 		 	<td><input type="submit" value="ÏàòÏ†ï"></td>
+ 		 </form>
+ 			<td>ÏÇ≠Ï†ú</td> 		 	 			
  		</tr>
+ 		</c:forEach>
  	</table>
+ 	
+ 	 <c:if test="${sessionScope.LOGIN_EMAIL!=null}">
+ 		<jsp:include page="addQa.jsp"/>
+ 	 </c:if>
+ 
 </body>
 </html>

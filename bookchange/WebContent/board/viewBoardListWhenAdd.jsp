@@ -70,6 +70,7 @@
        	<form action="/bookchange/ChangeService" method="post">
        	<input type="hidden" name="method" value="addChange">
        	<input type="hidden" name="demandBoardNo" value="${good.boardNo}">
+       	<input type="hidden" name="agreeBoardNo" value="${BOARD.boardNo}">
        	<input type="submit" value="교환신청">
        	</form>
        	</td>

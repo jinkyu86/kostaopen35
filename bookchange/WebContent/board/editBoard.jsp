@@ -16,26 +16,29 @@
 	<form action="/bookchange/BoardService" method="post">
 		<input type="hidden" name="method" value="editBoard"/>
 		<!-- <input type="hidden" name="photo" value=""/> -->
-		<label>작성자</label> ${sessionScope.LOGIN_EMAIL.email}<br/>
-		<label>게시물번호</label>${BOARD.boardNo}<br/>
-		<select name="categoryNo">
+		작성자<input type="text" name="email" value="${sessionScope.LOGIN_EMAIL.email}" readonly="readonly"/><br/>
+		게시물번호<input type="text" name="boardNo" value="${BOARD.boardNo}" readonly="readonly"/><br/>
+		카테고리<select name="categoryNo">
 		 <c:forEach var="category" items="${CATEGORY_LIST}">
 		     <option value="${category.categoryNo}">${category.categoryName}</option>
 		 </c:forEach>
-		</select>
-		<select name="dealNo">
+		</select><br/>
+		거래방법<select name="dealNo">
 		 <c:forEach var="deal" items="${DEAL_LIST}">
 		     <option value="${deal.dealNo}">${deal.dealWay}</option>
 		 </c:forEach>
 		</select><br/>
-		<label>원하는 물건</label><input type="text" name="boardWant"/><br/>
-		<label>제목</label><input type="text" name="boardTitle"/><br/>
-		<label>내용</label><textarea name="boardContent"></textarea><br/>
-		<label>사진</label><input type="text" name="boardPhoto"><br/>
-		<input type="hidden" name="email" value="${sessionScope.LOGIN_EMAIL.email}"/>
-		<input type="hidden" name="boardNo" value="${BOARD.boardNo}"/>
+		원하는 물건<input type="text" name="boardWant" value="${BOARD.boardWant}"/><br/>
+		제목<input type="text" name="boardTitle" value="${BOARD.boardTitle}"/><br/>
+		내용<input type="text" name="boardContent" value="${BOARD.boardContent}"/><br/>
+		사진<input type="text" name="boardPhoto" value="${BOARD.boardPhoto}"/><br/>
 		<input type="hidden" name="conditionResult" value="${BOARD.condition.conditionResult}"/>
 		<input type="submit" value="수정"/>
 	</form>	
+	<form action="/bookchange/BoardService" method="post">
+	<input type="hidden" name="method" value="viewBoard">
+	<input type="hidden" name="boardNo" value="${BOARD.boardNo}">
+	<input type="submit" value="취소"/>
+	</form>
 </body>
 </html>
