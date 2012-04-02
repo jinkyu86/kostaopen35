@@ -19,9 +19,7 @@
 	<tr>
 		<td>${change.changeDate}</td>
 		<td>${change.condition.conditionIng}</td>
-		<td>
-		<a href="/bookchange/BoardService?method=viewBoard&boardNo=${change.agreeBoard.boardNo}">
-		${change.agreeBoard.boardTitle}</a></td>
+		<td>${change.agreeBoard.boardTitle}</td>
 		<td>
 		<a href="/bookchange/BoardService?method=viewBoard&boardNo=${change.demandBoard.boardNo}">
 		${change.demandBoard.boardTitle}</a></td>
