@@ -47,9 +47,9 @@
 	  </form> --%>
 	  
 	  <form action="/bookchange/ChangeService" method="post">
-	  <input type="hidden" name="method" value="matchChange">
-	   <input type="hidden" name="demandBoardNo" value="${BOARD.boardNo}">
-	   <input type="hidden" name="agreeBoardNo" value="${AGREE_BOARD_NO}">
+	  <input type="hidden" name="method" value="cancelChange">
+	   <input type="hidden" name="demandBoardNo" value="${BOARD.boardNo}"><!-- 이게 상대방 게시물 번호 -->
+	   <input type="hidden" name="agreeBoardNo" value="${AGREE_BOARD_NO}"><!-- 이건 내 게시물 번호 -->
 	  <input type="submit" value="교환신청취소">
 	  </form>
 	</c:otherwise>	
