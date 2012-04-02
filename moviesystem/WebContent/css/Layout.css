@@ -8,8 +8,8 @@
 .table_style{border:1px solid #9191C8;width:100%;}
 .sch_style{border:1px solid #9191C8;width:100%;}
 .movie_menu{width:50%;text-align:center;}
-.reservation_menu{width:30%;text-align:center;}
-.buy_menu{width:30%;text-align:center;}
+.reservation_menu{width:100%;text-align:center;}
+.buy_menu{width:100%;text-align:center;}
 a{text-decoration:none;color:#000000;}
 #movie_info{border-bottom:1px solid #ffffff;}
 #movie_screen{border-bottom:1px solid #ffffff;}
