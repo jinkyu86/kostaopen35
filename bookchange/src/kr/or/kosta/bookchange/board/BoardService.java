@@ -422,7 +422,7 @@ public class BoardService extends HttpServlet {
 		request.setAttribute("QA_LIST",qaList);
 		request.setAttribute("AGREE_BOARD_NO",agreeBoardNo);
 		
-		RequestDispatcher rd=request.getRequestDispatcher("/board/viewBoardWhenAgree.jsp");
+		RequestDispatcher rd=request.getRequestDispatcher("/board/viewBoardWhenCancel.jsp");
 		rd.forward(request, response);
 	}
 }
