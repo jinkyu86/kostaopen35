@@ -39,11 +39,18 @@
 	</c:when>
 	
 	<c:otherwise>  
-   	 <form action="/bookchange/BoardService" method="post">
+   	<%--  <form action="/bookchange/BoardService" method="post">
 	  <input type="hidden" name="method" value="searchBoardListWhenAdd">
 	   <input type="hidden" name="boardNo" value="${BOARD.boardNo}">
 	  <input type="hidden" name="keyword" value="${sessionScope.LOGIN_EMAIL.email}">
 	  <input type="submit" value="교환신청">
+	  </form> --%>
+	  
+	  <form action="/bookchange/ChangeService" method="post">
+	  <input type="hidden" name="method" value="matchChange">
+	   <input type="hidden" name="demandBoardNo" value="${BOARD.boardNo}">
+	   <input type="hidden" name="agreeBoardNo" value="${AGREE_BOARD_NO}">
+	  <input type="submit" value="교환신청수락">
 	  </form>
 	</c:otherwise>	
 	</c:choose>	 	
@@ -85,13 +92,13 @@
 	 		 <input type="hidden" name="qaContent" value="${qa.qaContent}">
 	 		 <input type="hidden" name="email" value="${qa.member.email}">
 	 		 <input type="hidden" name="boardNo" value="${qa.board.boardNo}"> 
- 		 	<td><input type="submit" value="수정"></td>
+ 		 	<!-- <td><input type="submit" value="수정"></td> -->
 	 		 </form>
 	 		 <form action="/bookchange/QaService" method="post">
 	 		 <input type="hidden" name="method" value="removeQa">
 	 		 <input type="hidden" name="qaNo" value="${qa.qaNo}">
 	 		 <input type="hidden" name="boardNo" value="${BOARD.boardNo}">
-	 		   <td><input type="submit" value="삭제"/></td> 		    
+	 		<!-- <td><input type="submit" value="삭제"/></td>  -->		    
 	 		 </form>
 	 		</c:when>
 	 		<c:otherwise>
