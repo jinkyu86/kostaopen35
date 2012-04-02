@@ -63,9 +63,24 @@ public class MovieService extends HttpServlet{
 			MovieTimeListForm(request, response);
 		}else if("MovieTimeList".equals(method)){
 			MovieTimeList(request, response);
+		}else if("Main".equals(method)){
+			Main(request, response);
 		}
 	}
 	
+	private void Main(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
+		ArrayList<Movie>screenMovieList = MovieDAO.selectMovieList(1, 3, "screen");
+		ArrayList<Movie>scheduleMovieList = MovieDAO.selectMovieList(1, 3, "schedule");
+		ArrayList<Movie>rankingMovieList = MovieDAO.rankingMovieList();
+		
+		request.setAttribute("screenMovieList", screenMovieList);
+		request.setAttribute("scheduleMovieList", scheduleMovieList);
+		request.setAttribute("rankingMovieList", rankingMovieList);
+		
+		RequestDispatcher rd = request.getRequestDispatcher("/main.jsp");
+		rd.forward(request,  response);
+	}
+
 	private void MovieTimeList(HttpServletRequest request,
 			HttpServletResponse response) throws IOException, ServletException{
 		String mnum = request.getParameter("mnum");
