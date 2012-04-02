@@ -304,16 +304,20 @@ public class MemberService extends HttpServlet {
 		
 		if(member==null){
 			request.setAttribute("ERROR", "존재하지 않는 아이디");
+			RequestDispatcher rd=request.getRequestDispatcher("member/login.jsp");
+			rd.forward(request, response);
 		}else{
 			if(!member.getPw().equals(pw)){
 				request.setAttribute("ERROR", "비밀번호 오류");
+				RequestDispatcher rd=request.getRequestDispatcher("member/login.jsp");
+				rd.forward(request, response);
 			}else{
 				HttpSession session=request.getSession();
 				session.setAttribute("LOGIN_MEMBER", member);
+				RequestDispatcher rd=request.getRequestDispatcher("/MovieService?method=Main");
+				rd.forward(request, response);
 			}//end else
 		}//end if
-		RequestDispatcher rd=request.getRequestDispatcher("/MovieService?method=Main");
-		rd.forward(request, response);
 	}
 
 	/**
