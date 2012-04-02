@@ -387,4 +387,40 @@ public class BoardService extends HttpServlet {
 		RequestDispatcher rd=request.getRequestDispatcher("/board/viewBoardWhenAgree.jsp");
 		rd.forward(request, response);
 	}
+
+	/**
+	 * 게시물 보기 취소할때	 */
+	public void viewBoardWhenCancel(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
+		String boardNo=request.getParameter("boardNo");
+		String agreeBoardNo=request.getParameter("agreeBoardNo");
+		
+		Board board=BoardDAO.selectBoard(boardNo);
+		
+		//여기부턴 댓글 리스트
+		int page=1;
+		
+		if(request.getParameter("page")!=null){
+			page=Integer.parseInt(request.getParameter("page"));
+		}
+		
+		int length=10;
+		
+		ArrayList<Qa> qaList=QaDAO.selectQaList(length, page, boardNo);
+		request.setCharacterEncoding("utf-8");
+		request.setAttribute("QA_LIST",qaList);
+				
+		int qaCount=QaDAO.selectQaCount(boardNo);
+		
+		String pageLinkTag=PageUtil.generate(page, qaCount, length, "/bookchange/QaService?" +
+				"method=selectQaList");
+		request.setAttribute("PAGE_LINK_TAG",pageLinkTag);
+		//댓글 리스트 조회 완료
+		
+		request.setAttribute("BOARD",board);
+		request.setAttribute("QA_LIST",qaList);
+		request.setAttribute("AGREE_BOARD_NO",agreeBoardNo);
+		
+		RequestDispatcher rd=request.getRequestDispatcher("/board/viewBoardWhenAgree.jsp");
+		rd.forward(request, response);
+	}
 }
