@@ -22,7 +22,14 @@ public class AuctionDAO {
 		try {
 			psmt = con
 					.prepareStatement("INSERT INTO AUCTION "
-							+ "(g_num,s_price,im_price,a_num,s_time,e_time,sold,cu_price) "
+							+ "(g_num," +
+							"s_price," +
+							"im_price," +
+							"a_num," +
+							"s_time," +
+							"e_time," +
+							"sold," +
+							"cu_price) "
 							+ "VALUES(?,?,?,auc_seq.nextval,?,?,?,?)");
 			psmt.setString(1, auction.getGood().getgNum());
 			psmt.setString(2, auction.getsPrice());
@@ -53,8 +60,8 @@ public class AuctionDAO {
 					+ "im_price=?," 
 					+ "sold=?, "
 					+ "cu_price=?," 
-					+ "s_time=?," 
-					+ "e_time=? " 
+					+ "s_time=to_date(?,'yyyy-mm-dd hh24:mi:ss')," 
+					+ "e_time=to_date(?,'yyyy-mm-dd hh24:mi:ss') " 
 					+ "WHERE a_num=?");
 
 			psmt.setString(1, auction.getGood().getgNum());
@@ -100,7 +107,7 @@ public class AuctionDAO {
 		con = ConnectionUtil.getConnection();
 		try {
 			psmt = con
-					.prepareStatement("SELECT a.g_num,a.s_price,a.im_price,a.s_time,a.e_time,a.sold,a.cu_price,"
+					.prepareStatement("SELECT a.g_num,a.s_price,a.im_price,to_char(a.s_time,'yyyy-mm-dd hh24:mi:ss'),to_char(a.e_time,'yyyy-mm-dd hh24:mi:ss'),a.sold,a.cu_price,"
 							+ "g.gname,g.detail,g.img"
 							+ " FROM auction a,good g "
 							+ " WHERE a.g_num = g.g_num AND a.a_num=?");
