@@ -34,7 +34,7 @@ public class MovieService extends HttpServlet{
 		request.setCharacterEncoding("utf-8");
 		String method = request.getParameter("method");
 		if(method==null){
-			method="viewMovieList";
+			method="Main";
 		}
 		//System.out.println(method);
 		if("viewMovieList".equals(method)){
