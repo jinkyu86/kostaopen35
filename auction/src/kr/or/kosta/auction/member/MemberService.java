@@ -134,11 +134,11 @@ public class MemberService extends HttpServlet {
 				
 				//3.회원정보를 수정하는 메서드 호출
 				MemberDAO.updateMember(member);
+				request.setAttribute("MEMBER",member);
 				//4.회원정보 조회화면으로 이동 객체 생성
 				RequestDispatcher rd=
 						request.getRequestDispatcher(
-								"/MemberService?method=viewMember" +
-								"&userid="+userid);
+								"/MemberService?method=viewMember");
 				rd.forward(request, response);
 	}
 
@@ -172,16 +172,9 @@ public class MemberService extends HttpServlet {
 	 */
 	private void viewMember(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		//1.userid 파라메터 리턴받아서 변수에 저장
-		HttpSession session=request.getSession();
-		Member member=(Member)session.getAttribute("LOGIN_MEMBER");
-				
-				request.setAttribute("MEMBER",member);
-				//4./member/viewMember.jsp로 이동 객체 생성
-				RequestDispatcher rd=
-						request.getRequestDispatcher("/member/viewMember.jsp");
-				//5.4의 JSP로 이동	
-				rd.forward(request, response);
+		RequestDispatcher rd=
+				request.getRequestDispatcher("/member/viewMember.jsp");
+		rd.forward(request, response);
 			
 
 	}
@@ -229,7 +222,7 @@ public class MemberService extends HttpServlet {
 				// HttpSession리턴 속성명:LOGIN_MEMBER
 				// 값:3의 객체
 				HttpSession session = request.getSession();
-				session.setAttribute("LOGIN_MEMBER", member);
+				session.setAttribute("MEMBER", member);
 			}// end else
 		}// end if
 			// 7. /GoodService?method=viewGoodList로 이동
