@@ -26,3 +26,7 @@ a{text-decoration:none;color:#000000;}
 .main_img{width:120px;height:171px;border:1px solid #9191C8;}
 .main_title{text-align:left;font-size:15px;font-weight:bold;}
 .main_td{font-size:10pt;font-weight:bold;text-align:center;width:33%}
+#my_page{border-bottom:1px solid #ffffff;}
+#member_info{border-bottom:1px solid #ffffff;}
+#buy_list{border-bottom:1px solid #ffffff;}
+#reservation_list{border-bottom:1px solid #ffffff;}
