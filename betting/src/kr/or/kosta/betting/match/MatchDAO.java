@@ -32,7 +32,9 @@ public class MatchDAO {
 		
 		try {
 		con=ConnectionUtil.getConnection();
-		sql="SELECT match_num,match_time,match_result_score," +
+		sql="SELECT match_num" +
+				",TO_CHAR(match_time,'yyyy/mm/dd hh24:mi:ss')" +
+				",match_result_score," +
 				"home_team_num,h.team_name,h.photo" +
 				",away_team_num,a.team_name,a.photo" +
 				",win_team_num,w.team_name,w.photo" +
@@ -42,7 +44,7 @@ public class MatchDAO {
 				" AND m.away_team_num=a.team_num" +
 				" AND m.win_team_num=w.team_num(+)" +
 				" AND m.loc_num=l.loc_num" +
-				" ORDER BY match_num";
+				" ORDER BY match_num DESC";
 			
 		//rs.absolute()가 가능하도록 설정
 			ps=con.prepareStatement(sql,
@@ -125,7 +127,9 @@ public class MatchDAO {
 		
 		try {
 		con=ConnectionUtil.getConnection();
-		sql="SELECT match_num,match_time,match_result_score" +
+		sql="SELECT match_num" +
+				",TO_CHAR(match_time,'yyyy/mm/dd hh24:mi:ss')" +
+				",match_result_score" +
 				",home_team_num,h.team_name,h.photo" +
 				",away_team_num,a.team_name,a.photo" +
 				",win_team_num,w.team_name,w.photo" +
@@ -136,7 +140,7 @@ public class MatchDAO {
 				" AND m.win_team_num=w.team_num(+)" +
 				" AND m.loc_num=l.loc_num"+
 				" AND TO_CHAR(m.match_time,'YYYY/MM/DD')= ?" +
-				" ORDER BY match_num";
+				" ORDER BY match_num DESC";
 			
 			ps=con.prepareStatement(sql);
 			ps.setString(1, date);
@@ -212,7 +216,9 @@ public class MatchDAO {
 		
 		try {
 		con=ConnectionUtil.getConnection();
-		sql="SELECT match_num,match_time,match_result_score" +
+		sql="SELECT match_num" +
+				",TO_CHAR(match_time,'yyyy/mm/dd hh24:mi:ss')" +
+				",match_result_score" +
 				",home_team_num,h.team_name,h.photo" +
 				",away_team_num,a.team_name,a.photo" +
 				",win_team_num,w.team_name,w.photo" +
@@ -291,7 +297,9 @@ public class MatchDAO {
 		try {
 		con=ConnectionUtil.getConnection();
 		sql="UPDATE match" +
-				" SET match_num=?, match_time=?, match_result_score=? " +
+				" SET match_num=?" +
+				", match_time=TO_DATE(?,'yyyy/mm/dd hh24:mi:ss')" +
+				", match_result_score=? " +
 				",home_team_num=?, away_team_num=? ,win_team_num=? " +
 				" ,loc_num=?"+
 				" WHERE match_num=?";
@@ -325,18 +333,17 @@ public class MatchDAO {
 				
 		try {
 		con=ConnectionUtil.getConnection();
-		sql="INSERT INTO match (match_num, match_time, match_result_score " +
-				",home_team_num, away_team_num ,win_team_num " +
+		sql="INSERT INTO match (match_num" +
+				", match_time" +
+				",home_team_num, away_team_num " +
 				" ,loc_num) "+
-				 " VALUES(s_match.nextval,?,?,?,?,?,?)";
+				 " VALUES(s_match.nextval,TO_DATE(?,'yyyy/mm/dd hh24:mi:ss'),?,?,?)";
 			
 			ps=con.prepareStatement(sql);
 			ps.setString(1, match.getMatchTime());
-			ps.setString(2, match.getScore());
-			ps.setString(3, match.getHomeTeam().getNum());
-			ps.setString(4, match.getAwayTeam().getNum());
-			ps.setString(5, match.getWinTeam().getNum());
-			ps.setString(6, match.getLoc().getNum());
+			ps.setString(2, match.getHomeTeam().getNum());
+			ps.setString(3, match.getAwayTeam().getNum());
+			ps.setString(4, match.getLoc().getNum());
 			ps.executeUpdate();			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -401,5 +408,22 @@ public class MatchDAO {
 		}
 		return matchCount;
 	}
+	//경기데이터 삭제 메서드
+	public static void deleteMatch (String matchNum) {
+		// TODO Auto-generated method stub
+		Connection con = null;
+		PreparedStatement psmt = null;
+		con = ConnectionUtil.getConnection();
+		try {
+			psmt = con.prepareStatement("DELETE FROM match "+
+			                                                    " WHERE match_num = ?");
+			psmt.setString(1, matchNum);
+			psmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}		
+	}
+	
+	
 	
 }

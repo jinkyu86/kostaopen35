@@ -9,6 +9,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import kr.or.kosta.betting.betting.Betting;
+import kr.or.kosta.betting.betting.BettingDAO;
+import kr.or.kosta.betting.loc.Loc;
+import kr.or.kosta.betting.loc.LocDAO;
+import kr.or.kosta.betting.team.Team;
+import kr.or.kosta.betting.team.TeamDAO;
 import kr.or.kosta.betting.util.PageUtil;
 
 /**
@@ -43,19 +49,57 @@ public class MatchService extends HttpServlet {
 		}
 		if ("viewMatchList".equals(method)) {
 			viewMatchList(request, response);
+		}else if("editMatchForm".equals(method)){
+			editMatchForm(request,response);
+		}else if("editMatch".equals(method)){
+			editMatch(request,response);
+		}else if("addMatch".equals(method)){
+			addMatch(request,response);
+		}else if("addMatchForm".equals(method)){
+			addMatchForm(request,response);
+		}else if("removeMatch".equals(method)){
+			removeMatch(request,response);
 		}
 
 	}
+
 	/**
 	 * 메치데이터 입력 메서드
 	 * 
 	 * @param request
 	 * @param response
+	 * @throws IOException 
+	 * @throws ServletException 
 	 */
 	public void addMatch(HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response) throws ServletException, IOException {
 		/* default generated stub */;
-
+		String homeTeamNo = request.getParameter("hometeamno");
+		String awayTeamNo = request.getParameter("awayteamno");
+		String locNo = request.getParameter("locno");
+		String matchTime = request.getParameter("matchtime");
+				
+		Match match = new Match();
+		match.setMatchTime(matchTime);
+				
+		Team homeTeam = new Team();
+		homeTeam.setNum(homeTeamNo);
+				
+		Team awayTeam = new Team();
+		awayTeam.setNum(awayTeamNo);
+				
+		Loc loc = new Loc();
+		loc.setNum(locNo);
+		
+		match.setAwayTeam(awayTeam);
+		match.setHomeTeam(homeTeam);
+		match.setLoc(loc);
+		
+		MatchDAO.insertMatch(match);
+		
+		RequestDispatcher rd = request
+				.getRequestDispatcher("/MatchService?method=viewMatchList");
+		rd.forward(request, response);
 	}
 
 	/**
@@ -63,11 +107,19 @@ public class MatchService extends HttpServlet {
 	 * 
 	 * @param request
 	 * @param response
+	 * @throws IOException 
+	 * @throws ServletException 
 	 */
 	public void addMatchForm(HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response) throws ServletException, IOException {
 		/* default generated stub */;
-
+		ArrayList<Team> teamList = TeamDAO.selectTeamList();
+		ArrayList<Loc> locList = LocDAO.selectLocList();
+		request.setAttribute("TEAM_LIST", teamList);
+		request.setAttribute("LOC_LIST",locList);
+		RequestDispatcher rd = request
+				.getRequestDispatcher("/match/addMatch.jsp");
+		rd.forward(request, response);
 	}
 
 	/**
@@ -75,11 +127,24 @@ public class MatchService extends HttpServlet {
 	 * 
 	 * @param request
 	 * @param response
+	 * @throws IOException 
+	 * @throws ServletException 
 	 */
 	public void editMatchForm(HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response) throws ServletException, IOException {
 		/* default generated stub */;
-
+		String matchNo = request.getParameter("matchno");
+		Match match = MatchDAO.selectMatch(matchNo);
+		ArrayList<Team> teamList = TeamDAO.selectTeamList();
+		ArrayList<Loc> locList = LocDAO.selectLocList();
+		int betting = BettingDAO.selectBettingMatchCount(matchNo);
+		request.setAttribute("BETTING", betting);
+		request.setAttribute("TEAM_LIST", teamList);
+		request.setAttribute("MATCH", match);
+		request.setAttribute("LOC_LIST",locList);
+		RequestDispatcher rd = request
+				.getRequestDispatcher("/match/editMatch.jsp");
+		rd.forward(request, response);
 	}
 
 	/**
@@ -87,11 +152,48 @@ public class MatchService extends HttpServlet {
 	 * 
 	 * @param request
 	 * @param response
+	 * @throws IOException 
+	 * @throws ServletException 
 	 */
 	public void editMatch(HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response) throws ServletException, IOException {
 		/* default generated stub */;
-
+		String matchNo = request.getParameter("matchno");
+		String homeTeamNo = request.getParameter("hometeamno");
+		String awayTeamNo = request.getParameter("awayteamno");
+		String winTeamNo = request.getParameter("winteamno");
+		String locNo = request.getParameter("locno");
+		String matchTime = request.getParameter("matchtime");
+		String score = request.getParameter("score");
+		
+		Match match = new Match();
+		match.setNum(matchNo);
+		match.setMatchTime(matchTime);
+		match.setScore(score);
+		
+		Team homeTeam = new Team();
+		homeTeam.setNum(homeTeamNo);
+				
+		Team awayTeam = new Team();
+		awayTeam.setNum(awayTeamNo);
+				
+		Team winTeam = new Team();
+		winTeam.setNum(winTeamNo);
+				
+		Loc loc = new Loc();
+		loc.setNum(locNo);
+		
+		match.setWinTeam(winTeam);
+		match.setAwayTeam(awayTeam);
+		match.setHomeTeam(homeTeam);
+		match.setLoc(loc);
+		
+		MatchDAO.updateMatch(match);
+		
+		RequestDispatcher rd = request
+				.getRequestDispatcher("/MatchService?method=editMatch&matchno="
+						+ matchNo);
+		rd.forward(request, response);
 	}
 
 	/**
@@ -99,11 +201,17 @@ public class MatchService extends HttpServlet {
 	 * 
 	 * @param request
 	 * @param response
+	 * @throws IOException 
+	 * @throws ServletException 
 	 */
 	public void removeMatch(HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response) throws ServletException, IOException {
 		/* default generated stub */;
-
+		String matchNum = request.getParameter("matchno");
+		MatchDAO.deleteMatch(matchNum);
+		RequestDispatcher rd = request
+				.getRequestDispatcher("/match/viewMatchList.jsp");
+		rd.forward(request, response);
 	}
 
 	/**
@@ -123,7 +231,7 @@ public class MatchService extends HttpServlet {
 		}
 		int length = 10;
 
-		ArrayList<Match> matchList = MatchDAO.selectMatchList(length, page);
+		ArrayList<Match> matchList = MatchDAO.selectMatchList(page,length);
 		request.setAttribute("MATCH_LIST", matchList);
 		int matchCount = MatchDAO.selectMatchCount();
 		String pageLinkTag = PageUtil.generate(page, matchCount, length,

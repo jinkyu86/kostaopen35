@@ -32,24 +32,19 @@ public class MatchDAOTest {
 	@Test
 	public void testInsertMatch() {
 		Match match = new Match();
-		match.setMatchTime("2012/04/01");
-		match.setScore("null");
-		
+		match.setMatchTime("2012/04/01 12:00:00");
+				
 		Team hTeam = new Team();
 		hTeam.setNum("1");
 		
 		Team aTeam = new Team();
 		aTeam.setNum("2");
 		
-		Team wTeam = new Team();
-		wTeam.setNum("1");
-		
 		Loc loc = new Loc();
 		loc.setNum("11");
 		
 		match.setHomeTeam(hTeam);
 		match.setAwayTeam(aTeam);
-		match.setWinTeam(wTeam);
 		match.setLoc(loc);
 				
 		MatchDAO.insertMatch(match);
