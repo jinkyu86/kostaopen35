@@ -15,7 +15,7 @@ public class ConnectionUtil {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			System.out.println("JDBC Driver연동 성공");
 			Connection con=DriverManager.getConnection(
-					"jdbc:oracle:thin:@192.168.0.85:1521:XE",
+					"jdbc:oracle:thin:@192.168.0.90:1521:XE",
 					"scott","tiger");
 			return con;
 		} catch (Exception e) {
