@@ -39,5 +39,9 @@
 	   회원삭제
 	    </a>
 	  </p>
+	  <p align="center">
+		 <p align="center">
+		 <a href="/auction/AuctionService?method=viewAuctionList">경매목록 보기</a>
+	</p>
 </body>
 </html>
