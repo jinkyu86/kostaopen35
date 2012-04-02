@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import kr.or.kosta.gooddivision.GoodDivisionDAO;
 import kr.or.kosta.gooddivision.Good_division;
+import kr.or.kosta.photo.Photo;
+import kr.or.kosta.photo.PhotoDAO;
 import kr.or.kosta.recipe.Recipe;
 import kr.or.kosta.recipe.RecipeDAO;
 
@@ -83,11 +85,13 @@ public class GoodService extends HttpServlet {
 		Good good = GoodDAO.selectGood(goodNum);
 		//상품 관련 레시피 조회
 		ArrayList<Recipe> recipeList = RecipeDAO.selectRecipeList(goodNum);
-		
+		ArrayList<Photo> photoList = PhotoDAO.selectGoodPhotoList(goodNum);
+
 		request.setAttribute("GOOD", good);
 		request.setAttribute("GOOD_RECIPELIST", recipeList);
+		request.setAttribute("PHOTO_LIST", photoList);
 		
-		RequestDispatcher rd = request.getRequestDispatcher("/good/viewGood");
+		RequestDispatcher rd = request.getRequestDispatcher("/good/viewGood.jsp");
 		rd.forward(request, response);
 	}
 
@@ -198,5 +202,4 @@ public class GoodService extends HttpServlet {
 		RequestDispatcher rd = request.getRequestDispatcher("/GoodService?method=viewGoodList");
 		rd.forward(request, response);
 	}
-	
 }
