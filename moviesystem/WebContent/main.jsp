@@ -25,6 +25,7 @@
 	<tr>		
 		<!-- 본문 내용 시작 -->
 		<td>
+			<!-- 상영작 순위 시작 -->
 			<div class="main_title" >인기 상영작</div>
 			<table class="table_style" align="center">
 				<tr>
@@ -44,7 +45,9 @@
 					</c:forEach>
 				</tr>
 			</table>
+			<!-- 상영작 순위 끝 -->
 			
+			<!-- 상영작 시작 -->
 			<div class="main_title" style="margin-top:10px;">상영작</div>
 			<table class="table_style" align="center">
 				<tr>
@@ -64,6 +67,29 @@
 					</c:forEach>
 				</tr>
 			</table>
+			<!-- 상영작 끝 -->
+			
+			<!-- 상영 예정작 시작 -->
+			<div class="main_title" style="margin-top:10px;">상영 예정작</div>
+			<table class="table_style" align="center">
+				<tr>
+					<c:forEach var="rankingMovieList" items="${rankingMovieList}" varStatus="n">
+						<td class="main_td">
+							<img src="/moviesystem/movieimg/${rankingMovieList.poster}.jpg" class="main_img" style="margin:5px 0 5px 0"><br/>
+							<c:choose>
+								<c:when test="${fn:length(rankingMovieList.mname)>9}">
+									${fn:substring(rankingMovieList.mname, 0, 8)}
+								</c:when>
+								<c:otherwise>
+									${rankingMovieList.mname}
+								</c:otherwise>
+							</c:choose>
+							<br/>
+						</td>
+					</c:forEach>
+				</tr>
+			</table>
+			<!-- 상영 예정작 끝 -->
 		</td>
 	</tr>
 	<!-- 본문 내용 끝 -->
