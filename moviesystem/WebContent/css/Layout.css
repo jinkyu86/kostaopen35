@@ -23,3 +23,6 @@ a{text-decoration:none;color:#000000;}
 .movieList_img{width:125px;height:176px;}
 .poster_style{border:1px solid #b3b3b3; width:120px;height:171px;}
 .poster_style2{border:1px solid #b3b3b3; width:200px;height:250px;}
+.main_img{width:120px;height:171px;border:1px solid #9191C8;}
+.main_title{text-align:left;font-size:15px;font-weight:bold;}
+.main_td{font-size:10pt;font-weight:bold;text-align:center;width:33%}
