@@ -22,12 +22,12 @@ public class AuctionDAOTest {
 		Auction auction = new Auction(); 
 		Good good = new Good();
 		
-		good.setgNum("2");
+		good.setgNum("18");
 		auction.setsTime("2012/03/28");
 		auction.seteTime("2012/03/29");
 		auction.setCuPrice("100");
 		auction.setImPrice("1000");
-		auction.setSold(false);
+		auction.setSold(true);
 		auction.setsPrice("10");
 		auction.setGood(good);
 		

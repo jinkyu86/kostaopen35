@@ -60,15 +60,13 @@ public class AuctionDAO {
 					+ "sold=?, "
 					+ "cu_price=?," 
 					+ "s_time=to_date(?,'yyyy-mm-dd hh24:mi:ss')," 
-					+ "e_time=? " 
+					+ "e_time=to_date(?,'yyyy-mm-dd hh24:mi:ss')  " 
 					+ "WHERE a_num=?");
 
 			psmt.setString(1, auction.getGood().getgNum());
 			psmt.setString(2, auction.getsPrice());
 			psmt.setString(3, auction.getImPrice());
-			String sold="0";
-			if(auction.isSold()) sold="1";
-			psmt.setString(4, sold);
+			psmt.setBoolean(4, auction.isSold());
 			psmt.setString(5, auction.getCuPrice());
 			psmt.setString(6, auction.getsTime());
 			psmt.setString(7, auction.geteTime());
