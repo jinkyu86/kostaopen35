@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<title>Insert title here</title>
+<title>회원 조회</title>
 </head>
 <body>
 	<h1>회원 조회</h1>
@@ -38,10 +38,11 @@
 	    <a href="/auction/MemberService?method=remove&userid=${MEMBER.userid}">
 	   회원삭제
 	    </a>
-	  </p>
+	   </p> 
+	  
 	  <p align="center">
-		 <p align="center">
-		 <a href="/auction/AuctionService?method=viewAuctionList">경매목록 보기</a>
-	</p>
+	   <a href="/auction/AuctionService?method=viewAuctionList">경매목록보기</a> 
+	  
+		</p>
 </body>
 </html>
