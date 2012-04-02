@@ -8,6 +8,11 @@
 <title>경매정보</title>
 </head>
 <body>
+<script type="text/javascript">
+<c:if test="${ERROR!=null}">
+	alert("${ERROR}");
+</c:if>
+</script>
 <c:choose>
 	<c:when test="${sessionScope.LOGIN_MEMBER==null}">
 		<p align="right">
@@ -44,6 +49,10 @@
 		</tr>
 	</form>
 	</table>
+	<p align="center">
+		 <p align="center">
+		 <a href="/auction/BidService?method=buy&aNum=${AUCTION.aNum }">즉시구매하기</a>
+	</p>
 	 <p align="center">
 		 <p align="center">
 		 <a href="/auction/AuctionService?method=viewAuctionList">경매목록 보기</a>
