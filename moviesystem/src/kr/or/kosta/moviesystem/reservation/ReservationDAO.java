@@ -39,7 +39,7 @@ public class ReservationDAO {
 		    psmt.setString(3,reservation.getScreenTime().getScrnum());
 			psmt.setLong(4,reservation.getResQty());
 			psmt.setLong(5,reservation.getTotalPrice());
-			psmt.setLong(6, 0);
+			psmt.setString(6, "결제대기");
 			psmt.setLong(7,reservation.getSeatnum());
 			psmt.executeUpdate();
 			
@@ -60,7 +60,7 @@ public class ReservationDAO {
 		ArrayList<Reservation>reservationList=new ArrayList<Reservation>();
 		try{
 			con=ConnectionUtil.getConnection();
-			sql="SELECT   m.m_name,s.time,r.seat_num,r.res_date" +
+			sql="SELECT   m.m_name,s.time,r.seat_num,r.res_date,r.res_qty,r.pay_state,r.res_num" +
 					
 					"  FROM  RESERVATION r ,MEMBER mem,"+
 					"                   MOVIE m,SCREENING_TIME s " +
@@ -72,19 +72,25 @@ public class ReservationDAO {
 			psmt=con.prepareStatement(sql,
 					ResultSet.TYPE_SCROLL_INSENSITIVE,
 					ResultSet.CONCUR_READ_ONLY);
-			psmt.setString(1,"%"+memberid+"%");
+			psmt.setString(1,memberid);
 			rs=psmt.executeQuery();//쿼리 결과를 rs에 저장
+			System.out.println("page="+page+"length"+length);
 			if(page>1){
 				rs.absolute((page-1)*length);
 			}
 			//가져온 레코드 개수
 			int getRecordCount=0;
-			while(rs.next()){
+			while(rs.next()&&getRecordCount<length){
+				getRecordCount++;
 				String m_name=rs.getString(1);
 				String time=rs.getString(2);
 				long seatnum=rs.getShort(3);					
 				Date resDate=rs.getDate(4);
-								
+				long resQty=rs.getLong(5);
+				String payState=rs.getString(6);
+				String resnum=rs.getString(7);
+				
+				
 				reservation=new Reservation();
 				
 				Movie movie=new Movie();
@@ -97,6 +103,9 @@ public class ReservationDAO {
 				reservation.setScreenTime(screentime);
 				reservation.setSeatnum(seatnum);
 				reservation.setResDate(resDate);
+				reservation.setResQty(resQty);
+				reservation.setPayState(payState);
+				reservation.setResnum(resnum);
 				
 			
 				reservationList.add(reservation);
@@ -167,12 +176,13 @@ public class ReservationDAO {
 	 * 회원아이디로 찾은 예매목록의 수를 찾을 수 있는 기능
 	 * 
 	 */
-	public int selectReservationCount(String userid) {
+	public static int selectReservationCount(String userid) {
 		Connection con =null;
 		PreparedStatement psmt=null;
 		String sql=null;//쿼리문 저장할 곳
 		ResultSet rs=null;//커리문의 주소를 받아온다.(rs.next()는 쿼리문이있으면 true 없으면 flase
 		int reservationCount=0;
+
 		try{
 			con=ConnectionUtil.getConnection();
 			sql="SELECT count(userid)"+
@@ -183,7 +193,7 @@ public class ReservationDAO {
 			psmt.setString(1,userid);
 			rs=psmt.executeQuery();//쿼리 결과를 rs에 저장
 			
-			
+			System.out.println("userid= "+userid);
 			if(rs.next()){
 				reservationCount=rs.getInt(1);
 			}
@@ -310,7 +320,7 @@ public class ReservationDAO {
 	 * @param userid
 	 * @param resnum
 	 */
-	public static void removeReservation(Reservation reservation) {
+	public static void removeReservation(String resnum) {
 		 Connection con=null;
 		  PreparedStatement psmt=null;
 		  
@@ -320,8 +330,8 @@ public class ReservationDAO {
 			psmt=con.prepareStatement
 					  ("UPDATE RESERVATION SET pay_state=? WHERE res_num=?");
 			
-			   psmt.setLong(1,reservation.getPayState());
-			   psmt.setString(2, reservation.getResnum());
+			   psmt.setString(1,"결제완료");
+			   psmt.setString(2, resnum);
 			   
 			   psmt.executeUpdate();
 			   
@@ -332,6 +342,27 @@ public class ReservationDAO {
 	
 	}
 		
+	public static void cancelReservation(String resnum) {
+		 Connection con=null;
+		  PreparedStatement psmt=null;
+		  
+		  con=ConnectionUtil.getConnection();
+		  
+		  try {
+			psmt=con.prepareStatement
+					  ("UPDATE RESERVATION SET pay_state=? WHERE res_num=?");
+			
+			   psmt.setString(1,"결제취소");
+			   psmt.setString(2, resnum);
+			   
+			   psmt.executeUpdate();
+			   
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+	
+	}
 
 	/**
 	 * 예매목록 업데이트(수정) 기능
