@@ -244,11 +244,23 @@ public class GoodDAO {
 		ArrayList<Good> arrayList = new ArrayList<Good>();
 		String sql="";
 		
+//		select r.good_num, r.recipe_num,
+//		g.name, g.division, g.good_price, g.qty, g.explantion, g.img, g.g_option,
+//		d.g_name
+//		from good_recipe_relation r, good g, good_division d
+//		where r.good_num=g.good_num
+//		and g.division=d.division
+//		and r.recipe_num=1
+
 		try {
 			sql=" select r.good_num, r.recipe_num, " +
-				 " g.name, g.division, g.good_price, g.qty, g.explantion, g.img, g.g_option " +
-				 " from good_recipe_relation r, good g " +
-				 " where r.good_num=g.good_num and r.recipe_num=? ";
+				 " g.name, g.division, g.good_price, g.qty, g.explantion, g.img, g.g_option, " +
+				 " d.g_name "+
+				 " from good_recipe_relation r, good g, good_division d " +
+				 " where r.good_num=g.good_num " +
+				 " and g.division=d.division " +
+				 " and r.recipe_num=? " +
+				 " order by r.good_num ";
 			psmt=con.prepareStatement(sql);
 			psmt.setInt(1, recipeNum);
 			rs=psmt.executeQuery();
@@ -267,6 +279,7 @@ public class GoodDAO {
 				String explantion =rs.getString(7);
 				String img =rs.getString(8);
 				String gOption =rs.getString(9);
+				String gName=rs.getString(10);
 				
 				good.setGoodNum(good_num);
 				recipe.setRecipeNum(recipe_num);
@@ -277,6 +290,7 @@ public class GoodDAO {
 				good.setExplantion(explantion);
 				good.setImg(img);
 				good.setOption(gOption);
+				good_division.setgName(gName);
 				
 				good.setGood_division(good_division);
 				good.setRecipe(recipe);
