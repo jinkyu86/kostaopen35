@@ -29,9 +29,9 @@ public class MemberDAOTest {
 	public void testUpdateMember() {
 		Member member = new Member();
 		member.setUserid("jung");
-		member.setPw("4321");
+		member.setPw("12345");
 		member.setEmail("jungwon87@naver.com");
-		member.setName("Á¤¿ø´Ô");
+		member.setName("Á¤¿ø");
 		member.setCoin("300");
 		member.setEmoney("300");
 		

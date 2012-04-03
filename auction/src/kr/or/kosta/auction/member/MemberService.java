@@ -147,8 +147,7 @@ public class MemberService extends HttpServlet {
 	 */
 	private void editMemberForm(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {				
-				RequestDispatcher  rd=
-						request.getRequestDispatcher("/member/editMember.jsp");
+				RequestDispatcher  rd=	request.getRequestDispatcher("/member/editMember.jsp");
 				rd.forward(request, response);
 	}
 
@@ -169,6 +168,7 @@ public class MemberService extends HttpServlet {
 		//해당ID의 최근 입찰한 5개의 입찰리스트 호출
 		ArrayList<Bid> bidList=BidDAO.selectBidListByID(5, 1, userid);
 		//세션에 정보 저장
+		session.setAttribute("MEMBER", member);
 		session.setAttribute("BID_LIST", bidList);
 		RequestDispatcher rd=
 				request.getRequestDispatcher("/member/viewMember.jsp");
