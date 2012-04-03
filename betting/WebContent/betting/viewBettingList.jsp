@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -9,27 +9,42 @@
 </head>
 <body>
 	<body>
-	<h2 align="center">º£ÆÃ ¸®½ºÆ®</h2>
+	<h2 align="center">ë² íŒ… ë¦¬ìŠ¤íŠ¸</h2>
 	<table border="1" align="center">
 		<tr>
-			<th>º£ÆÃ¹øÈ£</th>
-			<th>°æ±â¹øÈ£</th>
-			<th>ÆÀ</th>
-			<th>¹è´ç·ü</th>
-			<th>¼±ÅÃ·ü</th>
-			<th>´©Àû ¹Ì³×¶ö</th>
-			<th>º£ÆÃÁ¾·á½Ã°£</th>
+			<th>ë² íŒ…ë²ˆí˜¸</th>
+			<th>ê²½ê¸°ë²ˆí˜¸</th>
+			<th>í™ˆ/ì–´ì›¨ì´</th>
+			<th>íŒ€</th>
+			<th>ë°°ë‹¹ë¥ </th>
+			<th>ì„ íƒë¥ </th>
+			<th>ëˆ„ì  ë¯¸ë„¤ë„</th>
+			<th>ë² íŒ…ì¢…ë£Œì‹œê°„</th>
 		</tr>
 		<c:forEach var="betting" items="${BETTING_LIST }">
 		<tr>
 			<td>${betting.num}</td>
 			<td>${betting.match.num}</td>
-			
-			<td>${betting.match.awayTeam.name}</td>
-			<td>${betting.match.homeTeam.name}</td>
+			<c:choose>
+			 	<c:when test="${betting.distnum == '1'}">
+			 		<td>í™ˆ</td>
+				</c:when>
+				<c:otherwise>
+					<td>ì–´ì›¨ì´</td>
+				</c:otherwise>
+			</c:choose>
+			<c:choose>
+			 	<c:when test="${betting.distnum == '1'}">
+			 		<td>${betting.match.homeTeam.name}</td>
+				</c:when>
+				<c:otherwise>
+					<td>${betting.match.awayTeam.name}</td>
+				</c:otherwise>
+			</c:choose>
 			<td>${betting.batRating}</td>
 			<td>${betting.seleRating}</td>
 			<td>${betting.totMineral}</td>
+			<td>${betting.match.matchTime}</td>
 		</tr>
 		</c:forEach>
 	</table>
