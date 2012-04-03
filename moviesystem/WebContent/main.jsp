@@ -35,10 +35,10 @@
 							<span title="${rankingMovieList.mname}">
 								<c:choose>
 									<c:when test="${fn:length(rankingMovieList.mname)>9}">
-										${fn:substring(rankingMovieList.mname, 0, 8)}
+										<a href="/moviesystem/MovieService?method=viewMovie&gubun=&mnum=${rankingMovieList.mnum}">${fn:substring(rankingMovieList.mname, 0, 8)}</a>
 									</c:when>
 									<c:otherwise>
-										${rankingMovieList.mname}
+										<a href="/moviesystem/MovieService?method=viewMovie&gubun=&mnum=${rankingMovieList.mnum}">${rankingMovieList.mname}</a>
 									</c:otherwise>
 								</c:choose>
 							</span>
@@ -59,10 +59,10 @@
 							<span title="${screenMovieList.mname}">
 								<c:choose>
 									<c:when test="${fn:length(screenMovieList.mname)>9}">
-										${fn:substring(screenMovieList.mname, 0, 8)}
+										<a href="/moviesystem/MovieService?method=viewMovie&gubun=screen&mnum=${screenMovieList.mnum}">${fn:substring(screenMovieList.mname, 0, 8)}</a>
 									</c:when>
 									<c:otherwise>
-										${screenMovieList.mname}
+										<a href="/moviesystem/MovieService?method=viewMovie&gubun=screen&mnum=${screenMovieList.mnum}">${screenMovieList.mname}</a>
 									</c:otherwise>
 								</c:choose>
 							</span>
@@ -83,10 +83,10 @@
 							<span title="${scheduleMovieList.mname}">
 							<c:choose>
 								<c:when test="${fn:length(scheduleMovieList.mname)>9}">
-									${fn:substring(scheduleMovieList.mname, 0, 8)}
+									<a href="/moviesystem/MovieService?method=viewMovie&gubun=schedule&mnum=${scheduleMovieList.mnum}">${fn:substring(scheduleMovieList.mname, 0, 8)}</a>
 								</c:when>
 								<c:otherwise>
-									${scheduleMovieList.mname}
+									<a href="/moviesystem/MovieService?method=viewMovie&gubun=schedule&mnum=${scheduleMovieList.mnum}">${scheduleMovieList.mname}</a>
 								</c:otherwise>
 							</c:choose>
 							</span>
