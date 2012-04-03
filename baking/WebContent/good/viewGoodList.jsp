@@ -12,7 +12,14 @@ pageEncoding="utf-8"%>
 </head>
 <ul>	
 	<div ALIGN="right">
+	<c:choose> 
+		<c:when test="${sessionScope.member==null}">
 		<a href="/baking/member/loginForm.jsp">로그인</a>
+		</c:when>
+		<c:otherwise>
+		<a href="/baking/MemberService?method=logout">로그아웃</a>
+		</c:otherwise>
+	</c:choose>
 		<a href="">회원가입</a>
 	</div>
 <body>
@@ -40,7 +47,12 @@ pageEncoding="utf-8"%>
 <section id="content">	
 	<a href="/baking/GoodService?method=viewDivisionGoodList&division=1">쿠키</a>
 	<a href="/baking/GoodService?method=viewDivisionGoodList&division=2">케이크</a>  
-	<a href="/baking/GoodService?method=viewDivisionGoodList&division=3">초콜릿</a>				
+	<a href="/baking/GoodService?method=viewDivisionGoodList&division=3">초콜릿</a>
+	<c:if test="${sessionScope.member.memberid=='ADMIN'}">
+		<center>
+		<a href="/baking/good/addGood.jsp">상품등록</a>
+		</center>
+	</c:if>
 <ul class="column">			        
 	<c:forEach var="good" items="${GOOD_LIST}">        
 	<li>        
