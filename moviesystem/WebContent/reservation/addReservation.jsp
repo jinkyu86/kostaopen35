@@ -7,7 +7,13 @@
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>예매하기</title>
 <script src="http://code.jquery.com/jquery-1.7.1.js"></script>
+<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.js"></script>
+<script src="jquery.validate.password.js"></script>
 <script type="text/javascript">
+
+
+
+
 
 	$(document).ready(function(){
 		var mnum = $("select[name:mnum] option:selected").val();
@@ -21,7 +27,7 @@
 					for(var i=0; i<length; i++){
 						//alert(data[i].scrnum);
 						var option = "<option value='"+ data[i].scrnum +"'>"+ data[i].time +"</option>";
-						alert(option);
+						//alert(option);
 						$("#scrnum").append(option);
 					}
 					
@@ -51,8 +57,13 @@
 		});		
 
 	
+
+		
 		
 });
+	
+	
+
 </script>
 
 <link rel="stylesheet" href="/moviesystem/css/Layout.css">
@@ -78,7 +89,7 @@
 
 
 
-	<form action="/moviesystem/ReservationService" method="post">
+	<form id="my_form" action="/moviesystem/ReservationService" method="post">
 	<input type="hidden" name="method" value ="addReservation"/>
 		<table border="1" align="center">
 
@@ -119,8 +130,27 @@
 				
 			</tr>
 			<tr>
-				<td>수량</td>
-				<td><input type="text" name="resQty"></td>
+			
+				<td><label >수량</label></td>
+				<td><select name="resQty" id="resQty">
+				<option value="1">       
+							1
+				</option>
+				<option value="2">       
+							2
+				</option>
+				<option value="3">       
+							3
+				</option>
+				<option value="4">       
+							4
+				</option>
+				<option value="5">       
+							5
+				</option>
+				
+				</select></td>
+			
 			</tr>
 
 			
