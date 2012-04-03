@@ -1,52 +1,62 @@
 package kr.or.kosta.moviesystem.screentime;
 
-public class ScreenTimeService {
+import java.io.IOException;
+import java.util.ArrayList;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+/**
+ * Servlet implementation class ScreenTimeService
+ */
+public class ScreenTimeService extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public ScreenTimeService() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
 
 	/**
-	 * 전체 상영시간 리스트
-	 * 
-	 * @param request
-	 * @param response
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	public void viewScreeningTimeList(HttpServletRequest request,
-			HttpServletResponse response) {
-		/* default generated stub */;
-		return null;
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doPost(request,response);
 	}
 
 	/**
-	 * 선택한 상영시간을 확인
-	 * 
-	 * @param request
-	 * @param response
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	public void viewScreeningTime(HttpServletRequest request,
-			HttpServletResponse response) {
-		/* default generated stub */;
-		return null;
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("utf-8");//우리는 utf-8로 사용한다.
+		
+		String method=request.getParameter("method");
+		System.out.println(method);
+		if("viewScreenTimeListBymnum".equals(method)){
+			viewScreenTimeListBymnum(request,response);
+		}
+	}
+	
+	private void viewScreenTimeListBymnum(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		String mnum = request.getParameter("mnum");
+		System.out.println("mnum= "+mnum);
+		ArrayList<ScreenTime>screenTimeList=ScreenTimeDAO.selectScreen(mnum);
+		request.setAttribute("SCREENTIME_LIST",screenTimeList);
+		System.out.println("screenTimeList = "+screenTimeList);
+		
+		RequestDispatcher rd=request.getRequestDispatcher(
+		"/reservation/viewScreenTimeListBymnum.jsp");
+		//4.JSP로 페이지 이동
+		rd.forward(request, response);
+		
+		
 	}
 
-	/**
-	 * 상영시간 추가  폼
-	 * 
-	 * @param request
-	 * @param response
-	 */
-	public void addScreeningTimeform(HttpServletRequest request,
-			HttpServletResponse response) {
-		/* default generated stub */;
-		return null;
-	}
-
-	/**
-	 * 상영시간 추가
-	 * 
-	 * @param request
-	 * @param response
-	 */
-	public void addScreeningTime(HttpServletRequest request,
-			HttpServletResponse response) {
-		/* default generated stub */;
-		return null;
-	}
 }
