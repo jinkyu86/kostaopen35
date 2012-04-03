@@ -40,7 +40,7 @@
 		${reservation.screenTime.time}
 		</td>
 		<td>${reservation.resQty}</td>
-		<td>${reservation.seatnum}</td>
+		<td>${reservation.seatnum}${finalSeatNum}</td>
 		<td>${reservation.totalPrice}</td>
 	</tr>
 </table>

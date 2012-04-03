@@ -51,8 +51,9 @@
 		<tr>
 		<td>${reservation.movie.mname}</td>
 		<td>
-		<%-- <a href="/20120305/StudentService?method=viewStudent&studno=${student.studno}">--%>
+		<a href="/moviesystem/ReservationService?method=viewReservationByResNumForm&resnum=${reservation.resnum}&select=${0}">
 		${reservation.screenTime.time}
+		</a>
 		</td>
 		<td>${reservation.seatnum}</td>
 		<td>${reservation.resQty}</td>
