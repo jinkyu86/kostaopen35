@@ -62,8 +62,6 @@ $(document).ready(function(){
 		<td>
 			<div class="menu_title" >개인정보수정</div>
 			<table class="table_style" align="right">
-		<!-- <form id="my_form" action="/moviesystem/LOGIN_MEMBERService" method="post">
-		<input type="hidden" name="method" value="editLOGIN_MEMBER"/> -->
 		 <form id="my_form" action="/moviesystem/MemberService" method="post">
 		<input type="hidden" name="method" value="editMember"/>
 		
