@@ -136,7 +136,6 @@ public class MemberService extends HttpServlet {
 				
 				//3.회원정보를 수정하는 메서드 호출
 				MemberDAO.updateMember(member);
-			//	session.setAttribute("MEMBER",member);
 				//4.회원정보 조회화면으로 이동 객체 생성
 				RequestDispatcher rd=request.getRequestDispatcher("/MemberService?method=viewMember");
 				rd.forward(request, response);
@@ -147,14 +146,7 @@ public class MemberService extends HttpServlet {
 	 * @param response
 	 */
 	private void editMemberForm(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-			//1.수정할 회원의 ID 리턴
-				String userid=request.getParameter("userid");
-				//2.수정할 회원의 정보 조회
-				Member member=MemberDAO.selectMember(userid);
-				//4.request에 저장
-				request.setAttribute("MEMBER", member);
-				//5./member/editMember.jsp이동 객체 생성
+			HttpServletResponse response) throws ServletException, IOException {				
 				RequestDispatcher  rd=
 						request.getRequestDispatcher("/member/editMember.jsp");
 				rd.forward(request, response);
@@ -177,7 +169,6 @@ public class MemberService extends HttpServlet {
 		//해당ID의 최근 입찰한 5개의 입찰리스트 호출
 		ArrayList<Bid> bidList=BidDAO.selectBidListByID(5, 1, userid);
 		//세션에 정보 저장
-		session.setAttribute("MEMBER",member);
 		session.setAttribute("BID_LIST", bidList);
 		RequestDispatcher rd=
 				request.getRequestDispatcher("/member/viewMember.jsp");
