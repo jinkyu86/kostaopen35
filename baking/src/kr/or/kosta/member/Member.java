@@ -171,6 +171,30 @@ public class Member {
 				+ ", telNumber=" + telNumber + "]";
 	}
 
+	public Member(String memberid, String password, String name,
+			String regiNumber, String pwHint, String pwAnswer, String zipcode,
+			String address, String strAddress, String email,
+			String phoneNumber, String telNumber) {
+		super();
+		this.memberid = memberid;
+		this.password = password;
+		this.name = name;
+		this.regiNumber = regiNumber;
+		this.pwHint = pwHint;
+		this.pwAnswer = pwAnswer;
+		this.zipcode = zipcode;
+		this.address = address;
+		this.strAddress = strAddress;
+		this.email = email;
+		this.phoneNumber = phoneNumber;
+		this.telNumber = telNumber;
+	}
+
+	public Member() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 //	private Order member;
 
 //	private Myrecipe member;

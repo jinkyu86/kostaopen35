@@ -1,5 +1,12 @@
 package kr.or.kosta.member;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import kr.or.kosta.util.ConnectionUtil;
+
 public class MemberDAO {
 
 	/**
@@ -53,5 +60,29 @@ public class MemberDAO {
 	public void updateMember(Member member) {
 		/* default generated stub */;
 //		return null;
+	}
+	
+	public static Member login(String memberid,String password){
+		Member member=null;
+		Connection con=null;
+		PreparedStatement psmt=null;
+		ResultSet rs=null;
+		String sql="select memberid,password,name,regi_number,pw_hint,pw_answer,zipcode,address,str_address,email,phone_number,tel_number"+
+				     " from member"+
+				     " where memberid=? and password=?";
+		try {
+			con=ConnectionUtil.getConnection();
+			psmt=con.prepareStatement(sql);
+			psmt.setString(1, memberid);
+			psmt.setString(2, password);
+			rs=psmt.executeQuery();
+			if(rs.next()){
+				member = new Member(memberid,password,rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8),rs.getString(9),rs.getString(10));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return member;
 	}
 }
