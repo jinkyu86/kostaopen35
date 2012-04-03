@@ -8,6 +8,8 @@
 <title>Insert title here</title>
 </head>
 <body>
+
+
 <h1 align="center">상품추가</h1>
 	<form action="/baking/GoodService" method="post">
 	<input type="hidden" name="method" value="addGood">
@@ -36,7 +38,7 @@
 				<td><select name="division">
 						<c:forEach var="good_division" items="${DIVISION_LIST}">
 					<option value="${good_division.division }">
-							$[good_division.gName]
+							${good_division.gName}
 					</option>
 						</c:forEach>
 				</select>

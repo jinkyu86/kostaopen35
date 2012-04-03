@@ -5,14 +5,14 @@ pageEncoding="utf-8"%>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title></title>
+<title>상품목록</title>
 <link rel="stylesheet" href="/baking/styles.css" type="text/css" media="screen" />	
 <link rel="stylesheet" type="text/css" href="print.css" media="print" />
 <!--[if IE]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->	
 </head>
 <ul>	
 	<div ALIGN="right">
-		<a href="/baking/member/loginForm.jsp">로그인</a>
+		<a href="/baking/member/loginForm.jsp">로그인</a>/
 		<a href="">회원가입</a>
 	</div>
 <body>
@@ -42,10 +42,10 @@ pageEncoding="utf-8"%>
 	<a href="/baking/GoodService?method=viewDivisionGoodList&division=2">케이크</a>  
 	<a href="/baking/GoodService?method=viewDivisionGoodList&division=3">초콜릿</a>				
 <ul class="column">			        
-	<c:forEach var="good" items="${GOOD_LIST}">        
+	<c:forEach var="good" items="${viewGoodList}">        
 	<li>        
 	<section class="block">							
-	<a href="/baking/GoodService?method=viewGood&goodNum=${good.goodNum}" ><img src="/baking/img/${good.good_division.gName }/${good.img}"/></a>				
+	<a href="/baking/GoodService?method=viewGood&goodNum=${good.goodNum}" ><img src="/baking/img/${good.good_division.gName }/${good.img}"/></a>
 	<center><h5>${good.name }</h5>	</center>														
 	<center><p>${good.goodPrice }</p></center>			        
 	</section>			    
