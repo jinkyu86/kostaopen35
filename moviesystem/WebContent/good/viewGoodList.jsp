@@ -50,7 +50,9 @@
 	</tr>
 	
 </table>
-
+<p align="center">
+	${PAGE_LINK_TAG}
+</p>
 
 </body>
 </html>

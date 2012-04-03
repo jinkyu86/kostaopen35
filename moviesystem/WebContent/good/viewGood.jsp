@@ -25,9 +25,9 @@ $(document).ready(function(){
 				range:"1 이상 100 이하의 값을 입력해주세요."
 			}
 		}
-		
 	});
 });
+
 </script>
 </head>
 <body>
@@ -42,11 +42,13 @@ $(document).ready(function(){
 	<!-- 상단 메뉴 끝 -->
 </table>
 
-<h1>${GOOD.gname}</h1>
 
-<table border="1">
+<table border="1" align="center">
 	<tr>
-		<td rowspan=2><img src="/moviesystem/gphoto/${GOOD.photo}" width="200" height="200"></td>
+		<td rowspan=3><img src="/moviesystem/gphoto/${GOOD.photo}" width="200" height="200"></td>
+		<td>상품명</td><td>${GOOD.gname}</td>
+	</tr>
+	<tr>
 		<td>상품 가격</td><td>${GOOD.gprice}</td>
 	</tr>
 	<tr>
@@ -55,12 +57,17 @@ $(document).ready(function(){
 
 </table>
 
-<form action="/moviesystem/GoodService"method="post" id="my_form">
-	<input type="hidden"name="method"value="addCartList"/>
-	수량 : <input type="text"name="qty" value="1" id="qty"/><br/>
-	<input type="hidden"name="gnum"value="${GOOD.gnum}"/>
-	<input type="submit" value="장바구니 담기"/>
-</form>
-
+<table border="0" align="center">
+	<form action="/moviesystem/GoodService"method="post" id="my_form" align="center">
+		<input type="hidden"name="method"value="addCartList"/>
+		<input type="hidden"name="gnum"value="${GOOD.gnum}"/>
+		<tr>
+			<td  width="300" align="center">수량 : <input type="text"name="qty" value="1" id="qty"size="3"/><br/><div id="message"/></td>
+		</tr>
+		<tr>
+			<td align="center"><input type="submit" value="장바구니 담기" id="addCartButton"/></td>
+		</tr>
+	</form>
+</table>
 </body>
 </html>

@@ -46,8 +46,8 @@ $(document).ready(function(){
 	<tr>
 		<th>이미지</th>
 		<th>상품명</th>
-		<th>단가</th>
-		<th>개수</th>	
+		<th >단가</th>
+		<th width=300>개수</th>	
 		<th>총가격</th>
 		<th>기타</th>	
 		
@@ -66,7 +66,7 @@ $(document).ready(function(){
 		</td>
 		<td>
 			<form action="/moviesystem/GoodService" method="post" id="my_form">
-				<input type="text" name="qty" value="${buy.qty}" id="qty"/>
+				<input type="text" name="qty" value="${buy.qty}" id="qty"size=2/>
 				<input type="hidden" name="method" value="editCartList"/>
 				<input type="hidden" name="index" value="${i.count-1}"/>	
 				<br/>
@@ -86,6 +86,7 @@ $(document).ready(function(){
 	</tr>
 	</c:forEach>
 </table>
+
 
 <table border="0" align="center"  width="400">
 	<tr align="center">
