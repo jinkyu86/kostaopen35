@@ -307,9 +307,52 @@ public class ReservationDAO {
 	 * @param userid
 	 * @param resnum
 	 */
-	public Reservation selectReservation(String userid, int resnum) {
-		/* default generated stub */;
-		return null;
+	public static Reservation selectReservation(String resnum) {
+		Connection con =null;
+		PreparedStatement psmt=null;
+		String sql=null;//쿼리문 저장할 곳
+		ResultSet rs=null;//커리문의 주소를 받아온다.(rs.next()는 쿼리문이있으면 true 없으면 flase
+		Reservation reservation=new Reservation();
+		try{
+			con=ConnectionUtil.getConnection();
+			sql="SELECT   m.m_name,s.time,r.seat_num,r.res_qty,r.total_price" +
+					
+					"  FROM  RESERVATION r ,"+
+					"                   MOVIE m,SCREENING_TIME s " +
+					"  WHERE  r.scr_num=s.scr_num" +
+					"                      AND r.m_num=m.m_num " +
+					"                      AND  r.res_num=?" +
+					"    ORDER BY r.res_date  DESC";
+			//rs.absolute()가  가능하도록 설정
+			psmt=con.prepareStatement(sql);
+			psmt.setString(1,resnum);
+			rs=psmt.executeQuery();//쿼리 결과를 rs에 저장
+			if(rs.next()){
+			String mname=rs.getString(1);
+			String time=rs.getString(2);
+			long seatnum=rs.getLong(3);
+			long resqty=rs.getLong(4);
+			long totalPrice=rs.getLong(5);
+			
+			
+			
+			Movie movie=new Movie();
+			ScreenTime screenTime=new ScreenTime();
+			
+			
+			movie.setMname(mname);
+			reservation.setMovie(movie);
+			screenTime.setTime(time);
+			reservation.setScreenTime(screenTime);
+			reservation.setSeatnum(seatnum);
+			reservation.setResQty(resqty);
+			reservation.setTotalPrice(totalPrice);
+			}
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
+		
+		return reservation;
 	}
 
 	/**
