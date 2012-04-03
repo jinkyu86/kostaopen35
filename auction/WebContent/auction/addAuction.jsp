@@ -14,7 +14,20 @@
 		<table>
 		<tr>
 		<td>물품번호</td>
-		<td><input type ="text" name="gNum"></td>
+		<td><input type ="text" name="gNum"value="${GOOD.gNum}"
+				 readOnly="readOnly" /></td>
+		</tr>
+		<tr>
+		<td>물품명</td>
+		<td><input type="text" name="gName" value="${GOOD.gName}" /></td>
+		</tr>
+		<tr>
+		<td>상세설명</td>
+		<td><textarea name="detail" >${GOOD.detail}</textarea></td>
+		</tr>
+		<tr>
+		<td>이미지</td>
+		<td><img src="/auction/gphoto/${GOOD.img }" height="100" width="100"></td>
 		</tr>
 		
 		<tr>
