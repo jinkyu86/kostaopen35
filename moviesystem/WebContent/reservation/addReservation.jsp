@@ -55,14 +55,32 @@
 });
 </script>
 
-
+<link rel="stylesheet" href="/moviesystem/css/Layout.css">
+<script src="http://code.jquery.com/jquery-1.7.1.js"></script>
+<script src="/moviesystem/js/common.jsp"></script>
 
 </head>
 <body>
-<h1 align="center">예매하기</h1>
+<table width="90%" align="center">
+	<!-- 상단 메뉴 시작 -->
+	<tr>
+		<td>
+			<jsp:include page="/common/top.jsp"></jsp:include>
+		</td>
+	</tr>
+	<!-- 상단 메뉴 끝 -->
+	
+	<tr>		
+		<!-- 본문 내용 시작 -->
+		<td>
+
+
+
+
+
 	<form action="/moviesystem/ReservationService" method="post">
 	<input type="hidden" name="method" value ="addReservation"/>
-		<table>
+		<table border="1" align="center">
 
 			<tr>
 				
@@ -117,5 +135,17 @@
 		</table>
 	
 	</form>
+	
+		</td>
+	</tr>
+	<!-- 본문 내용 끝 -->
+	<!-- 하단 내용 시작 -->
+	<tr>
+		<td>
+			<jsp:include page="/common/footer.jsp"></jsp:include>
+		</td>
+	</tr>
+	<!-- 하단 내용 끝 -->
+</table>	
 </body>
 </html>
