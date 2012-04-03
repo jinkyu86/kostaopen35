@@ -45,10 +45,50 @@ public class ChangeService extends HttpServlet {
 			matchChange(request,response);
 		}else if("cancelChange".equals(method)){
 			cancelChange(response,request);
+		}else if("matchChangeList".equals(method)){
+			matchChangeList(request,response);
+		}else if("completeChange".equals(method)){
+			completeChange(request,response);
 		}
 	}
 	
 	
+
+	private void completeChange(HttpServletRequest request,
+			HttpServletResponse response) throws IOException,ServletException {
+		String BoardNo=request.getParameter("BoardNo");
+		String ChangeNo=request.getParameter("ChangeNo");
+		
+		
+		ChangeDAO.completeChange(Integer.parseInt(ChangeNo), Integer.parseInt(BoardNo));
+		
+		RequestDispatcher rd=request.getRequestDispatcher("/member/loginafter.jsp");
+		rd.forward(request, response);
+	}
+
+	private void matchChangeList(HttpServletRequest request,
+			HttpServletResponse response) throws IOException,ServletException{
+		HttpSession session=request.getSession();
+		Member member=(Member)session.getAttribute("LOGIN_EMAIL");
+		int page=1;
+		int length=10;
+		if(request.getParameter("page")!=null){
+			page=Integer.parseInt(request.getParameter("page"));
+		}
+		if(member==null){
+			RequestDispatcher rd=request.getRequestDispatcher("");
+			rd.forward(request, response);
+			return;
+		}
+		String memberEmail=member.getEmail();
+		ArrayList<Change>matchList=ChangeDAO.selectMatchList(length, page, memberEmail);
+		session.setAttribute("MATCH_LIST", matchList);
+		int demandChangeCount=ChangeDAO.selectChangeRequestCount(memberEmail);
+		String pageLinkTag=PageUtil.generate(page, demandChangeCount, length, "/bookchange/ChangeService?method=matchChangeList");
+		request.setAttribute("PAGE_LINK_TAG", pageLinkTag);
+		RequestDispatcher rd=request.getRequestDispatcher("/change/matchChangeList.jsp");
+		rd.forward(request, response);
+	}
 
 	private void cancelChange(HttpServletResponse response,
 			HttpServletRequest request) throws ServletException,IOException{
