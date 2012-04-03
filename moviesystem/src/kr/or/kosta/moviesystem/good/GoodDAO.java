@@ -16,7 +16,7 @@ public class GoodDAO {
 	 * @param length
 	 * @param page
 	 */
-	public static ArrayList<Good> selectGoodList(int length, int page) {
+	public static ArrayList<Good> selectGoodList() {
 		/* default generated stub */
 		Connection con=null;
 		PreparedStatement psmt=null;

@@ -25,7 +25,7 @@ public class GoodDAOTest {
 	
 	@Test
 	public void testselectGood() {
-		Good good = GoodDAO.selectGood("2");
+		Good good = GoodDAO.selectGood("4");
 		System.out.println(good);
 		
 	}
