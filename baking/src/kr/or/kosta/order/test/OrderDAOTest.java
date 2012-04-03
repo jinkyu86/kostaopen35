@@ -33,12 +33,12 @@ public class OrderDAOTest {
 //		System.out.println(order);
 //	}
 
-//	@Test
-//	public void testSelectOrder(){
-//		Order order=new Order();
-//		order=OrderDAO.selectOrder(1);
-//		System.out.println(order);
-//	}
+	@Test
+	public void testSelectOrder(){
+		Order order=new Order();
+		order=OrderDAO.selectOrder(1);
+		System.out.println(order);
+	}
 	
 //	@Test
 //	public void testDeleteOrder(){
@@ -65,9 +65,9 @@ public class OrderDAOTest {
 //		OrderDAO.updateQty(order);
 //	}
 	
-	@Test
-	public void testOrderList(){
-		ArrayList<Order>orderList=OrderDAO.selectOrderList("yubi");
-		System.out.println(orderList);
-	}
+//	@Test
+//	public void testOrderList(){
+//		ArrayList<Order>orderList=OrderDAO.selectOrderList("yubi");
+//		System.out.println(orderList);
+//	}
 }
