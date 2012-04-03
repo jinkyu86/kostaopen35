@@ -37,8 +37,8 @@
 <div class="menu">			
 <ul>			
 	<li><a href="">홈</a></li>			
-	<li><a href="">상품</a></li>				
-	<li><a href="/RecipeService?method=viewRecipeList">레시피</a></li>			
+	<li><a href="">상품</a></li>		
+	<li><a href="/baking/RecipeService?method=viewRecipeList">레시피</a></li>			
 	<li><a href="">장바구니</a></li>			
 	<li><a href="">주문조회</a></li>				
 	<li><a href="">마이레시피</a></li>		
@@ -50,19 +50,18 @@
 
 <!-- content -->
 <section id="content">
-	<a href="">- 쿠키</a>&nbsp&nbsp      
-	<a href="">- 케이크</a>&nbsp&nbsp      
-	<a href="">- 초콜릿</a>			
+	<a href="/baking/RecipeService?method=recipeRelativeGoodList&division=1">- 쿠키</a>&nbsp&nbsp      
+	<a href="/baking/RecipeService?method=recipeRelativeGoodList&division=2">- 케이크</a>&nbsp&nbsp      
+	<a href="/baking/RecipeService?method=recipeRelativeGoodList&division=3">- 초콜릿</a>			
 <ul class="column">
 			        
 	<c:forEach var="recipe" items="${RECIPE_LIST}">
 		<li>        
 		<section class="block">							
 			<a href="/baking/RecipeService?method=viewRecipe=${recipe.recipeNum }">
-			<img src="/baking/img/recipe_${recipe.good_division.gName}/${recipe.img}" border=0  /></a> 										
-			<h5><center>${recipe.title}</center></h5>
-			${recipe.good_division.gName}
-			${recipe.img }																	        
+			<img src="/baking/img/recipe_${recipe.good_division.gName}/${recipe.img}" border=0  /></a> 	
+			<br/>									
+			<h5><center>${recipe.title}</center></h5>																	        
 		</section>			    
 		</li>
 	</c:forEach>
