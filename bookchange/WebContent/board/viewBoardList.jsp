@@ -38,6 +38,7 @@ alert("${COMPLETE}");
    	로그아웃
    	</a><br/>
    	<a href="/bookchange/BoardService?method=addBoardForm">물품등록</a><br/>
+   	<a href="/bookchange/member/loginafter.jsp">메인으로</a>
    </c:otherwise>
  </c:choose>
 <h1 align="center">게시판</h1>	
