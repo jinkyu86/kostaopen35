@@ -91,8 +91,7 @@ public class AuctionService extends HttpServlet {
 		ArrayList<Good>goodList=
 				GoodDAO.selectGoodList();
 		//2.request에 저장
-		request.setAttribute("GOOD_LIST",
-				goodList);
+		request.setAttribute("GOOD_LIST",goodList);
 		//3.경매 추가 페이지 이동 객체 생성
 		RequestDispatcher rd=
 				request.getRequestDispatcher(
