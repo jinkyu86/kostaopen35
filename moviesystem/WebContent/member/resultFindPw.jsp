@@ -13,7 +13,7 @@
 	<script type="text/javascript">
 		$(document).ready(function(){
 			$("#member_info").css('background-color','#C4E2FF');
-			$("#member_login").css('background-color','#C4E2FF');
+			$("#member_findPw").css('background-color','#C4E2FF');
 		});
 	</script>
 </head>

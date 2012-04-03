@@ -95,15 +95,28 @@ $(document).ready(function(){
 		</tr>
 		<tr>
 			<td>주소</td>
-			<td><input type="text" name="addr" value="${LOGIN_MEMBER.addr }"/></td>
+			<td><textarea name="addr" >${LOGIN_MEMBER.addr}</textarea></td>
 		</tr>
-		<tr>
-			<td>
-				<input type="submit" value="개인정보 수정"/>
-			</td>
-		</tr>
-		</form>
+		
 	</table>
+	<table align="center">
+			<tr>
+				<td>
+				<input type="submit" value="개인정보 수정"/>
+				</td>
+			</tr>
+	</form>
+	</table>
+	<table align="center">
+		<form action="/moviesystem/MemberService" method="post">
+			<input type="hidden" name="method" value="dropMemberForm"/>
+			<tr>
+				<td>
+				<input type="submit" value="회원탈퇴"/>
+				</td>
+			</tr>
+			</form>
+		</table>
 	</td>
 	</tr>
 </body>

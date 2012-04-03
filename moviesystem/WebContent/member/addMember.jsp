@@ -122,11 +122,21 @@
 			</tr>
 			<tr>
 				<td colspan="2" >
-					<input type="submit" value="회원가입"/>
+					
 				</td>
 			</tr>
-				</form>
+			</table>
+				
+			<table  align="center">
+			<tr>
+				<td>
+					<input type="submit" value="회원가입"/>
+					
+				</td>
+			</tr>
+
 		</table>
+		</form>
 		</td>
 		</tr>
 
