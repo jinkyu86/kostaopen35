@@ -6,6 +6,13 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>회원 조회</title>
+<script>
+	function removemember(){
+		var ret;
+		ret=confirm("정말 탈퇴하시겠습니까?");
+		return ret;
+	}
+</script>
 </head>
 <body>
 	<h1 align="center">회원 조회</h1>
@@ -57,7 +64,7 @@
 	    </a>
 	  </p>
 	  <p align="center">
-	    <a href="/auction/MemberService?method=removeMember&userid=${MEMBER.userid}">
+	    <a href="/auction/MemberService?method=removeMember&userid=${MEMBER.userid}" onclick="removemember()">
 	   회원탈퇴
 	    </a>
 	   </p> 
