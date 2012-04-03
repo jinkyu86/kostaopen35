@@ -4,7 +4,14 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<title>Insert title here</title>
+<title>게시물 조회</title>
+<script>
+	function deleteboard(){
+		var ret;
+		ret=confirm("정말 삭제하시겠습니까?");
+		return ret;
+	}
+</script>
 </head>
 <body>
 	<h1>게시물 조회</h1>
@@ -28,7 +35,7 @@
 	    </a>
 	  </p>
 	  <p align="center">
-	    <a href="/auction/BoardService?method=removeBoard&bNum=${BOARD.bNum }">
+	    <a href="/auction/BoardService?method=removeBoard&bNum=${BOARD.bNum }" onclick="deleteboard()">
 	    게시물 삭제
 	    </a>
 	  </p>
