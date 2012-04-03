@@ -42,7 +42,7 @@
 	<tr>
 		<td><img src="/auction/gphoto/${bid.auction.good.img }" height="100" width="100"></td>
 		<td align="center">
-			<a href="/auction/GoodService?method=viewAuction&aNum=${bid.auction.aNum }">
+			<a href="/auction/AuctionService?method=viewAuction&aNum=${bid.auction.aNum }">
 				${bid.auction.good.gName }
 			</a>
 		</td>
