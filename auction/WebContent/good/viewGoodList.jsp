@@ -32,5 +32,8 @@
 	물품 추가
 	</a>
 </p>
+<p align="center">
+	   <a href="/auction/AuctionService?method=viewAuctionList">경매목록보기</a> 
+</p>
 </body>
 </html>
