@@ -37,12 +37,12 @@ public class ScreenTimeDAO {
 		ArrayList<ScreenTime>screentimeList=new ArrayList<ScreenTime>();
 		try {
 			con=ConnectionUtil.getConnection();
-			sql="SELECT m.m_name,s.time" +
+			sql="SELECT m.m_name,s.time,s.scr_num,m.m_num" +
 					
 					"  FROM  MOVIE m,SCREENING_TIME s " +
 					"  WHERE  s.m_num=m.m_num " +
 					"                      AND  m.m_num=?";
-			
+		
 			
 				psmt=con.prepareStatement(sql);
 				psmt.setString(1,mnum);
@@ -50,15 +50,21 @@ public class ScreenTimeDAO {
 				while(rs.next()){
 					String m_name=rs.getString(1);
 					String time=rs.getString(2);
+					String scrnum=rs.getString(3);
+					mnum=rs.getString(4);
 								
 					Movie movie=new Movie();
 					screentime=new ScreenTime();
 					
 					movie.setMname(m_name);
+					movie.setMnum(mnum);
 					screentime.setMovie(movie);
-					screentime.setTime(time);					
+					screentime.setTime(time);			
+					screentime.setScrnum(scrnum);
+					
 				
 					screentimeList.add(screentime);
+					System.out.println("screentime = "+screentime);
 				}//end while
 		} catch (SQLException e) {
 			e.printStackTrace();
