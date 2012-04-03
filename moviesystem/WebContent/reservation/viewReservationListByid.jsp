@@ -15,15 +15,21 @@
 <table width="90%" align="center">
 	<!-- 상단 메뉴 시작 -->
 	<tr>
-		<td>
+		<td colspan="2">
 			<jsp:include page="/common/top.jsp"></jsp:include>
 		</td>
 	</tr>
 	<!-- 상단 메뉴 끝 -->
 	
-	<tr>		
+	<tr>
+		<!-- 좌측 메뉴 시작 -->
+		<td valign="top" style="width:20%">
+			<jsp:include page="/member/MypagLeft.jsp"></jsp:include>
+		</td>
+		<!-- 좌측 메뉴 끝 -->
+		
 		<!-- 본문 내용 시작 -->
-		<td>
+		<td align="center">
 
 
 
@@ -85,16 +91,18 @@
 </p>
 
 
-</td>
+
+		</td>
 	</tr>
 	<!-- 본문 내용 끝 -->
 	<!-- 하단 내용 시작 -->
 	<tr>
-		<td>
+		<td colspan="2">
 			<jsp:include page="/common/footer.jsp"></jsp:include>
 		</td>
 	</tr>
 	<!-- 하단 내용 끝 -->
 </table>
+
 </body>
 </html>
