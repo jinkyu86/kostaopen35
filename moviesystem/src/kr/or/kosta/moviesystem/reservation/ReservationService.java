@@ -174,7 +174,7 @@ public class ReservationService extends HttpServlet {
 	private void addReservationByTimeForm(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 			HttpSession session=request.getSession();
-			Member member=(Member)session.getAttribute("member");
+			Member member=(Member)session.getAttribute("LOGIN_MEMBER");
 			String userid=member.getUserid();
 			String time=request.getParameter("time");
 			String scrnum=request.getParameter("scrnum");
@@ -204,7 +204,7 @@ public class ReservationService extends HttpServlet {
 //				member.setUserid("jun123");
 //				String userid=request.getParameter("userid");
 				HttpSession session=request.getSession();
-				Member member=(Member)session.getAttribute("member");
+				Member member=(Member)session.getAttribute("LOGIN_MEMBER");
 				String userid=member.getUserid();
 				request.setAttribute("userid",userid);
 				
@@ -225,7 +225,7 @@ public class ReservationService extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		//파라미터 정보를 리턴
 		HttpSession session=request.getSession();
-		Member member=(Member)session.getAttribute("member");
+		Member member=(Member)session.getAttribute("LOGIN_MEMBER");
 		String userid=member.getUserid();
 		String mnum=request.getParameter("mnum");
 		String scrnum=request.getParameter("scrnum");
@@ -294,7 +294,7 @@ public class ReservationService extends HttpServlet {
 		member.setUserid("jun123");
 		
 		HttpSession session=request.getSession();
-		session.setAttribute("member",member);
+		session.setAttribute("LOGIN_MEMBER",member);
 		
 		Movie movie=new Movie();
 		movie.setMnum("1");
@@ -338,7 +338,7 @@ public class ReservationService extends HttpServlet {
 		//String userid=request.getParameter("userid");
 		//System.out.println(userid);
 		HttpSession session=request.getSession();
-		Member member=(Member)session.getAttribute("member");
+		Member member=(Member)session.getAttribute("LOGIN_MEMBER");
 		String userid=member.getUserid();
 		//1.StudentDAO에서 페이지에 해당하는 학생조회 메서들 호출
 		ArrayList<Reservation>reservationList=ReservationDAO.selectReservationList(length,page,userid);
