@@ -10,7 +10,7 @@ public class Reservation {
 	private String resnum;//예약번호
 	private Date resDate;//예약날짜
 	private long resQty;//예매수량
-	private long payState;//결제상태
+	private String payState;//결제상태
 	private long totalPrice;//전체가격
 	private long seatnum;//좌석번호
 	public ScreenTime screenTime;
@@ -44,10 +44,10 @@ public class Reservation {
 	public void setResQty(long resQty) {
 		this.resQty = resQty;
 	}
-	public long getPayState() {
+	public String getPayState() {
 		return payState;
 	}
-	public void setPayState(long payState) {
+	public void setPayState(String payState) {
 		this.payState = payState;
 	}
 	public long getTotalPrice() {
