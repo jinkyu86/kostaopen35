@@ -21,6 +21,11 @@
 <c:choose>
 	<c:when test="${sessionScope.MEMBER==null}">
 		<p align="right">
+			<a href="/auction/MemberService?method=addMemberForm">
+			회원가입
+			</a>
+		</p>
+		<p align="right">
 			<a href="/auction/MemberService?method=loginForm">
 			로그인
 			</a>
