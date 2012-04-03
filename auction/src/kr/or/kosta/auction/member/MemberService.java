@@ -36,8 +36,6 @@ public class MemberService extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		String sessionId=request.getSession().getId();
-		System.out.println("sessionId:"+sessionId);
 		
 		request.setCharacterEncoding("utf-8");
 		String method = request.getParameter("method");
@@ -129,7 +127,7 @@ public class MemberService extends HttpServlet {
 				String coin=request.getParameter("coin");
 				String emoney=request.getParameter("emoney");
 				//2.1의 정보를 이용해서 Member 객체 생성
-				Member  member=new Member();
+				Member member=new Member();
 				member.setUserid(userid);
 				member.setPw(pw);
 				member.setEmail(email);
