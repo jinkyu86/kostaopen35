@@ -115,7 +115,7 @@ public class MemberService extends HttpServlet {
 	 */
 	private void editMember(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		//1.파라메터정보 리턴
+			HttpSession session=request.getSession();
 				String userid=request.getParameter("userid");
 				String pw=request.getParameter("pw");
 				String email=request.getParameter("email");
@@ -134,7 +134,7 @@ public class MemberService extends HttpServlet {
 				
 				//3.회원정보를 수정하는 메서드 호출
 				MemberDAO.updateMember(member);
-				request.setAttribute("MEMBER",member);
+				session.setAttribute("MEMBER",member);
 				//4.회원정보 조회화면으로 이동 객체 생성
 				RequestDispatcher rd=
 						request.getRequestDispatcher(
