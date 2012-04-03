@@ -16,7 +16,7 @@ public class GoodDAO {
 	 * @param length
 	 * @param page
 	 */
-	public static ArrayList<Good> selectGoodList() {
+	public static ArrayList<Good> selectGoodList(int length, int page) {
 		/* default generated stub */
 		Connection con=null;
 		PreparedStatement psmt=null;
@@ -29,12 +29,16 @@ public class GoodDAO {
 		con=ConnectionUtil.getConnection();
 		sql="SELECT g_num,g_name,detail,g_price,photo FROM good";
 		
-		psmt=con.prepareStatement(sql);
+		psmt=con.prepareStatement(sql,ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 		
 		rs=psmt.executeQuery();
 
-		
-		while(rs.next()){
+		 if(page>1){
+				rs.absolute((page-1)*length);
+				}
+		 int getRecordCount=0;
+		while(rs.next()&&getRecordCount<length){
+			getRecordCount++;
 			String gnum=rs.getString(1);
 			String gname=rs.getString(2);
 			String detail=rs.getString(3);

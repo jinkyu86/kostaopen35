@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import kr.or.kosta.moviesystem.buy.Buy;
 import kr.or.kosta.moviesystem.good.Good;
 import kr.or.kosta.moviesystem.good.GoodDAO;
+import kr.or.kosta.moviesystem.util.PageUtil;
 
 public class GoodService extends HttpServlet{
 	private static final long serialVersionUID = 1L;
@@ -150,8 +151,21 @@ public class GoodService extends HttpServlet{
 	 */
 	public void viewGoodList(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		ArrayList<Good>goodList=GoodDAO.selectGoodList();
+		int page=1;
+		if(request.getParameter("page")!=null){
+			page=Integer.parseInt(request.getParameter("page"));
+		}
+		int length=8;
+		
+		ArrayList<Good>goodList=GoodDAO.selectGoodList(length,page);
+		int goodCount=GoodDAO.selectGoodCount();
 		request.setAttribute("GOOD_LIST", goodList);
+		
+		String pageLinkTag=PageUtil.generate(page, goodCount, length, "/moviesystem/GoodService?method=viewGoodList");
+		System.out.println(pageLinkTag);
+		
+		request.setAttribute("PAGE_LINK_TAG", pageLinkTag);
+		
 		RequestDispatcher rd=request.getRequestDispatcher("/good/viewGoodList.jsp");
 		rd.forward(request, response);
 	}
