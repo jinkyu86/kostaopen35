@@ -36,7 +36,7 @@ public class BuyDAO {
 		psmt.setString(1, buy.getGood().getGnum());
 		psmt.setLong(2, buy.getQty());
 		psmt.setString(3, buy.getMember().getUserid());
-		psmt.setLong(4, buy.getTotalPrice());
+		psmt.setLong(4, buy.getGood().getGprice()*buy.getQty());
 		psmt.executeUpdate();
 		
 		} catch (SQLException e) {
@@ -72,12 +72,17 @@ public class BuyDAO {
 				"FROM member m,good g, buy b " +
 				"WHERE m.userid=b.userid AND g.g_num=b.g_num AND m.userid=? AND pay_state=0 ORDER BY buy_date DESC ";
 		
-			psmt=con.prepareStatement(sql);
+			psmt=con.prepareStatement(sql,ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			psmt.setString(1, userid1);
 			psmt.executeUpdate();
 			rs=psmt.executeQuery();
 			
-			while(rs.next()){
+			 if(page>1){
+					rs.absolute((page-1)*length);
+					}
+			 int getRecordCount=0;
+			while(rs.next()&&getRecordCount<length){
+				getRecordCount++;
 				String user_num=rs.getString(1);
 				String userid=rs.getString(2);
 				String name=rs.getString(3);
@@ -214,7 +219,7 @@ public class BuyDAO {
 		return buyList;
 	}
 
-	public static int selectBuyCount(String userid) {
+	public static int selectBuyCountByUerid(String userid) {
 		/* default generated stub */
 		Connection con=null;
 		PreparedStatement psmt=null;
@@ -240,72 +245,72 @@ public class BuyDAO {
 		return buyCount;
 	}
 	
-	/**
-	 * 구매목록 삭제 기능
-	 * 
-	 * @param buynum
-	 */
-	public static void deleteBuy(String buynum) {
-		/* default generated stub */
-		Connection con=null;
-		PreparedStatement psmt=null;
-		con=ConnectionUtil.getConnection();
-		
-		try {
-			String sql="DELETE FROM buy WHERE buy_num=?";
-			psmt=con.prepareStatement(sql);
-			
-			psmt.setString(1, buynum);
-			psmt.executeUpdate();
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}	
-	}
-	
-	/**
-	 * 구매목록 수량,가격 수정 기능
-	 * 
-	 * @param buy
-	 */
-	public static void editBuy(Buy buy) {
-		/* default generated stub */;
-		Connection con=null;
-		PreparedStatement psmt=null;
-		con=ConnectionUtil.getConnection();
-		
-		try {
-			String sql="UPDATE buy SET qty=?,total_price=? WHERE buy_num=?";
-			psmt=con.prepareStatement(sql);
-			
-			psmt.setLong(1, buy.getQty());
-			psmt.setLong(2, buy.getTotalPrice());
-			psmt.setString(3, buy.getBuynum());
-			psmt.executeUpdate();
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}	
-	}
-
-	//결제하기 (buy table의 pay_state를 1로 set, buy_date를 결제날짜로 바꿈)
-	public static void payBuy(String buynum){
-		Connection con=null;
-		PreparedStatement psmt=null;
-		con=ConnectionUtil.getConnection();
-		
-		try {
-			String sql="UPDATE buy SET pay_state=1,buy_date=SYSDATE WHERE buy_num=?";
-			psmt=con.prepareStatement(sql);
-			
-			psmt.setString(1, buynum);
-			psmt.executeUpdate();
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}	
-		
-	}
+//	/**
+//	 * 구매목록 삭제 기능
+//	 * 
+//	 * @param buynum
+//	 */
+//	public static void deleteBuy(String buynum) {
+//		/* default generated stub */
+//		Connection con=null;
+//		PreparedStatement psmt=null;
+//		con=ConnectionUtil.getConnection();
+//		
+//		try {
+//			String sql="DELETE FROM buy WHERE buy_num=?";
+//			psmt=con.prepareStatement(sql);
+//			
+//			psmt.setString(1, buynum);
+//			psmt.executeUpdate();
+//			
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}	
+//	}
+//	
+//	/**
+//	 * 구매목록 수량,가격 수정 기능
+//	 * 
+//	 * @param buy
+//	 */
+//	public static void editBuy(Buy buy) {
+//		/* default generated stub */;
+//		Connection con=null;
+//		PreparedStatement psmt=null;
+//		con=ConnectionUtil.getConnection();
+//		
+//		try {
+//			String sql="UPDATE buy SET qty=?,total_price=? WHERE buy_num=?";
+//			psmt=con.prepareStatement(sql);
+//			
+//			psmt.setLong(1, buy.getQty());
+//			psmt.setLong(2, buy.getTotalPrice());
+//			psmt.setString(3, buy.getBuynum());
+//			psmt.executeUpdate();
+//			
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}	
+//	}
+//
+//	//결제하기 (buy table의 pay_state를 1로 set, buy_date를 결제날짜로 바꿈)
+//	public static void payBuy(String buynum){
+//		Connection con=null;
+//		PreparedStatement psmt=null;
+//		con=ConnectionUtil.getConnection();
+//		
+//		try {
+//			String sql="UPDATE buy SET pay_state=1,buy_date=SYSDATE WHERE buy_num=?";
+//			psmt=con.prepareStatement(sql);
+//			
+//			psmt.setString(1, buynum);
+//			psmt.executeUpdate();
+//			
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}	
+//		
+//	}
 
 	
 	
