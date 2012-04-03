@@ -82,8 +82,6 @@ public class BuyService extends HttpServlet{
 		System.out.println(pageLinkTag);
 		
 		request.setAttribute("PAGE_LINK_TAG", pageLinkTag);
-	
-		//ArrayList<Buy>buyList=BuyDAO.selectBuyList(userid,1,1);
 		
 		RequestDispatcher rd=request.getRequestDispatcher("/buy/viewBuyList.jsp");
 		rd.forward(request, response);
