@@ -52,7 +52,7 @@ public class BidDAOTest {
 
 	@Test
 	public void testSelectBidListByID() {
-		ArrayList<Bid> page1List=BidDAO.selectBidListByID(1,1,"lee");
+		ArrayList<Bid> page1List=BidDAO.selectBidListByID(5,1,"lee");
 		System.out.println("page1List:"+page1List);
 	}
 

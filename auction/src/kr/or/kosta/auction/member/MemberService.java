@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import kr.or.kosta.auction.bid.Bid;
+import kr.or.kosta.auction.bid.BidDAO;
+
 
 
 
@@ -172,10 +175,18 @@ public class MemberService extends HttpServlet {
 	 */
 	private void viewMember(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+		//세션에서 멤버정보 추출
+		HttpSession session=request.getSession();
+		Member member=(Member)session.getAttribute("MEMBER");
+		//아이디 추출
+		String userid=member.getUserid();
+		
+		//해당ID의 최근 입찰한 5개의 입찰리스트 호출
+		ArrayList<Bid> bidList=BidDAO.selectBidListByID(5, 1, userid);
+		session.setAttribute("BID_LIST", bidList);
 		RequestDispatcher rd=
 				request.getRequestDispatcher("/member/viewMember.jsp");
 		rd.forward(request, response);
-			
 
 	}
 
@@ -185,7 +196,10 @@ public class MemberService extends HttpServlet {
 	 */
 	private void removeMember(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		session.invalidate();
 		String userid=request.getParameter("userid");
+		BidDAO.deleteBidById(userid);
 		MemberDAO.deleteMember(userid);
 		RequestDispatcher rd=
 				request.getRequestDispatcher(

@@ -305,7 +305,8 @@ public class BidDAO {
 								  "m.pw,m.name,m.email,m.coin,m.emoney," +
 								  "g.gname,g.detail,g.img " +
 					  "FROM BID b, AUCTION a, MEMBER m, GOOD g " +
-					  "WHERE b.a_num=a.a_num AND b.userid=m.userid AND a.g_num=g.g_num AND b.userid=?";
+					  "WHERE b.a_num=a.a_num AND b.userid=m.userid AND a.g_num=g.g_num AND b.userid=? " +
+					  "ORDER BY bid_time DESC";
 		con=ConnectionUtil.getConnection();
 		try {
 			
