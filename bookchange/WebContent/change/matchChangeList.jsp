@@ -15,15 +15,22 @@
 		<th>You Book</th>
 		<th>EMAIL</th>
 	</tr>
-	<c:forEach  var="change"  items="${AGREE_CHANGE_LIST }">	
+	<c:forEach  var="change"  items="${MATCH_LIST }">	
 	<tr>
 		<td>${change.changeDate}</td>
 		<td>${change.condition.conditionIng}</td>
 		<td>${change.agreeBoard.boardTitle}</td>
-		<td>
-		<a href="/bookchange/BoardService?method=viewBoardWhenAgree&boardNo=${change.demandBoard.boardNo}&agreeBoardNo=${change.agreeBoard.boardNo}">
-		${change.demandBoard.boardTitle}</a></td>
+		<td>${change.demandBoard.boardTitle}</td>
 		<td>${change.agreeBoard.member.email}</td>
+		<td>
+		<td>
+       		<form action="/bookchange/ChangeService" method="post">
+       		<input type="hidden" name="method" value="completeChange">
+       		<input type="hidden" name="ChangeNo" value="${change.demandBoard.boardNo}">
+       		<input type="hidden" name="BoardNo" value="${change.agreeBoard.boardNo}">
+       		<input type="submit" value="교환완료">
+       	</form>
+       	</td>
 	</tr>
 	</c:forEach>
 </table>
