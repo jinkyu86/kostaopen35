@@ -32,14 +32,16 @@
 					<c:forEach var="rankingMovieList" items="${rankingMovieList}" varStatus="n">
 						<td class="main_td">
 							<img src="/moviesystem/movieimg/${rankingMovieList.poster}.jpg" class="main_img" style="margin:5px 0 5px 0"><br/>
-							<c:choose>
-								<c:when test="${fn:length(rankingMovieList.mname)>9}">
-									${fn:substring(rankingMovieList.mname, 0, 8)}
-								</c:when>
-								<c:otherwise>
-									${rankingMovieList.mname}
-								</c:otherwise>
-							</c:choose>
+							<span title="${rankingMovieList.mname}">
+								<c:choose>
+									<c:when test="${fn:length(rankingMovieList.mname)>9}">
+										${fn:substring(rankingMovieList.mname, 0, 8)}
+									</c:when>
+									<c:otherwise>
+										${rankingMovieList.mname}
+									</c:otherwise>
+								</c:choose>
+							</span>
 							<br/>
 						</td>
 					</c:forEach>
@@ -54,14 +56,16 @@
 					<c:forEach var="screenMovieList" items="${screenMovieList}" varStatus="n">
 						<td class="main_td">
 							<img src="/moviesystem/movieimg/${screenMovieList.poster}.jpg" class="main_img" style="margin:5px 0 5px 0"><br/>
-							<c:choose>
-								<c:when test="${fn:length(screenMovieList.mname)>9}">
-									${fn:substring(screenMovieList.mname, 0, 8)}
-								</c:when>
-								<c:otherwise>
-									${screenMovieList.mname}
-								</c:otherwise>
-							</c:choose>
+							<span title="${screenMovieList.mname}">
+								<c:choose>
+									<c:when test="${fn:length(screenMovieList.mname)>9}">
+										${fn:substring(screenMovieList.mname, 0, 8)}
+									</c:when>
+									<c:otherwise>
+										${screenMovieList.mname}
+									</c:otherwise>
+								</c:choose>
+							</span>
 							<br/>
 						</td>
 					</c:forEach>
@@ -73,17 +77,19 @@
 			<div class="main_title" style="margin-top:10px;">상영 예정작</div>
 			<table class="table_style" align="center">
 				<tr>
-					<c:forEach var="rankingMovieList" items="${rankingMovieList}" varStatus="n">
+					<c:forEach var="scheduleMovieList" items="${scheduleMovieList}" varStatus="n">
 						<td class="main_td">
-							<img src="/moviesystem/movieimg/${rankingMovieList.poster}.jpg" class="main_img" style="margin:5px 0 5px 0"><br/>
+							<img src="/moviesystem/movieimg/${scheduleMovieList.poster}.jpg" class="main_img" style="margin:5px 0 5px 0"><br/>
+							<span title="${scheduleMovieList.mname}">
 							<c:choose>
-								<c:when test="${fn:length(rankingMovieList.mname)>9}">
-									${fn:substring(rankingMovieList.mname, 0, 8)}
+								<c:when test="${fn:length(scheduleMovieList.mname)>9}">
+									${fn:substring(scheduleMovieList.mname, 0, 8)}
 								</c:when>
 								<c:otherwise>
-									${rankingMovieList.mname}
+									${scheduleMovieList.mname}
 								</c:otherwise>
 							</c:choose>
+							</span>
 							<br/>
 						</td>
 					</c:forEach>
