@@ -220,7 +220,7 @@ public class MemberService extends HttpServlet {
 		
 		MemberDAO.insertMember(member);
 		
-		RequestDispatcher rd=request.getRequestDispatcher("member/viewMemberList.jsp");
+		RequestDispatcher rd=request.getRequestDispatcher("/MovieService?method=Main");
 		rd.forward(request, response);
 		
 		
