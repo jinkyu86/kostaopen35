@@ -17,7 +17,7 @@ public class Betting {
 	/**
 	 * ¹èÆÃ·ü
 	 */
-	private long batRating;
+	private double batRating;
 
 	/**
 	 * ¼±ÅÃÈ½¼ö
@@ -50,11 +50,11 @@ public class Betting {
 		this.match = match;
 	}
 
-	public long getBatRating() {
+	public double getBatRating() {
 		return batRating;
 	}
 
-	public void setBatRating(long batRating) {
+	public void setBatRating(double batRating) {
 		this.batRating = batRating;
 	}
 

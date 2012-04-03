@@ -7,6 +7,7 @@ import org.junit.Test;
 import kr.or.kosta.betting.betting.Betting;
 import kr.or.kosta.betting.betting.BettingDAO;
 import kr.or.kosta.betting.match.Match;
+import kr.or.kosta.betting.util.now;
 
 
 public class BettingDAOTest extends BettingDAO {
@@ -14,25 +15,13 @@ public class BettingDAOTest extends BettingDAO {
 
 	@Test
 	public void testInsertHomeBetting(){
-		Betting betting = new Betting();
-		
-		Match match = new Match();
-		match.setNum("10012");
-	
-		betting.setMatch(match);
-		
-		BettingDAO.insertHomeBetting(betting);
+
+		BettingDAO.insertHomeBetting("10012");
 	}
 	@Test
 	public void testInsertAwayBetting() {
-		Betting betting = new Betting();
 
-		Match match = new Match();
-		match.setNum("10012");
-	
-		betting.setMatch(match);
-		
-		BettingDAO.insertAwayBetting(betting);
+		BettingDAO.insertAwayBetting("10012");
 	}
 	@Test
 	public void testSelectBettingList() {
@@ -43,7 +32,8 @@ public class BettingDAOTest extends BettingDAO {
 	}
 	@Test
 	public void testSelectBettingListByDate(){
-		ArrayList<Betting> bettingList = BettingDAO.selectBettingListByDate("2012/03/18");
+		String date = now.Date();
+		ArrayList<Betting> bettingList = BettingDAO.selectBettingListByDate(date);
 		for(int i=0;i<bettingList.size();i++){
 			Betting betting = bettingList.get(i);
 		  System.out.println(betting);
@@ -51,7 +41,7 @@ public class BettingDAOTest extends BettingDAO {
 	}
 	@Test
 	public void testSelectBettingRating(){
-		long bettingRating = BettingDAO.selectBettingRating("5");
+		double bettingRating = BettingDAO.selectBettingRating("5");
 		System.out.println(bettingRating);
 	}
 	@Test
@@ -79,5 +69,17 @@ public class BettingDAOTest extends BettingDAO {
 		betting.setMatch(match);
 		
 		BettingDAO.updateBetting(betting);
+	}
+	@Test
+	public void testSelectBettingListByHome(){
+		Betting bettingHome = BettingDAO.selectBettingListByHome("10001");
+		System.out.println(bettingHome);
+		
+	}
+	@Test
+	public void testSelectBettingListByAway(){
+		Betting betting = BettingDAO.selectBettingListByAway("10001");
+		System.out.println(betting);
+		
 	}
 }
