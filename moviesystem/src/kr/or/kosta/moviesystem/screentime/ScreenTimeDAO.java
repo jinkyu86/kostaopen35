@@ -41,7 +41,7 @@ public class ScreenTimeDAO {
 					
 					"  FROM  MOVIE m,SCREENING_TIME s " +
 					"  WHERE  s.m_num=m.m_num " +
-					"                      AND  m.m_num=?";
+					"                      AND  m.m_num=? AND s.time>sysdate" ;
 		
 			
 				psmt=con.prepareStatement(sql);
