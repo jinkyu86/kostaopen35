@@ -38,10 +38,13 @@ public class MemberDAO {
 		PreparedStatement psmt = null;
 		con = ConnectionUtil.getConnection();
 		try {
-			psmt = con.prepareStatement(" UPDATE MEMBER "
-					+ " SET  pw=?,email=?,name=?,coin=?,emoney=?"
-					+ " WHERE userid=?");
-
+			psmt = con.prepareStatement("UPDATE MEMBER " +
+													  "SET pw=?," +
+													  "email=?," +
+													  "name=?," +
+													  "coin=?," +
+													  "emoney=? " +
+													  "WHERE userid=?");
 			psmt.setString(1, member.getPw());
 			psmt.setString(2, member.getEmail());
 			psmt.setString(3, member.getName());
