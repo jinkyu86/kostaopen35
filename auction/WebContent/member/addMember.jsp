@@ -5,10 +5,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<title>회원추가</title>
+<title>회원가입</title>
 </head>
 <body>
-	<h1 align="center">회원추가</h1>
+	<h1 align="center">회원가입</h1>
 	<form  action="/auction/MemberService" 
 		method="post">
 		<input type="hidden"  name="method"
@@ -32,7 +32,7 @@
 			</tr>
 			<tr>
 					<td>
-						<input type="submit" value="멥버추가"/>
+						<input type="submit" value="회원가입"/>
 					</td>
 					<td>
 						<input type="reset" value="취소"/>
