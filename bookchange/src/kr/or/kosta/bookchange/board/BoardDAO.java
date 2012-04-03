@@ -540,7 +540,7 @@ public class BoardDAO {
 				 "and b.email like ?");
 			
 			ps=con.prepareStatement(sql,ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
-			ps.setString(1,email);
+			ps.setString(1,"%"+email+"%");
 			rs=ps.executeQuery();
 			
 			if(rs.next()){

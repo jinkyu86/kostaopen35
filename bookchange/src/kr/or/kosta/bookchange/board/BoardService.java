@@ -62,6 +62,7 @@ public class BoardService extends HttpServlet {
 	/**
 	 * 게시물 추가 */
 	public void addBoard(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		String boardTitle=request.getParameter("boardTitle");
 		String boardWant=request.getParameter("boardWant");
 		String boardPhoto=request.getParameter("boardPhoto");
@@ -103,16 +104,9 @@ public class BoardService extends HttpServlet {
 	/**
 	 * 게시물 추가 창(물품등록 화면) */
 	public void addBoardForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session=request.getSession();
-		Member member=(Member)session.getAttribute("LOGIN_EMAIL");
-		
-		/*String email=request.getParameter("email");
-		Member member=MemberDAO.selectMember(email);*/
-		
 		ArrayList<Category> categoryList=CategoryDAO.selectCategory();//카테고리 정보 조회
 		ArrayList<Deal> dealList=DealDAO.selectDeal();//거래방법 조회
 		
-		/*request.setAttribute("MEMBER", member);*/
 		request.setAttribute("CATEGORY_LIST",categoryList);
 		request.setAttribute("DEAL_LIST",dealList);
 		
@@ -222,8 +216,8 @@ public class BoardService extends HttpServlet {
 				
 		int qaCount=QaDAO.selectQaCount(boardNo);
 		
-		String pageLinkTag=PageUtil.generate(page, qaCount, length, "/bookchange/QaService?" +
-				"method=selectQaList");
+		String pageLinkTag=PageUtil.generate(page, qaCount, length, "/bookchange/BoardService?" +
+				"method=viewBoard&boardNo="+boardNo);
 		request.setAttribute("PAGE_LINK_TAG",pageLinkTag);
 		//댓글 리스트 조회 완료
 		
@@ -285,10 +279,14 @@ public class BoardService extends HttpServlet {
 					boardList=BoardDAO.selectBoardListbyCategoryandTitle(length, page, request.getParameter("categoryNo"), request.getParameter("keyword"));
 					boardCount=BoardDAO.selectBoardCategoryandTitleCount(request.getParameter("categoryNo"), request.getParameter("keyword"));
 					}
-				}else {
-				boardList=BoardDAO.selectBoardListbyCategoryandEmail(length, page,request.getParameter("categoryNo"), request.getParameter("keyword"));
-				boardCount=BoardDAO.selectBoardCategoryandEmailCount(request.getParameter("categoryNo"), request.getParameter("keyword"));
-			}
+						}else if(request.getParameter("keyword")==null||request.getParameter("keyword").equals("")){
+							boardList=BoardDAO.selectBoardListbyCategory(length, page, request.getParameter("categoryNo"));
+							boardCount=BoardDAO.selectBoardCategoryCount(request.getParameter("categoryNo"));
+							} 
+						else {
+						boardList=BoardDAO.selectBoardListbyCategoryandEmail(length, page,request.getParameter("categoryNo"), request.getParameter("keyword"));
+						boardCount=BoardDAO.selectBoardCategoryandEmailCount(request.getParameter("categoryNo"), request.getParameter("keyword"));
+					}
 		}
 		
 		if(request.getParameter("categoryNo").equals("")){
@@ -300,18 +298,22 @@ public class BoardService extends HttpServlet {
 					boardList=BoardDAO.selectBoardListbyTitle(length, page, request.getParameter("keyword"));
 					boardCount=BoardDAO.selectBoardTitleCount(request.getParameter("keyword"));
 					}
-			}else{
-				boardList=BoardDAO.selectBoardListbyEmail(length, page, request.getParameter("keyword"));
-				boardCount=BoardDAO.selectBoardEmailCount(request.getParameter("keyword"));
-			}
+						}else if(request.getParameter("keyword")==null||request.getParameter("keyword").equals("")){
+								boardList=BoardDAO.selectBoardList(length, page);
+								boardCount=BoardDAO.selectBoardCount();
+								}
+						else{
+							boardList=BoardDAO.selectBoardListbyEmail(length, page, request.getParameter("keyword"));
+							boardCount=BoardDAO.selectBoardEmailCount(request.getParameter("keyword"));
+						}
 		}
 		
 		request.setCharacterEncoding("utf-8");
 		request.setAttribute("BOARD_LIST", boardList);
 		
 		String pageLinkTag=PageUtil.generate(page, boardCount, length,
-				"/bookchange/BoardService?method=searchBoardList&column="+
-		             request.getParameter("column")+"&keyword="+request.getParameter("keyword"));
+				"/bookchange/BoardService?method=searchBoardList&categoryNo="+request.getParameter("categoryNo")+
+				"&column="+request.getParameter("column")+"&keyword="+request.getParameter("keyword"));
 		request.setAttribute("PAGE_LINK_TAG",pageLinkTag);
 		
 		RequestDispatcher rd=request.getRequestDispatcher("/board/viewBoardList.jsp");
@@ -377,8 +379,8 @@ public class BoardService extends HttpServlet {
 				
 		int qaCount=QaDAO.selectQaCount(boardNo);
 		
-		String pageLinkTag=PageUtil.generate(page, qaCount, length, "/bookchange/QaService?" +
-				"method=selectQaList");
+		String pageLinkTag=PageUtil.generate(page, qaCount, length, "/bookchange/BoardService?" +
+				"method=viewBoard&boardNo="+boardNo);
 		request.setAttribute("PAGE_LINK_TAG",pageLinkTag);
 		//댓글 리스트 조회 완료
 		
@@ -413,8 +415,8 @@ public class BoardService extends HttpServlet {
 				
 		int qaCount=QaDAO.selectQaCount(boardNo);
 		
-		String pageLinkTag=PageUtil.generate(page, qaCount, length, "/bookchange/QaService?" +
-				"method=selectQaList");
+		String pageLinkTag=PageUtil.generate(page, qaCount, length, "/bookchange/BoardService?" +
+				"method=viewBoard&boardNo="+boardNo);
 		request.setAttribute("PAGE_LINK_TAG",pageLinkTag);
 		//댓글 리스트 조회 완료
 		

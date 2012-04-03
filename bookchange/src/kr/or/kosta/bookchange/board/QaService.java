@@ -40,7 +40,6 @@ public class QaService extends HttpServlet {
 			editQaForm(request,response);
 		}
 	}
-	
 
 	private void searcheQaListbyBoardNo(HttpServletRequest request,
 			HttpServletResponse response) {
@@ -132,7 +131,7 @@ public class QaService extends HttpServlet {
 				request.setCharacterEncoding("utf-8");
 				request.setAttribute("EDITQA",qa);	
 				
-				RequestDispatcher rd=request.getRequestDispatcher("/board/editQaForm.jsp");
+				RequestDispatcher rd=request.getRequestDispatcher("/BoardService?method=viewBoard&boardNo="+boardNo);
 				rd.forward(request, response);
 	}
 
