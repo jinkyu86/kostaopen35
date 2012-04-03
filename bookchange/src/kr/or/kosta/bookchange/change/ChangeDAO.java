@@ -215,7 +215,7 @@ public class ChangeDAO {
 	 * TB_BOARD의 condition_result값을 0(교환가능)으로 변경, TB_CHANGE 에서 삭제
 	 * condition_result의 값이 1(교환요청)일때만 실행
 	 * 상대방이 교환요청 수락하였을 경우 취소 불가.... **/
-	public static void cancelChange(int agreeBoardNo, int demandBoardNo) {
+	public static void cancelChange(int demandBoardNo, int agreeBoardNo) {
 		Connection con=null;
 		PreparedStatement ps1=null;
 		PreparedStatement ps2=null;
@@ -238,8 +238,29 @@ public class ChangeDAO {
 		}
 	}
 	
+	/** 교환 완료(교환완료 클릭시)
+	 * condition_result의 값이 2(교환중)일때만 실행
+	 * tb_change, tb_board의 condition_result의 값을 3(교환완료)으로 변경,**/
+	public static void completeChange(int ChangeNo, int BoardNo){
+		Connection con=null;
+		PreparedStatement ps1=null;
+		PreparedStatement ps2=null;
+		
+		try {
+			con=ConnectionUtil.getConnection();
+			ps1=con.prepareStatement("UPDATE tb_change set condition_result=3 where agree_board_no=?");
+			ps2=con.prepareStatement("UPDATE tb_board set condition_result=3 where board_no=?");
+			ps1.setInt(1, ChangeNo);
+			ps2.setInt(1, BoardNo);
+			ps1.executeUpdate();
+			ps2.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	/**내 게시물번호로 교환리스트 검색(나에게 교환을 요청한 사람들 검색)**/
-	public static ArrayList<Change> selectChangeMyboardList(int length, int page, String email) {
+ 	public static ArrayList<Change> selectChangeMyboardList(int length, int page, String email) {
 		Connection con=null;
 		PreparedStatement ps=null;
 		ResultSet rs=null;
@@ -256,6 +277,7 @@ public class ChangeDAO {
 					"FROM tb_change c, tb_board a, tb_board b, tb_condition d, tb_category ca " +
 					"WHERE b.email=? AND c.agree_board_no=b.board_no AND c.demand_board_no=a.board_no " +
 					"AND c.condition_result=d.condition_result AND ca.category_no=a.category_no " +
+					"AND c.condition_result='1' " +
 					"ORDER BY c.change_no";
 			ps=con.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			ps.setString(1, email);
@@ -388,6 +410,7 @@ public class ChangeDAO {
 					"FROM tb_change c, tb_board a, tb_board b, tb_condition d, tb_category ca " +
 					"WHERE a.email=? AND c.agree_board_no=b.board_no AND c.demand_board_no=a.board_no " +
 					"AND c.condition_result=d.condition_result AND ca.category_no=a.category_no " +
+					"AND c.condition_result='1' " +
 					"ORDER BY c.change_no";
 			ps=con.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			ps.setString(1, email);
@@ -477,6 +500,114 @@ public class ChangeDAO {
 		return changeList;
 	}
 
+	/**나와 교환중인 사람 리스트 보기**/
+	public static ArrayList<Change> selectMatchList(int length, int page, String email) {
+		Connection con=null;
+		PreparedStatement ps=null;
+		ResultSet rs=null;
+		ArrayList<Change>changeList=new ArrayList<Change>();
+		String sql=null;
+		
+		try {
+			con=ConnectionUtil.getConnection();
+			sql="Select c.change_no, c.change_date, c.condition_result, c.agree_board_no, c.demand_board_no, " +
+					"d.condition_result, d.condition_ing, a.board_no, a.board_title, a.board_want, a.board_photo, " +
+					"a.board_content, a.email, a.deal_no, a.condition_result, a.category_no, b.board_no, b.board_title,	" +
+					"b.board_want, b.board_photo, b.board_content, b.email, b.deal_no, b.condition_result, " +
+					"b.category_no, ca.category_no, ca.category_name " +
+					"FROM tb_change c, tb_board a, tb_board b, tb_condition d, tb_category ca " +
+					"WHERE a.email=? AND c.agree_board_no=b.board_no AND c.demand_board_no=a.board_no " +
+					"AND c.condition_result=d.condition_result AND ca.category_no=a.category_no " +
+					"AND c.condition_result='2' " +
+					"ORDER BY c.change_no";
+			ps=con.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			ps.setString(1, email);
+			rs=ps.executeQuery();
+			
+			if(page>1){
+				rs.absolute((page-1)*length);
+			}
+			int recordCount=0;
+			while(rs.next()&&recordCount<length){
+				recordCount++;
+				int changeNo=rs.getInt(1);
+				Date changeDate=rs.getDate(2);
+				int changeConditionResult=rs.getInt(3);
+				int changeAgreeBoardNo=rs.getInt(4);
+				int changeDemandBoardNo=rs.getInt(5);
+				String conditionIng=rs.getString(7);
+				String demandBoardTitle=rs.getString(9);
+				String demandBoardWant=rs.getString(10);
+				String demandBoardPhoto=rs.getString(11);
+				String demandBoardContent=rs.getString(12);
+				String demandBoardEmail=rs.getString(13);
+				int demandBoardConditionResult=rs.getInt(15);
+				int demandBoardCategoryNo=rs.getInt(16);
+				String agreeBoardTitle=rs.getString(18);
+				String agreeBoardWant=rs.getString(19);
+				String agreeBoardPhoto=rs.getString(20);
+				String agreeBoardContent=rs.getString(21);
+				String agreeBoardEmail=rs.getString(22);
+				int agreeBoardConditionResult=rs.getInt(24);
+				int agreeBoardCategoryNo=rs.getInt(25);
+				String categoryName=rs.getString(27);
+				
+				
+				Category agreeCategory=new Category();
+				agreeCategory.setCategoryNo(agreeBoardCategoryNo);
+				agreeCategory.setCategoryName(categoryName);
+				Category demandCategory=new Category();
+				demandCategory.setCategoryNo(demandBoardCategoryNo);
+				demandCategory.setCategoryName(categoryName);
+				
+				Condition agreeCondition=new Condition();
+				agreeCondition.setConditionResult(agreeBoardConditionResult);
+				Condition demandCondition=new Condition();
+				demandCondition.setConditionResult(demandBoardConditionResult);
+				Condition changeCondition=new Condition();
+				changeCondition.setConditionResult(changeConditionResult);
+				changeCondition.setConditionIng(conditionIng);
+				
+				Member agreeMember=new Member();
+				agreeMember.setEmail(demandBoardEmail);
+				Member demandMember=new Member();
+				demandMember.setEmail(agreeBoardEmail);
+				
+				Board agreeBoard=new Board();
+				agreeBoard.setBoardNo(changeAgreeBoardNo);
+				agreeBoard.setBoardPhoto(agreeBoardPhoto);
+				agreeBoard.setBoardContent(agreeBoardContent);
+				agreeBoard.setBoardTitle(agreeBoardTitle);
+				agreeBoard.setBoardWant(agreeBoardWant);
+				agreeBoard.setCategory(agreeCategory);
+				agreeBoard.setCondition(agreeCondition);
+				agreeBoard.setMember(agreeMember);
+				
+				Board demandBoard=new Board();
+				demandBoard.setBoardContent(demandBoardContent);
+				demandBoard.setBoardNo(changeDemandBoardNo);
+				demandBoard.setBoardPhoto(demandBoardPhoto);
+				demandBoard.setBoardTitle(demandBoardTitle);
+				demandBoard.setBoardWant(demandBoardWant);
+				demandBoard.setCategory(demandCategory);
+				demandBoard.setCondition(demandCondition);
+				demandBoard.setMember(demandMember);
+				
+				Change change=new Change();
+				change.setChangeNo(changeNo);
+				change.setChangeDate(changeDate);
+				change.setCondition(changeCondition);
+				change.setAgreeBoard(demandBoard);
+				change.setDemandBoard(agreeBoard);
+				
+				changeList.add(change);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return changeList;
+	}
+	
 	/**내가 교환을 신청한 사람의 수 리턴**/
 	public static int selectChangeRequestCount(String email) {
 		Connection con=null;
