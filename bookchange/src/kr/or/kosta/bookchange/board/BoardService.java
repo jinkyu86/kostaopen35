@@ -201,20 +201,20 @@ public class BoardService extends HttpServlet {
 		
 		Board board=BoardDAO.selectBoard(boardNo);
 		
+		int qaCount=QaDAO.selectQaCount(boardNo);
+		int length=10;
 		//여기부턴 댓글 리스트
-		int page=1;
+		int page=(qaCount/length)+1;
 		
 		if(request.getParameter("page")!=null){
 			page=Integer.parseInt(request.getParameter("page"));
 		}
-		
-		int length=10;
-		
+				
 		ArrayList<Qa> qaList=QaDAO.selectQaList(length, page, boardNo);
 		request.setCharacterEncoding("utf-8");
 		request.setAttribute("QA_LIST",qaList);
 				
-		int qaCount=QaDAO.selectQaCount(boardNo);
+		//int qaCount=QaDAO.selectQaCount(boardNo);
 		
 		String pageLinkTag=PageUtil.generate(page, qaCount, length, "/bookchange/BoardService?" +
 				"method=viewBoard&boardNo="+boardNo);
@@ -364,20 +364,18 @@ public class BoardService extends HttpServlet {
 		
 		Board board=BoardDAO.selectBoard(boardNo);
 		
+		int qaCount=QaDAO.selectQaCount(boardNo);
+		int length=10;
 		//여기부턴 댓글 리스트
-		int page=1;
+		int page=(qaCount/length)+1;
 		
 		if(request.getParameter("page")!=null){
 			page=Integer.parseInt(request.getParameter("page"));
 		}
 		
-		int length=10;
-		
 		ArrayList<Qa> qaList=QaDAO.selectQaList(length, page, boardNo);
 		request.setCharacterEncoding("utf-8");
 		request.setAttribute("QA_LIST",qaList);
-				
-		int qaCount=QaDAO.selectQaCount(boardNo);
 		
 		String pageLinkTag=PageUtil.generate(page, qaCount, length, "/bookchange/BoardService?" +
 				"method=viewBoard&boardNo="+boardNo);
@@ -400,21 +398,19 @@ public class BoardService extends HttpServlet {
 		
 		Board board=BoardDAO.selectBoard(boardNo);
 		
+		int qaCount=QaDAO.selectQaCount(boardNo);
+		int length=10;
 		//여기부턴 댓글 리스트
-		int page=1;
+		int page=(qaCount/length)+1;
 		
 		if(request.getParameter("page")!=null){
 			page=Integer.parseInt(request.getParameter("page"));
 		}
 		
-		int length=10;
-		
 		ArrayList<Qa> qaList=QaDAO.selectQaList(length, page, boardNo);
 		request.setCharacterEncoding("utf-8");
 		request.setAttribute("QA_LIST",qaList);
-				
-		int qaCount=QaDAO.selectQaCount(boardNo);
-		
+
 		String pageLinkTag=PageUtil.generate(page, qaCount, length, "/bookchange/BoardService?" +
 				"method=viewBoard&boardNo="+boardNo);
 		request.setAttribute("PAGE_LINK_TAG",pageLinkTag);
