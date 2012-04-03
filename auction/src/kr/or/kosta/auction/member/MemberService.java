@@ -13,6 +13,8 @@ import javax.servlet.http.HttpSession;
 
 import kr.or.kosta.auction.bid.Bid;
 import kr.or.kosta.auction.bid.BidDAO;
+import kr.or.kosta.auction.good.Good;
+import kr.or.kosta.auction.good.GoodDAO;
 
 
 
@@ -90,8 +92,7 @@ public class MemberService extends HttpServlet {
 		// 3.DB에 저장
 		MemberDAO.insertMember(member);
 		// 4.전체 회원리스트 이동 객체
-		RequestDispatcher rd = request
-				.getRequestDispatcher("/MemberService?method=viewMemberList");
+		RequestDispatcher rd = request.getRequestDispatcher("/AuctionService?method=viewAuctionList");
 		// 5.페이지 이동
 		rd.forward(request, response);
 
@@ -157,7 +158,6 @@ public class MemberService extends HttpServlet {
 				RequestDispatcher  rd=
 						request.getRequestDispatcher("/member/editMember.jsp");
 				rd.forward(request, response);
-
 	}
 
 	/**

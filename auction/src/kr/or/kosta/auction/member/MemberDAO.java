@@ -40,7 +40,7 @@ public class MemberDAO {
 		try {
 			psmt = con.prepareStatement(" UPDATE MEMBER "
 					+ " SET  pw=?,email=?,name=?,coin=?,emoney=?"
-					+ " WHERE userid=? ");
+					+ " WHERE userid=?");
 
 			psmt.setString(1, member.getPw());
 			psmt.setString(2, member.getEmail());
