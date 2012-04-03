@@ -36,11 +36,11 @@
 <!-- top nav -->	
 <div class="menu">			
 <ul>			
-	<li><a href="">홈</a></li>			
-	<li><a href="">상품</a></li>		
+	<li><a href="/baking/RecipeService?method=viewGoodList">홈</a></li>			
+	<li><a href="/baking/RecipeService?method=viewGoodList">상품</a></li>		
 	<li><a href="/baking/RecipeService?method=viewRecipeList">레시피</a></li>			
-	<li><a href="">장바구니</a></li>			
-	<li><a href="">주문조회</a></li>				
+	<li><a href="/baking/RecipeService?method=">장바구니</a></li>			
+	<li><a href="/baking/RecipeService?method=viewOrderList">주문조회</a></li>				
 	<li><a href="">마이레시피</a></li>		
 </ul>
 </div>
@@ -58,7 +58,7 @@
 	<c:forEach var="recipe" items="${RECIPE_LIST}">
 		<li>        
 		<section class="block">							
-			<a href="/baking/RecipeService?method=viewRecipe=${recipe.recipeNum }">
+			<a href="/baking/RecipeService?method=viewRecipe&recipenum=${recipe.recipeNum }">
 			<img src="/baking/img/recipe_${recipe.good_division.gName}/${recipe.img}" border=0  /></a> 	
 			<br/>									
 			<h5><center>${recipe.title}</center></h5>																	        
