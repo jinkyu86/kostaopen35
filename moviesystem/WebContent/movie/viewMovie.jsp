@@ -92,7 +92,7 @@
 						<c:choose>
 							<c:when test="${sessionScope.LOGIN_MEMBER eq null}"></c:when>
 							<c:otherwise>
-								<span id="reservation" class="button1">예매하기</span>
+								<a href="/moviesystem/ScreenTimeService?method=viewScreenTimeListBymnum&mnum=${Movie.mnum}"><span id="reservation" class="button1">예매하기</span></a>
 							</c:otherwise>
 						</c:choose>
 					</td>
