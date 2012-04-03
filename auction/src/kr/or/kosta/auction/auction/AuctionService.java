@@ -92,7 +92,11 @@ public class AuctionService extends HttpServlet {
 				GoodDAO.selectGoodList();
 		//2.request에 저장
 		request.setAttribute("GOOD_LIST",goodList);
-		//3.경매 추가 페이지 이동 객체 생성
+		
+		String gNum = request.getParameter("gNum");
+		Good good = GoodDAO.selectGood(gNum);
+		request.setAttribute("GOOD", good);
+		
 		RequestDispatcher rd=
 				request.getRequestDispatcher(
 						"/auction/addAuction.jsp");
