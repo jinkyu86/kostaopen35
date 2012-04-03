@@ -6,6 +6,18 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>경매정보</title>
+<script>
+	function bid(){
+		var ret;
+		ret=confirm("정말 입찰하시겠습니까?");
+		return ret;
+	}
+	function buy(){
+		var ret;
+		ret=confirm("정말 즉시구매하시겠습니까?");
+		return ret;		
+	}
+</script>
 </head>
 <body>
 <script type="text/javascript">
@@ -47,7 +59,7 @@
 			<td align="center">${AUCTION.sTime}</td>
 			<td align="center">${AUCTION.eTime }</td>
 			<c:if test="${AUCTION.sold=='0'}">
-				<td align="center"><input type="submit" value="입찰하기"></td>
+				<td align="center"><input type="submit" value="입찰하기" onclick="return bid()"></td>
 			</c:if>
 		</tr>
 	</form>
@@ -55,13 +67,10 @@
 	<c:if test="${AUCTION.sold=='0'}">
 	<p align="center">
 		 <p align="center">
-		 <a href="/auction/BidService?method=buy&aNum=${AUCTION.aNum }">즉시구매하기</a>
+		 <a href="/auction/BidService?method=buy&aNum=${AUCTION.aNum }" onclick="return buy()">즉시구매하기</a>
 	</p>
 	</c:if>
-	 <p align="center">
-		 <p align="center">
-		 <a href="/auction/AuctionService?method=viewAuctionList">경매목록 보기</a>
-	</p>
+	 
 <c:if test="${sessionScope.MEMBER.userid=='admin'}">
 	 <p align="center">
 		 <p align="center">
@@ -71,6 +80,11 @@
 		 <a href="/auction/AuctionService?method=removeAuction&aNum=${AUCTION.aNum}">경매 삭제</a>
 	 </p>
 </c:if>
+
+	<p align="center">
+		 <p align="center">
+		 <a href="/auction/AuctionService?method=viewAuctionList">경매목록 보기</a>
+	</p>
 </script>
 </body>
 </html>
