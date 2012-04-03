@@ -49,8 +49,8 @@ pageEncoding="utf-8"%>
 	옵션 : ${GOOD.option } <br><br>
 	관련레시피 목록 : <br><br>
 <c:forEach var="recipe" items="${GOOD_RECIPELIST}">
-	${recipe.recipeNum }
-	${recipe.title }<br>
+	<a href="/baking/RecipeService?method=viewRecipe&recipenum=${recipe.recipeNum }">${recipe.title }</a>
+	<br>
 </c:forEach>
 <c:forEach var="photoList" items="${PHOTO_LIST}" >
 	<img src="/baking/img/${GOOD.good_division.gName }/${photoList.image}"/><br>
