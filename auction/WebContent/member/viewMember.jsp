@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
   <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -7,8 +8,8 @@
 <title>회원 조회</title>
 </head>
 <body>
-	<h1>회원 조회</h1>
-	<table border="1" align="center">
+	<h1 align="center">회원 조회</h1>
+<table border="1" align="center">
 	  <tr>
 	  <td>아이디</td><td>${MEMBER.userid}</td>
 	  </tr>
@@ -27,8 +28,29 @@
 	  <tr>
 	  <td>E머니</td><td>${MEMBER.emoney}</td>
 	  </tr>
-	  
-	  </table>
+</table>
+<br/><br/><br/>
+<table border="1" align="center">
+	<tr>
+		<th>물품사진</th>
+		<th>물품명</th>
+		<th>입찰시간</th>
+		<th>입찰가격</th>
+	</tr>
+	
+	<c:forEach var="bid" items="${BID_LIST}">	
+	<tr>
+		<td><img src="/auction/gphoto/${bid.auction.good.img }" height="100" width="100"></td>
+		<td align="center">
+			<a href="/auction/GoodService?method=viewAuction&aNum=${bid.auction.aNum }">
+				${bid.auction.good.gName }
+			</a>
+		</td>
+		<td align="center">${bid.bidTime }</td>
+		<td align="center">${bid.bidPrice }</td>
+	</tr>
+	</c:forEach>
+</table>	
 	  <p align="center">
 	    <a href="/auction/MemberService?method=editMemberForm&userid=${MEMBER.userid}">
 	    회원수정
@@ -36,7 +58,7 @@
 	  </p>
 	  <p align="center">
 	    <a href="/auction/MemberService?method=remove&userid=${MEMBER.userid}">
-	   회원삭제
+	   회원탈퇴
 	    </a>
 	   </p> 
 	  
