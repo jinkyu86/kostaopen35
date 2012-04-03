@@ -105,9 +105,7 @@ public class MemberService extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		
 		//1.회원추가 페이지 이동 객체 생성
-		RequestDispatcher rd=
-				request.getRequestDispatcher(
-						"/member/addMember.jsp");
+		RequestDispatcher rd=request.getRequestDispatcher("/member/addMember.jsp");
 		//2.페이지 이동
 		rd.forward(request, response);
 
@@ -119,7 +117,6 @@ public class MemberService extends HttpServlet {
 	 */
 	private void editMember(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-			HttpSession session=request.getSession();
 				String userid=request.getParameter("userid");
 				String pw=request.getParameter("pw");
 				String email=request.getParameter("email");
@@ -140,9 +137,7 @@ public class MemberService extends HttpServlet {
 				MemberDAO.updateMember(member);
 			//	session.setAttribute("MEMBER",member);
 				//4.회원정보 조회화면으로 이동 객체 생성
-				RequestDispatcher rd=
-						request.getRequestDispatcher(
-								"/MemberService?method=viewMember");
+				RequestDispatcher rd=request.getRequestDispatcher("/MemberService?method=viewMember");
 				rd.forward(request, response);
 	}
 
@@ -201,9 +196,7 @@ public class MemberService extends HttpServlet {
 		String userid=request.getParameter("userid");
 		BidDAO.deleteBidById(userid);
 		MemberDAO.deleteMember(userid);
-		RequestDispatcher rd=
-				request.getRequestDispatcher(
-						"/MemberService?method=viewAuctionList");
+		RequestDispatcher rd=request.getRequestDispatcher("/MemberService?method=viewAuctionList");
 		rd.forward(request, response);
 
 	}
@@ -240,8 +233,7 @@ public class MemberService extends HttpServlet {
 			}// end else
 		}// end if
 			// 7. /GoodService?method=viewGoodList로 이동
-		RequestDispatcher rd = request
-				.getRequestDispatcher("/AuctionService?method=viewAuctionList");
+		RequestDispatcher rd = request.getRequestDispatcher("/AuctionService?method=viewAuctionList");
 		rd.forward(request, response);
 
 	}
@@ -254,8 +246,7 @@ public class MemberService extends HttpServlet {
 			throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		session.invalidate();
-		RequestDispatcher rd = request
-				.getRequestDispatcher("/AuctionService?method=viewAuctionList");
+		RequestDispatcher rd = request.getRequestDispatcher("/AuctionService?method=viewAuctionList");
 		rd.forward(request, response);
 
 	}
@@ -266,9 +257,7 @@ public class MemberService extends HttpServlet {
 	 */
 	private void loginForm(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher rd=
-				request.getRequestDispatcher(
-						"/member/login.jsp");
+		RequestDispatcher rd=request.getRequestDispatcher("/member/login.jsp");
 		rd.forward(request, response);
 
 	}
@@ -278,9 +267,7 @@ public class MemberService extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		ArrayList<Member> memberList=MemberDAO.selectMemberList();
 		request.setAttribute("MEMBER_LIST",memberList);
-		RequestDispatcher rd=
-				request.getRequestDispatcher(
-						"/member/viewMemberList.jsp");
+		RequestDispatcher rd=request.getRequestDispatcher("/member/viewMemberList.jsp");
 		rd.forward(request, response);
 	}
 }
