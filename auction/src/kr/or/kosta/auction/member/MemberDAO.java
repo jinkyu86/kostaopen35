@@ -21,7 +21,7 @@ public class MemberDAO {
 		try {
 			psmt = con.prepareStatement("INSERT INTO MEMBER"
 					+ " (userid,pw,email,name,coin,emoney)"
-					+ " VALUES(?,?,?,?,'100','50')");
+					+ " VALUES(?,?,?,?,'100','5000000')");
 			psmt.setString(1, member.getUserid());
 			psmt.setString(2, member.getPw());
 			psmt.setString(3, member.getEmail());
