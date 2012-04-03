@@ -26,7 +26,7 @@ import kr.or.kosta.photo.PhotoDAO;
 
 
 
-public class RecipeService {
+public class RecipeService extends HttpServlet{
 
     public RecipeService() {
         super();
@@ -81,7 +81,7 @@ public class RecipeService {
 			int division=Integer.parseInt(request.getParameter("division"));
 			
 //			데이터베이스에서 레시피구분리스트 조회
-			ArrayList<Recipe> recipeList= RecipeDAO.selectRecipeList(division);
+			ArrayList<Recipe> recipeList= RecipeDAO.selectDivisionRecipeList(division);
 //			request에 레시피구분리스트 리스트 저장
 			request.setAttribute("RECIPE_DIVISION_LIST", recipeList);
 		

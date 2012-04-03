@@ -45,15 +45,14 @@ public class RecipeDAOTest {
 //		System.out.println("delete ¿Ï·á");
 //	}
 	
-//	@Test
-//	public void testselectrecipeList(){
-//		ArrayList<Recipe> arrayList = RecipeDAO.selectRecipeList();
-//
-//		for (int i = 0; i < arrayList.size(); i++) {
-//			Recipe recipe = arrayList.get(i);
-//			System.out.println(recipe);
-//		}
-//	}
+	@Test
+	public void testselectrecipeList(){
+		ArrayList<Recipe> arrayList = RecipeDAO.selectRecipeList(1);
+		for (int i = 0; i < arrayList.size(); i++) {
+			Recipe recipe = arrayList.get(i);
+			System.out.println(recipe);
+		}
+	}
 	
 //	@Test
 //	public void testselectrecipe(){
@@ -85,15 +84,15 @@ public class RecipeDAOTest {
 //	}
 
 	
-	@Test
-	public void testselectGoodPhotoList(){
-		Good good= GoodDAO.selectGood(30);
-		ArrayList<Photo>arrayList=PhotoDAO.selectGoodPhotoList(30);
-		
-		System.out.println(good);
-		for (int i = 0; i < arrayList.size(); i++) {
-			Photo photo=arrayList.get(i);
-			System.out.println(photo);
-		}
-	}
+//	@Test
+//	public void testselectGoodPhotoList(){
+//		Good good= GoodDAO.selectGood(30);
+//		ArrayList<Photo>arrayList=PhotoDAO.selectGoodPhotoList(30);
+//		
+//		System.out.println(good);
+//		for (int i = 0; i < arrayList.size(); i++) {
+//			Photo photo=arrayList.get(i);
+//			System.out.println(photo);
+//		}
+//	}
 }

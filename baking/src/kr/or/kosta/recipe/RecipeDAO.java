@@ -136,6 +136,55 @@ public class RecipeDAO {
 		
 		return recipeList;
 	}
+	
+	//레시피구분리스트
+		public static ArrayList<Recipe> selectDivisionRecipeList(int divisionNum) {
+			Connection con =null;
+			PreparedStatement psmt =null;
+			con=ConnectionUtil.getConnection();
+			ResultSet rs =null;
+			ArrayList<Recipe> recipeList = new ArrayList<Recipe>();
+			String sql="";
+			
+			try {
+				sql="select R.RECIPE_NUM ,R.TITLE, R.CONTENT, R.IMG, R.MATERIAL, R.DIVISION, G.g_NAME " +
+				    " from RECIPE R, GOOD_DIVISION G " +
+				    " where R.DIVISION=G.DIVISION and R.DIVISION=?";
+				
+				con=ConnectionUtil.getConnection();
+				psmt=con.prepareStatement(sql);
+				psmt.setInt(1, divisionNum);
+				rs=psmt.executeQuery();
+				
+				while (rs.next()) {
+					Recipe recipe = new Recipe();
+					Good_division good_division = new Good_division();
+					int recipe_num=rs.getInt(1);
+					String title=rs.getString(2);
+					String content=rs.getString(3);
+					String img=rs.getString(4);
+					String material=rs.getString(5);
+					int division=rs.getInt(6);
+					String g_name=rs.getString(7);
+					
+					recipe.setRecipeNum(recipe_num);
+					recipe.setTitle(title);
+					recipe.setContent(content);
+					recipe.setImg(img);
+					recipe.setMaterial(material);
+					
+					good_division.setDivision(division);
+					good_division.setgName(g_name);
+			
+					recipe.setGood_division(good_division);
+					
+					recipeList.add(recipe);
+				}
+			} catch (SQLException e) {	e.printStackTrace();}
+			
+			return recipeList;
+		}
+	
 
 	//레시피정보
 	public static Recipe selectRecipe(int recipenum) {
