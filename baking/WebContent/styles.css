@@ -63,9 +63,9 @@ p {
 /* header */
 header {
 	position: relative;
-	margin-top: 5px;
+	margin-top: 7px;
 	margin-bottom: 5px;
-	padding: 50px;
+	padding: 10px 30px 10px 50px ;	/*¼öÁ¤ÇØ¾ß´ï*/
 	background: #0da4dd;
 	/* curved border radius */
 	-moz-border-radius: 10px;
@@ -101,10 +101,13 @@ margin-left: 12px;
 nav .menu ul {
 list-style: none;
 margin: 0;
+background-color: #000000;
+
 }
 nav .menu li {
 float: left;
 position: relative;
+background-color: #000000;
 }
 nav .menu a {
 display: block;
@@ -112,6 +115,7 @@ text-decoration: none;
 color: #FFF;
 padding: 0 30px;
 line-height: 38px;
+background-color: #000000;
 }
 nav .menu a:hover {
 color: #b5df26;
