@@ -25,7 +25,10 @@ $(document).ready(function(){
 				digits:"숫자 정수를 입력해주세요.",
 				range:"1 이상 100 이하의 값을 입력해주세요."
 			}
-		}
+		},
+		errorPlacement: function(error, element) {     
+			error.appendTo( $("#qtymsg") );
+			}
 		
 	});
 });
@@ -52,8 +55,8 @@ $(document).ready(function(){
 		<th>기타</th>	
 		
 	</tr>
-	
-	<c:forEach var="buy" items="${sessionScope.CART_LIST }" varStatus="i">
+
+	<c:forEach var="buy"  items="${sessionScope.CART_LIST }" varStatus="i">
 	<tr>
 		<td>
 			<img src="/moviesystem/gphoto/${buy.good.photo}" width="100" height="100"/>
@@ -65,13 +68,16 @@ $(document).ready(function(){
 			${buy.good.gprice}
 		</td>
 		<td>
+
 			<form action="/moviesystem/GoodService" method="post" id="my_form">
 				<input type="text" name="qty" value="${buy.qty}" id="qty"size=2/>
+				<div id="qtymsg"></div>
 				<input type="hidden" name="method" value="editCartList"/>
 				<input type="hidden" name="index" value="${i.count-1}"/>	
 				<br/>
 				<input type="submit" value="수량변경"/>
 			</form>
+	
 		</td>	
 		<td>
 			${buy.good.gprice*buy.qty}
