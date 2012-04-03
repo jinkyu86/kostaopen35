@@ -36,8 +36,6 @@ public class BidService extends HttpServlet {
 			viewBidList(request,response);
 		}else if("addBid".equals(method)){
 			addBid(request,response);
-		}else if("removeBidById".equals(method)){
-			removeBidById(request,response);
 		}else if("buy".equals(method)){
 			buy(request,response);
 		}
@@ -155,13 +153,5 @@ public class BidService extends HttpServlet {
 		rd.forward(request, response);
 		
 	}
-	
-	private void removeBidById(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session=request.getSession();
-		Member member=(Member)session.getAttribute("MEMBER");
-		
-		String userid=member.getUserid();
-		BidDAO.deleteBidById(userid);
-	}
+
 }
