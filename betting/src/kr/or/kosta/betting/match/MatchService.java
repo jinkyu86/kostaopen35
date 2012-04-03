@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import kr.or.kosta.betting.betting.Betting;
 import kr.or.kosta.betting.betting.BettingDAO;
 import kr.or.kosta.betting.loc.Loc;
 import kr.or.kosta.betting.loc.LocDAO;
@@ -210,7 +209,7 @@ public class MatchService extends HttpServlet {
 		String matchNum = request.getParameter("matchno");
 		MatchDAO.deleteMatch(matchNum);
 		RequestDispatcher rd = request
-				.getRequestDispatcher("/match/viewMatchList.jsp");
+				.getRequestDispatcher("/MatchService?method=viewMatchList");
 		rd.forward(request, response);
 	}
 

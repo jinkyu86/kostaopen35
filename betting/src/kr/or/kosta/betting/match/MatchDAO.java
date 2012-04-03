@@ -380,8 +380,9 @@ public class MatchDAO {
 		}
 		return winTeam;
 	
-	//match 카운트 메서드
+	
 	}
+	//match 카운트 메서드
 	public static int selectMatchCount(){
 		Connection con = null;
 		PreparedStatement psmt = null;
@@ -424,6 +425,34 @@ public class MatchDAO {
 		}		
 	}
 	
+	public static String selectMatchTime(String matchNum){
+		Connection con = null;
+		PreparedStatement psmt = null;
+		String sql = null;
+		ResultSet rs =null;
+		String matchTime=null;
+				
+		try {
+			con = ConnectionUtil.getConnection();
+			sql = "SELECT TO_CHAR(match_time,'yyyy/mm/dd hh24:mi:ss')"
+					+ " FROM match m,team h,team a,team w,loc l"
+					+ " WHERE m.home_team_num=h.team_num "
+					+ " AND m.away_team_num=a.team_num"
+					+ " AND m.win_team_num=w.team_num(+)"
+					+ " AND m.loc_num=l.loc_num"
+					+ " AND m.match_num=?";
+
+			psmt = con.prepareStatement(sql);
+			psmt.setString(1, matchNum);
+			rs = psmt.executeQuery();
+			if (rs.next()) {
+				matchTime = rs.getString(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return matchTime;
+	}
 	
 	
 }
