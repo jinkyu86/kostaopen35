@@ -1,77 +1,51 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
- <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+ <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"  %>
+<%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>구매리스트</title>
+<link rel="stylesheet" href="/moviesystem/css/Layout.css">
+<script src="http://code.jquery.com/jquery-1.7.1.js"></script>
+<script src="/moviesystem/js/common.jsp"></script>
 </head>
-<body>
 
-<table border="1" align="center">
+
+<body>
+<table width="90%" align="center">
+	<!-- 상단 메뉴 시작 -->
 	<tr>
-		<th>구매번호</th>
-		<th>이미지</th>
-		<th>상품명</th>
-		<th>단가</th>
-		<th>개수</th>	
-		<th>총가격</th>
-		<th>기타</th>	
-		
+		<td colspan="2">
+			<jsp:include page="/common/top.jsp"></jsp:include>
+		</td>
 	</tr>
-	
+	<!-- 상단 메뉴 끝 -->
+</table>
+<table border="i" align="center">
+	<h1>전체 구매 물건 조회</h1>
+	<tr>
+		<th width="100">구매 번호</th>
+		<th>물건이름</th>
+		<th>개수</th>
+		<th>가격</th>
+		<th>총가격</th>
+		<th>구매일</th>
+	</tr>
 	<c:forEach var="buy" items="${BUY_LIST}">
 	<tr>
-		<td>
-			${buy.buynum}
-		</td>
-		<td>
-			<img src="/moviesystem/gphoto/${buy.good.photo}" width="100" height="100"/>
-		</td>
-		<td>
-			${buy.good.gname}
-		</td>
-		<td>
-			${buy.good.gprice}
-		</td>
-		<form action="/moviesystem/BuyService" method="post">
-			<input type="hidden" name="method" value="editBuyList"/>
-			<input type="hidden" name="buynum" value="${buy.buynum}"/>
-		<td>
-			<input type="text" name="qty" value="${buy.qty}"/>
-			<br/>
-			<input type="submit" value="변경"/>
-		</td>	
-			<input type="hidden" name="Price"  value="${buy.good.gprice}"/>
-			</form>
-		<td>
-			${buy.good.gprice*buy.qty}
-		</td>
-		<form action="/moviesystem/BuyService" method="post">
-			<input type="hidden" name="method"value="removeBuyList"/>
-			<input type="hidden" name="buynum"value="${buy.buynum}"/>
-			<td>
-				<input type="submit" value="삭제"/>
-			</td>
-		</form>
-
-		
+		<td>${buy.buynum}</td>
+		<td>${buy.good.gname}</td>
+		<td>${buy.qty}</td>
+		<td>${buy.good.gprice}</td>
+		<td>${buy.good.gprice*buy.qty}</td>
+		<td><fmt:formatDate value="${buy.buyDate }"pattern="yyyy년 MM월dd일 hh시mm분ss초"/></td>
 	</tr>
 	</c:forEach>
 </table>
-<table border="0" align="center"  width="400">
-<tr>
-<form action="/moviesystem/BuyService" method="post">
-	<input type="hidden" name="method" value="completeBuy"/>	
-	<input type="submit" value="결제하기" />
-</form>
-</tr>
-<tr>
-<p>
-	<a href="/moviesystem/GoodService?method=viewGoodList">쇼핑하러가기</a>
+<p align="center">
+	${PAGE_LINK_TAG}
 </p>
-</tr>
-</table>
 </body>
 </html>
