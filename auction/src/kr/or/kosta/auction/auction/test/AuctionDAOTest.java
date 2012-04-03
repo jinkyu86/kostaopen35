@@ -27,7 +27,7 @@ public class AuctionDAOTest {
 		auction.seteTime("2012/03/29");
 		auction.setCuPrice("100");
 		auction.setImPrice("1000");
-		auction.setSold(true);
+		auction.setSold(1);
 		auction.setsPrice("10");
 		auction.setGood(good);
 		
