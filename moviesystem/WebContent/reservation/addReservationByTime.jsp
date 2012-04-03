@@ -41,7 +41,7 @@
 				<td>아이디</td>
 				<td>
 				
-				<input type="text"name="userid"value="${member.userid}"
+				<input type="text"name="userid"value="${LOGIN_MEMBER.userid}"
 					readOnly="readOnly"/> 
 				
 				
