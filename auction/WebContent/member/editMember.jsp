@@ -15,7 +15,7 @@
 			<tr>
 				<td>아이디</td>
 				<td><input type="text" name="userid"
-					value="${MEMBER.userid }" readOnly="readOnly" /></td>
+					value="${MEMBER.userid}" readOnly="readOnly" /></td>
 			</tr>
 			<tr>
 				<td>비밀번호</td>
