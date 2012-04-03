@@ -36,6 +36,9 @@ public class MemberService extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+		String sessionId=request.getSession().getId();
+		System.out.println("sessionId:"+sessionId);
+		
 		request.setCharacterEncoding("utf-8");
 		String method = request.getParameter("method");
 		if(method==null){
@@ -137,7 +140,7 @@ public class MemberService extends HttpServlet {
 				
 				//3.회원정보를 수정하는 메서드 호출
 				MemberDAO.updateMember(member);
-				session.setAttribute("MEMBER",member);
+			//	session.setAttribute("MEMBER",member);
 				//4.회원정보 조회화면으로 이동 객체 생성
 				RequestDispatcher rd=
 						request.getRequestDispatcher(
