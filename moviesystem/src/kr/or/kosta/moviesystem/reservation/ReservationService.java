@@ -104,18 +104,39 @@ public class ReservationService extends HttpServlet {
 			HttpServletResponse response) throws IOException, ServletException {
 		String resnum = request.getParameter("resnum");
 		String select = request.getParameter("select");
+	    Reservation reservation= new Reservation();
+	    reservation = ReservationDAO.selectReservation(resnum);
 //		Reservation reservation= new Reservation();
 //		reservation.setResnum(resnum);
 		request.setAttribute("select", select);
 		request.setAttribute("resnum",resnum);
+		System.out.println("reservation"+reservation);
+		request.setAttribute("reservation",reservation);
+		
+		long finalSeatNum=reservation.getSeatnum()+(reservation.getResQty()-1);
+		
+		String finalSeat = null;
+		
+		if(reservation.getResQty()==1){
+			finalSeat="";
+		}else {
+			finalSeat="~"+finalSeatNum;
+		}
+		
+		request.setAttribute("finalSeatNum",finalSeat);
 		if(select.equals("1")){
 			RequestDispatcher rd=request.getRequestDispatcher(
 					"/reservation/payment.jsp");
 					//4.JSP로 페이지 이동
 					rd.forward(request, response);
-		}else{
+		}else if(select.equals("2")){
 			RequestDispatcher rd=request.getRequestDispatcher(
 					"/reservation/cancel.jsp");
+					//4.JSP로 페이지 이동
+					rd.forward(request, response);
+		}else{
+			RequestDispatcher rd=request.getRequestDispatcher(
+					"/reservation/viewReservationByResnum.jsp");
 					//4.JSP로 페이지 이동
 					rd.forward(request, response);
 		}
