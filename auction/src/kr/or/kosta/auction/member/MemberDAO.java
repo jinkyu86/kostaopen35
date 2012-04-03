@@ -32,44 +32,6 @@ public class MemberDAO {
 		}
 	}
 
-	/**
-	 * @param member
-	 */
-	public static Member selectMemberById(String userid) {
-		Connection con = null;
-		PreparedStatement psmt = null;
-		String sql = null;
-		ResultSet rs = null;
-		Member member = null;
-		try {
-			con = ConnectionUtil.getConnection();
-			sql = "SELECT  pw,email,name,coin,emoney"
-					+ "  FROM  member " + " WHERE userid=? ";
-
-			psmt = con.prepareStatement(sql);
-			psmt.setString(1, userid);
-			rs = psmt.executeQuery();
-			if (rs.next()) {
-				String pw = rs.getString(1);
-				String email = rs.getString(2);
-				String name = rs.getString(3);
-				String coin = rs.getString(4);
-				String emoney = rs.getString(5);
-
-				member = new Member();
-				member.setUserid(userid);
-				member.setPw(pw);
-				member.setEmail(email);
-				member.setName(name);
-				member.setCoin(coin);
-				member.setEmoney(emoney);
-
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return member;
-	}
 
 	public static void updateMember(Member member) {
 		Connection con = null;

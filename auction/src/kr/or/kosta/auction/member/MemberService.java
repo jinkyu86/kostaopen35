@@ -151,17 +151,12 @@ public class MemberService extends HttpServlet {
 	 */
 	private void editMemberForm(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		//1.수정할 회원의 학번 리턴
+			//1.수정할 회원의 ID 리턴
 				String userid=request.getParameter("userid");
 				//2.수정할 회원의 정보 조회
 				Member member=MemberDAO.selectMember(userid);
-				//3.전체 회원 리스트 조회
-				ArrayList<Member> memberList=
-						MemberDAO.selectMemberList();
 				//4.request에 저장
 				request.setAttribute("MEMBER", member);
-				request.setAttribute("MEMBER_LIST",
-						memberList);
 				//5./member/editMember.jsp이동 객체 생성
 				RequestDispatcher  rd=
 						request.getRequestDispatcher("/member/editMember.jsp");
@@ -181,8 +176,12 @@ public class MemberService extends HttpServlet {
 		//아이디 추출
 		String userid=member.getUserid();
 		
+		//DB에 있는 정보로 회원정보 갱신
+		member=MemberDAO.selectMember(userid);
 		//해당ID의 최근 입찰한 5개의 입찰리스트 호출
 		ArrayList<Bid> bidList=BidDAO.selectBidListByID(5, 1, userid);
+		//세션에 정보 저장
+		session.setAttribute("MEMBER",member);
 		session.setAttribute("BID_LIST", bidList);
 		RequestDispatcher rd=
 				request.getRequestDispatcher("/member/viewMember.jsp");
@@ -219,7 +218,7 @@ public class MemberService extends HttpServlet {
 		// 2.pw 파라메터 리턴
 		String pw = request.getParameter("pw");
 		// 3.아이디가 일치하는 회원정보 조회
-		Member member = MemberDAO.selectMemberById(userid);
+		Member member = MemberDAO.selectMember(userid);
 		// 4.3의 리턴값이 null이면
 		// request에 속성명:ERROR 값:존재하지 않는 아이디
 		// 저장
@@ -276,7 +275,7 @@ public class MemberService extends HttpServlet {
 	
 	private void viewMemberList(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		ArrayList<Member> memberList=	MemberDAO.selectMemberList();
+		ArrayList<Member> memberList=MemberDAO.selectMemberList();
 		request.setAttribute("MEMBER_LIST",memberList);
 		RequestDispatcher rd=
 				request.getRequestDispatcher(
