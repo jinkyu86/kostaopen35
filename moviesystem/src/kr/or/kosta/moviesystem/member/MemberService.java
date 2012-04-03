@@ -36,7 +36,9 @@ public class MemberService extends HttpServlet {
 		   String  method=request.getParameter("method");
 		   System.out.println(method);
 		   if(method==null){
-			   method="viewMemberList";
+			   RequestDispatcher rd=request.getRequestDispatcher("/MovieService?method=Main");
+				rd.forward(request, response);
+				
 		   }if("viewMemberList".equals(method)){
 			   viewMemberList(request,response);
 		   }else if("addMemberForm".equals(method)){
@@ -219,8 +221,9 @@ public class MemberService extends HttpServlet {
 		member.setAddr(addr);
 		
 		MemberDAO.insertMember(member);
+		request.setAttribute("ERROR", "회원가입이 되었습니다.");
 		
-		RequestDispatcher rd=request.getRequestDispatcher("/MovieService?method=Main");
+		RequestDispatcher rd=request.getRequestDispatcher("/member/login.jsp");
 		rd.forward(request, response);
 		
 		
@@ -355,7 +358,7 @@ public class MemberService extends HttpServlet {
 			HttpServletResponse response) throws IOException,ServletException{
 		String userid=request.getParameter("userid");
 		Member member=MemberDAO.selectMemberById(userid);
-		request.setAttribute("MEMBER", member);
+		request.setAttribute("LOGIN_MEMBER", member);
 		RequestDispatcher rd=request.getRequestDispatcher("/member/dropMember.jsp");
 		rd.forward(request, response);
 		
@@ -381,10 +384,7 @@ public class MemberService extends HttpServlet {
 		member.setDropReason(dropReason);
 		
 		MemberDAO.dropMember(member);
-		RequestDispatcher rd=
-				request.getRequestDispatcher(
-						"/MemberService?method=viewMemberList");
-		rd.forward(request, response);
+		logoutMember(request, response);
 		
 	}
 	
