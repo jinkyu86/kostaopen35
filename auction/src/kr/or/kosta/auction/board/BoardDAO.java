@@ -113,7 +113,8 @@ public class BoardDAO {
 			psmt=con.prepareStatement(
 					" SELECT b.b_num, m.userid, b.title, b.content " +
 					" FROM board b, member m " +
-					" WHERE b.userid=m.userid ");
+					" WHERE b.userid=m.userid " +
+					" ORDER BY b.b_num DESC");
 			rs=psmt.executeQuery();
 			while(rs.next()){
 				String bNum=rs.getString(1);
