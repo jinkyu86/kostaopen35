@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import kr.or.kosta.gooddivision.GoodDivisionDAO;
 import kr.or.kosta.gooddivision.Good_division;
+import kr.or.kosta.member.Member;
+import kr.or.kosta.member.MemberDAO;
 import kr.or.kosta.photo.Photo;
 import kr.or.kosta.photo.PhotoDAO;
 import kr.or.kosta.recipe.Recipe;
@@ -60,8 +62,11 @@ public class GoodService extends HttpServlet {
 			editGoodForm(request,response);
 		}else if("removeGood".equals(method)){
 			removeGood(request,response);
+		}else if("viewDivisionGoodList".equals(method)){
+			viewDivisionGoodList(request,response);
 		}
 	}
+	
 
 	/**
 	 * 상품리스트보기
@@ -71,6 +76,8 @@ public class GoodService extends HttpServlet {
 		GoodDAO goodDAO = new GoodDAO();
 		ArrayList<Good> goodList = goodDAO.selectGoodList();
 		request.setAttribute("GOOD_LIST",goodList);
+		//HttpSession session = request.getSession(true);
+		//session.setAttribute("admin", 1);//관리자
 		RequestDispatcher rd = request.getRequestDispatcher("/good/viewGoodList.jsp");
 		rd.forward(request, response);
 	}
@@ -126,7 +133,7 @@ public class GoodService extends HttpServlet {
 		//3.DB에 저장
 		GoodDAO.insertGood(good);
 		//4. 전체 학생리스트 이동객체 생성
-		RequestDispatcher rd = request.getRequestDispatcher("/GoodService?mehtod=viewGoodList");
+		RequestDispatcher rd = request.getRequestDispatcher("/GoodService?method=viewGoodList");
 		rd.forward(request, response);
 	}
 
@@ -174,7 +181,7 @@ public class GoodService extends HttpServlet {
 		//3.DB에 저장
 		GoodDAO.updateGood(good);
 		//4. 전체 학생리스트 이동객체 생성
-		RequestDispatcher rd = request.getRequestDispatcher("/GoodService?mehtod=viewGood&goodNum="+goodNum); //RequestDispatcher에 쓸때는 프로젝트명은 뺀다는것에 유의
+		RequestDispatcher rd = request.getRequestDispatcher("/GoodService?method=viewGood&goodNum="+goodNum); //RequestDispatcher에 쓸때는 프로젝트명은 뺀다는것에 유의
 		rd.forward(request, response);
 	}
 
@@ -200,6 +207,19 @@ public class GoodService extends HttpServlet {
 		int goodNum=Integer.parseInt(request.getParameter("goodNum"));
 		GoodDAO.deleteGood(goodNum);
 		RequestDispatcher rd = request.getRequestDispatcher("/GoodService?method=viewGoodList");
+		rd.forward(request, response);
+	}
+	
+	/**
+	 * 상품구분별 상품리스트 조회
+	 */
+	private void viewDivisionGoodList(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		int division = Integer.parseInt(request.getParameter("division"));
+		
+		ArrayList<Good> goodList = GoodDAO.viewDivisionGoodList(division);
+		request.setAttribute("viewGoodList", goodList);
+		RequestDispatcher rd = request.getRequestDispatcher("/good/viewDivisionGoodList.jsp");
 		rd.forward(request, response);
 	}
 }
