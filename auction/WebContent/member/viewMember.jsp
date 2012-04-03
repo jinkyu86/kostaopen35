@@ -57,7 +57,7 @@
 	    </a>
 	  </p>
 	  <p align="center">
-	    <a href="/auction/MemberService?method=remove&userid=${MEMBER.userid}">
+	    <a href="/auction/MemberService?method=removeMember&userid=${MEMBER.userid}">
 	   È¸¿øÅ»Åð
 	    </a>
 	   </p> 

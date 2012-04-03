@@ -32,19 +32,34 @@
 				<td><input type="text" name="name"
 					value="${MEMBER.name}"/></td>
 			</tr>
-			<c:if test="${sessionScope.MEMBER.userid=='admin'}">
-			<tr>
-				<td>코인</td>
-				<td><input type="text" name="coin"
-					value="${MEMBER.coin}" /></td>
-					
-			</tr>
-			<tr>
-				<td>E머니</td>
-				<td><input type="text" name="emoney"
-					value="${MEMBER.emoney}" /></td>
-			</tr>
-			</c:if>
+			<c:choose>
+				<c:when test="${sessionScope.MEMBER.userid=='admin'}">
+					<tr>
+						<td>코인</td>
+						<td><input type="text" name="coin"
+							value="${MEMBER.coin}" /></td>
+							
+					</tr>
+					<tr>
+						<td>E머니</td>
+						<td><input type="text" name="emoney"
+							value="${MEMBER.emoney}" /></td>
+					</tr>
+				</c:when>
+				<c:otherwise>
+					<tr>
+						<td>코인</td>
+						<td><input type="text" name="coin"
+							value="${MEMBER.coin}" readOnly="readOnly"/></td>
+							
+					</tr>
+					<tr>
+						<td>E머니</td>
+						<td><input type="text" name="emoney"
+							value="${MEMBER.emoney}" readOnly="readOnly"/></td>
+					</tr>
+				</c:otherwise>
+			</c:choose>
 			<tr>
 				<td><input type="submit" value="회원수정" /></td>
 				<td><input type="reset" value="입력취소" /></td>
