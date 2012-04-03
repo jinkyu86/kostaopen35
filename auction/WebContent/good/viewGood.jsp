@@ -31,5 +31,8 @@
 	<p align="center">
 		 <a href="/auction/GoodService?method=removeGood&gNum=${GOOD.gNum}">물품 삭제</a>
 	 </p>
+	 <p align="center">
+		 <a href="/auction/AuctionService?method=addAuctionForm&gNum=${GOOD.gNum}">경매 등록</a>
+	 </p>
 </body>
 </html>
