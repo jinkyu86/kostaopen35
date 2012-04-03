@@ -107,6 +107,9 @@
 	 		</c:choose>  			 		 	 			
  		</tr>
  		</c:forEach>
+ 		<tr>
+ 		<td align="center" colspan="7"> ${PAGE_LINK_TAG}</td>
+ 		</tr>
  	</table>
  	
  	 <c:if test="${sessionScope.LOGIN_EMAIL!=null}">

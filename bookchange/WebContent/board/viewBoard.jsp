@@ -6,6 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>물건 조회</title>
+<script src="http://code.jquery.com/jquery-1.7.js"></script>
 </head>
 <body>
 
@@ -78,8 +79,8 @@
  			<td colspan="2">${qa.member.email}</td> 			
  			<c:choose>
  			<c:when test="${sessionScope.LOGIN_EMAIL.email eq qa.member.email}">
- 			 <td colspan="2">${qa.qaContent}</td>
-	 		 <form action="/bookchange/QaService" method="post">
+ 			 <td id="qaContent" colspan="2">${qa.qaContent}</td>
+	 		 <form id="editQa" action="/bookchange/QaService" method="post">
 	 		 <input type="hidden" name="method" value="editQaForm">
 	 		 <input type="hidden" name="qaNo" value="${qa.qaNo}">
 	 		 <input type="hidden" name="qaContent" value="${qa.qaContent}">
@@ -100,11 +101,22 @@
 	 		</c:choose>  			 		 	 			
  		</tr>
  		</c:forEach>
+ 		<tr>
+ 		<td align="center" colspan="7"> ${PAGE_LINK_TAG}</td>
+ 		</tr>
  	</table>
  	
- 	 <c:if test="${sessionScope.LOGIN_EMAIL!=null}">
- 		<jsp:include page="addQa.jsp"/>
- 	 </c:if>
- 
+ 	<center>
+ 	<c:choose>
+ 	 <c:when test="${EDITQA!=null}">
+ 			<jsp:include page="editQaForm.jsp"/>
+	 	</c:when>	 	
+ 	 <c:when test="${sessionScope.LOGIN_EMAIL!=null}">
+ 		<jsp:include page="addQa.jsp"/> 		
+ 	 </c:when>
+ 	 <c:otherwise>
+ 	 </c:otherwise>
+ 	 </c:choose>	
+ 	 </center>
 </body>
 </html>

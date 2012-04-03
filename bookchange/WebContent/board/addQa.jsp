@@ -4,16 +4,33 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<script src="http://code.jquery.com/jquery-1.7.js"></script>
+<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.js"></script>
+<script>
+	$(document).ready(function(){
+		$("#add_qa").validate({
+			rules:{
+				qaContent:{
+					required:true
+				}
+			},
+			messages:{
+				qaContent:{
+					required:"내용을 입력해주세요."
+				}
+			}			
+		});
+	});
+</script>
 </head>
 <body> 
- <form action="/bookchange/QaService" method="post">
+ <form id="add_qa" action="/bookchange/QaService" method="post">
  <input type="hidden" name="method" value="addQa"/>
  <input type="hidden" name="email" value="${sessionScope.LOGIN_EMAIL.email}"/>
  <input type="hidden" name="boardNo" value="${BOARD.boardNo}"/>
   <p align="center">
-  댓글 등록:
-  <textarea name="qaContent"></textarea>
-  <input type="submit" value="상품문의등록">
+  <textarea name="qaContent" cols="60" rows="3"></textarea>
+  <input type="submit" value="댓글등록">
   </p> 
  </form> 
 </body>
