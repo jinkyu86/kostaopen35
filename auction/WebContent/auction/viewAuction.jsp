@@ -16,7 +16,14 @@
 	$(document).ready(function(){
 		
 		$("#buy").click(function (event){
-			var result=confirm("회원탈퇴하시겠습니까?");
+			var result=confirm("해당 물품을 즉시구매 하시겠습니까?");
+		
+			if(result==false){
+				event.preventDefault();
+			}
+		});
+		$("#delete").click(function (event){
+			var result=confirm("해당 물품을 삭제 하시겠습니까?");
 		
 			if(result==false){
 				event.preventDefault();
@@ -83,7 +90,7 @@
 		 <a href="/auction/AuctionService?method=editAuctionForm&aNum=${AUCTION.aNum}">경매정보 수정</a>
 	</p>
 	<p align="center">
-		 <a href="/auction/AuctionService?method=removeAuction&aNum=${AUCTION.aNum}">경매 삭제</a>
+		 <a href="/auction/AuctionService?method=removeAuction&aNum=${AUCTION.aNum}" id="deleteauction">경매 삭제</a>
 	 </p>
 </c:if>
 
