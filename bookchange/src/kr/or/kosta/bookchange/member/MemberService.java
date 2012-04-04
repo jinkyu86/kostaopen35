@@ -50,8 +50,16 @@ public class MemberService extends HttpServlet {
 			viewMemberList(request, response);
 		}else if("searchMemberList".equals(method)){
 			searchMemberList(request, response);
+		}else if("PwInMember".equals(method)){;
+			PwInMember(request,response);
+		}else if("removeMemberForm".equals(method)){
+			removeMemberForm(request,response);
 		}
-	
+	}
+	private void removeMemberForm(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException,IOException {
+		RequestDispatcher rd=request.getRequestDispatcher("/memer/removeMember.jsp");
+		rd.forward(request, response);
 	}
 	/**
 	 * 회원추가
@@ -194,7 +202,7 @@ public class MemberService extends HttpServlet {
 			}
 		
 		}
-		RequestDispatcher rd=request.getRequestDispatcher("/main.jsp");
+		RequestDispatcher rd=request.getRequestDispatcher("/member/loginafter.jsp");
 		rd.forward(request, response);
 	
 	}
@@ -227,7 +235,21 @@ public class MemberService extends HttpServlet {
 		rd.forward(request, response);
 		
 	}
+	/**
+	 * 회원탈퇴를 위한 비밀번호 입력창 
+	 */
 
+	public void PwInMember(HttpServletRequest request,
+			HttpServletResponse response) throws IOException,ServletException{
+//			String email=request.getParameter("email");
+//			Member member=MemberDAO.selectMember(email);
+//			request.setAttribute("LOGIN_EMAIL", member);
+			RequestDispatcher rd=request.getRequestDispatcher("/member/outPwkeyword.jsp");
+			rd.forward(request, response);
+		}
+	
+	
+	
 	/**
 	 * 회원 탈퇴/삭제
 	 * 
@@ -238,10 +260,23 @@ public class MemberService extends HttpServlet {
 			HttpServletResponse response) throws IOException,ServletException{
 		/* default generated stub */;
 		String email=request.getParameter("email");
-		MemberDAO.deleteMember(email);
-		System.out.println("회원이 삭제 되었습니다.");
-		RequestDispatcher rd=request.getRequestDispatcher("/member/removemember.jsp");
-		rd.forward(request, response);
+		Member member=MemberDAO.selectMember(email);
+		
+		String pw=request.getParameter("pw");
+		
+		if(pw==null){
+			System.out.println("비밀번호를 입력하시오.");
+		}else if (!member.getPw().equals(pw)) {
+			System.out.println("비밀번호를 잘못 입력하셨습니다.");
+		}else if (member.getPw().equals(pw)) {
+		
+			MemberDAO.deleteMember(email);
+			System.out.println("회원이 삭제 되었습니다.");
+			request.setAttribute("ERROR", "탈퇴되었습니다.");
+			
+			RequestDispatcher rd=request.getRequestDispatcher("/main.jsp");
+			rd.forward(request, response);
+		}
 	}
 
 	/**
@@ -251,6 +286,57 @@ public class MemberService extends HttpServlet {
 	 * @param response
 	 */
 	public void viewMember(HttpServletRequest request,
+			HttpServletResponse response)throws IOException,ServletException {
+			
+			String email=request.getParameter("email");
+			Member member=MemberDAO.selectMember(email);
+			
+			request.setAttribute("MEMBER",member);
+			//System.out.println(email+"회원정보가 보입니다.");
+			
+			RequestDispatcher rd=request.getRequestDispatcher("/member/viewmember.jsp");
+			rd.forward(request, response);
+	}
+/**
+ * 전화번호로 이메일 검색
+ * @param request
+ * @param response
+ * @throws IOException
+ * @throws ServletException
+ */
+	
+	public void viewMemberEmail(HttpServletRequest request,
+			HttpServletResponse response)throws IOException,ServletException {
+			
+			String email=request.getParameter("email");
+			String tel=request.getParameter("tel");
+			
+			Member member=MemberDAO.selectMember(tel);
+		//	member.setPw(pw);
+		//	member.setEmail(email);
+			if(tel==null){
+				System.out.println("전화번호를 입력하시오.");
+			}else if (!member.getTel().equals(tel)) {
+				System.out.println("전화번호를 잘못 입력하셨습니다.");
+			}else if (!member.getTel().equals(tel)) {
+			
+			//request.setAttribute("PW",pw);
+			request.setAttribute("EMAIL",email);
+			//System.out.println(email+"회원정보가 보입니다.");
+			
+			RequestDispatcher rd=request.getRequestDispatcher("/member/nomalmemberListemail.jsp");
+			rd.forward(request, response);
+			}
+	}
+	/**
+	 * 이메일과 전화번호로 검색
+	 * @param request
+	 * @param response
+	 * @throws IOException
+	 * @throws ServletException
+	 */
+	
+	public void viewMemberPw(HttpServletRequest request,
 			HttpServletResponse response)throws IOException,ServletException {
 			
 			String email=request.getParameter("email");
