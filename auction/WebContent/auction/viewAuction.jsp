@@ -6,6 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>경매정보</title>
+<script src="http://code.jquery.com/jquery-1.7.js"></script>
 <script>
 	function bid(){
 		var ret;
