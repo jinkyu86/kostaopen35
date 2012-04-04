@@ -80,7 +80,7 @@
 </head>
 <body>
 	<body>
-	<h1 align="center">경매추가</h1>
+	<h1 align="center">경매등록</h1>
 	<form action="/auction/AuctionService" method="post" id="my_form">
 		<input type="hidden" name="method" value="addAuction" />
 		<table>
@@ -134,7 +134,7 @@
 		
 		
 		<tr>
-			<td><input type="submit" value="경매추가" id="addAuction"/></td>
+			<td><input type="submit" value="경매등록" id="addAuction"/></td>
 			<td><input type="reset" value="취소"/></td>
 		</tr>
 	</table>
