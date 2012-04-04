@@ -9,37 +9,46 @@
 </head>
 <body>
 <h1 align="center">전체 맴버 리스트</h1>
-	<table border="1" align="center">		 
+	<table border="2" align="left">		 
 	<form action="/bookchange/MemberService" method="post">
 	  <input type="hidden" name="method" value="searchMemberList">
-  <tr>
-   <th>이메일</th>
-   <th>주소</th>
-   <th>비밀번호</th>
-   <th>전화번호</th>
-  </tr>
+     <select name="email">
+     	<option value="email">이메일</option>
+     </select>
+		<input type="text" name="keyword">
+		<br/>
+		<input type="submit" value="검색">
+	</form>
+</table>	
+ <table border="1" align="center">
+ <tr>
+ 	<th>이메일</th>
+ 	<th>주소</th>
+ 	<th>전화번호</th>
+ 	<th>비밀번호</th>
+ </tr>
  <c:forEach var="member" items="${MEMBER_LIST}">
-  <tr>
-  <td>
-  <a href="/bookchange/MemberService?method=viewMemberList&email">
-  ${member.email}
-  </a>
-  </td>
-  
-  
-   <td>${member.address}</td>
-  <td> ${member.pw}</td>	
-   <td>${member.tel}</td>
-  
-  </tr>
-  </c:forEach>
-	</table>
-	<p align="center">
-	${PAGE_LINK_TAG }
-	</p>
-	<p align="center">
-		<a href="/MemberService?method=searchMemberList&keyword=keyword">맴버검색</a>
-	</p>
 
+
+   <a href="/bookchange/MemberService?method=viewMemberList&email=${member.email}">
+	 </a>
+
+ 	<tr> 
+ 	  <th>${member.email}</th>	
+ 	  <th>${member.address}</th> 	  
+	  <th>${member.tel}</th>
+	  <th>${member.pw}</th>
+	</tr>
+	
+  </c:forEach>
+  
+	</table>
+<p align="center">
+		${PAGE_LINK_TAG }
+		</p>
+	<p align="center">
+		<a href="/bookchange/member/loginafter.jsp">로그인화면으로</a>
+	</p>
+	
 </body>
 </html>
