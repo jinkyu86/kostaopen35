@@ -11,7 +11,6 @@
 <title>경매리스트</title>
 </head>
 <body>
-
 <script type="text/javascript">
 	<c:if test="${ERROR!=null}">
 		alert("${ERROR}");
@@ -88,7 +87,6 @@
 	<p align="center">
 		<a href="/auction/GoodService?method=viewGoodList">물품관리</a><br/>
 		<a href="/auction/AuctionService?method=addAuctionForm">경매추가</a>
-		<a href="/auction/AuctionService?method=editAuctionForm">경매수정</a>	
 	</p>
 </c:if>
 	<br/>
