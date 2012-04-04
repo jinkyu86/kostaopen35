@@ -27,7 +27,7 @@ $(document).ready(function(){
 			}
 		},
 		errorPlacement: function(error, element) {     
-			error.appendTo( $("#qtymsg") );
+			error.appendTo( $(".qtymsg") );
 			}
 		
 	});
@@ -43,14 +43,15 @@ $(document).ready(function(){
 		</td>
 	</tr>
 	<!-- 상단 메뉴 끝 -->
+	
 </table>
 
 <table border="1" align="center">
 	<tr>
 		<th>이미지</th>
 		<th>상품명</th>
-		<th >단가</th>
-		<th width=300>개수</th>	
+		<th>단가</th>
+		<th width="200">개수</th>	
 		<th>총가격</th>
 		<th>기타</th>	
 		
@@ -70,12 +71,12 @@ $(document).ready(function(){
 		<td>
 
 			<form action="/moviesystem/GoodService" method="post" id="my_form">
-				<input type="text" name="qty" value="${buy.qty}" id="qty"size=2/>
-				<div id="qtymsg"></div>
 				<input type="hidden" name="method" value="editCartList"/>
-				<input type="hidden" name="index" value="${i.count-1}"/>	
-				<br/>
-				<input type="submit" value="수량변경"/>
+				<input type="text" name="qty" value="${buy.qty}" id="qty"size=6/>
+				<input type="submit" value="수량변경"/><br/>
+				<input type="hidden" name="index" value="${i.count-1}"/>
+				<div class="qtymsg"></div>
+								
 			</form>
 	
 		</td>	
@@ -89,20 +90,23 @@ $(document).ready(function(){
 				<input type="submit" value="삭제"/>
 			</form>
 		</td>
-	</tr>
+	</tr><br/>
+		
 	</c:forEach>
 </table>
 
 
-<table border="0" align="center"  width="400">
-	<tr align="center">
+<table border="0" align="center" width="400">
+	<tr align="center"><br/>
+		<td>
 		<form action="/moviesystem/BuyService" method="post">
 			<input type="hidden" name="method" value="addBuy"/>	
-			<input type="submit" value="결제하기" /><br/>
+			<input type="submit" value="결제하기" />
 		</form>
-	</tr>
+		</td>
+	</tr><br/>
 	<tr>
-	<p align="center">
+		<p align="center">
 			<a href="/moviesystem/GoodService?method=viewGoodList">쇼핑하러가기</a>
 		</p>
 	</tr>

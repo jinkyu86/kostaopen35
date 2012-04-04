@@ -24,7 +24,10 @@ $(document).ready(function(){
 				digits:"숫자 정수를 입력해주세요.",
 				range:"1 이상 100 이하의 값을 입력해주세요."
 			}
-		}
+		},
+		errorPlacement: function(error, element) {     
+			error.appendTo( $("#qtymsg") );
+			}
 	});
 });
 
@@ -62,10 +65,14 @@ $(document).ready(function(){
 		<input type="hidden"name="method"value="addCartList"/>
 		<input type="hidden"name="gnum"value="${GOOD.gnum}"/>
 		<tr>
-			<td  width="300" align="center">수량 : <input type="text"name="qty" value="1" id="qty"size="3"/><br/><div id="message"/></td>
+			<td  width="300" align="center">
+				수량 : <input type="text"name="qty" value="1" id="qty"size="6"/>
+				<input type="submit" value="장바구니 담기"/>
+			</td>
 		</tr>
 		<tr>
-			<td align="center"><input type="submit" value="장바구니 담기" id="addCartButton"/></td>
+			<td align="center"><div id="qtymsg"></div></td>
+			
 		</tr>
 	</form>
 </table>
