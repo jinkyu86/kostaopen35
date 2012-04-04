@@ -49,8 +49,11 @@
 			${sessionScope.LOGIN_MEMBER.name} 님 안녕하세요<br /> <a
 				href="/betting/MemberService?method=logout"> 로그아웃 </a>
 		</p>
-		</c:otherwise>
-	
-	</c:choose>
+		</c:otherwise>	
+	</c:choose>	
+	<p align="center">
+		<a href="/betting/MemberService?method=viewMemberRankingListForm">
+			랭킹보기 </a>
+	</p>
 </body>
 </html>
