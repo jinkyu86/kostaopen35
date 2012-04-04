@@ -66,17 +66,22 @@ $(document).ready(function(){
 	<a href="/bookchange/member/addmember.jsp">
   	 회원가입</a> 
   	</td>
-  	   	
+  	  	<tr>
+		<td align="center">
+			<a href="/bookchange/BlockService?method=viewMemberEmail&tel">이메일찾기</a>
+		</td>	
+	</tr>
+	<tr>
+		<td align="center">
+			<a href="/bookchange/BlockService?method=viewMemberPw&pw">비밀번호찾기</a>
+		</td>	
+	</tr> 	
    	<td><p align="center">
 	${PAGE_LINK_TAG}
 	</p>
    	</td>
    	
-   	<td>
-   	<a href="/bookchange/MemberService?method=viewMemberList">
- 	회원정보보기
-  	</a>
-  	</td>
+
   </tr>	
 	</table>
 </body>
