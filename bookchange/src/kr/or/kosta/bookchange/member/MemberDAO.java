@@ -10,6 +10,7 @@ import kr.or.kosta.util.ConnectionUtil;
 public class MemberDAO {
 
 
+
 	/**
 	 * (관리자 전용)회원명단 조회
 	 * 
@@ -179,13 +180,15 @@ public class MemberDAO {
 		Connection con=null;
 		PreparedStatement ps=null;
 		con=ConnectionUtil.getConnection();
-		
 		try {
+			
 			ps=con.prepareStatement(
-					"delete from tb_member" +
-					" where email=?");
+					"delete  from tb_member" +
+					" where email=?"
+					);
 			ps.setString(1, email);
 			ps.executeUpdate();
+			
 		} catch (Exception e) {
 			// TODO: handle exception
 			
@@ -201,10 +204,10 @@ public class MemberDAO {
 		ArrayList<Member> memberList=new ArrayList<Member>();
 		try {
 			con=ConnectionUtil.getConnection();
-			sql="select email,tel,address,pw from tb_member where email like ?";
+			sql="select email,tel,address,pw from tb_member where email=? ";
 			ps=con.prepareStatement(sql,ResultSet.TYPE_SCROLL_INSENSITIVE,
 										ResultSet.CONCUR_READ_ONLY);
-			ps.setString(1, "%"+email+"%");
+			ps.setString(1, email);
 			rs=ps.executeQuery();
 			if(page>1){
 				rs.absolute((page-1)*length);
@@ -245,9 +248,9 @@ public class MemberDAO {
 		
 		try {
 			con=ConnectionUtil.getConnection();
-			sql="select count(email) from tb_member where email like ?"; 
+			sql="select count(email) from tb_member "; 
 			ps=con.prepareStatement(sql);
-			ps.setString(1, "%"+email+"%");
+			
 			rs=ps.executeQuery();
 			if(rs.next()){
 				memberCount=rs.getInt(1);
