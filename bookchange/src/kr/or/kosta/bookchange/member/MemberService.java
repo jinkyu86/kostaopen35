@@ -83,7 +83,7 @@ public class MemberService extends HttpServlet {
 		
 		MemberDAO.insertMember(member);
 		
-		RequestDispatcher rd=request.getRequestDispatcher("/BoardService?method=viewBoardList");
+		RequestDispatcher rd=request.getRequestDispatcher("main.jsp");
 		rd.forward(request, response);
 		
 	}
@@ -96,7 +96,7 @@ public class MemberService extends HttpServlet {
 	 */
 	public void addMemberForm(HttpServletRequest request,
 			HttpServletResponse response) throws IOException,ServletException {
-		RequestDispatcher rd=request.getRequestDispatcher("/member/addmember.jsp");
+		RequestDispatcher rd=request.getRequestDispatcher("addMember.jsp");
 		rd.forward(request, response);
 	
 	}
@@ -192,7 +192,6 @@ public class MemberService extends HttpServlet {
 		if(member!=null){
 			if(!member.getPw().equals(pw)){
 				request.setAttribute("ERROR", "비밀번호 오류");
-				request.setAttribute("ERROR","존재하지 않는 아이디");
 			}else {
 				
 				HttpSession session=request.getSession();
@@ -202,7 +201,7 @@ public class MemberService extends HttpServlet {
 			}
 		
 		}
-		RequestDispatcher rd=request.getRequestDispatcher("/member/loginafter.jsp");
+		RequestDispatcher rd=request.getRequestDispatcher("main.jsp");
 		rd.forward(request, response);
 	
 	}
@@ -288,14 +287,24 @@ public class MemberService extends HttpServlet {
 	public void viewMember(HttpServletRequest request,
 			HttpServletResponse response)throws IOException,ServletException {
 			
-			String email=request.getParameter("email");
-			Member member=MemberDAO.selectMember(email);
+		HttpSession session=request.getSession();
+		Member member=(Member) session.getAttribute("LOGIN_EMAIL");
+		if(member==null){
+			request.setCharacterEncoding("utf-8");
+			request.setAttribute("ERROR","로그인하시기 바랍니다.");
 			
+			RequestDispatcher rd=request.getRequestDispatcher("/main.jsp");
+			rd.forward(request, response);
+		}else{
+			String email=member.getEmail();
+			member=MemberDAO.selectMember(email);
+		
 			request.setAttribute("MEMBER",member);
 			//System.out.println(email+"회원정보가 보입니다.");
-			
-			RequestDispatcher rd=request.getRequestDispatcher("/member/viewmember.jsp");
+		
+			RequestDispatcher rd=request.getRequestDispatcher("/myInfo.jsp");
 			rd.forward(request, response);
+		}
 	}
 /**
  * 전화번호로 이메일 검색
