@@ -13,17 +13,6 @@
 	alert("${ERROR}");
 	</c:if>
 </script>
-<%-- 
-<script>
-	$(document).ready(function(){
-		$.ajax("/bookchange/BoardService",{
-			success:function(data){
-				$(body).append(data);
-			}
-		});
-	});
-</script>
---%>
 </head>
 <body topmargin="0" leftmargin="0" bgcolor="#FFFFFF">
 	<table width="880" align="center" cellpadding="0" cellspacing="0" border="0">
@@ -42,7 +31,7 @@
 		<c:choose>
 		<c:when test="${sessionScope.LOGIN_EMAIL==null}">	
 			<td><a href="/bookchange/BoardService?method=addBoardForm"><img src="webimg/join.GIF" border="0"/></a></td>
-			<td><a href="/"><img src="webimg/myinfo.GIF" border="0"/></a></td>
+			<td><a href="/bookchange/MemberService?method=viewMember"><img src="webimg/myinfo.GIF" border="0"/></a></td>
 		</c:when>
 		<c:otherwise>
 			<td><a href="/bookchange/BoardService?method=addBoardForm"><img src="webimg/join.GIF" border="0"/></a></td>
@@ -101,7 +90,7 @@
 	    <form action="/bookchange/MemberService" method="post">
 		<input type="hidden"name="method" value="logout">
 		<tr>
-		 <td>${sessionScope.LOGIN_EMAIL.email}님 로그인..</td>
+		 <td>${sessionScope.LOGIN_EMAIL.email}님이 로그인하였습니다.</td>
 		</tr>
 		<tr>
 		 <td colspan="5"><div align="right">
@@ -112,6 +101,7 @@
 		<tr>
 		 <td><div align="right">
 		 <a href="/bookchange/MemberService?method=removeMemberForm"><button>회원탈퇴</button></a>
+		 <a href="/bookchange/MemberService?method=editMemberForm"><button>정보수정</button></a>
 		 </div></td>
 		</tr>
 	    </table>
@@ -128,7 +118,7 @@
 	   </tr>
 	 </table>
 	 </tr>
-	 <td width="550" height="600" valign="top" bgcolor="#B0E0E6">
+	 <td width="550" height="600" valign="top" bgcolor="#FFFFFF">
 	 	<table width="550" height="600" cellpadding="0" cellspacing="0" border="1">
 	 	<td><jsp:include page="/board/boardListAtMain.jsp" flush="true"/></td> 	
 	 	</table>
