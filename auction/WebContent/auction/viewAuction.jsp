@@ -12,11 +12,16 @@
 		ret=confirm("정말 입찰하시겠습니까?");
 		return ret;
 	}
-	function buy(){
-		var ret;
-		ret=confirm("정말 즉시구매하시겠습니까?");
-		return ret;		
-	}
+	$(document).ready(function(){
+		
+		$("#buy").click(function (event){
+			var result=confirm("회원탈퇴하시겠습니까?");
+		
+			if(result==false){
+				event.preventDefault();
+			}
+		});
+	});
 </script>
 </head>
 <body>
@@ -67,7 +72,7 @@
 	<c:if test="${AUCTION.sold=='0'}">
 	<p align="center">
 		 <p align="center">
-		 <a href="/auction/BidService?method=buy&aNum=${AUCTION.aNum }" onclick="return buy()">즉시구매하기</a>
+		 <a href="/auction/BidService?method=buy&aNum=${AUCTION.aNum }" id="buy">즉시구매하기</a>
 	</p>
 	</c:if>
 	 
