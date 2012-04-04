@@ -15,7 +15,7 @@
 </script>
 </head>
 <body>
-	<h1>게시물 조회</h1>
+	<h1 align="center">게시물 조회</h1>
 	<table border="1" align="center">  	
 	  <tr>
 	  <td>번호</td><td>${BOARD.bNum}</td>

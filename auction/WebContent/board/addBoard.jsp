@@ -8,6 +8,7 @@
 </head>
 <body>
 <hr noshade>
+<h1 align="center">게시물 작성</h1>
 <form name="login_form" action="/auction/BoardService" method="post">
 <table border="1" align="center">
 <input type="hidden" name="method" value="addBoard" />

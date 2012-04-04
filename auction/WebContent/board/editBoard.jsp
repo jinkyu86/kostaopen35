@@ -10,6 +10,7 @@
 <title>게시물 수정</title>
 </head>
 <body>
+<h1 align="center">게시물 수정</h1>
 	<form  action="/auction/BoardService"
 	  method="post">
 	  <input  type="hidden" name="method" 
