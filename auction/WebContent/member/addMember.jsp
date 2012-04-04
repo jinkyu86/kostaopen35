@@ -20,6 +20,24 @@
 					}
 			});
 		});
+		$(document).ready(function(){
+			$extend(jQuery.validator.messages,{
+				required: '필수 입력 사항입니다.',
+				minlength: '{0}글자이상 입력해 주세요.',
+				email: '이메일 형식에 맞게 입력해 주세요.'
+			});
+			
+		$('my_form').vaalidate({
+			rules:{
+				userid:{
+					required : true,
+					minlength:3
+				},
+				email: 'required email'
+			}
+		
+	    });
+		});
 	});
 </script>
 </head>
