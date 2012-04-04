@@ -242,4 +242,59 @@ public class MemberDAO {
 		}
 		return memberCount;
 	}
+	public static long selectMineralByID(String id) {
+
+		/**
+		 * 아이디를 통해 선택된 미네랄 조회
+		 * 
+		 * @param ID
+		 */
+
+		Connection con = null;
+		PreparedStatement psmt = null;
+		String sql = null;
+		ResultSet rs = null;
+		long mineral=0;
+		try {
+			con = ConnectionUtil.getConnection();
+			sql = "SELECT  mineral" + "  FROM  member"
+					+ " WHERE id=?";
+
+			psmt = con.prepareStatement(sql);
+			psmt.setString(1, id);
+			rs = psmt.executeQuery();
+			if (rs.next()) {
+
+				
+				mineral = rs.getLong(1);
+
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return mineral;
+	}
+	
+	public static void updateMineralByID(String id , long mineral) {
+
+		/**
+		 * 미네랄 데이터 삽입
+		 * 
+		 * @param member
+		 */
+
+		Connection con = null;
+		PreparedStatement psmt = null;
+		con = ConnectionUtil.getConnection();
+		try {
+			psmt = con.prepareStatement("UPDATE member set mineral=?"
+					+"where id=?");
+			psmt.setString(1, id);			
+			psmt.setLong(4, mineral);
+			
+			psmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }
