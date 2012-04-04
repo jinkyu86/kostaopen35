@@ -97,7 +97,7 @@ public class BidService extends HttpServlet {
 		
 		MemberDAO.updateMember(member);
 		AuctionDAO.updateAuction(auction);
-		BidDAO.updateBid(bid);
+		BidDAO.insertBid(bid);
 		
 		request.setAttribute("ERROR","구매하셨습니다");
 		
