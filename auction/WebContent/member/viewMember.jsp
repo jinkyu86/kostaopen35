@@ -72,7 +72,7 @@
 	  </p>
 	  <p align="center">
 	 
-	    <a  id="removeMemberLink" href="/auction/MemberService?method=removeMember&userid=${MEMBER.userid}" onclick="removemember()">
+	    <a  id="removeMemberLink" href="/auction/MemberService?method=removeMember&userid=${MEMBER.userid}">
            È¸¿øÅ»Åð
 		   </a>
 	  
