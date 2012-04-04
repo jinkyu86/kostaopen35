@@ -32,7 +32,7 @@ public class BoardService extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		String method=request.getParameter("method");
 		if(method==null){
-			method="viewBoardList";
+			method="boardListAtMain";
 		}
 		if("viewBoardList".equals(method)){
 			viewBoardList(request,response);
@@ -56,7 +56,33 @@ public class BoardService extends HttpServlet {
 			viewBoardWhenAgree(request,response);
 		}else if("viewBoardWhenCancel".equals(method)){
 			viewBoardWhenCancel(request,response);
+		}else if("boardListAtMain".equals(method)){
+			boardListAtMain(request,response);
 		}
+	}
+
+	private void boardListAtMain(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		int page=1;
+		
+		if(request.getParameter("page")!=null){
+			page=Integer.parseInt(request.getParameter("page"));
+		}
+		
+		int length=8;
+		
+		ArrayList<Board> boardList=BoardDAO.selectBoardList(length, page);
+		request.setCharacterEncoding("utf-8");
+		request.setAttribute("BOARD_LIST",boardList);
+				
+		int boardCount=BoardDAO.selectBoardCount();
+		
+		String pageLinkTag=PageUtil.generate(page, boardCount, length, "/bookchange/BoardService?" +
+				"method=viewBoardList");
+		request.setAttribute("PAGE_LINK_TAG",pageLinkTag);
+		
+		RequestDispatcher rd=request.getRequestDispatcher("/board/boardListAtMain.jsp");
+		rd.forward(request, response);
 	}
 
 	/**

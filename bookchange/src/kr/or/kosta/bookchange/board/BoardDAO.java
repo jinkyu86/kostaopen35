@@ -23,7 +23,7 @@ public class BoardDAO {
 		try {
 			con=ConnectionUtil.getConnection();
 			sql=("select board_no, board_title, board_photo, m.email, b.category_no, b.condition_result, " +
-				 "c.category_name, c2.condition_ing, m.tel, m.address " +
+				 "c.category_name, c2.condition_ing, m.tel, m.address, b.board_want " +
 				 "from tb_board b, tb_member m, tb_category c, tb_condition c2 " +
 				 "where m.email=b.email " +
 				 "and b.category_no=c.category_no " +
@@ -48,11 +48,13 @@ public class BoardDAO {
 				String conditionIng=rs.getString(8);
 				String tel=rs.getString(9);
 				String address=rs.getString(10);
+				String boardWant=rs.getString(11);
 				
 				Board board=new Board();
 				board.setBoardNo(Integer.parseInt(boardNo));
 				board.setBoardTitle(boardTitle);
 				board.setBoardPhoto(boardPhoto);
+				board.setBoardWant(boardWant);
 				
 				Member member=new Member();
 				member.setEmail(email);
