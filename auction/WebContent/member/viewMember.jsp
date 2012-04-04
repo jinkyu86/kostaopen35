@@ -10,7 +10,7 @@
 	function removemember(){
 		var ret;
 		ret=confirm("정말 탈퇴하시겠습니까?");
-		return ret;
+		return false;
 	}
 </script>
 </head>
