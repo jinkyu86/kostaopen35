@@ -13,10 +13,10 @@ import kr.or.kosta.betting.member.Member;
 import kr.or.kosta.betting.team.Team;
 import kr.or.kosta.betting.util.ConnectionUtil;
 
-
+  
 public class MemberBetDataDAO {
 
-	public static ArrayList<MemberBatData> 
+	public static ArrayList<MemberBetData> 
 									selectMemberBetDataList(int page, int length) {
 
 		/**
@@ -30,7 +30,7 @@ public class MemberBetDataDAO {
 		PreparedStatement psmt = null;
 		String sql = null;
 		ResultSet rs = null;
-		ArrayList<MemberBatData> mbdList = new ArrayList<MemberBatData>();
+		ArrayList<MemberBetData> mbdList = new ArrayList<MemberBetData>();
 		try {
 			con = ConnectionUtil.getConnection();
 			sql ="SELECT m.match_num,m.match_result_score"+
@@ -79,9 +79,9 @@ public class MemberBetDataDAO {
 				String locNum = rs.getString(12);
 				String loc1 = rs.getString(13);
 				String batNum = rs.getString(14);
-				Long batRating = rs.getLong(15);
-				Long seleRating = rs.getLong(16);
-				Long totMineral = rs.getLong(17);
+				double batRating = rs.getDouble(15);
+				long seleRating = rs.getLong(16);
+				long totMineral = rs.getLong(17);
 				String distinguishTeam = rs.getString(18);
 				String matchTime = rs.getString(19);
 				long betMineral = rs.getLong(20);
@@ -94,7 +94,7 @@ public class MemberBetDataDAO {
 				String email = rs.getString(27);
 				long mineral = rs.getLong(28);
 
-				MemberBatData mbd = new MemberBatData();
+				MemberBetData mbd = new MemberBetData();
 				mbd.setNum(mbdNum);
 				mbd.setBetMineral(betMineral);
 				mbd.setSeleTime(selectTime);
@@ -130,7 +130,7 @@ public class MemberBetDataDAO {
 				awayTeam.setPhoto(aPhoto);
 
 				Team winTeam = new Team();
-				winTeam.setName(winNum);
+				winTeam.setNum(winNum);
 				winTeam.setName(wTeamName);
 				winTeam.setPhoto(wPhoto);
 
@@ -138,12 +138,9 @@ public class MemberBetDataDAO {
 				loc.setNum(locNum);
 				loc.setLoc(loc1);
 
-				if (distinguishTeam.equals("1")) {
-					match.setHomeTeam(homeTeam);
-				} else {
-					match.setAwayTeam(awayTeam);
-				}
-				match.setWinTeam(winTeam);
+				match.setHomeTeam(homeTeam);
+			    match.setAwayTeam(awayTeam);
+     			match.setWinTeam(winTeam);
 				match.setLoc(loc);
 				betting.setMatch(match);
 
@@ -158,7 +155,7 @@ public class MemberBetDataDAO {
 		return mbdList;
 	}
 
-	public static ArrayList<MemberBatData> 
+	public static ArrayList<MemberBetData> 
 	 						selectMemberBetDataListByID(int page, int length,String ID1) {
 
 		/**
@@ -170,7 +167,7 @@ public class MemberBetDataDAO {
 		PreparedStatement psmt = null;
 		String sql = null;
 		ResultSet rs = null;
-		ArrayList<MemberBatData> mbdList = new ArrayList<MemberBatData>();
+		ArrayList<MemberBetData> mbdList = new ArrayList<MemberBetData>();
 		try {
 			con = ConnectionUtil.getConnection();
 			sql ="SELECT m.match_num,m.match_result_score"+
@@ -221,9 +218,9 @@ public class MemberBetDataDAO {
 				String locNum = rs.getString(12);
 				String loc1 = rs.getString(13);
 				String batNum = rs.getString(14);
-				Long batRating = rs.getLong(15);
-				Long seleRating = rs.getLong(16);
-				Long totMineral = rs.getLong(17);
+				double batRating = rs.getDouble(15);
+				long seleRating = rs.getLong(16);
+				long totMineral = rs.getLong(17);
 				String distinguishTeam = rs.getString(18);
 				String matchTime = rs.getString(19);
 				long betMineral = rs.getLong(20);
@@ -236,7 +233,7 @@ public class MemberBetDataDAO {
 				String email = rs.getString(27);
 				long mineral = rs.getLong(28);
 
-				MemberBatData mbd = new MemberBatData();
+				MemberBetData mbd = new MemberBetData();
 				mbd.setNum(mbdNum);
 				mbd.setBetMineral(betMineral);
 				mbd.setSeleTime(selectTime);
@@ -272,7 +269,7 @@ public class MemberBetDataDAO {
 				awayTeam.setPhoto(aPhoto);
 
 				Team winTeam = new Team();
-				winTeam.setName(winNum);
+				winTeam.setNum(winNum);
 				winTeam.setName(wTeamName);
 				winTeam.setPhoto(wPhoto);
 
@@ -280,11 +277,8 @@ public class MemberBetDataDAO {
 				loc.setNum(locNum);
 				loc.setLoc(loc1);
 
-				if (distinguishTeam.equals("1")) {
-					match.setHomeTeam(homeTeam);
-				} else {
-					match.setAwayTeam(awayTeam);
-				}
+				match.setHomeTeam(homeTeam);
+				match.setAwayTeam(awayTeam);
 				match.setWinTeam(winTeam);
 				match.setLoc(loc);
 				betting.setMatch(match);
@@ -300,7 +294,7 @@ public class MemberBetDataDAO {
 		return mbdList;
 	}
 
-	public static void insultMemberBetData(MemberBatData mbd) {
+	public static void insultMemberBetData(MemberBetData mbd) {
 
 		/**
 		 * ∏‚πˆµ•¿Ã≈Õ ª¿‘ ∏ﬁº≠µÂ
@@ -360,11 +354,7 @@ public class MemberBetDataDAO {
 	
 		try {
 			con=ConnectionUtil.getConnection();
-//			sql="SELECT count(m.match_num)"+
-//					" FROM match m,team t,loc l"+
-//					" WHERE m.home_team=t.num AND m.away_team_num=t.num" +
-//					"	AND m.win_team_num=t.num AND m.loc_num=l.loc_num" +
-//					" AND match_time=?";
+
 			sql = "SELECT  count(personal_betting_num)"
 					+ "  FROM  member_betting_data"
 					+ " WHERE id=?";
@@ -404,27 +394,5 @@ public class MemberBetDataDAO {
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-	}
-	
-	public static int selectMemberbetdataCount() {
-		Connection con = null;
-		PreparedStatement psmt = null;
-		String sql = null;
-		ResultSet rs = null;
-		int memberbetdataCount = 0;
-
-		try {
-			con = ConnectionUtil.getConnection();
-			sql = "SELECT count(personal_betting_num)" + " FROM member_betting_data";
-
-			psmt = con.prepareStatement(sql);
-			rs = psmt.executeQuery();
-			if (rs.next()) {
-				memberbetdataCount = rs.getInt(1);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return memberbetdataCount;
 	}
 }
