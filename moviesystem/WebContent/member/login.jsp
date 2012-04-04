@@ -38,8 +38,8 @@
 		</td>
 		<!-- 좌측 메뉴 끝 -->
 		<td>
-			<div class="menu_title" >Login	</div>
-			<table class="table_style" align="right">
+			<div class="menu_title" ><font size="5">Login</font>	</div>
+			<table class="table_style" style="width:70%">
 		<form action="/moviesystem/MemberService" method="post">
 		<input type="hidden" name="method" value="login"/>
 		<tr>

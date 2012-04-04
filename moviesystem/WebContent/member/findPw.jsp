@@ -38,27 +38,28 @@
 		</td>
 		<!-- 좌측 메뉴 끝 -->
 		<td>
-			<div class="menu_title" >Find Id</div>
-			<table class="table_style" align="right">
-		<form action="/moviesystem/MemberService" method="post">
-		<input type="hidden" name="method" value="findPw"/>
-		<tr>
-			<td>아이디</td>
-			<td> <input type="text" name="userid"/></td>
-			<td rowspan="3">
-			<input type="submit" value="비밀번호찾기"/></td>
-		</tr>
-		<tr>
-			<td>이름</td>
-			<td> <input type="text" name="name"/></td>
-		</tr>
-		<tr>
-			<td>이메일</td>
-			<td><input type="text" name="email"/></td>
-		</tr>
-	</form>
-	</table>
-	</td>
+			<div class="menu_title" ><font size="5">Find Password</font></div>
+			<table class="table_style" style="width:70%">
+				<form action="/moviesystem/MemberService" method="post">
+				<input type="hidden" name="method" value="findPw"/>
+				<tr>
+					<td>아이디</td>
+					<td> <input type="text" name="userid"/></td>
+					<td rowspan="3">
+					<input type="submit" value="비밀번호찾기"/></td>
+				</tr>
+				<tr>
+					<td>이름</td>
+					<td> <input type="text" name="name"/></td>
+				</tr>
+				<tr>
+					<td>이메일</td>
+					<td><input type="text" name="email"/></td>
+				</tr>
+				</form>
+			</table>
+		</td>
 	</tr>
+</table>
 </body>
 </html>

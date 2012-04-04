@@ -37,8 +37,8 @@
 		</td>
 		<!-- 좌측 메뉴 끝 -->
 		<td>
-			<div class="menu_title" >Find Id</div>
-			<table class="table_style" align="right">
+			<div class="menu_title" ><font size="5">Find Id</font></div>
+			<table class="table_style" style="width:70%">
 		<form action="/moviesystem/MemberService" method="post">
 		<input type="hidden" name="method" value="findId"/>
 		<tr>

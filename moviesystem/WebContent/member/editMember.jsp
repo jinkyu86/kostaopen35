@@ -60,8 +60,8 @@ $(document).ready(function(){
 		</td>
 			<!--좌측 메뉴 끝 -->
 		<td>
-			<div class="menu_title" >개인정보수정</div>
-			<table class="table_style" align="right">
+			<div class="menu_title" ><font size="5">개인정보수정</font></div>
+			<table class="table_style" style="width:70%">
 		 <form id="my_form" action="/moviesystem/MemberService" method="post">
 		<input type="hidden" name="method" value="editMember"/>
 		
@@ -99,7 +99,7 @@ $(document).ready(function(){
 		</tr>
 		
 	</table>
-	<table align="center">
+	<table >
 			<tr>
 				<td>
 				<input type="submit" value="개인정보 수정"/>
@@ -107,7 +107,7 @@ $(document).ready(function(){
 			</tr>
 	</form>
 	</table>
-	<table align="center">
+	<table >
 		<form action="/moviesystem/MemberService" method="post">
 			<input type="hidden" name="method" value="dropMemberForm"/>
 			<tr>

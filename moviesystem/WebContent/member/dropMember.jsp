@@ -34,8 +34,8 @@ $(document).ready(function(){
 		</td>
 			<!--좌측 메뉴 끝 -->
 		<td>
-			<div class="menu_title" >회원탈퇴</div>
-			<table class="table_style" align="right">
+			<div class="menu_title" ><font size="5">회원탈퇴</font></div>
+			<table class="table_style" style="width:70%">
 		<form action="/moviesystem/MemberService" method="post">
 		<input type="hidden" name="method"  value="dropMember"/>
 		  <tr>
@@ -52,7 +52,7 @@ $(document).ready(function(){
 		  </tr>
 	
 	</table>
-	<table align="center">
+	<table >
 		  <tr>
 		  	<td>
 		  	<input type="submit" value="회원탈퇴"/>
