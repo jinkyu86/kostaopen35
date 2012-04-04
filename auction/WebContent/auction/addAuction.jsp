@@ -39,7 +39,7 @@
 				minlength:1
 			}
 		},
-		massages:{
+		messages:{
 			sPrice:{
 				required:"시작가를 입력하세요."
 			},
@@ -56,7 +56,7 @@
 				required:"형식에 맞게 입력하세요."
 			},
 			sold:{
-				required:"판매여부를 입력하세요",
+				required:"0 또는 1을 입력하세요",
 			}
 		}
  	});
@@ -89,12 +89,12 @@
 		
 		<tr>
 		<td>시작가</td>
-		<td><input type ="text" name="sPrice"></td>
+		<td><input type ="text" name="sPrice" value="10" readOnly="readOnly"></td>
 		</tr>
 		
 		<tr>
 		<td>현재가격</td>
-		<td><input type ="text" name="cuPrice"></td>
+		<td><input type ="text" name="cuPrice" value="10" readOnly="readOnly"></td>
 		</tr>
 		
 		<tr>
