@@ -71,6 +71,8 @@ public class MemberService extends HttpServlet {
 			logout(request, response);
 		} else if ("checkMemberID".equals(method)) {
 			checkMemberID(request, response);
+		} else if ("viewMemberRankingListForm".equals(method)) {
+			viewMemberRankingListForm(request, response);
 		}
 	}// end method doPost
 
@@ -134,7 +136,7 @@ public class MemberService extends HttpServlet {
 		 * @param request
 		 * @param response
 		 */
-		
+
 		String userid = request.getParameter("userid");
 		Member usermember = MemberDAO.selectMemberByID(userid);
 		response.setContentType("text/html;charset=utf-8");
@@ -371,15 +373,25 @@ public class MemberService extends HttpServlet {
 		 * @param response
 		 */
 
-		// 1.StudentDAO에서 전체 학생조회 메서드 호출
+		int page = 1;
+		if (request.getParameter("page") != null) {
+			page = Integer.parseInt(request.getParameter("page"));
+		}
+		int length = 10;
+
+		int MemberCount = MemberDAO.selectMemberCount();
+		String pageLinkTag = PageUtil.generate(page, MemberCount, length,
+				"/betting/MemberService?method=viewMemberRankingListForm");
+		request.setAttribute("PAGE_LINK_TAG", pageLinkTag);
+
 		ArrayList<Member> memberRankingList = MemberDAO
-				.selectMemberRankingList(1, 5);
-		// 2.request에 1의 전체 학생 정보 저장
+				.selectMemberRankingList(length, page);
+
 		request.setAttribute("MEMBER_LIST", memberRankingList);
-		// 3. /student/viewStudentList.jsp로 페이지이동
+
 		RequestDispatcher rd = request
-				.getRequestDispatcher("/member/viewMemberRankingList.jsp");
-		// 4.JSP로 페이지 이동
+				.getRequestDispatcher("/member/viewMemberRank.jsp");
+
 		rd.forward(request, response);
 	}
 

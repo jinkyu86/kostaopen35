@@ -168,7 +168,7 @@ public class MemberDAO {
 		ArrayList<Member> memberList = new ArrayList<Member>();
 		try {
 			con = ConnectionUtil.getConnection();
-			sql = "SELECT  rank() over (ORDER BY mineral DESC) RANK"
+			sql = "SELECT  rank() over (ORDER BY mineral DESC) RANK , id, mineral"
 					+ " FROM  member";
 
 			psmt = con.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE,
@@ -180,12 +180,16 @@ public class MemberDAO {
 			int getRecordCount = 0;
 			while (rs.next() && getRecordCount < length) {
 				getRecordCount++;
-				String id = rs.getString(1);
-				Long mineral = rs.getLong(2);
+				
+				String rank=rs.getString(1);
+				String id = rs.getString(2);
+				Long mineral = rs.getLong(3);
+				
 
 				Member member = new Member();
 				member.setId(id);
 				member.setMineral(mineral);
+				member.setRank(rank);
 
 				memberList.add(member);
 

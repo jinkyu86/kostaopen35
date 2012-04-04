@@ -9,6 +9,16 @@ public class Member {
 	private String pw;
 
 	private String email;
+	
+	private String rank;
+
+	public String getRank() {
+		return rank;
+	}
+
+	public void setRank(String rank) {
+		this.rank = rank;
+	}
 
 	private long mineral;
 
@@ -55,9 +65,11 @@ public class Member {
 	@Override
 	public String toString() {
 		return "Member [id=" + id + ", name=" + name + ", pw=" + pw
-				+ ", email=" + email + ", mineral=" + mineral + "]";
+				+ ", email=" + email + ", rank=" + rank + ", mineral="
+				+ mineral + "]";
 	}
 
+	
 	
 	
 }
