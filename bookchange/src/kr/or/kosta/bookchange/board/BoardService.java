@@ -88,7 +88,6 @@ public class BoardService extends HttpServlet {
 	/**
 	 * 게시물 추가 */
 	public void addBoard(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		String boardTitle=request.getParameter("boardTitle");
 		String boardWant=request.getParameter("boardWant");
 		String boardPhoto=request.getParameter("boardPhoto");
@@ -130,6 +129,16 @@ public class BoardService extends HttpServlet {
 	/**
 	 * 게시물 추가 창(물품등록 화면) */
 	public void addBoardForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session=request.getSession();
+		Member member=(Member) session.getAttribute("LOGIN_EMAIL");
+		if(member==null){
+			request.setCharacterEncoding("utf-8");
+			request.setAttribute("NEED_LOGIN","로그인하시기 바랍니다.");
+			
+			RequestDispatcher rd=request.getRequestDispatcher("/main.jsp");
+			rd.forward(request, response);
+		}else{
+					
 		ArrayList<Category> categoryList=CategoryDAO.selectCategory();//카테고리 정보 조회
 		ArrayList<Deal> dealList=DealDAO.selectDeal();//거래방법 조회
 		
@@ -138,6 +147,7 @@ public class BoardService extends HttpServlet {
 		
 		RequestDispatcher rd=request.getRequestDispatcher("/board/addBoard.jsp");
 		rd.forward(request, response);
+		}
 	}
 
 	/**	 * 게시물 수정	 */
