@@ -90,6 +90,18 @@
 		 <p align="center">
 		 <a href="/auction/AuctionService?method=viewAuctionList">경매목록 보기</a>
 	</p>
-</script>
+	
+<table border="1" align="center">
+	<tr>
+		<th>아이디</th>
+		<th>입찰가격</th>
+	</tr>
+	<c:forEach var="bid" items="${BID_LIST}">	
+		<tr>
+			<td align="center">${bid.member.userid }</td>
+			<td align="center">${bid.bidPrice }</td>
+		</tr>
+	</c:forEach>
+</table>	
 </body>
 </html>
