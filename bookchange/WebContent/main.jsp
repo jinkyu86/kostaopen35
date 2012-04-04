@@ -13,6 +13,17 @@
 	alert("${ERROR}");
 	</c:if>
 </script>
+<%-- 
+<script>
+	$(document).ready(function(){
+		$.ajax("/bookchange/BoardService",{
+			success:function(data){
+				$(body).append(data);
+			}
+		});
+	});
+</script>
+--%>
 </head>
 <body topmargin="0" leftmargin="0" bgcolor="#FFFFFF">
 	<table width="880" align="center" cellpadding="0" cellspacing="0" border="0">
@@ -119,6 +130,7 @@
 	 </tr>
 	 <td width="550" height="600" valign="top" bgcolor="#B0E0E6">
 	 	<table width="550" height="600" cellpadding="0" cellspacing="0" border="1">
+	 	<td><jsp:include page="/board/boardListAtMain.jsp" flush="true"/></td> 	
 	 	</table>
 	 </td>
 	</table>
