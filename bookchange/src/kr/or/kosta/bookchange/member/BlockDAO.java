@@ -28,9 +28,11 @@ public class BlockDAO {
 		
 		try {
 			con=ConnectionUtil.getConnection();
-			sql="select block_no,block_content,block_email," +
-					"register_email,blockcondition_result " +
-					"from tb_block";
+			sql="select b.block_no,b.block_content,b.block_email, " +
+					"b.register_email,c.blockcondition_result,c.blockcondition_ing " +
+					"from tb_block b,tb_blockcondition c " +
+					"where b.blockcondition_result=c.blockcondition_result ";
+			
 			ps=con.prepareStatement(sql,ResultSet.TYPE_SCROLL_INSENSITIVE,
 									ResultSet.CONCUR_READ_ONLY);
 			rs=ps.executeQuery();
@@ -44,7 +46,7 @@ public class BlockDAO {
 				String blockEmail=rs.getString(3);
 				String registerEmail=rs.getString(4);
 				String blockConditionResult=rs.getString(5);
-				
+				String blockConditioning=rs.getString(6);
 				
 				Block block=new Block();
 				block.setBlockNo(blockNo);
@@ -60,6 +62,7 @@ public class BlockDAO {
 				
 				BlockCondition blockCondition=new BlockCondition();
 				blockCondition.setBlockConditionResult(Integer.parseInt(blockConditionResult));
+				blockCondition.setBlockConditionIng(blockConditioning);
 				block.setBlockCondition(blockCondition);				
 				
 				BlockList.add(block);
