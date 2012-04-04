@@ -97,7 +97,7 @@ pageEncoding="utf-8"%>
 			</tr>
 			<tr>
 				<td>수량</td>
-				<td><input type="text" name="goodPrice">
+				<td><input type="text" name="qty">
 			<tr>
 				<td>옵션</td>
 				<td><input type="text" name="option" value="${GOOD.option}"></td>
