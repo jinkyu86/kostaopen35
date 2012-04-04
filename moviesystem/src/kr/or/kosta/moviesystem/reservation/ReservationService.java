@@ -92,11 +92,15 @@ public class ReservationService extends HttpServlet {
 		String resnum = request.getParameter("resnum");	
 		Reservation reservation= new Reservation();
 		ReservationDAO.cancelReservation(resnum);
-		RequestDispatcher rd=request.getRequestDispatcher(
-				"/reservation/test.jsp");
-				//4.JSP로 페이지 이동
-				rd.forward(request, response);
-		
+		RequestDispatcher rd=
+				request.getRequestDispatcher(
+						"/ReservationService?method=viewReservationListById");
+		rd.forward(request, response);
+//		RequestDispatcher rd=request.getRequestDispatcher(
+//				"/reservation/test.jsp");
+//				//4.JSP로 페이지 이동
+//				rd.forward(request, response);
+//		
 		
 	}
 
@@ -148,10 +152,16 @@ public class ReservationService extends HttpServlet {
 		String resnum = request.getParameter("resnum");	
 		Reservation reservation= new Reservation();
 		ReservationDAO.removeReservation(resnum);
-		RequestDispatcher rd=request.getRequestDispatcher(
-				"/reservation/test.jsp");
-				//4.JSP로 페이지 이동
-				rd.forward(request, response);
+		
+		RequestDispatcher rd=
+				request.getRequestDispatcher(
+						"/ReservationService?method=viewReservationListById");
+		rd.forward(request, response);
+		
+//		RequestDispatcher rd=request.getRequestDispatcher(
+//				"/reservation/test.jsp");
+//				//4.JSP로 페이지 이동
+//				rd.forward(request, response);
 		
 	}
 
@@ -205,19 +215,39 @@ public class ReservationService extends HttpServlet {
 //				String userid=request.getParameter("userid");
 				HttpSession session=request.getSession();
 				Member member=(Member)session.getAttribute("LOGIN_MEMBER");
-				String userid=member.getUserid();
-				request.setAttribute("userid",userid);
+				String userid="";
 				
-				int MovieTotalCnt = MovieDAO.selectMovieCount("");
-				//1.전체영화 리스트 조회
-				ArrayList<Movie>movieList=MovieDAO.selectMovieList(1,MovieTotalCnt, "");
-				//2.request에 저장
-				request.setAttribute("MOVIE_LIST",movieList);
-				//3.학생추가 페이지 이동 객체 생성
-				RequestDispatcher rd=request.getRequestDispatcher(
-						"/reservation/addReservation.jsp");
-				//페이지 이동
-				rd.forward(request, response);
+				//userid 가 null이면 Exception발생하니 그걸 방지
+				try{
+					userid=member.getUserid();
+				}catch(NullPointerException e){
+					//userid="";
+				}
+				
+				
+				if(userid.equals("")){
+					RequestDispatcher rd=
+							request.getRequestDispatcher(
+									"/MemberService?method=loginForm");
+					rd.forward(request, response);
+//					RequestDispatcher rd=request.getRequestDispatcher(
+//							"/reservation/addReservation.jsp");
+//					//페이지 이동
+//					rd.forward(request, response);
+				}else{
+					request.setAttribute("userid",userid);
+					int MovieTotalCnt = MovieDAO.selectMovieCount("");
+					//1.전체영화 리스트 조회
+					ArrayList<Movie>movieList=MovieDAO.selectMovieList(1,MovieTotalCnt, "");
+					//2.request에 저장
+					request.setAttribute("MOVIE_LIST",movieList);
+					//3.학생추가 페이지 이동 객체 생성
+					RequestDispatcher rd=request.getRequestDispatcher(
+							"/reservation/addReservation.jsp");
+					//페이지 이동
+					rd.forward(request, response);
+				}
+				
 		
 	}
 
@@ -274,7 +304,7 @@ public class ReservationService extends HttpServlet {
 		
 		//DB저장
 		ReservationDAO.insertReservation(reservation);
-		//test.jsp로 이동
+		
 		RequestDispatcher rd=
 				request.getRequestDispatcher(
 						"/ReservationService?method=viewReservationListById");
