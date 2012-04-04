@@ -23,9 +23,9 @@ public class MemberDAOTest {
 	public void testInsertMember() {
 		
 		Member member = new Member();
-		member.setID("jun123");
+		member.setId("jun123");
 		member.setName("¾ÆÀú¾¾");
-		member.setPW("1234");
+		member.setPw("1234");
 		member.setMineral(1000);
 		member.setEmail("jun1");
 		
@@ -62,8 +62,8 @@ public class MemberDAOTest {
 	public void updateMember(){
 		
 		Member member = new Member();
-		member.setID("jun123");
-		member.setPW("1234");
+		member.setId("jun123");
+		member.setPw("1234");
 		member.setMineral(1000);
 		member.setEmail("jun21");
 		

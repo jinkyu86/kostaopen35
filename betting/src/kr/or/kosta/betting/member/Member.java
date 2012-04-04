@@ -2,22 +2,22 @@ package kr.or.kosta.betting.member;
 
 public class Member {
 
-	private String ID;
+	private String id;
 
 	private String name;
 
-	private String PW;
+	private String pw;
 
-	private String Email;
+	private String email;
 
-	private long Mineral;
+	private long mineral;
 
-	public String getID() {
-		return ID;
+	public String getId() {
+		return id;
 	}
 
-	public void setID(String iD) {
-		ID = iD;
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	public String getName() {
@@ -28,35 +28,36 @@ public class Member {
 		this.name = name;
 	}
 
-	public String getPW() {
-		return PW;
+	public String getPw() {
+		return pw;
 	}
 
-	public void setPW(String pW) {
-		PW = pW;
+	public void setPw(String pw) {
+		this.pw = pw;
 	}
 
 	public String getEmail() {
-		return Email;
+		return email;
 	}
 
 	public void setEmail(String email) {
-		Email = email;
+		this.email = email;
 	}
 
 	public long getMineral() {
-		return Mineral;
+		return mineral;
 	}
 
 	public void setMineral(long mineral) {
-		Mineral = mineral;
+		this.mineral = mineral;
 	}
 
 	@Override
 	public String toString() {
-		return "Member [ID=" + ID + ", name=" + name + ", PW=" + PW
-				+ ", Email=" + Email + ", Mineral=" + Mineral + "]";
+		return "Member [id=" + id + ", name=" + name + ", pw=" + pw
+				+ ", email=" + email + ", mineral=" + mineral + "]";
 	}
 
+	
 	
 }

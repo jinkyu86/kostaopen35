@@ -1,20 +1,106 @@
 package kr.or.kosta.betting.member;
 
+import java.io.IOException;
+import java.util.ArrayList;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-public class MemberService {
+import kr.or.kosta.betting.util.PageUtil;
+
+/**
+ * Servlet implementation class MemberService
+ */
+public class MemberService extends HttpServlet {
+	private static final long serialVersionUID = 1L;
 
 	/**
-	 * 멤버 삽입 메서드
-	 * 
-	 * @param request
-	 * @param response
+	 * @see HttpServlet#HttpServlet()
 	 */
+	public MemberService() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		doPost(request, response);
+	}
+
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+
+		/**
+		 * @see HttpServlet#doPost(HttpServletRequest request,
+		 *      HttpServletResponse response)
+		 */
+
+		request.setCharacterEncoding("utf-8");
+		String method = request.getParameter("method");
+		if (method == null) {
+			method = "viewMemberList";
+		}
+		if ("viewMemberList".equals(method)) {
+			viewMemberList(request, response);
+		} else if ("viewMember".equals(method)) {
+			viewMember(request, response);
+		} else if ("editMemberForm".equals(method)) {
+			editMemberForm(request, response);
+		} else if ("editMember".equals(method)) {
+			editMember(request, response);
+		} else if ("removeMember".equals(method)) {
+			removeMember(request, response);
+		} else if ("addMemberForm".equals(method)) {
+			addMemberForm(request, response);
+		} else if ("addMember".equals(method)) {
+			addMember(request, response);
+			// } else if ("loginForm".equals(method)) {
+			// loginForm(request, response);
+		} else if ("login".equals(method)) {
+			login(request, response);
+		} else if ("logout".equals(method)) {
+			logout(request, response);
+		}
+	}// end method doPost
+
 	public void addMember(HttpServletRequest request,
-			HttpServletResponse response) {
-		/* default generated stub */;
-		
+			HttpServletResponse response) throws ServletException, IOException {
+
+		/**
+		 * 멤버 삽입 메서드
+		 * 
+		 * @param request
+		 * @param response
+		 */
+
+		String id = request.getParameter("ID");
+		String name = request.getParameter("name");
+		String pw = request.getParameter("PW");
+		String email = request.getParameter("Email");
+		long mineral = Long.parseLong(request.getParameter("Mineral"));
+
+		Member member = new Member();
+		member.setId(id);
+		member.setName(name);
+		member.setPw(pw);
+		member.setEmail(email);
+		member.setMineral(mineral);
+
+		MemberDAO.insultMember(member);
+
+		RequestDispatcher rd = request
+				.getRequestDispatcher("/MemberService?method=viewMemberList");
+
+		rd.forward(request, response);
+
 	}
 
 	/**
@@ -22,105 +108,226 @@ public class MemberService {
 	 * 
 	 * @param request
 	 * @param response
+	 * @throws IOException
+	 * @throws ServletException
 	 */
 	public void addMemberForm(HttpServletRequest request,
-			HttpServletResponse response) {
-		/* default generated stub */;
-	
+			HttpServletResponse response) throws ServletException, IOException {
+
+		ArrayList<Member> memberList = MemberDAO.selectMemberList(1, 5);
+
+		request.setAttribute("MEMBER_LIST", memberList);
+
+		RequestDispatcher rd = request
+				.getRequestDispatcher("/member/addMember.jsp");
+
+		rd.forward(request, response);
 	}
 
-	/**
-	 * 멤버의 아이디가 유일한 값인지 체크하는 메서드
-	 * 
-	 * @param request
-	 * @param response
-	 */
 	public void checkMemberID(HttpServletRequest request,
 			HttpServletResponse response) {
 		/* default generated stub */;
-	
+
+		/**
+		 * 멤버의 아이디가 유일한 값인지 체크하는 메서드
+		 * 
+		 * @param request
+		 * @param response
+		 */
+
 	}
 
-	/**
-	 * 멤버데이터를 에디트 하는 메서드
-	 * 
-	 * @param request
-	 * @param response
-	 */
 	public void editMember(HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response) throws ServletException, IOException {
 		/* default generated stub */;
-		
+
+		/**
+		 * 멤버데이터를 에디트 하는 메서드
+		 * 
+		 * @param request
+		 * @param response
+		 */
+
+		String id = request.getParameter("ID");
+		String name = request.getParameter("name");
+		String pw = request.getParameter("PW");
+		String email = request.getParameter("Email");
+		long mineral = Long.parseLong(request.getParameter("Mineral"));
+
+		Member member = new Member();
+		member.setId(id);
+		member.setName(name);
+		member.setPw(pw);
+		member.setEmail(email);
+		member.setMineral(mineral);
+
+		MemberDAO.updateMember(member);
+
+		RequestDispatcher rd = request
+				.getRequestDispatcher("/MemberService?method=viewMemberList");
+
+		rd.forward(request, response);
+
 	}
 
-	/**
-	 * 멤버 데이터를 에디트하기 위한 삽입 데이터를 받기위한 메서드
-	 * 
-	 * @param request
-	 * @param response
-	 */
 	public void editMemberForm(HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response) throws ServletException, IOException {
 		/* default generated stub */;
-		
+
+		/**
+		 * 멤버 데이터를 에디트하기 위한 삽입 데이터를 받기위한 메서드
+		 * 
+		 * @param request
+		 * @param response
+		 */
+
+		String ID = request.getParameter("ID");
+
+		Member member = MemberDAO.selectMemberByID(ID);
+
+		ArrayList<Member> memberList = MemberDAO.selectMemberList(1, 5);
+
+		request.setAttribute("MEMBER", member);
+		request.setAttribute("MEMBER_LIST", memberList);
+
+		RequestDispatcher rd = request
+				.getRequestDispatcher("/member/editMember.jsp");
+		rd.forward(request, response);
+
 	}
 
-	/**
-	 * 로그인 메서드
-	 * 
-	 * @param request
-	 * @param response
-	 */
-	public void login(HttpServletRequest request, HttpServletResponse response) {
+	public void login(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		/* default generated stub */;
-	
+
+		/**
+		 * 로그인 메서드
+		 * 
+		 * @param request
+		 * @param response
+		 */
+
+		String id = request.getParameter("ID");
+
+		String pw = request.getParameter("PW");
+
+		Member member = MemberDAO.selectMemberByID(id);
+
+		if (member == null) {
+			request.setAttribute("ERROR", "존재하지 않는 아이디");
+		} else {
+
+			if (!member.getPw().equals(pw)) {
+				request.setAttribute("ERROR", "비밀번호 오류");
+			} else {
+
+				HttpSession session = request.getSession();
+				session.setAttribute("LOGIN_MEMBER", member);
+			}// end else
+		}// end if
+
+		RequestDispatcher rd = request
+				.getRequestDispatcher("/MemberService?method=viewMemberList");
+		rd.forward(request, response);
+
 	}
 
-	/**
-	 * 로그아웃메서드
-	 * 
-	 * @param request
-	 * @param response
-	 */
-	public void logout(HttpServletRequest request, HttpServletResponse response) {
+	public void logout(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		/* default generated stub */;
-		
+
+		/**
+		 * 로그아웃메서드
+		 * 
+		 * @param request
+		 * @param response
+		 */
+
+		HttpSession session = request.getSession();
+		session.invalidate();
+		RequestDispatcher rd = request
+				.getRequestDispatcher("/MemberService?method=viewMemberList");
+		rd.forward(request, response);
+
 	}
 
-	/**
-	 * 가입 탈퇴를 위한 메서드
-	 * 
-	 * @param request
-	 * @param response
-	 */
 	public void removeMember(HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response) throws ServletException, IOException {
 		/* default generated stub */;
-	
+
+		/**
+		 * 가입 탈퇴를 위한 메서드
+		 * 
+		 * @param request
+		 * @param response
+		 */
+
+		String ID = request.getParameter("ID");
+		MemberDAO.deleteMember(ID);
+		RequestDispatcher rd = request
+				.getRequestDispatcher("/MemberService?method=viewMemberList");
+		rd.forward(request, response);
+
 	}
 
-	/**
-	 * 모든 멤버 데이터를 조회하는 메서드
-	 * 
-	 * @param request
-	 * @param response
-	 */
 	public void viewMemberList(HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response) throws ServletException, IOException {
 		/* default generated stub */;
+
+		/**
+		 * 모든 멤버 데이터를 조회하는 메서드
+		 * 
+		 * @param request
+		 * @param response
+		 */
+
+		int page = 1;
+		if (request.getParameter("page") != null) {
+			page = Integer.parseInt(request.getParameter("page"));
+		}
+		int length = 10;
+
+		// 1.StudentDAO에서 전체 학생조회 메서드 호출
+		ArrayList<Member> memberList = MemberDAO.selectMemberList(length,page);
+		// 2.request에 1의 전체 학생 정보 저장
+		request.setAttribute("MEMBER", memberList);
+
+		int MemberCount = MemberDAO.selectMemberCount();
+		String pageLinkTag = PageUtil.generate(page, MemberCount, length,
+				"/betting/MemberService?method=viewMemberList");
+		request.setAttribute("PAGE_LINK_TAG", pageLinkTag);
+		// 3. /student/viewStudentList.jsp로 페이지이동
+		RequestDispatcher rd = request
+				.getRequestDispatcher("/member/viewMemberList.jsp");
+		// 4.JSP로 페이지 이동
+		rd.forward(request, response);
 
 	}
 
-	/**
-	 * 선택된 아이디의 멤버데이터를 조회하는 메서드
-	 * 
-	 * @param request
-	 * @param response
-	 */
 	public void viewMember(HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response) throws ServletException, IOException {
 		/* default generated stub */;
-		
+
+		/**
+		 * 선택된 아이디의 멤버데이터를 조회하는 메서드
+		 * 
+		 * @param request
+		 * @param response
+		 */
+
+		// 1.studno파라메터 리턴받아서 변수에 저장
+		String id = request.getParameter("ID");
+		// 2.DB에서 학번이 일치하는 학생 조회
+		Member member = MemberDAO.selectMemberByID(id);
+		// 3.request에 2에서 조회한 학생의 정보 저장
+		// 이름-STUDENT
+		request.setAttribute("MEMBER", member);
+		// 4./student/viewStudent.jsp로 이동 객체 생성
+		RequestDispatcher rd = request
+				.getRequestDispatcher("/member/viewMember.jsp");
+		// 5.4의 JSP로 이동
+		rd.forward(request, response);
+
 	}
 
 	/**
@@ -132,18 +339,30 @@ public class MemberService {
 	public void viewMemberRankingList(HttpServletRequest request,
 			HttpServletResponse response) {
 		/* default generated stub */;
-	
+
 	}
 
-	/**
-	 * 랭킹데이터의 폼 구현 메서드
-	 * 
-	 * @param request
-	 * @param response
-	 */
 	public void viewMemberRankingListForm(HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response) throws ServletException, IOException {
 		/* default generated stub */;
-		
+
+		/**
+		 * 랭킹데이터의 폼 구현 메서드
+		 * 
+		 * @param request
+		 * @param response
+		 */
+
+		// 1.StudentDAO에서 전체 학생조회 메서드 호출
+		ArrayList<Member> memberRankingList = MemberDAO
+				.selectMemberRankingList(1, 5);
+		// 2.request에 1의 전체 학생 정보 저장
+		request.setAttribute("MEMBER_LIST", memberRankingList);
+		// 3. /student/viewStudentList.jsp로 페이지이동
+		RequestDispatcher rd = request
+				.getRequestDispatcher("/member/viewMemberRankingList.jsp");
+		// 4.JSP로 페이지 이동
+		rd.forward(request, response);
+
 	}
 }

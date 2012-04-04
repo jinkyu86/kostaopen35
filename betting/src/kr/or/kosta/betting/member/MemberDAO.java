@@ -44,9 +44,9 @@ public class MemberDAO {
 				Long mineral = rs.getLong(5);
 
 				Member member = new Member();
-				member.setID(id);
+				member.setId(id);
 				member.setName(name);
-				member.setPW(pw);
+				member.setPw(pw);
 				member.setEmail(email);
 				member.setMineral(mineral);
 
@@ -73,9 +73,9 @@ public class MemberDAO {
 		try {
 			psmt = con.prepareStatement("INSERT INTO member "
 					+ "(id,name,pw,email,mineral) " + " VALUES (?,?,?,?,?)");
-			psmt.setString(1, member.getID());
+			psmt.setString(1, member.getId());
 			psmt.setString(2, member.getName());
-			psmt.setString(3, member.getPW());
+			psmt.setString(3, member.getPw());
 			psmt.setString(4, member.getEmail());
 			psmt.setLong(5, member.getMineral());
 			psmt.executeUpdate();
@@ -84,7 +84,7 @@ public class MemberDAO {
 		}
 	}
 
-	public static Member selectMemberByID(String ID) {
+	public static Member selectMemberByID(String id) {
 
 		/**
 		 * 아이디를 통해 선택된 멤버데이터 조회
@@ -103,7 +103,7 @@ public class MemberDAO {
 					+ " WHERE id=?";
 
 			psmt = con.prepareStatement(sql);
-			psmt.setString(1, ID);
+			psmt.setString(1, id);
 			rs = psmt.executeQuery();
 			if (rs.next()) {
 
@@ -113,9 +113,9 @@ public class MemberDAO {
 				Long mineral = rs.getLong(5);
 
 				member = new Member();
-				member.setID(ID);
+				member.setId(id);
 				member.setName(name);
-				member.setPW(pw);
+				member.setPw(pw);
 				member.setEmail(email);
 				member.setMineral(mineral);
 			}
@@ -125,7 +125,7 @@ public class MemberDAO {
 		return member;
 	}
 
-	public static void deleteMember(String ID) {
+	public static void deleteMember(String id) {
 
 		/**
 		 * 아이디로 선택된 데이터 삭제
@@ -139,7 +139,7 @@ public class MemberDAO {
 		try {
 			psmt = con.prepareStatement("DELETE FROM member" + " WHERE id=?");
 
-			psmt.setString(1, ID);
+			psmt.setString(1, id);
 
 			psmt.executeUpdate();
 		} catch (Exception e) {
@@ -179,7 +179,7 @@ public class MemberDAO {
 				Long mineral = rs.getLong(2);
 
 				Member member = new Member();
-				member.setID(id);
+				member.setId(id);
 				member.setMineral(mineral);
 
 				memberList.add(member);
@@ -210,10 +210,10 @@ public class MemberDAO {
 			psmt = con.prepareStatement("UPDATE  member SET pw=?," + "email=?,"
 					+ "mineral=? " + "WHERE id=?");
 
-			psmt.setString(1, member.getPW());
+			psmt.setString(1, member.getPw());
 			psmt.setString(2, member.getEmail());
 			psmt.setLong(3, member.getMineral());
-			psmt.setString(4, member.getID());
+			psmt.setString(4, member.getId());
 
 			psmt.executeUpdate();
 		} catch (Exception e) {
