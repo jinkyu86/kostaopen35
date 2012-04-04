@@ -6,12 +6,18 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>게시물 조회</title>
+<script src="http://code.jquery.com/jquery-1.7.js"></script>
 <script>
-	function deleteboard(){
-		var ret;
-		ret=confirm("정말 삭제하시겠습니까?");
-		return ret;
-	}
+	$(document).ready(function(){
+		
+		$("#deleteboard").click(function (event){
+			var result=confirm("정말 삭제하시겠습니까?");
+		
+			if(result==false){
+				event.preventDefault();
+			}
+		});
+	});
 </script>
 </head>
 <body>
@@ -37,7 +43,7 @@
 	    </a>
 	  </p>
 	  <p align="center">
-	    <a href="/auction/BoardService?method=removeBoard&bNum=${BOARD.bNum }" onclick="deleteboard()">
+	    <a href="/auction/BoardService?method=removeBoard&bNum=${BOARD.bNum }" id="deleteboard">
 	    게시물 삭제
 	    </a>
 	  </p>
