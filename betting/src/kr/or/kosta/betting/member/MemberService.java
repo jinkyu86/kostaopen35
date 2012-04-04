@@ -81,18 +81,17 @@ public class MemberService extends HttpServlet {
 		 * @param response
 		 */
 
-		String id = request.getParameter("ID");
+		String id = request.getParameter("id");
 		String name = request.getParameter("name");
-		String pw = request.getParameter("PW");
-		String email = request.getParameter("Email");
-		long mineral = Long.parseLong(request.getParameter("Mineral"));
+		String pw = request.getParameter("pw");
+		String email = request.getParameter("email");
+		
 
 		Member member = new Member();
 		member.setId(id);
 		member.setName(name);
 		member.setPw(pw);
 		member.setEmail(email);
-		member.setMineral(mineral);
 
 		MemberDAO.insultMember(member);
 
@@ -148,18 +147,17 @@ public class MemberService extends HttpServlet {
 		 * @param response
 		 */
 
-		String id = request.getParameter("ID");
+		String id = request.getParameter("id");
 		String name = request.getParameter("name");
-		String pw = request.getParameter("PW");
-		String email = request.getParameter("Email");
-		long mineral = Long.parseLong(request.getParameter("Mineral"));
-
+		String pw = request.getParameter("pw");
+		String email = request.getParameter("email");
+		
 		Member member = new Member();
 		member.setId(id);
 		member.setName(name);
 		member.setPw(pw);
 		member.setEmail(email);
-		member.setMineral(mineral);
+		
 
 		MemberDAO.updateMember(member);
 

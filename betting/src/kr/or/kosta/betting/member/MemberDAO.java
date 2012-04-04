@@ -72,12 +72,11 @@ public class MemberDAO {
 		con = ConnectionUtil.getConnection();
 		try {
 			psmt = con.prepareStatement("INSERT INTO member "
-					+ "(id,name,pw,email,mineral) " + " VALUES (?,?,?,?,?)");
+					+ "(id,name,pw,email,mineral) " + " VALUES (?,?,?,?,5000)");
 			psmt.setString(1, member.getId());
 			psmt.setString(2, member.getName());
 			psmt.setString(3, member.getPw());
 			psmt.setString(4, member.getEmail());
-			psmt.setLong(5, member.getMineral());
 			psmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -208,12 +207,12 @@ public class MemberDAO {
 		con = ConnectionUtil.getConnection();
 		try {
 			psmt = con.prepareStatement("UPDATE  member SET pw=?," + "email=?,"
-					+ "mineral=? " + "WHERE id=?");
+					 + "WHERE id=?");
 
 			psmt.setString(1, member.getPw());
 			psmt.setString(2, member.getEmail());
-			psmt.setLong(3, member.getMineral());
-			psmt.setString(4, member.getId());
+			
+			psmt.setString(3, member.getId());
 
 			psmt.executeUpdate();
 		} catch (Exception e) {
