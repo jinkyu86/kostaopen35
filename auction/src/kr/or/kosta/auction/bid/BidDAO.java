@@ -395,7 +395,8 @@ public class BidDAO {
 								  "m.pw,m.name,m.email,m.coin,m.emoney," +
 								  "g.gname,g.detail,g.img " +
 					  "FROM BID b, AUCTION a, MEMBER m, GOOD g " +
-					  "WHERE b.a_num=a.a_num AND b.userid=m.userid AND a.g_num=g.g_num AND a.a_num=?";
+					  "WHERE b.a_num=a.a_num AND b.userid=m.userid AND a.g_num=g.g_num AND a.a_num=?" +
+					  "ORDER BY b.bid_price DESC";
 		con=ConnectionUtil.getConnection();
 		try {
 			
@@ -481,7 +482,7 @@ public class BidDAO {
 					"DELETE FROM BID " +
 					"WHERE userid=?");
 			psmt.setString(1,userid);
-			psmt.executeUpdate();		
+			psmt.executeQuery();	
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}			
