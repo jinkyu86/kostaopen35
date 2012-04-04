@@ -1,12 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"  %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>MovieSystem</title>
 <link rel="stylesheet" href="/moviesystem/css/Layout.css">
 <script src="http://code.jquery.com/jquery-1.7.1.js"></script>
@@ -14,19 +14,19 @@
 </head>
 <body>
 <table width="90%" align="center">
-	<!-- »ó´Ü ¸Þ´º ½ÃÀÛ -->
+	<!-- ìƒë‹¨ ë©”ë‰´ ì‹œìž‘ -->
 	<tr>
 		<td>
 			<jsp:include page="/common/top.jsp"></jsp:include>
 		</td>
 	</tr>
-	<!-- »ó´Ü ¸Þ´º ³¡ -->
+	<!-- ìƒë‹¨ ë©”ë‰´ ë -->
 	
 	<tr>		
-		<!-- º»¹® ³»¿ë ½ÃÀÛ -->
+		<!-- ë³¸ë¬¸ ë‚´ìš© ì‹œìž‘ -->
 		<td>
-			<!-- »ó¿µÀÛ ¼øÀ§ ½ÃÀÛ -->
-			<div class="main_title" >ÀÎ±â »ó¿µÀÛ</div>
+			<!-- ìƒì˜ìž‘ ìˆœìœ„ ì‹œìž‘ -->
+			<div class="main_title" >ì¸ê¸° ìƒì˜ìž‘</div>
 			<table class="table_style" align="center">
 				<tr>
 					<c:forEach var="rankingMovieList" items="${rankingMovieList}" varStatus="n">
@@ -47,10 +47,10 @@
 					</c:forEach>
 				</tr>
 			</table>
-			<!-- »ó¿µÀÛ ¼øÀ§ ³¡ -->
+			<!-- ìƒì˜ìž‘ ìˆœìœ„ ë -->
 			
-			<!-- »ó¿µÀÛ ½ÃÀÛ -->
-			<div class="main_title" style="margin-top:10px;">»ó¿µÀÛ</div>
+			<!-- ìƒì˜ìž‘ ì‹œìž‘ -->
+			<div class="main_title" style="margin-top:10px;">ìƒì˜ìž‘</div>
 			<table class="table_style" align="center">
 				<tr>
 					<c:forEach var="screenMovieList" items="${screenMovieList}" varStatus="n">
@@ -71,10 +71,10 @@
 					</c:forEach>
 				</tr>
 			</table>
-			<!-- »ó¿µÀÛ ³¡ -->
+			<!-- ìƒì˜ìž‘ ë -->
 			
-			<!-- »ó¿µ ¿¹Á¤ÀÛ ½ÃÀÛ -->
-			<div class="main_title" style="margin-top:10px;">»ó¿µ ¿¹Á¤ÀÛ</div>
+			<!-- ìƒì˜ ì˜ˆì •ìž‘ ì‹œìž‘ -->
+			<div class="main_title" style="margin-top:10px;">ìƒì˜ ì˜ˆì •ìž‘</div>
 			<table class="table_style" align="center">
 				<tr>
 					<c:forEach var="scheduleMovieList" items="${scheduleMovieList}" varStatus="n">
@@ -95,17 +95,17 @@
 					</c:forEach>
 				</tr>
 			</table>
-			<!-- »ó¿µ ¿¹Á¤ÀÛ ³¡ -->
+			<!-- ìƒì˜ ì˜ˆì •ìž‘ ë -->
 		</td>
 	</tr>
-	<!-- º»¹® ³»¿ë ³¡ -->
-	<!-- ÇÏ´Ü ³»¿ë ½ÃÀÛ -->
+	<!-- ë³¸ë¬¸ ë‚´ìš© ë -->
+	<!-- í•˜ë‹¨ ë‚´ìš© ì‹œìž‘ -->
 	<tr>
 		<td>
 			<jsp:include page="/common/footer.jsp"></jsp:include>
 		</td>
 	</tr>
-	<!-- ÇÏ´Ü ³»¿ë ³¡ -->
+	<!-- í•˜ë‹¨ ë‚´ìš© ë -->
 </table>
 </body>
 </html>
