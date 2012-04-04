@@ -45,6 +45,8 @@ public class GoodService extends HttpServlet{
 			removeCartList(request,response);
 		}else if("editCartList".equals(method)){
 			editCartList(request,response);
+		}else if("searchGoodList".equals(method)){
+			searchGoodList(request, response);
 		}
 //		else if("addGoodForm".equals(method)){
 //			addGoodForm(request,response);
@@ -52,6 +54,37 @@ public class GoodService extends HttpServlet{
 //			addGood(request,response);
 //		}
 	}
+	private void searchGoodList(HttpServletRequest request,
+			HttpServletResponse response)throws IOException, ServletException {
+		int page=1;
+		if(request.getParameter("page")!=null){
+			page=Integer.parseInt(request.getParameter("page"));	
+		}
+		int length=8;
+		
+		ArrayList<Good>goodList=null;
+		int goodCount=0;
+		String keyword=request.getParameter("keyword");
+		
+		if(keyword==null||keyword.equals("")){
+			goodList=GoodDAO.selectGoodList(length, page);
+			goodCount=GoodDAO.selectGoodCount();
+		}
+		else{
+			goodList=GoodDAO.selectGoodListByName(length, page, keyword);
+			goodCount=GoodDAO.selectGoodListByNameCount(keyword);
+		}
+		request.setAttribute("GOOD_LIST", goodList);
+		
+		String pageLinkTag=PageUtil.generate(page, goodCount, length, "GoodService?method=searchGoodList&keyword="+keyword);
+		System.out.println(pageLinkTag);
+		
+		request.setAttribute("PAGE_LINK_TAG", pageLinkTag);
+		
+		RequestDispatcher rd=request.getRequestDispatcher("/good/viewGoodList.jsp");
+		rd.forward(request, response);
+	}
+
 	private void editCartList(HttpServletRequest request,
 			HttpServletResponse response)throws IOException, ServletException {
 
@@ -75,14 +108,14 @@ public class GoodService extends HttpServlet{
 		HttpSession session=request.getSession();
 		ArrayList<Buy>cartList=(ArrayList)session.getAttribute("CART_LIST");
 		Buy buy=cartList.get(index);
-		if(buy.getQty()==1){
+//		if(buy.getQty()==1){
 			cartList.remove(index);
-		}
-		else{
-			long qty=buy.getQty();
-			buy.setQty(qty-1);
-			cartList.set(index, buy);
-		}
+//		}
+//		else{
+//			long qty=buy.getQty();
+//			buy.setQty(qty-1);
+//			cartList.set(index, buy);
+//		}
 		
 		session.setAttribute("CART_LIST",cartList);
 		RequestDispatcher rd= request.getRequestDispatcher("/good/viewCartList.jsp");
