@@ -105,24 +105,28 @@ pageEncoding="utf-8"%>
 		
 		<br/><br/>
 		
-		<c:if test="${GOOD_RECIPELIST!=null}">
-		<center><h3>상품관련 레시피</h3></center>
-		<br/>
-		<table border="1">
-			<tr>
-				<th>레시피 번호</th>
-				<th>상품구분</th>
-				<th>레시피 사진</th>
-			</tr>
-			<c:forEach var="recipe" items="${GOOD_RECIPELIST}" >
-			<tr>
-				<td>${recipe.recipeNum}</td>
-				<td>${recipe.good_division.gName}</td>
-				<td><img src="/baking/img/recipe_${recipe.good_division.gName}/${recipe.img}"></td>
-			</tr>
-			</c:forEach>
-		</table>
-		</c:if>
+		<c:choose>
+			<c:when test="${not empty requestScope.GOOD_RECIPELIST }"> <%--배열은 null이 아니고 안의 자료가 없는것일 뿐이기때문에 not empty(비어있지 않을때) 라는것을 써준다 --%>
+				<center><h3>상품관련 레시피</h3></center><br/>
+					<table border="1">
+						<tr>
+							<th>레시피 번호</th>
+							<th>상품구분</th>
+							<th>레시피 사진</th>
+						</tr>
+						<c:forEach var="recipe" items="${GOOD_RECIPELIST}" >
+						<tr>
+							<td>${recipe.recipeNum}</td>
+							<td>${recipe.good_division.gName}</td>
+							<td><a href="/baking/RecipeService?method=viewRecipe&recipenum=${recipe.recipeNum}"><img src="/baking/img/recipe_${recipe.good_division.gName}/${recipe.img}"></a></td>
+						</tr>
+						</c:forEach>
+					</table>
+		</c:when>
+		<c:otherwise>
+			<center><h3>상품관련 레시피가 없습니다</h3></center>
+		</c:otherwise>	
+		</c:choose>
 		</center>
 	</ul>	
 </section>
