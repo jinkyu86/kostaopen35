@@ -5,7 +5,7 @@ pageEncoding="utf-8"%>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>상품목록</title>
+<title></title>
 <link rel="stylesheet" href="/baking/styles.css" type="text/css" media="screen" />	
 <link rel="stylesheet" type="text/css" href="print.css" media="print" />
 <style type="text/css">
@@ -18,7 +18,14 @@ pageEncoding="utf-8"%>
 </head>
 <ul>	
 	<div ALIGN="right">
+		<c:choose> 
+		<c:when test="${sessionScope.member==null}">
 		<a href="/baking/member/loginForm.jsp">로그인</a>
+		</c:when>
+		<c:otherwise>
+		<a href="/baking/MemberService?method=logout">로그아웃</a>
+		</c:otherwise>
+	</c:choose>
 		<a href="">회원가입</a>
 	</div>
 <body>
@@ -73,16 +80,17 @@ pageEncoding="utf-8"%>
 			</tr>
 			<tr>
 				<td><center>가격 : ${GOOD.goodPrice}원</center></td>
-				<td><select name="qty">
+				<td><center>수량 선택 : <select name="qty">
 					<%for(int i=1;i<100;i++) {%>					
 					<option value="<%=i%>"><%=i%>
 					</option>
 					<%} %>
 					</select>
+					</center>
 					</td>
 			</tr>
 			<tr>
-			<td colspan="1"><input type="submit" value="장바구니"></td>
+			<td colspan="2"><input type="submit" value="장바구니"></td>
 			<tr>
 		</table>
 		</form>
@@ -95,40 +103,11 @@ pageEncoding="utf-8"%>
 		<br/><br/>		
 		</c:forEach>
 		
-		
-	<!-- 상품번호 히든, 수량,옵션 셀렉터옵션 -->
-		<%-- <form action="/baking/OrderService" method="post">
-		<input type="hidden" name="method" value="addCartForm">
-		<table>
-			<tr>
-				<td>상품번호</td>
-				<td><input type="text" name="goodNum" value="${GOOD.goodNum}"></td>
-			</tr>
-			<tr>
-				<td>상품이름</td>
-				<td><input type="text" name="name" value="${GOOD.name}"></td>
-			<tr>
-				<td>가격</td>
-				<td><input type="text" name="goodPrice" value="${GOOD.goodPrice}">
-				</td>
-			</tr>
-			<tr>
-				<td>수량</td>
-				<td><input type="text" name="qty">
-			<tr>
-				<td>옵션</td>
-				<td><input type="text" name="option" value="${GOOD.option}"></td>
-			</tr>
-			<tr>
-			<td><input type="submit" value="저장"/></td>
-			</tr>
-			</table>
-			</form> --%>
-		
 		<br/><br/>
-		<%-- <c:if test="${GOOD_RECIPELIST.recipeNum!=null}"> --%>
+		
+		<c:if test="${GOOD_RECIPELIST!=null}">
 		<center><h3>상품관련 레시피</h3></center>
-		<br/><br/>
+		<br/>
 		<table border="1">
 			<tr>
 				<th>레시피 번호</th>
@@ -143,7 +122,7 @@ pageEncoding="utf-8"%>
 			</tr>
 			</c:forEach>
 		</table>
-		<%-- </c:if> --%>
+		</c:if>
 		</center>
 	</ul>	
 </section>

@@ -18,7 +18,14 @@ pageEncoding="utf-8"%>
 </head>
 <ul>	
 	<div ALIGN="right">
-		<a href="/baking/member/loginForm.jsp">로그인</a>/
+		<c:choose> 
+		<c:when test="${sessionScope.member==null}">
+		<a href="/baking/member/loginForm.jsp">로그인</a>
+		</c:when>
+		<c:otherwise>
+		<a href="/baking/MemberService?method=logout">로그아웃</a>
+		</c:otherwise>
+	</c:choose>
 		<a href="">회원가입</a>
 	</div>
 <body>
