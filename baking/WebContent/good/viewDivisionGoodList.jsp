@@ -8,6 +8,12 @@ pageEncoding="utf-8"%>
 <title>상품목록</title>
 <link rel="stylesheet" href="/baking/styles.css" type="text/css" media="screen" />	
 <link rel="stylesheet" type="text/css" href="print.css" media="print" />
+<style type="text/css">
+	a:link {text-decoration:none}
+	a:visited {text-decoration:none}
+	a:hover {text-decoration:none}
+	a {color:#000000; text-decoration:none; }
+</style>
 <!--[if IE]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->	
 </head>
 <ul>	
@@ -27,7 +33,7 @@ pageEncoding="utf-8"%>
 <ul>			
 	<li><a href="">홈</a></li>			
 	<li><a href="/baking/GoodService?method=viewGoodList">상품</a></li>				
-	<li><a href="">레시피</a></li>			
+	<li><a href="/baking/RecipeService?method=viewRecipeList">레시피</a></li>			
 	<li><a href="">장바구니</a></li>			
 	<li><a href="">주문조회</a></li>				
 	<li><a href="">마이레시피</a></li>		
