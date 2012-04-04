@@ -43,18 +43,52 @@ public class BuyService extends HttpServlet{
 			viewBuyList(request,response);
 		}else if("addBuy".equals(method)){
 			addBuy(request,response);
+		}else if("viewCanceledBuyList".equals(method)){
+			viewCanceledBuyList(request,response);
 		}
+//		else if("cancelBuyListForm".equals(method)){
+//			cancelBuyListForm(request,response);
+//		}
+//		else if("cancelBuy".equals(method)){
+//			cancelBuy(request,response);
+//		}
 //		else if("removeBuyList".equals(method)){
 //			removeBuyList(request,response);
 //		}
 //		else if("editBuyList".equals(method)){
 //			editBuyList(request, response);
 //		}
-//		else if("completeBuy".equals(method)){
-//			completeBuy(request,response);
-//		}
+		else if("completeBuy".equals(method)){
+			completeBuy(request, response);
+		}
 	}
 
+
+	private void viewCanceledBuyList(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException{
+		int page=1;
+		if(request.getParameter("page")!=null){
+			page=Integer.parseInt(request.getParameter("page"));
+		}
+		int length=10;
+		
+		HttpSession session=request.getSession();
+		Member member=(Member)session.getAttribute("LOGIN_MEMBER");
+		String userid=member.getUserid();
+		
+		ArrayList<Buy>buyList=BuyDAO.selectCanceledBuyList(userid,length, page);
+		int buyCount=BuyDAO.selectCanceledBuyListCount(userid);
+		request.setAttribute("CANCELED_BUY_LIST", buyList);
+		
+		String pageLinkTag=PageUtil.generate(page, buyCount, length, "/moviesystem/BuyService?method=viewCanceledBuyList&userid="+userid);
+		System.out.println(pageLinkTag);
+		
+		request.setAttribute("PAGE_LINK_TAG", pageLinkTag);
+		
+		RequestDispatcher rd=request.getRequestDispatcher("/buy/viewCanceledBuyList.jsp");
+		rd.forward(request, response);
+		
+	}
 
 	/**
 	 * 전체 구매 목록
@@ -68,7 +102,7 @@ public class BuyService extends HttpServlet{
 		if(request.getParameter("page")!=null){
 			page=Integer.parseInt(request.getParameter("page"));
 		}
-		int length=5;
+		int length=10;
 		
 		HttpSession session=request.getSession();
 		Member member=(Member)session.getAttribute("LOGIN_MEMBER");
@@ -113,7 +147,7 @@ public class BuyService extends HttpServlet{
 		}
 		session.removeAttribute("CART_LIST");
 
-		RequestDispatcher rd=request.getRequestDispatcher("/BuyService?method=viewBuyList");
+		RequestDispatcher rd=request.getRequestDispatcher("/BuyService?method=completeBuy");
 		rd.forward(request, response);
 		
 	}
@@ -163,35 +197,18 @@ public class BuyService extends HttpServlet{
 //		RequestDispatcher rd=request.getRequestDispatcher("/buy/viewBuyList.jsp");
 //		rd.forward(request, response);
 //	}
-//
-//	/**
-//	 * 결제 완료 화면 폼으로 이동
-//	 * 
-//	 * @param request
-//	 * @param response
-//	 */
-//	public void completeBuy(HttpServletRequest request,	
-//			HttpServletResponse response)throws ServletException, IOException {
-//		/* default generated stub */
-//		
-//		ArrayList<Buy>buyList=BuyDAO.selectBuyList("jun123", 1, 1);
-//		//파라미터 userid로 수정하기
-//		
-//		for(int i=0;i<buyList.size();i++){
-//			Buy buy=buyList.get(i);
-//			BuyDAO.payBuy(buy.getBuynum());
-//		}
-//		
-//		ArrayList<Buy>completeBuyList=BuyDAO.selectcompleteBuyList("jun123", 1, 1);
-//		//파라미터 userid로 수정하기
-//		
-//		request.setAttribute("COMPLETE_BUY_LIST", completeBuyList);
-//		
-//		RequestDispatcher rd = request.getRequestDispatcher("/buy/buyCompleteForm.jsp");
-//		rd.forward(request, response);
-//		
-//		
-//	}
-	
+
+	/**
+	 * 결제 완료 화면 폼으로 이동
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	public void completeBuy(HttpServletRequest request,	
+			HttpServletResponse response)throws ServletException, IOException {
+		
+		RequestDispatcher rd=request.getRequestDispatcher("/buy/completebuy.jsp");
+		rd.forward(request, response);			
+	}
 	
 }
