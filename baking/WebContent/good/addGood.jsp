@@ -21,12 +21,13 @@ pageEncoding="utf-8"%>
 		<c:choose> 
 		<c:when test="${sessionScope.member==null}">
 		<a href="/baking/member/loginForm.jsp">로그인</a>
+		<a href="">회원가입</a>
 		</c:when>
 		<c:otherwise>
 		<a href="/baking/MemberService?method=logout">로그아웃</a>
 		</c:otherwise>
 	</c:choose>
-		<a href="">회원가입</a>
+		
 	</div>
 <body>
 <header>
@@ -58,31 +59,31 @@ pageEncoding="utf-8"%>
 	<ul class="column">
 	<form action="/baking/GoodService" method="post">
 	<input type="hidden" name="method" value="addGood">
-		<table border="1" width="300px" height="200px" align="center">
+		<table border="1" align="center">
 			<tr>
 				<td>상품명</td>
 				<td><input type="text" name="name"></td>
 			</tr>
-			<tr>
+			<tr>	
 				<td>상품설명</td>
 				<td><textarea name="explantion" rows="10" cols="30" ></textarea>
 				</td>
 			</tr>
 			<tr>
-				<td>단가</td>
-				<td><input type="text" name="goodPrice" id="goodPrice">
+				<td>옵션</td>
+				<td><textarea name="option" rows="10" cols="30" ></textarea>
 				</td>
 			</tr>
 			<tr>
-				<td>옵션</td>
-				<td><input type="text" name="option" id="option">
+				<td>단가</td>
+				<td><input type="text" name="goodPrice">
 				</td>
 			</tr>
 			<tr>
 				<td>상품구분</td>
 				<td><select name="division">
 						<c:forEach var="good_division" items="${DIVISION_LIST}">
-					<option value="${good_division.division }">
+					<option value="${good_division.division}">
 							${good_division.gName}
 					</option>
 						</c:forEach>
@@ -94,8 +95,8 @@ pageEncoding="utf-8"%>
 				<td><input type="text" name="img"></td>
 			</tr>
 			<tr>
-				<td><input type="submit" value="저장"/></td>
-				<td><input type="reset" value="취소"/></td>
+				<td colspan="2"><center><input type="submit" value="저장"/><input type="reset" value="취소"/></center></td>
+			</tr>
 		</table>
 	</form> 
 	</ul>	
@@ -104,47 +105,3 @@ pageEncoding="utf-8"%>
 </section>		
 </body>
 </html>
-
-<%-- <h1 align="center">상품추가</h1>
-	<form action="/baking/GoodService" method="post">
-	<input type="hidden" name="method" value="addGood">
-		<table>
-			<tr>
-				<td>상품명</td>
-				<td><input type="text" name="name"></td>
-			</tr>
-			<tr>
-				<td>상품설명</td>
-				<td><textarea name="explantion" rows="10" cols="30" ></textarea>
-				</td>
-			</tr>
-			<tr>
-				<td>단가</td>
-				<td><input type="text" name="goodPrice" id="goodPrice">
-				</td>
-			</tr>
-			<tr>
-				<td>옵션</td>
-				<td><input type="text" name="option" id="option">
-				</td>
-			</tr>
-			<tr>
-				<td>상품구분</td>
-				<td><select name="division">
-						<c:forEach var="good_division" items="${DIVISION_LIST}">
-					<option value="${good_division.division }">
-							${good_division.gName}
-					</option>
-						</c:forEach>
-				</select>
-				</td>
-				</tr>
-				<tr>
-				<td>이미지</td>
-				<td><input type="text" name="img"></td>
-			</tr>
-			<tr>
-				<td><input type="submit" value="저장"/></td>
-				<td><input type="reset" value="취소"/></td>
-		</table>
-	</form> --%>

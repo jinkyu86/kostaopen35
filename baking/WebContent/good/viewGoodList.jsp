@@ -21,12 +21,12 @@ pageEncoding="utf-8"%>
 	<c:choose> 
 		<c:when test="${sessionScope.member==null}">
 		<a href="/baking/member/loginForm.jsp">로그인</a>
+		<a href="">회원가입</a>
 		</c:when>
 		<c:otherwise>
 		<a href="/baking/MemberService?method=logout">로그아웃</a>
 		</c:otherwise>
 	</c:choose>
-		<a href="">회원가입</a>
 	</div>
 <body>
 <header>
@@ -56,7 +56,7 @@ pageEncoding="utf-8"%>
 	<a href="/baking/GoodService?method=viewDivisionGoodList&division=3">초콜릿</a>
 	<c:if test="${sessionScope.member.memberid=='ADMIN'}">
 		<center>
-		<a href="/baking/good/addGood.jsp">상품등록</a>
+		<a href="/baking/GoodService?method=addGoodForm">상품등록</a>
 		</center>
 	</c:if>
 <ul class="column">			        
