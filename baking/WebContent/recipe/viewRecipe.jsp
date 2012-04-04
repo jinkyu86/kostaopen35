@@ -49,10 +49,11 @@
 <!-- end of top nav -->
 
 <!-- content -->
-
-<br/><br/><br/>
-
+	
 <section id="content">
+	<a href="/baking/RecipeService?method=recipeRelativeGoodList&division=1">- 쿠키</a>&nbsp&nbsp      
+	<a href="/baking/RecipeService?method=recipeRelativeGoodList&division=2">- 케이크</a>&nbsp&nbsp      
+	<a href="/baking/RecipeService?method=recipeRelativeGoodList&division=3">- 초콜릿</a>
 <!-- RECIPE:레시피명, 레시피재료 ,레시피설명 RECIPE_PHOTO:레시피사진 RECIPE_GOODLIST:레시피관련상품 -->
 
 	<ul class="column">
@@ -105,21 +106,20 @@
 				<td>${good.goodNum}</td>
 				<td>${good.good_division.gName}</td>
 				<td>${good.name}</td>
-				<td>${good.goodPrice} 원</td>
-				<td><img src="/baking/img/${good.good_division.gName}/${good.img}"></td>
+				<td>${good.goodPrice}원</td>
+				<td>
+				<a href="/baking/GoodService?method=viewGood&goodNum=${good.goodNum}">
+				<img src="/baking/img/${good.good_division.gName}/${good.img}"></a>
+				</td>
 			</tr>
 			</c:forEach>
 		</table>
 		
-		</center>
-		
-		
+		</center>	
+	</ul>
+	<br/>
 	
-	</ul>	
 </section>
 
-
-</ul>
-</section>	
 </body>
 </html>

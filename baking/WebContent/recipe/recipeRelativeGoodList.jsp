@@ -58,11 +58,11 @@
 	<c:forEach var="recipeDivision" items="${RECIPE_DIVISION_LIST}">
 		<li>        
 		<section class="block">							
-			<a href="/baking/RecipeService?method=viewRecipe=${recipeDivision.recipeNum }">
+			<a href="/baking/RecipeService?method=viewRecipe&recipenum=${recipeDivision.recipeNum }">
 			<img src="/baking/img/recipe_${recipeDivision.good_division.gName}/${recipeDivision.img}" border=0  /></a> 	
 			<br/>									
 			<h5><center>${recipeDivision.title}</center></h5>																	        
-		</section>			    
+		</section>	   
 		</li>
 	</c:forEach>
 

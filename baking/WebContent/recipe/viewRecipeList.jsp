@@ -37,7 +37,7 @@
 <div class="menu">			
 <ul>			
 	<li><a href="/baking/RecipeService?method=viewGoodList">홈</a></li>			
-	<li><a href="/baking/RecipeService?method=viewGoodList">상품</a></li>		
+	<li><a href="/baking/GoodService?method=viewGoodList">상품</a></li>		
 	<li><a href="/baking/RecipeService?method=viewRecipeList">레시피</a></li>			
 	<li><a href="/baking/RecipeService?method=">장바구니</a></li>			
 	<li><a href="/baking/RecipeService?method=viewOrderList">주문조회</a></li>				
@@ -52,7 +52,14 @@
 <section id="content">
 	<a href="/baking/RecipeService?method=recipeRelativeGoodList&division=1">- 쿠키</a>&nbsp&nbsp      
 	<a href="/baking/RecipeService?method=recipeRelativeGoodList&division=2">- 케이크</a>&nbsp&nbsp      
-	<a href="/baking/RecipeService?method=recipeRelativeGoodList&division=3">- 초콜릿</a>			
+	<a href="/baking/RecipeService?method=recipeRelativeGoodList&division=3">- 초콜릿</a>
+
+	<c:if test="${sessionScope.member.memberid=='ADMIN'}">
+		<center>
+		<a href="/baking/RecipeService?method=addRecipeForm">레시피등록</a>
+		</center>
+	</c:if>
+				
 <ul class="column">
 			        
 	<c:forEach var="recipe" items="${RECIPE_LIST}">
@@ -65,7 +72,6 @@
 		</section>			    
 		</li>
 	</c:forEach>
-
 
 </ul>
 </section>	
