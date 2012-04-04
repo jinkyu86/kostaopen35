@@ -8,11 +8,17 @@ pageEncoding="utf-8"%>
 <title>상품목록</title>
 <link rel="stylesheet" href="/baking/styles.css" type="text/css" media="screen" />	
 <link rel="stylesheet" type="text/css" href="print.css" media="print" />
+<style type="text/css">
+	a:link {text-decoration:none}
+	a:visited {text-decoration:none}
+	a:hover {text-decoration:none}
+	a {color:#000000; text-decoration:none; }
+</style>
 <!--[if IE]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->	
 </head>
 <ul>	
 	<div ALIGN="right">
-		<a href="/baking/member/loginForm.jsp">로그인</a>/
+		<a href="/baking/member/loginForm.jsp">로그인</a>
 		<a href="">회원가입</a>
 	</div>
 <body>
@@ -27,7 +33,7 @@ pageEncoding="utf-8"%>
 <ul>			
 	<li><a href="">홈</a></li>			
 	<li><a href="/baking/GoodService?method=viewGoodList">상품</a></li>				
-	<li><a href="">레시피</a></li>			
+	<li><a href="/baking/RecipeService?method=viewRecipeList">레시피</a></li>			
 	<li><a href="">장바구니</a></li>			
 	<li><a href="">주문조회</a></li>				
 	<li><a href="">마이레시피</a></li>		
@@ -40,22 +46,91 @@ pageEncoding="utf-8"%>
 <section id="content">	
 	<a href="/baking/GoodService?method=viewDivisionGoodList&division=1">쿠키</a>
 	<a href="/baking/GoodService?method=viewDivisionGoodList&division=2">케이크</a>  
-	<a href="/baking/GoodService?method=viewDivisionGoodList&division=3">초콜릿</a>				
-<ul class="column">			        
-	이름 : ${GOOD.name} <br><br>
-	설명 : ${GOOD.explantion} <br><br>
-	가격 : ${GOOD.goodPrice} <br><br>
-	상품수량 : ${GOOD.qty } <br><br>
-	옵션 : ${GOOD.option } <br><br>
-	관련레시피 목록 : <br><br>
-<c:forEach var="recipe" items="${GOOD_RECIPELIST}">
-	<a href="/baking/RecipeService?method=viewRecipe&recipenum=${recipe.recipeNum }">${recipe.title }</a>
-	<br>
-</c:forEach>
-<c:forEach var="photoList" items="${PHOTO_LIST}" >
-	<img src="/baking/img/${GOOD.good_division.gName }/${photoList.image}"/><br>
-</c:forEach>
+	<a href="/baking/GoodService?method=viewDivisionGoodList&division=3">초콜릿</a>	
+
+	<ul class="column">
+		<table border="1" width="300px" height="200px" align="center">
+			<tr>
+				<td colspan="2" height="50px" align="center"><h3>${GOOD.name}</h3></td>
+			</tr>
+			<tr>
+				 <td colspan="2" align="center">
+					<c:forEach var="photoList" items="${PHOTO_LIST}" begin="0" end="0">
+					<img src="/baking/img/${GOOD.good_division.gName }/${photoList.image}"/>
+					</c:forEach>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2"><textarea cols="75" rows="10" disabled="disabled" style="overflow:hidden;">상품설명 : ${GOOD.explantion}</textarea></td>
+			</tr>
+			<tr>	
+				<td colspan="2"><textarea cols="75" rows="4" disabled="disabled" style="overflow:hidden;">옵션 : ${RECIPE.option }</textarea></td>
+			</tr>
+			<tr>
+				<td><center>가격 : ${GOOD.goodPrice}원</center></td>
+				<td><center>상품수량 : ${GOOD.qty }개</center></td>
+			</tr>
+		</table>
+		
+		<center>
+		<br/><br/>
+
+		<c:forEach var="photoList" items="${PHOTO_LIST}" begin="1" >
+				<img src="/baking/img/${GOOD.good_division.gName }/${photoList.image}"/>
+		<br/><br/>		
+		</c:forEach>
+		
+		<form action="/baking/OrderService" method="get">
+		<input type="hidden" name="method" value="addCartForm">
+		<table>
+			<tr>
+				<td>상품번호</td>
+				<td><input type="text" name="goodNum" value="${GOOD.goodNum}"></td>
+			</tr>
+			<tr>
+				<td>상품이름</td>
+				<td><input type="text" name="name" value="${GOOD.name}"></td>
+			<tr>
+				<td>가격</td>
+				<td><input type="text" name="goodPrice" value="${GOOD.goodPrice}">
+				</td>
+			</tr>
+			<tr>
+				<td>수량</td>
+				<td><input type="text" name="goodPrice">
+			<tr>
+				<td>옵션</td>
+				<td><input type="text" name="option" value="${GOOD.option}"></td>
+			</tr>
+			<tr>
+			<td><input type="submit" value="저장"/></td>
+			</tr>
+			</table>
+			</form>
+		
+		<br/><br/>
+		<%-- <c:if test="${GOOD_RECIPELIST.recipeNum!=null}"> --%>
+		<center><h3>상품관련 레시피</h3></center>
+		<br/><br/>
+		<table border="1">
+			<tr>
+				<th>레시피 번호</th>
+				<th>상품구분</th>
+				<th>레시피 사진</th>
+			</tr>
+			<c:forEach var="recipe" items="${GOOD_RECIPELIST}" >
+			<tr>
+				<td>${recipe.recipeNum}</td>
+				<td>${recipe.good_division.gName}</td>
+				<td><img src="/baking/img/recipe_${recipe.good_division.gName}/${recipe.img}"></td>
+			</tr>
+			</c:forEach>
+		</table>
+		<%-- </c:if> --%>
+		</center>
+	</ul>	
+</section>
 </ul>
-</section>	
+</section>		
 </body>
 </html>
