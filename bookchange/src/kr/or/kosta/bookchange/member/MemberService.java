@@ -179,27 +179,24 @@ public class MemberService extends HttpServlet {
 		
 		if (member==null) {
 			request.setAttribute("ERROR","존재하지 않는 아이디");
-			RequestDispatcher rd=request.getRequestDispatcher("/member/login.jsp");
-			rd.forward(request, response);
 		}
 		
 		if(member!=null){
 			if(!member.getPw().equals(pw)){
 				request.setAttribute("ERROR", "비밀번호 오류");
 				request.setAttribute("ERROR","존재하지 않는 아이디");
-				RequestDispatcher rd=request.getRequestDispatcher("/member/login.jsp");	
-				rd.forward(request, response);
 			}else {
+				
 				HttpSession session=request.getSession();
 				session.setAttribute("LOGIN_EMAIL",member);
 				System.out.println(email+"로그인 되었습니다.");
 				
-				RequestDispatcher rd=request.getRequestDispatcher("/member/loginafter.jsp");
-				rd.forward(request, response);
 			}
 		
 		}
-		
+		RequestDispatcher rd=request.getRequestDispatcher("/main.jsp");
+		rd.forward(request, response);
+	
 	}
 	
 	/**
@@ -267,7 +264,7 @@ public class MemberService extends HttpServlet {
 	}
 
 	/**
-	 * 회원명단 보기
+	 * 전체 회원명단 보기
 	 * 
 	 * @param request
 	 * @param response
@@ -275,15 +272,18 @@ public class MemberService extends HttpServlet {
 	public void viewMemberList(HttpServletRequest request,
 			HttpServletResponse response) throws IOException,ServletException{
 		int page=1;//페이지수
-		int length=5;//페이지내용크기
+
 		
-		ArrayList<Member>memberList=
-				MemberDAO.selectMemberList(length, page);//맴버호출 
 		if(request.getParameter("page")!=null){//page 값이 널이면
 			  page=Integer.parseInt(request.getParameter("page"));
 			  //현제 페이지값리턴 
 		  }
-		 request.setAttribute("MEMBER_LIST", memberList);
+		int length=5;//페이지내용크기
+
+		ArrayList<Member>memberList=
+				MemberDAO.selectMemberList(length, page);//맴버호출 
+		request.setCharacterEncoding("utf-8");
+		request.setAttribute("MEMBER_LIST", memberList);
 		 
 		 int memberCount=MemberDAO.selectMemberCount();
 		 String pageLink=PageUtil.generate(page, memberCount, length, 
