@@ -8,6 +8,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import kr.or.kosta.util.PageUtil;
 
@@ -23,10 +24,10 @@ public class BlockService extends HttpServlet {
 		doPost(request,response);
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("utf=8");
+		request.setCharacterEncoding("utf-8");
 		String method=request.getParameter("method");
 		if (method==null) {
-			method="addBlock";
+			method="searchBlockList";
 		}if("addBlock".equals(method)){
 			addBlock(request,response);
 		}else if("editBlock".equals(method)){
@@ -64,7 +65,7 @@ public class BlockService extends HttpServlet {
 		
 		BlockDAO.insertBlock(block);
 		
-		RequestDispatcher rd=request.getRequestDispatcher("/BlockService?method=addBlock.jsp");
+		RequestDispatcher rd=request.getRequestDispatcher("/block/addBlock.jsp");
 		rd.forward(request, response);
 	}
 
@@ -76,19 +77,23 @@ public class BlockService extends HttpServlet {
 	 */
 	public void editBlock(HttpServletRequest request,
 			HttpServletResponse response) throws IOException,ServletException{
-		String blockConditionresult=request.getParameter("blockcConditionresult");
-		String blockno=request.getParameter("blockno");
+		String blockConditionresult=request.getParameter("blockConditionresult");
+		String blockNo=request.getParameter("blockNo");
 		
 		Block block=new Block();
-		block.setBlockNo(Integer.parseInt(blockno));
+		block.setBlockNo(Integer.parseInt(blockNo));
 		
 		BlockCondition blockCondition=new BlockCondition();
 		blockCondition.setBlockConditionResult(Integer.parseInt(blockConditionresult));
 		block.setBlockCondition(blockCondition);
 		
+
+		
 		BlockDAO.updateBlock(block);
 		
-		RequestDispatcher rd= request.getRequestDispatcher("/BlockService?method=editBlock");
+		
+		
+		RequestDispatcher rd= request.getRequestDispatcher("/member/loginafter.jsp");
 		rd.forward(request, response);
 	}
 
@@ -100,14 +105,14 @@ public class BlockService extends HttpServlet {
 	 */
 	public void removeBlock(HttpServletRequest request,
 			HttpServletResponse response) throws IOException,ServletException {
-		String blockno=request.getParameter("blockno");
+		String blockno=request.getParameter("blockNo");
 		
 		Block block= new Block();
 		block.setBlockNo(Integer.parseInt(blockno));
 		
 		BlockDAO.deleteBlock(Integer.parseInt(blockno));
 		
-		RequestDispatcher rd= request.getRequestDispatcher("/BlockService?method=removeBlock");
+		RequestDispatcher rd= request.getRequestDispatcher("/member/loginafter.jsp");
 		rd.forward(request, response);
 	}
 
@@ -142,7 +147,7 @@ public class BlockService extends HttpServlet {
 				
 		}else{
 				blockList=
-							BlockDAO.selectBlockbyResult(length, page, request.getParameter("keyword"));
+						BlockDAO.selectBlockbyResult(length, page, request.getParameter("keyword"));
 				BlockCount=
 						BlockDAO.selectBlockbyResultCount(request.getParameter("keyword"));				
 		}
@@ -158,4 +163,5 @@ public class BlockService extends HttpServlet {
 		RequestDispatcher rd=request.getRequestDispatcher("/block/viewBlockList.jsp");
 		rd.forward(request, response);
 	}
+
 }
