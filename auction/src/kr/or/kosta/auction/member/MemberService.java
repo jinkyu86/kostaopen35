@@ -1,6 +1,7 @@
 package kr.or.kosta.auction.member;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 
@@ -15,8 +16,6 @@ import kr.or.kosta.auction.bid.Bid;
 import kr.or.kosta.auction.bid.BidDAO;
 import kr.or.kosta.auction.good.Good;
 import kr.or.kosta.auction.good.GoodDAO;
-
-
 
 
 
@@ -64,6 +63,8 @@ public class MemberService extends HttpServlet {
 			login(request, response);
 		} else if ("logout".equals(method)) {
 			logout(request, response);
+		} else if ("checkuserID".equals(method)){
+			checkuserID(request, response);
 		}
 	}// end method doPost
 
@@ -71,6 +72,23 @@ public class MemberService extends HttpServlet {
 	
 		
 	
+
+	private void checkuserID(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException{
+		// TODO Auto-generated method stubString userid = request.getParameter("userid");
+				String userid = request.getParameter("userid");
+				Member member = MemberDAO.selectMember(userid);
+				response.setContentType("text/html;charset=utf-8");
+				PrintWriter out = response.getWriter();
+				if(member==null){
+					out.print(userid+"는 사용 가능한 아이디 입니다.");
+				}else{
+					out.print(userid+"는 이미 사용중인 아이디 입니다.");
+				}
+				out.flush();
+				out.close();
+		
+	}
 
 	private void addMember(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
