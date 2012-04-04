@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib  prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -49,10 +50,10 @@
 	</tr>
 	<tr rowspan="3">
 		<td>
-			<img src="/baking/img/cookie/${ORDER.good.img}"/>
+			<img src="/baking/img/${ORDER.good.good_division.gName}/${ORDER.good.img}"/>
 		</td>
 		<td>수량:${ORDER.qty}
-		<br/><br/>
+		<br/>
 		가격:${ORDER.price}</td>
 	<tr>
 		<td>구매자</td>
