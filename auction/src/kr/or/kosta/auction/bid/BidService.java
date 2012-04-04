@@ -99,6 +99,8 @@ public class BidService extends HttpServlet {
 		AuctionDAO.updateAuction(auction);
 		BidDAO.updateBid(bid);
 		
+		request.setAttribute("ERROR","구매하셨습니다");
+		
 		RequestDispatcher rd=request.getRequestDispatcher("/AuctionService?method=viewAuctionList");
 		rd.forward(request, response);
 	}
