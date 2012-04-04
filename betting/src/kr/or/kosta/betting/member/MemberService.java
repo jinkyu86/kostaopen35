@@ -69,6 +69,8 @@ public class MemberService extends HttpServlet {
 			login(request, response);
 		} else if ("logout".equals(method)) {
 			logout(request, response);
+		} else if ("checkMemberID".equals(method)) {
+			checkMemberID(request, response);
 		}
 	}// end method doPost
 

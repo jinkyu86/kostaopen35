@@ -168,8 +168,8 @@ public class MemberDAO {
 		ArrayList<Member> memberList = new ArrayList<Member>();
 		try {
 			con = ConnectionUtil.getConnection();
-			sql = "SELECT  id,mineral" + " FROM  member"
-					+ " ORDER BY mineral DESC";
+			sql = "SELECT  rank() over (ORDER BY mineral DESC) RANK"
+					+ " FROM  member";
 
 			psmt = con.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE,
 					ResultSet.CONCUR_READ_ONLY);
@@ -213,11 +213,11 @@ public class MemberDAO {
 		con = ConnectionUtil.getConnection();
 		try {
 			psmt = con.prepareStatement("UPDATE  member SET pw=?," + "email=?,"
-					 + "WHERE id=?");
+					+ "WHERE id=?");
 
 			psmt.setString(1, member.getPw());
 			psmt.setString(2, member.getEmail());
-			
+
 			psmt.setString(3, member.getId());
 
 			psmt.executeUpdate();
@@ -248,6 +248,7 @@ public class MemberDAO {
 		}
 		return memberCount;
 	}
+
 	public static long selectMineralByID(String id) {
 
 		/**
@@ -260,18 +261,16 @@ public class MemberDAO {
 		PreparedStatement psmt = null;
 		String sql = null;
 		ResultSet rs = null;
-		long mineral=0;
+		long mineral = 0;
 		try {
 			con = ConnectionUtil.getConnection();
-			sql = "SELECT  mineral" + "  FROM  member"
-					+ " WHERE id=?";
+			sql = "SELECT  mineral" + "  FROM  member" + " WHERE id=?";
 
 			psmt = con.prepareStatement(sql);
 			psmt.setString(1, id);
 			rs = psmt.executeQuery();
 			if (rs.next()) {
 
-				
 				mineral = rs.getLong(1);
 
 			}
@@ -280,8 +279,8 @@ public class MemberDAO {
 		}
 		return mineral;
 	}
-	
-	public static void updateMineralByID(String id , long mineral) {
+
+	public static void updateMineralByID(String id, long mineral) {
 
 		/**
 		 * ¹Ì³×¶ö µ¥ÀÌÅÍ »ðÀÔ
@@ -294,13 +293,13 @@ public class MemberDAO {
 		con = ConnectionUtil.getConnection();
 		try {
 			psmt = con.prepareStatement("UPDATE member set mineral=?"
-					+"where id=?");
-			psmt.setString(1, id);			
+					+ "where id=?");
+			psmt.setString(1, id);
 			psmt.setLong(4, mineral);
-			
+
 			psmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
-		}		
-	}	
+		}
+	}
 }
