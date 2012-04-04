@@ -80,4 +80,25 @@ public class PhotoDAO {
 		
 		return photoList;
 	}
+	
+	//이미지추가
+	public static void insertPhoto(Photo photo, int recipe_num){
+		Connection con=null;
+		PreparedStatement psmt=null;
+		con=ConnectionUtil.getConnection();
+//		sql="insert into photo(시퀀스, RecipeNum, img이름, 구분)";
+		try {
+			psmt=con.prepareStatement(
+					"insert into photo" +
+					" (p_num,  Recipe_num, image, division)" +
+					" values(?, ?, ?, ?)");
+			psmt.setInt(1,photo.getP_num());
+			psmt.setInt(2,photo.getRecipe_num());
+			psmt.setString(3,photo.getImage());
+			psmt.setInt(4,photo.getDivision());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }

@@ -6,6 +6,7 @@ public class Photo {
 	private int recipe_num;
 	private int board_num;
 	private String image;
+	private int division;
 	
 	public int getP_num() {
 		return p_num;
@@ -38,14 +39,16 @@ public class Photo {
 		this.image = image;
 	}
 	
+	public int getDivision() {
+		return division;
+	}
+	public void setDivision(int division) {
+		this.division = division;
+	}
 	@Override
 	public String toString() {
 		return "Photo [p_num=" + p_num + ", good_num=" + good_num
 				+ ", recipe_num=" + recipe_num + ", board_num=" + board_num
-				+ ", image=" + image + "]";
+				+ ", image=" + image + ", division=" + division + "]";
 	}
-	
-	
-	
-	
 }
