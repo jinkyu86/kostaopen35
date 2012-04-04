@@ -82,60 +82,52 @@
 		</td>
 		<!-- 좌측 메뉴 끝 -->
 		<td>
-			<div class="menu_title" >Join</div>
-			<table class="table_style" align="right">
-		<form id="my_form" action="/moviesystem/MemberService" method="post">
-		<input type="hidden"  name="method" value="addMember"/>
-			<tr>
-				<td><label>아이디</label></td>
-				<td><input type="text" name="userid" id="userid"/>
-				<span id="idcheck"></span>
-				</td>
-			</tr>
-			<tr>
-				<td><label>이름</label></td>
-				<td><input type="text" name="name" id="name"/></td>
-			</tr>
-			<tr>
-				<td><label>비밀번호</label></td>
-				<td><input type="password" name="pw" id="pw"/></td>
-			</tr>
-			<tr>
+			<div class="menu_title" ><font size="5">Join</font></div>
+			<table class="table_style" style="width:70%">
+				<form id="my_form" action="/moviesystem/MemberService" method="post">
+				<input type="hidden"  name="method" value="addMember"/>
+				<tr>
+					<td><label>아이디</label></td>
+					<td><input type="text" name="userid" id="userid"/>
+					<span id="idcheck"></span>
+					</td>
+				</tr>
+				<tr>
+					<td><label>이름</label></td>
+					<td><input type="text" name="name" id="name"/></td>
+				</tr>
+				<tr>
+					<td><label>비밀번호</label></td>
+					<td><input type="password" name="pw" id="pw"/></td>
+				</tr>
+				<tr>
 					<td><label>비밀번호확인</label></td>
 					<td><input type="password" name="pwvalid"/></td>
 				</tr>
-			<tr>
-				<td><label>이메일</label></td>
-				<td><input type="text" name="email"></td>
-			</tr>
-			<tr>
-				<td><label>전화번호</label></td>
-				<td><input type="text" name="phone"></td>
-			</tr>
-			<tr>
-				<td><label>우편번호</label></td>
-				<td><input type="text" name="zipcode"></td>
-			</tr>
-			<tr>
-				<td><label>주소</label></td>
-				<td><input type="text" name="addr"></td>
-			</tr>
-			<tr>
-				<td colspan="2" >
-					
+				<tr>
+					<td><label>이메일</label></td>
+					<td><input type="text" name="email"></td>
+				</tr>
+				<tr>
+					<td><label>전화번호</label></td>
+					<td><input type="text" name="phone"></td>
+				</tr>
+				<tr>
+					<td><label>우편번호</label></td>
+					<td><input type="text" name="zipcode"></td>
+				</tr>
+				<tr>
+					<td><label>주소</label></td>
+					<td><textarea name="addr"></textarea></td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<input type="submit" value="회원가입"/>
+						
 				</td>
-			</tr>
-			</table>
-				
-			<table  align="center">
-			<tr>
-				<td>
-					<input type="submit" value="회원가입"/>
-					
-				</td>
-			</tr>
+				</tr>
+				</table>
 
-		</table>
 		</form>
 		</td>
 		</tr>
