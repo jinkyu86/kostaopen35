@@ -62,8 +62,6 @@
 	</form>
 	</c:forEach>
 	</table>
-	<p align="center">
-	${PAGE_LINK_TAG}
 	<br/><br/>
 	
 	<h3 align="center">낙찰된 물품리스트</h3>
@@ -86,13 +84,10 @@
 <c:if test="${sessionScope.MEMBER.userid=='admin'}">
 	<p align="center">
 		<a href="/auction/GoodService?method=viewGoodList">물품관리</a><br/>
-		<a href="/auction/AuctionService?method=addAuctionForm">경매추가</a>
 	</p>
-</c:if>
-	<br/>
+</c:if>	
 	<p align="center">
 		<a href="/auction/BoardService?method=viewBoardList">게시판보기</a>
-	</p>
-		
+	</p>	
 </body>
 </html>
