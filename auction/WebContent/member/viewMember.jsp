@@ -6,7 +6,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>회원 조회</title>
-
 <script src="http://code.jquery.com/jquery-1.7.js"></script>
 <script>
 	$(document).ready(function(){
