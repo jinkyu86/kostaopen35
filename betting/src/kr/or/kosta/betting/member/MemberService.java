@@ -63,8 +63,8 @@ public class MemberService extends HttpServlet {
 			addMemberForm(request, response);
 		} else if ("addMember".equals(method)) {
 			addMember(request, response);
-			// } else if ("loginForm".equals(method)) {
-			// loginForm(request, response);
+		} else if ("loginForm".equals(method)) {
+			loginForm(request, response);
 		} else if ("login".equals(method)) {
 			login(request, response);
 		} else if ("logout".equals(method)) {
@@ -74,7 +74,7 @@ public class MemberService extends HttpServlet {
 
 	public void addMember(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		
+
 		String userid = request.getParameter("userid");
 		Member usermember = MemberDAO.selectMemberByID(userid);
 		response.setContentType("text/html;charset=utf-8");
@@ -86,7 +86,7 @@ public class MemberService extends HttpServlet {
 		}
 		out.flush();
 		out.close();
-		
+
 		/**
 		 * ¸â¹ö »ðÀÔ ¸Þ¼­µå
 		 * 
@@ -215,9 +215,9 @@ public class MemberService extends HttpServlet {
 		 * @param response
 		 */
 
-		String id = request.getParameter("ID");
+		String id = request.getParameter("id");
 
-		String pw = request.getParameter("PW");
+		String pw = request.getParameter("pw");
 
 		Member member = MemberDAO.selectMemberByID(id);
 
@@ -236,6 +236,14 @@ public class MemberService extends HttpServlet {
 
 		RequestDispatcher rd = request
 				.getRequestDispatcher("/MemberService?method=viewMemberList");
+		rd.forward(request, response);
+
+	}
+
+	private void loginForm(HttpServletRequest request,
+			HttpServletResponse response) throws IOException, ServletException {
+		RequestDispatcher rd = request
+				.getRequestDispatcher("/member/login.jsp");
 		rd.forward(request, response);
 
 	}
