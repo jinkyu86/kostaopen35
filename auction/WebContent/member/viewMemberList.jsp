@@ -17,25 +17,22 @@
 		<th>이름</th>
 		<th>코인</th>
 		<th>E머니</th>
+		<th>회원정보 수정</th>
 	</tr>
 	<c:forEach var="member" items="${MEMBER_LIST}">
 	<tr>
-	<td>${member.userid}</td> 
+	<form action="/auction/MemberService" method="post">
+	<input type="hidden" name="method" value="editMember" />
+	<td><label name="userid">${member.userid}</label></td> 
 	<td>${member.pw}</td>
 	<td>${member.email}</td>
 	<td>${member.name}</td>
-	<td>${member.coin}</td>
-	<td>${member.emoney}</td>
+	<td><input type="text" name="coin" value="${member.coin}"></td>
+	<td><input type="text" name="emoney" value="${member.emoney}"></td>
 	</tr>
+	</form>
 	</c:forEach>
-
 	
 </table>
-<p align="center">
-	${PAGE_LINK_TAG}
-</p>
-<p align="center">
-	<a href="/auction/MemberService?method=addMemberForm">회원추가</a>
-</p>
 </body>
 </html>
