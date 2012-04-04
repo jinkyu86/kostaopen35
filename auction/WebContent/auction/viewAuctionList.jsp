@@ -85,6 +85,9 @@
 	<p align="center">
 		<a href="/auction/GoodService?method=viewGoodList">물품관리</a><br/>
 	</p>
+	<p align="center">
+		<a href="/auction/MemberService?method=viewMemberList">회원관리</a><br/>
+	</p>
 </c:if>	
 	<p align="center">
 		<a href="/auction/BoardService?method=viewBoardList">게시판보기</a>
