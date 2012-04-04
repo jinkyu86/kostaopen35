@@ -8,7 +8,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import kr.or.kosta.auction.member.Member;
+import kr.or.kosta.auction.member.MemberDAO;
 import kr.or.kosta.auction.util.PageUtil;
 
 public class BoardService extends HttpServlet {
@@ -89,11 +92,16 @@ public class BoardService extends HttpServlet {
 		String bNum=request.getParameter("bNum");
 		String title=request.getParameter("title");
 		String content=request.getParameter("content");
+		String userid=request.getParameter("userid");
+		
+		Member member=new Member();
+		member.setUserid(userid);
 		
 		Board board=new Board();
 		board.setTitle(title);
 		board.setContent(content);
 		board.setbNum(bNum);
+		board.setMember(member);
 		
 		BoardDAO.updateBoard(board);
 		
@@ -128,8 +136,26 @@ public class BoardService extends HttpServlet {
 
 	private void viewBoardList(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		ArrayList<Board> boardList=	BoardDAO.selectBoardList();
-		request.setAttribute("BOARD_LIST",boardList);
+		//기본 페이지1
+		int page=1;
+		//페이지 파라메터가 존재
+		if(request.getParameter("page")!=null){
+			//파라메터 리턴
+			page=Integer.parseInt(request.getParameter("page"));
+		}
+		//한페이지당 보여줄 게시물수
+		int length=10;
+			
+		ArrayList<Board> boardList=	BoardDAO.selectBoardList(length,page);
+		//2.request에 1의페이지 학생 정보 저장
+		request.setAttribute("BOARD_LIST", boardList);
+		//전체 학생의 수 조회
+		int boardCount=BoardDAO.selectBoardCount();
+		//다른 페이지로 이동하는 링크태그 만듬
+		//PageUtil.generate(현페이지,전체건수,한페이지당 보여줄row수,주소)
+		String pageLinkTag=PageUtil.generate(page, boardCount, length, "/auction/BoardService?method=viewBoardList");
+		request.setAttribute("PAGE_LINK_TAG",pageLinkTag);
+		
 		RequestDispatcher rd=
 				request.getRequestDispatcher(
 						"/board/viewBoardList.jsp");
