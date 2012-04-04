@@ -95,5 +95,4 @@ public class Good {
 				+ ", qty=" + qty + ", name=" + name + ", explantion="
 				+ explantion + ", img=" + img + ", option=" + option + "]";
 	}
-	
 }

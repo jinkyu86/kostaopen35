@@ -93,10 +93,11 @@ public class GoodService extends HttpServlet {
 		//상품 관련 레시피 조회
 		ArrayList<Recipe> recipeList = RecipeDAO.selectRecipeList(goodNum);
 		ArrayList<Photo> photoList = PhotoDAO.selectGoodPhotoList(goodNum);
-
+			
 		request.setAttribute("GOOD", good);
 		request.setAttribute("GOOD_RECIPELIST", recipeList);
 		request.setAttribute("PHOTO_LIST", photoList);
+		
 		
 		RequestDispatcher rd = request.getRequestDispatcher("/good/viewGood.jsp");
 		rd.forward(request, response);
@@ -216,7 +217,6 @@ public class GoodService extends HttpServlet {
 	private void viewDivisionGoodList(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		int division = Integer.parseInt(request.getParameter("division"));
-		
 		ArrayList<Good> goodList = GoodDAO.viewDivisionGoodList(division);
 		request.setAttribute("viewGoodList", goodList);
 		RequestDispatcher rd = request.getRequestDispatcher("/good/viewDivisionGoodList.jsp");
