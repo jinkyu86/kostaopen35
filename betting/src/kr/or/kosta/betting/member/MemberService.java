@@ -1,6 +1,7 @@
 package kr.or.kosta.betting.member;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
@@ -73,7 +74,19 @@ public class MemberService extends HttpServlet {
 
 	public void addMember(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-
+		
+		String userid = request.getParameter("userid");
+		Member usermember = MemberDAO.selectMemberByID(userid);
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter out = response.getWriter();
+		if (usermember == null) {
+			out.print(userid + "는 사용 가능한 아이디 입니다.");
+		} else {
+			out.print(userid + "는 이미 사용중인 아이디 입니다.");
+		}
+		out.flush();
+		out.close();
+		
 		/**
 		 * 멤버 삽입 메서드
 		 * 
@@ -85,7 +98,6 @@ public class MemberService extends HttpServlet {
 		String name = request.getParameter("name");
 		String pw = request.getParameter("pw");
 		String email = request.getParameter("email");
-		
 
 		Member member = new Member();
 		member.setId(id);
@@ -99,7 +111,6 @@ public class MemberService extends HttpServlet {
 				.getRequestDispatcher("/MemberService?method=viewMemberList");
 
 		rd.forward(request, response);
-
 	}
 
 	/**
@@ -151,13 +162,12 @@ public class MemberService extends HttpServlet {
 		String name = request.getParameter("name");
 		String pw = request.getParameter("pw");
 		String email = request.getParameter("email");
-		
+
 		Member member = new Member();
 		member.setId(id);
 		member.setName(name);
 		member.setPw(pw);
 		member.setEmail(email);
-		
 
 		MemberDAO.updateMember(member);
 
@@ -286,7 +296,7 @@ public class MemberService extends HttpServlet {
 		int length = 10;
 
 		// 1.StudentDAO에서 전체 학생조회 메서드 호출
-		ArrayList<Member> memberList = MemberDAO.selectMemberList(length,page);
+		ArrayList<Member> memberList = MemberDAO.selectMemberList(length, page);
 		// 2.request에 1의 전체 학생 정보 저장
 		request.setAttribute("MEMBER", memberList);
 
@@ -361,6 +371,6 @@ public class MemberService extends HttpServlet {
 				.getRequestDispatcher("/member/viewMemberRankingList.jsp");
 		// 4.JSP로 페이지 이동
 		rd.forward(request, response);
-
 	}
+
 }
