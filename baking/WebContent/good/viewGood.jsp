@@ -49,9 +49,14 @@ pageEncoding="utf-8"%>
 	<a href="/baking/GoodService?method=viewDivisionGoodList&division=3">초콜릿</a>	
 
 	<ul class="column">
+	<form action="/baking/OrderService" method="get">
+		<input type="hidden" name="method" value="addCartForm">
+		<input type="hidden" name="goodNum" value="${GOOD.goodNum}">
+		<input type="hidden" name="option" value="${GOOD.option}">
+		<input type="hidden" name="goodPrice" value="${GOOD.goodPrice}">
 		<table border="1" width="300px" height="200px" align="center">
 			<tr>
-				<td colspan="2" height="50px" align="center"><h3>${GOOD.name}</h3></td>
+				<td colspan="2" height="50px" align="center" ><h3>${GOOD.name}</h3></td>
 			</tr>
 			<tr>
 				 <td colspan="2" align="center">
@@ -68,9 +73,19 @@ pageEncoding="utf-8"%>
 			</tr>
 			<tr>
 				<td><center>가격 : ${GOOD.goodPrice}원</center></td>
-				<td><center>상품수량 : ${GOOD.qty }개</center></td>
+				<td><select name="qty">
+					<%for(int i=1;i<100;i++) {%>					
+					<option value="<%=i%>"><%=i%>
+					</option>
+					<%} %>
+					</select>
+					</td>
 			</tr>
+			<tr>
+			<td colspan="1"><input type="submit" value="장바구니"></td>
+			<tr>
 		</table>
+		</form>
 		
 		<center>
 		<br/><br/>
@@ -80,7 +95,9 @@ pageEncoding="utf-8"%>
 		<br/><br/>		
 		</c:forEach>
 		
-		<form action="/baking/OrderService" method="get">
+		
+	<!-- 상품번호 히든, 수량,옵션 셀렉터옵션 -->
+		<%-- <form action="/baking/OrderService" method="post">
 		<input type="hidden" name="method" value="addCartForm">
 		<table>
 			<tr>
@@ -106,7 +123,7 @@ pageEncoding="utf-8"%>
 			<td><input type="submit" value="저장"/></td>
 			</tr>
 			</table>
-			</form>
+			</form> --%>
 		
 		<br/><br/>
 		<%-- <c:if test="${GOOD_RECIPELIST.recipeNum!=null}"> --%>
