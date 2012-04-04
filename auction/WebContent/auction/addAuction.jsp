@@ -36,7 +36,9 @@
 			},
 			sold:{
 				required:true,
-				minlength:1
+				minlength:1,
+				max:1,
+				min:0
 			}
 		},
 		messages:{
@@ -50,13 +52,17 @@
 				required:"즉구가를 입력하세요."
 			},
 			sTime:{
-				required:"형식에 맞게 입력하세요."
+				required:"'YYYY/MM/DD HH:mm:ss'형식에 맞게 입력하세요.",
+				date:"'YYYY/MM/DD HH:mm:ss'형식에 맞게 입력하세요."
 			},
 			eTime:{
-				required:"형식에 맞게 입력하세요."
+				required:"'YYYY/MM/DD HH:mm:ss'형식에 맞게 입력하세요.",
+				date:"'YYYY/MM/DD HH:mm:ss'형식에 맞게 입력하세요."
 			},
 			sold:{
 				required:"0 또는 1을 입력하세요",
+				max:"0 또는 1을 입력하세요",
+				min:"0 또는 1을 입력하세요"
 			}
 		}
  	});
