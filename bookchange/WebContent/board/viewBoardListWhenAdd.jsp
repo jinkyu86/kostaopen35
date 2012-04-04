@@ -34,16 +34,16 @@
 	<table border="3" align="center">
 		 <tr>
 		  <th>번호</th>
-		  <th>올린사람</th>
 		  <th>사진</th>
+		  <th>올린사람</th>
 		  <th>제목</th>
 		  <th>교환상태</th>
 		 </tr>
 	      <tr>
 	       <td>${BOARD.boardNo}</td>
-	       <td>${BOARD.member.email}</td>
 	       <td><img src="/bookchange/bookimg/${BOARD.boardPhoto}" height="50" width="40"></td>
-	       <td>${BOARD.boardTitle}</a></td>
+	       <td>${BOARD.member.email}</td>
+	       <td>${BOARD.boardTitle}</td>
 	       <td>${BOARD.condition.conditionIng}</td>
 	      </tr>
 		 </table>

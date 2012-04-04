@@ -46,18 +46,18 @@ alert("${COMPLETE}");
 	 <table border="3" align="center">
 	 <tr>
 	  <th>번호</th>
-	  <th>올린사람</th>
 	  <th>사진</th>
+	  <th>올린사람</th>
 	  <th>제목</th>
 	  <th>교환상태</th>
 	 </tr>
 	  <c:forEach var="good" items="${BOARD_LIST}">
       <tr>
-       <td>${good.boardNo}</td>
+       <td align="center">${good.boardNo}</td>
+       <td><img src="/bookchange/bookimg/${good.boardPhoto}" height="80" width="80"></td>
        <td>${good.member.email}</td>
-       <td><img src="/bookchange/bookimg/${good.boardPhoto}" height="100" width="80"></td>
        <td><a href="/bookchange/BoardService?method=viewBoard&boardNo=${good.boardNo}">${good.boardTitle}</a></td>
-       <td>${good.condition.conditionIng}</td>
+       <td align="center">${good.condition.conditionIng}</td>
       </tr>
      </c:forEach>
 	 </table>

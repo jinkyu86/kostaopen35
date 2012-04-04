@@ -59,17 +59,17 @@
  
  <h1 align="center">물건명세</h1>
  	<table align="center" border="3">
- 		<tr>
- 			<td>${BOARD.boardNo}</td>
- 			<td>${BOARD.category.categoryName}</td>
- 			<td>${BOARD.boardTitle}</td>
- 			<td>${BOARD.member.email}</td>
- 			<td>${BOARD.condition.conditionIng}</td>
- 	 		<td>${BOARD.boardWant}</td>	
- 	 		<td>${BOARD.deal.dealWay}</td>
+ 		<tr align="center">
+ 			<td><b>게시물번호</b><br>${BOARD.boardNo}</td> 			
+ 			<td><b>올린사람</b><br>${BOARD.member.email}</td>
+ 			<td><b>카테고리</b><br>${BOARD.category.categoryName}</td>
+ 			<td><b>제목</b><br>${BOARD.boardTitle}</td>
+ 			<td><b>원하는물건</b><br>${BOARD.boardWant}</td>	
+ 	 		<td><b>거래방법</b><br>${BOARD.deal.dealWay}</td>
+  			<td><b>교환상태</b><br>${BOARD.condition.conditionIng}</td> 	 		
  		</tr>
  		<tr>
- 			<td align="center" colspan="3"><img src="/bookchange/bookimg/${BOARD.boardPhoto}" height="300" width="200"></td> 			
+ 			<td align="center" height="300" width="300" colspan="3"><img src="/bookchange/bookimg/${BOARD.boardPhoto}" height="300" width="300"></td> 			
  	 		<td colspan="4">${BOARD.boardContent}</td> 	 		
  		</tr>
  		
