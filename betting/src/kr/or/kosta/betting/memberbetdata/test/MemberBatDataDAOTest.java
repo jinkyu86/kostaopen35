@@ -17,7 +17,7 @@ public class MemberBatDataDAOTest {
 		mbd.setBetMineral(100);
 		
 		Member member = new Member();
-		member.setID("jun1");
+		member.setId("jun1");
 		
 		Betting betting = new Betting();
 		betting.setNum("5");

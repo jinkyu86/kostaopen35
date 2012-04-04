@@ -101,9 +101,9 @@ public class MemberBetDataDAO {
 				mbd.setGiveMineralConfirm(gmc);
 
 				Member member = new Member();
-				member.setID(ID);
+				member.setId(ID);
 				member.setName(name);
-				member.setPW(pw);
+				member.setPw(pw);
 				member.setEmail(email);
 				member.setMineral(mineral);
 
@@ -240,9 +240,9 @@ public class MemberBetDataDAO {
 				mbd.setGiveMineralConfirm(gmc);
 
 				Member member = new Member();
-				member.setID(ID);
+				member.setId(ID);
 				member.setName(name);
-				member.setPW(pw);
+				member.setPw(pw);
 				member.setEmail(email);
 				member.setMineral(mineral);
 
@@ -313,7 +313,7 @@ public class MemberBetDataDAO {
 					" VALUES (?,?,?,s_bettingdata.nextval,sysdate,0)");
 			psmt.setString(1,mbd.getBetting().getNum());
 			psmt.setLong(2,mbd.getBetMineral());
-			psmt.setString(3,mbd.getMember().getID());
+			psmt.setString(3,mbd.getMember().getId());
 			psmt.executeUpdate();
 		}catch(Exception e){
 			e.printStackTrace();
