@@ -65,6 +65,8 @@ public class MemberService extends HttpServlet {
 			logout(request, response);
 		} else if ("checkuserID".equals(method)){
 			checkuserID(request, response);
+		} else if ("editMemberByadmin".equals(method)){
+			editMemberByadmin(request,response);
 		}
 	}// end method doPost
 
@@ -72,6 +74,32 @@ public class MemberService extends HttpServlet {
 	
 		
 	
+
+	private void editMemberByadmin(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		String userid=request.getParameter("userid");
+		String pw=request.getParameter("pw");
+		String email=request.getParameter("email");
+		String name=request.getParameter("name");
+		String coin=request.getParameter("coin");
+		String emoney=request.getParameter("emoney");
+		//2.1의 정보를 이용해서 Member 객체 생성
+		Member member=new Member();
+		member.setUserid(userid);
+		member.setPw(pw);
+		member.setEmail(email);
+		member.setName(name);
+		member.setCoin(coin);
+		member.setEmoney(emoney);
+		
+		
+		//3.회원정보를 수정하는 메서드 호출
+		MemberDAO.updateMember(member);
+		//4.회원정보 조회화면으로 이동 객체 생성
+		RequestDispatcher rd=request.getRequestDispatcher("/MemberService?method=viewMemberList");
+		rd.forward(request, response);
+		
+	}
 
 	private void checkuserID(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException{
