@@ -5,11 +5,37 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>게시물 작성</title>
+<script src="http://code.jquery.com/jquery-1.7.js"></script>
+<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.js"></script>
+<script>
+$(document).ready(function(){
+	$('#my_form').validate({
+		rules:{
+			title:{
+				required:true,
+				minlength:1
+			},
+			content:{
+				required:true,
+				minlength:1
+			}
+		},
+		messages:{
+			title:{
+				required:"제목을 입력하세요."
+			},//end title
+			content:{
+				required:"내용을 입력하세요.",
+			}//end content
+		}
+	});
+});
+</script>
 </head>
 <body>
 <hr noshade>
 <h1 align="center">게시물 작성</h1>
-<form name="login_form" action="/auction/BoardService" method="post">
+<form name="login_form" action="/auction/BoardService" method="post" id="my_form">
 <table border="1" align="center">
 <input type="hidden" name="method" value="addBoard" />
 	<tr>
