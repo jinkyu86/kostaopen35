@@ -161,7 +161,7 @@ public class BettingService extends HttpServlet {
 			betting1.setNum(homeBetNum);
 			
 			Member member = new Member();
-			member.setID("jun10");
+			member.setId("jun10");
 			
 			mbd.setBetting(betting1);
 			mbd.setMember(member);
@@ -196,7 +196,7 @@ public class BettingService extends HttpServlet {
 			betting1.setNum(awayBetNum);
 			
 			Member member = new Member();
-			member.setID("jun1");
+			member.setId("jun1");
 			
 			mbd.setBetting(betting1);
 			mbd.setMember(member);
