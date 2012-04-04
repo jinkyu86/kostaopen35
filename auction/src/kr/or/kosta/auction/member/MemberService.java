@@ -205,7 +205,7 @@ public class MemberService extends HttpServlet {
 		String userid=request.getParameter("userid");
 		BidDAO.deleteBidById(userid);
 		MemberDAO.deleteMember(userid);
-		RequestDispatcher rd=request.getRequestDispatcher("/MemberService?method=viewAuctionList");
+		RequestDispatcher rd=request.getRequestDispatcher("/AuctionService?method=viewAuctionList");
 		rd.forward(request, response);
 
 	}
