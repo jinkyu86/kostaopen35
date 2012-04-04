@@ -22,17 +22,23 @@
 	<c:forEach var="member" items="${MEMBER_LIST}">
 	<tr>
 	<form action="/auction/MemberService" method="post">
-	<input type="hidden" name="method" value="editMember" />
-	<td><label name="userid">${member.userid}</label></td> 
-	<td>${member.pw}</td>
-	<td>${member.email}</td>
-	<td>${member.name}</td>
-	<td><input type="text" name="coin" value="${member.coin}"></td>
-	<td><input type="text" name="emoney" value="${member.emoney}"></td>
+	<input type="hidden" name="method" value="editMemberByadmin" />
+	<td><input type="text" name="userid" value="${member.userid}" readOnly="readOnly" /></label></td> 
+	<td><input type="password" name="pw" value="${member.pw}" /></td>
+	<td><input type="text" name="email" value="${member.email}"/></td>
+	<td><input type="text" name="name" value="${member.name}"/></td>
+	<td><input type="text" name="coin" value="${member.coin}"/></td>
+	<td><input type="text" name="emoney" value="${member.emoney}"/></td>
+	<td>
+		<input type="submit" value="회원정보 수정"/>
+		<input type="reset" value="취소"/>
+	</td>
 	</tr>
 	</form>
 	</c:forEach>
-	
 </table>
+<p align="center">
+	<a href="/auction/AuctionService?method=viewAuctionList">경매목록 보기</a>
+</p>
 </body>
 </html>
