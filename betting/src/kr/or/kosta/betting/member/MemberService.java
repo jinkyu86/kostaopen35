@@ -75,18 +75,6 @@ public class MemberService extends HttpServlet {
 	public void addMember(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 
-		String userid = request.getParameter("userid");
-		Member usermember = MemberDAO.selectMemberByID(userid);
-		response.setContentType("text/html;charset=utf-8");
-		PrintWriter out = response.getWriter();
-		if (usermember == null) {
-			out.print(userid + "는 사용 가능한 아이디 입니다.");
-		} else {
-			out.print(userid + "는 이미 사용중인 아이디 입니다.");
-		}
-		out.flush();
-		out.close();
-
 		/**
 		 * 멤버 삽입 메서드
 		 * 
@@ -135,7 +123,7 @@ public class MemberService extends HttpServlet {
 	}
 
 	public void checkMemberID(HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response) throws IOException {
 		/* default generated stub */;
 
 		/**
@@ -144,6 +132,18 @@ public class MemberService extends HttpServlet {
 		 * @param request
 		 * @param response
 		 */
+		
+		String userid = request.getParameter("userid");
+		Member usermember = MemberDAO.selectMemberByID(userid);
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter out = response.getWriter();
+		if (usermember == null) {
+			out.print(userid + "는 사용 가능한 아이디 입니다.");
+		} else {
+			out.print(userid + "는 이미 사용중인 아이디 입니다.");
+		}
+		out.flush();
+		out.close();
 
 	}
 
