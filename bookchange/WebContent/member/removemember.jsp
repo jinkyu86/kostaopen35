@@ -7,15 +7,6 @@
 <title>È¸¿øÅ»Åð</title>
 </head>
 <body>
-		<form action="/bookchange/MemberService"method="post">
-		 <input type="hidden" name="method" value="removeMember">
-		 <input type="hidden" name="email" value="${sessionScope.LOGIN_EMAIL.email}">
-		  <tr>
-				
-				<td>Email</td>
-  				<td>${sessionScope.LOGIN_EMAIL.email} ´ÔÀÌ Å»ÅðµÇ¾ú½À´Ï´Ù.</td>
-  			
-  		  </tr>
-  		  </form>
+		
 </body>
 </html>
