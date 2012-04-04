@@ -21,8 +21,8 @@
 	<tr>
 		<td>${MEMBER.email}</td>
 		<td>${MEMBER.address}</td>
-		<td>${MEMBER.tel}</td>
-		<td><input type="password" name="pw" value="${MEMBER.pw}" readonly="readonly"/></td>
+		<td>${MEMBER.tel}</td>		
+		<td><input type="password" name="pw" value="${MEMBER.pw}" readonly="readonly"/></td>	
 	</tr>
 		
 		
