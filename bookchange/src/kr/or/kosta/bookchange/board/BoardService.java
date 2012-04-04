@@ -133,7 +133,7 @@ public class BoardService extends HttpServlet {
 		Member member=(Member) session.getAttribute("LOGIN_EMAIL");
 		if(member==null){
 			request.setCharacterEncoding("utf-8");
-			request.setAttribute("NEED_LOGIN","로그인하시기 바랍니다.");
+			request.setAttribute("ERROR","로그인하시기 바랍니다.");
 			
 			RequestDispatcher rd=request.getRequestDispatcher("/main.jsp");
 			rd.forward(request, response);
