@@ -39,7 +39,7 @@ alert("${COMPLETE}");
 		<c:choose>
 		<c:when test="${sessionScope.LOGIN_EMAIL==null}">	
 			<td><a href="/bookchange/BoardService?method=addBoardForm"><img src="webimg/join.GIF" border="0"/></a></td>
-			<td><a href="/"><img src="webimg/myinfo.GIF" border="0"/></a></td>
+			<td><a href="/bookchange/MemberService?method=viewMember"><img src="webimg/myinfo.GIF" border="0"/></a></td>
 		</c:when>
 		<c:otherwise>
 			<td><a href="/bookchange/BoardService?method=addBoardForm"><img src="webimg/join.GIF" border="0"/></a></td>
@@ -98,7 +98,7 @@ alert("${COMPLETE}");
 	    <form action="/bookchange/MemberService" method="post">
 		<input type="hidden"name="method" value="logout">
 		<tr>
-		 <td>${sessionScope.LOGIN_EMAIL.email}님 로그인..</td>
+		 <td>${sessionScope.LOGIN_EMAIL.email}님이 로그인하였습니다.</td>
 		</tr>
 		<tr>
 		 <td colspan="5"><div align="right">
