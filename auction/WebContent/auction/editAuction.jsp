@@ -6,14 +6,85 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>경매 수정</title>
+<script src="http://code.jquery.com/jquery-1.7.js"></script>
+<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.js"></script>
+<script>
+ $(document).ready(function(){
+	 $('#my_form').validate({
+		rules:{
+			sPrice:{
+				required:true,
+				minlength:1,
+				digits:true
+			},
+			cuPrice:{
+				required:true,
+				minlength:1,
+				digits:true
+			},
+			imPrice:{
+				required:true,
+				minlength:1,
+				digits:true
+			},
+			sTime:{
+				required:true,
+				date:true
+			},
+			eTime:{
+				required:true,
+				date:true
+			},
+			sold:{
+				required:true,
+				minlength:1,
+				max:1,
+				min:0
+			}
+		},
+		messages:{
+			sPrice:{
+				required:"시작가를 입력하세요.",
+				digits:"정수로 입력하세요."
+			},
+			cuPrice:{
+				required:"현재가를 입력하세요.",
+				digits:"정수로 입력하세요."
+			},
+			imPrice:{
+				required:"즉구가를 입력하세요.",
+				digits:"정수로 입력하세요."
+			},
+			sTime:{
+				required:"'YYYY/MM/DD HH:mm:ss'형식에 맞게 입력하세요.",
+				date:"'YYYY/MM/DD HH:mm:ss'형식에 맞게 입력하세요."
+			},
+			eTime:{
+				required:"'YYYY/MM/DD HH:mm:ss'형식에 맞게 입력하세요.",
+				date:"'YYYY/MM/DD HH:mm:ss'형식에 맞게 입력하세요."
+			},
+			sold:{
+				required:"0 또는 1을 입력하세요",
+				max:"0 또는 1을 입력하세요",
+				min:"0 또는 1을 입력하세요"
+			}
+		}
+ 	});
+		$("#editAuction").click(function (event){
+				var result=confirm("물품 수정을 하시겠습니까?");
+			
+				if(result==false){
+					event.preventDefault();
+				}
+			});
+ });
+</script>
 </head>
 <body>
-
-</body>
 <h1 align="center">경매수정</h1>
-<table align="center">
-	<form action="/auction/AuctionService" method="post">
+<form action="/auction/AuctionService" method="post" id="my_form">
 		<input type="hidden" name="method" value="editAuction" />
+		<table align="center">
 		<tr>
 			<td>물품번호</td>
 			<td><input type="text" name="gNum"
@@ -58,10 +129,11 @@
 				value="${AUCTION.cuPrice}" /></td>
 		</tr>
 		<tr>
-			<td><input type="submit" value="경매수정" /></td>
+			<td><input type="submit" value="경매수정" id="editAuction"/></td>
 			<td><input type="reset" value="입력취소" /></td>
 		</tr>
-	</form>
-</table>
+	</table>
+</form>
 
+</body>
 </html>

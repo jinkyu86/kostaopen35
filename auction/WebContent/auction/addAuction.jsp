@@ -24,7 +24,8 @@
 			},
 			imPrice:{
 				required:true,
-				minlength:1
+				minlength:1,
+				digits:true
 			},
 			sTime:{
 				required:true,
@@ -49,7 +50,8 @@
 				required:"현재가를 입력하세요."
 			},
 			imPrice:{
-				required:"즉구가를 입력하세요."
+				required:"즉구가를 입력하세요.",
+					digits:"정수로 입력하세요."
 			},
 			sTime:{
 				required:"'YYYY/MM/DD HH:mm:ss'형식에 맞게 입력하세요.",
