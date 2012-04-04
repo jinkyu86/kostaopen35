@@ -11,7 +11,6 @@
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.js"></script>
 <script src="/bookchange/uploadify/jquery.uploadify.v2.1.4.js"></script>
 <script src="/bookchange/uploadify/swfobject.js"></script>
-
 <script>
 	$(document).ready(function(){
 		$("#add_board").validate({
@@ -114,11 +113,13 @@ $(document).ready(function(){
 		<tr align="center">	
 		</table>
 </form>	
-		<input type="file" name="file" id="uploadify"/>
-		<input type="button" id="addPhoto" value="등록" />
-		<form action="/bookchange/BoardService" method="post">
-		<input type="hidden" name="method" value="viewBoardList"/>
-		<input type="submit" value="취소"> 
-		</form>
+<table align="center">
+<tr><td><input type="file" name="file" id="uploadify"/></td>
+	<td><input type="button" id="addPhoto" value="등록" /></td>
+	<td><form action="/bookchange/BoardService" method="post">
+		<input type="hidden" name="method" value="viewBoardList"/></td>
+	<td><input type="submit" value="취소"></td> 
+		</form></td></tr>
+</table>
 </body>
 </html>

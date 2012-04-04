@@ -104,12 +104,14 @@
 		</tr>
 		</table>
 </form>
-		<input type="file" name="file" id="uploadify"/>
-		<input type="button" id="addPhoto" value="수정" />	
-		<form action="/bookchange/BoardService" method="post">
+<table align="center">
+<tr><td><input type="file" name="file" id="uploadify"/></td>
+	<td><input type="button" id="addPhoto" value="수정" /></td>	
+	<td><form action="/bookchange/BoardService" method="post">
 		<input type="hidden" name="method" value="viewBoard">
-		<input type="hidden" name="boardNo" value="${BOARD.boardNo}">
-		<input type="submit" value="취소"/>
-		</form>	
+		<input type="hidden" name="boardNo" value="${BOARD.boardNo}"></td>
+	<td><input type="submit" value="취소"/></td>
+		</form></tr>
+</table>
 </body>
 </html>

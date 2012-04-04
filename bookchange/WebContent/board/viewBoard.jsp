@@ -12,52 +12,57 @@
 
 <c:choose>
   <c:when test="${sessionScope.LOGIN_EMAIL==null}">
-	 <p align="right">
-   		<a href="/bookchange/MemberService?method=loginForm">
-   		로그인
-   		</a>
-	 </p>
+	 <table align="center">
+   		<tr><td><a href="/bookchange/MemberService?method=loginForm">로그인</a></td>
+	 </table>
   </c:when> 
   <c:when test="${sessionScope.LOGIN_EMAIL!=null}">
-  <p align="right">
- 	${sessionScope.LOGIN_EMAIL.email}님<br/>
-   	<a href="/bookchange/MemberService?method=logout">
-   	로그아웃
-   	</a><br/>
+  <table align="center">
+  <tr><td>${sessionScope.LOGIN_EMAIL.email}님</td>
+  <td><a href="/bookchange/MemberService?method=logout">로그아웃</a></td>
    	<c:choose>
    	<c:when test="${sessionScope.LOGIN_EMAIL.email==BOARD.member.email}">
    	 <form action="/bookchange/BoardService" method="post">
 	  <input type="hidden" name="method" value="editBoardForm">
 	  <input type="hidden" name="boardNo" value="${BOARD.boardNo}">
-	  <input type="submit" value="수정">
+  <td><input type="submit" value="수정"></td>
 	 </form>	 
 	  <form action="/bookchange/BoardService" method="post">
 	  <input type="hidden" name="method" value="removeBoard"/>
 	  <input type="hidden" name="boardNo" value="${BOARD.boardNo}"/>
 	  <input type="hidden" name="conditionResult" value="${BOARD.condition.conditionResult}"/>
-	  <input type="submit" value="삭제">
+  <td><input type="submit" value="삭제"></td>
 	 </form>
 	</c:when>
 	
-	<c:otherwise>  
-   	 <form action="/bookchange/BoardService" method="post">
+	<c:otherwise>
+   	<td><form action="/bookchange/BoardService" method="post">
 	  <input type="hidden" name="method" value="searchBoardListWhenAdd">
 	   <input type="hidden" name="boardNo" value="${BOARD.boardNo}">
-	  <input type="hidden" name="keyword" value="${sessionScope.LOGIN_EMAIL.email}">
-	  <input type="submit" value="교환신청">
-	  </form>
+	  <input type="hidden" name="keyword" value="${sessionScope.LOGIN_EMAIL.email}"></td>
+	  <td><input type="submit" value="교환신청"></td></tr>
+	  </form>	  
 	</c:otherwise>	
-	</c:choose>	 	
+	</c:choose>
+	</table>	 	
    	</c:when>
-  <%--  </c:otherwise> --%>
  </c:choose>
  
- <p align="right">
-  <a href="/bookchange/BoardService?method=viewBoardList">전체 리스트 보기</a>
- </p>
- 
- 
- <h1 align="center">물건명세</h1>
+	 <table align="left">
+		<tr align="left"><th>분야별 찾기</th></tr>
+		<tr><td align="left"><a href="/bookchange/BoardService?method=searchBoardList&categoryNo=&column=title&keyword=">전체보기</a></td></tr>
+		<tr><td align="left"><a href="/bookchange/BoardService?method=searchBoardList&categoryNo=0&column=title&keyword=">만화/잡지</a></td></tr>
+		<tr><td align="left"><a href="/bookchange/BoardService?method=searchBoardList&categoryNo=1&column=title&keyword=">학습/참고서</a></td></tr>
+		<tr><td align="left"><a href="/bookchange/BoardService?method=searchBoardList&categoryNo=2&column=title&keyword=">취업/수험서</a></td></tr>
+		<tr><td align="left"><a href="/bookchange/BoardService?method=searchBoardList&categoryNo=3&column=title&keyword=">컴퓨터/IT</a></td></tr>
+		<tr><td align="left"><a href="/bookchange/BoardService?method=searchBoardList&categoryNo=4&column=title&keyword=">소설/시/에세이</a></td></tr>
+		<tr><td align="left"><a href="/bookchange/BoardService?method=searchBoardList&categoryNo=5&column=title&keyword=">가정/생활/요리</a></td></tr>
+		<tr><td align="left"><a href="/bookchange/BoardService?method=searchBoardList&categoryNo=6&column=title&keyword=">여행/취미/레저</a></td></tr>
+		<tr><td align="left"><a href="/bookchange/BoardService?method=searchBoardList&categoryNo=7&column=title&keyword=">종교/해외도서</a></td></tr>
+		<tr><td align="left"><a href="/bookchange/BoardService?method=searchBoardList&categoryNo=8&column=title&keyword=">기타도서</a></td></tr>
+		<tr><td align="left"><a href="/bookchange/BoardService?method=searchBoardList&categoryNo=9&column=title&keyword=">유아/아동</a></td></tr>
+	</table>
+
  	<table align="center" border="3">
  		<tr align="center">
  			<td><b>게시물번호</b><br>${BOARD.boardNo}</td> 			
@@ -69,7 +74,7 @@
   			<td><b>교환상태</b><br>${BOARD.condition.conditionIng}</td> 	 		
  		</tr>
  		<tr>
- 			<td align="center" height="300" width="300" colspan="3"><img src="/bookchange/bookimg/${BOARD.boardPhoto}" height="300" width="300"></td> 			
+ 			<td align="center" colspan="3"><img src="/bookchange/bookimg/${BOARD.boardPhoto}" height="300" width="300"></td> 			
  	 		<td colspan="4">${BOARD.boardContent}</td> 	 		
  		</tr>
  		
