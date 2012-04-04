@@ -10,7 +10,7 @@
 
 <script src="http://code.jquery.com/jquery-1.7.js"></script>
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.js"></script>
-<script>
+<script type="text/javascript">
  $(document).ready(function(){
 	 $('#my_form').validate({
 		rules:{
@@ -63,8 +63,8 @@
 			},
 			sold:{
 				required:"0 또는 1을 입력하세요",
-				max:"0 또는 1을 입력하세요",
-				min:"0 또는 1을 입력하세요"
+				max:"0 또는 1을 입력하세요 (1 = sold, 0 = sale)",
+				min:"0 또는 1을 입력하세요 (1 = sold, 0 = sale)"
 			}
 		}
  	});
