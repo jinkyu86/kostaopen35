@@ -6,12 +6,20 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>회원 조회</title>
+
+<script src="http://code.jquery.com/jquery-1.7.js"></script>
+<script src="/bookchange/uploadify/jquery.uploadify.v2.1.4.js"></script>
 <script>
-	function removemember(){
-		var ret;
-		ret=confirm("정말 탈퇴하시겠습니까?");
-		return false;
-	}
+	$(document).ready(function(){
+		
+		$("#removeMemberLink").click(function (event){
+			var result=confirm("회원탈퇴하시겠습니까?");
+		
+			if(result==false){
+				event.preventDefault();
+			}
+		});
+	});
 </script>
 </head>
 <body>
@@ -64,9 +72,12 @@
 	    </a>
 	  </p>
 	  <p align="center">
-	    <a href="/auction/MemberService?method=removeMember&userid=${MEMBER.userid}" onclick="removemember()">
-	   회원탈퇴
-	    </a>
+	 
+	    <a  id="removeMemberLink" href="/auction/MemberService?method=removeMember&userid=${MEMBER.userid}" onclick="removemember()">
+           회원탈퇴
+		   </a>
+	  
+	     
 	   </p> 
 	  
 	<p align="center">
