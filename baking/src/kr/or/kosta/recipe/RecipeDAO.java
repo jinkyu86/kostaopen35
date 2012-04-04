@@ -302,9 +302,9 @@ public class RecipeDAO {
 		PreparedStatement psmt=null;
 		ResultSet rs= null;
 		ArrayList<Recipe> goodToRecipeList = new ArrayList<Recipe>();
-		String sql="select grr.good_num,grr.recipe_num,r.recipe_num,r.title,r.content,r.img,r.material,r.division"+
-					" from good_recipe_relation grr,recipe r"+
-					" where grr.recipe_num=r.recipe_num and grr.good_num=?";
+		String sql="select grr.good_num,grr.recipe_num,r.recipe_num,r.title,r.content,r.img,r.material,r.division,d.g_name"+
+					" from good_recipe_relation grr,recipe r,good_division d"+
+					" where grr.recipe_num=r.recipe_num and d.division=r.division and grr.good_num=?";
 		try {
 			con=ConnectionUtil.getConnection();
 			psmt=con.prepareStatement(sql);
@@ -319,6 +319,7 @@ public class RecipeDAO {
 				String img	=rs.getString(6);		
 				String material=rs.getString(7);	
 				int division=rs.getInt(8);
+				String gName=rs.getString(9);
 				
 				Good good = new Good();
 				Recipe recipe = new Recipe();
@@ -330,6 +331,7 @@ public class RecipeDAO {
 				recipe.setContent(content);
 				recipe.setImg(img);
 				recipe.setMaterial(material);
+				good_division.setgName(gName);
 				
 				recipe.setGood(good);
 				recipe.setGood_division(good_division);
