@@ -71,7 +71,7 @@
 		}
  	});
 		$("#editAuction").click(function (event){
-				var result=confirm("물품 수정을 하시겠습니까?");
+				var result=confirm("경매정보를 수정 하시겠습니까?");
 			
 				if(result==false){
 					event.preventDefault();
