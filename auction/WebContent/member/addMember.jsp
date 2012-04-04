@@ -29,7 +29,7 @@
 		method="post">
 		<input type="hidden"  name="method"
 		  value="addMember"/>
-		<table>
+		<table align="center">
 			<tr>
 				<td>아이디</td>
 				<td><input type="text"  name="userid" id="userid">
