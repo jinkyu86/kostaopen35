@@ -22,23 +22,123 @@ alert("${COMPLETE}");
 
 </script>
 </head>
-<body>
-<c:choose>
-  <c:when test="${sessionScope.LOGIN_EMAIL==null}">
-	 <table align="center">
-	 <tr><td><a href="/bookchange/MemberService?method=loginForm">로그인</a></td></tr>
-	 </table>
-  </c:when>
-  <c:otherwise>	
-   	<table align="center">
- 	<tr><td>${sessionScope.LOGIN_EMAIL.email}님</td>
- 	<td><a href="/bookchange/MemberService?method=logout">로그아웃</a><td/>
-   	<td><a href="/bookchange/BoardService?method=addBoardForm">물품등록</a><br/></td>
-   	<td><a href="/bookchange/member/loginafter.jsp">메인으로</a></td></tr>
-   	</table>
-   </c:otherwise>
- </c:choose>
+<body topmargin="0" leftmargin="0" bgcolor="#FFFFFF">
+	<table width="880" align="center" cellpadding="0" cellspacing="0" border="0">
 	
+	<tr>
+	<td height="60"></td>
+	</tr>
+
+	<tr>
+	<td>
+		<table cellpadding="0" cellspacing="0" border="0">
+		<tr align="right">
+			<td width="25"></td>
+			<td><a href="main.jsp"><img src="webimg/home.gif" border="0"/></a></td>
+			<td><a href="/bookchange/BoardService?method=viewBoardList"><img src="webimg/board.GIF" border="0"/></a></td>
+		<c:choose>
+		<c:when test="${sessionScope.LOGIN_EMAIL==null}">	
+			<td><a href="/bookchange/BoardService?method=addBoardForm"><img src="webimg/join.GIF" border="0"/></a></td>
+			<td><a href="/"><img src="webimg/myinfo.GIF" border="0"/></a></td>
+		</c:when>
+		<c:otherwise>
+			<td><a href="/bookchange/BoardService?method=addBoardForm"><img src="webimg/join.GIF" border="0"/></a></td>
+			<td><a href="/bookchange/MemberService?method=viewMember"><img src="webimg/myinfo.GIF" border="0"/></a></td>
+		</c:otherwise>
+		</c:choose>
+			<td width="25"></td>
+		</tr>
+		</table>
+	</td>
+	</tr>
+	
+	<tr>
+	<td height="10"></td>
+	</tr>
+
+	<tr>
+	<td>
+	<table cellpadding="0" cellspacing="0" border="0">
+	 <tr>
+	 <td width="220" height="600" valign="top" bgcolor="#F8F8F8">
+	 <table cellpadding="0" cellspacing="0" border="0">
+	 <!--로그인-->
+	  <tr>
+	  <td>		
+	   <c:choose>
+	    <c:when test="${sessionScope.LOGIN_EMAIL==null}">
+	     <fieldset>
+	     <table align="left" cellpadding="0" cellspacing="0" border="0">
+	     <form action="/bookchange/MemberService" method="post">
+		 <input type="hidden"name="method" value="login">
+		 <tr>
+		 <td>Email</td>
+		 <td><input type="text" name="email"></td>
+		 </tr>
+		 <tr>
+		 <td>Password</td>
+		 <td><input type="password" name="pw"></td>
+		 </tr>
+		 <tr>
+		 <td colspan="5"><div align="right">
+		 <input type="submit" value="로그인">
+		 </div></td>
+		 </tr>
+		 </form>
+		 <td colspan="5"><div align="right">
+		 <a href="/bookchange/MemberService?method=addMemberForm"><button>회원가입</button></a>
+		 <a href="/bookchange/MemberService?method="><button>Email/Pw찾기</button></a>
+		 </div></td>
+	     </table>
+	     </fieldset>
+	    </c:when>
+	   <c:otherwise>
+	    <fieldset>
+	 	<table cellpadding="0" cellspacing="0" border="0">
+	    <form action="/bookchange/MemberService" method="post">
+		<input type="hidden"name="method" value="logout">
+		<tr>
+		 <td>${sessionScope.LOGIN_EMAIL.email}님 로그인..</td>
+		</tr>
+		<tr>
+		 <td colspan="5"><div align="right">
+		 <input type="submit" value="로그아웃">
+		 </div></td>
+		</tr>
+		</form>
+		<tr>
+		 <td><div align="right">
+		 <a href="/bookchange/MemberService?method=removeMemberForm"><button>회원탈퇴</button></a>
+		 </div></td>
+		</tr>
+	    </table>
+	    </fieldset>
+	   </c:otherwise>
+	  </c:choose>
+	</td>
+	</tr>
+	<tr>
+	 <table cellpadding="0" cellspacing="0" border="0">
+	   <tr>
+	   <td><a href="">
+	   <img align="right" src="webimg/block.GIF" title="신고하기" border="0" width="230"/></a></td>
+	   </tr>
+	   
+	   <tr>
+	   <td>
+	   <a href="/bookchange/ChangeService?method=acceptChangeList">나와 교환을 원하는 책 보기</a>
+	   </td>
+	   <tr>
+	   
+	   <tr>
+	   <td>
+	   <a href="/bookchange/ChangeService?method=requestChangeList">내가 교환을 원하는 책 보기</a>
+	   </td>
+	   <tr>
+	   
+	   <tr>
+	   <td>
+	   	
 	<table align="left">
 	<tr align="left"><th>분야별 찾기</th></tr>
 	<tr><td align="left"><a href="/bookchange/BoardService?method=searchBoardList&categoryNo=&column=title&keyword=">전체보기</a></td></tr>
@@ -54,8 +154,14 @@ alert("${COMPLETE}");
 	<tr><td align="left"><a href="/bookchange/BoardService?method=searchBoardList&categoryNo=9&column=title&keyword=">유아/아동</a></td></tr>
 	</table>
 	
-	 <table bordercolor="#FFA500" border="1" align="center">
-	 <tr bgcolor="#FF8200" align="center">
+	
+	   </td>
+	   </tr>
+	 </table>
+	 </tr>
+	 <td width="550" height="600" valign="top" bgcolor="#FFFFE0">
+	 	 <table bordercolor="#FFA500" border="1" align="center">
+	 <tr align="center">
 	  <th>번호</th>
 	  <th>사진</th>
 	  <th>올린사람</th>
@@ -99,5 +205,28 @@ alert("${COMPLETE}");
 	</table>
 	
 	 <p align="center">  ${PAGE_LINK_TAG} </p>
+	 </td>
+	</table>
+   </td>
+  </tr>
+ </table>
+ </td>
+ </tr>
+ 
+<c:choose>
+  <c:when test="${sessionScope.LOGIN_EMAIL==null}">
+	 <table align="center">
+	 <tr><td><a href="/bookchange/MemberService?method=loginForm">로그인</a></td></tr>
+	 </table>
+  </c:when>
+  <c:otherwise>	
+   	<table align="center">
+ 	<tr><td>${sessionScope.LOGIN_EMAIL.email}님</td>
+ 	<td><a href="/bookchange/MemberService?method=logout">로그아웃</a><td/>
+   	<td><a href="/bookchange/BoardService?method=addBoardForm">물품등록</a><br/></td>
+   	<td><a href="/bookchange/member/loginafter.jsp">메인으로</a></td></tr>
+   	</table>
+   </c:otherwise>
+ </c:choose>
 </body>
 </html>

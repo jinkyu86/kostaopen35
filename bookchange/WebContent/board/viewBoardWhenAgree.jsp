@@ -6,23 +6,128 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>물건 조회</title>
+<script src="http//code.jquery.com/jquery-1.7.js"></script>
+<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.js"></script>
 </head>
-<body>
+<body topmargin="0" leftmargin="0" bgcolor="#FFFFFF">
+	<table width="880" align="center" cellpadding="0" cellspacing="0" border="0">
+	
+	<tr>
+	<td height="60"></td>
+	</tr>
+
+	<tr>
+	<td>
+		<table cellpadding="0" cellspacing="0" border="0">
+		<tr align="right">
+			<td width="25"></td>
+			<td><a href="main.jsp"><img src="webimg/home.gif" border="0"/></a></td>
+			<td><a href="/bookchange/BoardService?method=viewBoardList"><img src="webimg/board.GIF" border="0"/></a></td>
+		<c:choose>
+		<c:when test="${sessionScope.LOGIN_EMAIL==null}">	
+			<td><a href="/bookchange/BoardService?method=addBoardForm"><img src="webimg/join.GIF" border="0"/></a></td>
+			<td><a href="/"><img src="webimg/myinfo.GIF" border="0"/></a></td>
+		</c:when>
+		<c:otherwise>
+			<td><a href="/bookchange/BoardService?method=addBoardForm"><img src="webimg/join.GIF" border="0"/></a></td>
+			<td><a href="/bookchange/MemberService?method=viewMember"><img src="webimg/myinfo.GIF" border="0"/></a></td>
+		</c:otherwise>
+		</c:choose>
+			<td width="25"></td>
+		</tr>
+		</table>
+	</td>
+	</tr>
+	
+	<tr>
+	<td height="10"></td>
+	</tr>
+
+	<tr>
+	<td>
+	<table cellpadding="0" cellspacing="0" border="0">
+	 <tr>
+	 <td width="220" height="600" valign="top" bgcolor="#F8F8F8">
+	 <table cellpadding="0" cellspacing="0" border="0">
+	 <!--로그인-->
+	  <tr>
+	  <td>		
+	   <c:choose>
+	    <c:when test="${sessionScope.LOGIN_EMAIL==null}">
+	     <fieldset>
+	     <table align="left" cellpadding="0" cellspacing="0" border="0">
+	     <form action="/bookchange/MemberService" method="post">
+		 <input type="hidden"name="method" value="login">
+		 <tr>
+		 <td>Email</td>
+		 <td><input type="text" name="email"></td>
+		 </tr>
+		 <tr>
+		 <td>Password</td>
+		 <td><input type="password" name="pw"></td>
+		 </tr>
+		 <tr>
+		 <td colspan="5"><div align="right">
+		 <input type="submit" value="로그인">
+		 </div></td>
+		 </tr>
+		 </form>
+		 <td colspan="5"><div align="right">
+		 <a href="/bookchange/MemberService?method=addMemberForm"><button>회원가입</button></a>
+		 <a href="/bookchange/MemberService?method="><button>Email/Pw찾기</button></a>
+		 </div></td>
+	     </table>
+	     </fieldset>
+	    </c:when>
+	   <c:otherwise>
+	    <fieldset>
+	 	<table cellpadding="0" cellspacing="0" border="0">
+	    <form action="/bookchange/MemberService" method="post">
+		<input type="hidden"name="method" value="logout">
+		<tr>
+		 <td>${sessionScope.LOGIN_EMAIL.email}님 로그인..</td>
+		</tr>
+		<tr>
+		 <td colspan="5"><div align="right">
+		 <input type="submit" value="로그아웃">
+		 </div></td>
+		</tr>
+		</form>
+		<tr>
+		 <td><div align="right">
+		 <a href="/bookchange/MemberService?method=removeMemberForm"><button>회원탈퇴</button></a>
+		 </div></td>
+		</tr>
+	    </table>
+	    </fieldset>
+	   </c:otherwise>
+	  </c:choose>
+	</td>
+	</tr>
+	<tr>
+	 <table cellpadding="0" cellspacing="0" border="0">
+	   <tr>
+	   <td><a href="">
+	   <img align="right" src="webimg/block.GIF" title="신고하기" border="0" width="230"/></a></td>
+	   </tr>
+	 </table>
+	 </tr>
+	 <td width="550" height="600" valign="top" bgcolor="#FAFAD2">
+	 	<table width="550" height="600" cellpadding="0" cellspacing="0" border="1">
+	 	<td>
+
 
 <c:choose>
   <c:when test="${sessionScope.LOGIN_EMAIL==null}">
-	 <p align="right">
-   		<a href="/bookchange/MemberService?method=loginForm">
-   		로그인
-   		</a>
-	 </p>
+	 <table align="center">
+   	 <tr><td><a href="/bookchange/MemberService?method=loginForm">로그인</a></td>
   </c:when> 
   <c:when test="${sessionScope.LOGIN_EMAIL!=null}">
-  <p align="right">
- 	${sessionScope.LOGIN_EMAIL.email}님<br/>
-   	<a href="/bookchange/MemberService?method=logout">
+  <table align="center">
+  <td>	${sessionScope.LOGIN_EMAIL.email}님<br/></td>
+  <td> 	<a href="/bookchange/MemberService?method=logout">
    	로그아웃
-   	</a><br/>
+   	</a></td>
    	<c:choose>
    	<c:when test="${sessionScope.LOGIN_EMAIL.email==BOARD.member.email}">
    	 <form action="/bookchange/BoardService" method="post">
@@ -50,20 +155,14 @@
 	  <input type="hidden" name="method" value="matchChange">
 	   <input type="hidden" name="demandBoardNo" value="${BOARD.boardNo}">
 	   <input type="hidden" name="agreeBoardNo" value="${AGREE_BOARD_NO}">
-	  <input type="submit" value="교환신청수락">
+	<td>  <input type="submit" value="교환신청수락"></td></tr></table>
 	  </form>
 	</c:otherwise>	
 	</c:choose>	 	
    	</c:when>
   <%--  </c:otherwise> --%>
- </c:choose>
- 
- <p align="right">
-  <a href="/bookchange/BoardService?method=viewBoardList">전체 리스트 보기</a>
- </p>
- 
- 
- <h1 align="center">물건명세</h1>
+ </c:choose> 
+
  	<table align="center" border="3">
  		<tr align="center">
  			<td><b>게시물번호</b><br>${BOARD.boardNo}</td> 			
@@ -81,8 +180,8 @@
  		
  		<c:forEach var="qa" items="${QA_LIST}">
  		<tr> 		
- 			<td>작성자</td>
- 			<td colspan="2">${qa.member.email}</td> 			
+ 			<td>작성자<br>
+ 			<small>${qa.member.email}</small></td> 			
  			<c:choose>
  			<c:when test="${sessionScope.LOGIN_EMAIL.email eq qa.member.email}">
  			 <td colspan="2">${qa.qaContent}</td>
@@ -116,5 +215,16 @@
  		<jsp:include page="addQa.jsp"/>
  	 </c:if>
  
+
+		</td> 	
+	 	</table>
+	 </td>
+	</table>
+   </td>
+  </tr>
+ </table>
+ </td>
+ </tr>
+
 </body>
 </html>

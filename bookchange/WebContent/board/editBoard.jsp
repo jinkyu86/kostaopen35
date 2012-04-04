@@ -71,18 +71,124 @@
 	});
 </script>
 </head>
-<body>
-<h3 align="center">게시물 수정</h3>
+<body topmargin="0" leftmargin="0" bgcolor="#FFFFFF">
+	<table width="880" align="center" cellpadding="0" cellspacing="0" border="0">
+	
+	<tr>
+	<td height="60"></td>
+	</tr>
+
+	<tr>
+	<td>
+		<table cellpadding="0" cellspacing="0" border="0">
+		<tr align="right">
+			<td width="25"></td>
+			<td><a href="main.jsp"><img src="webimg/home.gif" border="0"/></a></td>
+			<td><a href="/bookchange/BoardService?method=viewBoardList"><img src="webimg/board.GIF" border="0"/></a></td>
+		<c:choose>
+		<c:when test="${sessionScope.LOGIN_EMAIL==null}">	
+			<td><a href="/bookchange/BoardService?method=addBoardForm"><img src="webimg/join.GIF" border="0"/></a></td>
+			<td><a href="/"><img src="webimg/myinfo.GIF" border="0"/></a></td>
+		</c:when>
+		<c:otherwise>
+			<td><a href="/bookchange/BoardService?method=addBoardForm"><img src="webimg/join.GIF" border="0"/></a></td>
+			<td><a href="/bookchange/MemberService?method=viewMember"><img src="webimg/myinfo.GIF" border="0"/></a></td>
+		</c:otherwise>
+		</c:choose>
+			<td width="25"></td>
+		</tr>
+		</table>
+	</td>
+	</tr>
+	
+	<tr>
+	<td height="10"></td>
+	</tr>
+
+	<tr>
+	<td>
+	<table cellpadding="0" cellspacing="0" border="0">
+	 <tr>
+	 <td width="220" height="600" valign="top" bgcolor="#F8F8F8">
+	 <table cellpadding="0" cellspacing="0" border="0">
+	 <!--로그인-->
+	  <tr>
+	  <td>		
+	   <c:choose>
+	    <c:when test="${sessionScope.LOGIN_EMAIL==null}">
+	     <fieldset>
+	     <table align="left" cellpadding="0" cellspacing="0" border="0">
+	     <form action="/bookchange/MemberService" method="post">
+		 <input type="hidden"name="method" value="login">
+		 <tr>
+		 <td>Email</td>
+		 <td><input type="text" name="email"></td>
+		 </tr>
+		 <tr>
+		 <td>Password</td>
+		 <td><input type="password" name="pw"></td>
+		 </tr>
+		 <tr>
+		 <td colspan="5"><div align="right">
+		 <input type="submit" value="로그인">
+		 </div></td>
+		 </tr>
+		 </form>
+		 <td colspan="5"><div align="right">
+		 <a href="/bookchange/MemberService?method=addMemberForm"><button>회원가입</button></a>
+		 <a href="/bookchange/MemberService?method="><button>Email/Pw찾기</button></a>
+		 </div></td>
+	     </table>
+	     </fieldset>
+	    </c:when>
+	   <c:otherwise>
+	    <fieldset>
+	 	<table cellpadding="0" cellspacing="0" border="0">
+	    <form action="/bookchange/MemberService" method="post">
+		<input type="hidden"name="method" value="logout">
+		<tr>
+		 <td>${sessionScope.LOGIN_EMAIL.email}님 로그인..</td>
+		</tr>
+		<tr>
+		 <td colspan="5"><div align="right">
+		 <input type="submit" value="로그아웃">
+		 </div></td>
+		</tr>
+		</form>
+		<tr>
+		 <td><div align="right">
+		 <a href="/bookchange/MemberService?method=removeMemberForm"><button>회원탈퇴</button></a>
+		 </div></td>
+		</tr>
+	    </table>
+	    </fieldset>
+	   </c:otherwise>
+	  </c:choose>
+	</td>
+	</tr>
+	<tr>
+	 <table cellpadding="0" cellspacing="0" border="0">
+	   <tr>
+	   <td><a href="">
+	   <img align="right" src="webimg/block.GIF" title="신고하기" border="0" width="230"/></a></td>
+	   </tr>
+	 </table>
+	 </tr>
+	 <td width="550" height="600" valign="top" bgcolor="#FAFAD2">
+	 	<table width="550" height="600" cellpadding="0" cellspacing="0" border="1">
+	 	<td valign="top">
+	 
+	 <h3 align="center">게시물 수정</h3>
 	<form id="edit_board" action="/bookchange/BoardService" method="post">
 		<input type="hidden" name="method" value="editBoard"/>
 		<input id="photo" type="hidden" name="boardPhoto" value=""/>
 			<input type="hidden" name="conditionResult" value="${BOARD.condition.conditionResult}"/>
 		<table border="3" align="center">
-	    <tr align="center">
+	    <tr>
 		<td>작성자<input type="text" name="email" value="${sessionScope.LOGIN_EMAIL.email}" readonly="readonly"/><td/>
 		<td>게시물번호<input type="text" name="boardNo" value="${BOARD.boardNo}" readonly="readonly"/><td/>
 		</tr>
-		<tr align="center">
+		<tr>
 		<td>카테고리<select name="categoryNo">
 		 <c:forEach var="category" items="${CATEGORY_LIST}">
 		     <option value="${category.categoryNo}">${category.categoryName}</option>
@@ -94,13 +200,13 @@
 		 </c:forEach>
 		</select><td/>
 		</tr>
-		<tr align="center">		
+		<tr>		
 		<td>제목<input type="text" name="boardTitle" value="${BOARD.boardTitle}"/><td/>
 		<td>원하는 물건<input type="text" name="boardWant" value="${BOARD.boardWant}"/><td/>
 		</tr>
 		<tr>
 		<td colspan="3">
-		내용<textarea name="boardContent" cols="60" rows="10">${BOARD.boardContent}</textarea><td/>
+		내용<br><textarea name="boardContent" cols="60" rows="10">${BOARD.boardContent}</textarea><td/>
 		</tr>
 		</table>
 </form>
@@ -113,5 +219,16 @@
 	<td><input type="submit" value="취소"/></td>
 		</form></tr>
 </table>
+	 	</td> 	
+	 	</table>
+	 </td>
+	</table>
+   </td>
+  </tr>
+ </table>
+ </td>
+ </tr>
+ 
+
 </body>
 </html>

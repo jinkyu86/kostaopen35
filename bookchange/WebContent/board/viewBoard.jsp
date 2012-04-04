@@ -8,8 +8,135 @@
 <title>물건 조회</title>
 <script src="http://code.jquery.com/jquery-1.7.js"></script>
 </head>
-<body>
+<body topmargin="0" leftmargin="0" bgcolor="#FFFFFF">
+	<table width="880" align="center" cellpadding="0" cellspacing="0" border="0">
+	
+	<tr>
+	<td height="60"></td>
+	</tr>
 
+	<tr>
+	<td>
+		<table cellpadding="0" cellspacing="0" border="0">
+		<tr align="right">
+			<td width="25"></td>
+			<td><a href="main.jsp"><img src="webimg/home.gif" border="0"/></a></td>
+			<td><a href="/bookchange/BoardService?method=viewBoardList"><img src="webimg/board.GIF" border="0"/></a></td>
+		<c:choose>
+		<c:when test="${sessionScope.LOGIN_EMAIL==null}">	
+			<td><a href="/bookchange/BoardService?method=addBoardForm"><img src="webimg/join.GIF" border="0"/></a></td>
+			<td><a href="/"><img src="webimg/myinfo.GIF" border="0"/></a></td>
+		</c:when>
+		<c:otherwise>
+			<td><a href="/bookchange/BoardService?method=addBoardForm"><img src="webimg/join.GIF" border="0"/></a></td>
+			<td><a href="/bookchange/MemberService?method=viewMember"><img src="webimg/myinfo.GIF" border="0"/></a></td>
+		</c:otherwise>
+		</c:choose>
+			<td width="25"></td>
+		</tr>
+		</table>
+	</td>
+	</tr>
+	
+	<tr>
+	<td height="10"></td>
+	</tr>
+
+	<tr>
+	<td>
+	<table cellpadding="0" cellspacing="0" border="0">
+	 <tr>
+	 <td width="220" height="600" valign="top" bgcolor="#F8F8F8">
+	 <table cellpadding="0" cellspacing="0" border="0">
+	 <!--로그인-->
+	  <tr>
+	  <td>		
+	   <c:choose>
+	    <c:when test="${sessionScope.LOGIN_EMAIL==null}">
+	     <fieldset>
+	     <table align="left" cellpadding="0" cellspacing="0" border="0">
+	     <form action="/bookchange/MemberService" method="post">
+		 <input type="hidden"name="method" value="login">
+		 <tr>
+		 <td>Email</td>
+		 <td><input type="text" name="email"></td>
+		 </tr>
+		 <tr>
+		 <td>Password</td>
+		 <td><input type="password" name="pw"></td>
+		 </tr>
+		 <tr>
+		 <td colspan="5"><div align="right">
+		 <input type="submit" value="로그인">
+		 </div></td>
+		 </tr>
+		 </form>
+		 <td colspan="5"><div align="right">
+		 <a href="/bookchange/MemberService?method=addMemberForm"><button>회원가입</button></a>
+		 <a href="/bookchange/MemberService?method="><button>Email/Pw찾기</button></a>
+		 </div></td>
+	     </table>
+	     </fieldset>
+	    </c:when>
+	   <c:otherwise>
+	    <fieldset>
+	 	<table cellpadding="0" cellspacing="0" border="0">
+	    <form action="/bookchange/MemberService" method="post">
+		<input type="hidden"name="method" value="logout">
+		<tr>
+		 <td>${sessionScope.LOGIN_EMAIL.email}님 로그인..</td>
+		</tr>
+		<tr>
+		 <td colspan="5"><div align="right">
+		 <input type="submit" value="로그아웃">
+		 </div></td>
+		</tr>
+		</form>
+		<tr>
+		 <td><div align="right">
+		 <a href="/bookchange/MemberService?method=removeMemberForm"><button>회원탈퇴</button></a>
+		 </div></td>
+		</tr>
+	    </table>
+	    </fieldset>
+	   </c:otherwise>
+	  </c:choose>
+	</td>
+	</tr>
+	<tr>
+	 <table cellpadding="0" cellspacing="0" border="0">
+	   <tr>
+	   <td><a href="">
+	   <img align="right" src="webimg/block.GIF" title="신고하기" border="0" width="230"/></a></td>
+	   </tr>
+	   <tr>
+	   <td>
+	   
+ 
+	 <table align="left">
+		<tr align="left"><th>분야별 찾기</th></tr>
+		<tr><td align="left"><a href="/bookchange/BoardService?method=searchBoardList&categoryNo=&column=title&keyword=">전체보기</a></td></tr>
+		<tr><td align="left"><a href="/bookchange/BoardService?method=searchBoardList&categoryNo=0&column=title&keyword=">만화/잡지</a></td></tr>
+		<tr><td align="left"><a href="/bookchange/BoardService?method=searchBoardList&categoryNo=1&column=title&keyword=">학습/참고서</a></td></tr>
+		<tr><td align="left"><a href="/bookchange/BoardService?method=searchBoardList&categoryNo=2&column=title&keyword=">취업/수험서</a></td></tr>
+		<tr><td align="left"><a href="/bookchange/BoardService?method=searchBoardList&categoryNo=3&column=title&keyword=">컴퓨터/IT</a></td></tr>
+		<tr><td align="left"><a href="/bookchange/BoardService?method=searchBoardList&categoryNo=4&column=title&keyword=">소설/시/에세이</a></td></tr>
+		<tr><td align="left"><a href="/bookchange/BoardService?method=searchBoardList&categoryNo=5&column=title&keyword=">가정/생활/요리</a></td></tr>
+		<tr><td align="left"><a href="/bookchange/BoardService?method=searchBoardList&categoryNo=6&column=title&keyword=">여행/취미/레저</a></td></tr>
+		<tr><td align="left"><a href="/bookchange/BoardService?method=searchBoardList&categoryNo=7&column=title&keyword=">종교/해외도서</a></td></tr>
+		<tr><td align="left"><a href="/bookchange/BoardService?method=searchBoardList&categoryNo=8&column=title&keyword=">기타도서</a></td></tr>
+		<tr><td align="left"><a href="/bookchange/BoardService?method=searchBoardList&categoryNo=9&column=title&keyword=">유아/아동</a></td></tr>
+	</table>
+	   
+	   </td>	   
+	   </tr>
+	 </table>
+	 </tr>
+	 <td width="550" height="600" valign="top" bgcolor="#FAFAD2">
+	 	<table width="550" height="600" cellpadding="0" cellspacing="0" border="1">
+	 	<td>
+	 	
+	 	
 <c:choose>
   <c:when test="${sessionScope.LOGIN_EMAIL==null}">
 	 <table align="center">
@@ -48,40 +175,28 @@
    	</c:when>
  </c:choose>
  
-	 <table align="left">
-		<tr align="left"><th>분야별 찾기</th></tr>
-		<tr><td align="left"><a href="/bookchange/BoardService?method=searchBoardList&categoryNo=&column=title&keyword=">전체보기</a></td></tr>
-		<tr><td align="left"><a href="/bookchange/BoardService?method=searchBoardList&categoryNo=0&column=title&keyword=">만화/잡지</a></td></tr>
-		<tr><td align="left"><a href="/bookchange/BoardService?method=searchBoardList&categoryNo=1&column=title&keyword=">학습/참고서</a></td></tr>
-		<tr><td align="left"><a href="/bookchange/BoardService?method=searchBoardList&categoryNo=2&column=title&keyword=">취업/수험서</a></td></tr>
-		<tr><td align="left"><a href="/bookchange/BoardService?method=searchBoardList&categoryNo=3&column=title&keyword=">컴퓨터/IT</a></td></tr>
-		<tr><td align="left"><a href="/bookchange/BoardService?method=searchBoardList&categoryNo=4&column=title&keyword=">소설/시/에세이</a></td></tr>
-		<tr><td align="left"><a href="/bookchange/BoardService?method=searchBoardList&categoryNo=5&column=title&keyword=">가정/생활/요리</a></td></tr>
-		<tr><td align="left"><a href="/bookchange/BoardService?method=searchBoardList&categoryNo=6&column=title&keyword=">여행/취미/레저</a></td></tr>
-		<tr><td align="left"><a href="/bookchange/BoardService?method=searchBoardList&categoryNo=7&column=title&keyword=">종교/해외도서</a></td></tr>
-		<tr><td align="left"><a href="/bookchange/BoardService?method=searchBoardList&categoryNo=8&column=title&keyword=">기타도서</a></td></tr>
-		<tr><td align="left"><a href="/bookchange/BoardService?method=searchBoardList&categoryNo=9&column=title&keyword=">유아/아동</a></td></tr>
-	</table>
-
- 	<table align="center" border="3">
+	 	<table align="center" border="3">
  		<tr align="center">
- 			<td><b>게시물번호</b><br>${BOARD.boardNo}</td> 			
- 			<td><b>올린사람</b><br>${BOARD.member.email}</td>
- 			<td><b>카테고리</b><br>${BOARD.category.categoryName}</td>
- 			<td><b>제목</b><br>${BOARD.boardTitle}</td>
- 			<td><b>원하는물건</b><br>${BOARD.boardWant}</td>	
- 	 		<td><b>거래방법</b><br>${BOARD.deal.dealWay}</td>
-  			<td><b>교환상태</b><br>${BOARD.condition.conditionIng}</td> 	 		
+ 			<td><b><small>게시물번호</small></b><br>${BOARD.boardNo}</td> 			
+ 			<td><b>올린사람</b><br>${BOARD.member.email}</td> 			
+ 			<td colspan="2"><b>카테고리</b><br>${BOARD.category.categoryName}</td>	
+ 	 		<td colspan="3"><b>거래방법</b><br>${BOARD.deal.dealWay}</td> 	 		
  		</tr>
  		<tr>
- 			<td align="center" colspan="3"><img src="/bookchange/bookimg/${BOARD.boardPhoto}" height="300" width="300"></td> 			
+ 			<td colspan="2"><b>제목</b><br>${BOARD.boardTitle}</td>
+ 			<td align="center" colspan="2"><b>원하는물건</b><br>${BOARD.boardWant}</td>
+ 			
+ 			<td align="center" colspan="4"><b>교환상태</b><br>${BOARD.condition.conditionIng}</td>
+ 		</tr>
+ 		<tr>
+ 			<td align="center" colspan="2"><img src="/bookchange/bookimg/${BOARD.boardPhoto}" height="300" width="300"></td> 			
  	 		<td colspan="4">${BOARD.boardContent}</td> 	 		
  		</tr>
  		
  		<c:forEach var="qa" items="${QA_LIST}">
  		<tr> 		
- 			<td>작성자</td>
- 			<td colspan="2">${qa.member.email}</td> 			
+ 			<td>작성자<br>
+ 			<small>${qa.member.email}</small></td> 			
  			<c:choose>
  			<c:when test="${sessionScope.LOGIN_EMAIL.email eq qa.member.email}">
  			 <td id="qaContent" colspan="2">${qa.qaContent}</td>
@@ -123,5 +238,14 @@
  	 </c:otherwise>
  	 </c:choose>	
  	 </center>
+	 	</td> 	
+	 	</table>
+	 </td>
+	</table>
+   </td>
+  </tr>
+ </table>
+ </td>
+ </tr> 	
 </body>
 </html>

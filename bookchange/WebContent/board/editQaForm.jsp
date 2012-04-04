@@ -32,7 +32,7 @@
 		  <input type="hidden" name="qaNo" value="${EDITQA.qaNo}">
 		  <input type="hidden" name="email" value="${EDITQA.member.email}">
 		  <input type="hidden" name="boardNo" value="${EDITQA.board.boardNo}">
-		  <textarea name="qaContent" cols="60" rows="3">${EDITQA.qaContent}</textarea></td> 
+		  <textarea name="qaContent" cols="30" rows="3">${EDITQA.qaContent}</textarea></td> 
 	    <td><input type="submit" value="댓글수정"/></form></td>
 	    <td>
 		 <form action="/bookchange/BoardService" method="post">
