@@ -1,25 +1,29 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
- <%@ taglib  prefix="c" 
-             uri="http://java.sun.com/jsp/jstl/core" %>
+ <%@ taglib  prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>게시물 리스트</title>
 </head>
-<table align="right">
-  <form action="/auction/BoardService" method="post">
-   <input type="hidden" name="method" value="searchBoardList">
-    <Select name="column">
-      <option value="title">글제목</option>
-      <option value="userid">아이디</option>
-    </Select>
-    <input type="text" name="keyword">
-    </br>
-    <input type="submit" value="검색"/>
-  </form>
-</table>
+<c:choose>
+	<c:when test="${sessionScope.MEMBER==null}">
+		<p align="right">
+			<a href="/auction/MemberService?method=loginForm">
+			로그인
+			</a>
+		</p>
+	</c:when>
+	<c:otherwise>
+		<p align="right">
+			${sessionScope.MEMBER.name }님<br/>
+			<a href="/auction/MemberService?method=logout">
+			로그아웃
+			</a><br/>
+		</p>
+	</c:otherwise>
+</c:choose>
 <body>
 <table border="1" align="center">
 	<tr>
@@ -39,9 +43,22 @@
 <p align="center">
  ${PAGE_LINK_TAG}
  </p>
+ <table align="center">
+  <form action="/auction/BoardService" method="post">
+   <input type="hidden" name="method" value="searchBoardList">
+    <Select name="column" align="center">
+      <option value="title">글제목</option>
+      <option value="userid">아이디</option>
+    </Select>
+    <input type="text" name="keyword" />
+    <input type="submit" value="검색"/>
+  </form>
+</table>
+ <c:if test="${sessionScope.MEMBER.userid!=null}">
 <p align="center">
 	<a href="/auction/BoardService?method=addBoardForm">게시물 작성</a>
 </p>
+</c:if>
 <p align="center">
 		 <p align="center">
 		 <a href="/auction/AuctionService?method=viewAuctionList">경매목록 보기</a>

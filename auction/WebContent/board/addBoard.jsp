@@ -9,22 +9,31 @@
 <body>
 <hr noshade>
 <form name="login_form" action="/auction/BoardService" method="post">
-작성자 ID: 
-<c:if test="${sessionScope.MEMBER.userid=='admin'}">
-</c:if>
-<input type="text" size=10 name="userid">
-<br>
-제목:<input type="text" size=20 name="title">
-<br>
-<textarea name="content" cols=30 rows=3 wrap="hard">
-게시물내용
-</textarea>
+<table border="1" align="center">
+<input type="hidden" name="method" value="addBoard" />
+	<tr>
+		<td>작성자 ID: </td>
+		<td><input type="text" size=30 name="userid" value="${sessionScope.MEMBER.userid }" readOnly="readonly"></td>
+	</tr>
+	<tr>
+		<td>제목:</td>
+		<td><input type="text" size=50 name="title"></td>
+	</tr>
+	<tr>
+		<td>내용:</td>
+		<td><textarea name="content" cols=50 rows=10 wrap="hard"></textarea></td>
+	</tr>
 <hr noshade>
-<!--화면에 출력되지 않고 서버로 전송만 되는 객체-->
-<input type="hidden" name="method" 
-   value="addBoard" />
-   <input type="submit" name="c" value="게시물추가">
+</table>
+<center>
+	<input type="submit" value="게시물추가">
+	<input type="reset" value="취소">
+</center>
 </form>
-
+<p align="center">
+	<a href="/auction/BoardService?method=viewBoardList">
+	    게시물 목록 보기
+	</a>
+</p>
 </body>
 </html>

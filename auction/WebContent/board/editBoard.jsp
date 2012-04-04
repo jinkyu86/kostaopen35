@@ -20,6 +20,10 @@
 	   			<td><input type="text" name="bNum" value="${BOARD.bNum }" readOnly="readOnly"/></td>
 	   		</tr>
 	   		<tr>
+	   			<td>작성자 ID</td>
+	   			<td><input type="text" name="userid" value="${BOARD.member.userid }" readOnly="readOnly"/></td>
+	   		</tr>
+	   		<tr>
 	   			<td>게시물 제목</td>
 	   			<td><input type="text" name="title" value="${BOARD.title }"/></td>
 	   		</tr>
@@ -33,5 +37,10 @@
 	           	</tr>
 	           	</table>
 	   </form>
+<p align="center">
+	<a href="/auction/BoardService?method=viewBoard&bNum=${BOARD.bNum }">
+	    게시물 보기
+	</a>
+</p>
 </body>
 </html>
