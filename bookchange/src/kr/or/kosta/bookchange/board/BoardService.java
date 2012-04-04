@@ -81,7 +81,7 @@ public class BoardService extends HttpServlet {
 				"method=viewBoardList");
 		request.setAttribute("PAGE_LINK_TAG",pageLinkTag);
 		
-		RequestDispatcher rd=request.getRequestDispatcher("/board/boardListAtMain.jsp");
+		RequestDispatcher rd=request.getRequestDispatcher("/main.jsp");
 		rd.forward(request, response);
 	}
 
@@ -277,6 +277,10 @@ public class BoardService extends HttpServlet {
 		ArrayList<Board> boardList=BoardDAO.selectBoardList(length, page);
 		request.setCharacterEncoding("utf-8");
 		request.setAttribute("BOARD_LIST",boardList);
+		
+		ArrayList<Category> categoryList=CategoryDAO.selectCategory();//카테고리 정보 조회
+		
+		request.setAttribute("CATEGORY_LIST",categoryList);
 				
 		int boardCount=BoardDAO.selectBoardCount();
 		
@@ -299,12 +303,7 @@ public class BoardService extends HttpServlet {
 		int length=10;
 		
 		ArrayList<Board> boardList=null;
-		int boardCount=0;
-		
-		/*if(request.getParameter("keyword")==null||request.getParameter("keyword").equals("")){
-			boardList=BoardDAO.selectBoardList(length, page);
-			boardCount=BoardDAO.selectBoardCount();		
-		}*/
+		int boardCount=0;	
 		
 		if(!request.getParameter("categoryNo").equals("")){
 			if(request.getParameter("column").equals("title")){
@@ -346,6 +345,12 @@ public class BoardService extends HttpServlet {
 		
 		request.setCharacterEncoding("utf-8");
 		request.setAttribute("BOARD_LIST", boardList);
+		//카테고리 넘버 보내줘서 검색할때 selected되게 사용
+		String categoryNo=request.getParameter("categoryNo");
+		request.setAttribute("CATEGORY",categoryNo);
+		
+		ArrayList<Category> categoryList=CategoryDAO.selectCategory();//카테고리 정보 조회
+		request.setAttribute("CATEGORY_LIST",categoryList);
 		
 		String pageLinkTag=PageUtil.generate(page, boardCount, length,
 				"/bookchange/BoardService?method=searchBoardList&categoryNo="+request.getParameter("categoryNo")+
