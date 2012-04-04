@@ -66,6 +66,13 @@
 			}
 		}
  	});
+		$("#addAuction").click(function (event){
+				var result=confirm("물품 등록을 하시겠습니까?");
+			
+				if(result==false){
+					event.preventDefault();
+				}
+			});
  });
 </script>
 </head>
@@ -125,11 +132,11 @@
 		
 		
 		<tr>
-			<td><input type="submit" value="경매추가"/></td>
+			<td><input type="submit" value="경매추가" id="addAuction"/></td>
 			<td><input type="reset" value="취소"/></td>
 		</tr>
 	</table>
-
+  
 </form>
 </body>
 </html>
