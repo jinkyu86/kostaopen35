@@ -38,5 +38,19 @@
 		<a href="/betting/MemberService?method=addMemberForm&ID=${member.id}">
 			가입하기 </a>
 	</p>
+	<c:choose>
+		<c:when test="${sessionScope.LOGIN_MEMBER==null}">
+		<p align="right">
+			<a href="/betting/MemberService?method=loginForm"> 로그인 </a>
+		</p>
+		</c:when>
+		<c:otherwise>
+		<p align="right">
+			${sessionScope.LOGIN_MEMBER.name} 님 안녕하세요<br /> <a
+				href="/betting/MemberService?method=logout"> 로그아웃 </a>
+		</p>
+		</c:otherwise>
+	
+	</c:choose>
 </body>
 </html>
