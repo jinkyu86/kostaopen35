@@ -8,7 +8,6 @@
 <title>회원 조회</title>
 
 <script src="http://code.jquery.com/jquery-1.7.js"></script>
-<script src="/bookchange/uploadify/jquery.uploadify.v2.1.4.js"></script>
 <script>
 	$(document).ready(function(){
 		
