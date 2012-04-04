@@ -153,7 +153,8 @@ public class BoardDAO {
 		try {
 			con=ConnectionUtil.getConnection();
 			sql=" SELECT b_num, title, content, userid " +
-					"FROM board ";
+					"FROM board " +
+					"ORDER BY b_num DESC";
 			
 			psmt=con.prepareStatement(sql, 
 					ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
