@@ -6,6 +6,22 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>회원가입</title>
+<script src="http://code.jquery.com/jquery-1.7.js"></script>
+<script>
+	$(document).ready(function(){
+		$("#userid").change(function(){
+			var userid=$("#userid").val();
+			
+			$.ajax('/auction/MemberService',{
+				data:{"method":"checkuserID","userid":userid
+					},
+					success : function(data){
+						$('#useridcheck').html(data);
+					}
+			});
+		});
+	});
+</script>
 </head>
 <body>
 	<h1 align="center">회원가입</h1>
@@ -16,7 +32,8 @@
 		<table>
 			<tr>
 				<td>아이디</td>
-				<td><input type="text"  name="userid"></td>
+				<td><input type="text"  name="userid" id="userid">
+				<span id ="useridcheck"></span></td>
 			</tr>
 			<tr>
 				<td>비밀번호</td>
