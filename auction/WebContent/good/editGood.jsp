@@ -67,5 +67,10 @@ $(document).ready(function(){
 			<input type="reset" value="입력취소"/>
 		</center>
 	</form>
+<p align="center">
+	<a href="/auction/GoodService?method=viewGoodList">
+	    물품 목록 보기
+	</a>
+</p>
 </body>
 </html>
