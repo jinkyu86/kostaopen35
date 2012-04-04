@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import kr.or.kosta.auction.bid.Bid;
+import kr.or.kosta.auction.bid.BidDAO;
 import kr.or.kosta.auction.good.Good;
 import kr.or.kosta.auction.good.GoodDAO;
 
@@ -181,13 +183,16 @@ public class AuctionService extends HttpServlet {
 	 */
 	private void viewAuction(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException,IOException{
-		//1.a_num 파라메터 리턴받아서 변수에 저장
+				//1.a_num 파라메터 리턴받아서 변수에 저장
 				String aNum=request.getParameter("aNum");
 				//2.DB에서 경매번호가 일치하는 경매 조회
+				int size=5;
 				Auction auction = AuctionDAO.selectAuction(aNum);
+				ArrayList<Bid> bidList=BidDAO.selectBidListByAuctionNum(aNum, size);
 				//3.request에 2에서 조회한 경매의 정보 저장
 				//   이름-STUDENT
 				request.setAttribute("AUCTION",auction);
+				request.setAttribute("BID_LIST", bidList);
 				//4./auction/viewAuction.jsp로 이동 객체 생성
 				RequestDispatcher rd=
 						request.getRequestDispatcher("/auction/viewAuction.jsp");
