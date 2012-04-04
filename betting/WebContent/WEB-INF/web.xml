@@ -29,4 +29,14 @@
     <servlet-name>BettingService</servlet-name>
     <url-pattern>/BettingService</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>MemberBetDataService</display-name>
+    <servlet-name>MemberBetDataService</servlet-name>
+    <servlet-class>kr.or.kosta.betting.memberbetdata.MemberBetDataService</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MemberBetDataService</servlet-name>
+    <url-pattern>/MemberBetDataService</url-pattern>
+  </servlet-mapping>
 </web-app>
