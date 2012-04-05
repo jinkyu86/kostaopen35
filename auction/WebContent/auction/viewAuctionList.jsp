@@ -10,7 +10,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>경매리스트</title>
 </head>
-<body>
+<body background="/auction/gphoto/s20.jpg">
 <script type="text/javascript">
 	<c:if test="${ERROR!=null}">
 		alert("${ERROR}");
@@ -21,12 +21,9 @@
 	<c:when test="${sessionScope.MEMBER==null}">
 		<p align="right">
 			<a href="/auction/MemberService?method=addMemberForm">
-			회원가입
-			</a>
-		</p>
-		<p align="right">
+			<img src="/auction/menu/join.jpg"/>
 			<a href="/auction/MemberService?method=loginForm">
-			로그인
+			<img src="/auction/menu/login.jpg"/>
 			</a>
 		</p>
 	</c:when>
@@ -34,16 +31,33 @@
 		<p align="right">
 			${sessionScope.MEMBER.name }님 안녕<br/>
 			<a href="/auction/MemberService?method=logout">
-			로그아웃
-			</a><br/>
+			<img src="/auction/menu/logout.jpg"/>
+			</a></br>
 			<a href="/auction/MemberService?method=viewMember">
-			회원정보보기
+			<img src="/auction/menu/memberInfo.jpg"/>
 			</a>
 		</p>
 	</c:otherwise>
 </c:choose>
-	<h3 align="center">입찰중인 물품리스트</h3>
-	<table  align="center"  border="1">
+<c:if test="${sessionScope.MEMBER.userid=='admin'}">
+	<p align="right">
+		<a href="/auction/GoodService?method=viewGoodList">
+		<img src="/auction/menu/viewGoodList.jpg"/>
+		</a></br>
+		<a href="/auction/MemberService?method=viewMemberList">
+		<img src="/auction/menu/viewMemberList.jpg"/>
+		</a><br/>
+	</p>
+</c:if>
+	<p align="right">
+		<a href="/auction/BoardService?method=viewBoardList">
+		<img src="/auction/menu/viewBoardList.jpg"/>
+		</a>
+	</p>	
+	<table  align="center"  border="1" bgcolor="pink">
+	<tr>
+		<th colspan="5"><h3>입찰중인 물품리스트</h3></th>
+	</tr>
 	<th>사진</th><th>상품명</th><th>가격</th><th>마감시간</th><th>상세보기</th>
 	<c:forEach var="auction" items="${AUCTION_LIST}">
 	<form action="/auction/AuctionService" method="post">
@@ -64,8 +78,10 @@
 	</table>
 	<br/><br/>
 	
-	<h3 align="center">낙찰된 물품리스트</h3>
-	<table  align="center"  border="1">
+	<table  align="center"  border="1" bgcolor="pink">
+	<tr>
+		<th colspan="5"><h3>낙찰된 물품리스트</h3></th>
+	</tr>
 	<th>사진</th><th>상품명</th><th>가격</th><th>마감시간</th><th>상세보기</th>
 	<c:forEach var="sold" items="${SOLD_LIST}">
 	<form action="/auction/AuctionService" method="post">
@@ -81,16 +97,5 @@
 	</form>
 	</c:forEach>
 	</table>
-<c:if test="${sessionScope.MEMBER.userid=='admin'}">
-	<p align="center">
-		<a href="/auction/GoodService?method=viewGoodList">물품관리</a><br/>
-	</p>
-	<p align="center">
-		<a href="/auction/MemberService?method=viewMemberList">회원관리</a><br/>
-	</p>
-</c:if>	
-	<p align="center">
-		<a href="/auction/BoardService?method=viewBoardList">게시판보기</a>
-	</p>	
 </body>
 </html>
