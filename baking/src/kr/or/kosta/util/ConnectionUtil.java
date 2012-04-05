@@ -13,7 +13,7 @@ public class ConnectionUtil {
 	static public Connection getConnection(){
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
-			System.out.println("JDBC Driver연동 성공");
+//			System.out.println("JDBC Driver연동 성공");
 			Connection con=DriverManager.getConnection(
 					"jdbc:oracle:thin:@192.168.0.90:1521:XE",
 					"scott","tiger");
