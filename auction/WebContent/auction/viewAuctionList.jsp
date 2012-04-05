@@ -11,7 +11,9 @@
 <title>경매리스트</title>
 </head>
 <body background="/auction/gphoto/mina2.jpg">
-
+	<center>
+		<img src="/auction/menu/door.jpg"/>
+	</center>
 <script type="text/javascript">
 	<c:if test="${ERROR!=null}">
 		alert("${ERROR}");
@@ -61,7 +63,7 @@
 	</li>
 </ui>
 
-	<table  align="center"  border="1" bgcolor="pink">
+	<table  align="center"  border="1" bgcolor="">
 	<tr>
 		<th colspan="5"><h3>입찰중인 물품리스트</h3></th>
 	</tr>
