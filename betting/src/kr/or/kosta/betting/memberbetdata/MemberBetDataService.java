@@ -55,8 +55,28 @@ public class MemberBetDataService extends HttpServlet {
 			cancleBetting(request,response);
 		}else if("giveMineral".equals(method)){
 			giveMineral(request,response);
+		}else if("recoveryMineral".equals(method)){
+			recoveryMineral(request,response);
 		}
 	}
+	// 취소나 무승부시 미네랄 복구 시켜주는 메서드
+	private void recoveryMineral(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		
+		long betMineral = Long.parseLong(request.getParameter("bmineral"));
+		long mineral = MemberDAO.selectMineralByID("jun1");
+		String mbdNum = request.getParameter("mbdnum");
+		
+		mineral = mineral + betMineral;
+		
+		MemberDAO.updateMineralByID("jun1", mineral);
+		MemberBetDataDAO.updateMemberBetData(mbdNum);
+		
+		RequestDispatcher rd = request
+				.getRequestDispatcher("/MemberBetDataService?method=viewMemberBetDataByIDList");
+		rd.forward(request, response);
+	}
+
 	/**
 	 * 베팅 취소 메서드
 	 * 
@@ -153,7 +173,7 @@ public class MemberBetDataService extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		/* default generated stub */;
 		long betMineral = Long.parseLong(request.getParameter("emineral"));
-		long mineral = MemberDAO.selectMineralByID("id");
+		long mineral = MemberDAO.selectMineralByID("jun1");
 		String mbdNum = request.getParameter("mbdnum");
 		
 		mineral = mineral + betMineral;
@@ -162,7 +182,7 @@ public class MemberBetDataService extends HttpServlet {
 		MemberBetDataDAO.updateMemberBetData(mbdNum);
 		
 		RequestDispatcher rd = request
-				.getRequestDispatcher("/betting/MemberBetDataService?method=viewMemberBetDataByIDList");
+				.getRequestDispatcher("/MemberBetDataService?method=viewMemberBetDataByIDList");
 		rd.forward(request, response);
 	}
 
