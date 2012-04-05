@@ -123,12 +123,14 @@ function deleteGood(){
 					<table border="1">
 						<tr>
 							<th>레시피 번호</th>
+							<th>레시피 이름</th>
 							<th>상품구분</th>
 							<th>레시피 사진</th>
 						</tr>
 						<c:forEach var="recipe" items="${GOOD_RECIPELIST}" >
 						<tr>
 							<td>${recipe.recipeNum}</td>
+							<td>${recipe.title}</td>
 							<td>${recipe.good_division.gName}</td>
 							<td><a href="/baking/RecipeService?method=viewRecipe&recipenum=${recipe.recipeNum}"><img src="/baking/img/recipe_${recipe.good_division.gName}/${recipe.img}"></a></td>
 						</tr>

@@ -1,5 +1,3 @@
-<!-- 이 페이지 사용 안함 -->
-
 <%@ page language="java" contentType="text/html; charset=utf-8" 
 pageEncoding="utf-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -7,7 +5,7 @@ pageEncoding="utf-8"%>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>상품목록</title>
+<title></title>
 <link rel="stylesheet" href="/baking/styles.css" type="text/css" media="screen" />	
 <link rel="stylesheet" type="text/css" href="print.css" media="print" />
 <style type="text/css">
@@ -16,11 +14,10 @@ pageEncoding="utf-8"%>
 	a:hover {text-decoration:none}
 	a {color:#000000; text-decoration:none; }
 </style>
-<!--[if IE]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->	
 </head>
 <ul>	
 	<div ALIGN="right">
-		<c:choose> 
+	<c:choose> 
 		<c:when test="${sessionScope.member==null}">
 		<a href="/baking/member/loginForm.jsp">로그인</a>
 		<a href="">회원가입</a>
@@ -29,7 +26,6 @@ pageEncoding="utf-8"%>
 		<a href="/baking/MemberService?method=logout">로그아웃</a>
 		</c:otherwise>
 	</c:choose>
-		
 	</div>
 <body>
 <header>
@@ -54,12 +50,17 @@ pageEncoding="utf-8"%>
 <section id="content">	
 	<a href="/baking/GoodService?method=viewDivisionGoodList&division=1">- 쿠키</a>
 	<a href="/baking/GoodService?method=viewDivisionGoodList&division=2">- 케이크</a>  
-	<a href="/baking/GoodService?method=viewDivisionGoodList&division=3">- 초콜릿</a>				
+	<a href="/baking/GoodService?method=viewDivisionGoodList&division=3">- 초콜릿</a>
+	<c:if test="${sessionScope.member.memberid=='ADMIN'}">
+		<center>
+		<a href="/baking/GoodService?method=addGoodForm"><input type="button" value="상품등록"> </a>
+		</center>
+	</c:if>
 <ul class="column">			        
 	<c:forEach var="good" items="${viewGoodList}">        
 	<li>        
 	<section class="block">							
-	<a href="/baking/GoodService?method=viewGood&goodNum=${good.goodNum}" ><img src="/baking/img/${good.good_division.gName }/${good.img}"/></a>
+	<a href="/baking/GoodService?method=viewGood&goodNum=${good.goodNum}" ><img src="/baking/img/${good.good_division.gName }/${good.img}"/></a>				
 	<center><h5>${good.name }</h5>	</center>														
 	<center><p>${good.goodPrice }</p></center>			        
 	</section>			    
