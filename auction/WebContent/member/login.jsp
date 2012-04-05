@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>로그인 페이지</title>
 </head>
-<body>
+<body background="/auction/gphoto/seo.jpg">
 	<h4  align="center">로그인</h4>
 	<table  align="center">
 		<form action="/auction/MemberService" method="post">
