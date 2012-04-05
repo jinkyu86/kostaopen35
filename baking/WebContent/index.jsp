@@ -30,7 +30,7 @@ pageEncoding="utf-8"%>
 	</div>
 <body>
 <header>
-<h1>HOME BAKING MALL</h1> <br> <br>	
+<a href="/baking/GoodService?method=viewIndex"><h1>HOME BAKING MALL</h1></a><br> <br>	
 </header>
 <nav>
 <!-- top nav -->	
