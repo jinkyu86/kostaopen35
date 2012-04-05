@@ -34,26 +34,6 @@
 		</c:forEach>
 	</table>
 	<p align="center">${PAGE_LINK_TAG }</p>
-	<p align="center">
-		<a href="/betting/MemberService?method=addMemberForm&ID=${member.id}">
-			가입하기 </a>
-	</p>
-	<c:choose>
-		<c:when test="${sessionScope.LOGIN_MEMBER==null}">
-		<p align="right">
-			<a href="/betting/MemberService?method=loginForm"> 로그인 </a>
-		</p>
-		</c:when>
-		<c:otherwise>
-		<p align="right">
-			${sessionScope.LOGIN_MEMBER.name} 님 안녕하세요<br /> <a
-				href="/betting/MemberService?method=logout"> 로그아웃 </a>
-		</p>
-		</c:otherwise>	
-	</c:choose>	
-	<p align="center">
-		<a href="/betting/MemberService?method=viewMemberRankingListForm">
-			랭킹보기 </a>
 	</p>
 </body>
 </html>
