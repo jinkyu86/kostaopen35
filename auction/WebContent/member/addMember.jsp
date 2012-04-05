@@ -66,13 +66,6 @@
 			}
 			});
 		});	
-		$("#addMember").click(function (event){
-			var result=confirm("회원 가입 하시겠습니까??");
-		
-			if(result==false){
-				event.preventDefault();
-			}
-		});
 		$("#userid").change(function(){
 			var userid=$("#userid").val();
 			
