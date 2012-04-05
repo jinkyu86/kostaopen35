@@ -17,7 +17,7 @@
 		 </c:if>
 		 $(document).ready(function(){
 				$("#member_info").css('background-color','#C4E2FF');
-				$("#member_findPw").css('background-color','#C4E2FF');
+				$("#member_findPw").css('background-color','#EBFBFF');
 			});
 	 </script>
 </head>

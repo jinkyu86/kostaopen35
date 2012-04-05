@@ -17,9 +17,12 @@
 	 </c:if>
 		$(document).ready(function(){
 			$("#member_info").css('background-color','#C4E2FF');
-			$("#member_login").css('background-color','#C4E2FF');
+			$("#member_login").css('background-color','#EBFBFF');
+
+
 		});
 	</script>
+	
 </head>
 <body>
 <table width="90%" align="center">
@@ -39,36 +42,33 @@
 		<!-- 좌측 메뉴 끝 -->
 		<td>
 			<div class="menu_title" ><font size="5">Login</font>	</div>
-			<table class="table_style" style="width:70%">
-		<form action="/moviesystem/MemberService" method="post">
-		<input type="hidden" name="method" value="login"/>
-		<tr>
-			<td>아이디</td>
-			<td><input type="text" name="userid" ></td>
-			<td rowspan="2">
-			<input type="submit" value="로그인" >
-			</td>
-		</tr>
-		<tr>
-			<td>비밀번호</td>
-			<td><input type="password" name="pw" ></td>
-		
-		</tr>
-			</form>		
+			<table class="table_style" style="width:50%">
+				<form action="/moviesystem/MemberService" method="post">
+				<input type="hidden" name="method" value="login"/>
+				<tr>
+					<td>ID:</td>
+					<td><input type="text" name="userid" ></td>
+					<td rowspan="2" ">
+					<input type="submit" value="로그인" >
+					</td>
+				</tr>
+				<tr>
+					<td id="pw">PASSWORD:</td>
+					<td><input type="password" name="pw" ></td>
+				</tr>
+				</form>		
 			</table>
 		</td>
 			<tr>
-			<td colspan="2">
-			<a href="/moviesystem/MemberService?method=addMemberForm">
-			<font size=2 >회원가입 |</font>
-			</a>
-		
-		
-			<a href="/moviesystem/MemberService?method=findIdForm">
-			<font size=2 >아이디
-			</a>/ <a href="/moviesystem/MemberService?method=findPwForm">비밀번호</a> 찾기</font>
-			</td>
+				<td colspan="2">
+				<a href="/moviesystem/MemberService?method=addMemberForm">
+				<font size=2 >회원가입 |</font></a>
+				<a href="/moviesystem/MemberService?method=findIdForm">
+				<font size=2 >아이디</a>
+				/<a href="/moviesystem/MemberService?method=findPwForm">비밀번호</a> 찾기</font>
+				</td>
+			</tr>
 		</tr>
-	</tr>
+	</table>
 </body>
 </html>
