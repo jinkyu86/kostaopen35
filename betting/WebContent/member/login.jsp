@@ -8,9 +8,9 @@
 </head>
 <body>
 	<h4 align="center">로그인</h4>
+	<form action="/betting/MemberService" method="post">
+	<input type="hidden" name="method" value="login" />
 	<table align="center">
-		<form action="/betting/MemberService" method="post">
-			<input type="hidden" name="method" value="login" />
 			<tr>
 				<td>아이디</td>
 				<td><input type="text" name="id" /></td>
@@ -19,12 +19,14 @@
 				<td>비밀번호</td>
 				<td><input type="password" name="pw" /></td>
 			</tr>
+		</table>
+		<table border="0" align="center">
 			<tr>
 				<td><input type="submit" value="로그인" /></td>
 				<td><input type="reset" value="취소" /></td>
 			</tr>
-		</form>
-	</table>
+		</table>
+	</form>
 
 
 </body>
