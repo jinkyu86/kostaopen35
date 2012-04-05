@@ -65,9 +65,11 @@ public class OrderDAOTest {
 //		OrderDAO.updateQty(order);
 //	}
 	
-//	@Test
-//	public void testOrderList(){
-//		ArrayList<Order>orderList=OrderDAO.selectOrderList("yubi");
-//		System.out.println(orderList);
-//	}
-}
+	@Test
+	public void testOrderList(){
+		ArrayList<Order>orderList=OrderDAO.selectOrderList("yubi");
+		System.out.println(orderList);
+	}
+	
+} 
+

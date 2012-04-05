@@ -154,7 +154,7 @@ public class OrderDAO {
 		try {
 			con=ConnectionUtil.getConnection();
 			psmt=con.prepareStatement(
-					"select o.memberid,o.order_num,o.qty,o.price,o.buy_date," +
+					"select o.memberid,o.order_num,o.qty,o.price,to_char(o.buy_date,'yyyy/mm/dd hh24:mi')," +
 					"g.good_num,g.name,g.explantion,g.img,g.g_option," +
 					"m.password,m.name,m.regi_number," +
 					"m.zipcode,m.address,m.str_address,m.email,m.phone_number,m.tel_number," +
@@ -169,7 +169,7 @@ public class OrderDAO {
 				int ordernum=rs.getInt(2);
 				int qty=rs.getInt(3);
 				int price=rs.getInt(4);
-				Date buydate=rs.getDate(5);
+				String buydate=rs.getString(5);
 				int goodnum=rs.getInt(6);
 				String gname=rs.getString(7);
 				String explantion=rs.getString(8);
@@ -237,7 +237,7 @@ public class OrderDAO {
 		try {
 			con=ConnectionUtil.getConnection();
 			psmt=con.prepareStatement(
-					"select o.memberid,o.order_num,o.qty,o.price,o.buy_date," +
+					"select o.memberid,o.order_num,o.qty,o.price,to_char(o.buy_date,'yyyy/mm/dd hh24:mi')," +
 					"g.good_num,g.name,g.explantion,g.img,g.g_option," +
 					"m.password,m.name,m.regi_number," +
 					"m.zipcode,m.address,m.str_address,m.email,m.phone_number,m.tel_number," +
@@ -260,7 +260,7 @@ public class OrderDAO {
 				int ordernum=rs.getInt(2);
 				int qty=rs.getInt(3);
 				int price=rs.getInt(4);
-				Date buydate=rs.getDate(5);
+				String buydate=rs.getString(5);
 				int goodnum=rs.getInt(6);
 				String gname=rs.getString(7);
 				String explantion=rs.getString(8);

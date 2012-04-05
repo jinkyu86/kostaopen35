@@ -40,7 +40,7 @@ public class Order {
 	/**
 	 * 주문일자
 	 */
-	private Date buyDate;
+	private String buyDate;
 
 	public Member getMember() {
 		return member;
@@ -98,11 +98,11 @@ public class Order {
 		this.price = price;
 	}
 
-	public Date getBuyDate() {
+	public String getBuyDate() {
 		return buyDate;
 	}
 
-	public void setBuyDate(Date buyDate) {
+	public void setBuyDate(String buyDate) {
 		this.buyDate = buyDate;
 	}
 
