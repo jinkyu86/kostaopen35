@@ -72,9 +72,13 @@ public class ReservationService extends HttpServlet {
 			viewCancelByResNum(request,response);
 		}else if("addReservationByTimeForm".equals(method)){
 			addReservationByTimeForm(request,response);
+		}else if("viewSeatListByScrnum".equals(method)){
+			viewSeatListByScrnum(request,response);
+		}else if("SelectSeat".equals(method)){
+			SelectSeat(request,response);
+		}else if("InsertReservation".equals(method)){
+			InsertReservation(request,response);
 		}
-
-		
 		
 		
 		//		else if("viewScreenTimeListBymnum".equals(method)){
@@ -87,6 +91,151 @@ public class ReservationService extends HttpServlet {
 
 
 
+
+
+
+//	private void SelectSeat(HttpServletRequest request,
+//			HttpServletResponse response) throws ServletException, IOException {
+//		String count=request.getParameter("count");
+//		String seat=request.getParameter("seat");
+//		int num1= Integer.parseInt(count);
+//		int seatnum=Integer.parseInt(seat);
+//		System.out.println("count="+count);
+//		System.out.println("seatnum1="+request.getParameter("seatnum1"));
+//		
+//		
+//		if(num1==1){
+//			String seatnum1=request.getParameter("seatnum1");
+//		//	int seatnum1_1=Integer.parseInt(seatnum1);
+//			System.out.println("선택한 좌석 번호는 "+seatnum1+","+seatnum);
+//			
+//		}else {
+//			String scrnum="4";
+//			int num;
+//			ArrayList<Integer>TotalSeatList=new ArrayList<Integer>();
+//			ArrayList<Integer>SelectSeatList=new ArrayList<Integer>();
+//			SelectSeatList=ReservationDAO.selectSeatNumByScrnum(scrnum);
+//			TotalSeatList=ReservationDAO.selectTotalList();
+//				for(int i=0;i<SelectSeatList.size();i++){
+//					num=SelectSeatList.get(i);
+//					TotalSeatList.set(num-1, 1);
+//				}
+//			
+//			TotalSeatList.set(seatnum-1, 2);
+//			request.setAttribute("seatnum1", seat);
+//			request.setAttribute("TotalSeatList", TotalSeatList);
+//			request.setAttribute("count",1);
+//			request.setAttribute("seatnum",seatnum);
+//			RequestDispatcher rd=request.getRequestDispatcher(
+//					"/reservation/viewSeatListByScrnum.jsp");
+//					//4.JSP로 페이지 이동
+//					rd.forward(request, response);
+//			
+//		}
+//		
+//		
+//	}
+	
+	private void SelectSeat(HttpServletRequest request,
+	HttpServletResponse response) throws ServletException, IOException {
+		
+		String seatString=request.getParameter("seat");
+		HttpSession session=request.getSession();
+		String countString=(String)session.getAttribute("COUNT");
+		int count=Integer.parseInt(countString);
+		int seat=Integer.parseInt(seatString);
+		Reservation reservation=(Reservation)session.getAttribute("RESERVATION");
+		ArrayList<Integer> SeatNumList=(ArrayList<Integer>)session.getAttribute("SeatNumList");
+		String scrnum=reservation.getScreenTime().getScrnum();
+		
+		
+		
+		System.out.println("seat="+seat+"count="+count+"scrnum="+scrnum);
+		
+		ArrayList<Integer>TotalSeatList=new ArrayList<Integer>();
+		SeatNumList.add(seat);
+		
+		if(count>1){
+			TotalSeatList=ReservationDAO.selectTotalList(scrnum);	
+			
+			for(int i=0;i<SeatNumList.size();i++){
+//				TotalSeatList.set(seat-1, 1);
+				TotalSeatList.set(SeatNumList.get(i)-1, 1);
+			}
+			
+			
+			request.setAttribute("TotalSeatList",TotalSeatList);
+			
+			session=request.getSession();
+			session.setAttribute("COUNT",count-1+"");
+			session.setAttribute("SeatNumList", SeatNumList);
+//			session.setAttribute("seatnum"+count, seat+"");
+			
+			
+			RequestDispatcher rd=request.getRequestDispatcher(
+					"/reservation/viewSeatListByScrnum.jsp");
+					//4.JSP로 페이지 이동
+					rd.forward(request, response);
+		}else{
+			System.out.println("성공");
+			System.out.println("seat="+seat+"count="+count+"scrnum="+scrnum);
+			System.out.println("reservation"+reservation);
+			//session.setAttribute("SeatNumList", SeatNumList);
+			session.setAttribute("reservation",reservation);
+			RequestDispatcher rd=request.getRequestDispatcher(
+					"/reservation/pay.jsp");
+					//4.JSP로 페이지 이동
+					rd.forward(request, response);
+					
+		}
+
+
+
+}
+
+	private void viewSeatListByScrnum(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+
+		Reservation reservation=new Reservation();
+		Movie movie=new Movie();
+		ScreenTime screenTime = new ScreenTime();
+		String mnum = request.getParameter("mnum");
+		String scrnum= request.getParameter("scrnum");
+		String resQty=request.getParameter("resQty");
+		movie=MovieDAO.selectMovie(mnum);
+		screenTime=ScreenTimeDAO.selectScreenTimeBySrcNum(scrnum);
+		
+		System.out.println("mnum="+mnum+"scrnum="+scrnum+"resQty="+resQty);
+
+
+		
+		screenTime.setScrnum(scrnum);
+		reservation.setMovie(movie);
+		reservation.setScreenTime(screenTime);
+		reservation.setResQty(Integer.parseInt(resQty));
+		reservation.setTotalPrice(Integer.parseInt(resQty)*8000);
+		
+		ArrayList<Integer>TotalSeatList=new ArrayList<Integer>();
+		ArrayList<Integer>SeatNumList=new ArrayList<Integer>();
+		
+		
+		HttpSession session=request.getSession();
+		session.setAttribute("RESERVATION",reservation);
+		session.setAttribute("COUNT",resQty);
+		session.setAttribute("SeatNumList", SeatNumList);
+
+
+		TotalSeatList=ReservationDAO.selectTotalList(scrnum);
+
+		request.setAttribute("TotalSeatList",TotalSeatList);
+
+		RequestDispatcher rd=request.getRequestDispatcher(
+				"/reservation/viewSeatListByScrnum.jsp");
+				//4.JSP로 페이지 이동
+				rd.forward(request, response);
+		
+	}
+
 	private void viewCancelByResNum(HttpServletRequest request,
 			HttpServletResponse response) throws IOException, ServletException{
 		String resnum = request.getParameter("resnum");	
@@ -96,11 +245,7 @@ public class ReservationService extends HttpServlet {
 				request.getRequestDispatcher(
 						"/ReservationService?method=viewReservationListById");
 		rd.forward(request, response);
-//		RequestDispatcher rd=request.getRequestDispatcher(
-//				"/reservation/test.jsp");
-//				//4.JSP로 페이지 이동
-//				rd.forward(request, response);
-//		
+
 		
 	}
 
@@ -230,15 +375,11 @@ public class ReservationService extends HttpServlet {
 							request.getRequestDispatcher(
 									"/MemberService?method=loginForm");
 					rd.forward(request, response);
-//					RequestDispatcher rd=request.getRequestDispatcher(
-//							"/reservation/addReservation.jsp");
-//					//페이지 이동
-//					rd.forward(request, response);
 				}else{
 					request.setAttribute("userid",userid);
 					int MovieTotalCnt = MovieDAO.selectMovieCount("");
 					//1.전체영화 리스트 조회
-					ArrayList<Movie>movieList=MovieDAO.selectMovieList(1,MovieTotalCnt, "");
+					ArrayList<Movie>movieList=MovieDAO.selectMovieList(1,MovieTotalCnt, "reservation");
 					//2.request에 저장
 					request.setAttribute("MOVIE_LIST",movieList);
 					//3.학생추가 페이지 이동 객체 생성
@@ -249,6 +390,37 @@ public class ReservationService extends HttpServlet {
 				}
 				
 		
+	}
+	
+
+private void InsertReservation(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+	HttpSession session=request.getSession();
+	Member member=(Member)session.getAttribute("LOGIN_MEMBER");
+	Reservation reservation=(Reservation)session.getAttribute("RESERVATION");
+	ArrayList<Integer> SeatNumList=(ArrayList<Integer>)session.getAttribute("SeatNumList");
+	ReservationDAO.insertReservation(member,reservation, SeatNumList);
+	
+	
+	RequestDispatcher rd=
+			request.getRequestDispatcher(
+					"/ReservationService?method=viewReservationListById");
+	rd.forward(request, response);
+	
+	
+	
+	
+	
+	
+	
+	
+//	System.out.println("member="+member+"reservaiton="+reservaiton);
+//	System.out.println("SeatNumList="+SeatNumList.size());
+//	
+//    System.out.println("SeatNumList"+SeatNumList.get(0));
+    
+	
+	
 	}
 
 	private void addReservation(HttpServletRequest request,
@@ -323,13 +495,16 @@ public class ReservationService extends HttpServlet {
 		Member member=new Member();
 		member.setUserid("jun123");
 		
+			
+		
 		HttpSession session=request.getSession();
 		session.setAttribute("LOGIN_MEMBER",member);
+		
 		
 		Movie movie=new Movie();
 		movie.setMnum("1");
 		request.setAttribute("movie",movie);
-		
+		request.setAttribute("count","2");
 //		request.setAttribute("member",member);
 				//4.JSP로 페이지 이동
 				rd.forward(request, response);
