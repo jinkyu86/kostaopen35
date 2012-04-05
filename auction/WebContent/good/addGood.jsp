@@ -39,7 +39,7 @@ $(document).ready(function(){
 });
 </script>
 </head>
-<body>
+<body background="/auction/gphoto/seo.jpg">
 	<h1 align="center">물품 추가</h1>
 	<form action="/auction/GoodService" method="post" id="my_form">
 	<table border="1" align="center">	
@@ -64,7 +64,7 @@ $(document).ready(function(){
 	</form>
 <p align="center">
 	<a href="/auction/GoodService?method=viewGoodList">
-	    물품 목록 보기
+	    <img src="/auction/menu/viewGoodList.jpg"/>
 	</a>
 </p>
 </body>

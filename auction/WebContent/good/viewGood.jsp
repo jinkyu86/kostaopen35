@@ -20,7 +20,7 @@
 	});
 </script>
 </head>
-<body>
+<body background="/auction/gphoto/seo.jpg"/>
 	<table border="1" align="center">
 		<tr>
 			<td width="200">물건 번호</td>
@@ -40,18 +40,14 @@
 		</tr>
 	</table>
 	 <p align="center">
-		 <a href="/auction/GoodService?method=editGoodForm&gNum=${GOOD.gNum}">물품정보 수정</a>
-	</p>
-	<p align="center">
-		 <a id="deletegood" href="/auction/GoodService?method=removeGood&gNum=${GOOD.gNum}">물품 삭제</a>
-	 </p>
-	 <p align="center">
-		 <a href="/auction/AuctionService?method=addAuctionForm&gNum=${GOOD.gNum}">경매 등록</a>
-	 </p>
-<p align="center">
-	<a href="/auction/GoodService?method=viewGoodList">
-	    물품 목록 보기
-	</a>
+		 <a href="/auction/GoodService?method=editGoodForm&gNum=${GOOD.gNum}">
+		 	<img src="/auction/menu/editGood.jpg"/></a>
+		 <a id="deletegood" href="/auction/GoodService?method=removeGood&gNum=${GOOD.gNum}">
+		 	<img src="/auction/menu/deleteGood.jpg"/></a>
+		 <a href="/auction/AuctionService?method=addAuctionForm&gNum=${GOOD.gNum}">
+		 	<img src="/auction/menu/addAuction.jpg"/></a>
+		<a href="/auction/GoodService?method=viewGoodList">
+	    	<img src="/auction/menu/viewGoodList.jpg"/></a>
 </p>
 </body>
 </html>

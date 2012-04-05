@@ -7,8 +7,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>viewGoodList</title>
 </head>
-<body>
+<body background="/auction/gphoto/seo.jpg">
 <table border="1" align="center">
+	<tr>
+		<th colspan="2"><h3>물품 목록</h3></th>
 		<tr>
 			<th>번호</th>
 			<th>이름</th>
@@ -29,11 +31,11 @@
 </p>
 <p align="center">
 	<a href="/auction/GoodService?method=addGoodForm">
-	물품 추가
+		<img src="/auction/menu/addGood.jpg"/>
 	</a>
-</p>
-<p align="center">
-	   <a href="/auction/AuctionService?method=viewAuctionList">경매목록보기</a> 
+   <a href="/auction/AuctionService?method=viewAuctionList">
+   		<img src="/auction/menu/viewAuctionList.jpg"/>
+   	</a> 
 </p>
 </body>
 </html>

@@ -40,7 +40,7 @@ $(document).ready(function(){
 });
 </script>
 </head>
-<body>
+<body background="/auction/gphoto/seo.jpg">
 	<h1 align="center">물품 정보 수정</h1>
 	<form action="/auction/GoodService" method="post" id="my_form">
 		<input type="hidden" name="method" value="editGood"/>
@@ -69,7 +69,7 @@ $(document).ready(function(){
 	</form>
 <p align="center">
 	<a href="/auction/GoodService?method=viewGoodList">
-	    물품 목록 보기
+	    <img src="/auction/menu/viewGoodList.jpg"/>
 	</a>
 </p>
 </body>
