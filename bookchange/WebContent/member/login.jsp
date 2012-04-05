@@ -68,14 +68,15 @@ $(document).ready(function(){
   	</td>
   	  	<tr>
 		<td align="center">
-			<a href="/bookchange/BlockService?method=viewMemberEmail&tel">이메일찾기</a>
+			<a href="/bookchange/member/nomalmemberListemail.jsp">이메일찾기</a>
 		</td>	
 	</tr>
 	<tr>
 		<td align="center">
-			<a href="/bookchange/BlockService?method=viewMemberPw&pw">비밀번호찾기</a>
+			<a href="/bookchange/member/nomalmemberListpw.jsp">비밀번호찾기</a>
 		</td>	
-	</tr> 	
+
+	 	 	
    	<td><p align="center">
 	${PAGE_LINK_TAG}
 	</p>

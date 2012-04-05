@@ -4,16 +4,17 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<title>회원탈퇴</title>
+<title>Insert title here</title>
 </head>
 <body>
-		<table align="center">		
+<table align="center">		
 		  <tr>
 				
 				
-  				<td>${EMAIL}님 탈퇴되었습니다.</td>
+  				<td> 회원님의 ${MEMBER.email} 입니다.</td>
   			
   		  </tr>
-  	</table>
+  		 </table>
+	
 </body>
 </html>
