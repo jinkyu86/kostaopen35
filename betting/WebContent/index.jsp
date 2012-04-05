@@ -32,7 +32,7 @@
 							 <a
 							href="/betting/MemberService?method=editMemberForm"> 정보수정</a>
 							 <a
-							href="/betting/MemberService?method=editMemberForm"> 나의 배팅 정보</a>
+							href="/betting/MemberBetDataService?method=viewMemberBetDataByIDList"> 나의 배팅 정보</a>
 					</p>
 				</c:otherwise>
 			</c:choose>
