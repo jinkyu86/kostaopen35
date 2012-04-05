@@ -85,7 +85,7 @@
 	  	 </form></div></td>
 		 <td><div align="right">
 		 <form action="/bookchange/MemberService" method="post">
-	  	 <input type="hidden" name="method" value="">
+	  	 <input type="hidden" name="method" value="viewMemberPwAndEmail">
 	  	   <input type="submit" value="Email/Pw찾기"/>
 	  	 </form></div></td>
 		 </tr>
