@@ -387,6 +387,11 @@ public class BoardService extends HttpServlet {
 		//내가 원하는 물건 리턴
 		String boardNo=request.getParameter("boardNo");
 		Board board=BoardDAO.selectBoard(boardNo);
+		if(board.getCondition().getConditionResult()==2||board.getCondition().getConditionResult()==3){
+			request.setAttribute("ERROR","선택한 책은 이미 교환중이므로 신청할 수 없습니다 :)");
+			RequestDispatcher rd=request.getRequestDispatcher("/BoardService?method=viewBoard&boardNo="+boardNo);
+			rd.forward(request, response);
+		}else{
 		request.setCharacterEncoding("utf-8");
 		request.setAttribute("BOARD", board);
 		
@@ -415,6 +420,7 @@ public class BoardService extends HttpServlet {
 		
 		RequestDispatcher rd=request.getRequestDispatcher("/board/viewBoardListWhenAdd.jsp");
 		rd.forward(request,response);
+		}
 	}
 
 	/**
