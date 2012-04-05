@@ -100,8 +100,14 @@
 		</form>
 		<tr>
 		 <td><div align="right">
-		 <a href="/bookchange/MemberService?method=removeMemberForm"><button>회원탈퇴</button></a>
-		 <a href="/bookchange/MemberService?method=editMemberForm"><button>정보수정</button></a>
+		 <form action="/bookchange/MemberService" method="post">
+	  	 <input type="hidden" name="method" value="removeMemberForm">
+	  	   <ul><input type="submit" value="회원탈퇴"/></ul>
+	  	 </form>
+		 <form action="/bookchange/MemberService" method="post">
+	  	 <input type="hidden" name="method" value="editMemberForm">
+	  	   <ul><input type="submit" value="정보수정"/></ul>
+	  	 </form>
 		 </div></td>
 		</tr>
 	    </table>
