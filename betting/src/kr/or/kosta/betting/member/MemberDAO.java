@@ -302,7 +302,7 @@ public class MemberDAO {
 		}
 	}
 	
-	public static String selectMemberRanking(String id) {
+	public static long selectMemberRanking(String id) {
 
 		/**
 		 * 선택된 아이디 랭크 조회
@@ -315,7 +315,7 @@ public class MemberDAO {
 		PreparedStatement psmt = null;
 		String sql = null;
 		ResultSet rs = null;
-		String rank=null;
+		long rank=0;
 		try {
 			con = ConnectionUtil.getConnection();
 			sql = " select count(*)"+
@@ -328,7 +328,7 @@ public class MemberDAO {
 			
 			
 			if (rs.next()) {				
-				rank=rs.getString(1);
+				rank=rs.getLong(1);
 
 			}
 		} catch (SQLException e) {
