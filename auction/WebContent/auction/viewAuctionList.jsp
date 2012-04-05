@@ -63,7 +63,11 @@
 	</li>
 </ui>
 
+	<table  align="center"  border="1" bgcolor="pink" >
+
+
 	<table  align="center"  border="1" bgcolor="">
+
 	<tr>
 		<th colspan="5"><h3>입찰중인 물품리스트</h3></th>
 	</tr>
@@ -87,7 +91,7 @@
 	</table>
 	<br/><br/>
 	
-	<table  align="center"  border="1" bgcolor="pink">
+	<table  align="center"  border="1">
 	<tr>
 		<th colspan="5"><h3>낙찰된 물품리스트</h3></th>
 	</tr>
