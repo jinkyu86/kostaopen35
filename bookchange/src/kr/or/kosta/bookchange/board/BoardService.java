@@ -185,8 +185,9 @@ public class BoardService extends HttpServlet {
 		condition.setConditionResult(Integer.parseInt(conditionResult));
 		board.setCondition(condition);
 		
-		BoardDAO.updateBoard(board);
-		
+		BoardDAO.updateBoard(board);		
+		String error="수정되었습니다.";
+		request.setAttribute("ERROR",error);
 		RequestDispatcher rd=request.getRequestDispatcher("/BoardService?method=viewBoard&boardNo="+boardNo);
 		rd.forward(request, response);
 	}
@@ -218,11 +219,11 @@ public class BoardService extends HttpServlet {
 		if(conditionResult.equals("0")||conditionResult.equals("3")){
 			BoardDAO.deleteBoard(boardNo);
 			String complete="삭제되었습니다.";
-			request.setAttribute("COMPLETE",complete);
+			request.setAttribute("ERROR",complete);
 		}else{
 			request.setCharacterEncoding("utf-8");
 			String delete="교환진행중이므로 삭제할 수 없습니다.";
-			request.setAttribute("DELETE",delete);
+			request.setAttribute("ERROR",delete);
 			//System.out.println("교환중이므로 삭제할 수 없습니다.");
 		}
 		
@@ -259,6 +260,7 @@ public class BoardService extends HttpServlet {
 		
 		request.setAttribute("BOARD",board);
 		request.setAttribute("QA_LIST",qaList);
+		request.setAttribute("QA_COUNT",qaCount);
 		
 		RequestDispatcher rd=request.getRequestDispatcher("/board/viewBoard.jsp");
 		rd.forward(request, response);
@@ -426,6 +428,7 @@ public class BoardService extends HttpServlet {
 		request.setAttribute("BOARD",board);
 		request.setAttribute("QA_LIST",qaList);
 		request.setAttribute("AGREE_BOARD_NO",agreeBoardNo);
+		request.setAttribute("QA_COUNT",qaCount);
 		
 		RequestDispatcher rd=request.getRequestDispatcher("/board/viewBoardWhenAgree.jsp");
 		rd.forward(request, response);
@@ -460,6 +463,7 @@ public class BoardService extends HttpServlet {
 		request.setAttribute("BOARD",board);
 		request.setAttribute("QA_LIST",qaList);
 		request.setAttribute("AGREE_BOARD_NO",agreeBoardNo);
+		request.setAttribute("QA_COUNT",qaCount);
 		
 		RequestDispatcher rd=request.getRequestDispatcher("/board/viewBoardWhenCancel.jsp");
 		rd.forward(request, response);
