@@ -14,11 +14,6 @@ public class MemberBetData {
 	 */
 	private String num;
 
-//	/**
-//	 * 선택한 팀번호
-//	 */
-//	private String seleTeamNum;
-
 	/**
 	 * 베팅에 걸은 미네랄
 	 */
