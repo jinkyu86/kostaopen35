@@ -87,7 +87,7 @@ public class ChangeService extends HttpServlet {
 		int demandChangeCount=ChangeDAO.selectChangeRequestCount(memberEmail);
 		String pageLinkTag=PageUtil.generate(page, demandChangeCount, length, "/bookchange/ChangeService?method=matchChangeList");
 		request.setAttribute("PAGE_LINK_TAG", pageLinkTag);
-		RequestDispatcher rd=request.getRequestDispatcher("/matchChangeList.jsp");
+		RequestDispatcher rd=request.getRequestDispatcher("/change/matchChangeList.jsp");
 		rd.forward(request, response);
 	}
 
