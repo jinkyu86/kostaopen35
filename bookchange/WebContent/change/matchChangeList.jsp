@@ -23,13 +23,12 @@
 		<td>${change.demandBoard.boardTitle}</td>
 		<td>${change.agreeBoard.member.email}</td>
 		<td>
-		<td>
        		<form action="/bookchange/ChangeService" method="post">
        		<input type="hidden" name="method" value="completeChange">
        		<input type="hidden" name="ChangeNo" value="${change.demandBoard.boardNo}">
        		<input type="hidden" name="BoardNo" value="${change.agreeBoard.boardNo}">
        		<input type="submit" value="교환완료">
-       	</form>
+       		</form>
        	</td>
 	</tr>
 	</c:forEach>
