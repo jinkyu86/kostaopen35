@@ -31,9 +31,11 @@ pageEncoding="utf-8"%>
 	</div>
 <body>
 <header>
-<marquee width=200 scrollamount=70>★</marquee><marquee width=150 scrollamount=47><font color=hotpink>★</font></marquee><marquee width=200 scrollamount=48><font color=green>☆</font></marquee><br> <marquee width=100 scrollamount=45><font color=blue>☆</font></marquee><marquee width=130 scrollamount=57><font color=hotblue>☆</font></marquee><marquee width=180 scrollamount=60><font color=red>★</font>
-</marquee><marquee width=200 scrollamount=68><font color=purple>☆</font></marquee><br><h1>HOME BAKING MALL</h1> <marquee width=143 scrollamount=47><font color=pink>☆</font></marquee><marquee width=150 scrollamount=52><font color=violet>☆</font></marquee><marquee width=170 scrollamount=58><font color=orange>★</font></marquee><br> <br>			
-<!-- <P><font size=4>HOME BAKING</font></p>	 -->		
+<h1>HOME BAKING MALL</h1><br><br>
+<div style="margin-left: 500px; ">
+		ID:<input type="text" id=""/>
+		PW:<input type="password" id=""/>
+	</div>
 </header>
 <nav>
 <!-- top nav -->	
@@ -52,9 +54,9 @@ pageEncoding="utf-8"%>
 
 <!-- content -->
 <section id="content">	
-	<a href="/baking/GoodService?method=viewDivisionGoodList&division=1">쿠키</a>
-	<a href="/baking/GoodService?method=viewDivisionGoodList&division=2">케이크</a>  
-	<a href="/baking/GoodService?method=viewDivisionGoodList&division=3">초콜릿</a>	
+	<a href="/baking/GoodService?method=viewDivisionGoodList&division=1">- 쿠키</a>
+	<a href="/baking/GoodService?method=viewDivisionGoodList&division=2">- 케이크</a>  
+	<a href="/baking/GoodService?method=viewDivisionGoodList&division=3">- 초콜릿</a>	
 
 	<ul class="column">
 	<form action="/baking/GoodService" method="post">

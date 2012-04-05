@@ -6,6 +6,15 @@ pageEncoding="utf-8"%>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title></title>
+<script type="text/javascript">
+function deleteGood(){
+	var flag=confirm("이 상품을 삭제하시겠습니까?");
+	if(flag){
+		location.href="/baking/GoodService?method=removeGood&goodNum="+${GOOD.goodNum};
+	}
+	alert("상품이 삭제되었습니다");
+}
+</script>
 <link rel="stylesheet" href="/baking/styles.css" type="text/css" media="screen" />	
 <link rel="stylesheet" type="text/css" href="print.css" media="print" />
 <style type="text/css">
@@ -29,9 +38,11 @@ pageEncoding="utf-8"%>
 	</div>
 <body>
 <header>
-<marquee width=200 scrollamount=70>★</marquee><marquee width=150 scrollamount=47><font color=hotpink>★</font></marquee><marquee width=200 scrollamount=48><font color=green>☆</font></marquee><br> <marquee width=100 scrollamount=45><font color=blue>☆</font></marquee><marquee width=130 scrollamount=57><font color=hotblue>☆</font></marquee><marquee width=180 scrollamount=60><font color=red>★</font>
-</marquee><marquee width=200 scrollamount=68><font color=purple>☆</font></marquee><br><h1>HOME BAKING MALL</h1> <marquee width=143 scrollamount=47><font color=pink>☆</font></marquee><marquee width=150 scrollamount=52><font color=violet>☆</font></marquee><marquee width=170 scrollamount=58><font color=orange>★</font></marquee><br> <br>			
-
+<h1>HOME BAKING MALL</h1><br><br>
+<div style="margin-left: 500px; ">
+		ID:<input type="text" id=""/>
+		PW:<input type="password" id=""/>
+	</div>
 </header>
 <nav>
 <!-- top nav -->	
@@ -50,10 +61,15 @@ pageEncoding="utf-8"%>
 
 <!-- content -->
 <section id="content">	
-	<a href="/baking/GoodService?method=viewDivisionGoodList&division=1">쿠키</a>
-	<a href="/baking/GoodService?method=viewDivisionGoodList&division=2">케이크</a>  
-	<a href="/baking/GoodService?method=viewDivisionGoodList&division=3">초콜릿</a>	
-
+	<a href="/baking/GoodService?method=viewDivisionGoodList&division=1">- 쿠키</a>
+	<a href="/baking/GoodService?method=viewDivisionGoodList&division=2">- 케이크</a>  
+	<a href="/baking/GoodService?method=viewDivisionGoodList&division=3">- 초콜릿</a>	
+	<c:if test="${sessionScope.member.memberid=='ADMIN'}">
+		<center>
+		<a href="/baking/GoodService?method=editGoodForm"><input type="button" value="상품수정"></a>
+		&nbsp&nbsp<input type="button" onclick="deleteGood()" value="상품삭제">				
+		</center>
+	</c:if>
 	<ul class="column">
 	<form action="/baking/OrderService" method="get">
 		<input type="hidden" name="method" value="addCartForm">
@@ -131,6 +147,6 @@ pageEncoding="utf-8"%>
 	</ul>	
 </section>
 </ul>
-</section>		
+</section>
 </body>
 </html>
