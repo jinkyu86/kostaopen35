@@ -99,7 +99,7 @@ public class MemberService extends HttpServlet {
 
 		MemberDAO.insultMember(member);
 		
-
+		request.setAttribute("SUCCESS","성공적으로 가입하였습니다.");
 		RequestDispatcher rd = request
 				.getRequestDispatcher("index.jsp");
 
@@ -218,7 +218,8 @@ public class MemberService extends HttpServlet {
 		 * @param request
 		 * @param response
 		 */
-
+		
+		
 		String id = request.getParameter("id");
 
 		String pw = request.getParameter("pw");
@@ -238,7 +239,11 @@ public class MemberService extends HttpServlet {
 			}// end else
 		}// end if
 
-		String rank =MemberDAO.selectMemberRanking(id);
+		HttpSession session=request.getSession();
+		Member member1=(Member)session.getAttribute("LOGIN_MEMBER");
+		String ID = member1.getId();
+
+		String rank =MemberDAO.selectMemberRanking(ID);
 		request.setAttribute("RANK", rank);
 		RequestDispatcher rd = request
 				.getRequestDispatcher("index.jsp");

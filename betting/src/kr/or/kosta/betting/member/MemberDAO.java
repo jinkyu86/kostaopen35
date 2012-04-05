@@ -320,7 +320,7 @@ public class MemberDAO {
 			con = ConnectionUtil.getConnection();
 			sql = " select count(*)"+
 					" from member"+
-					" where mineral>=(select mineral from member Where id=?)";
+					" where mineral>(select mineral from member Where id=?)";
 
 			psmt = con.prepareStatement(sql);
 			psmt.setString(1, id );
