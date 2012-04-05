@@ -26,8 +26,8 @@ public class AuctionDAO {
 							"s_price," +
 							"im_price," +
 							"a_num," +
-							"s_time," +
-							"e_time," +
+							"s_time=to_date(?,'yyyy-mm-dd hh24:mi:ss')," +
+							"e_time=to_date(?,'yyyy-mm-dd hh24:mi:ss')," +
 							"sold," +
 							"cu_price) "
 							+ "VALUES(?,?,?,auc_seq.nextval,?,?,'0',?)");
