@@ -1,56 +1,81 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"  %>
+<%@ taglib  prefix="c"  uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<title>È¸¿ø °Ô½Ã¹° Á¶È¸</title>
+<title>íšŒì› ê²Œì‹œë¬¼ ì¡°íšŒ</title>
+<link rel="stylesheet" href="/moviesystem/css/Layout.css">
+<script src="http://code.jquery.com/jquery-1.7.1.js"></script>
+<script src="/moviesystem/js/common.jsp"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('#member_manage').css('background-color','#C4E2FF');
+		$("#member_list").css('background-color','#EBFBFF');
+	});
+	</script>
 </head>
 <body>
-<h1 align="center">È¸¿øÁ¶È¸</h1>
-<table border="1" align="center">
+
+<table width="90%" align="center">
+	<!-- ìƒë‹¨ ë©”ë‰´ ì‹œì‘ -->
 	<tr>
-		<td>¹øÈ£</td>
+		<td colspan="2">
+			<jsp:include page="/common/top.jsp"></jsp:include>
+		</td>
+	</tr>
+	<!-- ìƒë‹¨ ë©”ë‰´ ë -->
+	
+	<tr>
+		<!-- ì¢Œì¸¡ ë©”ë‰´ ì‹œì‘ -->
+		<td rowspan="2" valign="top" style="width:20%">
+			<jsp:include page="managerLeft.jsp"></jsp:include>
+		</td>
+		<!-- ì¢Œì¸¡ ë©”ë‰´ ë -->
+		<td>
+			<div class="menu_title" ><font size="5">View_Member</font>	</div>
+			<table class="table_style" border="1">
+	<tr>
+		<td>ë²ˆí˜¸</td>
 		<td>${MEMBER.userNum }</td>
 	</tr>
 	<tr>
-		<td>¾ÆÀÌµğ</td>
+		<td>ì•„ì´ë””</td>
 		<td>${MEMBER.userid}</td>
 	</tr>
 	<tr>
-		<td>ÀÌ¸§</td>
+		<td>ì´ë¦„</td>
 		<td>${MEMBER.name}</td>
 	</tr>
 	<tr>	
-		<td>ÀÌ¸ŞÀÏ</td>
+		<td>ì´ë©”ì¼</td>
 		<td>${MEMBER.email}</td>
 	</tr>
 	<tr>
-		<td>ÀüÈ­¹øÈ£</td>
+		<td>ì „í™”ë²ˆí˜¸</td>
 		<td>${MEMBER.phone}</td>
 	</tr>
 	<tr>
-		<td>¿ìÆí¹øÈ£</td>
+		<td>ìš°í¸ë²ˆí˜¸</td>
 		<td>${MEMBER.zipcode}</td>
 	</tr>
 	<tr>
-		<td>ÁÖ¼Ò</td>
+		<td>ì£¼ì†Œ</td>
 		<td>${MEMBER.addr}</td>
 	</tr>
 	<tr>
-		<td>È¸¿ø°¡ÀÔÀÏ</td>
+		<td>íšŒì›ê°€ì…ì¼</td>
 		<td>${MEMBER.regDate}</td>
 	</tr>
 	<tr>
-		<td>È¸¿ø»óÅÂ</td>
+		<td>íšŒì›ìƒíƒœ</td>
 		<td>${MEMBER.memState}</td>
 	</tr>
 </table>
-<p align="center">
-<a href="/moviesystem/MemberService?method=editMemberForm&userid=${MEMBER.userid}">
-È¸¿øÁ¤º¸ ¼öÁ¤</a></p>
-<p align="center">
-<a href="/moviesystem/MemberService?method=dropMemberForm&userid=${MEMBER.userid}">
-È¸¿øÅ»Åğ</a></p>
+</td>
+</tr>
+</table>
 </body>
 </html>

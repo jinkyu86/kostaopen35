@@ -30,7 +30,7 @@
 	<tr>
 		<!-- 좌측 메뉴 시작 -->
 		<td valign="top" style="width:20%">
-			<jsp:include page="MypagLeft.jsp"></jsp:include>
+			<jsp:include page="MypagLeft.jsp"></jsp:include>			
 		</td>
 		<!-- 좌측 메뉴 끝 -->
 		

@@ -6,15 +6,15 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<title>전체회원 리스트</title>
+<title>검색 회원 리스트</title>
 <link rel="stylesheet" href="/moviesystem/css/Layout.css">
 <script src="http://code.jquery.com/jquery-1.7.1.js"></script>
 <script src="/moviesystem/js/common.jsp"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
 		$('#member_manage').css('background-color','#C4E2FF');
-		$("#member_list").css('background-color','#EBFBFF');
-		$('#memberlist').css('background-color','#C4E2FF');
+		$("#member_search").css('background-color','#EBFBFF');
+
 	});
 	</script>
 </head>
@@ -35,21 +35,39 @@
 		</td>
 		<!-- 좌측 메뉴 끝 -->
 		<td>
-			<div class="menu_title" ><font size="5">Member_List</font>	</div>
-			<table class="table_style" border="1">
-		<%-- table align="right">
-			<form action="/moviesystem/MemberService" method="post">
-			<input type="hidden" name="method" value="searchMemberList">
-				<select name="column">
-					<option value="이름">이름</option>
-					<option value="이메일">이메일</option>
-				</select>
+			<div class="menu_title" ><font size="5">Search_Member</font>	</div>
+				<!-- 검색 박스 시작 -->
+			<table class="sch_style" style="margin-bottom:10px;" align="center">
+				<tr>
+					<td align="center" style="padding:5px 5px 5px 5px;width:100%">
+						<form action="/moviesystem/MemberService" method="post">
+						<input type="hidden" name="method" value="searchMemberList">
+	
+							<select name="column">
+								<option value="name">이름</option>
+								<option value="email">이메일</option>
+								<option value="addr">주소</option>
+								<option value="phone">전화번호</option>
+							</select>
+						<input type="text" name="keyword">
+						<input type="submit" value="검색"/>
+						</form>
+					</td>
+				</tr>
+			</table>
+			<!-- 검색 박스
+				
+				<tr>
 				<input type="text" name="keyword">
 				<br/>
 				<input type="submit" name="검색"/>
 			</form>
-			</table>--%>
-
+			</table>
+					</td>
+				</tr>
+			</table>
+			<!-- 검색 박스 끝 -->
+			<table class="table_style" border="1">
 				<tr id="memberlist">
 					<th>회원번호</th>
 					<th>아이디</th>
@@ -73,6 +91,8 @@
 					<td>${member.memState}</td>
 			</c:forEach>
 		</table>
+			<table align="center">
+
 		</td>
 		</tr>
 		</table>
