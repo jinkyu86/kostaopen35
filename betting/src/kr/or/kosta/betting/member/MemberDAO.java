@@ -334,7 +334,7 @@ public class MemberDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return rank;
+		return rank+1;
 
 	}
 }

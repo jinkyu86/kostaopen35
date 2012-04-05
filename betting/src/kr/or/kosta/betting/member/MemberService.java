@@ -253,18 +253,16 @@ public class MemberService extends HttpServlet {
 
 				HttpSession session = request.getSession();
 				session.setAttribute("LOGIN_MEMBER", member);
+				
+				String rank =MemberDAO.selectMemberRanking(id);
+				request.setAttribute("RANK", rank);
+				
 			}// end else
 		}// end if
-
-		HttpSession session=request.getSession();
-		Member member1=(Member)session.getAttribute("LOGIN_MEMBER");
-		String ID = member1.getId();
-
-		String rank =MemberDAO.selectMemberRanking(ID);
-		request.setAttribute("RANK", rank);
 		RequestDispatcher rd = request
 				.getRequestDispatcher("index.jsp");
 		rd.forward(request, response);
+		
 
 	}
 
