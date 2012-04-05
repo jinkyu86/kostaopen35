@@ -1,6 +1,7 @@
 package kr.or.kosta.photo.test;
 
 import static org.junit.Assert.*;
+import kr.or.kosta.gooddivision.Good_division;
 import kr.or.kosta.photo.Photo;
 import kr.or.kosta.photo.PhotoDAO;
 
@@ -21,12 +22,13 @@ public class PhotoDAOTest {
 	@Test
 	public void testInsertPhoto() {
 		Photo photo=new Photo();
-		photo.setP_num(1000);
-		photo.setRecipe_num(30);
-		photo.setImage("asd");
-		photo.setDivision(3);
+		
+		photo.setImage("test.jpg");
+		Good_division good_division =new Good_division();
+		good_division.setDivision(1);
+		photo.setGood_division(good_division);
 		PhotoDAO.insertPhoto(photo,30);
-		System.out.println(photo);
+		
 	}
 
 }
