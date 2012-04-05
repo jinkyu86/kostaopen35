@@ -91,6 +91,8 @@
 			<td><input type="text" name="score" 
 					value="${MATCH.score}" /></td>
 		</tr>
+	</table>
+	<table border="0" align="center">
 		<tr>
 			<td>
 					<input type="submit" value="경기데이터수정"/>
@@ -103,20 +105,30 @@
 	</table>
 	
 </form>
-	<a href="/betting/MatchService?method=removeMatch&matchno=${MATCH.num }">
-		데이터 삭제
-	</a>
-	<br/>
-	
+	<table border="0" align="center">
+		<tr>
+			<th>
+				<a href="/betting/MatchService?method=removeMatch&matchno=${MATCH.num }">
+					데이터 삭제
+				</a>
+	        </th>
+		</tr>
 	<c:choose>
 		<c:when test="${BETTING eq '2' }">
-					 베팅테이블에 입력된 데이터 입니다.
+			<tr>
+				<th>베팅테이블에 입력된 데이터 입니다.</th>
+			</tr>
 		</c:when>
 		<c:otherwise>
+			<tr>
+				<th>
 					<a href="/betting/BettingService?method=insertBetting&matchno=${MATCH.num }">
 					 	베팅테이블 데이터 입력
-					 </a>
+					</a>
+				</th>
+			</tr>	
 		</c:otherwise>
 	</c:choose>
+	</table>
 </body>
 </html>

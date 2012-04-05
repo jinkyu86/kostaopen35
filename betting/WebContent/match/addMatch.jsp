@@ -65,6 +65,8 @@
 			<td><input type="text" name="matchtime" 
 					value="yyyy/mm/dd hh24:mi:ss" /></td>
 		</tr>
+	</table>
+	<table border="0" align="center">
 		<tr>
 			<td>
 					<input type="submit" value="경기데이터삽입"/>

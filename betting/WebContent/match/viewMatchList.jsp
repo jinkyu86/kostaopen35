@@ -42,8 +42,14 @@
 	<p align="center">
 		${PAGE_LINK_TAG }
 	</p>
-	<a href="/betting/MatchService?method=addMatchForm">
-		경기 데이터 삽입
-	</a>
+	<table border="0" align="center">
+		<tr>
+			<th>
+				<a href="/betting/MatchService?method=addMatchForm">
+					경기 데이터 삽입
+				</a>
+			</th>
+		</tr>
+	</table>
 </body>
 </html>
