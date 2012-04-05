@@ -60,6 +60,11 @@ public class OrderService extends HttpServlet {
 
 	private void viewCartList(HttpServletRequest request,
 			HttpServletResponse response) throws IOException,ServletException{
+		Member member1=new Member();
+		member1.setMemberid("yubi");
+		HttpSession session1=request.getSession();
+		session1.setAttribute("LOGIN",member1);
+		
 		RequestDispatcher rd=request.getRequestDispatcher("/order/viewCartList.jsp");
 		rd.forward(request, response);
 	}
@@ -175,11 +180,8 @@ public class OrderService extends HttpServlet {
 		String memberid=request.getParameter("memberid");
 		Member member=MemberDAO.selsctMember(memberid);
 		order.setMember(member);
-		HttpSession session1=request.getSession();
-		ArrayList<Order>memberList=null;
-		session1.setAttribute("CART_LIST",memberList);
-		RequestDispatcher rd=request.getRequestDispatcher("/OrderService?method=addOrder");
-		rd.forward(request, response);
+		request.setAttribute("MEMBER",order);
+		System.out.println(order);
 	}
 
 	//장바구니 삭제
