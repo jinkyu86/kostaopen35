@@ -7,6 +7,14 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>Betting Data</title>
+<script type="text/javascript">
+	<c:if test="${ERROR!=null}">
+		alert("${ERROR}");
+	</c:if>
+	<c:if test="${SUCCESS!=null}">
+		alert("${SUCCESS}");
+	</c:if>
+</script>
 </head>
 <body>
 <h3 align="center">나의 베팅데이터</h3>

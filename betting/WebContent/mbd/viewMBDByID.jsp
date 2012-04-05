@@ -294,6 +294,7 @@
 	<input type="hidden" name="home" value="${BETTING_HOME.num }"/>
 	<input type="hidden" name="away" value="${BETTING_AWAY.num }"/>
 	<input type="hidden" name="mbdnum" value="${MBD.num }"/>
+	<input type="hidden" name="matchtime" value="${BETTING_HOME.match.matchTime}"/>
 	</form>
 </body>
 </html>
