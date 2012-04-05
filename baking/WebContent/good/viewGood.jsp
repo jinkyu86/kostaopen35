@@ -79,17 +79,18 @@ pageEncoding="utf-8"%>
 			</tr>
 			<tr>
 				<td><center>가격 : ${GOOD.goodPrice}원</center></td>
-				<td><center>수량 선택 : <select name="qty">
-					<%for(int i=1;i<100;i++) {%>					
-					<option value="<%=i%>"><%=i%>
-					</option>
-					<%} %>
+					<td><center>수량 선택 : <select name="qty">
+						<c:forEach var="i" begin="1" end="5">
+						<option value="${i}">
+							${i}
+						</option>
+					</c:forEach>
 					</select>
 					</center>
 					</td>
 			</tr>
 			<tr>
-			<td colspan="2"><input type="submit" value="장바구니"></td>
+			<td colspan="2"><center><input type="submit" value="장바구니"></center></td>
 			<tr>
 		</table>
 		</form>
