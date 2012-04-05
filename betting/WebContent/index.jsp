@@ -22,10 +22,10 @@
 		<c:choose>
 			<c:when test="${sessionScope.LOGIN_MEMBER==null}">
 				<div ALIGN="right">
-				<a href="/betting/MemberService?method=loginForm" onfocus=blur()><font
-					color=black>로그인</font></a>/<a
-					href="/betting/MemberService?method=addMemberForm" onfocus=blur()><font
-					color=black>회원가입</font></a>
+					<a href="/betting/MemberService?method=loginForm" onfocus=blur()><font
+						color=black>로그인</font></a>/<a
+						href="/betting/MemberService?method=addMemberForm" onfocus=blur()><font
+						color=black>회원가입</font></a>
 				</div>
 			</c:when>
 			<c:otherwise>
@@ -50,10 +50,14 @@
 					<p>
 					<table border="0" align="right">
 						<tr>
-							<td align="center"><font color="white">${sessionScope.LOGIN_MEMBER.name}
-									님 </font></td>
+							<td colspan="2" align="center"><font color="white">${sessionScope.LOGIN_MEMBER.name}
+									님 환영합니다</font></td>
+						</tr>
+						<tr>
 							<td align="center"><font color="white">순위 : ${RANK }
-									위</font></td>
+									위|</font></td>
+							<td align="center"><font color="white">미네랄 : ${MINERAL}
+									</font></td>
 						</tr>
 						<tr>
 							<td colspan="2" align="right"><a
