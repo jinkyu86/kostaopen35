@@ -38,7 +38,8 @@
 	</table>
 	<center>
 		<form action="/baking/OrderService" method="post">
-			<input type="hidden" name="method" value="addOrder"/>
+			<input type="hidden" name="method" value="addOrderForm"/>
+			<input type="hidden" name="memberid" value="${sessionScope.LOGIN.memberid}"/>
 			  <input type="submit" value="구매하기"/> 
 		</form>
 	</center>

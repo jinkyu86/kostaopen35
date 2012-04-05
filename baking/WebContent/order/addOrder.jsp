@@ -52,39 +52,39 @@ function no(){
 		<td>${order.good.option}</td>
 		<td>${order.qty*order.good.goodPrice}</td>
 	</tr>
+	</c:forEach>
 </table>
 <p align="center">주문자정보</p>
 <table style="border: 2px solid #ddd;">
 	<tr>
 		<td style="border: 2px solid #ddd;" width="150px"  align="center" height="37px">이름</td>
-		<td><input type="text" size=25 name="name1" value="${order.member.name}"/></td>
+		<td><input type="text" size=25 name="name1" value="${MEMBER.name}"/></td>
 	</tr>
 	<tr style="border: 2px solid #ddd;">
 		<td style="border: 2px solid #ddd;" width="150px"  align="center" height="37px">주소</td>
-		<td><input type="text" size=11 name="zipcode1" value="${order.member.zipcode}"/>
+		<td><input type="text" size=11 name="zipcode1" value="${MEMBER.zipcode}"/>
 		<input type="submit" value="우편번호검색"/>( - 생략 )<br/>
-		<input type="text" size=50 name="address1" value="${order.member.address}"/> 기본주소 <br/>
-		<input type="text" size=50 name="strAddress1" value="${order.member.strAddress}"/> 나머지주소 </td>
+		<input type="text" size=50 name="address1" value="${MEMBER.address}"/> 기본주소 <br/>
+		<input type="text" size=50 name="strAddress1" value="${MEMBER.strAddress}"/> 나머지주소 </td>
 	</tr>
 	<tr>
 		<td align="center">유선전화</td>
 		<td style="border: 2px solid #ddd;" width="550px" height="37px" >
-		<input type="text" size=15 name="telNumber1" value="${order.member.telNumber}"/>( - 생략 )
+		<input type="text" size=15 name="telNumber1" value="${MEMBER.telNumber}"/>( - 생략 )
 		</td>
 	</tr>
 	<tr>
 		<td style="border: 2px solid #ddd;" width="150px"  align="center" height="37px">휴대전화</td>
 		<td>
-			<input type="text" size=15 name="phoneNumber1" value="${order.member.phoneNumber}"/>( - 생략 )
+			<input type="text" size=15 name="phoneNumber1" value="${MEMBER.phoneNumber}"/>( - 생략 )
 		</td>
 	</tr>
 	<tr>
 		<td align="center">이메일</td>
 		<td style="border: 2px solid #ddd;" width="550px" height="37px" >
-		<input type="text" size=25 name="email1" value="${order.member.email}"/>
+		<input type="text" size=25 name="email1" value="${MEMBER.email}"/>
 		</td>
 	</tr>
-</c:forEach>
 </table>
 <p align="center">배송지정보</p>
 <p align="right">배송지 정보가 주문지 정보와 동일합니까?
