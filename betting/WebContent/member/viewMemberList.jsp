@@ -22,7 +22,7 @@
 
 			<tr>
 				<td><a
-					href="/betting/MemberService?method=viewMemberList&ID=${member.id}">
+					href="/betting/MemberService?method=viewMember&ID=${member.id}">
 						${member.id} </a></td>
 
 				<td>${member.name}</td>
