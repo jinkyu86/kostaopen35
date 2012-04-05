@@ -1,74 +1,16 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="utf-8"%>
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<title>게시물등록</title>
-<link rel="Stylesheet" href="/bookchange/uploadify/uploadify.css"/>
-<script src="http://code.jquery.com/jquery-1.7.js"></script>
+<title>도서물물 교환</title>
+<script src="http//code.jquery.com/jquery-1.7.js"></script>
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.js"></script>
-<script src="/bookchange/uploadify/jquery.uploadify.v2.1.4.js"></script>
-<script src="/bookchange/uploadify/swfobject.js"></script>
-<script>
-	$(document).ready(function(){
-		$("#add_board").validate({
-			rules:{
-				boardWant:{
-					required:true
-				},
-				boardTitle:{
-					required:true
-				},
-				boardContent:{
-					required:true
-				},
-				file:{
-					required:true
-				}
-			},
-			messages:{
-				boardWant:{
-					required:"원하는 물건을 입력해주세요."
-				},
-				boardTitle:{
-					required:"제목을 입력해주세요."
-				},
-				boardContent:{
-					required:"상세 내용을 입력해주세요."
-				},
-				file:{
-					required:"사진을 업로드해주세요."
-				}
-			}			
-		});
-	});
-
-$(document).ready(function(){
-	$("#uploadify").uploadify({
-		cancelImg:"/bookchange/uploadify/cancel.png",
-		uploader:"/bookchange/uploadify/uploadify.swf",
-		script:"/bookchange/UploadServlet",			
-		multi:false,
-		auto:false,
-		fileExt:"*.jpg;*.jpeg;*.png;*.gif",
-		fileDesc:"WebImageFiles(.jpg,.gif,.png)",
-		buttonText:"Select Photo",
-		onComplete:function(event,queueID,fileObj,response,data){
-			/* alert("글이 등록됐습니다."); */
-			//id가 photo인 객체선택 $("#photo")
-			//value 속성 수정 val(수정하고싶은값)
-			$("#photo").val(response);
-			//my_form의 action설정된 서블렛으로 입력정보 전송
-			$("#add_board").submit();
-		}
-	});
-	$("#addPhoto").click(function (event){
-		$("#uploadify").uploadifyUpload();
-		event.preventDefault();
-	});
-});
+<script type="text/javascript">
+	<c:if test="${ERROR!=null}">
+	alert("${ERROR}");
+	</c:if>
 </script>
 </head>
 <body topmargin="0" leftmargin="0" bgcolor="#FFFFFF">
@@ -134,7 +76,7 @@ $(document).ready(function(){
 		 </div></td>
 		 </tr>
 		 </form>
-		  <tr>
+		 <tr>
 		 <td><div align="right">
 		 <form action="/bookchange/MemberService" method="post">
 	  	 <input type="hidden" name="method" value="addMemberForm">
@@ -146,7 +88,7 @@ $(document).ready(function(){
 	  	   <input type="submit" value="Email/Pw찾기"/>
 	  	 </form></div></td>
 		 </tr>
-	     </table>
+		 </table>
 	     </fieldset>
 	    </c:when>
 	   <c:otherwise>
@@ -176,8 +118,9 @@ $(document).ready(function(){
 	  	 </form>
 		 </div></td>
 		</tr>
-	    </table>
+		</table>
 	    </fieldset>
+	 
 	</td>
 	</tr>
 	<tr>
@@ -227,75 +170,29 @@ $(document).ready(function(){
 	     </c:otherwise>
 	  </c:choose>
 	   
-	   
-	   
-	   
 	 </table>
 	 </tr>
 	 <td width="550" height="600" valign="top" bgcolor="#FFFFE0">
-	 	<table width="550" height="600" cellpadding="0" cellspacing="0" border="1">
-	 	<td valign="top">
-	 	 
- 
-<h3 align="center">물품등록</h3>
-<form id="add_board" action="/bookchange/BoardService" method="post">
-<input type="hidden" name="method" value="addBoard"/>
-<input type="hidden" name="email" value="${sessionScope.LOGIN_EMAIL.email}"/>
-<input id="photo" type="hidden" name="boardPhoto" value=""/>
-		<table border="1" align="center">				
-		<tr align="center">
-		<td>
-		<label>작성자</label> ${sessionScope.LOGIN_EMAIL.email}<br/>
-		</td>
-		<td>
-		카테고리 <select name="categoryNo">
-		 <c:forEach var="category" items="${CATEGORY_LIST}">
-		     <option value="${category.categoryNo}">${category.categoryName}</option>
-		 </c:forEach>
-		</select><br/>
-		</td>
-		<td>
-		거래방법 <select name="dealNo">
-		 <c:forEach var="deal" items="${DEAL_LIST}">
-		     <option value="${deal.dealNo}">${deal.dealWay}</option>
-		 </c:forEach>
-		</select><br/>
-		</td>
-		</tr>
-		<tr>
-		<td colspan="2">
-		<label>제목 </label><input type="text" size="50" name="boardTitle"/><br/>
-		</td>
-		<td>
-		<label>원하는 물건 </label><input type="text" size="20" name="boardWant"/><br/>
-		</td>		
-		</tr>
-		<tr>
-		<td colspan="3">
-		<label>내용</label><br><textarea cols="60" rows="10" name="boardContent"></textarea><br/>
-		</td>
-		</tr>
-		<tr align="center">	
-		</table>
-</form>	
-<table align="center">
-<tr><td><input type="file" name="file" id="uploadify"/></td>
-	<td><input type="button" id="addPhoto" value="등록" /></td>
-
-	<td><form action="/bookchange/BoardService" method="post">
-		<input type="hidden" name="method" value="viewBoardList"/></td>
-	<td><input type="submit" value="취소"></td> 
-		</form></td></tr>
-</table>
-	 	</td> 	
-	 	</table>
-	 </td>
-	</table>
+	 <h5 align="center">상대방 정보</h5>
+	 <table border="1" bordercolor="#E6E6FA" align="center">
+	 <tr>
+	 <td>email</td><td>${MEMBER.email}</td>
+	 </tr>
+	 <tr>
+	 <td>주소</td><td>${MEMBER.address}</td>
+	 </tr>
+	 <tr>
+	 <td>전화번호</td><td>${MEMBER.tel}</td>
+	 </tr>	 
+	 </table>
+	 <center><br>
+	 <a href="/bookchange/ChangeService?method=matchChangeList">
+	 <img src="/bookchange/webimg/return.gif" border="0"></a>
+	 </center>
    </td>
   </tr>
  </table>
  </td>
  </tr>
-
 </body>
 </html>
