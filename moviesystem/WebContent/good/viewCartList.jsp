@@ -15,23 +15,44 @@
 $(document).ready(function(){
 	$("#my_form").validate({
 		rules:{
-			qty:{
-				digits:true,
-				range:[1,100]
-			}
+			<c:forEach var="buy" items="${sessionScope.CART_LIST }" varStatus="i">
+				qty${i.count-1}:{
+					digits:true,
+					range:[1,100]
+				}
+				<c:if test="${sessionScope.CART_LIST[i.count] ne null}">
+					,
+				</c:if>
+			</c:forEach>
 		},
 		messages:{
-			qty:{
+			<c:forEach var="buy" items="${sessionScope.CART_LIST }" varStatus="i">
+			qty${i.count-1}:{
 				digits:"숫자 정수를 입력해주세요.",
 				range:"1 이상 100 이하의 값을 입력해주세요."
-			}
+				}
+			<c:if test="${sessionScope.CART_LIST[i.count] ne null}">
+				,
+			</c:if>
+			</c:forEach>
 		},
-		errorPlacement: function(error, element) {     
-			error.appendTo( $(".qtymsg") );
+		errorPlacement: function(error, element) { 
+			<c:forEach var="buy" items="${sessionScope.CART_LIST }" varStatus="i">
+			qty${i.count-1}:{
+				error.appendTo( $("#qtymsg${i.count-1}"));
 			}
+			<c:if test="${sessionScope.CART_LIST[i.count] ne null}">
+				,
+			</c:if>
+			</c:forEach>
+		}
 		
 	});
+
 });
+//editCartList에서 qty를 받는데 validation이 name태크를 보고 검사하므로 이름이 바뀌면  /editCartList에 qty값이 전달이 안된다
+// id로 할수 있는 방법이 없나?  유효성 검사도 안된다.
+
 </script>
 </head>
 <body>
@@ -59,6 +80,7 @@ $(document).ready(function(){
 
 	<c:forEach var="buy"  items="${sessionScope.CART_LIST }" varStatus="i">
 	<tr>
+
 		<td>
 			<img src="/moviesystem/gphoto/${buy.good.photo}" width="100" height="100"/>
 		</td>
@@ -68,15 +90,16 @@ $(document).ready(function(){
 		<td>
 			${buy.good.gprice}
 		</td>
+
 		<td>
 
 			<form action="/moviesystem/GoodService" method="post" id="my_form">
 				<input type="hidden" name="method" value="editCartList"/>
-				<input type="text" name="qty" value="${buy.qty}" id="qty"size=6/>
+				<input type="text" name="qty" id="qty${i.count-1}" value="${buy.qty}" size=6/>
 				<input type="submit" value="수량변경"/><br/>
-				<input type="hidden" name="index" value="${i.count-1}"/>
-				<div class="qtymsg"></div>
-								
+				<input type="hidden" name="index" value="${i.count-1}"/>	
+				<div id="qtymsg${i.count-1}"></div>	
+				
 			</form>
 	
 		</td>	
@@ -86,7 +109,7 @@ $(document).ready(function(){
 		<td>
 			<form action="/moviesystem/GoodService" method="post">
 				<input type="hidden" name="method"value="removeCartList"/>
-				<input type="hidden" name="index"value="${i.count-1}"/>
+				<input type="hidden" name="index" value="${i.count-1}"/>
 				<input type="submit" value="삭제"/>
 			</form>
 		</td>
@@ -99,10 +122,12 @@ $(document).ready(function(){
 <table border="0" align="center" width="400">
 	<tr align="center"><br/>
 		<td>
-		<form action="/moviesystem/BuyService" method="post">
-			<input type="hidden" name="method" value="addBuy"/>	
-			<input type="submit" value="결제하기" />
-		</form>
+		<c:if test="${sessionScope.CART_LIST[0] ne null}">
+			<form action="/moviesystem/BuyService" method="post" class="my_form">
+				<input type="hidden" name="method" value="addBuy"/>	
+				<input type="submit" value="결제하기" />
+			</form>
+		</c:if>
 		</td>
 	</tr><br/>
 	<tr>
