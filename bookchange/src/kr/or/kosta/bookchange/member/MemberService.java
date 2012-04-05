@@ -83,6 +83,7 @@ public class MemberService extends HttpServlet {
 		
 		MemberDAO.insertMember(member);
 		
+		request.setAttribute("ERROR", "회원가입이 완료되었습니다.");
 		RequestDispatcher rd=request.getRequestDispatcher("main.jsp");
 		rd.forward(request, response);
 		
@@ -96,7 +97,7 @@ public class MemberService extends HttpServlet {
 	 */
 	public void addMemberForm(HttpServletRequest request,
 			HttpServletResponse response) throws IOException,ServletException {
-		RequestDispatcher rd=request.getRequestDispatcher("addMember.jsp");
+		RequestDispatcher rd=request.getRequestDispatcher("/member/addMember.jsp");
 		rd.forward(request, response);
 	
 	}
@@ -151,7 +152,9 @@ public class MemberService extends HttpServlet {
 		
 		MemberDAO.updateMember(member);
 		
-		RequestDispatcher rd=request.getRequestDispatcher("/MemberService?method=viewMember&email"+email);
+		request.setAttribute("ERROR", "정보수정이 완료되었습니다.");
+		
+		RequestDispatcher rd=request.getRequestDispatcher("/MemberService?method=viewMember");
 		rd.forward(request, response);
 		
 	}
@@ -302,7 +305,7 @@ public class MemberService extends HttpServlet {
 			request.setAttribute("MEMBER",member);
 			//System.out.println(email+"회원정보가 보입니다.");
 		
-			RequestDispatcher rd=request.getRequestDispatcher("/myInfo.jsp");
+			RequestDispatcher rd=request.getRequestDispatcher("/member/myInfo.jsp");
 			rd.forward(request, response);
 		}
 	}
