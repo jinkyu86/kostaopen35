@@ -16,16 +16,6 @@
 </style>
 <script type="text/javascript">
 	$(document).ready(function(){
-		$("#userid").change(function(){
-			var userid=$("#userid").val();
-			
-			$.ajax('/auction/MemberService',{
-				data:{"method":"checkuserID","userid":userid
-					},
-					success : function(data){
-						$('#useridcheck').html(data);
-					}
-			});	
 		$('#my_form').validate({
 			rules:{
 				userid:{
@@ -67,6 +57,16 @@
 				}		
 			}
 			});
+		$("#userid").change(function(){
+			var userid=$("#userid").val();
+			
+			$.ajax('/auction/MemberService',{
+				data:{"method":"checkuserID","userid":userid
+					},
+					success : function(data){
+						$('#useridcheck').html(data);
+					}
+			});	
 		});	
 	
 			$("#addMember").click(function (event){
@@ -80,7 +80,7 @@
 </script>
 
 </head>
-<body>
+<body background="/auction/gphoto/seo.jpg">
 	<h1 align="center">회원가입</h1>
 	<form  action="/auction/MemberService" 
 		method="post" id="my_form">
