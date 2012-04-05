@@ -156,6 +156,10 @@ public class BidService extends HttpServlet {
 		
 		Auction auction=AuctionDAO.selectAuction(aNum);
 		
+		//최근 입찰자 입력
+		String userid=member.getUserid();
+		auction.setUserid(userid);
+		
 		Bid bid=new Bid();
 		
 		//입찰가격 10원 증가

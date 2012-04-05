@@ -43,6 +43,7 @@
 	  </tr>
 </table>
 <br/><br/><br/>
+<h3 align="center">입찰중인 물품리스트</h3>
 <table border="1" align="center">
 	<tr>
 		<th>물품사진</th>
@@ -64,6 +65,28 @@
 	</tr>
 	</c:forEach>
 </table>	
+<h3 align="center">낙찰된 물품리스트</h3>
+<table border="1" align="center">
+	<tr>
+		<th>물품사진</th>
+		<th>물품명</th>
+		<th>낙찰시간</th>
+		<th>낙찰가격</th>
+	</tr>
+	
+	<c:forEach var="sold" items="${SOLD_LIST}">	
+	<tr>
+		<td><img src="/auction/gphoto/${sold.good.img }" height="100" width="100"></td>
+		<td align="center">
+			<a href="/auction/AuctionService?method=viewAuction&aNum=${sold.aNum }">
+				${sold.good.gName }
+			</a>
+		</td>
+		<td align="center">${sold.eTime }</td>
+		<td align="center">${sold.cuPrice }</td>
+	</tr>
+	</c:forEach>
+</table>
 	  <p align="center">
 	    <a href="/auction/BidService?method=moneyBack&userid=${MEMBER.userid}">
 	    유찰된 코인 emoney로 돌려받기

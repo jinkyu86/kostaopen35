@@ -45,6 +45,8 @@ public class Auction {
 	 * 현재 입찰가
 	 */
 	private String cuPrice;
+	
+	private String userid;
 
 	public Good getGood() {
 		return good;
@@ -111,11 +113,20 @@ public class Auction {
 		this.eTime = eTime;
 	}
 
+	public String getUserid() {
+		return userid;
+	}
+
+	public void setUserid(String userid) {
+		this.userid = userid;
+	}
+
 	@Override
 	public String toString() {
 		return "Auction [good=" + good + ", aNum=" + aNum + ", sPrice="
 				+ sPrice + ", imPrice=" + imPrice + ", sTime=" + sTime
 				+ ", eTime=" + eTime + ", sold=" + sold + ", cuPrice="
-				+ cuPrice + "]";
+				+ cuPrice + ", userid=" + userid + "]";
 	}
+	
 }

@@ -214,6 +214,84 @@ public class BidDAO {
 		return bidList;
 	}
 
+	public static Bid selectSold(String aNum) {
+		Connection con=null;
+		PreparedStatement psmt=null;
+		Bid bid=null;
+		
+		String sql="SELECT b.bidnum,b.a_num,b.userid,b.bid_time,b.bid_price,b.moneyback," +
+								  "a.g_num,a.s_price,a.im_price,a.s_time,a.e_time,a.sold,a.cu_price," +
+								  "m.pw,m.name,m.email,m.coin,m.emoney," +
+								  "g.gname,g.detail,g.img " +
+					  "FROM BID b, AUCTION a, MEMBER m, GOOD g " +
+					  "WHERE b.a_num=a.a_num AND b.userid=m.userid AND a.g_num=g.g_num " +
+					  "ORDER BY bid_time DESC";
+		con=ConnectionUtil.getConnection();
+		try {
+			psmt=con.prepareStatement(sql);
+			ResultSet rs=psmt.executeQuery();
+			if(rs.next()){
+				String bidNum=rs.getString(1);
+				aNum=rs.getString(2);
+				String userid=rs.getString(3);
+				String bidTime=rs.getString(4);
+				String bidPrice=rs.getString(5);
+				int moneyback=rs.getInt(6);
+				String gNum=rs.getString(7);
+				String sPrice=rs.getString(8);
+				String imPrice=rs.getString(9);
+				String sTime=rs.getString(10);
+				String eTime=rs.getString(11);
+				int sold=rs.getInt(12);
+				String cuPrice=rs.getString(13);
+				String pw=rs.getString(14);
+				String name=rs.getString(15);
+				String email=rs.getString(16);
+				String coin=rs.getString(17);
+				String emoney=rs.getString(18);
+				String gName=rs.getString(19);
+				String detail=rs.getString(20);
+				String img=rs.getString(21);
+				
+				Member member=new Member();
+				member.setUserid(userid);
+				member.setName(name);
+				member.setPw(pw);
+				member.setEmail(email);
+				member.setCoin(coin);
+				member.setEmoney(emoney);
+				
+				Good good=new Good();
+				good.setgNum(gNum);
+				good.setgName(gName);
+				good.setDetail(detail);
+				good.setImg(img);
+					
+				Auction auction=new Auction();
+				auction.setaNum(aNum);
+				auction.setGood(good);
+				auction.setsPrice(sPrice);
+				auction.setImPrice(imPrice);
+				auction.setsTime(sTime);
+				auction.seteTime(eTime);
+
+				auction.setSold(sold);
+				auction.setCuPrice(cuPrice);				
+				
+				bid=new Bid();
+				bid.setBidNum(bidNum);
+				bid.setMember(member);
+				bid.setAuction(auction);
+				bid.setBidTime(bidTime);
+				bid.setBidPrice(bidPrice);
+				bid.setMoneyback(moneyback);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return bid;
+	}
+	
 	public static ArrayList<Bid> selectBidList(int length, int page) {
 		Connection con=null;
 		PreparedStatement psmt=null;

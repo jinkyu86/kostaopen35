@@ -73,7 +73,9 @@ public class AuctionService extends HttpServlet {
 		Auction auction = new Auction();
 		auction.setaNum(aNum);	
 		auction.setsPrice("10");
+		auction.setsPrice(sPrice);
 		auction.setImPrice(imPrice);
+		auction.setCuPrice(cuPrice);
 		auction.setsTime(sTime);
 		auction.seteTime(eTime);
 		auction.setSold(Integer.parseInt(sold));
@@ -205,6 +207,7 @@ public class AuctionService extends HttpServlet {
 		//1.AuctionDAO에서 전체 경매조회 메서드 호출
 		ArrayList<Auction> auctionList=AuctionDAO.selectAuctionList();
 		ArrayList<Auction> soldList=AuctionDAO.selectSoldList();
+		
 		//2.request에 1의 전체 경매 정보 저장
 		request.setAttribute("AUCTION_LIST", auctionList);
 		request.setAttribute("SOLD_LIST", soldList);

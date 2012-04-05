@@ -60,7 +60,8 @@ public class AuctionDAO {
 					+ "sold=?, "
 					+ "cu_price=?," 
 					+ "s_time=to_date(?,'yyyy-mm-dd hh24:mi:ss')," 
-					+ "e_time=to_date(?,'yyyy-mm-dd hh24:mi:ss')  " 
+					+ "e_time=to_date(?,'yyyy-mm-dd hh24:mi:ss')," 
+					+ "userid=? " 
 					+ "WHERE a_num=?");
 
 			psmt.setString(1, auction.getGood().getgNum());
@@ -70,7 +71,8 @@ public class AuctionDAO {
 			psmt.setString(5, auction.getCuPrice());
 			psmt.setString(6, auction.getsTime());
 			psmt.setString(7, auction.geteTime());
-			psmt.setString(8, auction.getaNum());
+			psmt.setString(8, auction.getUserid());
+			psmt.setString(9, auction.getaNum());
 			psmt.executeUpdate();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -106,7 +108,7 @@ public class AuctionDAO {
 		con = ConnectionUtil.getConnection();
 		try {
 			psmt = con
-					.prepareStatement("SELECT a.g_num,a.s_price,a.im_price,to_char(a.s_time,'yyyy-mm-dd hh24:mi:ss'),to_char(a.e_time,'yyyy-mm-dd hh24:mi:ss'),a.sold,a.cu_price,"
+					.prepareStatement("SELECT a.g_num,a.s_price,a.im_price,to_char(a.s_time,'yyyy-mm-dd hh24:mi:ss'),to_char(a.e_time,'yyyy-mm-dd hh24:mi:ss'),a.sold,a.cu_price,a.userid,"
 							+ "g.gname,g.detail,g.img"
 							+ " FROM auction a,good g "
 							+ " WHERE a.g_num = g.g_num AND a.a_num=?");
@@ -120,9 +122,10 @@ public class AuctionDAO {
 				String eTime = rs.getString(5);
 				int sold = rs.getInt(6);
 				String cuPrice = rs.getString(7);
-				String gName = rs.getString(8);
-				String detail = rs.getString(9);
-				String img = rs.getString(10);
+				String userid = rs.getString(8);
+				String gName = rs.getString(9);
+				String detail = rs.getString(10);
+				String img = rs.getString(11);
 
 				Good good = new Good();
 
@@ -140,6 +143,7 @@ public class AuctionDAO {
 				auction.setImPrice(imPrice);
 				auction.setsPrice(sPrice);
 				auction.setGood(good);
+				auction.setUserid(userid);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -156,7 +160,7 @@ public class AuctionDAO {
 
 		try {
 			con = ConnectionUtil.getConnection();
-			sql = "SELECT a.a_num,a.s_price,a.im_price,a.s_time,a.e_time,a.sold,a.cu_price,"
+			sql = "SELECT a.a_num,a.s_price,a.im_price,a.s_time,a.e_time,a.sold,a.cu_price,a.userid,"
 					+ "g.g_num,g.gname,g.detail,g.img"
 					+ " FROM auction a,good g "
 					+ " WHERE a.g_num = g.g_num " +
@@ -173,10 +177,11 @@ public class AuctionDAO {
 				String eTime = rs.getString(5);
 				int sold=rs.getInt(6);
 				String cuPrice = rs.getString(7);
-				String gNum = rs.getString(8);
-				String gname = rs.getString(9);
-				String detail = rs.getString(10);
-				String img = rs.getString(11);
+				String userid = rs.getString(8);
+				String gNum = rs.getString(9);
+				String gname = rs.getString(10);
+				String detail = rs.getString(11);
+				String img = rs.getString(12);
 				
 
 				Good good = new Good();
@@ -196,6 +201,7 @@ public class AuctionDAO {
 				auction.setImPrice(imPrice);
 				auction.setsPrice(sPrice);
 				auction.setGood(good);
+				auction.setUserid(userid);
 
 				auctionList.add(auction);
 			}
@@ -205,6 +211,64 @@ public class AuctionDAO {
 		return auctionList;
 	}
 
+	public static ArrayList<Auction> selectSoldListById(String userid){
+		Connection con = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		String sql = null;
+		ArrayList<Auction> auctionList = new ArrayList<Auction>();
+
+		try {
+			con = ConnectionUtil.getConnection();
+			sql = "SELECT a.a_num,a.s_price,a.im_price,a.s_time,a.e_time,a.sold,a.cu_price,a.userid,"
+					+ "g.g_num,g.gname,g.detail,g.img"
+					+ " FROM auction a,good g "
+					+ " WHERE a.g_num = g.g_num AND a.e_time<sysdate AND a.userid=?" +
+					" ORDER BY a.e_time , a.a_num";
+			psmt = con.prepareStatement(sql);
+			psmt.setString(1, userid);
+			
+			rs = psmt.executeQuery();
+			while (rs.next()) {
+				String aNum = rs.getString(1); 
+				String sPrice = rs.getString(2);
+				String imPrice = rs.getString(3);
+				String sTime = rs.getString(4);
+				String eTime = rs.getString(5);
+				int sold=rs.getInt(6);
+				String cuPrice = rs.getString(7);
+				userid = rs.getString(8);
+				String gNum = rs.getString(9);
+				String gname = rs.getString(10);
+				String detail = rs.getString(11);
+				String img = rs.getString(12);
+			
+				Good good = new Good();
+				good.setDetail(detail);
+				good.setgName(gname);
+				good.setgNum(gNum);
+				good.setImg(img);
+
+				Auction auction = new Auction();
+
+				auction.setaNum(aNum);
+				auction.setCuPrice(cuPrice);
+				auction.setSold(sold);
+				auction.seteTime(eTime);
+				auction.setsTime(sTime);
+				auction.setImPrice(imPrice);
+				auction.setsPrice(sPrice);
+				auction.setGood(good);
+				auction.setUserid(userid);
+
+				auctionList.add(auction);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return auctionList;
+	}
+	
 	public static ArrayList<Auction> selectSoldList() {
 		Connection con = null;
 		PreparedStatement psmt = null;
@@ -214,7 +278,7 @@ public class AuctionDAO {
 
 		try {
 			con = ConnectionUtil.getConnection();
-			sql = "SELECT a.a_num,a.s_price,a.im_price,a.s_time,a.e_time,a.sold,a.cu_price,"
+			sql = "SELECT a.a_num,a.s_price,a.im_price,a.s_time,a.e_time,a.sold,a.cu_price,userid,"
 					+ "g.g_num,g.gname,g.detail,g.img"
 					+ " FROM auction a,good g "
 					+ " WHERE a.g_num = g.g_num" +
@@ -231,10 +295,11 @@ public class AuctionDAO {
 				String eTime = rs.getString(5);
 				int sold=rs.getInt(6);
 				String cuPrice = rs.getString(7);
-				String gNum = rs.getString(8);
-				String gname = rs.getString(9);
-				String detail = rs.getString(10);
-				String img = rs.getString(11);
+				String userid = rs.getString(8);
+				String gNum = rs.getString(9);
+				String gname = rs.getString(10);
+				String detail = rs.getString(11);
+				String img = rs.getString(12);
 				
 
 				Good good = new Good();
@@ -253,6 +318,7 @@ public class AuctionDAO {
 				auction.setImPrice(imPrice);
 				auction.setsPrice(sPrice);
 				auction.setGood(good);
+				auction.setUserid(userid);
 
 				auctionList.add(auction);
 			}
@@ -275,7 +341,7 @@ public class AuctionDAO {
 
 		try {
 			con = ConnectionUtil.getConnection();
-			sql = "SELECT a.a_num,a.s_price,a.im_price,a.s_time,a.e_time,a.sold,a.cu_price,"
+			sql = "SELECT a.a_num,a.s_price,a.im_price,a.s_time,a.e_time,a.sold,a.cu_price,a.userid,"
 					+ "g.g_num,g.gname,g.detail,g.img"
 					+ " FROM auction a,good g "
 					+ " WHERE a.g_num = g.g_num " +
@@ -297,10 +363,11 @@ public class AuctionDAO {
 				String eTime = rs.getString(5);
 				int sold=rs.getInt(6);
 				String cuPrice = rs.getString(7);
-				String gNum = rs.getString(8);
-				String gname = rs.getString(9);
-				String detail = rs.getString(10);
-				String img = rs.getString(11);
+				String userid = rs.getString(8);
+				String gNum = rs.getString(9);
+				String gname = rs.getString(10);
+				String detail = rs.getString(11);
+				String img = rs.getString(12);
 				
 
 				Good good = new Good();
@@ -319,6 +386,7 @@ public class AuctionDAO {
 				auction.setImPrice(imPrice);
 				auction.setsPrice(sPrice);
 				auction.setGood(good);
+				auction.setUserid(userid);
 
 				auctionList.add(auction);
 			}
@@ -343,7 +411,7 @@ public class AuctionDAO {
 
 		try {
 			con = ConnectionUtil.getConnection();
-			sql = "SELECT a.a_num,a.s_price,a.im_price,a.s_time,a.e_time,a.sold,a.cu_price,"
+			sql = "SELECT a.a_num,a.s_price,a.im_price,a.s_time,a.e_time,a.sold,a.cu_price,a.userid,"
 					+ "g.g_num,g.gname,g.detail,g.img"
 					+ " FROM auction a,good g "
 					+ " WHERE a.g_num = g.g_num AND sold = '1' " +
@@ -364,10 +432,11 @@ public class AuctionDAO {
 				String eTime = rs.getString(5);
 				int sold=rs.getInt(6);
 				String cuPrice = rs.getString(7);
-				String gNum = rs.getString(8);
-				String gname = rs.getString(9);
-				String detail = rs.getString(10);
-				String img = rs.getString(11);
+				String userid=rs.getString(8);
+				String gNum = rs.getString(9);
+				String gname = rs.getString(10);
+				String detail = rs.getString(11);
+				String img = rs.getString(12);
 				
 
 				Good good = new Good();
@@ -386,6 +455,7 @@ public class AuctionDAO {
 				auction.setImPrice(imPrice);
 				auction.setsPrice(sPrice);
 				auction.setGood(good);
+				auction.setUserid(userid);
 
 				auctionList.add(auction);
 			}

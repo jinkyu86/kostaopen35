@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import kr.or.kosta.auction.auction.Auction;
+import kr.or.kosta.auction.auction.AuctionDAO;
 import kr.or.kosta.auction.bid.Bid;
 import kr.or.kosta.auction.bid.BidDAO;
 import kr.or.kosta.auction.good.Good;
@@ -213,9 +215,13 @@ public class MemberService extends HttpServlet {
 		member=MemberDAO.selectMember(userid);
 		//해당ID의 최근 입찰한 5개의 입찰리스트 호출
 		ArrayList<Bid> bidList=BidDAO.selectBidListByID(5, 1, userid);
+		//해당ID의 낙찰된 입찰리스트
+		ArrayList<Auction> soldList=AuctionDAO.selectSoldListById(userid);
+		//해당ID의 낙찰물품 리스트
 		//세션에 정보 저장
 		session.setAttribute("MEMBER", member);
 		session.setAttribute("BID_LIST", bidList);
+		session.setAttribute("SOLD_LIST",soldList);
 		RequestDispatcher rd=
 				request.getRequestDispatcher("/member/viewMember.jsp");
 		rd.forward(request, response);
