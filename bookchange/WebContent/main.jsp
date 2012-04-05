@@ -77,11 +77,19 @@
 		 </div></td>
 		 </tr>
 		 </form>
-		 <td colspan="5"><div align="right">
-		 <a href="/bookchange/MemberService?method=addMemberForm"><button>회원가입</button></a>
-		 <a href="/bookchange/MemberService?method="><button>Email/Pw찾기</button></a>
-		 </div></td>
-	     </table>
+		 <tr>
+		 <td><div align="right">
+		 <form action="/bookchange/MemberService" method="post">
+	  	 <input type="hidden" name="method" value="addMemberForm">
+	  	  <input type="submit" value="회원가입"/>
+	  	 </form></div></td>
+		 <td><div align="right">
+		 <form action="/bookchange/MemberService" method="post">
+	  	 <input type="hidden" name="method" value="">
+	  	   <input type="submit" value="Email/Pw찾기"/>
+	  	 </form></div></td>
+		 </tr>
+		 </table>
 	     </fieldset>
 	    </c:when>
 	   <c:otherwise>
@@ -102,15 +110,16 @@
 		 <td><div align="right">
 		 <form action="/bookchange/MemberService" method="post">
 	  	 <input type="hidden" name="method" value="removeMemberForm">
-	  	   <ul><input type="submit" value="회원탈퇴"/></ul>
-	  	 </form>
+	  	  <input type="submit" value="회원탈퇴"/>
+	  	 </form></div></td>
+		 <td><div align="right">
 		 <form action="/bookchange/MemberService" method="post">
 	  	 <input type="hidden" name="method" value="editMemberForm">
-	  	   <ul><input type="submit" value="정보수정"/></ul>
+	  	   <input type="submit" value="정보수정"/>
 	  	 </form>
 		 </div></td>
 		</tr>
-	    </table>
+		</table>
 	    </fieldset>
 	   </c:otherwise>
 	  </c:choose>
@@ -137,5 +146,3 @@
  </tr>
 </body>
 </html>
-
-
