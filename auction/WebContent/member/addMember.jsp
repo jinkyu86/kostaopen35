@@ -16,6 +16,16 @@
 </style>
 <script type="text/javascript">
 	$(document).ready(function(){
+		$("#userid").change(function(){
+			var userid=$("#userid").val();
+			
+			$.ajax('/auction/MemberService',{
+				data:{"method":"checkuserID","userid":userid
+					},
+					success : function(data){
+						$('#useridcheck').html(data);
+					}
+			});	
 		$('#my_form').validate({
 			rules:{
 				userid:{
@@ -58,16 +68,7 @@
 			}
 			});
 		});	
-		$("#userid").change(function(){
-			var userid=$("#userid").val();
-			
-			$.ajax('/auction/MemberService',{
-				data:{"method":"checkuserID","userid":userid
-					},
-					success : function(data){
-						$('#useridcheck').html(data);
-					}
-			});	
+	
 			$("#addMember").click(function (event){
 				var result=confirm("가입하시겠습니까?");
 			
