@@ -11,8 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.springframework.mock.web.MockHttpServletRequest;
-
 import kr.or.kosta.good.Good;
 import kr.or.kosta.good.GoodDAO;
 import kr.or.kosta.member.Member;
@@ -39,11 +37,11 @@ public class OrderService extends HttpServlet {
 		}
 		if("viewOrderList".equals(method)){			//아이디를 이용한 주문리스트 조회
 			viewOrderList(request,response);
-		}else if("viewOrder".equals(method)){		//주문조회
+		}else if("viewOrder".equals(method)){		//상세주문조회
 			viewOrder(request,response);
 		}else if("addOrder".equals(method)){		//주문하기
 			addOrder(request,response);
-		}else if("addOrderForm".equals(method)){	//주문하기폼
+		}else if("addOrderForm".equals(method)){	//주문하기
 			addOrderForm(request,response);
 		}else if("removeCart".equals(method)){		//장바구니 삭제
 			removeCart(request,response);
@@ -51,12 +49,16 @@ public class OrderService extends HttpServlet {
 			editOrder(request,response);
 		}else if("editOrderForm".equals(method)){	//주문수정폼
 			editOrderForm(request,response);
-		}else if("addCartForm".equals(method)){		//장바구니폼
-			addCartForm(request,response);
-		}else if("viewCartList".equals(method)){	//장바구니조회
+		}else if("viewCartList".equals(method)){	//장바구니
 			viewCartList(request,response);
 		}
 	}
+
+//	private void viewCartList(HttpServletRequest request,
+//			HttpServletResponse response) throws IOException,ServletException{
+//		RequestDispatcher rd=request.getRequestDispatcher("/order/viewCartList.jsp");
+//		rd.forward(request, response);
+//	}
 
 	private void viewCartList(HttpServletRequest request,
 			HttpServletResponse response) throws IOException,ServletException{
@@ -65,12 +67,6 @@ public class OrderService extends HttpServlet {
 		HttpSession session1=request.getSession();
 		session1.setAttribute("LOGIN",member1);
 		
-		RequestDispatcher rd=request.getRequestDispatcher("/order/viewCartList.jsp");
-		rd.forward(request, response);
-	}
-
-	private void addCartForm(HttpServletRequest request,
-			HttpServletResponse response) throws IOException,ServletException{
 		int goodnum=Integer.parseInt(request.getParameter("goodNum"));
 		int qty=Integer.parseInt(request.getParameter("qty"));
 		
@@ -104,18 +100,13 @@ public class OrderService extends HttpServlet {
 		}
 		session.setAttribute("CART_LIST",cartList);
 		//viewcartList이동
-		RequestDispatcher rd=request.getRequestDispatcher("/OrderService?method=viewCartList");
+		RequestDispatcher rd=request.getRequestDispatcher("/order/viewCartList.jsp");
 		rd.forward(request, response);
 	}
 
 	//아이디를 이용한 주문리스트 조회
 	public void viewOrderList(HttpServletRequest request,
 			HttpServletResponse response) throws IOException,ServletException{
-		Member member1=new Member();
-		member1.setMemberid("yubi");
-		HttpSession session1=request.getSession();
-		session1.setAttribute("LOGIN",member1);
-		
 		HttpSession session=request.getSession();
 		Member member=(Member)session.getAttribute("LOGIN");
 		String memberid=member.getMemberid();
@@ -154,7 +145,17 @@ public class OrderService extends HttpServlet {
 	//주문하기
 	public void addOrder(HttpServletRequest request,
 			HttpServletResponse response) throws IOException, ServletException{
-		RequestDispatcher rd=request.getRequestDispatcher("/order/addOrder.jsp");
+		HttpSession session=request.getSession();
+		Member member=(Member)session.getAttribute("LOGIN");
+		
+		ArrayList<Order>cartList=(ArrayList)session.getAttribute("CART_LIST");
+		for(int i=0; i<cartList.size(); i++){
+			Order order=cartList.get(i);
+			order.setMember(member);
+			OrderDAO.insertOrder(order);
+		}
+		session.removeAttribute("CART_LIST");
+		RequestDispatcher rd=request.getRequestDispatcher("/OrderService?method=viewOrderList");
 		rd.forward(request, response);
 	}
 
@@ -167,21 +168,12 @@ public class OrderService extends HttpServlet {
 	public void addOrderForm(HttpServletRequest request,
 			HttpServletResponse response) throws IOException, ServletException{
 		
-		int goodNum=Integer.parseInt(request.getParameter("goodNum"));
-		int qty=Integer.parseInt(request.getParameter("qty"));
-		Good good=GoodDAO.selectGood(goodNum);
-		Order order=new Order();
-		order.setGood(good);
-		order.setQty(qty);
 		HttpSession session=request.getSession();
-		ArrayList<Order>cartList=null;
-		session.setAttribute("CART_LIST",cartList);
-		
-		String memberid=request.getParameter("memberid");
-		Member member=MemberDAO.selsctMember(memberid);
-		order.setMember(member);
-		request.setAttribute("MEMBER",order);
-		System.out.println(order);
+		Member member=(Member)session.getAttribute("LOGIN");
+		Member member1=MemberDAO.selsctMember(member.getMemberid());
+		request.setAttribute("MEMBER",member1);
+		RequestDispatcher rd=request.getRequestDispatcher("order/addOrder.jsp");
+		rd.forward(request, response);
 	}
 
 	//장바구니 삭제

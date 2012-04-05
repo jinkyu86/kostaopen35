@@ -24,7 +24,7 @@ public class OrderDAOTest {
 //		member.setMemberid("yubi");
 //		order.setMember(member);
 //		Good good = new Good();
-//		good.setGoodNum(1);
+//		good.setGoodNum(3);
 //		good.setGoodPrice(13900);
 //		order.setGood(good);
 //		
@@ -33,12 +33,12 @@ public class OrderDAOTest {
 //		System.out.println(order);
 //	}
 
-	@Test
-	public void testSelectOrder(){
-		Order order=new Order();
-		order=OrderDAO.selectOrder(1);
-		System.out.println(order);
-	}
+//	@Test
+//	public void testSelectOrder(){
+//		Order order=new Order();
+//		order=OrderDAO.selectOrder(1);
+//		System.out.println(order);
+//	}
 	
 //	@Test
 //	public void testDeleteOrder(){
