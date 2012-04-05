@@ -97,7 +97,9 @@ public class ChangeService extends HttpServlet {
 		String demandBoardNo=request.getParameter("demandBoardNo");
 		
 		ChangeDAO.cancelChange(Integer.parseInt(agreeBoardNo),Integer.parseInt(demandBoardNo));
-		RequestDispatcher rd=request.getRequestDispatcher("/member/loginafter.jsp");
+		
+		request.setAttribute("ERROR","교환요청이 취소되었습니다.");
+		RequestDispatcher rd=request.getRequestDispatcher("/ChangeService?method=requestChangeList");
 		rd.forward(request, response);
 	}
 
@@ -117,7 +119,9 @@ public class ChangeService extends HttpServlet {
 		change.setDemandBoard(demandBoard);
 		
 		ChangeDAO.matchChange(change);
-		RequestDispatcher rd=request.getRequestDispatcher("/member/loginafter.jsp");
+		
+		request.setAttribute("ERROR","교환신청을 수락하셨습니다.");
+		RequestDispatcher rd=request.getRequestDispatcher("/ChangeService?method=matchChangeList");
 		rd.forward(request, response);
 	}
 
@@ -185,6 +189,8 @@ public class ChangeService extends HttpServlet {
 		change.setDemandBoard(demandBoard);
 		
 		ChangeDAO.insertChange(change);
+		
+		request.setAttribute("ERROR","교환 신청되었습니다.");
 		RequestDispatcher rd=request.getRequestDispatcher("/ChangeService?method=requestChangeList");
 		rd.forward(request, response);
 		
