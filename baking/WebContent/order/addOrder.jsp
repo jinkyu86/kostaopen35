@@ -88,7 +88,7 @@ function no(){
 		<th>옵션</th>
 		<th>가격</th>
 	</tr>
-	<c:forEach var="order" items="${sessionScope.CART_LIST}" varStatus="i">
+	<c:forEach var="order" items="${sessionScope.CART_LIST}">
 	<tr>
 		<td>${order.good.goodNum}</td>
 		<td>${order.good.name}</td>
@@ -99,8 +99,8 @@ function no(){
 	</tr>
 	</c:forEach>
 </table>
-<p align="center">주문자정보</p>
-<table style="border: 2px solid #ddd;">
+<h3 align="center">주문자정보</h3>
+<table style="border: 2px solid #ddd;" align="center">
 	<tr>
 		<td style="border: 2px solid #ddd;" width="150px"  align="center" height="37px">이름</td>
 		<td><input type="text" size=25 name="name1" value="${MEMBER.name}"/></td>
@@ -130,12 +130,12 @@ function no(){
 		</td>
 	</tr>
 </table>
-<p align="center">배송지정보</p>
+<h3 align="center">배송지정보</h3>
 <p align="right">배송지 정보가 주문지 정보와 동일합니까?
 <input type=radio name=sl value="0"  onclick="yes()"/>예
 <input type=radio name=sl value="1"  onclick="no()"/>아니오</p>
 
-<table style="border: 2px solid #ddd;" >
+<table style="border: 2px solid #ddd;" align="center">
 	<tr>
 		<td style="border: 2px solid #ddd;" width="150px"  align="center" height="37px">이름</td>
 		<td><input type="text" size=25 name="name"/></td>
@@ -166,11 +166,12 @@ function no(){
 	</tr>
 </table>
 </form>
+<center>
 <form action="/baking/OrderService" method="post">
 	<input type="hidden" name="method" value="addOrder"/>
 	<input type="submit" value="구매하기"/>
 </form>
-
+</center>
 
 </ul>
 </section>	

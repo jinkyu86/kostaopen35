@@ -59,7 +59,9 @@
 	</tr>
 	<tr rowspan="3">
 		<td>
-			<img src="/baking/img/${ORDER.good.good_division.gName}/${ORDER.good.img}"/>
+		<c:forEach var="order" items="${sessionScope.CART_LIST}">
+			<img src="/baking/img/${order.good.good_division.gName}/${order.good.img}"/>
+		</c:forEach>
 		</td>
 		<td>수량:${ORDER.qty}
 		<br/>
