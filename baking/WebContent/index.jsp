@@ -14,7 +14,6 @@ pageEncoding="utf-8"%>
 	a:hover {text-decoration:none}
 	a {color:#000000; text-decoration:none; }
 </style>
-<!--[if IE]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->	
 </head>
 <ul>	
 	<div ALIGN="right">
@@ -30,20 +29,18 @@ pageEncoding="utf-8"%>
 	</div>
 <body>
 <header>
-<marquee width=200 scrollamount=70>★</marquee><marquee width=150 scrollamount=47><font color=hotpink>★</font></marquee><marquee width=200 scrollamount=48><font color=green>☆</font></marquee><br> <marquee width=100 scrollamount=45><font color=blue>☆</font></marquee><marquee width=130 scrollamount=57><font color=hotblue>☆</font></marquee><marquee width=180 scrollamount=60><font color=red>★</font>
-</marquee><marquee width=200 scrollamount=68><font color=purple>☆</font></marquee><br><h1>HOME BAKING MALL</h1> <marquee width=143 scrollamount=47><font color=pink>☆</font></marquee><marquee width=150 scrollamount=52><font color=violet>☆</font></marquee><marquee width=170 scrollamount=58><font color=orange>★</font></marquee><br> <br>			
-<!-- <P><font size=4>HOME BAKING</font></p>	 -->		
+<h1>HOME BAKING MALL</h1> <br> <br>	
 </header>
 <nav>
 <!-- top nav -->	
 <div class="menu">			
 <ul>			
-	<li><a href="">홈</a></li>			
+	<li><a href="/baking/GoodService?method=viewIndex">홈</a></li>			
 	<li><a href="/baking/GoodService?method=viewGoodList">상품</a></li>				
 	<li><a href="/baking/RecipeService?method=viewRecipeList">레시피</a></li>			
-	<li><a href="">장바구니</a></li>			
-	<li><a href="">주문조회</a></li>				
-	<li><a href="">마이레시피</a></li>		
+	<li><a href="/baking/RecipeService?method=">장바구니</a></li>			
+	<li><a href="/baking/RecipeService?method=">주문조회</a></li>				
+	<li><a href="/baking/RecipeService?method=viewOrderList">마이레시피</a></li>		
 </ul>	
 </div>
 </nav>
@@ -53,7 +50,7 @@ pageEncoding="utf-8"%>
 <section id="content">	
 	<c:if test="${sessionScope.member.memberid=='ADMIN'}">
 		<center>
-		<a href="/baking/GoodService?method=addGoodForm">상품등록</a>
+		<a href="/baking/GoodService?method=addGoodForm"><input type="button" value="상품등록"> </a>
 		</center>
 	</c:if>
 <ul class="column">			        
