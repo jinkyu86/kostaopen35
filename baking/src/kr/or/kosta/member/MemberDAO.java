@@ -211,27 +211,73 @@ public class MemberDAO {
 		}
 	}
 	
-//	public static Member login(String memberid,String password){
-//		Member member=null;
-//		Connection con=null;
-//		PreparedStatement psmt=null;
-//		ResultSet rs=null;
-//		String sql="select memberid,password,name,regi_number,pw_hint,pw_answer,zipcode,address,str_address,email,phone_number,tel_number"+
-//				     " from member"+
-//				     " where memberid=? and password=?";
-//		try {
-//			con=ConnectionUtil.getConnection();
-//			psmt=con.prepareStatement(sql);
-//			psmt.setString(1, memberid);
-//			psmt.setString(2, password);
-//			rs=psmt.executeQuery();
-//			if(rs.next()){
-//				member = new Member(memberid,password,rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8),rs.getString(9),rs.getString(10));
-//			}
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		return member;
-//	}
+	public static Member login(String memberid,String password){
+		Member member=null;
+		Connection con=null;
+		PreparedStatement psmt=null;
+		ResultSet rs=null;
+		String sql="select memberid,password,name,regi_number,pw_hint,pw_answer,zipcode,address,str_address,email,phone_number,tel_number"+
+				     " from member"+
+				     " where memberid=? and password=?";
+		try {
+			con=ConnectionUtil.getConnection();
+			psmt=con.prepareStatement(sql);
+			psmt.setString(1, memberid);
+			psmt.setString(2, password);
+			rs=psmt.executeQuery();
+			if(rs.next()){
+				member = new Member(memberid,password,rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8),rs.getString(9),rs.getString(10));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return member;
+	}
+	
+	public static Member selsctMember(String memberid){
+		Connection con=null;
+		PreparedStatement psmt=null;
+		ResultSet rs=null;
+		Member member=new Member();
+		try {
+			con=ConnectionUtil.getConnection();
+			psmt=con.prepareStatement(
+					"select memberid, password, name, regi_number, pw_hint, pw_answer," +
+					" zipcode, address, str_address, email, phone_number, tel_number" +
+					" from member" +
+					" where memberid=?");
+			psmt.setString(1,memberid);
+			rs=psmt.executeQuery();
+			while(rs.next()){
+				String password=rs.getString(1);
+				String name=rs.getString(2);
+				String regiNum=rs.getString(3);
+				String pwhint=rs.getString(4);
+				String pwanswer=rs.getString(5);
+				String zipcode=rs.getString(6);
+				String address=rs.getString(7);
+				String strAddress=rs.getString(8);
+				String email=rs.getString(9);
+				String phoneNum=rs.getString(10);
+				String telNum=rs.getString(11);
+				
+				member.setPassword(password);
+				member.setName(name);
+				member.setRegiNumber(regiNum);
+				member.setPwHint(pwhint);
+				member.setPwAnswer(pwanswer);
+				member.setZipcode(zipcode);
+				member.setAddress(address);
+				member.setStrAddress(strAddress);
+				member.setEmail(email);
+				member.setPhoneNumber(phoneNum);
+				member.setTelNumber(telNum);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return member;
+	}
 }
