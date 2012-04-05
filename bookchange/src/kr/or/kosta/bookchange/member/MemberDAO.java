@@ -265,7 +265,7 @@ public class MemberDAO {
 				
 				member=new Member();
 				
-				member.setEmail(pw);
+				member.setPw(pw);
 				member.setEmail(realemail);
 				member.setTel(realtel);
 			}		
