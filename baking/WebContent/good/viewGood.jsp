@@ -39,21 +39,17 @@ function deleteGood(){
 <body>
 <header>
 <h1>HOME BAKING MALL</h1><br><br>
-<div style="margin-left: 500px; ">
-		ID:<input type="text" id=""/>
-		PW:<input type="password" id=""/>
-	</div>
 </header>
 <nav>
 <!-- top nav -->	
 <div class="menu">			
 <ul>			
-	<li><a href="">홈</a></li>			
+	<li><a href="/baking/GoodService?method=viewIndex">홈</a></li>			
 	<li><a href="/baking/GoodService?method=viewGoodList">상품</a></li>				
 	<li><a href="/baking/RecipeService?method=viewRecipeList">레시피</a></li>			
-	<li><a href="">장바구니</a></li>			
-	<li><a href="">주문조회</a></li>				
-	<li><a href="">마이레시피</a></li>		
+	<li><a href="/baking/RecipeService?method=">장바구니</a></li>			
+	<li><a href="/baking/RecipeService?method=">주문조회</a></li>				
+	<li><a href="/baking/RecipeService?method=viewOrderList">마이레시피</a></li>	
 </ul>	
 </div>
 </nav>
