@@ -58,8 +58,32 @@ public class MatchService extends HttpServlet {
 			addMatchForm(request,response);
 		}else if("removeMatch".equals(method)){
 			removeMatch(request,response);
+		}else if("viewMatchListToVistor".equals(method)){
+			viewMatchListToVistor(request,response);
 		}
 
+	}
+
+	private void viewMatchListToVistor(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		int page = 1;
+		if (request.getParameter("page") != null) {
+			page = Integer.parseInt(request.getParameter("page"));
+		}
+		int length = 10;
+
+		ArrayList<Match> matchList = MatchDAO.selectMatchList(page,length);
+		request.setAttribute("MATCH_LIST", matchList);
+		int matchCount = MatchDAO.selectMatchCount();
+		String pageLinkTag = PageUtil.generate(page, matchCount, length,
+				"MatchService?method=viewMatchList");
+		request.setAttribute("PAGE_LINK_TAG", pageLinkTag);
+		RequestDispatcher rd = request
+				.getRequestDispatcher("/match/viewMatchListToVistor.jsp");
+		rd.forward(request, response);
+
+	
+		
 	}
 
 	/**
