@@ -6,8 +6,15 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>회원가입</title>
+<link rel ="Stylesheet" href="jquery.validate.password.css"/>
+
 <script src="http://code.jquery.com/jquery-1.7.js"></script>
-<script>
+<script src="jquery.validate.password.js"></script>
+<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.js"></script>
+<style>
+	#password_row label.error {dispaly:none !important;}
+</style>
+<script type="text/javascript">
 	$(document).ready(function(){
 		$("#userid").change(function(){
 			var userid=$("#userid").val();
@@ -18,33 +25,55 @@
 					success : function(data){
 						$('#useridcheck').html(data);
 					}
-			});
-		});
-		$(document).ready(function(){
-			$extend(jQuery.validator.messages,{
-				required: '필수 입력 사항입니다.',
-				minlength: '{0}글자이상 입력해 주세요.',
-				email: '이메일 형식에 맞게 입력해 주세요.'
-			});
-			
-		$('my_form').vaalidate({
+			});	
+		$('#my_form').validate({
 			rules:{
-				userid:{
-					required : true,
-					minlength:3
+				pw: { 
+					password:true 
+					},
+				    pass_check: {
+				    	equalTo:'#password' 
+				   	},
+				    errorPlacement: function (label, element){
+				     label.prependTo(element.parent().next());
+				    },   
+				email:{
+					required:true,
+					email:true,
+					minlength:5
 				},
-				email: 'required email'
+				name:{
+					required:true,
+					minlength:2
+				}
+			},	
+			messages:{
+				pw:{
+					requird:'패스워드를 입력하세요'
+				},
+				pass_check: {
+			    	equalTo:'패스워드가 일치하지 않습니다' 
+			   	},
+				email:{
+					required:'이메일을 입력해주세요.',
+					email:'이메일 형식에 맞게 입력해주세요',
+					minlength: '{0}자 이상 입력하세요'
+				},
+				name:{
+					required: '이름을 입력해주세요.',
+					minlength: '{0}자 이상 입력하세요'
+				}		
 			}
-		
-	    });
-		});
+			});
+		});	
 	});
 </script>
+
 </head>
 <body>
 	<h1 align="center">회원가입</h1>
 	<form  action="/auction/MemberService" 
-		method="post">
+		method="post" id="my_form">
 		<input type="hidden"  name="method"
 		  value="addMember"/>
 		<table align="center">
@@ -53,9 +82,21 @@
 				<td><input type="text"  name="userid" id="userid">
 				<span id ="useridcheck"></span></td>
 			</tr>
-			<tr>
-				<td>비밀번호</td>
+			<tr id = "password">
+				<td><label>비밀번호</label></td>
 				<td><input type="password"  name="pw"></td>
+				<td>
+					<div class="password-meter">
+						<div class="password-meter-message"></div>
+						<div class="password-meter-bg">
+							<div class="password-meter-bar"></div>
+						</div>
+					</div>
+			</tr>
+			<tr>
+				<td><label>비밀번호 확인</label></td>
+				<td><input type="password" name="pass_check"/></td>
+				<td></td>	
 			</tr>
 			<tr>
 				<td>이메일</td>
