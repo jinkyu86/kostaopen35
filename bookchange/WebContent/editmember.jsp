@@ -89,16 +89,16 @@
 	  	   <input type="submit" value="Email/Pw찾기"/>
 	  	 </form></div></td>
 		 </tr>
-		 </table>
+	     </table>
 	     </fieldset>
 	    </c:when>
 	   <c:otherwise>
 	    <fieldset>
-	 	<table cellpadding="0" cellspacing="0" border="0">
+	 	<table align="left" cellpadding="0" cellspacing="0" border="0">
 	    <form action="/bookchange/MemberService" method="post">
 		<input type="hidden"name="method" value="logout">
 		<tr>
-		 <td>${sessionScope.LOGIN_EMAIL.email}님이 로그인하였습니다.</td>
+		 <td>${sessionScope.LOGIN_EMAIL.email}님이 로그인하셨습니다.</td>
 		</tr>
 		<tr>
 		 <td colspan="5"><div align="right">
@@ -119,7 +119,7 @@
 	  	 </form>
 		 </div></td>
 		</tr>
-		</table>
+	    </table>
 	    </fieldset>
 	   </c:otherwise>
 	  </c:choose>
@@ -127,44 +127,27 @@
 	</tr>
 	<tr>
 	 <table cellpadding="0" cellspacing="0" border="0">
-	   <c:choose>
-	   	<c:when test="${sessionScope.LOGIN_EMAIL!=null}">
-	   	 <tr>
-	     <td><a href="">
-	     <img align="right" src="webimg/block.GIF" title="신고하기" border="0" width="230"/></a></td>
-	     </tr>
-	   	 
-		 <tr>
-	     <td>
-	     <a href="/bookchange/ChangeService?method=acceptChangeList">나와 교환을 원하는 책 보기</a>
-	     </td>
-	     </tr>
-	   
-	     <tr>
-	     <td>
-	     <a href="/bookchange/ChangeService?method=requestChangeList">내가 교환을 원하는 책 보기</a>
-	     </td>
-	     </tr>
-	   
-	     <tr>
-	     <td>
-	     <a href="/bookchange/ChangeService?method=matchChangeList">교환중인 책보기</a>
-	     </td>
-	     </tr>
-	    </c:when>
-		<c:otherwise>
-		  <tr>
-	      <td><a href="">
-	      <img align="right" src="webimg/block.GIF" title="신고하기" border="0" width="230"/></a></td>
-	      </tr>
-		</c:otherwise>
-	   </c:choose>
+	   <tr>
+	   <td><a href="">
+	   <img align="right" src="webimg/block.GIF" title="신고하기" border="0" width="230"/></a></td>
+	   </tr>
 	 </table>
 	 </tr>
 	 <td width="550" height="600" valign="top" bgcolor="#FFFFFF">
-	 	<table width="550" height="600" cellpadding="0" cellspacing="0" border="1">
-	 	<td><jsp:include page="/board/boardListAtMain.jsp" flush="true"/></td> 	
-	 	</table>
+	 <fieldset>
+	 <li><div class="txt01"><h4 align="center">정보수정</h4></div></li>
+	 </fieldset>
+	 <fieldset>
+	  <form action="/bookchange/MemberService"method="post">
+		<input type="hidden" name="method" value="addMember">
+	 	<ul><li><div> 이메일</div><input type="text"name="email"/>(이메일 주소를 정확히 입력)</li></ul>
+		<ul><li><div> 비밀번호</div><input type="text"name="pw"/>(영어,숫자를 4자리 이상 입력)</li></ul>
+		<ul><li><div> 주소</div><input type="text"name="address" size="50"/></li></ul>
+		<ul><li><div> 핸드폰번호</div><input type="text"name="tel"/>(ex : XXX-XXXX-XXXX)</li></ul>
+		<ul><input type="submit" value="가입"/><a href="main.jsp"><button>가입취소</button></a></ul>				
+		</tr>
+		</form>
+	 </fieldset>
 	 </td>
 	</table>
    </td>

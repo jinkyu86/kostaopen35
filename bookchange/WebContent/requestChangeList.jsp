@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -127,44 +126,33 @@
 	</tr>
 	<tr>
 	 <table cellpadding="0" cellspacing="0" border="0">
-	   <c:choose>
-	   	<c:when test="${sessionScope.LOGIN_EMAIL!=null}">
-	   	 <tr>
-	     <td><a href="">
-	     <img align="right" src="webimg/block.GIF" title="신고하기" border="0" width="230"/></a></td>
-	     </tr>
-	   	 
-		 <tr>
-	     <td>
-	     <a href="/bookchange/ChangeService?method=acceptChangeList">나와 교환을 원하는 책 보기</a>
-	     </td>
-	     </tr>
-	   
-	     <tr>
-	     <td>
-	     <a href="/bookchange/ChangeService?method=requestChangeList">내가 교환을 원하는 책 보기</a>
-	     </td>
-	     </tr>
-	   
-	     <tr>
-	     <td>
-	     <a href="/bookchange/ChangeService?method=matchChangeList">교환중인 책보기</a>
-	     </td>
-	     </tr>
-	    </c:when>
-		<c:otherwise>
-		  <tr>
-	      <td><a href="">
-	      <img align="right" src="webimg/block.GIF" title="신고하기" border="0" width="230"/></a></td>
-	      </tr>
-		</c:otherwise>
-	   </c:choose>
+	   <tr>
+	   <td><a href="">
+	   <img align="right" src="webimg/block.GIF" title="신고하기" border="0" width="230"/></a></td>
+	   </tr>
 	 </table>
 	 </tr>
-	 <td width="550" height="600" valign="top" bgcolor="#FFFFFF">
-	 	<table width="550" height="600" cellpadding="0" cellspacing="0" border="1">
-	 	<td><jsp:include page="/board/boardListAtMain.jsp" flush="true"/></td> 	
-	 	</table>
+	 <td width="550" height="600" valign="top" bgcolor="#FFFFE0">
+	  <table bordercolor="#FFA500" border="1" align="center">
+	   <tr align="center">
+	   	<th>My Book</th>
+	    <th>신청한사람</th>
+	    <th>Trade Book</th>
+		<th>신청일자</th>
+	   </tr>
+	  <c:forEach var="change" items="${DEMAND_CHANGE_LIST}">
+       <tr>
+        <td><img src="/bookchange/bookimg/${change.agreeBoard.boardPhoto}" height="100" width="100"></td>
+        <td align="center">${change.agreeBoard.member.email}</td>
+        <td align="center">
+		<a href="/bookchange/BoardService?method=viewBoardWhenAgree&boardNo=${change.demandBoard.boardNo}&agreeBoardNo=${change.agreeBoard.boardNo}">
+		<img src="/bookchange/bookimg/${change.demandBoard.boardPhoto}"height="100" width="100"></a></td>
+		<td align="center">${change.changeDate}</td>
+       </tr>
+      </c:forEach>
+	  <p align="center">
+		${PAGE_LINK_TAG}
+	  </p>
 	 </td>
 	</table>
    </td>
