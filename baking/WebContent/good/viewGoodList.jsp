@@ -68,6 +68,6 @@ pageEncoding="utf-8"%>
 	</li>
 </c:forEach>
 </ul>
-</section>	
+</section>
 </body>
 </html>

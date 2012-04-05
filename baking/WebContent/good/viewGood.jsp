@@ -63,7 +63,7 @@ function deleteGood(){
 	<a href="/baking/GoodService?method=viewDivisionGoodList&division=3">- 초콜릿</a>	
 	<c:if test="${sessionScope.member.memberid=='ADMIN'}">
 		<center>
-		<a href="/baking/GoodService?method=editGoodForm"><input type="button" value="상품수정"></a>
+		<a href="/baking/GoodService?method=editGoodForm&goodNum=${GOOD.goodNum }"><input type="button" value="상품수정"></a>
 		&nbsp&nbsp<input type="button" onclick="deleteGood()" value="상품삭제">				
 		</center>
 	</c:if>
