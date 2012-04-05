@@ -318,9 +318,9 @@ public class MemberDAO {
 		String rank=null;
 		try {
 			con = ConnectionUtil.getConnection();
-			sql = "SELECT  rank() over (ORDER BY mineral DESC) RANK , id, mineral"
-					+ " FROM  member" +
-					" Where id=?";
+			sql = " select count(*)"+
+					" from member"+
+					" where mineral>=(select mineral from member Where id=?)";
 
 			psmt = con.prepareStatement(sql);
 			psmt.setString(1, id );
