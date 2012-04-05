@@ -32,6 +32,7 @@ function deleteGood(){
 		<a href="">회원가입</a>
 		</c:when>
 		<c:otherwise>
+		${sessionScope.member.memberid}님 어서오세요! &nbsp
 		<a href="/baking/MemberService?method=logout">로그아웃</a>
 		</c:otherwise>
 	</c:choose>
