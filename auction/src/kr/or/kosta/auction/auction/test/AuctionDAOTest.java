@@ -74,8 +74,8 @@ public class AuctionDAOTest {
 	}
 	@Test
 	public void testUpdateAuction(){
-		Auction auction = AuctionDAO.selectAuction("3");
-						
+		Auction auction = AuctionDAO.selectAuction("4");
+		auction.setsPrice("20");
 		AuctionDAO.updateAuction(auction);
 		selectAuctionTest();
 	}
