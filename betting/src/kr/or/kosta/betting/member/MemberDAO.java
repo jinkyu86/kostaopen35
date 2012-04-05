@@ -306,4 +306,40 @@ public class MemberDAO {
 			e.printStackTrace();
 		}
 	}
+	
+	public static String selectMemberRanking(String id) {
+
+		/**
+		 * 선택된 아이디 랭크 조회
+		 * 
+		 * @param page
+		 * @param length
+		 */
+
+		Connection con = null;
+		PreparedStatement psmt = null;
+		String sql = null;
+		ResultSet rs = null;
+		String rank=null;
+		try {
+			con = ConnectionUtil.getConnection();
+			sql = "SELECT  rank() over (ORDER BY mineral DESC) RANK , id, mineral"
+					+ " FROM  member" +
+					" Where id=?";
+
+			psmt = con.prepareStatement(sql);
+			psmt.setString(1, id );
+			rs = psmt.executeQuery();
+			
+			
+			if (rs.next()) {				
+				rank=rs.getString(1);
+
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return rank;
+
+	}
 }

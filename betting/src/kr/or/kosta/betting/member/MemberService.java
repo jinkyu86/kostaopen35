@@ -335,17 +335,16 @@ public class MemberService extends HttpServlet {
 		 * @param response
 		 */
 
-		// 1.studno파라메터 리턴받아서 변수에 저장
+		
 		String id = request.getParameter("ID");
-		// 2.DB에서 학번이 일치하는 학생 조회
+		
 		Member member = MemberDAO.selectMemberByID(id);
-		// 3.request에 2에서 조회한 학생의 정보 저장
-		// 이름-STUDENT
+		
 		request.setAttribute("MEMBER", member);
-		// 4./student/viewStudent.jsp로 이동 객체 생성
+		
 		RequestDispatcher rd = request
 				.getRequestDispatcher("/member/viewMember.jsp");
-		// 5.4의 JSP로 이동
+		
 		rd.forward(request, response);
 
 	}
