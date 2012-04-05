@@ -7,6 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>게시물 리스트</title>
 </head>
+<body background="/auction/gphoto/s20.jpg">
 <c:choose>
 	<c:when test="${sessionScope.MEMBER==null}">
 		<p align="right">
@@ -19,13 +20,13 @@
 		<p align="right">
 			${sessionScope.MEMBER.name }님<br/>
 			<a href="/auction/MemberService?method=logout">
-			로그아웃
+			<img src="/auction/menu/logout.jpg"/>
 			</a><br/>
 		</p>
 	</c:otherwise>
 </c:choose>
 <body>
-<table border="1" align="center">
+<table  align="center"  border="1" bgcolor="pink">
 	<tr>
 		<th>번호</th>
 		<th>아이디</th>
@@ -56,12 +57,15 @@
 </table>
  <c:if test="${sessionScope.MEMBER.userid!=null}">
 <p align="center">
-	<a href="/auction/BoardService?method=addBoardForm">게시물 작성</a>
+	<a href="/auction/BoardService?method=addBoardForm">
+	<img src="/auction/menu/insertBoard.jpg"/>
+	</a>
 </p>
 </c:if>
 <p align="center">
-		 <p align="center">
-		 <a href="/auction/AuctionService?method=viewAuctionList">경매목록 보기</a>
+	<a href="/auction/AuctionService?method=viewAuctionList">
+	<img src="/auction/menu/viewAuctionList.jpg"/>
+	</a>
 </p>
 </body>
 </html>

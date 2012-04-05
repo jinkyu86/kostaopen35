@@ -20,9 +20,10 @@
 	});
 </script>
 </head>
+<body background="/auction/gphoto/s20.jpg">
 <body>
 	<h1 align="center">게시물 조회</h1>
-	<table border="1" align="center">  	
+	<table  align="center"  border="1" bgcolor="pink">
 	  <tr>
 	  <td>번호</td><td>${BOARD.bNum}</td>
 	  </tr>
@@ -39,18 +40,18 @@
 <c:if test="${sessionScope.MEMBER.userid==BOARD.member.userid||sessionScope.MEMBER.userid=='admin'}">
 	  <p align="center">
 	    <a href="/auction/BoardService?method=editBoardForm&bNum=${BOARD.bNum }">
-	    게시물 수정
+		<img src="/auction/menu/editBoard.jpg"/>
 	    </a>
 	  </p>
 	  <p align="center">
 	    <a href="/auction/BoardService?method=removeBoard&bNum=${BOARD.bNum }" id="deleteboard">
-	    게시물 삭제
+		<img src="/auction/menu/deleteBoard.jpg"/>
 	    </a>
 	  </p>
 </c:if>
 <p align="center">
 	<a href="/auction/BoardService?method=viewBoardList">
-	    게시물 목록 보기
+	<img src="/auction/menu/viewBoardList.jpg"/>
 	</a>
 </p>
 </body>

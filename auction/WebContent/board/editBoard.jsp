@@ -35,11 +35,12 @@ $(document).ready(function(){
 });
 </script>
 </head>
+<body background="/auction/gphoto/s20.jpg">s
 <body>
 <h1 align="center">게시물 수정</h1>
 	<form  action="/auction/BoardService" method="post" id="my_form">
 	  <input  type="hidden" name="method" value="editBoard"/>
-	   <table  align="center">
+	   <table  align="center"  border="1" bgcolor="pink">
 	   		<tr>
 	   			<td>게시물 번호</td>
 	   			<td><input type="text" name="bNum" value="${BOARD.bNum }" readOnly="readOnly"/></td>
@@ -64,7 +65,7 @@ $(document).ready(function(){
 	   </form>
 <p align="center">
 	<a href="/auction/BoardService?method=viewBoard&bNum=${BOARD.bNum }">
-	    게시물 보기
+	<img src="/auction/menu/viewBoard.jpg"/>
 	</a>
 </p>
 </body>

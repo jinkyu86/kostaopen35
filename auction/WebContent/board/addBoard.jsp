@@ -32,11 +32,12 @@ $(document).ready(function(){
 });
 </script>
 </head>
+<body background="/auction/gphoto/s20.jpg">
 <body>
 <hr noshade>
 <h1 align="center">게시물 작성</h1>
 <form name="login_form" action="/auction/BoardService" method="post" id="my_form">
-<table border="1" align="center">
+<table  align="center"  border="1" bgcolor="pink">
 <input type="hidden" name="method" value="addBoard" />
 	<tr>
 		<td>작성자 ID: </td>
@@ -59,7 +60,7 @@ $(document).ready(function(){
 </form>
 <p align="center">
 	<a href="/auction/BoardService?method=viewBoardList">
-	    게시물 목록 보기
+	<img src="/auction/menu/viewBoardList.jpg"/>
 	</a>
 </p>
 </body>
