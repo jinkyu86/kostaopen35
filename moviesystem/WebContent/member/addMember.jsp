@@ -83,7 +83,7 @@
 		<!-- 좌측 메뉴 끝 -->
 		<td>
 			<div class="menu_title" ><font size="5">Join</font></div>
-			<table class="table_style" style="width:70%">
+			<table class="table_style" style="width:80%">
 				<form id="my_form" action="/moviesystem/MemberService" method="post">
 				<input type="hidden"  name="method" value="addMember"/>
 				<tr>
