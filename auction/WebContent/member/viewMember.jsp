@@ -65,6 +65,11 @@
 	</c:forEach>
 </table>	
 	  <p align="center">
+	    <a href="/auction/BidService?method=moneyBack&userid=${MEMBER.userid}">
+	    유찰된 코인 emoney로 돌려받기
+	    </a>
+	  </p>
+	  <p align="center">
 	    <a href="/auction/MemberService?method=editMemberForm&userid=${MEMBER.userid}">
 	    회원수정
 	    </a>
@@ -73,9 +78,7 @@
 	 
 	    <a  id="removeMemberLink" href="/auction/MemberService?method=removeMember&userid=${MEMBER.userid}">
            회원탈퇴
-		   </a>
-	  
-	     
+		</a>
 	   </p> 
 	  
 	<p align="center">
