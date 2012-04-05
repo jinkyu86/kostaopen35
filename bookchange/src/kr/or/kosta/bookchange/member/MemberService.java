@@ -63,7 +63,7 @@ public class MemberService extends HttpServlet {
 
 	private void removeMemberForm(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException,IOException {
-		RequestDispatcher rd=request.getRequestDispatcher("/memer/removeMember.jsp");
+		RequestDispatcher rd=request.getRequestDispatcher("removeMember.jsp");
 		rd.forward(request, response);
 	}
 	/**
@@ -209,7 +209,7 @@ public class MemberService extends HttpServlet {
 			}
 		
 		}
-		RequestDispatcher rd=request.getRequestDispatcher("main.jsp");
+		RequestDispatcher rd=request.getRequestDispatcher("/BoardService?method=boardListAtMain");
 		rd.forward(request, response);
 	
 	}
@@ -267,21 +267,24 @@ public class MemberService extends HttpServlet {
 			HttpServletResponse response) throws IOException,ServletException{
 		/* default generated stub */;
 		String email=request.getParameter("email");
+		String pw=request.getParameter("pw");
 		Member member=MemberDAO.selectMember(email);
 		
-		String pw=request.getParameter("pw");
-		
 		if(pw==null){
-			System.out.println("비밀번호를 입력하시오.");
+			request.setAttribute("ERROR", "비밀번호를 입력하세요.");
+			RequestDispatcher rd=request.getRequestDispatcher("/BoardService?method=boardListAtMain");
+			rd.forward(request, response);
 		}else if (!member.getPw().equals(pw)) {
-			System.out.println("비밀번호를 잘못 입력하셨습니다.");
+			request.setAttribute("ERROR", "비밀번호가 틀렸습니다.");
+			RequestDispatcher rd=request.getRequestDispatcher("/BoardService?method=boardListAtMain");
+			rd.forward(request, response);
 		}else if (member.getPw().equals(pw)) {
 		
 			MemberDAO.deleteMember(email);
 			System.out.println("회원이 삭제 되었습니다.");
 			request.setAttribute("ERROR", "탈퇴되었습니다.");
 			
-			RequestDispatcher rd=request.getRequestDispatcher("/main.jsp");
+			RequestDispatcher rd=request.getRequestDispatcher("/MemberService?method=logout");
 			rd.forward(request, response);
 		}
 	}
