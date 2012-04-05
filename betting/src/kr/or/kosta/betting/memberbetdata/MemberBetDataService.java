@@ -84,7 +84,7 @@ public class MemberBetDataService extends HttpServlet {
 		} else {
 			request.setAttribute("ERROR", "로그인 해주세요");
 			RequestDispatcher rd = request
-					.getRequestDispatcher("/Member?method=loginForm");
+					.getRequestDispatcher("/MemberService?method=loginForm");
 			rd.forward(request, response);
 		}
 		
@@ -212,7 +212,7 @@ public class MemberBetDataService extends HttpServlet {
 		} else {
 			request.setAttribute("ERROR", "로그인 해주세요");
 			RequestDispatcher rd = request
-					.getRequestDispatcher("/Member?method=loginForm");
+					.getRequestDispatcher("/MemberService?method=loginForm");
 			rd.forward(request, response);
 		}
 				
@@ -251,7 +251,7 @@ public class MemberBetDataService extends HttpServlet {
 		} else {
 			request.setAttribute("ERROR", "로그인 해주세요");
 			RequestDispatcher rd = request
-					.getRequestDispatcher("/Member?method=loginForm");
+					.getRequestDispatcher("/MemberService?method=loginForm");
 			rd.forward(request, response);
 		}
 	}
@@ -291,7 +291,7 @@ public class MemberBetDataService extends HttpServlet {
 		} else {
 			request.setAttribute("ERROR", "로그인 해주세요");
 			RequestDispatcher rd = request
-					.getRequestDispatcher("/Member?method=loginForm");
+					.getRequestDispatcher("/MemberService?method=loginForm");
 			rd.forward(request, response);
 		}
 	}
@@ -327,7 +327,7 @@ public class MemberBetDataService extends HttpServlet {
 		} else {
 			request.setAttribute("ERROR", "로그인 해주세요");
 			RequestDispatcher rd = request
-					.getRequestDispatcher("/Member?method=loginForm");
+					.getRequestDispatcher("/MemberService?method=loginForm");
 			rd.forward(request, response);
 		}
 	}
