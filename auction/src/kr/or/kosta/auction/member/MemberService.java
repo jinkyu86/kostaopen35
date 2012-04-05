@@ -237,14 +237,21 @@ public class MemberService extends HttpServlet {
 	 */
 	private void removeMember(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
-		session.invalidate();
+		HttpSession session=request.getSession();
 		String userid=request.getParameter("userid");
 		BidDAO.deleteBidById(userid);
 		MemberDAO.deleteMember(userid);
-		RequestDispatcher rd=request.getRequestDispatcher("/AuctionService?method=viewAuctionList");
-		rd.forward(request, response);
-
+		
+		Member member=(Member)session.getAttribute("MEMBER");
+		if("admin".equals(member.getUserid())){
+			RequestDispatcher rd=request.getRequestDispatcher("/MemberService?method=viewMemberList");
+			rd.forward(request, response);
+		}else{
+			session.invalidate();			
+			RequestDispatcher rd=request.getRequestDispatcher("/AuctionService?method=viewAuctionList");
+			rd.forward(request, response);
+		}
+		
 	}
 
 	/**
