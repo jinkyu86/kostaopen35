@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.catalina.Session;
+
 import kr.or.kosta.betting.util.PageUtil;
 
 /**
@@ -51,8 +53,6 @@ public class MemberService extends HttpServlet {
 		}
 		if ("viewMemberList".equals(method)) {
 			viewMemberList(request, response);
-		} else if ("viewMember".equals(method)) {
-			viewMember(request, response);
 		} else if ("editMemberForm".equals(method)) {
 			editMemberForm(request, response);
 		} else if ("editMember".equals(method)) {
@@ -193,18 +193,17 @@ public class MemberService extends HttpServlet {
 		 * @param request
 		 * @param response
 		 */
-
-		String ID = request.getParameter("ID");
+		
+		HttpSession session=request.getSession();
+		Member member1=(Member)session.getAttribute("LOGIN_MEMBER");
+		String ID = member1.getId();
 
 		Member member = MemberDAO.selectMemberByID(ID);
 
-		ArrayList<Member> memberList = MemberDAO.selectMemberList(1, 5);
-
 		request.setAttribute("MEMBER", member);
-		request.setAttribute("MEMBER_LIST", memberList);
 
 		RequestDispatcher rd = request
-				.getRequestDispatcher("/member/viewMember.jsp");
+				.getRequestDispatcher("/member/editMember.jsp");
 		rd.forward(request, response);
 
 	}
@@ -327,31 +326,7 @@ public class MemberService extends HttpServlet {
 
 	}
 
-	public void viewMember(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		/* default generated stub */;
-
-		/**
-		 * 선택된 아이디의 멤버데이터를 조회하는 메서드
-		 * 
-		 * @param request
-		 * @param response
-		 */
-
-		
-		String id = request.getParameter("ID");
-		
-		Member member = MemberDAO.selectMemberByID(id);
-		
-		request.setAttribute("MEMBER", member);
-		
-		RequestDispatcher rd = request
-				.getRequestDispatcher("/member/viewMember.jsp");
-		
-		rd.forward(request, response);
-
-	}
-
+	
 	/**
 	 * 모든 멤버리스트를 미네랄로 오름차순 정렬한 메서드
 	 * 
