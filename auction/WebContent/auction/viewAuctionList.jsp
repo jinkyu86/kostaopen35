@@ -11,49 +11,56 @@
 <title>경매리스트</title>
 </head>
 <body background="/auction/gphoto/s20.jpg">
+
 <script type="text/javascript">
 	<c:if test="${ERROR!=null}">
 		alert("${ERROR}");
 	</c:if>
 </script>
 
-<c:choose>
-	<c:when test="${sessionScope.MEMBER==null}">
-		<p align="right">
-			<a href="/auction/MemberService?method=addMemberForm">
-			<img src="/auction/menu/join.jpg"/>
-			<a href="/auction/MemberService?method=loginForm">
-			<img src="/auction/menu/login.jpg"/>
-			</a>
-		</p>
-	</c:when>
-	<c:otherwise>
+<ui>
+	<li>
+		<c:choose>
+			<c:when test="${sessionScope.MEMBER==null}">
+				<p align="right">
+					<a href="/auction/MemberService?method=loginForm">
+					<img src="/auction/menu/login.jpg"/>
+					</a></br>
+					<a href="/auction/MemberService?method=addMemberForm">
+					<img src="/auction/menu/join.jpg"/>
+					</a>
+				</p>
+			</c:when>
+		<c:otherwise>
 		<p align="right">
 			${sessionScope.MEMBER.name }님 안녕<br/>
 			<a href="/auction/MemberService?method=logout">
-			<img src="/auction/menu/logout.jpg"/>
+				<img src="/auction/menu/logout.jpg"/>
 			</a></br>
 			<a href="/auction/MemberService?method=viewMember">
-			<img src="/auction/menu/memberInfo.jpg"/>
+				<img src="/auction/menu/memberInfo.jpg"/>
 			</a>
 		</p>
-	</c:otherwise>
-</c:choose>
-<c:if test="${sessionScope.MEMBER.userid=='admin'}">
-	<p align="right">
-		<a href="/auction/GoodService?method=viewGoodList">
-		<img src="/auction/menu/viewGoodList.jpg"/>
-		</a></br>
-		<a href="/auction/MemberService?method=viewMemberList">
-		<img src="/auction/menu/viewMemberList.jpg"/>
-		</a><br/>
-	</p>
-</c:if>
-	<p align="right">
-		<a href="/auction/BoardService?method=viewBoardList">
-		<img src="/auction/menu/viewBoardList.jpg"/>
-		</a>
-	</p>	
+		</c:otherwise>
+		</c:choose>
+	</li>
+	<li>
+		<p align="center">
+			<c:if test="${sessionScope.MEMBER.userid=='admin'}">
+				<a href="/auction/GoodService?method=viewGoodList">
+					<img src="/auction/menu/viewGoodList.jpg"/>
+				</a>
+				<a href="/auction/MemberService?method=viewMemberList">
+					<img src="/auction/menu/viewMemberList.jpg"/>
+				</a>
+			</c:if>
+				<a href="/auction/BoardService?method=viewBoardList">
+					<img src="/auction/menu/viewBoardList.jpg"/>
+				</a>
+		</p>
+	</li>
+</ui>
+
 	<table  align="center"  border="1" bgcolor="pink">
 	<tr>
 		<th colspan="5"><h3>입찰중인 물품리스트</h3></th>
