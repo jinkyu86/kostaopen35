@@ -128,6 +128,14 @@
 	   
 	    <tr>
 	   <td>
+	   <a href="/bookchange/BoardService?method=searchBoardList&categoryNo=&column=email&keyword=${sessionScope.LOGIN_EMAIL.email}">내가 등록한 책 보기</a>
+	   </td>
+	   <tr>	  
+	   
+	   
+	   
+	    <tr>
+	   <td>
 	   <a href="/bookchange/ChangeService?method=acceptChangeList">나와 교환을 원하는 책 보기</a>
 	   </td>
 	   <tr>
@@ -165,10 +173,7 @@
   </c:when> 
   <c:when test="${sessionScope.LOGIN_EMAIL!=null}">
   <table align="center">
- 	<tr><td>${sessionScope.LOGIN_EMAIL.email}님</td>
-   	<td><a href="/bookchange/MemberService?method=logout">
-   	로그아웃
-   	</a></td>
+ 	<tr><td></td>
    	<c:choose>
    	<c:when test="${sessionScope.LOGIN_EMAIL.email==BOARD.member.email}">
    	 <form action="/bookchange/BoardService" method="post">

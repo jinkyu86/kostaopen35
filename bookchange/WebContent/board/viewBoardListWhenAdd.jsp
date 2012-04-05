@@ -131,6 +131,11 @@
 	   <img align="right" src="webimg/block.GIF" title="신고하기" border="0" width="230"/></a></td>
 	   </tr>
 	   
+	    <tr>
+	   <td>
+	   <a href="/bookchange/BoardService?method=searchBoardList&categoryNo=&column=email&keyword=${sessionScope.LOGIN_EMAIL.email}">내가 등록한 책 보기</a>
+	   </td>
+	   <tr>	  
 	    
 	   <tr>
 	   <td>
@@ -162,22 +167,6 @@
 	 	<td valign="top">
 	 	
 	 	 
-<c:choose>
-  <c:when test="${sessionScope.LOGIN_EMAIL==null}">
-	 <p align="right">
-   		<a href="/bookchange/MemberService?method=loginForm">
-   		로그인
-   		</a>
-	 </p>
-  </c:when>
-  <c:otherwise>
-  <p align="right">
- 	${sessionScope.LOGIN_EMAIL.email}님<br/>
-   	<a href="/bookchange/MemberService?method=logout">
-   	로그아웃
-   	</a><br/>
-   </c:otherwise>
- </c:choose>
  
 <h3 align="center">교환 신청할 물건</h3>
 	<table border="3" align="center">

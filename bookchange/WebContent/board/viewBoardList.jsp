@@ -138,6 +138,12 @@ alert("${COMPLETE}");
 	   <img align="right" src="webimg/block.GIF" title="신고하기" border="0" width="230"/></a></td>
 	   </tr>
 	   
+	    <tr>
+	   <td>
+	   <a href="/bookchange/BoardService?method=searchBoardList&categoryNo=&column=email&keyword=${sessionScope.LOGIN_EMAIL.email}">내가 등록한 책 보기</a>
+	   </td>
+	   <tr>	  
+	   
 	   <tr>
 	   <td>
 	   <a href="/bookchange/ChangeService?method=acceptChangeList">나와 교환을 원하는 책 보기</a>

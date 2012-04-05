@@ -124,6 +124,11 @@
 	   <img align="right" src="webimg/block.GIF" title="신고하기" border="0" width="230"/></a></td>
 	   </tr>
 	   
+	   <tr>
+	   <td>
+	   <a href="/bookchange/BoardService?method=searchBoardList&categoryNo=&column=email&keyword=${sessionScope.LOGIN_EMAIL.email}">내가 등록한 책 보기</a>
+	   </td>
+	   <tr>	  
 	    
 	   <tr>
 	   <td>
@@ -185,8 +190,7 @@
   </c:when> 
   <c:when test="${sessionScope.LOGIN_EMAIL!=null}">
   <table align="center">
-  <tr><td>${sessionScope.LOGIN_EMAIL.email}님</td>
-  <td><a href="/bookchange/MemberService?method=logout">로그아웃</a></td>
+  <tr>
    	<c:choose>
    	<c:when test="${sessionScope.LOGIN_EMAIL.email==BOARD.member.email}">
    	 <form action="/bookchange/BoardService" method="post">
