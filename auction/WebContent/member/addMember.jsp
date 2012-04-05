@@ -28,15 +28,19 @@
 			});	
 		$('#my_form').validate({
 			rules:{
-				pw: { 
-					password:true 
+				userid:{
+					required:true
+				},
+				pw:{ 
+					required:true,
+					password:true,
+					minlength:2,
+					maxlength:15
 					},
-				    pass_check: {
-				    	equalTo:'#password' 
-				   	},
-				    errorPlacement: function (label, element){
-				     label.prependTo(element.parent().next());
-				    },   
+			    pass_check: {
+			    	required:true,
+			    	equalTo:'#pw', 
+			    	},
 				email:{
 					required:true,
 					email:true,
@@ -49,11 +53,13 @@
 			},	
 			messages:{
 				pw:{
-					requird:'패스워드를 입력하세요'
+					required:'패스워드를 입력하세요',
+					minlength:'{0}이상 입력하세요.',
+					maxlength:'{0}을 초과하였습니다'	
 				},
 				pass_check: {
-			    	equalTo:'패스워드가 일치하지 않습니다' 
-			   	},
+			    	equalTo:'패스워드가 일치 하지 않습니다',			
+				},
 				email:{
 					required:'이메일을 입력해주세요.',
 					email:'이메일 형식에 맞게 입력해주세요',
@@ -66,6 +72,13 @@
 			}
 			});
 		});	
+		$("#addMember").click(function (event){
+			var result=confirm("회원 가입 하시겠습니까??");
+		
+			if(result==false){
+				event.preventDefault();
+			}
+		});
 	});
 </script>
 
@@ -81,17 +94,19 @@
 				<td>아이디</td>
 				<td><input type="text"  name="userid" id="userid">
 				<span id ="useridcheck"></span></td>
+				<td></td>
 			</tr>
-			<tr id = "password">
+			<tr>
 				<td><label>비밀번호</label></td>
-				<td><input type="password"  name="pw"></td>
+				<td><input type="password"  name="pw" id="pw"></td>
 				<td>
-					<div class="password-meter">
-						<div class="password-meter-message"></div>
-						<div class="password-meter-bg">
-							<div class="password-meter-bar"></div>
+					<div class="pw-meter">
+						<div class="pw-meter-message"></div>
+						<div class="pw-meter-bg">
+							<div class="pw-meter-bar"></div>
 						</div>
 					</div>
+				</td>
 			</tr>
 			<tr>
 				<td><label>비밀번호 확인</label></td>
@@ -108,7 +123,7 @@
 			</tr>
 			<tr>
 					<td>
-						<input type="submit" value="회원가입"/>
+						<input type="submit" value="회원가입" id="addMember"/>
 					</td>
 					<td>
 						<input type="reset" value="취소"/>
