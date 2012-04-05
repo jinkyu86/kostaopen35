@@ -1,15 +1,18 @@
 package kr.or.kosta.bookchange.member;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
+import javax.servlet.ServletException;
+
+import com.sun.org.apache.regexp.internal.recompile;
+
 import kr.or.kosta.util.ConnectionUtil;
 
 public class MemberDAO {
-
-
 
 	/**
 	 * (관리자 전용)회원명단 조회
@@ -235,6 +238,81 @@ public class MemberDAO {
 		
 		return memberList;
 	}
+	/**
+	 * 회원 비밀번호 리턴(전화번호와 이메일로 검색)
+	 */
+	public static Member selectMember(String email,String tel){
+		Connection con=null;
+		PreparedStatement ps=null;
+		String sql=null;
+		con=ConnectionUtil.getConnection();
+		ResultSet rs=null;
+		Member member=null;
+		try {
+		
+			sql="select pw,email,tel from tb_member where email=? and tel=?";
+			ps=con.prepareStatement(sql);
+			ps.setString(1,email);
+			ps.setString(2,tel);
+			ps.executeQuery();
+			rs=ps.executeQuery();
+			
+			while (rs.next()) {
+				
+				String pw=rs.getString(1);
+				String realemail=rs.getString(2);
+				String realtel=rs.getString(3);
+				
+				member=new Member();
+				
+				member.setEmail(pw);
+				member.setEmail(realemail);
+				member.setTel(realtel);
+			}		
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return member;
+	}
+	/**
+	 * 전화번호로 이메일 검색
+	 * @param request
+	 * @param response
+	 * @return 
+	 * @throws IOException
+	 * @throws ServletException
+	 */
+	  public static Member selectMemberTel(String tel){
+		Connection con=null;
+		PreparedStatement ps=null;
+		String sql=null;
+		con=ConnectionUtil.getConnection();
+		ResultSet rs=null;
+		Member member=null;
+		try {
+			sql="select email, tel from tb_member where tel=?";
+			ps=con.prepareStatement(sql);
+			
+			ps.setString(1,tel);			
+			rs=ps.executeQuery();
+			
+			while(rs.next()){
+				String email=rs.getString(1);
+				String realTel=rs.getString(2);
+				
+				member=new Member();
+				member.setEmail(email);
+				member.setTel(realTel);
+			}
+						
+
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return member;
+				
+	  }
+	
 	/**
 	 * 전체 회원수 리턴
 	 */
