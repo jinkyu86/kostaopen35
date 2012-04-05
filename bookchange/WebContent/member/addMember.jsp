@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -88,16 +89,16 @@
 	  	   <input type="submit" value="Email/Pw찾기"/>
 	  	 </form></div></td>
 		 </tr>
-		 </table>
+	     </table>
 	     </fieldset>
 	    </c:when>
 	   <c:otherwise>
 	    <fieldset>
-	 	<table cellpadding="0" cellspacing="0" border="0">
+	 	<table align="left" cellpadding="0" cellspacing="0" border="0">
 	    <form action="/bookchange/MemberService" method="post">
 		<input type="hidden"name="method" value="logout">
 		<tr>
-		 <td>${sessionScope.LOGIN_EMAIL.email}님이 로그인하였습니다.</td>
+		 <td>${sessionScope.LOGIN_EMAIL.email}님이 로그인하셨습니다.</td>
 		</tr>
 		<tr>
 		 <td colspan="5"><div align="right">
@@ -118,7 +119,7 @@
 	  	 </form>
 		 </div></td>
 		</tr>
-		</table>
+	    </table>
 	    </fieldset>
 	   </c:otherwise>
 	  </c:choose>
@@ -132,27 +133,21 @@
 	   </tr>
 	 </table>
 	 </tr>
-	 <td width="550" height="600" valign="top" bgcolor="#FFFFE0">
-	  <table bordercolor="#FFA500" border="1" align="center">
-	   <tr align="center">
-	   	<th>My Book</th>
-	    <th>신청한사람</th>
-	    <th>Trade Book</th>
-		<th>신청일자</th>
-	   </tr>
-	  <c:forEach var="change" items="${AGREE_CHANGE_LIST}">
-       <tr>
-        <td><img src="/bookchange/bookimg/${change.agreeBoard.boardPhoto}" height="100" width="100"></td>
-        <td align="center">${change.agreeBoard.member.email}</td>
-        <td align="center">
-		<a href="/bookchange/BoardService?method=viewBoardWhenAgree&boardNo=${change.demandBoard.boardNo}&agreeBoardNo=${change.agreeBoard.boardNo}">
-		<img src="/bookchange/bookimg/${change.demandBoard.boardPhoto}"height="100" width="100"></a></td>
-		<td align="center">${change.changeDate}</td>
-       </tr>
-      </c:forEach>
-	  <p align="center">
-		${PAGE_LINK_TAG}
-	  </p>
+	 <td width="550" height="600" valign="top" bgcolor="#FFFFFF">
+	 <fieldset>
+	 <li><div class="txt01"><h4 align="center">회원가입</h4></div></li>
+	 </fieldset>
+	 <fieldset>
+	  <form action="/bookchange/MemberService"method="post">
+		<input type="hidden" name="method" value="addMember">
+	 	<ul><li><div> 이메일</div><input type="text"name="email"/>(이메일 주소를 정확히 입력)</li></ul>
+		<ul><li><div> 비밀번호</div><input type="password"name="pw"/>(영어,숫자를 4자리 이상 입력)</li></ul>
+		<ul><li><div> 주소</div><input type="text"name="address" size="50"/></li></ul>
+		<ul><li><div> 핸드폰번호</div><input type="text"name="tel"/>(ex : XXX-XXXX-XXXX)</li></ul>
+		<ul><input type="submit" value="가입"/><a href="main.jsp"><button>가입취소</button></a></ul>				
+		</tr>
+		</form>
+	 </fieldset>
 	 </td>
 	</table>
    </td>
