@@ -34,6 +34,10 @@ function no(){
 </script>
 <link rel="stylesheet" href="/baking/styles.css" type="text/css" media="screen" />	
 <link rel="stylesheet" type="text/css" href="print.css" media="print" />
+<script src="http://code.jquery.com/jquery-1.7.js"></script>
+<script  src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.js"></script>
+<script src="/baking/uploadify/jquery.uploadify.v2.1.4.js"></script>
+<script src="/baking/uploadify/swfobject.js"></script>
 <!--[if IE]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 <style type="text/css">
 	a:link {text-decoration:none}
@@ -41,6 +45,68 @@ function no(){
 	a:hover {text-decoration:none}
 	a {color:#000000; text-decoration:none; }
 </style>
+<script>
+	$(document).ready(function(){
+		$('#order').validate({
+			rules:{
+				name:{
+					required: true,
+					minlength: 2
+				},
+				zipcode:{
+					required: true,
+					digits: true
+				},
+				address:{
+					required: true
+				},
+				strAddress:{
+					required: true
+				},
+				phoneNumber:{
+					required: true,
+					digits: true
+				},
+				telNumber:{
+					required: true,
+					digits: true
+				},
+				email:{
+					required: true,
+					email: 'required email'
+				}
+			},
+			messages:{
+				name:{
+					required: '필수 입력 사항입니다',
+					minlength: '{0}글자 이상 입력해주세요'
+				},
+				zipcode:{
+					required: '필수 입력 사항입니다',
+					digits: '숫자만 사용하세요'
+				},
+				address:{
+					required: '필수 입력 사항입니다'
+				},
+				strAddress:{
+					required: '필수 입력 사항입니다'
+				},
+				phoneNumber:{
+					required: '필수 입력 사항입니다',
+					digits: '숫자만 사용하세요'
+				},
+				telNumber:{
+					required: '필수 입력 사항입니다',
+					digits: '숫자만 사용하세요'
+				},
+				email:{
+					required: '필수 입력 사항입니다',
+					email: '형식에 맞게 입력해주세요'
+				}
+			}
+		});
+	});
+</script>
 </head>
 <ul>	
 	<div ALIGN="right">
@@ -78,7 +144,7 @@ function no(){
 <section id="content">			
 <ul class="column">
 			        
-<form action="" name="order">
+<form action="/baking/OrderService" name="order" id="order">
 <table border="1" align="center">
 	<tr>
 		<th>상품번호</th>
