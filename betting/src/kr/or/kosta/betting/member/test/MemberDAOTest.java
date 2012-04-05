@@ -78,7 +78,7 @@ public class MemberDAOTest {
 	}
 	@Test
 	public void selectMemberRanking(){
-		String rank=MemberDAO.selectMemberRanking("jun1");
+		long rank=MemberDAO.selectMemberRanking("jun1");
 		System.out.println(rank);
 		
 	}
