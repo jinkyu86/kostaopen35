@@ -73,9 +73,20 @@
 		<td>회원상태</td>
 		<td>${MEMBER.memState}</td>
 	</tr>
+		<tr>
+		<td colspan="2">
+			<p align="center">
+				<form action="/moviesystem/MemberService" method="post">
+					<input type="hidden" name="method" value="viewMemberList">
+						<input type="submit" value="목록"/>
+				</form>
+			</p>
+		</td>
+	</tr>
 </table>
 </td>
 </tr>
 </table>
 </body>
+
 </html>

@@ -14,6 +14,7 @@
 	$(document).ready(function(){
 		$('#member_manage').css('background-color','#C4E2FF');
 		$("#member_search").css('background-color','#EBFBFF');
+		$('#memberlist').css('background-color','#C4E2FF');
 
 	});
 	</script>
@@ -55,19 +56,8 @@
 					</td>
 				</tr>
 			</table>
-			<!-- 검색 박스
-				
-				<tr>
-				<input type="text" name="keyword">
-				<br/>
-				<input type="submit" name="검색"/>
-			</form>
-			</table>
-					</td>
-				</tr>
-			</table>
 			<!-- 검색 박스 끝 -->
-			<table class="table_style" border="1">
+			<table class="table_style" border="1" >
 				<tr id="memberlist">
 					<th>회원번호</th>
 					<th>아이디</th>
