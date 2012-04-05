@@ -8,10 +8,12 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import kr.or.kosta.betting.betting.Betting;
 import kr.or.kosta.betting.betting.BettingDAO;
 import kr.or.kosta.betting.match.MatchDAO;
+import kr.or.kosta.betting.member.Member;
 import kr.or.kosta.betting.member.MemberDAO;
 import kr.or.kosta.betting.util.PageUtil;
 import kr.or.kosta.betting.util.now;
@@ -62,19 +64,29 @@ public class MemberBetDataService extends HttpServlet {
 	private void recoveryMineral(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		
-		long betMineral = Long.parseLong(request.getParameter("bmineral"));
-		long mineral = MemberDAO.selectMineralByID("jun1");
-		String mbdNum = request.getParameter("mbdnum");
+		HttpSession session = request.getSession();
+		Member member1 = (Member) session.getAttribute("LOGIN_MEMBER");
+		if (member1 != null) {
+			String ID = member1.getId();
+			long betMineral = Long.parseLong(request.getParameter("bmineral"));
+			long mineral = MemberDAO.selectMineralByID(ID);
+			String mbdNum = request.getParameter("mbdnum");
 		
-		mineral = mineral + betMineral;
+			mineral = mineral + betMineral;
 		
-		MemberDAO.updateMineralByID("jun1", mineral);
-		MemberBetDataDAO.updateMemberBetData(mbdNum);
+			MemberDAO.updateMineralByID(ID, mineral);
+			MemberBetDataDAO.updateMemberBetData(mbdNum);
 		
-		request.setAttribute("SUCCESS", "미네랄을 돌려드렸습니다.");
-		RequestDispatcher rd = request
+			request.setAttribute("SUCCESS", "미네랄을 돌려드렸습니다.");
+			RequestDispatcher rd = request
 				.getRequestDispatcher("/MemberBetDataService?method=viewMemberBetDataByIDList");
-		rd.forward(request, response);
+			rd.forward(request, response);
+		} else {
+			request.setAttribute("ERROR", "로그인 해주세요");
+			RequestDispatcher rd = request
+					.getRequestDispatcher("/Member?method=loginForm");
+			rd.forward(request, response);
+		}
 		
 	}
 
@@ -89,107 +101,120 @@ public class MemberBetDataService extends HttpServlet {
 	public void cancleBetting(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		/* default generated stub */;
-		String matchTime = request.getParameter("matchtime");
-		int check = now.hourCheck(matchTime);
-		if (check == 1) {
+		HttpSession session = request.getSession();
+		Member member1 = (Member) session.getAttribute("LOGIN_MEMBER");
+		if (member1 != null) {
+			String ID = member1.getId();
+			String matchTime = request.getParameter("matchtime");
+			int check = now.hourCheck(matchTime);
+			
+			if (check == 1) {
 
-			String mbdNum = request.getParameter("mbdnum");
-			String distNum = request.getParameter("distnum");
-			long betMineral = Long.parseLong(request.getParameter("bmineral"));
-			String homeBetNum = request.getParameter("home");
-			String awayBetNum = request.getParameter("away");
-			double homeBetRating = BettingDAO.selectBettingRating(homeBetNum);
-			double awayBetRating = BettingDAO.selectBettingRating(awayBetNum);
-			long homeSeleRating = BettingDAO
-					.selectBettingSeleRating(homeBetNum);
-			long awaySeleRating = BettingDAO
-					.selectBettingSeleRating(awayBetNum);
-			long homeTotMineral = BettingDAO
-					.selectBettingTotMineral(homeBetNum);
-			long awayTotMineral = BettingDAO
-					.selectBettingTotMineral(awayBetNum);
-			long mineral = MemberDAO.selectMineralByID("jun1");
+				String mbdNum = request.getParameter("mbdnum");
+				String distNum = request.getParameter("distnum");
+				long betMineral = Long.parseLong(request.getParameter("bmineral"));
+				String homeBetNum = request.getParameter("home");
+				String awayBetNum = request.getParameter("away");
+				double homeBetRating = BettingDAO.selectBettingRating(homeBetNum);
+				double awayBetRating = BettingDAO.selectBettingRating(awayBetNum);
+				long homeSeleRating = BettingDAO
+						.selectBettingSeleRating(homeBetNum);
+				long awaySeleRating = BettingDAO
+						.selectBettingSeleRating(awayBetNum);
+				long homeTotMineral = BettingDAO
+						.selectBettingTotMineral(homeBetNum);
+				long awayTotMineral = BettingDAO
+						.selectBettingTotMineral(awayBetNum);
+				long mineral = MemberDAO.selectMineralByID(ID);
 
-			if (distNum.equals("1")) {
-				homeSeleRating = homeSeleRating - 1;
-				homeTotMineral = homeTotMineral - betMineral;
-				homeBetRating = ((double) homeTotMineral + awayTotMineral)
+				if (distNum.equals("1")) {
+					homeSeleRating = homeSeleRating - 1;
+					homeTotMineral = homeTotMineral - betMineral;
+					homeBetRating = ((double) homeTotMineral + awayTotMineral)
 						/ homeTotMineral;
-				awayBetRating = ((double) homeTotMineral + awayTotMineral)
+					awayBetRating = ((double) homeTotMineral + awayTotMineral)
 						/ awayTotMineral;
-				mineral = mineral + betMineral;
+					mineral = mineral + betMineral;
 
-				if (homeTotMineral == 0) {
-					homeBetRating = 1;
+					if (homeTotMineral == 0) {
+						homeBetRating = 1;
+					}
+					if (awayTotMineral == 0) {
+						awayBetRating = 1;
+					}
+
+					Betting hBetting = new Betting();
+					hBetting.setBatRating(homeBetRating);
+					hBetting.setSeleRating(homeSeleRating);
+					hBetting.setTotMineral(homeTotMineral);
+					hBetting.setNum(homeBetNum);
+
+					BettingDAO.updateBetting(hBetting);
+
+					Betting aBetting = new Betting();
+					aBetting.setBatRating(awayBetRating);
+					aBetting.setSeleRating(awaySeleRating);
+					aBetting.setTotMineral(awayTotMineral);
+					aBetting.setNum(awayBetNum);
+
+					BettingDAO.updateBetting(aBetting);
+
+					MemberDAO.updateMineralByID(ID, mineral);
+
+					MemberBetDataDAO.deleteMemberbetData(mbdNum);
+
+				} else {
+
+					awaySeleRating = awaySeleRating - 1;
+					awayTotMineral = awayTotMineral - betMineral;
+					awayBetRating = ((double) homeTotMineral + awayTotMineral)
+							/ awayTotMineral;
+					homeBetRating = ((double) homeTotMineral + awayTotMineral)
+							/ homeTotMineral;
+					mineral = mineral + betMineral;
+
+					if (homeTotMineral == 0) {
+						homeBetRating = 1;
+					}
+					if (awayTotMineral == 0) {
+						awayBetRating = 1;
+					}
+
+					Betting aBetting = new Betting();
+					aBetting.setBatRating(awayBetRating);
+					aBetting.setSeleRating(awaySeleRating);
+					aBetting.setTotMineral(awayTotMineral);
+					aBetting.setNum(awayBetNum);
+
+					BettingDAO.updateBetting(aBetting);
+
+					Betting hBetting = new Betting();
+					hBetting.setBatRating(homeBetRating);
+					hBetting.setSeleRating(homeSeleRating);
+					hBetting.setTotMineral(homeTotMineral);
+					hBetting.setNum(homeBetNum);
+
+					BettingDAO.updateBetting(hBetting);
+
+					MemberDAO.updateMineralByID(ID, mineral);
+
+					MemberBetDataDAO.deleteMemberbetData(mbdNum);
+					
+					request.setAttribute("SUCCESS", "성공적으로 베팅을 취소하였습니다.");
 				}
-				if (awayTotMineral == 0) {
-					awayBetRating = 1;
-				}
-
-				Betting hBetting = new Betting();
-				hBetting.setBatRating(homeBetRating);
-				hBetting.setSeleRating(homeSeleRating);
-				hBetting.setTotMineral(homeTotMineral);
-				hBetting.setNum(homeBetNum);
-
-				BettingDAO.updateBetting(hBetting);
-
-				Betting aBetting = new Betting();
-				aBetting.setBatRating(awayBetRating);
-				aBetting.setSeleRating(awaySeleRating);
-				aBetting.setTotMineral(awayTotMineral);
-				aBetting.setNum(awayBetNum);
-
-				BettingDAO.updateBetting(aBetting);
-
-				MemberDAO.updateMineralByID("jun1", mineral);
-
-				MemberBetDataDAO.deleteMemberbetData(mbdNum);
-
 			} else {
-
-				awaySeleRating = awaySeleRating - 1;
-				awayTotMineral = awayTotMineral - betMineral;
-				awayBetRating = ((double) homeTotMineral + awayTotMineral)
-						/ awayTotMineral;
-				homeBetRating = ((double) homeTotMineral + awayTotMineral)
-						/ homeTotMineral;
-				mineral = mineral + betMineral;
-
-				if (homeTotMineral == 0) {
-					homeBetRating = 1;
-				}
-				if (awayTotMineral == 0) {
-					awayBetRating = 1;
-				}
-
-				Betting aBetting = new Betting();
-				aBetting.setBatRating(awayBetRating);
-				aBetting.setSeleRating(awaySeleRating);
-				aBetting.setTotMineral(awayTotMineral);
-				aBetting.setNum(awayBetNum);
-
-				BettingDAO.updateBetting(aBetting);
-
-				Betting hBetting = new Betting();
-				hBetting.setBatRating(homeBetRating);
-				hBetting.setSeleRating(homeSeleRating);
-				hBetting.setTotMineral(homeTotMineral);
-				hBetting.setNum(homeBetNum);
-
-				BettingDAO.updateBetting(hBetting);
-
-				MemberDAO.updateMineralByID("jun1", mineral);
-
-				MemberBetDataDAO.deleteMemberbetData(mbdNum);
+				request.setAttribute("ERROR", "경기가 시작되어 취소 할 수 없습니다.");
 			}
-		} else {
-			request.setAttribute("ERROR", "경기가 시작되어 취소 할 수 없습니다.");
-		}
-		request.setAttribute("SUCCESS", "성공적으로 베팅을 취소하였습니다.");
-		RequestDispatcher rd = request
+			
+			RequestDispatcher rd = request
 				.getRequestDispatcher("/MemberBetDataService?method=viewMemberBetDataByIDList");
-		rd.forward(request, response);
+			rd.forward(request, response);
+		} else {
+			request.setAttribute("ERROR", "로그인 해주세요");
+			RequestDispatcher rd = request
+					.getRequestDispatcher("/Member?method=loginForm");
+			rd.forward(request, response);
+		}
 				
 	
 		
@@ -206,19 +231,29 @@ public class MemberBetDataService extends HttpServlet {
 	public void giveMineral(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		/* default generated stub */;
-		long betMineral = Long.parseLong(request.getParameter("emineral"));
-		long mineral = MemberDAO.selectMineralByID("jun1");
-		String mbdNum = request.getParameter("mbdnum");
+		HttpSession session = request.getSession();
+		Member member1 = (Member) session.getAttribute("LOGIN_MEMBER");
+		if (member1 != null) {
+			String ID = member1.getId();
+			long betMineral = Long.parseLong(request.getParameter("emineral"));
+			long mineral = MemberDAO.selectMineralByID(ID);
+			String mbdNum = request.getParameter("mbdnum");
 		
-		mineral = mineral + betMineral;
+			mineral = mineral + betMineral;
 		
-		MemberDAO.updateMineralByID("jun1", mineral);
-		MemberBetDataDAO.updateMemberBetData(mbdNum);
+			MemberDAO.updateMineralByID(ID, mineral);
+			MemberBetDataDAO.updateMemberBetData(mbdNum);
 		
-		request.setAttribute("SUCCESS", "미네랄을 지급하였습니다.");
-		RequestDispatcher rd = request
-				.getRequestDispatcher("/MemberBetDataService?method=viewMemberBetDataByIDList");
-		rd.forward(request, response);
+			request.setAttribute("SUCCESS", "미네랄을 지급하였습니다.");
+			RequestDispatcher rd = request
+					.getRequestDispatcher("/MemberBetDataService?method=viewMemberBetDataByIDList");
+			rd.forward(request, response);
+		} else {
+			request.setAttribute("ERROR", "로그인 해주세요");
+			RequestDispatcher rd = request
+					.getRequestDispatcher("/Member?method=loginForm");
+			rd.forward(request, response);
+		}
 	}
 
 	/**
@@ -232,22 +267,33 @@ public class MemberBetDataService extends HttpServlet {
 	public void viewMemberBetDataByIDList(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		/* default generated stub */;
-		int page = 1;
-		if (request.getParameter("page") != null) {
-			page = Integer.parseInt(request.getParameter("page"));
+		HttpSession session = request.getSession();
+		Member member1 = (Member) session.getAttribute("LOGIN_MEMBER");
+		if (member1 != null) {
+			String ID = member1.getId();
+
+			int page = 1;
+			if (request.getParameter("page") != null) {
+				page = Integer.parseInt(request.getParameter("page"));
+			}
+			int length = 10;
+
+			ArrayList<MemberBetData> mbdList = MemberBetDataDAO
+					.selectMemberBetDataListByID(page, length, ID);
+			request.setAttribute("MBD_LIST", mbdList);
+			int mbdCount = MemberBetDataDAO.selectMemberBetDataByIDCount(ID);
+			String pageLinkTag = PageUtil.generate(page, mbdCount, length,
+					"MemberBetDataService?method=viewMemberBetDataByIDList");
+			request.setAttribute("PAGE_LINK_TAG", pageLinkTag);
+			RequestDispatcher rd = request
+					.getRequestDispatcher("/mbd/viewMBDByIDList.jsp");
+			rd.forward(request, response);
+		} else {
+			request.setAttribute("ERROR", "로그인 해주세요");
+			RequestDispatcher rd = request
+					.getRequestDispatcher("/Member?method=loginForm");
+			rd.forward(request, response);
 		}
-		int length = 10;
-		
-		ArrayList<MemberBetData> mbdList = 
-				MemberBetDataDAO.selectMemberBetDataListByID(page, length, "jun1");
-		request.setAttribute("MBD_LIST", mbdList);
-		int mbdCount = MemberBetDataDAO.selectMemberBetDataByIDCount("jun1");
-		String pageLinkTag = PageUtil.generate(page, mbdCount, length,
-				"MemberBetDataService?method=viewMemberBetDataByIDList");
-		request.setAttribute("PAGE_LINK_TAG", pageLinkTag);
-		RequestDispatcher rd = request
-				.getRequestDispatcher("/mbd/viewMBDByIDList.jsp");
-		rd.forward(request, response);
 	}
 
 	/**
@@ -261,20 +307,29 @@ public class MemberBetDataService extends HttpServlet {
 	public void viewMBDByIDForm(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		/* default generated stub */;
-		String mbdNum = request.getParameter("mbdnum");
-		String matchNum = MemberBetDataDAO.selectMatchNum(mbdNum);
-		String matchTime = MatchDAO.selectMatchTime(matchNum);
-		int check = now.hourCheck(matchTime);
-		request.setAttribute("CHECK", check);
-		Betting bettingHome = BettingDAO.selectBettingListByHome(matchNum);
-		request.setAttribute("BETTING_HOME", bettingHome);
-		Betting bettingAway = BettingDAO.selectBettingListByAway(matchNum);
-		request.setAttribute("BETTING_AWAY", bettingAway);
-		MemberBetData mbd = MemberBetDataDAO.selectMemberBetData(mbdNum);
-		request.setAttribute("MBD", mbd);
-		RequestDispatcher rd = request
-				.getRequestDispatcher("/mbd/viewMBDByID.jsp");
-		rd.forward(request, response);
+		HttpSession session = request.getSession();
+		Member member1 = (Member) session.getAttribute("LOGIN_MEMBER");
+		if (member1 != null) {
+			String mbdNum = request.getParameter("mbdnum");
+			String matchNum = MemberBetDataDAO.selectMatchNum(mbdNum);
+			String matchTime = MatchDAO.selectMatchTime(matchNum);
+			int check = now.hourCheck(matchTime);
+			request.setAttribute("CHECK", check);
+			Betting bettingHome = BettingDAO.selectBettingListByHome(matchNum);
+			request.setAttribute("BETTING_HOME", bettingHome);
+			Betting bettingAway = BettingDAO.selectBettingListByAway(matchNum);
+			request.setAttribute("BETTING_AWAY", bettingAway);
+			MemberBetData mbd = MemberBetDataDAO.selectMemberBetData(mbdNum);
+			request.setAttribute("MBD", mbd);
+			RequestDispatcher rd = request
+					.getRequestDispatcher("/mbd/viewMBDByID.jsp");
+			rd.forward(request, response);
+		} else {
+			request.setAttribute("ERROR", "로그인 해주세요");
+			RequestDispatcher rd = request
+					.getRequestDispatcher("/Member?method=loginForm");
+			rd.forward(request, response);
+		}
 	}
 	
 }
