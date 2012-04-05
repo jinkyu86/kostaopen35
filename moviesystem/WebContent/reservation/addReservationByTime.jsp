@@ -30,7 +30,7 @@
 
 
 <form action="/moviesystem/ReservationService" method="post">
-	<input type="hidden" name="method" value ="addReservation"/>
+	<input type="hidden" name="method" value ="viewSeatListByScrnum"/>
 	<input type="hidden"name="mnum"value="${mnum}"readOnly="readOnly"/>
 	<input type="hidden"name="scrnum"value="${scrnum}"readOnly="readOnly"/> 
 
@@ -72,8 +72,27 @@
 			
 			
 			<tr>
-				<td>수량</td>
-				<td><input type="text" name="resQty"></td>
+			
+				<td><label >수량</label></td>
+				<td><select name="resQty" id="resQty">
+				<option value="1">       
+							1
+				</option>
+				<option value="2">       
+							2
+				</option>
+				<option value="3">       
+							3
+				</option>
+				<option value="4">       
+							4
+				</option>
+				<option value="5">       
+							5
+				</option>
+				
+				</select></td>
+			
 			</tr>
 
 			

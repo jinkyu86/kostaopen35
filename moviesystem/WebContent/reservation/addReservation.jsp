@@ -90,7 +90,7 @@
 
 
 	<form id="my_form" action="/moviesystem/ReservationService" method="post">
-	<input type="hidden" name="method" value ="addReservation"/>
+	<input type="hidden" name="method" value ="viewSeatListByScrnum"/>
 		<table border="1" align="center">
 
 			<tr>
