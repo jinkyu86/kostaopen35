@@ -34,20 +34,6 @@
 <header>
 <h1>HOME BAKING MALL</h1><br><br>
 </header>
-<ul>	
-	<div ALIGN="right">
-		<a href="">로그인</a>|
-		<a href="">ID/PW 찾기</a>|
-		<a href="">회원가입</a>
-	</div>
-<body>		
-<header>
-	<P><font size=4>title</font></p>
-	<div style="margin-left: 500px; ">
-		ID:<input type="text" id=""/>
-		PW:<input type="password" id=""/>
-	</div>		
-</header>
 <nav>
 <!-- top nav -->	
 <div class="menu">			

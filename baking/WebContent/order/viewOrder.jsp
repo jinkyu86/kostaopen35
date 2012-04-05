@@ -55,7 +55,8 @@
 			        
 <table border="1" align="center">
 	<tr>
-		<td colspan="2" align="center">${ORDER.good.name}</td>
+		<td colspan="2" align="center">
+		${ORDER.good.name}</td>
 	</tr>
 	<tr rowspan="3">
 		<td>
