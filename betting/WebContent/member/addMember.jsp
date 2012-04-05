@@ -17,7 +17,7 @@
 					"id" : id
 				},
 				success : function(data) {
-					$('#useridcheck').html(data);
+					$('#checkuserID').html(data);
 				}
 			});
 		});
