@@ -250,18 +250,20 @@ public class MemberDAO {
 			psmt.setString(1,memberid);
 			rs=psmt.executeQuery();
 			while(rs.next()){
-				String password=rs.getString(1);
-				String name=rs.getString(2);
-				String regiNum=rs.getString(3);
-				String pwhint=rs.getString(4);
-				String pwanswer=rs.getString(5);
-				String zipcode=rs.getString(6);
-				String address=rs.getString(7);
-				String strAddress=rs.getString(8);
-				String email=rs.getString(9);
-				String phoneNum=rs.getString(10);
-				String telNum=rs.getString(11);
+				memberid=rs.getString(1);
+				String password=rs.getString(2);
+				String name=rs.getString(3);
+				String regiNum=rs.getString(4);
+				String pwhint=rs.getString(5);
+				String pwanswer=rs.getString(6);
+				String zipcode=rs.getString(7);
+				String address=rs.getString(8);
+				String strAddress=rs.getString(9);
+				String email=rs.getString(10);
+				String phoneNum=rs.getString(11);
+				String telNum=rs.getString(12);
 				
+				member.setMemberid(memberid);
 				member.setPassword(password);
 				member.setName(name);
 				member.setRegiNumber(regiNum);
