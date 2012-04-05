@@ -42,6 +42,7 @@
 			<th align="center">누적 미네랄</th>
 			<td align="center">${BETTING_AWAY.totMineral}</td>
 		</tr>
+		
 		<tr>
 			<c:choose>
 				<c:when test="${CHECK == '1' }">	
@@ -68,8 +69,17 @@
 					</td>
 				</c:otherwise>
 			</c:choose>
-			
 		</tr>
+		<c:choose>
+			<c:when test="${MBD.betting.match.winTeam.num==null }">
+				</c:when>
+			<c:otherwise>
+				<tr>
+					<th align="center">승리팀</th>
+					<td align="center" colspan="2">${MBD.betting.match.winTeam.name }</td>
+				</tr>
+			</c:otherwise>					
+		</c:choose>
 		<tr>
 			<th align="center">베팅금</th>
 			<td align="center" colspan="2">
@@ -111,7 +121,7 @@
 				<c:choose>
 					<c:when test="${MBD.betting.distnum=='1' }">
 						<c:choose>
-							<c:when test="${mbd.betting.match.winTeam.num==null }">
+							<c:when test="${MBD.betting.match.winTeam.num==null }">
 								<table border="0" align="center">
 									<tr>
 										<th>진행중</th>
@@ -195,7 +205,7 @@
 					</c:when>	
 					<c:otherwise>
 						<c:choose>
-							<c:when test="${mbd.betting.match.winTeam.num==null }">
+							<c:when test="${MBD.betting.match.winTeam.num==null }">
 								<table border="0" align="center">
 									<tr>
 										<th>진행중</th>
