@@ -31,19 +31,19 @@
 		<table border="1" align="center">
 			<tr>
 				<th>ID</th>
-				<td><input type="text" name="id" value="${MEMBER.id}" /></td>
+				<td><input type="text" name="id"  /></td>
 			</tr>
 			<tr>
 				<th>이름</th>
-				<td><input type="text" name="name" value="${MEMBER.name}" /></td>
+				<td><input type="text" name="name"  /></td>
 			</tr>
 			<tr>
 				<th>PW</th>
-				<td><input type="password" name="pw" value="${MEMBER.pw}" /></td>
+				<td><input type="password" name="pw"  /></td>
 			</tr>
 			<tr>
 				<th>Email</th>
-				<td><input type="text" name="email" value="${MEMBER.email}" />
+				<td><input type="text" name="email"  />
 				</td>
 			</tr>
     	</table>
