@@ -16,16 +16,6 @@
 </style>
 <script type="text/javascript">
 	$(document).ready(function(){
-		$("#userid").change(function(){
-			var userid=$("#userid").val();
-			
-			$.ajax('/auction/MemberService',{
-				data:{"method":"checkuserID","userid":userid
-					},
-					success : function(data){
-						$('#useridcheck').html(data);
-					}
-			});	
 		$('#my_form').validate({
 			rules:{
 				userid:{
@@ -52,13 +42,17 @@
 				}
 			},	
 			messages:{
+				userid:{
+					required:'아이디를 입력하세요.'
+				},
 				pw:{
 					required:'패스워드를 입력하세요',
 					minlength:'{0}이상 입력하세요.',
 					maxlength:'{0}을 초과하였습니다'	
 				},
 				pass_check: {
-			    	equalTo:'패스워드가 일치 하지 않습니다',			
+			    	required:'패스워드를 확인하세요.',
+					equalTo:'패스워드가 일치 하지 않습니다',
 				},
 				email:{
 					required:'이메일을 입력해주세요.',
@@ -79,6 +73,23 @@
 				event.preventDefault();
 			}
 		});
+		$("#userid").change(function(){
+			var userid=$("#userid").val();
+			
+			$.ajax('/auction/MemberService',{
+				data:{"method":"checkuserID","userid":userid
+					},
+					success : function(data){
+						$('#useridcheck').html(data);
+					}
+			});	
+			$("#addMember").click(function (event){
+				var result=confirm("가입하시겠습니까?");
+			
+				if(result==false){
+					event.preventDefault();
+				}
+			});
 	});
 </script>
 
