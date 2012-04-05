@@ -6,6 +6,14 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>Today Betting List</title>
+<script type="text/javascript">
+	<c:if test="${ERROR!=null}">
+		alert("${ERROR}");
+	</c:if>
+	<c:if test="${SUCCESS!=null}">
+		alert("${SUCCESS}");
+	</c:if>
+</script>
 </head>
 <body>
 	<h2 align="center">오늘의 베팅 경기리스트</h2>
