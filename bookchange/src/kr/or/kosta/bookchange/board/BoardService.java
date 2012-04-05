@@ -58,7 +58,24 @@ public class BoardService extends HttpServlet {
 			viewBoardWhenCancel(request,response);
 		}else if("boardListAtMain".equals(method)){
 			boardListAtMain(request,response);
+		}else if("viewMemberInfo".equals(method)){
+			viewMemberInfo(request,response);
 		}
+	}
+
+	private void viewMemberInfo(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		String email=request.getParameter("email");
+		
+		Member member=BoardDAO.viewMemberInfo(email);
+		
+		request.setAttribute("MEMBER",member);
+		
+		RequestDispatcher rd=request.getRequestDispatcher("/board/viewMemberInfo.jsp");
+		rd.forward(request, response);
+		
+		
+		
 	}
 
 	private void boardListAtMain(HttpServletRequest request,
@@ -121,6 +138,7 @@ public class BoardService extends HttpServlet {
 		
 		BoardDAO.insertBoard(board);
 		
+		request.setAttribute("ERROR","등록되었습니다.");
 		RequestDispatcher rd=request.getRequestDispatcher("/BoardService?method=viewBoardList");
 		rd.forward(request, response);
 		

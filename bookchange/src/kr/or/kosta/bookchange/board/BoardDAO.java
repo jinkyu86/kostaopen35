@@ -844,4 +844,33 @@ public class BoardDAO {
 		}		
 		return boardCount;
 	}
+	
+	public static Member viewMemberInfo(String email){
+		Connection con=null;
+		PreparedStatement ps=null;
+		ResultSet rs=null;
+		Member member=null;
+		
+		con=ConnectionUtil.getConnection();
+		try {
+			ps=con.prepareStatement("select email, tel, address from tb_member where email=?");
+			ps.setString(1, email);
+			
+			rs=ps.executeQuery();
+			
+			while(rs.next()){
+				String tel=rs.getString(2);
+				String address=rs.getString(3);
+				
+				member=new Member();
+				member.setEmail(email);
+				member.setTel(tel);
+				member.setAddress(address);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return member;
+		
+	}
 }
