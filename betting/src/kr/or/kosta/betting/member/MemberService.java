@@ -73,8 +73,25 @@ public class MemberService extends HttpServlet {
 			checkMemberID(request, response);
 		} else if ("viewMemberRankingListForm".equals(method)) {
 			viewMemberRankingListForm(request, response);
+		} else if("viewMember".equals(method)){
+			viewMember(request,response);
 		}
 	}// end method doPost
+
+	private void viewMember(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		String id=request.getParameter("ID");
+		Member member=MemberDAO.selectMemberByID(id);
+		
+		request.setAttribute("MEMBER", member);
+
+		RequestDispatcher rd = request
+				.getRequestDispatcher("/member/editMember.jsp");
+		rd.forward(request, response);
+		
+		
+		
+	}
 
 	public void addMember(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
