@@ -155,7 +155,7 @@ public class MemberService extends HttpServlet {
 		 * @param response
 		 */
 
-		String userid = request.getParameter("userid");
+		String userid = request.getParameter("id");
 		Member checkuserID = MemberDAO.selectMemberByID(userid);
 		response.setContentType("text/html;charset=utf-8");
 		PrintWriter out = response.getWriter();
