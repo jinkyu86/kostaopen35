@@ -224,13 +224,15 @@
 	</c:when>
 	
 	<c:otherwise>
+	 
    	<td><form action="/bookchange/BoardService" method="post">
 	  <input type="hidden" name="method" value="searchBoardListWhenAdd">
 	   <input type="hidden" name="boardNo" value="${BOARD.boardNo}">
 	  <input type="hidden" name="keyword" value="${sessionScope.LOGIN_EMAIL.email}"></td>
-	  <td><input type="submit" value="교환신청"></td></tr>
+	  <td><input type="submit" value="교환신청"></td></tr>	  
 	  </form>	  
-	</c:otherwise>	
+	</c:otherwise>
+		
 	</c:choose>
 	</table>	 	
    	</c:when>
