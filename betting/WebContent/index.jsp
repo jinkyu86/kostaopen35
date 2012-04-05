@@ -43,21 +43,31 @@
 					</p>-->
 					<p>
 					<table border="0" align="right">
-					     <tr>
-					     	<td align="center"><font color="white" >${sessionScope.LOGIN_MEMBER.name} 님 </font></td>
-					      	<td align="center"><font color="white" >순위 : ${RANK }  위</font></td>
-					     </tr>
-					     <tr>
-					      	<td  colspan="2" align="right"><a href="/betting/MemberService?method=logout"> <font color="white" >로그아웃</font> </a></td>
-					     </tr>
-					     <tr>
-					      	<td  colspan="2" align="right"><a href="/betting/MemberService?method=editMemberForm"><font color="white" > 정보수정</font></a></td>
-					      	</tr>
-					      	<tr>
-						  	<td  colspan="2" align="right"> <a href="/betting/MemberBetDataService?method=viewMemberBetDataByIDList"> <font color="white" >나의 배팅 정보</font></a></td>
-						 </tr>
-				    </table>
-				    </p>				
+						<tr>
+							<td align="center"><font color="white">${sessionScope.LOGIN_MEMBER.name}
+									님 </font></td>
+							<td align="center"><font color="white">순위 : ${RANK }
+									위</font></td>
+						</tr>
+						<tr>
+							<td colspan="2" align="right"><a
+								href="/betting/MemberService?method=logout"> <font
+									color="white">로그아웃</font>
+							</a></td>
+						</tr>
+						<tr>
+							<td colspan="2" align="right"><a
+								href="/betting/MemberService?method=editMemberForm"><font
+									color="white"> 정보수정</font></a></td>
+						</tr>
+						<tr>
+							<td colspan="2" align="right"><a
+								href="/betting/MemberBetDataService?method=viewMemberBetDataByIDList">
+									<font color="white">나의 배팅 정보</font>
+							</a></td>
+						</tr>
+					</table>
+					</p>
 				</c:otherwise>
 			</c:choose>
 		</header>
@@ -65,13 +75,30 @@
 			<!-- top nav -->
 			<div class="menu">
 				<ul>
-					<li><a href="/betting/MatchService?method=viewMatchListToVistor">경기
+					<li><a
+						href="/betting/MatchService?method=viewMatchListToVistor">경기
 							일정</a></li>
 					<li><a href="/betting/BettingService?method=todayBettingList">
 							오늘의 베팅 </a></li>
 					<li><a
 						href="/betting/MemberService?method=viewMemberRankingListForm">랭킹</a>
 					</li>
+
+
+					<c:choose>
+						<c:when test="${sessionScope.LOGIN_MEMBER.id=='kosta100'}">
+							<li><a href="/betting/MatchService?method=viewMatchList">경기
+									관리</a></li>
+							<li><a href="/betting/MemberService?method=viewMemberList">멤버
+									관리</a></li>
+						</c:when>
+						<c:otherwise>
+
+						</c:otherwise>
+					</c:choose>
+
+
+
 				</ul>
 			</div>
 		</nav>
