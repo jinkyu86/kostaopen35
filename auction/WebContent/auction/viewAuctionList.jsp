@@ -10,7 +10,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>경매리스트</title>
 </head>
-<body background="/auction/gphoto/s20.jpg">
+<body background="/auction/gphoto/mina2.jpg">
 
 <script type="text/javascript">
 	<c:if test="${ERROR!=null}">
