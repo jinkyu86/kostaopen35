@@ -17,12 +17,13 @@ pageEncoding="utf-8"%>
 </head>
 <ul>	
 	<div ALIGN="right">
-	<c:choose> 
+	<c:choose>
 		<c:when test="${sessionScope.member==null}">
 		<a href="/baking/member/loginForm.jsp">로그인</a>
 		<a href="">회원가입</a>
 		</c:when>
 		<c:otherwise>
+		${sessionScope.member.memberid}님 어서오세요! &nbsp
 		<a href="/baking/MemberService?method=logout">로그아웃</a>
 		</c:otherwise>
 	</c:choose>
@@ -59,7 +60,7 @@ pageEncoding="utf-8"%>
 	<section class="block">							
 	<a href="/baking/GoodService?method=viewGood&goodNum=${good.goodNum}" ><img src="/baking/img/${good.good_division.gName }/${good.img}"/></a>				
 	<center><h5>${good.name }</h5>	</center>														
-	<center><p>${good.goodPrice }</p></center>			        
+	<center><p>${good.goodPrice }원</p></center>			        
 	</section>			    
 	</li>
 </c:forEach>
