@@ -18,6 +18,7 @@
 		<th>코인</th>
 		<th>E머니</th>
 		<th>회원정보 수정</th>
+		<th>회원삭제</th>
 	</tr>
 	<c:forEach var="member" items="${MEMBER_LIST}">
 	<tr>
@@ -32,6 +33,11 @@
 	<td>
 		<input type="submit" value="회원정보 수정"/>
 		<input type="reset" value="취소"/>
+	</td>
+	<td>
+		<a href="/auction/MemberService?method=removeMember&userid=${member.userid }">
+			<img src="/auction/menu/delete.jpg"/>
+		</a>
 	</td>
 	</tr>
 	</form>
