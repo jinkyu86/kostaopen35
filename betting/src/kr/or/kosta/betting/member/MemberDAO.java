@@ -1,7 +1,5 @@
 package kr.or.kosta.betting.member;
 
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -296,12 +294,13 @@ public class MemberDAO {
 		PreparedStatement psmt = null;
 		con = ConnectionUtil.getConnection();
 		try {
-			psmt = con.prepareStatement("UPDATE member set mineral=?"
-					+ "where id=?");
-			psmt.setString(1, id);
-			psmt.setLong(4, mineral);
+			psmt = con.prepareStatement("UPDATE member SET mineral=?"
+					+"where id=?");
+			psmt.setLong(1,mineral);			
+			psmt.setString(2, id);
 
 			psmt.executeUpdate();
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
