@@ -139,12 +139,13 @@
 	 </fieldset>
 	 <fieldset>
 	  <form action="/bookchange/MemberService"method="post">
-		<input type="hidden" name="method" value="addMember">
-	 	<ul><li><div> 이메일</div><input type="text"name="email"/>(이메일 주소를 정확히 입력)</li></ul>
+		<input type="hidden" name="method" value="editMember">
+	 	<input type="hidden" name="email" value="${sessionScope.LOGIN_EMAIL.email}">
+	 	<ul><li><div> 이메일</div>${MEMBER.email}</li></ul>
 		<ul><li><div> 비밀번호</div><input type="text"name="pw"/>(영어,숫자를 4자리 이상 입력)</li></ul>
 		<ul><li><div> 주소</div><input type="text"name="address" size="50"/></li></ul>
 		<ul><li><div> 핸드폰번호</div><input type="text"name="tel"/>(ex : XXX-XXXX-XXXX)</li></ul>
-		<ul><input type="submit" value="가입"/><a href="main.jsp"><button>가입취소</button></a></ul>				
+		<ul><input type="submit" value="수정완료"/></ul>				
 		</tr>
 		</form>
 	 </fieldset>
