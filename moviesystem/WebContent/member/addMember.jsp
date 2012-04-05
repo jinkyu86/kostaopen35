@@ -18,7 +18,7 @@
 
 	$(document).ready(function(){
 		$("#member_info").css('background-color','#C4E2FF');
-		$("#member_join").css('background-color','#C4E2FF');
+		$("#member_join").css('background-color','#EBFBFF');
 	
 		$("#userid").change(function(){
 		//userid에 입력한 갓을 리턴
