@@ -85,10 +85,18 @@ alert("${COMPLETE}");
 		 </div></td>
 		 </tr>
 		 </form>
-		 <td colspan="5"><div align="right">
-		 <a href="/bookchange/MemberService?method=addMemberForm"><button>회원가입</button></a>
-		 <a href="/bookchange/MemberService?method="><button>Email/Pw찾기</button></a>
-		 </div></td>
+		 <tr>
+		 <td><div align="right">
+		 <form action="/bookchange/MemberService" method="post">
+	  	 <input type="hidden" name="method" value="addMemberForm">
+	  	  <input type="submit" value="회원가입"/>
+	  	 </form></div></td>
+		 <td><div align="right">
+		 <form action="/bookchange/MemberService" method="post">
+	  	 <input type="hidden" name="method" value="">
+	  	   <input type="submit" value="Email/Pw찾기"/>
+	  	 </form></div></td>
+		 </tr>
 	     </table>
 	     </fieldset>
 	    </c:when>
@@ -108,7 +116,15 @@ alert("${COMPLETE}");
 		</form>
 		<tr>
 		 <td><div align="right">
-		 <a href="/bookchange/MemberService?method=removeMemberForm"><button>회원탈퇴</button></a>
+		 <form action="/bookchange/MemberService" method="post">
+	  	 <input type="hidden" name="method" value="removeMemberForm">
+	  	  <input type="submit" value="회원탈퇴"/>
+	  	 </form></div></td>
+		 <td><div align="right">
+		 <form action="/bookchange/MemberService" method="post">
+	  	 <input type="hidden" name="method" value="editMemberForm">
+	  	   <input type="submit" value="정보수정"/>
+	  	 </form>
 		 </div></td>
 		</tr>
 	    </table>
@@ -212,21 +228,5 @@ alert("${COMPLETE}");
  </table>
  </td>
  </tr>
- 
-<c:choose>
-  <c:when test="${sessionScope.LOGIN_EMAIL==null}">
-	 <table align="center">
-	 <tr><td><a href="/bookchange/MemberService?method=loginForm">로그인</a></td></tr>
-	 </table>
-  </c:when>
-  <c:otherwise>	
-   	<table align="center">
- 	<tr><td>${sessionScope.LOGIN_EMAIL.email}님</td>
- 	<td><a href="/bookchange/MemberService?method=logout">로그아웃</a><td/>
-   	<td><a href="/bookchange/BoardService?method=addBoardForm">물품등록</a><br/></td>
-   	<td><a href="/bookchange/member/loginafter.jsp">메인으로</a></td></tr>
-   	</table>
-   </c:otherwise>
- </c:choose>
 </body>
 </html>
