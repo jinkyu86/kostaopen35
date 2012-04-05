@@ -14,7 +14,6 @@ pageEncoding="utf-8"%>
 	a:hover {text-decoration:none}
 	a {color:#000000; text-decoration:none; }
 </style>
-<!--[if IE]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->	
 </head>
 <ul>	
 	<div ALIGN="right">
@@ -32,7 +31,7 @@ pageEncoding="utf-8"%>
 <header>
 <marquee width=200 scrollamount=70>★</marquee><marquee width=150 scrollamount=47><font color=hotpink>★</font></marquee><marquee width=200 scrollamount=48><font color=green>☆</font></marquee><br> <marquee width=100 scrollamount=45><font color=blue>☆</font></marquee><marquee width=130 scrollamount=57><font color=hotblue>☆</font></marquee><marquee width=180 scrollamount=60><font color=red>★</font>
 </marquee><marquee width=200 scrollamount=68><font color=purple>☆</font></marquee><br><h1>HOME BAKING MALL</h1> <marquee width=143 scrollamount=47><font color=pink>☆</font></marquee><marquee width=150 scrollamount=52><font color=violet>☆</font></marquee><marquee width=170 scrollamount=58><font color=orange>★</font></marquee><br> <br>			
-<!-- <P><font size=4>HOME BAKING</font></p>	 -->		
+
 </header>
 <nav>
 <!-- top nav -->	
