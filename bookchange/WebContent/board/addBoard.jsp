@@ -158,6 +158,7 @@ $(document).ready(function(){
 		<tr>
 		 <td><div align="right">
 		 <a href="/bookchange/MemberService?method=removeMemberForm"><button>회원탈퇴</button></a>
+		  <a href="/bookchange/MemberService?method=editMemberForm"><button>정보수정</button></a>
 		 </div></td>
 		</tr>
 	    </table>
