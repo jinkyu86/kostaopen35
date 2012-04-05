@@ -134,10 +134,18 @@ $(document).ready(function(){
 		 </div></td>
 		 </tr>
 		 </form>
-		 <td colspan="5"><div align="right">
-		 <a href="/bookchange/MemberService?method=addMemberForm"><button>회원가입</button></a>
-		 <a href="/bookchange/MemberService?method="><button>Email/Pw찾기</button></a>
-		 </div></td>
+		  <tr>
+		 <td><div align="right">
+		 <form action="/bookchange/MemberService" method="post">
+	  	 <input type="hidden" name="method" value="addMemberForm">
+	  	  <input type="submit" value="회원가입"/>
+	  	 </form></div></td>
+		 <td><div align="right">
+		 <form action="/bookchange/MemberService" method="post">
+	  	 <input type="hidden" name="method" value="">
+	  	   <input type="submit" value="Email/Pw찾기"/>
+	  	 </form></div></td>
+		 </tr>
 	     </table>
 	     </fieldset>
 	    </c:when>
@@ -157,14 +165,19 @@ $(document).ready(function(){
 		</form>
 		<tr>
 		 <td><div align="right">
-		 <a href="/bookchange/MemberService?method=removeMemberForm"><button>회원탈퇴</button></a>
-		  <a href="/bookchange/MemberService?method=editMemberForm"><button>정보수정</button></a>
+		 <form action="/bookchange/MemberService" method="post">
+	  	 <input type="hidden" name="method" value="removeMemberForm">
+	  	  <input type="submit" value="회원탈퇴"/>
+	  	 </form></div></td>
+		 <td><div align="right">
+		 <form action="/bookchange/MemberService" method="post">
+	  	 <input type="hidden" name="method" value="editMemberForm">
+	  	   <input type="submit" value="정보수정"/>
+	  	 </form>
 		 </div></td>
 		</tr>
 	    </table>
 	    </fieldset>
-	   </c:otherwise>
-	  </c:choose>
 	</td>
 	</tr>
 	<tr>
@@ -173,9 +186,37 @@ $(document).ready(function(){
 	   <td><a href="">
 	   <img align="right" src="webimg/block.GIF" title="신고하기" border="0" width="230"/></a></td>
 	   </tr>
+	   
+	     
+	   <tr>
+	   <td>
+	   <a href="/bookchange/ChangeService?method=acceptChangeList">나와 교환을 원하는 책 보기</a>
+	   </td>
+	   <tr>
+	   
+	   <tr>
+	   <td>
+	   <a href="/bookchange/ChangeService?method=requestChangeList">내가 교환을 원하는 책 보기</a>
+	   </td>
+	   <tr>
+	     
+	    <tr>
+	   <td>
+	   <a href="/bookchange/ChangeService?method=matchChangeList">나와 교환 진행중인 책 보기</a>
+	   </td>
+	   <tr>
+	     
+	     
+	     
+	     </c:otherwise>
+	  </c:choose>
+	   
+	   
+	   
+	   
 	 </table>
 	 </tr>
-	 <td width="550" height="600" valign="top" bgcolor="#B0E0E6">
+	 <td width="550" height="600" valign="top" bgcolor="#dcdcdc">
 	 	<table width="550" height="600" cellpadding="0" cellspacing="0" border="1">
 	 	<td valign="top">
 	 	 

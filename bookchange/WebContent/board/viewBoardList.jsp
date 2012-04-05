@@ -129,8 +129,6 @@ alert("${COMPLETE}");
 		</tr>
 	    </table>
 	    </fieldset>
-	   </c:otherwise>
-	  </c:choose>
 	</td>
 	</tr>
 	<tr>
@@ -151,6 +149,17 @@ alert("${COMPLETE}");
 	   <a href="/bookchange/ChangeService?method=requestChangeList">내가 교환을 원하는 책 보기</a>
 	   </td>
 	   <tr>
+	     
+	    <tr>
+	   <td>
+	   <a href="/bookchange/ChangeService?method=matchChangeList">나와 교환 진행중인 책 보기</a>
+	   </td>
+	   <tr>
+	     
+	     
+	     
+	     </c:otherwise>
+	  </c:choose>
 	   
 	   <tr>
 	   <td>

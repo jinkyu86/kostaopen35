@@ -72,10 +72,18 @@
 		 </div></td>
 		 </tr>
 		 </form>
-		 <td colspan="5"><div align="right">
-		 <a href="/bookchange/MemberService?method=addMemberForm"><button>회원가입</button></a>
-		 <a href="/bookchange/MemberService?method="><button>Email/Pw찾기</button></a>
-		 </div></td>
+		 <tr>
+		 <td><div align="right">
+		 <form action="/bookchange/MemberService" method="post">
+	  	 <input type="hidden" name="method" value="addMemberForm">
+	  	  <input type="submit" value="회원가입"/>
+	  	 </form></div></td>
+		 <td><div align="right">
+		 <form action="/bookchange/MemberService" method="post">
+	  	 <input type="hidden" name="method" value="">
+	  	   <input type="submit" value="Email/Pw찾기"/>
+	  	 </form></div></td>
+		 </tr>
 	     </table>
 	     </fieldset>
 	    </c:when>
@@ -95,13 +103,20 @@
 		</form>
 		<tr>
 		 <td><div align="right">
-		 <a href="/bookchange/MemberService?method=removeMemberForm"><button>회원탈퇴</button></a>
+		 <form action="/bookchange/MemberService" method="post">
+	  	 <input type="hidden" name="method" value="removeMemberForm">
+	  	  <input type="submit" value="회원탈퇴"/>
+	  	 </form></div></td>
+		 <td><div align="right">
+		 <form action="/bookchange/MemberService" method="post">
+	  	 <input type="hidden" name="method" value="editMemberForm">
+	  	   <input type="submit" value="정보수정"/>
+	  	 </form>
 		 </div></td>
 		</tr>
 	    </table>
 	    </fieldset>
-	   </c:otherwise>
-	  </c:choose>
+	  
 	</td>
 	</tr>
 	<tr>
@@ -110,6 +125,31 @@
 	   <td><a href="">
 	   <img align="right" src="webimg/block.GIF" title="신고하기" border="0" width="230"/></a></td>
 	   </tr>
+	   
+	    
+	   <tr>
+	   <td>
+	   <a href="/bookchange/ChangeService?method=acceptChangeList">나와 교환을 원하는 책 보기</a>
+	   </td>
+	   <tr>
+	   
+	   <tr>
+	   <td>
+	   <a href="/bookchange/ChangeService?method=requestChangeList">내가 교환을 원하는 책 보기</a>
+	   </td>
+	   <tr>
+	     
+	    <tr>
+	   <td>
+	   <a href="/bookchange/ChangeService?method=matchChangeList">나와 교환 진행중인 책 보기</a>
+	   </td>
+	   <tr>
+	     
+	     
+	     
+	     </c:otherwise>
+	  </c:choose>
+	   
 	 </table>
 	 </tr>
 	 <td width="550" height="600" valign="top" bgcolor="#FAFAD2">
@@ -165,16 +205,19 @@
 
  	<table align="center" border="3">
  		<tr align="center">
- 			<td><b>게시물번호</b><br>${BOARD.boardNo}</td> 			
- 			<td><b>올린사람</b><br>${BOARD.member.email}</td>
- 			<td><b>카테고리</b><br>${BOARD.category.categoryName}</td>
- 			<td><b>제목</b><br>${BOARD.boardTitle}</td>
- 			<td><b>원하는물건</b><br>${BOARD.boardWant}</td>	
- 	 		<td><b>거래방법</b><br>${BOARD.deal.dealWay}</td>
-  			<td><b>교환상태</b><br>${BOARD.condition.conditionIng}</td> 	 		
+ 			<td><b><small>게시물번호</small></b><br>${BOARD.boardNo}</td> 			
+ 			<td><b>올린사람</b><br>${BOARD.member.email}</td> 			
+ 			<td colspan="2"><b>카테고리</b><br>${BOARD.category.categoryName}</td>	
+ 	 		<td colspan="3"><b>거래방법</b><br>${BOARD.deal.dealWay}</td> 	 		
  		</tr>
  		<tr>
- 			<td align="center" colspan="3"><img src="/bookchange/bookimg/${BOARD.boardPhoto}" height="300" width="200"></td> 			
+ 			<td colspan="2"><b>제목</b><br>${BOARD.boardTitle}</td>
+ 			<td align="center" colspan="2"><b>원하는물건</b><br>${BOARD.boardWant}</td>
+ 			
+ 			<td align="center" colspan="4"><b>교환상태</b><br>${BOARD.condition.conditionIng}</td>
+ 		</tr>
+ 		<tr>
+ 			<td align="center" colspan="2"><img src="/bookchange/bookimg/${BOARD.boardPhoto}" height="300" width="300"></td> 			
  	 		<td colspan="4">${BOARD.boardContent}</td> 	 		
  		</tr>
  		
