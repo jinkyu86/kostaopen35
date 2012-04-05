@@ -203,7 +203,7 @@ public class MemberService extends HttpServlet {
 		request.setAttribute("MEMBER_LIST", memberList);
 
 		RequestDispatcher rd = request
-				.getRequestDispatcher("/member/editMember.jsp");
+				.getRequestDispatcher("/member/viewMember.jsp");
 		rd.forward(request, response);
 
 	}
@@ -239,7 +239,7 @@ public class MemberService extends HttpServlet {
 		}// end if
 
 		RequestDispatcher rd = request
-				.getRequestDispatcher("/MemberService?method=viewMemberList");
+				.getRequestDispatcher("index.jsp");
 		rd.forward(request, response);
 
 	}
@@ -266,7 +266,7 @@ public class MemberService extends HttpServlet {
 		HttpSession session = request.getSession();
 		session.invalidate();
 		RequestDispatcher rd = request
-				.getRequestDispatcher("/MemberService?method=viewMemberList");
+				.getRequestDispatcher("index.jsp");
 		rd.forward(request, response);
 
 	}
