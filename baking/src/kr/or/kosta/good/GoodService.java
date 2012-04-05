@@ -46,7 +46,7 @@ public class GoodService extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		String method=request.getParameter("method");
 		if(method==null){
-			method="viewGoodList";
+			method="viewIndex";
 		}
 		if("viewGoodList".equals(method)){
 			viewGoodList(request,response);
@@ -64,9 +64,22 @@ public class GoodService extends HttpServlet {
 			removeGood(request,response);
 		}else if("viewDivisionGoodList".equals(method)){
 			viewDivisionGoodList(request,response);
+		}else if("viewIndex".equals(method)){
+			viewIndex(request,response);
 		}
 	}
 	
+	/**
+	 * 홈화면.viewGoodList와 동일한 기능. jsp만 다름
+	 */
+	private void viewIndex(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		GoodDAO goodDAO = new GoodDAO();
+		ArrayList<Good> goodList = goodDAO.selectGoodList();
+		request.setAttribute("GOOD_LIST",goodList);
+		RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
+		rd.forward(request, response);
+	}
 
 	/**
 	 * 상품리스트보기
@@ -76,8 +89,6 @@ public class GoodService extends HttpServlet {
 		GoodDAO goodDAO = new GoodDAO();
 		ArrayList<Good> goodList = goodDAO.selectGoodList();
 		request.setAttribute("GOOD_LIST",goodList);
-		//HttpSession session = request.getSession(true);
-		//session.setAttribute("admin", 1);//관리자
 		RequestDispatcher rd = request.getRequestDispatcher("/good/viewGoodList.jsp");
 		rd.forward(request, response);
 	}
@@ -108,7 +119,7 @@ public class GoodService extends HttpServlet {
 	 */
 	public void addGood(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//1.파라메터 정보 리턴
-		int goodNum = Integer.parseInt(request.getParameter("goodNum"));
+		/*int goodNum = Integer.parseInt(request.getParameter("goodNum"));*/
 		int division = Integer.parseInt(request.getParameter("division"));
 		int goodPrice = Integer.parseInt(request.getParameter("goodPrice"));
 		int qty = Integer.parseInt(request.getParameter("qty"));
@@ -119,7 +130,7 @@ public class GoodService extends HttpServlet {
 		
 		//2.Good 객체 생성, 1의 속성을 저장
 		Good good= new Good();
-		good.setGoodNum(goodNum);
+		/*good.setGoodNum(goodNum);*/
 		good.setGoodPrice(goodPrice);
 		good.setQty(qty);
 		good.setName(name);
