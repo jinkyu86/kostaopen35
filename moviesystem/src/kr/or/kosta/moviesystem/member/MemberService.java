@@ -12,10 +12,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.catalina.connector.Request;
+
 
 
 import kr.or.kosta.moviesystem.util.PageUtil;
+
 
 
 
@@ -73,7 +74,9 @@ public class MemberService extends HttpServlet {
 			   logoutMember(request,response);
 		   }else if("mypage".equals(method)){
 			      mypage(request, response);
-		     }
+		   }else if("searchMemberList".equals(method)){
+			   searchMemberList(request, response);
+		   }
 	   }
 			
 	   private void findPw(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -413,28 +416,67 @@ public class MemberService extends HttpServlet {
 		  rd.forward(request, response);
 		 }
 
-//	/**
-//	 * 검색한 회원리스트
-//	 * 
-//	 * @param request
-//	 * @param response
-//	 */
-//	public void searchSelectMemberList(HttpServletResponse request,
-//			HttpServletResponse response) {
-//		/* default generated stub */;
-//		
-//	}
-//
-//
-//	/**
-//	 * 회원 정보 찾기
-//	 * 
-//	 * @param request
-//	 * @param response
-//	 */
-//	public void findMemberInfo(HttpServletRequest request,
-//			HttpServletResponse response) {
-//		/* default generated stub */;
-//		
-//	}
+
+
+	public void searchMemberList(HttpServletRequest request,
+			HttpServletResponse response) throws IOException,ServletException{
+		//기본페이지 1
+		int page=1;
+		//파라메터 리턴
+		if(request.getParameter("page")!=null){
+			page=Integer.parseInt(request.getParameter("page"));
+		}
+		//한페이지당 보여줄 학생의 수
+		int length=5;
+		String keyword=request.getParameter("keyword");
+		//1.StudentDAO에서 페이지에 해당하는 학생조회 메서드를 호출
+		ArrayList<Member>memberList=null;
+		int memberCount=0;
+		if(request.getParameter("keyword")==null||
+				request.getParameter("keyword").equals("")){
+			memberList=MemberDAO.selectMemberList(length, page);
+			memberCount=MemberDAO.selectMemberListCount();
+		}else{
+			if(request.getParameter("column").equals("name")){
+				memberList=MemberDAO.searchMemberListByName
+						(length, page, request.getParameter("keyword"));
+				memberCount=MemberDAO.searchMemberListByNameCount(keyword);
+			}else if(request.getParameter("column").equals("email")){
+				memberList=MemberDAO.searchMemberListByEmail
+						(length, page, request.getParameter("keyword"));
+				memberCount=MemberDAO.searchMemberListByEmailCount(keyword);
+			}else if(request.getParameter("column").equals("addr")){
+				memberList=MemberDAO.searchMemberListByAddr
+						(length, page, request.getParameter("keyword"));
+				memberCount=MemberDAO.searchMemberListByAddrCount(keyword);
+			}else if(request.getParameter("column").equals("phone")){
+				memberList=MemberDAO.searchMemberListByPhone
+						(length, page, request.getParameter("keyword"));
+				memberCount=MemberDAO.searchMemberListByPhoneCount(keyword);
+			}
+		}
+		
+		//2.request에 1의 페이지에 해당하는 학생 정보 저장
+		request.setAttribute("MEMBER_LIST",memberList);
+		
+		//다른 페이지로 이동하는 링크태그 만듬
+		//PageUtil.getnerate(현페이지,전체건수,한페이지당보여울 row수, 주소);
+		String pageLinkTag=PageUtil.generate
+				(page, memberCount, length, "/moviesystem/MemberService?method=searchMemberList&column=" +
+						request.getParameter("column")+"&keyword="+request.getParameter("keyword"));
+		
+		request.setAttribute("PAGE_LINK_TAG",pageLinkTag);
+		
+		
+		//3./student/viewStudentList.jsp로 페이지 이동
+		//객체생성
+		RequestDispatcher rd=request.getRequestDispatcher
+				("/member/searchMemberList.jsp");
+		//4.JSP로 페이지 이동
+		rd.forward(request, response);
+		
+	}
+
+
+
 }
