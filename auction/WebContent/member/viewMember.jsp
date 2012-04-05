@@ -20,7 +20,7 @@
 	});
 </script>
 </head>
-<body>
+<body background="/auction/gphoto/seo3.jpg">
 	<h1 align="center">회원 조회</h1>
 <table border="1" align="center">
 	  <tr>
