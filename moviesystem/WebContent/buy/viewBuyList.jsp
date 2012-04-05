@@ -10,14 +10,13 @@
 <link rel="stylesheet" href="/moviesystem/css/Layout.css">
 <script src="http://code.jquery.com/jquery-1.7.1.js"></script>
 <script src="/moviesystem/js/common.jsp"></script>
-</head>
 <script type="text/javascript">
 	$(document).ready(function(){
-
 		$('#my_page').css('background-color','#C4E2FF');
+		$('#top_row').css('background-color','#C4E2FF');
 	});
 </script>
-
+</head>
 <body>
 <table width="90%" align="center">
 	<!-- 상단 메뉴 시작 -->
@@ -27,20 +26,19 @@
 		</td>
 	</tr>
 	<!-- 상단 메뉴 끝 -->
-	
-		<tr>
+</table>
+<table width="90%" align="center">
+	<tr>
 		<!-- 좌측 메뉴 시작 -->
 		<td valign="top" style="width:20%">
 			<jsp:include page="/member/MypagLeft.jsp"></jsp:include>
 		</td>
 		<!-- 좌측 메뉴 끝 -->
-		<td></td>
-		</tr>
-</table>
-
-<table border="1" align="center">
+		<td align="center">
+		
+		<table class="table_style"  align="center">
 	<h1 align="center">구매 내역</h1>
-	<tr>
+	<tr id="top_row">
 		<th width="100">구매 번호</th>
 		<th>물건이름</th>
 		<th>개수</th>
@@ -63,5 +61,12 @@
 <p align="center">
 	${PAGE_LINK_TAG}
 </p>
+		
+		</td>
+	</tr>
+</table>
+
+
+
 </body>
 </html>
