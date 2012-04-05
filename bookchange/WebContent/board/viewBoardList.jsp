@@ -6,18 +6,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>게시물 목록</title>
+<script src="http://code.jquery.com/jquery-1.7.js"></script>
 <script type="text/javascript">
 
 <c:if test="${ERROR!=null}">
 	alert("${ERROR}");
-</c:if>
-
-<c:if test="${DELETE!=null}">
-alert("${DELETE}");
-</c:if>
-
-<c:if test="${COMPLETE!=null}">
-alert("${COMPLETE}");
 </c:if>
 
 </script>
@@ -34,7 +27,7 @@ alert("${COMPLETE}");
 		<table cellpadding="0" cellspacing="0" border="0">
 		<tr align="right">
 			<td width="25"></td>
-			<td><a href="main.jsp"><img src="webimg/home.gif" border="0"/></a></td>
+			<td><a href="/bookchange/BoardService"><img src="webimg/home.gif" border="0"/></a></td>
 			<td><a href="/bookchange/BoardService?method=viewBoardList"><img src="webimg/board.GIF" border="0"/></a></td>
 		<c:choose>
 		<c:when test="${sessionScope.LOGIN_EMAIL==null}">	
@@ -138,29 +131,40 @@ alert("${COMPLETE}");
 	   <img align="right" src="webimg/block.GIF" title="신고하기" border="0" width="230"/></a></td>
 	   </tr>
 	   
-	    <tr>
-	   <td>
-	   <a href="/bookchange/BoardService?method=searchBoardList&categoryNo=&column=email&keyword=${sessionScope.LOGIN_EMAIL.email}">내가 등록한 책 보기</a>
-	   </td>
-	   <tr>	  
+   <tr>
+	   <td align="center">
+	   <form action="/bookchange/BoardService" method="post">
+	   <input type="hidden" name="method" value="searchBoardList">
+	   <input type="hidden" name="categoryNo">
+	   <input type="hidden" name="column" value="email">
+	   <input type="hidden" name="keyword" value="${sessionScope.LOGIN_EMAIL.email}">
+	   <input type="submit" value=" 등록한 책 목록 "></td>
+	   </form>
+	   </tr>	  
 	   
 	   <tr>
-	   <td>
-	   <a href="/bookchange/ChangeService?method=acceptChangeList">나와 교환을 원하는 책 보기</a>
-	   </td>
-	   <tr>
+	   <td align="center">
+	   <form action="/bookchange/ChangeService" method="post">
+	   <input type="hidden" name="method" value="requestChangeList">
+	   <input type="submit" value="요청한 교환신청"></td>
+	   </form>	   
+	   </tr>
 	   
 	   <tr>
-	   <td>
-	   <a href="/bookchange/ChangeService?method=requestChangeList">내가 교환을 원하는 책 보기</a>
-	   </td>
+	   <td align="center">
+	   <form action="/bookchange/ChangeService" method="post">
+	   <input type="hidden" name="method" value="acceptChangeList">
+	   <input type="submit" value="들어온 교환신청"></td>
+	   </form>	   
+	   </tr>
+	   
 	   <tr>
-	     
-	    <tr>
-	   <td>
-	   <a href="/bookchange/ChangeService?method=matchChangeList">나와 교환 진행중인 책 보기</a>
-	   </td>
-	   <tr>
+	   <td align="center">
+	   <form action="/bookchange/ChangeService" method="post">
+	   <input type="hidden" name="method" value="matchChangeList">
+	   <input type="submit" value="교환진행중인 책 목록"></td>
+	   </form>	   
+	   </tr>
 	     
 	     
 	     
@@ -195,17 +199,17 @@ alert("${COMPLETE}");
 	 <tr align="center">
 	  <th>번호</th>
 	  <th>사진</th>
-	  <th>올린사람</th>
+	  <th>작성자</th>
 	  <th>제목</th>
 	  <th>교환상태</th>
 	 </tr>
 	  <c:forEach var="good" items="${BOARD_LIST}">
       <tr>
-       <td align="center">${good.boardNo}</td>
+       <td align="center"><small>${good.boardNo}</small></td>
        <td><img src="/bookchange/bookimg/${good.boardPhoto}" height="80" width="80"></td>
-       <td align="center">${good.member.email}</td>
+       <td align="center"><small>${good.member.email}</small></td>
        <td align="left"><a href="/bookchange/BoardService?method=viewBoard&boardNo=${good.boardNo}">${good.boardTitle}</a></td>
-       <td align="center">${good.condition.conditionIng}</td>
+       <td align="center"><small>${good.condition.conditionIng}</small></td>
       </tr>
      </c:forEach>
 	 </table>

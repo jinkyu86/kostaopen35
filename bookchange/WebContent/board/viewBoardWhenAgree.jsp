@@ -21,7 +21,7 @@
 		<table cellpadding="0" cellspacing="0" border="0">
 		<tr align="right">
 			<td width="25"></td>
-			<td><a href="main.jsp"><img src="webimg/home.gif" border="0"/></a></td>
+			<td><a href="/bookchange/BoardService"><img src="webimg/home.gif" border="0"/></a></td>
 			<td><a href="/bookchange/BoardService?method=viewBoardList"><img src="webimg/board.GIF" border="0"/></a></td>
 		<c:choose>
 		<c:when test="${sessionScope.LOGIN_EMAIL==null}">	
@@ -126,29 +126,40 @@
 	   <img align="right" src="webimg/block.GIF" title="신고하기" border="0" width="230"/></a></td>
 	   </tr>
 	   
-	    <tr>
-	   <td>
-	   <a href="/bookchange/BoardService?method=searchBoardList&categoryNo=&column=email&keyword=${sessionScope.LOGIN_EMAIL.email}">내가 등록한 책 보기</a>
-	   </td>
-	   <tr>	  
-	    
-	   <tr>
-	   <td>
-	   <a href="/bookchange/ChangeService?method=acceptChangeList">나와 교환을 원하는 책 보기</a>
-	   </td>
-	   <tr>
+   <tr>
+	   <td align="center">
+	   <form action="/bookchange/BoardService" method="post">
+	   <input type="hidden" name="method" value="searchBoardList">
+	   <input type="hidden" name="categoryNo">
+	   <input type="hidden" name="column" value="email">
+	   <input type="hidden" name="keyword" value="${sessionScope.LOGIN_EMAIL.email}">
+	   <input type="submit" value=" 등록한 책 목록 "></td>
+	   </form>
+	   </tr>	  
 	   
 	   <tr>
-	   <td>
-	   <a href="/bookchange/ChangeService?method=requestChangeList">내가 교환을 원하는 책 보기</a>
-	   </td>
+	   <td align="center">
+	   <form action="/bookchange/ChangeService" method="post">
+	   <input type="hidden" name="method" value="requestChangeList">
+	   <input type="submit" value="요청한 교환신청"></td>
+	   </form>	   
+	   </tr>
+	   
 	   <tr>
-	     
-	    <tr>
-	   <td>
-	   <a href="/bookchange/ChangeService?method=matchChangeList">나와 교환 진행중인 책 보기</a>
-	   </td>
+	   <td align="center">
+	   <form action="/bookchange/ChangeService" method="post">
+	   <input type="hidden" name="method" value="acceptChangeList">
+	   <input type="submit" value="들어온 교환신청"></td>
+	   </form>	   
+	   </tr>
+	   
 	   <tr>
+	   <td align="center">
+	   <form action="/bookchange/ChangeService" method="post">
+	   <input type="hidden" name="method" value="matchChangeList">
+	   <input type="submit" value="교환진행중인 책 목록"></td>
+	   </form>	   
+	   </tr>
 	     
 	     
 	     
@@ -205,7 +216,7 @@
   <%--  </c:otherwise> --%>
  </c:choose> 
 
- 	<table align="center" border="3">
+ 	<table align="center" border="1">
  		<tr align="center">
  			<td><b><small>게시물번호</small></b><br>${BOARD.boardNo}</td> 			
  			<td><b>올린사람</b><br>${BOARD.member.email}</td> 			
@@ -220,7 +231,13 @@
  		</tr>
  		<tr>
  			<td align="center" colspan="2"><img src="/bookchange/bookimg/${BOARD.boardPhoto}" height="300" width="300"></td> 			
- 	 		<td colspan="4">${BOARD.boardContent}</td> 	 		
+ 	 		<td colspan="6">${BOARD.boardContent}</td> 	 		
+ 		</tr>
+ 		
+ 		<tr>
+ 		<td colspan="10">
+ 		<b><i>댓글(${QA_COUNT})</i></b>
+ 		</td>
  		</tr>
  		
  		<c:forEach var="qa" items="${QA_LIST}">
@@ -229,7 +246,7 @@
  			<small>${qa.member.email}</small></td> 			
  			<c:choose>
  			<c:when test="${sessionScope.LOGIN_EMAIL.email eq qa.member.email}">
- 			 <td colspan="2">${qa.qaContent}</td>
+ 			 <td colspan="2"><small>${qa.qaContent}</small></td>
 	 		 <form action="/bookchange/QaService" method="post">
 	 		 <input type="hidden" name="method" value="editQaForm">
 	 		 <input type="hidden" name="qaNo" value="${qa.qaNo}">
@@ -246,7 +263,7 @@
 	 		 </form>
 	 		</c:when>
 	 		<c:otherwise>
-	 		 <td colspan="4">${qa.qaContent}</td>
+	 		 <td colspan="6"><small>${qa.qaContent}</small></td>
 	 		</c:otherwise>
 	 		</c:choose>  			 		 	 			
  		</tr>

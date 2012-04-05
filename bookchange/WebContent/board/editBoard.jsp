@@ -56,7 +56,7 @@
 			fileDesc:"WebImageFiles(.jpg,.gif,.png)",
 			buttonText:"Select Photo",
 			onComplete:function(event,queueID,fileObj,response,data){
-				alert(response+"를 서버에 저장했습니다.");
+				/* alert(response+"를 서버에 저장했습니다."); */
 				//id가 photo인 객체선택 $("#photo")
 				//value 속성 수정 val(수정하고싶은값)
 				$("#photo").val(response);
@@ -83,7 +83,7 @@
 		<table cellpadding="0" cellspacing="0" border="0">
 		<tr align="right">
 			<td width="25"></td>
-			<td><a href="main.jsp"><img src="webimg/home.gif" border="0"/></a></td>
+			<td><a href="/bookchange/BoardService"><img src="webimg/home.gif" border="0"/></a></td>
 			<td><a href="/bookchange/BoardService?method=viewBoardList"><img src="webimg/board.GIF" border="0"/></a></td>
 		<c:choose>
 		<c:when test="${sessionScope.LOGIN_EMAIL==null}">	
@@ -187,29 +187,40 @@
 	   <img align="right" src="webimg/block.GIF" title="신고하기" border="0" width="230"/></a></td>
 	   </tr>
 	   
-	   <tr>
-	   <td>
-	   <a href="/bookchange/BoardService?method=searchBoardList&categoryNo=&column=email&keyword=${sessionScope.LOGIN_EMAIL.email}">내가 등록한 책 보기</a>
-	   </td>
-	   <tr>	  
-	    
-	   <tr>
-	   <td>
-	   <a href="/bookchange/ChangeService?method=acceptChangeList">나와 교환을 원하는 책 보기</a>
-	   </td>
-	   <tr>
+   <tr>
+	   <td align="center">
+	   <form action="/bookchange/BoardService" method="post">
+	   <input type="hidden" name="method" value="searchBoardList">
+	   <input type="hidden" name="categoryNo">
+	   <input type="hidden" name="column" value="email">
+	   <input type="hidden" name="keyword" value="${sessionScope.LOGIN_EMAIL.email}">
+	   <input type="submit" value=" 등록한 책 목록 "></td>
+	   </form>
+	   </tr>	  
 	   
 	   <tr>
-	   <td>
-	   <a href="/bookchange/ChangeService?method=requestChangeList">내가 교환을 원하는 책 보기</a>
-	   </td>
+	   <td align="center">
+	   <form action="/bookchange/ChangeService" method="post">
+	   <input type="hidden" name="method" value="requestChangeList">
+	   <input type="submit" value="요청한 교환신청"></td>
+	   </form>	   
+	   </tr>
+	   
 	   <tr>
-	     
-	    <tr>
-	   <td>
-	   <a href="/bookchange/ChangeService?method=matchChangeList">나와 교환 진행중인 책 보기</a>
-	   </td>
+	   <td align="center">
+	   <form action="/bookchange/ChangeService" method="post">
+	   <input type="hidden" name="method" value="acceptChangeList">
+	   <input type="submit" value="들어온 교환신청"></td>
+	   </form>	   
+	   </tr>
+	   
 	   <tr>
+	   <td align="center">
+	   <form action="/bookchange/ChangeService" method="post">
+	   <input type="hidden" name="method" value="matchChangeList">
+	   <input type="submit" value="교환진행중인 책 목록"></td>
+	   </form>	   
+	   </tr>
 	     
 	     
 	     
@@ -229,7 +240,7 @@
 		<input type="hidden" name="method" value="editBoard"/>
 		<input id="photo" type="hidden" name="boardPhoto" value=""/>
 			<input type="hidden" name="conditionResult" value="${BOARD.condition.conditionResult}"/>
-		<table border="3" align="center">
+		<table border="1" align="center">
 	    <tr>
 		<td>작성자<input type="text" name="email" value="${sessionScope.LOGIN_EMAIL.email}" readonly="readonly"/><td/>
 		<td>게시물번호<input type="text" name="boardNo" value="${BOARD.boardNo}" readonly="readonly"/><td/>

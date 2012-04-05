@@ -24,7 +24,7 @@
 				boardContent:{
 					required:true
 				},
-				boardPhoto:{
+				file:{
 					required:true
 				}
 			},
@@ -38,7 +38,7 @@
 				boardContent:{
 					required:"상세 내용을 입력해주세요."
 				},
-				boardPhoto:{
+				file:{
 					required:"사진을 업로드해주세요."
 				}
 			}			
@@ -56,7 +56,7 @@ $(document).ready(function(){
 		fileDesc:"WebImageFiles(.jpg,.gif,.png)",
 		buttonText:"Select Photo",
 		onComplete:function(event,queueID,fileObj,response,data){
-			alert(response+"를 서버에 저장했습니다.");
+			alert("글이 등록됐습니다.");
 			//id가 photo인 객체선택 $("#photo")
 			//value 속성 수정 val(수정하고싶은값)
 			$("#photo").val(response);
@@ -83,7 +83,7 @@ $(document).ready(function(){
 		<table cellpadding="0" cellspacing="0" border="0">
 		<tr align="right">
 			<td width="25"></td>
-			<td><a href="main.jsp"><img src="webimg/home.gif" border="0"/></a></td>
+			<td><a href="/bookchange/BoardService"><img src="webimg/home.gif" border="0"/></a></td>
 			<td><a href="/bookchange/BoardService?method=viewBoardList"><img src="webimg/board.GIF" border="0"/></a></td>
 		<c:choose>
 		<c:when test="${sessionScope.LOGIN_EMAIL==null}">	
@@ -187,29 +187,40 @@ $(document).ready(function(){
 	   <img align="right" src="webimg/block.GIF" title="신고하기" border="0" width="230"/></a></td>
 	   </tr>
 	   
-	   <tr>
-	   <td>
-	   <a href="/bookchange/BoardService?method=searchBoardList&categoryNo=&column=email&keyword=${sessionScope.LOGIN_EMAIL.email}">내가 등록한 책 보기</a>
-	   </td>
-	   <tr>	   
-	     
-	   <tr>
-	   <td>
-	   <a href="/bookchange/ChangeService?method=acceptChangeList">나와 교환을 원하는 책 보기</a>
-	   </td>
-	   <tr>
+   <tr>
+	   <td align="center">
+	   <form action="/bookchange/BoardService" method="post">
+	   <input type="hidden" name="method" value="searchBoardList">
+	   <input type="hidden" name="categoryNo">
+	   <input type="hidden" name="column" value="email">
+	   <input type="hidden" name="keyword" value="${sessionScope.LOGIN_EMAIL.email}">
+	   <input type="submit" value=" 등록한 책 목록 "></td>
+	   </form>
+	   </tr>	  
 	   
 	   <tr>
-	   <td>
-	   <a href="/bookchange/ChangeService?method=requestChangeList">내가 교환을 원하는 책 보기</a>
-	   </td>
+	   <td align="center">
+	   <form action="/bookchange/ChangeService" method="post">
+	   <input type="hidden" name="method" value="requestChangeList">
+	   <input type="submit" value="요청한 교환신청"></td>
+	   </form>	   
+	   </tr>
+	   
 	   <tr>
-	     
-	    <tr>
-	   <td>
-	   <a href="/bookchange/ChangeService?method=matchChangeList">나와 교환 진행중인 책 보기</a>
-	   </td>
+	   <td align="center">
+	   <form action="/bookchange/ChangeService" method="post">
+	   <input type="hidden" name="method" value="acceptChangeList">
+	   <input type="submit" value="들어온 교환신청"></td>
+	   </form>	   
+	   </tr>
+	   
 	   <tr>
+	   <td align="center">
+	   <form action="/bookchange/ChangeService" method="post">
+	   <input type="hidden" name="method" value="matchChangeList">
+	   <input type="submit" value="교환진행중인 책 목록"></td>
+	   </form>	   
+	   </tr>
 	     
 	     
 	     
@@ -221,7 +232,7 @@ $(document).ready(function(){
 	   
 	 </table>
 	 </tr>
-	 <td width="550" height="600" valign="top" bgcolor="#dcdcdc">
+	 <td width="550" height="600" valign="top" bgcolor="#FFFFE0">
 	 	<table width="550" height="600" cellpadding="0" cellspacing="0" border="1">
 	 	<td valign="top">
 	 	 
@@ -231,7 +242,7 @@ $(document).ready(function(){
 <input type="hidden" name="method" value="addBoard"/>
 <input type="hidden" name="email" value="${sessionScope.LOGIN_EMAIL.email}"/>
 <input id="photo" type="hidden" name="boardPhoto" value=""/>
-		<table border="3" align="center">				
+		<table border="1" align="center">				
 		<tr align="center">
 		<td>
 		<label>작성자</label> ${sessionScope.LOGIN_EMAIL.email}<br/>
@@ -270,6 +281,7 @@ $(document).ready(function(){
 <table align="center">
 <tr><td><input type="file" name="file" id="uploadify"/></td>
 	<td><input type="button" id="addPhoto" value="등록" /></td>
+
 	<td><form action="/bookchange/BoardService" method="post">
 		<input type="hidden" name="method" value="viewBoardList"/></td>
 	<td><input type="submit" value="취소"></td> 
