@@ -64,6 +64,9 @@
 	<input type="hidden" name="method" value="addBid"/>
 	<input type="hidden" name="aNum" value="${AUCTION.aNum }"/>
 		<tr>
+			<th colspan="7"><h1>입찰 물품</h1></th>
+		</tr>
+		<tr>
 		<td align="center">물품사진</td><td align="center">물품명</td><td align="center">즉시구매가격</td>
 		<td align="center">입찰가격</td><td align="center">경매시작시간</td>
 		<td align="center">경매마감시간</td><c:if test="${AUCTION.sold=='0'}"><td>입찰하기</td></c:if>
@@ -100,6 +103,9 @@
 	</li>
 </ui>
 <table border="1" align="center" bgcolor="skyblue">
+	<tr>
+		<th colspan="2"><h4>입찰중인 유저</h4></th>
+	</tr>
 	<tr>
 		<th>아이디</th>
 		<th>입찰가격</th>
