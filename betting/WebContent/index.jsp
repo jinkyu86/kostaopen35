@@ -12,6 +12,9 @@
  <c:if test="${ERROR!=null}">
   alert("${ERROR}");
  </c:if>
+ <c:if test="${SUCCESS!=null}">
+ alert("${SUCCESS}");
+</c:if>
 </script>
 </head>
 <body>
@@ -62,7 +65,7 @@
 			<!-- top nav -->
 			<div class="menu">
 				<ul>
-					<li><a href="/betting/MatchService?method=viewMatchList">경기
+					<li><a href="/betting/MatchService?method=viewMatchListToVistor">경기
 							일정</a></li>
 					<li><a href="/betting/BettingService?method=todayBettingList">
 							오늘의 베팅 </a></li>
