@@ -1,5 +1,6 @@
 package kr.or.kosta.bookchange.member;
 
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -54,8 +55,13 @@ public class MemberService extends HttpServlet {
 			PwInMember(request,response);
 		}else if("removeMemberForm".equals(method)){
 			removeMemberForm(request,response);
+		}else if ("viewMemberEmail".equals(method)) {
+			viewMemberEmail(request, response);
+		}else if ("viewMemberPw".equals(method)) {
+			viewMemberPw(request, response);
 		}
 	}
+
 	private void removeMemberForm(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException,IOException {
 		RequestDispatcher rd=request.getRequestDispatcher("/memer/removeMember.jsp");
@@ -83,8 +89,7 @@ public class MemberService extends HttpServlet {
 		
 		MemberDAO.insertMember(member);
 		
-		request.setAttribute("ERROR", "회원가입이 완료되었습니다.");
-		RequestDispatcher rd=request.getRequestDispatcher("main.jsp");
+		RequestDispatcher rd=request.getRequestDispatcher("/BoardService?method=viewBoardList");
 		rd.forward(request, response);
 		
 	}
@@ -97,7 +102,7 @@ public class MemberService extends HttpServlet {
 	 */
 	public void addMemberForm(HttpServletRequest request,
 			HttpServletResponse response) throws IOException,ServletException {
-		RequestDispatcher rd=request.getRequestDispatcher("/member/addMember.jsp");
+		RequestDispatcher rd=request.getRequestDispatcher("/member/addmember.jsp");
 		rd.forward(request, response);
 	
 	}
@@ -152,9 +157,7 @@ public class MemberService extends HttpServlet {
 		
 		MemberDAO.updateMember(member);
 		
-		request.setAttribute("ERROR", "정보수정이 완료되었습니다.");
-		
-		RequestDispatcher rd=request.getRequestDispatcher("/MemberService?method=viewMember");
+		RequestDispatcher rd=request.getRequestDispatcher("/MemberService?method=viewMember&email"+email);
 		rd.forward(request, response);
 		
 	}
@@ -195,6 +198,7 @@ public class MemberService extends HttpServlet {
 		if(member!=null){
 			if(!member.getPw().equals(pw)){
 				request.setAttribute("ERROR", "비밀번호 오류");
+				request.setAttribute("ERROR","존재하지 않는 아이디");
 			}else {
 				
 				HttpSession session=request.getSession();
@@ -204,7 +208,7 @@ public class MemberService extends HttpServlet {
 			}
 		
 		}
-		RequestDispatcher rd=request.getRequestDispatcher("main.jsp");
+		RequestDispatcher rd=request.getRequestDispatcher("/member/loginafter.jsp");
 		rd.forward(request, response);
 	
 	}
@@ -233,7 +237,7 @@ public class MemberService extends HttpServlet {
 		HttpSession session=request.getSession();
 		session.invalidate();//세션 강제 종료
 		System.out.println("로그아웃되었습니다");
-		RequestDispatcher rd=request.getRequestDispatcher("/main.jsp");
+		RequestDispatcher rd=request.getRequestDispatcher("/member/loginafter.jsp");
 		rd.forward(request, response);
 		
 	}
@@ -290,24 +294,14 @@ public class MemberService extends HttpServlet {
 	public void viewMember(HttpServletRequest request,
 			HttpServletResponse response)throws IOException,ServletException {
 			
-		HttpSession session=request.getSession();
-		Member member=(Member) session.getAttribute("LOGIN_EMAIL");
-		if(member==null){
-			request.setCharacterEncoding("utf-8");
-			request.setAttribute("ERROR","로그인하시기 바랍니다.");
+			String email=request.getParameter("email");
+			Member member=MemberDAO.selectMember(email);
 			
-			RequestDispatcher rd=request.getRequestDispatcher("/main.jsp");
-			rd.forward(request, response);
-		}else{
-			String email=member.getEmail();
-			member=MemberDAO.selectMember(email);
-		
 			request.setAttribute("MEMBER",member);
 			//System.out.println(email+"회원정보가 보입니다.");
-		
-			RequestDispatcher rd=request.getRequestDispatcher("/member/myInfo.jsp");
+			
+			RequestDispatcher rd=request.getRequestDispatcher("/member/viewmember.jsp");
 			rd.forward(request, response);
-		}
 	}
 /**
  * 전화번호로 이메일 검색
@@ -320,24 +314,22 @@ public class MemberService extends HttpServlet {
 	public void viewMemberEmail(HttpServletRequest request,
 			HttpServletResponse response)throws IOException,ServletException {
 			
-			String email=request.getParameter("email");
+	
 			String tel=request.getParameter("tel");
-			
-			Member member=MemberDAO.selectMember(tel);
-		//	member.setPw(pw);
-		//	member.setEmail(email);
-			if(tel==null){
+		
+			Member member=MemberDAO.selectMemberTel(tel);
+
+			if(tel==null||tel.equals("")){
 				System.out.println("전화번호를 입력하시오.");
 			}else if (!member.getTel().equals(tel)) {
 				System.out.println("전화번호를 잘못 입력하셨습니다.");
-			}else if (!member.getTel().equals(tel)) {
-			
-			//request.setAttribute("PW",pw);
-			request.setAttribute("EMAIL",email);
-			//System.out.println(email+"회원정보가 보입니다.");
-			
-			RequestDispatcher rd=request.getRequestDispatcher("/member/nomalmemberListemail.jsp");
-			rd.forward(request, response);
+			}else if (member.getTel().equals(tel)) {
+				
+		
+				System.out.println("이메일이 검색되었습니다.");
+				request.setAttribute("MEMBER",member);
+				RequestDispatcher rd=request.getRequestDispatcher("/member/nomalmemberListemailresult.jsp");
+				rd.forward(request, response);
 			}
 	}
 	/**
@@ -351,14 +343,28 @@ public class MemberService extends HttpServlet {
 	public void viewMemberPw(HttpServletRequest request,
 			HttpServletResponse response)throws IOException,ServletException {
 			
+			Member member=new Member();
 			String email=request.getParameter("email");
-			Member member=MemberDAO.selectMember(email);
+			String tel=request.getParameter("tel");
+		
+			member=MemberDAO.selectMember(email, tel);
 			
-			request.setAttribute("MEMBER",member);
-			//System.out.println(email+"회원정보가 보입니다.");
+			if(tel.equals(null)||tel.equals("")||email.equals(null)||email.equals("")){
+				System.out.println("이메일과 전화번호를 입력하시오");
+			}else if (!member.getEmail().equals(email)||!member.getTel().equals(tel)) {
+				System.out.println("이메일과 전화번호를 잘못 입력하셨습니다.");
+			}else {
+				
+				
+				System.out.println("비밀번호가 검색되었습니다.");
 			
-			RequestDispatcher rd=request.getRequestDispatcher("/member/viewmember.jsp");
-			rd.forward(request, response);
+				request.setAttribute("MEMBER",member);
+				
+				RequestDispatcher rd=request.getRequestDispatcher("/member/nomalmemberListepwresult.jsp");
+				rd.forward(request, response);
+			}
+			
+		
 	}
 
 	/**
