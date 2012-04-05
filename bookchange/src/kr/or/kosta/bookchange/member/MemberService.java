@@ -230,7 +230,7 @@ public class MemberService extends HttpServlet {
 		HttpSession session=request.getSession();
 		session.invalidate();//세션 강제 종료
 		System.out.println("로그아웃되었습니다");
-		RequestDispatcher rd=request.getRequestDispatcher("/member/loginafter.jsp");
+		RequestDispatcher rd=request.getRequestDispatcher("/main.jsp");
 		rd.forward(request, response);
 		
 	}
