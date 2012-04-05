@@ -254,7 +254,10 @@ public class MemberService extends HttpServlet {
 				HttpSession session = request.getSession();
 				session.setAttribute("LOGIN_MEMBER", member);
 				
-				String rank =MemberDAO.selectMemberRanking(id);
+				long mineral=MemberDAO.selectMineralByID(id);
+				request.setAttribute("MINERAL", mineral);
+				
+				long rank =MemberDAO.selectMemberRanking(id);
 				request.setAttribute("RANK", rank);
 				
 			}// end else
