@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import kr.or.kosta.betting.match.Match;
 import kr.or.kosta.betting.match.MatchDAO;
 import kr.or.kosta.betting.member.Member;
+import kr.or.kosta.betting.member.MemberDAO;
 import kr.or.kosta.betting.memberbetdata.MemberBetData;
 import kr.or.kosta.betting.memberbetdata.MemberBetDataDAO;
 import kr.or.kosta.betting.util.PageUtil;
@@ -121,93 +122,131 @@ public class BettingService extends HttpServlet {
 	 */
 	public void bettingGame(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		/* default generated stub */;
-		String distNum = request.getParameter("distnum");
-		long betMineral = Long.parseLong(request.getParameter("betmineral"));
-		String homeBetNum = request.getParameter("home");
-		String awayBetNum = request.getParameter("away");
-		double homeBetRating = BettingDAO.selectBettingRating(homeBetNum);
-		double awayBetRating = BettingDAO.selectBettingRating(awayBetNum);
-		long homeSeleRating = BettingDAO.selectBettingSeleRating(homeBetNum);
-		long awaySeleRating = BettingDAO.selectBettingSeleRating(awayBetNum);
-		long homeTotMineral=BettingDAO.selectBettingTotMineral(homeBetNum);
-		long awayTotMineral = BettingDAO.selectBettingTotMineral(awayBetNum);
-		
-		if(distNum.equals("1")){
-			homeSeleRating =  homeSeleRating + 1;
-			homeTotMineral = homeTotMineral + betMineral;
-			homeBetRating = ((double)homeTotMineral+awayTotMineral)/ homeTotMineral;
-			awayBetRating = ((double)homeTotMineral+awayTotMineral)/ awayTotMineral;
-			
-			Betting hBetting = new Betting();
-			hBetting.setBatRating(homeBetRating);
-			hBetting.setSeleRating(homeSeleRating);
-			hBetting.setTotMineral(homeTotMineral);
-			hBetting.setNum(homeBetNum);
-						
-			BettingDAO.updateBetting(hBetting);
-			
-			Betting aBetting = new Betting();
-			aBetting.setBatRating(awayBetRating);
-			aBetting.setSeleRating(awaySeleRating);
-			aBetting.setTotMineral(awayTotMineral);
-			aBetting.setNum(awayBetNum);
-						
-			BettingDAO.updateBetting(aBetting);
-			
-			MemberBetData mbd = new MemberBetData();
-			mbd.setBetMineral(betMineral);
-			
-			Betting betting1 = new Betting();
-			betting1.setNum(homeBetNum);
-			
-			Member member = new Member();
-			member.setId("jun10");
-			
-			mbd.setBetting(betting1);
-			mbd.setMember(member);
-			
-			MemberBetDataDAO.insultMemberBetData(mbd);
-		}else{
-			awaySeleRating =  awaySeleRating + 1;
-			awayTotMineral = awayTotMineral + betMineral;
-			awayBetRating = ((double)homeTotMineral+awayTotMineral)/ awayTotMineral;
-			homeBetRating = ((double)homeTotMineral+awayTotMineral)/ homeTotMineral;
-			
-			Betting aBetting = new Betting();
-			aBetting.setBatRating(awayBetRating);
-			aBetting.setSeleRating(awaySeleRating);
-			aBetting.setTotMineral(awayTotMineral);
-			aBetting.setNum(awayBetNum);
-						
-			BettingDAO.updateBetting(aBetting);
-			
-			Betting hBetting = new Betting();
-			hBetting.setBatRating(homeBetRating);
-			hBetting.setSeleRating(homeSeleRating);
-			hBetting.setTotMineral(homeTotMineral);
-			hBetting.setNum(homeBetNum);
-						
-			BettingDAO.updateBetting(hBetting);
-			
-			MemberBetData mbd = new MemberBetData();
-			mbd.setBetMineral(betMineral);
-			
-			Betting betting1 = new Betting();
-			betting1.setNum(awayBetNum);
-			
-			Member member = new Member();
-			member.setId("jun1");
-			
-			mbd.setBetting(betting1);
-			mbd.setMember(member);
-			
-			MemberBetDataDAO.insultMemberBetData(mbd);
+		String matchTime = request.getParameter("matchtime");
+		int check = now.hourCheck(matchTime);
+		if (check == 1) {
+
+			String distNum = request.getParameter("distnum");
+			long betMineral = Long
+					.parseLong(request.getParameter("betmineral"));
+			String homeBetNum = request.getParameter("home");
+			String awayBetNum = request.getParameter("away");
+			double homeBetRating = BettingDAO.selectBettingRating(homeBetNum);
+			double awayBetRating = BettingDAO.selectBettingRating(awayBetNum);
+			long homeSeleRating = BettingDAO
+					.selectBettingSeleRating(homeBetNum);
+			long awaySeleRating = BettingDAO
+					.selectBettingSeleRating(awayBetNum);
+			long homeTotMineral = BettingDAO
+					.selectBettingTotMineral(homeBetNum);
+			long awayTotMineral = BettingDAO
+					.selectBettingTotMineral(awayBetNum);
+			long me1 = MemberDAO.selectMineralByID("jun10");
+			long me2 = MemberDAO.selectMineralByID("jun1");
+
+			if (distNum.equals("1")) {
+				homeSeleRating = homeSeleRating + 1;
+				homeTotMineral = homeTotMineral + betMineral;
+
+				homeBetRating = ((double) homeTotMineral + awayTotMineral)
+						/ homeTotMineral;
+				awayBetRating = ((double) homeTotMineral + awayTotMineral)
+						/ awayTotMineral;
+				me1 = me1 - betMineral;
+				
+				if (homeTotMineral == 0) {
+					homeBetRating = 1;
+				}
+				if (awayTotMineral == 0) {
+					awayBetRating = 1;
+				}
+
+				Betting hBetting = new Betting();
+				hBetting.setBatRating(homeBetRating);
+				hBetting.setSeleRating(homeSeleRating);
+				hBetting.setTotMineral(homeTotMineral);
+				hBetting.setNum(homeBetNum);
+
+				BettingDAO.updateBetting(hBetting);
+
+				Betting aBetting = new Betting();
+				aBetting.setBatRating(awayBetRating);
+				aBetting.setSeleRating(awaySeleRating);
+				aBetting.setTotMineral(awayTotMineral);
+				aBetting.setNum(awayBetNum);
+
+				BettingDAO.updateBetting(aBetting);
+
+				MemberBetData mbd = new MemberBetData();
+				mbd.setBetMineral(betMineral);
+
+				Betting betting1 = new Betting();
+				betting1.setNum(homeBetNum);
+
+				Member member = new Member();
+				member.setId("jun10");
+
+				mbd.setBetting(betting1);
+				mbd.setMember(member);
+
+				MemberBetDataDAO.insultMemberBetData(mbd);
+				MemberDAO.updateMineralByID("jun10", me1);
+			} else {
+				awaySeleRating = awaySeleRating + 1;
+				awayTotMineral = awayTotMineral + betMineral;
+				awayBetRating = ((double) homeTotMineral + awayTotMineral)
+						/ awayTotMineral;
+				homeBetRating = ((double) homeTotMineral + awayTotMineral)
+						/ homeTotMineral;
+				me2 = me2 - betMineral;
+				
+				if (homeTotMineral == 0) {
+					homeBetRating = 1;
+				}
+				if (awayTotMineral == 0) {
+					awayBetRating = 1;
+				}
+
+				Betting aBetting = new Betting();
+				aBetting.setBatRating(awayBetRating);
+				aBetting.setSeleRating(awaySeleRating);
+				aBetting.setTotMineral(awayTotMineral);
+				aBetting.setNum(awayBetNum);
+
+				BettingDAO.updateBetting(aBetting);
+
+				Betting hBetting = new Betting();
+				hBetting.setBatRating(homeBetRating);
+				hBetting.setSeleRating(homeSeleRating);
+				hBetting.setTotMineral(homeTotMineral);
+				hBetting.setNum(homeBetNum);
+
+				BettingDAO.updateBetting(hBetting);
+
+				MemberBetData mbd = new MemberBetData();
+				mbd.setBetMineral(betMineral);
+
+				Betting betting1 = new Betting();
+				betting1.setNum(awayBetNum);
+
+				Member member = new Member();
+				member.setId("jun1");
+
+				mbd.setBetting(betting1);
+				mbd.setMember(member);
+
+				MemberBetDataDAO.insultMemberBetData(mbd);
+				MemberDAO.updateMineralByID("jun1", me2);
+			}
+		} else {
+			request.setAttribute("ERROR", "마감 되었습니다.");
 		}
+		request.setAttribute("SUCCESS", "성공적으로 베팅에 참여하였습니다.");
 		RequestDispatcher rd = request
 				.getRequestDispatcher("/BettingService?method=todayBettingList");
 		rd.forward(request, response);
 				
-	
+		
 	}
 
 	/**
