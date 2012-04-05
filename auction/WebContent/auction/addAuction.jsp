@@ -54,12 +54,12 @@
 					digits:"정수로 입력하세요."
 			},
 			sTime:{
-				required:"'YYYY/MM/DD HH:mm:ss'형식에 맞게 입력하세요.",
-				date:"'YYYY/MM/DD HH:mm:ss'형식에 맞게 입력하세요."
+				required:"'YYYY/MM/DD'형식에 맞게 입력하세요.",
+				date:"'YYYY/MM/DD'형식에 맞게 입력하세요."
 			},
 			eTime:{
-				required:"'YYYY/MM/DD HH:mm:ss'형식에 맞게 입력하세요.",
-				date:"'YYYY/MM/DD HH:mm:ss'형식에 맞게 입력하세요."
+				required:"'YYYY/MM/DD'형식에 맞게 입력하세요.",
+				date:"'YYYY/MM/DD'형식에 맞게 입력하세요."
 			},
 			sold:{
 				required:"0 또는 1을 입력하세요",
