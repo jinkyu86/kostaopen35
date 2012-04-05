@@ -250,7 +250,8 @@ public class BettingDAO {
 					",m.win_team_num,w.team_name,w.photo"+
 					",m.loc_num,l.loc"+
 					",b.bet_num, b.bet_rating, b.sele_rating, b.tot_mineral"+
-			        ",b.distinguish_team,m.match_time"+
+			        ",b.distinguish_team" +
+			        ",TO_CHAR(match_time,'yyyy/mm/dd hh24:mi:ss')"+
 					" FROM betting b,match m,team h,team a,team w,loc l"+
 					 " WHERE m.home_team_num=h.team_num"+
 					 " AND m.away_team_num=a.team_num"+
@@ -353,7 +354,8 @@ public class BettingDAO {
 					",m.win_team_num,w.team_name,w.photo"+
 					",m.loc_num,l.loc"+
 					",b.bet_num, b.bet_rating, b.sele_rating, b.tot_mineral"+
-			        ",b.distinguish_team,m.match_time"+
+			        ",b.distinguish_team" +
+			        ",TO_CHAR(match_time,'yyyy/mm/dd hh24:mi:ss')"+
 					" FROM betting b,match m,team h,team a,team w,loc l"+
 					 " WHERE m.home_team_num=h.team_num"+
 					 " AND m.away_team_num=a.team_num"+
