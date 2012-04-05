@@ -123,10 +123,10 @@ public class MemberService extends HttpServlet {
 		PrintWriter out=response.getWriter();
 		
 		if (member==null) {
-			System.out.println(email+"는 사용 가능한 아이디입니다.");
+			request.getAttribute("ERROR"+"사용가능한 아이디입니다");
 			out.print(email+"는 사용 가능한 아이디 입니다.");
 		} else {
-			System.out.println(email+"이미 사용중인 아이디입니다.");
+			request.getAttribute("ERROR"+"이미 사용중인 아이디입니다");
 			out.print(email+"는 이미 사용중인 아이디 입니다.");
 		}
 		
