@@ -1,6 +1,5 @@
 package kr.or.kosta.bookchange.member;
 
-
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -89,7 +88,8 @@ public class MemberService extends HttpServlet {
 		
 		MemberDAO.insertMember(member);
 		
-		RequestDispatcher rd=request.getRequestDispatcher("/BoardService?method=viewBoardList");
+		request.setAttribute("ERROR", "회원가입이 완료되었습니다.");
+		RequestDispatcher rd=request.getRequestDispatcher("main.jsp");
 		rd.forward(request, response);
 		
 	}
@@ -102,7 +102,7 @@ public class MemberService extends HttpServlet {
 	 */
 	public void addMemberForm(HttpServletRequest request,
 			HttpServletResponse response) throws IOException,ServletException {
-		RequestDispatcher rd=request.getRequestDispatcher("/member/addmember.jsp");
+		RequestDispatcher rd=request.getRequestDispatcher("/member/addMember.jsp");
 		rd.forward(request, response);
 	
 	}
@@ -157,7 +157,9 @@ public class MemberService extends HttpServlet {
 		
 		MemberDAO.updateMember(member);
 		
-		RequestDispatcher rd=request.getRequestDispatcher("/MemberService?method=viewMember&email"+email);
+		request.setAttribute("ERROR", "정보수정이 완료되었습니다.");
+		
+		RequestDispatcher rd=request.getRequestDispatcher("/MemberService?method=viewMember");
 		rd.forward(request, response);
 		
 	}
@@ -198,7 +200,6 @@ public class MemberService extends HttpServlet {
 		if(member!=null){
 			if(!member.getPw().equals(pw)){
 				request.setAttribute("ERROR", "비밀번호 오류");
-				request.setAttribute("ERROR","존재하지 않는 아이디");
 			}else {
 				
 				HttpSession session=request.getSession();
@@ -208,7 +209,7 @@ public class MemberService extends HttpServlet {
 			}
 		
 		}
-		RequestDispatcher rd=request.getRequestDispatcher("/member/loginafter.jsp");
+		RequestDispatcher rd=request.getRequestDispatcher("main.jsp");
 		rd.forward(request, response);
 	
 	}
@@ -237,7 +238,7 @@ public class MemberService extends HttpServlet {
 		HttpSession session=request.getSession();
 		session.invalidate();//세션 강제 종료
 		System.out.println("로그아웃되었습니다");
-		RequestDispatcher rd=request.getRequestDispatcher("/member/loginafter.jsp");
+		RequestDispatcher rd=request.getRequestDispatcher("/main.jsp");
 		rd.forward(request, response);
 		
 	}
@@ -294,14 +295,24 @@ public class MemberService extends HttpServlet {
 	public void viewMember(HttpServletRequest request,
 			HttpServletResponse response)throws IOException,ServletException {
 			
-			String email=request.getParameter("email");
-			Member member=MemberDAO.selectMember(email);
+		HttpSession session=request.getSession();
+		Member member=(Member) session.getAttribute("LOGIN_EMAIL");
+		if(member==null){
+			request.setCharacterEncoding("utf-8");
+			request.setAttribute("ERROR","로그인하시기 바랍니다.");
 			
+			RequestDispatcher rd=request.getRequestDispatcher("/main.jsp");
+			rd.forward(request, response);
+		}else{
+			String email=member.getEmail();
+			member=MemberDAO.selectMember(email);
+		
 			request.setAttribute("MEMBER",member);
 			//System.out.println(email+"회원정보가 보입니다.");
-			
-			RequestDispatcher rd=request.getRequestDispatcher("/member/viewmember.jsp");
+		
+			RequestDispatcher rd=request.getRequestDispatcher("/member/myInfo.jsp");
 			rd.forward(request, response);
+		}
 	}
 /**
  * 전화번호로 이메일 검색
@@ -320,13 +331,13 @@ public class MemberService extends HttpServlet {
 			Member member=MemberDAO.selectMemberTel(tel);
 
 			if(tel==null||tel.equals("")){
-				System.out.println("전화번호를 입력하시오.");
+				request.getAttribute("ERROR"+"전화번호를 입력하시오.");
 			}else if (!member.getTel().equals(tel)) {
-				System.out.println("전화번호를 잘못 입력하셨습니다.");
+				request.getAttribute("ERROR"+"전화번호를 잘못 입력하셨습니다.");
 			}else if (member.getTel().equals(tel)) {
 				
 		
-				System.out.println("이메일이 검색되었습니다.");
+				request.getAttribute("ERROR"+"이메일를 찾았습니다.");
 				request.setAttribute("MEMBER",member);
 				RequestDispatcher rd=request.getRequestDispatcher("/member/nomalmemberListemailresult.jsp");
 				rd.forward(request, response);
@@ -350,13 +361,15 @@ public class MemberService extends HttpServlet {
 			member=MemberDAO.selectMember(email, tel);
 			
 			if(tel.equals(null)||tel.equals("")||email.equals(null)||email.equals("")){
-				System.out.println("이메일과 전화번호를 입력하시오");
+				request.getAttribute("ERROR"+"이메일과 전화번호를 입력하시오.");
 			}else if (!member.getEmail().equals(email)||!member.getTel().equals(tel)) {
-				System.out.println("이메일과 전화번호를 잘못 입력하셨습니다.");
+				request.getAttribute("ERROR"+"이메일과 전화번호를 잘못 입력하였습니다.");
+				
 			}else {
 				
 				
-				System.out.println("비밀번호가 검색되었습니다.");
+				request.getAttribute("ERROR"+"비밀번호를 찾았습니다.");
+
 			
 				request.setAttribute("MEMBER",member);
 				
@@ -446,4 +459,5 @@ public class MemberService extends HttpServlet {
 		RequestDispatcher rd=request.getRequestDispatcher("/member/viewMemberList.jsp");
 		rd.forward(request, response);
 	}
+
 }
