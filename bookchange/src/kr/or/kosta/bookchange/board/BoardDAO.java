@@ -873,4 +873,24 @@ public class BoardDAO {
 		return member;
 		
 	}
+
+	/**
+	 * 게시물 삭제	 */
+	public static void deleteBoardbyEmail(String email) {
+		Connection con=null;
+		PreparedStatement ps=null;
+		con=ConnectionUtil.getConnection();
+		//QaDAO.deleteQabyBoardNo(boardNo);//게시물 삭제됐을때 여기 딸려있던 문의글도 다 삭제해버림
+		
+		try {
+			ps=con.prepareStatement("delete from tb_board where email=?");
+			ps.setString(1,email);
+			ps.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		
+	}
 }
