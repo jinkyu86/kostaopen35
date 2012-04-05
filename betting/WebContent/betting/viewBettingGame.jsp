@@ -61,7 +61,7 @@
 			<table border="0" align="center">
 				<tr>
 					<td>
-					<input type="radio" name="distnum" value="1"/>
+					<input type="radio" name="distnum" value="1" checked="checked"/>
 						${BETTING_HOME.match.homeTeam.name }<br/>
 					<input type="radio" name="distnum" value="2"/>
 						${BETTING_AWAY.match.awayTeam.name}<br/>
