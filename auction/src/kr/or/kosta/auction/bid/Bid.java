@@ -25,6 +25,8 @@ public class Bid {
 	 * 현재입찰가격
 	 */
 	private String bidPrice;
+	
+	private int moneyback;
 
 	public Member getMember() {
 		return member;
@@ -66,11 +68,19 @@ public class Bid {
 		this.bidPrice = bidPrice;
 	}
 
+	public int getMoneyback() {
+		return moneyback;
+	}
+
+	public void setMoneyback(int moneyback) {
+		this.moneyback = moneyback;
+	}
+
 	@Override
 	public String toString() {
 		return "Bid [member=" + member + ", auction=" + auction + ", bidNum="
 				+ bidNum + ", bidTime=" + bidTime + ", bidPrice=" + bidPrice
-				+ "]";
+				+ ", moneyback=" + moneyback + "]";
 	}
 	
 }

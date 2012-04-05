@@ -17,8 +17,8 @@ public class BidDAO {
 		PreparedStatement psmt=null;
 		con=ConnectionUtil.getConnection();
 		String sql="INSERT INTO BID " +
-				"(bidnum,a_num,userid,bid_time,bid_price) "+
-				"VALUES (BID_SEQ.NEXTVAL,?,?,sysdate,?)";
+				"(bidnum,a_num,userid,bid_time,bid_price,moneyback) "+
+				"VALUES (BID_SEQ.NEXTVAL,?,?,sysdate,?,0)";
 		
 		try {
 			psmt=con.prepareStatement(sql);
@@ -38,8 +38,9 @@ public class BidDAO {
 		String sql="UPDATE BID " +
 				"SET userid=?," +
 				"a_num=?," +
-				"bid_time=?," +
-				"bid_price=? " +
+				"bid_time=to_date(?,'yyyy-mm-dd hh24:mi:ss')," +
+				"bid_price=?," +
+				"moneyback=? " +
 				"WHERE bidnum=?";
 		
 		try {
@@ -48,7 +49,8 @@ public class BidDAO {
 			psmt.setString(2,bid.getAuction().getaNum());
 			psmt.setString(3, bid.getBidTime());
 			psmt.setString(4,bid.getBidPrice());
-			psmt.setString(5,bid.getBidNum());
+			psmt.setInt(5, bid.getMoneyback());
+			psmt.setString(6,bid.getBidNum());
 			psmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -60,7 +62,7 @@ public class BidDAO {
 		PreparedStatement psmt=null;
 		Bid bid=null;
 		
-		String sql="SELECT b.a_num,b.userid,b.bid_time,b.bid_price," +
+		String sql="SELECT b.a_num,b.userid,to_char(b.bid_time,'yyyy-mm-dd hh24:mi:ss'),b.bid_price,b.moneyback," +
 								  "a.g_num,a.s_price,a.im_price,a.s_time,a.e_time,a.sold,a.cu_price," +
 								  "m.pw,m.name,m.email,m.coin,m.emoney," +
 								  "g.gname,g.detail,g.img " +
@@ -76,21 +78,22 @@ public class BidDAO {
 				String userid=rs.getString(2);
 				String bidTime=rs.getString(3);
 				String bidPrice=rs.getString(4);
-				String gNum=rs.getString(5);
-				String sPrice=rs.getString(6);
-				String imPrice=rs.getString(7);
-				String sTime=rs.getString(8);
-				String eTime=rs.getString(9);
-				int sold=rs.getInt(10);
-				String cuPrice=rs.getString(11);
-				String pw=rs.getString(12);
-				String name=rs.getString(13);
-				String email=rs.getString(14);
-				String coin=rs.getString(15);
-				String emoney=rs.getString(16);
-				String gName=rs.getString(17);
-				String detail=rs.getString(18);
-				String img=rs.getString(19);
+				int moneyback=rs.getInt(5);
+				String gNum=rs.getString(6);
+				String sPrice=rs.getString(7);
+				String imPrice=rs.getString(8);
+				String sTime=rs.getString(9);
+				String eTime=rs.getString(10);
+				int sold=rs.getInt(11);
+				String cuPrice=rs.getString(12);
+				String pw=rs.getString(13);
+				String name=rs.getString(14);
+				String email=rs.getString(15);
+				String coin=rs.getString(16);
+				String emoney=rs.getString(17);
+				String gName=rs.getString(18);
+				String detail=rs.getString(19);
+				String img=rs.getString(20);
 				
 				Member member=new Member();
 				member.setUserid(userid);
@@ -123,6 +126,7 @@ public class BidDAO {
 				bid.setAuction(auction);
 				bid.setBidTime(bidTime);
 				bid.setBidPrice(bidPrice);
+				bid.setMoneyback(moneyback);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -135,7 +139,7 @@ public class BidDAO {
 		PreparedStatement psmt=null;
 		ArrayList<Bid> bidList=null;
 		
-		String sql="SELECT b.bidnum,b.a_num,b.userid,b.bid_time,b.bid_price," +
+		String sql="SELECT b.bidnum,b.a_num,b.userid,b.bid_time,b.bid_price,b.moneyback," +
 								  "a.g_num,a.s_price,a.im_price,a.s_time,a.e_time,a.sold,a.cu_price," +
 								  "m.pw,m.name,m.email,m.coin,m.emoney," +
 								  "g.gname,g.detail,g.img " +
@@ -152,21 +156,22 @@ public class BidDAO {
 				String userid=rs.getString(3);
 				String bidTime=rs.getString(4);
 				String bidPrice=rs.getString(5);
-				String gNum=rs.getString(6);
-				String sPrice=rs.getString(7);
-				String imPrice=rs.getString(8);
-				String sTime=rs.getString(9);
-				String eTime=rs.getString(10);
-				int sold=rs.getInt(11);
-				String cuPrice=rs.getString(12);
-				String pw=rs.getString(13);
-				String name=rs.getString(14);
-				String email=rs.getString(15);
-				String coin=rs.getString(16);
-				String emoney=rs.getString(17);
-				String gName=rs.getString(18);
-				String detail=rs.getString(19);
-				String img=rs.getString(20);
+				int moneyback=rs.getInt(6);
+				String gNum=rs.getString(7);
+				String sPrice=rs.getString(8);
+				String imPrice=rs.getString(9);
+				String sTime=rs.getString(10);
+				String eTime=rs.getString(11);
+				int sold=rs.getInt(12);
+				String cuPrice=rs.getString(13);
+				String pw=rs.getString(14);
+				String name=rs.getString(15);
+				String email=rs.getString(16);
+				String coin=rs.getString(17);
+				String emoney=rs.getString(18);
+				String gName=rs.getString(19);
+				String detail=rs.getString(20);
+				String img=rs.getString(21);
 				
 				Member member=new Member();
 				member.setUserid(userid);
@@ -199,6 +204,7 @@ public class BidDAO {
 				bid.setAuction(auction);
 				bid.setBidTime(bidTime);
 				bid.setBidPrice(bidPrice);
+				bid.setMoneyback(moneyback);
 				
 				bidList.add(bid);
 			}
@@ -213,7 +219,7 @@ public class BidDAO {
 		PreparedStatement psmt=null;
 		ArrayList<Bid> bidList=null;
 		
-		String sql="SELECT b.bidnum,b.a_num,b.userid,b.bid_time,b.bid_price," +
+		String sql="SELECT b.bidnum,b.a_num,b.userid,b.bid_time,b.bid_price,b.moneyback," +
 								  "a.g_num,a.s_price,a.im_price,a.s_time,a.e_time,a.sold,a.cu_price," +
 								  "m.pw,m.name,m.email,m.coin,m.emoney," +
 								  "g.gname,g.detail,g.img " +
@@ -239,21 +245,22 @@ public class BidDAO {
 				String userid=rs.getString(3);
 				String bidTime=rs.getString(4);
 				String bidPrice=rs.getString(5);
-				String gNum=rs.getString(6);
-				String sPrice=rs.getString(7);
-				String imPrice=rs.getString(8);
-				String sTime=rs.getString(9);
-				String eTime=rs.getString(10);
-				int sold=rs.getInt(11);
-				String cuPrice=rs.getString(12);
-				String pw=rs.getString(13);
-				String name=rs.getString(14);
-				String email=rs.getString(15);
-				String coin=rs.getString(16);
-				String emoney=rs.getString(17);
-				String gName=rs.getString(18);
-				String detail=rs.getString(19);
-				String img=rs.getString(20);
+				int moneyback=rs.getInt(6);
+				String gNum=rs.getString(7);
+				String sPrice=rs.getString(8);
+				String imPrice=rs.getString(9);
+				String sTime=rs.getString(10);
+				String eTime=rs.getString(11);
+				int sold=rs.getInt(12);
+				String cuPrice=rs.getString(13);
+				String pw=rs.getString(14);
+				String name=rs.getString(15);
+				String email=rs.getString(16);
+				String coin=rs.getString(17);
+				String emoney=rs.getString(18);
+				String gName=rs.getString(19);
+				String detail=rs.getString(20);
+				String img=rs.getString(21);
 				
 				Member member=new Member();
 				member.setUserid(userid);
@@ -286,6 +293,7 @@ public class BidDAO {
 				bid.setAuction(auction);
 				bid.setBidTime(bidTime);
 				bid.setBidPrice(bidPrice);
+				bid.setMoneyback(moneyback);
 				
 				bidList.add(bid);
 			}
@@ -300,7 +308,7 @@ public class BidDAO {
 		PreparedStatement psmt=null;
 		ArrayList<Bid> bidList=null;
 		
-		String sql="SELECT b.bidnum,b.a_num,b.userid,b.bid_time,b.bid_price," +
+		String sql="SELECT b.bidnum,b.a_num,b.userid,b.bid_time,b.bid_price,b.moneyback," +
 								  "a.g_num,a.s_price,a.im_price,a.s_time,a.e_time,a.sold,a.cu_price," +
 								  "m.pw,m.name,m.email,m.coin,m.emoney," +
 								  "g.gname,g.detail,g.img " +
@@ -329,21 +337,22 @@ public class BidDAO {
 				userid=rs.getString(3);
 				String bidTime=rs.getString(4);
 				String bidPrice=rs.getString(5);
-				String gNum=rs.getString(6);
-				String sPrice=rs.getString(7);
-				String imPrice=rs.getString(8);
-				String sTime=rs.getString(9);
-				String eTime=rs.getString(10);
-				int sold=rs.getInt(11);
-				String cuPrice=rs.getString(12);
-				String pw=rs.getString(13);
-				String name=rs.getString(14);
-				String email=rs.getString(15);
-				String coin=rs.getString(16);
-				String emoney=rs.getString(17);
-				String gName=rs.getString(18);
-				String detail=rs.getString(19);
-				String img=rs.getString(20);
+				int moneyback=rs.getInt(6);
+				String gNum=rs.getString(7);
+				String sPrice=rs.getString(8);
+				String imPrice=rs.getString(9);
+				String sTime=rs.getString(10);
+				String eTime=rs.getString(11);
+				int sold=rs.getInt(12);
+				String cuPrice=rs.getString(13);
+				String pw=rs.getString(14);
+				String name=rs.getString(15);
+				String email=rs.getString(16);
+				String coin=rs.getString(17);
+				String emoney=rs.getString(18);
+				String gName=rs.getString(19);
+				String detail=rs.getString(20);
+				String img=rs.getString(21);
 				
 				Member member=new Member();
 				member.setUserid(userid);
@@ -366,7 +375,7 @@ public class BidDAO {
 				auction.setImPrice(imPrice);
 				auction.setsTime(sTime);
 				auction.seteTime(eTime);
-				
+
 				auction.setSold(sold);
 				auction.setCuPrice(cuPrice);				
 				
@@ -376,6 +385,7 @@ public class BidDAO {
 				bid.setAuction(auction);
 				bid.setBidTime(bidTime);
 				bid.setBidPrice(bidPrice);
+				bid.setMoneyback(moneyback);
 				
 				bidList.add(bid);
 			}
@@ -390,7 +400,7 @@ public class BidDAO {
 		PreparedStatement psmt=null;
 		ArrayList<Bid> bidList=null;
 		
-		String sql="SELECT b.bidnum,b.a_num,b.userid,b.bid_time,b.bid_price," +
+		String sql="SELECT b.bidnum,b.a_num,b.userid,b.bid_time,b.bid_price,b.moneyback," +
 								  "a.g_num,a.s_price,a.im_price,a.s_time,a.e_time,a.sold,a.cu_price," +
 								  "m.pw,m.name,m.email,m.coin,m.emoney," +
 								  "g.gname,g.detail,g.img " +
@@ -416,21 +426,22 @@ public class BidDAO {
 				String userid=rs.getString(3);
 				String bidTime=rs.getString(4);
 				String bidPrice=rs.getString(5);
-				String gNum=rs.getString(6);
-				String sPrice=rs.getString(7);
-				String imPrice=rs.getString(8);
-				String sTime=rs.getString(9);
-				String eTime=rs.getString(10);
-				int sold=rs.getInt(11);
-				String cuPrice=rs.getString(12);
-				String pw=rs.getString(13);
-				String name=rs.getString(14);
-				String email=rs.getString(15);
-				String coin=rs.getString(16);
-				String emoney=rs.getString(17);
-				String gName=rs.getString(18);
-				String detail=rs.getString(19);
-				String img=rs.getString(20);
+				int moneyback=rs.getInt(6);
+				String gNum=rs.getString(7);
+				String sPrice=rs.getString(8);
+				String imPrice=rs.getString(9);
+				String sTime=rs.getString(10);
+				String eTime=rs.getString(11);
+				int sold=rs.getInt(12);
+				String cuPrice=rs.getString(13);
+				String pw=rs.getString(14);
+				String name=rs.getString(15);
+				String email=rs.getString(16);
+				String coin=rs.getString(17);
+				String emoney=rs.getString(18);
+				String gName=rs.getString(19);
+				String detail=rs.getString(20);
+				String img=rs.getString(21);
 				
 				Member member=new Member();
 				member.setUserid(userid);
@@ -463,6 +474,7 @@ public class BidDAO {
 				bid.setAuction(auction);
 				bid.setBidTime(bidTime);
 				bid.setBidPrice(bidPrice);
+				bid.setMoneyback(moneyback);
 				
 				bidList.add(bid);
 			}
@@ -487,4 +499,66 @@ public class BidDAO {
 			e.printStackTrace();
 		}			
 	}
+	
+	//ID별로 환불완료 표시
+	public static void updateMoneybackById(String userid) {
+		Connection con=null;
+		PreparedStatement psmt=null;
+		con=ConnectionUtil.getConnection();
+		String sql="UPDATE BID " +
+				"SET moneyback=? " +
+				"WHERE userid=?";
+		
+		try {
+			psmt=con.prepareStatement(sql);
+			psmt.setInt(1,1);
+			psmt.setString(2,userid);
+			psmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	//해당경매의 ID별로 환불완료 표시
+	public static void updateMoneybackByIdInAuction(String userid,String aNum) {
+		Connection con=null;
+		PreparedStatement psmt=null;
+		con=ConnectionUtil.getConnection();
+		String sql="UPDATE BID " +
+				"SET moneyback=? " +
+				"WHERE moneyback='0' AND userid=? AND a_num=?";
+		
+		try {
+			psmt=con.prepareStatement(sql);
+			psmt.setInt(1,1);
+			psmt.setString(2,userid);
+			psmt.setString(3,aNum);
+			psmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static int selectMoneybackByIdCount(String userid) {
+		Connection con=null;
+		PreparedStatement psmt=null;
+		int count=0;
+		
+		String sql="SELECT count(b.bidnum) " +
+					  "FROM BID b, MEMBER m " +
+					  "WHERE b.userid=m.userid AND b.moneyback='0' AND b.userid=?";
+		con=ConnectionUtil.getConnection();
+		try {
+			psmt=con.prepareStatement(sql);
+			psmt.setString(1,userid);
+			ResultSet rs=psmt.executeQuery();
+			if(rs.next()){
+				count=rs.getInt(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return count;
+	}
+
 }

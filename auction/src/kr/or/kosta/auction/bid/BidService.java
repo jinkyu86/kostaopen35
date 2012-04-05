@@ -38,7 +38,39 @@ public class BidService extends HttpServlet {
 			addBid(request,response);
 		}else if("buy".equals(method)){
 			buy(request,response);
+		}else if("moneyBack".equals(method)){
+			moneyBack(request,response);
 		}
+	}
+
+	private void moneyBack(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		String userid=request.getParameter("userid");
+		
+		//멤버정보 확인
+		Member member=MemberDAO.selectMember(userid);
+		
+		//ID에 따른 유찰된 코인개수
+		int count=BidDAO.selectMoneybackByIdCount(userid);
+		int plusEmoney=count*500;
+		
+		//해당 ID의 emoney
+		String emoney=member.getEmoney();
+		Long longEmoney=Long.parseLong(emoney);
+		
+		//emoney 합산
+		longEmoney+=plusEmoney;
+		emoney=Long.toString(longEmoney);
+		
+		//저장
+		member.setEmoney(emoney);
+		MemberDAO.updateMember(member);
+		
+		//해당 멤버의 moneyback 받음을 표시
+		BidDAO.updateMoneybackById(userid);
+		
+		RequestDispatcher rd=request.getRequestDispatcher("/MemberService?method=viewMember");
+		rd.forward(request, response);
 	}
 
 	private void buy(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -83,7 +115,7 @@ public class BidService extends HttpServlet {
 		//회원 emoney차감
 		longEmoney-=longImPrice;
 		downEmoney=Long.toString(longEmoney);
-				
+		
 		Bid bid=new Bid();
 		
 		member.setEmoney(downEmoney);
@@ -98,6 +130,11 @@ public class BidService extends HttpServlet {
 		MemberDAO.updateMember(member);
 		AuctionDAO.updateAuction(auction);
 		BidDAO.insertBid(bid);
+		
+		String userid=bid.getMember().getUserid();
+		
+		//해당 경매 낙찰자의 코인을 환불받은걸로 처리
+		BidDAO.updateMoneybackByIdInAuction(userid, aNum);
 		
 		request.setAttribute("ERROR","구매하셨습니다");
 		
