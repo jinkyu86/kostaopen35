@@ -23,6 +23,60 @@ public class ScreenTimeDAO {
 		
 	}
 
+	
+	
+	/**
+	 * srcnum으로 상영시간을 찾을 수 있는 기능
+	 * 
+	 * @param mnum
+	 */
+	public static ScreenTime selectScreenTimeBySrcNum(String scrnum) {
+		Connection con=null;
+		PreparedStatement psmt=null;
+		String sql=null;
+		ResultSet rs=null;
+		ScreenTime screentime=null;
+		ArrayList<ScreenTime>screentimeList=new ArrayList<ScreenTime>();
+		try {
+			con=ConnectionUtil.getConnection();
+			sql="SELECT m.m_name,s.time,s.scr_num,m.m_num" +
+					
+					"  FROM  MOVIE m,SCREENING_TIME s " +
+					"  WHERE  s.m_num=m.m_num " +
+					"                      AND  s.scr_num=?" ;
+		
+			
+				psmt=con.prepareStatement(sql);
+				psmt.setString(1,scrnum);
+				rs=psmt.executeQuery();
+				if(rs.next()){
+					String m_name=rs.getString(1);
+					String time=rs.getString(2);
+					scrnum=rs.getString(3);
+					String mnum=rs.getString(4);
+								
+					Movie movie=new Movie();
+					screentime=new ScreenTime();
+					
+					movie.setMname(m_name);
+					movie.setMnum(mnum);
+					screentime.setMovie(movie);
+					screentime.setTime(time);			
+					screentime.setScrnum(scrnum);
+					
+				
+					System.out.println("screentime = "+screentime);
+				}//end while
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return screentime;
+	}
+	
+	
+	
+	
+	
 	/**
 	 * 영화이름으로 상영시간을 찾을 수 있는 기능
 	 * 
