@@ -21,11 +21,11 @@ public class BidDAOTest {
 	@Test
 	public void testUpdateBid() {
 		Bid bid=BidDAO.selectBid("1");
-		bid.setBidPrice("100");
+		bid.setBidPrice("120");
 		
 		BidDAO.updateBid(bid);
 	}
-
+	
 	@Test
 	public void testDeleteBid() {
 		BidDAO.deleteBidById("jung");
@@ -62,4 +62,8 @@ public class BidDAOTest {
 		System.out.println("page1List:"+page1List);
 	}
 
+	@Test
+	public void selectMoneybackByIdCount() {
+		System.out.println(BidDAO.selectMoneybackByIdCount("jung"));
+	}
 }
