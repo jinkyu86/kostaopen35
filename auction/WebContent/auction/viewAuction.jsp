@@ -32,30 +32,34 @@
 	});
 </script>
 </head>
-<body>
+<body background="/auction/gphoto/mina.jpg"/>
 <script type="text/javascript">
 <c:if test="${ERROR!=null}">
 	alert("${ERROR}");
 </c:if>
 </script>
-<c:choose>
-	<c:when test="${sessionScope.MEMBER==null}">
-		<p align="right">
-			<a href="/auction/MemberService?method=loginForm">
-			로그인
-			</a>
-		</p>
-	</c:when>
-	<c:otherwise>
-		<p align="right">
-			${sessionScope.MEMBER.name }님<br/>
-			<a href="/auction/MemberService?method=logout">
-			로그아웃
-			</a>
-		</p>
-	</c:otherwise>
-</c:choose>
-	<table  align="center"  border="1">
+<ui>
+	<li>
+		<c:choose>
+			<c:when test="${sessionScope.MEMBER==null}">
+				<p align="right">
+					<a href="/auction/MemberService?method=loginForm">
+					<img src="/auction/menu/login.jpg"/>
+					</a>
+				</p>
+			</c:when>
+			<c:otherwise>
+				<p align="right">
+					${sessionScope.MEMBER.name }님<br/>
+					<a href="/auction/MemberService?method=logout">
+					<img src="/auction/menu/logout.jpg"/>
+					</a>
+				</p>
+			</c:otherwise>
+		</c:choose>
+	</li>
+</ui>
+	<table  align="center"  border="1" bgcolor="skyblue">
 	<form action="/auction/BidService" method="post">
 	<input type="hidden" name="method" value="addBid"/>
 	<input type="hidden" name="aNum" value="${AUCTION.aNum }"/>
@@ -77,27 +81,25 @@
 		</tr>
 	</form>
 	</table>
-	<c:if test="${AUCTION.sold=='0'}">
-	<p align="center">
-		 <p align="center">
-		 <a href="/auction/BidService?method=buy&aNum=${AUCTION.aNum }" id="buy">즉시구매하기</a>
-	</p>
-	</c:if>
-	 
-<c:if test="${sessionScope.MEMBER.userid=='admin'}">
-	 <p align="center">
-		 <p align="center">
-		 <a href="/auction/AuctionService?method=editAuctionForm&aNum=${AUCTION.aNum}">경매정보 수정</a>
-	</p>
-	<p align="center">
-		 <a href="/auction/AuctionService?method=removeAuction&aNum=${AUCTION.aNum}" id="deleteauction">경매 삭제</a>
-	 </p>
-</c:if>
-<p align="center">
-	<a href="/auction/AuctionService?method=viewAuctionList">경매목록 보기</a>
-</p>
-	
-<table border="1" align="center">
+<ui>
+	<li>
+		<p align="center">
+			<c:if test="${AUCTION.sold=='0'}">
+				<a href="/auction/BidService?method=buy&aNum=${AUCTION.aNum }" id="buy">
+					<img src="/auction/menu/immediately.jpg"></a>
+			</c:if>
+			<c:if test="${sessionScope.MEMBER.userid=='admin'}">
+				 <a href="/auction/AuctionService?method=editAuctionForm&aNum=${AUCTION.aNum}">
+				 	<img src="/auction/menu/editAuction.jpg"></a>
+				 <a href="/auction/AuctionService?method=removeAuction&aNum=${AUCTION.aNum}" id="deleteauction">
+				 	<img src="/auction/menu/deleteAuction.jpg"></a>
+			</c:if>
+			<a href="/auction/AuctionService?method=viewAuctionList">
+				<img src="/auction/menu/viewAuctionList.jpg"></a>
+		</p>
+	</li>
+</ui>
+<table border="1" align="center" bgcolor="skyblue">
 	<tr>
 		<th>아이디</th>
 		<th>입찰가격</th>
