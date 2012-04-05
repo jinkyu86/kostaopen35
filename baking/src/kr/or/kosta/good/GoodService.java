@@ -204,8 +204,12 @@ public class GoodService extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		// 1.전체 학과 리스트 조회
 		ArrayList<Good_division> good_divisionList = GoodDivisionDAO.selectGooddivisionList();
+		
+		int goodNum = Integer.parseInt(request.getParameter("goodNum"));
+		Good good = new GoodDAO().selectGood(goodNum);
 		// 2.request에 저장
 		request.setAttribute("DIVISION_LIST", good_divisionList);
+		request.setAttribute("Good", good);
 		// 3.학생추가 페이지 이동 객체 생성
 		RequestDispatcher rd = request.getRequestDispatcher("/good/editGood.jsp");
 		// 4.페이지 이동
