@@ -141,7 +141,7 @@ public class ChangeService extends HttpServlet {
 		int demandChangeCount=ChangeDAO.selectChangeRequestCount(memberEmail);
 		String pageLinkTag=PageUtil.generate(page, demandChangeCount, length, "/bookchange/ChangeService?method=requestChangeList");
 		request.setAttribute("PAGE_LINK_TAG", pageLinkTag);
-		RequestDispatcher rd=request.getRequestDispatcher("/requestChangeList.jsp");
+		RequestDispatcher rd=request.getRequestDispatcher("/change/requestChangeList.jsp");
 		rd.forward(request, response);
 	}
 
@@ -165,7 +165,7 @@ public class ChangeService extends HttpServlet {
 		int agreeChangeCount=ChangeDAO.selectChangeMyboardCount(memberEmail);
 		String pageLinkTag=PageUtil.generate(page, agreeChangeCount, length, "/bookchange/ChangeService?method=acceptChangeList");
 		request.setAttribute("PAGE_LINK_TAG", pageLinkTag);
-		RequestDispatcher rd=request.getRequestDispatcher("/acceptChangeList.jsp");
+		RequestDispatcher rd=request.getRequestDispatcher("/change/acceptChangeList.jsp");
 		rd.forward(request, response);
 	}
 
@@ -185,7 +185,7 @@ public class ChangeService extends HttpServlet {
 		change.setDemandBoard(demandBoard);
 		
 		ChangeDAO.insertChange(change);
-		RequestDispatcher rd=request.getRequestDispatcher("/member/loginafter.jsp");
+		RequestDispatcher rd=request.getRequestDispatcher("/ChangeService?method=requestChangeList");
 		rd.forward(request, response);
 		
 	}
