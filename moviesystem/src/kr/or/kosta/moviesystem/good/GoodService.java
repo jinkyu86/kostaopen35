@@ -2,6 +2,8 @@ package kr.or.kosta.moviesystem.good;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -89,6 +91,17 @@ public class GoodService extends HttpServlet{
 			HttpServletResponse response)throws IOException, ServletException {
 
 		int index=Integer.parseInt(request.getParameter("index"));
+//		Map map = request.getParameterMap();
+//		
+//		Iterator<String> keys= map.keySet().iterator();
+//		String qty = null;
+//		
+//		while(keys.hasNext()){
+//			String str = keys.next();
+//			if(str.indexOf("qty") > -1)
+//				qty=request.getParameter(str);
+//		}
+		
 		String qty=request.getParameter("qty");
 		HttpSession session=request.getSession();
 		ArrayList<Buy>cartList=(ArrayList)session.getAttribute("CART_LIST");
