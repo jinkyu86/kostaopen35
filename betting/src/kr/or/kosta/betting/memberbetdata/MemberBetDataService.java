@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import kr.or.kosta.betting.betting.Betting;
 import kr.or.kosta.betting.betting.BettingDAO;
 import kr.or.kosta.betting.match.MatchDAO;
-import kr.or.kosta.betting.member.Member;
 import kr.or.kosta.betting.member.MemberDAO;
 import kr.or.kosta.betting.util.PageUtil;
 import kr.or.kosta.betting.util.now;
@@ -72,9 +71,11 @@ public class MemberBetDataService extends HttpServlet {
 		MemberDAO.updateMineralByID("jun1", mineral);
 		MemberBetDataDAO.updateMemberBetData(mbdNum);
 		
+		request.setAttribute("SUCCESS", "미네랄을 돌려드렸습니다.");
 		RequestDispatcher rd = request
 				.getRequestDispatcher("/MemberBetDataService?method=viewMemberBetDataByIDList");
 		rd.forward(request, response);
+		
 	}
 
 	/**
@@ -195,18 +196,6 @@ public class MemberBetDataService extends HttpServlet {
 	}
 
 	/**
-	 * 아이디와 선택한 일로 정의된 데이터 조회
-	 * 
-	 * @param request
-	 * @param response
-	 */
-	public void veiwMemberBetDataList(HttpServletRequest request,
-			HttpServletResponse response) {
-		/* default generated stub */;
-		
-	}
-
-	/**
 	 * 베팅 결과 따라 베팅 미네랄 지급
 	 * 
 	 * @param request
@@ -226,6 +215,7 @@ public class MemberBetDataService extends HttpServlet {
 		MemberDAO.updateMineralByID("jun1", mineral);
 		MemberBetDataDAO.updateMemberBetData(mbdNum);
 		
+		request.setAttribute("SUCCESS", "미네랄을 지급하였습니다.");
 		RequestDispatcher rd = request
 				.getRequestDispatcher("/MemberBetDataService?method=viewMemberBetDataByIDList");
 		rd.forward(request, response);
