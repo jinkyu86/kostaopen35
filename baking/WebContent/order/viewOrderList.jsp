@@ -74,7 +74,7 @@
 		<td>${order.qty}</td>
 		<td>${order.price}</td>
 		<td>
-		<fmt:formatDate value="${order.buyDate}" pattern="yyyy년 MM월dd일 hh:mm:ss"/>
+		${order.buyDate}
 		</td>
 	</tr>
 	</c:forEach>
