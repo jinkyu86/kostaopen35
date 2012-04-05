@@ -72,10 +72,10 @@ public class RecipeService extends HttpServlet{
 	// 전체레시피 리스트 
 	public void viewRecipeList(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException{
-			Member member = new Member();
-			member.setMemberid("ADMIN");			
-			HttpSession session = request.getSession();
-			session.setAttribute("member",member);
+//			Member member = new Member();
+//			member.setMemberid("ADMIN");			
+//			HttpSession session = request.getSession();
+//			session.setAttribute("member",member);
 /////////////////////////////////////////////////
 			
 			
@@ -126,12 +126,12 @@ public class RecipeService extends HttpServlet{
 	//레시피추가(미구현)
 	public void addRecipe(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-			
 			request.setCharacterEncoding("utf-8");
+			System.out.println("method addRecipe");
 			
 			String title =request.getParameter("title");
 			String content =request.getParameter("content");
-			String img =request.getParameter("img");
+			String img =request.getParameter("photo");
 			String material =request.getParameter("material");
 			int division =Integer.parseInt(request.getParameter("division"));
 
@@ -146,6 +146,7 @@ public class RecipeService extends HttpServlet{
 			good_division.setDivision(division);
 			recipe.setGood_division(good_division);
 			
+			System.out.println(recipe);
 			RecipeDAO.insertRecipe(recipe);
 			
 			RequestDispatcher rd = request.getRequestDispatcher("/RecipeService?method=viewRecipeList");

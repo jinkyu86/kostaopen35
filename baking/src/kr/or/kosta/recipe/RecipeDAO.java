@@ -13,6 +13,26 @@ import kr.or.kosta.util.ConnectionUtil;
 
 public class RecipeDAO {
 
+	//select max(recipe_num) from recipe
+
+	public static int maxRecipeNumber(){
+		Connection con =null;
+		PreparedStatement psmt=null;
+		con=ConnectionUtil.getConnection();
+		ResultSet rs= null;
+		int max=0;
+		String sql="select max(recipe_num) from recipe";
+			
+		try {
+			psmt=con.prepareStatement(sql);
+			rs=psmt.executeQuery();
+			rs.next();
+			max=rs.getInt(1);
+		} catch (SQLException e) {e.printStackTrace();
+		}
+		
+		return max;
+	}
 	
 	//레시피추가
 	public static void insertRecipe(Recipe recipe) {
@@ -22,14 +42,15 @@ public class RecipeDAO {
 		String sql="";
 		
 		try {
-			sql="insert into RECIPE(RECIPE_NUM, TITLE, CONTENT, IMG, MATERIAL) " +
+			sql="insert into RECIPE(RECIPE_NUM, TITLE, CONTENT, IMG, MATERIAL, DIVISION) " +
 //				" values(recipe_seq.nextval, ?, ?, ?, ?)";
-				" values(1000, ?, ?, ?, ?)";
+				" values(1000, ?, ?, ?, ?, ?)";
 			psmt=con.prepareStatement(sql);
 			psmt.setString(1, recipe.getTitle());
 			psmt.setString(2, recipe.getContent());
 			psmt.setString(3, recipe.getImg());
 			psmt.setString(4, recipe.getMaterial());
+			psmt.setInt(5, recipe.getGood_division().getDivision());
 			psmt.executeUpdate();
 			
 		} catch (SQLException e) {	e.printStackTrace();}
