@@ -27,10 +27,6 @@
 					minlength:2,
 					maxlength:15
 					},
-			    pass_check: {
-			    	required:true,
-			    	equalTo:'#pw', 
-			    	},
 				email:{
 					required:true,
 					email:true,
@@ -50,11 +46,7 @@
 					minlength:'{0}이상 입력하세요.',
 					maxlength:'{0}을 초과하였습니다'	
 				},
-				pass_check: {
-			    	required:'패스워드를 확인하세요.',
-					equalTo:'패스워드가 일치 하지 않습니다',
-				},
-				email:{
+			  email:{
 					required:'이메일을 입력해주세요.',
 					email:'이메일 형식에 맞게 입력해주세요',
 					minlength: '{0}자 이상 입력하세요'
@@ -102,21 +94,10 @@
 			</tr>
 			<tr>
 				<td><label>비밀번호</label></td>
-				<td><input type="password"  name="pw" id="pw"></td>
-				<td>
-					<div class="pw-meter">
-						<div class="pw-meter-message"></div>
-						<div class="pw-meter-bg">
-							<div class="pw-meter-bar"></div>
-						</div>
-					</div>
-				</td>
+				<td><input type="password"  name="pw" ></td>
+
 			</tr>
-			<tr>
-				<td><label>비밀번호 확인</label></td>
-				<td><input type="password" name="pass_check"/></td>
-				<td></td>	
-			</tr>
+			
 			<tr>
 				<td>이메일</td>
 				<td><input type="text" name="email"></td>
