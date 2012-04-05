@@ -144,9 +144,12 @@
 		<ul><li><div> 비밀번호</div><input type="password"name="pw"/>(영어,숫자를 4자리 이상 입력)</li></ul>
 		<ul><li><div> 주소</div><input type="text"name="address" size="50"/></li></ul>
 		<ul><li><div> 핸드폰번호</div><input type="text"name="tel"/>(ex : XXX-XXXX-XXXX)</li></ul>
-		<ul><input type="submit" value="가입"/><a href="main.jsp"><button>가입취소</button></a></ul>				
-		</tr>
-		</form>
+		<ul><div><input type="submit" value="가입"/></div></ul>				
+	 </form>
+	 <form action="/bookchange/BoardService"method="post">
+		<input type="hidden" name="method" value="boardListAtMain">
+	 	<ul><div><input type="submit" value="취소"/></div></ul>				
+	 </form>
 	 </fieldset>
 	 </td>
 	</table>
