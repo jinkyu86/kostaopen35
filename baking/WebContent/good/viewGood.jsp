@@ -71,8 +71,8 @@ function deleteGood(){
 		</center>
 	</c:if>
 	<ul class="column">
-	<form action="/baking/OrderService" method="get">
-		<input type="hidden" name="method" value="addCartForm">
+	<form action="/baking/OrderService" method="post">
+		<input type="hidden" name="method" value="viewCartList">
 		<input type="hidden" name="goodNum" value="${GOOD.goodNum}">
 		<input type="hidden" name="option" value="${GOOD.option}">
 		<input type="hidden" name="goodPrice" value="${GOOD.goodPrice}">
