@@ -20,6 +20,44 @@ import kr.or.kosta.moviesystem.util.ConnectionUtil;
 
 public class ReservationDAO {
 
+	
+	/**
+	 * 영화를 선택해 예약목록에 등록하는 기능
+	 
+	 */
+	public static void insertReservation(Member member,Reservation reservation,ArrayList<Integer> SeatNumList) {
+		Connection con=null;
+		PreparedStatement psmt=null;
+		
+		
+		for(int i=0;i<SeatNumList.size();i++){
+			try{
+				con=ConnectionUtil.getConnection();
+				psmt=con.prepareStatement(
+						"INSERT INTO RESERVATION" +
+						"(RES_NUM, M_NUM,USERID, RES_DATE, SCR_NUM, RES_QTY, TOTAL_PRICE, PAY_STATE,SEAT_NUM)"+
+						"VALUES(res_seq.nextval,?,?,sysdate,?,?,?,?,?)");
+				psmt.setString(1,reservation.getMovie().getMnum());
+				psmt.setString(2,member.getUserid());
+			    psmt.setString(3,reservation.getScreenTime().getScrnum());
+				psmt.setLong(4,reservation.getResQty());
+				psmt.setLong(5,reservation.getTotalPrice());
+				psmt.setString(6, "결제완료");
+				psmt.setLong(7,SeatNumList.get(i));
+				psmt.executeUpdate();
+				
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		}
+
+		
+		
+		
+	}
+	
+	
+	
 	/**
 	 * 영화를 선택해 예약목록에 등록하는 기능
 	 
@@ -434,4 +472,63 @@ public class ReservationDAO {
 		
 	
 	}
+	
+	
+	
+	
+	/**
+	 * SCR_NUM으로 예약한 좌석 번호를 찾기
+	 * 
+	 */
+	public static ArrayList selectSeatNumByScrnum(String scrnum) {
+		Connection con=null;
+		PreparedStatement psmt=null;
+		String sql=null;
+		ResultSet rs=null;
+		ArrayList<Integer>SeatList=new ArrayList<Integer>();
+		try {
+			con=ConnectionUtil.getConnection();
+			sql="	SELECT seat_num " +
+					"  FROM  reservation " +
+					"  WHERE  scr_num=? " ;
+		
+			
+				psmt=con.prepareStatement(sql);
+				psmt.setString(1,scrnum);
+				rs=psmt.executeQuery();
+				while(rs.next()){
+					int seatnum=rs.getInt(1);
+								
+		
+					SeatList.add(seatnum);
+					System.out.println("seatnum = "+seatnum);
+				}//end while
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return SeatList;
+	}
+	/**
+	 *Total seatList
+	 * 
+	 */
+	public static ArrayList selectTotalList(String scrnum) {
+		ArrayList<Integer>SelectSeatList=new ArrayList<Integer>();
+		SelectSeatList=ReservationDAO.selectSeatNumByScrnum(scrnum);
+		ArrayList<Integer>TotalSeatList=new ArrayList<Integer>();
+		int num;
+		for(int i=0;i<40;i++){
+			TotalSeatList.add(0);
+		}
+		
+		for(int i=0;i<SelectSeatList.size();i++){
+			num=SelectSeatList.get(i);
+			TotalSeatList.set(num-1, 1);
+		}
+		
+		
+		return TotalSeatList;
+	}
+	
+	
 }
