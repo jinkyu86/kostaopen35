@@ -87,31 +87,6 @@ public class BettingService extends HttpServlet {
 		
 	}
 
-	/**
-	 * 베팅 데이터 입력
-	 * 
-	 * @param request
-	 * @param response
-	 * @throws IOException 
-	 * @throws ServletException 
-	 */
-	public void addBetting(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		/* default generated stub */;
-
-	}
-
-	/**
-	 * 베팅데이터 업데이트
-	 * 
-	 * @param request
-	 * @param response
-	 */
-	public void updateBetting(HttpServletRequest request,
-			HttpServletResponse response) {
-		/* default generated stub */;
-	
-	}
 
 	/**
 	 * 베팅 알고리즘 메서드
@@ -254,9 +229,10 @@ public class BettingService extends HttpServlet {
 					.getRequestDispatcher("/BettingService?method=todayBettingList");
 			rd.forward(request, response);
 		} else {
-			request.setAttribute("ERROR", "로그인 해주세요");
+			request.setAttribute("ERROR", "로그인 해주세요.");
 			RequestDispatcher rd = request
 					.getRequestDispatcher("/MemberService?method=loginForm");
+//			"/MemberService?method=loginForm"
 			rd.forward(request, response);
 		}
 		
