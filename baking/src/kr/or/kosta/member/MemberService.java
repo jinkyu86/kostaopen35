@@ -1,6 +1,7 @@
 package kr.or.kosta.member;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -8,6 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import kr.or.kosta.student.Student;
+import kr.or.kosta.student.StudentDAO;
 
 public class MemberService extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -50,11 +54,25 @@ public class MemberService extends HttpServlet {
 	 * 
 	 * @param request
 	 * @param response
+	 * @throws IOException 
+	 * @throws ServletException 
 	 */
 	public void viewMember(HttpServletRequest request,
-			HttpServletResponse response) {
-		/* default generated stub */;
-//		return null;
+			HttpServletResponse response) throws ServletException, IOException {
+		
+		String memberid=request.getParameter("memberid");
+		String name=request.getParameter("name");
+		String reginum=request.getParameter("reginum");
+		
+		Member member=MemberDAO.selectMemberByid(name, reginum);
+				
+				request.setAttribute("Member",member);
+				
+				RequestDispatcher rd=
+						request.getRequestDispatcher(
+								"/board/viewBoard.jsp");
+				
+				rd.forward(request, response);
 	}
 
 	/**
@@ -62,11 +80,48 @@ public class MemberService extends HttpServlet {
 	 * 
 	 * @param request
 	 * @param response
+	 * @throws IOException 
+	 * @throws ServletException 
 	 */
 	public void editMember(HttpServletRequest request,
-			HttpServletResponse response) {
-		/* default generated stub */;
-//		return null;
+			HttpServletResponse response) throws ServletException, IOException {
+		
+				String memberid=request.getParameter("memberid");
+				String password=request.getParameter("password");
+				String name=request.getParameter("name");
+				String regiNumber=request.getParameter("regiNumber");
+				String pwHint=request.getParameter("pwHint");
+				String pwAnswer=request.getParameter("pwAnswer");
+				String zipcode=request.getParameter("zipcode");
+				String address=request.getParameter("address");
+				String strAddress=request.getParameter("strAddress");
+				String email=request.getParameter("email");
+				String phoneNumber=request.getParameter("phoneNumber");
+				String telNumber=request.getParameter("telNumber");
+				
+				
+				Member member=new Member();
+				member.setMemberid(memberid);
+				member.setPassword(password);
+				member.setName(name);
+				member.setRegiNumber(regiNumber);
+				member.setPwHint(pwHint);
+				member.setPwAnswer(pwAnswer);
+				member.setZipcode(zipcode);
+				member.setAddress(address);
+				member.setStrAddress(strAddress);
+				member.setEmail(email);
+				member.setPhoneNumber(phoneNumber);
+				member.setTelNumber(telNumber);
+				
+				MemberDAO.updateMember(member);
+				
+				RequestDispatcher rd=
+						request.getRequestDispatcher(
+								"/MemberService?method=viewMember&" +
+								"memberid="+memberid);
+				
+				rd.forward(request, response);
 	}
 
 	/**
@@ -74,11 +129,24 @@ public class MemberService extends HttpServlet {
 	 * 
 	 * @param request
 	 * @param response
+	 * @throws IOException 
+	 * @throws ServletException 
 	 */
 	public void editMemberForm(HttpServletRequest request,
-			HttpServletResponse response) {
-		/* default generated stub */;
-//		return null;
+			HttpServletResponse response) throws ServletException, IOException {
+		
+				String memberid=request.getParameter("memberid");
+				String name=request.getParameter("name");
+				String reginum=request.getParameter("reginum");
+				
+				Member member=MemberDAO.selectMemberByid(name, reginum);
+				
+				request.setAttribute("Member",member);
+				
+				RequestDispatcher rd=
+						request.getRequestDispatcher("/board/editBoard.jsp");
+				
+				rd.forward(request, response);
 	}
 
 	/**
@@ -86,11 +154,22 @@ public class MemberService extends HttpServlet {
 	 * 
 	 * @param request
 	 * @param response
+	 * @throws IOException 
+	 * @throws ServletException 
 	 */
 	public void removeMember(HttpServletRequest request,
-			HttpServletResponse response) {
-		/* default generated stub */;
-//		return null;
+			HttpServletResponse response) throws ServletException, IOException {
+		
+				String memberid=request.getParameter("memberid");
+				String pw=request.getParameter("pw");
+				String reginum=request.getParameter("reginum");
+				MemberDAO.deleteMember(pw, reginum);
+				
+				RequestDispatcher rd=
+						request.getRequestDispatcher(
+								"/MemberService?method=viewMember");
+				
+				rd.forward(request, response);
 	}
 
 	/**
@@ -98,11 +177,48 @@ public class MemberService extends HttpServlet {
 	 * 
 	 * @param request
 	 * @param response
+	 * @throws IOException 
+	 * @throws ServletException 
 	 */
 	public void addMember(HttpServletRequest request,
-			HttpServletResponse response) {
-		/* default generated stub */;
-//		return null;
+			HttpServletResponse response) throws ServletException, IOException {
+		String memberid=request.getParameter("memberid");
+		String name=
+				request.getParameter("name");
+		String password=
+				request.getParameter("password");
+		String regiNumber=
+				request.getParameter("regiNumber");
+		String pwHint=request.getParameter("pwHint");
+		String pwAnswer=
+				request.getParameter("pwAnswer");
+		String zipcode=
+				request.getParameter("zipcode");
+	    String address= request.getParameter("address");
+		String strAddress= request.getParameter("strAddress");
+		String email= request.getParameter("email");
+		String phoneNumber= request.getParameter("phoneNumber");
+		String telNumber= request.getParameter("telNumber");
+		
+		
+		Member member=new Member();
+		member.setMemberid(memberid);
+		member.setPassword(password);
+		member.setName(name);
+		member.setRegiNumber(regiNumber);
+		member.setPwHint(pwHint);
+		member.setPwAnswer(pwAnswer);
+		member.setZipcode(zipcode);
+		member.setAddress(address);
+		member.setStrAddress(strAddress);
+		member.setEmail(email);
+		member.setPhoneNumber(phoneNumber);
+		member.setTelNumber(telNumber);
+		
+		RequestDispatcher rd=
+				request.getRequestDispatcher(
+						"/MemberService?method=viewMember");
+		rd.forward(request, response);
 	}
 
 	/**
@@ -110,11 +226,15 @@ public class MemberService extends HttpServlet {
 	 * 
 	 * @param request
 	 * @param response
+	 * @throws IOException 
+	 * @throws ServletException 
 	 */
 	public void addMemberForm(HttpServletRequest request,
-			HttpServletResponse response) {
-		/* default generated stub */;
-//		return null;
+			HttpServletResponse response) throws ServletException, IOException {
+		RequestDispatcher rd=
+				request.getRequestDispatcher(
+						"/member/addMember.jsp");
+		rd.forward(request, response);
 	}
 
 	/**
@@ -123,7 +243,7 @@ public class MemberService extends HttpServlet {
 	public static void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String memberid= request.getParameter("memberid");
 		String password = request.getParameter("password");
-		Member member = MemberDAO.login(memberid, password);
+		Member member = MemberDAO.login(memberid);
 		if(member!=null){
 			HttpSession session = request.getSession();
 			session.setAttribute("member", member);
@@ -164,8 +284,21 @@ public class MemberService extends HttpServlet {
 	 */
 	public void checkMemberID(HttpServletRequest request,
 			HttpServletResponse response) {
-		/* default generated stub */;
-//		return null;
+		String memberid=request.getParameter("memberid");
+		String name=request.getParameter("name");
+		String reginum=request.getParameter("reginum");
+		Member member =MemberDAO.selectMemberByid(name,reginum);
+		
+		response.setCharacterEncoding("utf-8");
+		PrintWriter out=response.getWriter();
+		
+		if(member==null){
+			out.print(memberid+"는 사용 가능한 아이디입니다.");
+		}else{
+			out.print(memberid+"는 이미 사용중인 아이디입니다.");
+		}
+		out.flush();
+		out.close();
 	}
 
 	/**
