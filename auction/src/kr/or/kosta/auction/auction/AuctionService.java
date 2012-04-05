@@ -124,6 +124,7 @@ public class AuctionService extends HttpServlet {
 		String eTime = request.getParameter("eTime");
 		String sold=request.getParameter("sold");
 		String cuPrice = request.getParameter("cuPrice");
+		String userid=request.getParameter("userid");
 		
 		//2.1의 정보를 이용해서 Auction객체 생성
 		Good good = new Good();
@@ -139,6 +140,7 @@ public class AuctionService extends HttpServlet {
 		auction.setSold(Integer.parseInt(sold));
 		auction.setCuPrice(cuPrice);
 		auction.setGood(good);
+		auction.setUserid(userid);
 		
 		
 		//Department department=new Department();

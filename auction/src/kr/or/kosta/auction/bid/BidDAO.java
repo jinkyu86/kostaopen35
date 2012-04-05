@@ -38,7 +38,7 @@ public class BidDAO {
 		String sql="UPDATE BID " +
 				"SET userid=?," +
 				"a_num=?," +
-				"bid_time=to_date(?,'yyyy-mm-dd hh24:mi:ss')," +
+				"bid_time=to_date(?,'yyyy/mm/dd hh24:mi:ss')," +
 				"bid_price=?," +
 				"moneyback=? " +
 				"WHERE bidnum=?";
@@ -62,7 +62,7 @@ public class BidDAO {
 		PreparedStatement psmt=null;
 		Bid bid=null;
 		
-		String sql="SELECT b.a_num,b.userid,to_char(b.bid_time,'yyyy-mm-dd hh24:mi:ss'),b.bid_price,b.moneyback," +
+		String sql="SELECT b.a_num,b.userid,to_char(b.bid_time,'yyyy/mm/dd hh24:mi:ss'),b.bid_price,b.moneyback," +
 								  "a.g_num,a.s_price,a.im_price,a.s_time,a.e_time,a.sold,a.cu_price," +
 								  "m.pw,m.name,m.email,m.coin,m.emoney," +
 								  "g.gname,g.detail,g.img " +
@@ -139,7 +139,7 @@ public class BidDAO {
 		PreparedStatement psmt=null;
 		ArrayList<Bid> bidList=null;
 		
-		String sql="SELECT b.bidnum,b.a_num,b.userid,b.bid_time,b.bid_price,b.moneyback," +
+		String sql="SELECT b.bidnum,b.a_num,b.userid,to_char(b.bid_time,'yyyy/mm/dd hh24:mi:ss'),b.bid_price,b.moneyback," +
 								  "a.g_num,a.s_price,a.im_price,a.s_time,a.e_time,a.sold,a.cu_price," +
 								  "m.pw,m.name,m.email,m.coin,m.emoney," +
 								  "g.gname,g.detail,g.img " +
@@ -297,7 +297,7 @@ public class BidDAO {
 		PreparedStatement psmt=null;
 		ArrayList<Bid> bidList=null;
 		
-		String sql="SELECT b.bidnum,b.a_num,b.userid,b.bid_time,b.bid_price,b.moneyback," +
+		String sql="SELECT b.bidnum,b.a_num,b.userid,to_char(b.bid_time,'yyyy/mm/dd hh24:mi:ss'),b.bid_price,b.moneyback," +
 								  "a.g_num,a.s_price,a.im_price,a.s_time,a.e_time,a.sold,a.cu_price," +
 								  "m.pw,m.name,m.email,m.coin,m.emoney," +
 								  "g.gname,g.detail,g.img " +
@@ -386,12 +386,12 @@ public class BidDAO {
 		PreparedStatement psmt=null;
 		ArrayList<Bid> bidList=null;
 		
-		String sql="SELECT b.bidnum,b.a_num,b.userid,b.bid_time,b.bid_price,b.moneyback," +
+		String sql="SELECT b.bidnum,b.a_num,b.userid,to_char(b.bid_time,'yyyy/mm/dd hh24:mi:ss'),b.bid_price,b.moneyback," +
 								  "a.g_num,a.s_price,a.im_price,a.s_time,a.e_time,a.sold,a.cu_price," +
 								  "m.pw,m.name,m.email,m.coin,m.emoney," +
 								  "g.gname,g.detail,g.img " +
 					  "FROM BID b, AUCTION a, MEMBER m, GOOD g " +
-					  "WHERE b.a_num=a.a_num AND b.userid=m.userid AND a.g_num=g.g_num AND b.userid=? " +
+					  "WHERE b.a_num=a.a_num AND b.userid=m.userid AND a.g_num=g.g_num AND b.userid=? AND a.e_time>=sysdate " +
 					  "ORDER BY bid_time DESC";
 		con=ConnectionUtil.getConnection();
 		try {
@@ -478,7 +478,7 @@ public class BidDAO {
 		PreparedStatement psmt=null;
 		ArrayList<Bid> bidList=null;
 		
-		String sql="SELECT b.bidnum,b.a_num,b.userid,b.bid_time,b.bid_price,b.moneyback," +
+		String sql="SELECT b.bidnum,b.a_num,b.userid,to_char(b.bid_time,'yyyy/mm/dd hh24:mi:ss'),b.bid_price,b.moneyback," +
 								  "a.g_num,a.s_price,a.im_price,a.s_time,a.e_time,a.sold,a.cu_price," +
 								  "m.pw,m.name,m.email,m.coin,m.emoney," +
 								  "g.gname,g.detail,g.img " +

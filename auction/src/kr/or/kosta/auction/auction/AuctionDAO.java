@@ -59,8 +59,8 @@ public class AuctionDAO {
 					+ "im_price=?," 
 					+ "sold=?, "
 					+ "cu_price=?," 
-					+ "s_time=to_date(?,'yyyy-mm-dd hh24:mi:ss')," 
-					+ "e_time=to_date(?,'yyyy-mm-dd hh24:mi:ss')," 
+					+ "s_time=to_date(?,'yyyy/mm/dd hh24:mi:ss')," 
+					+ "e_time=to_date(?,'yyyy/mm/dd hh24:mi:ss')," 
 					+ "userid=? " 
 					+ "WHERE a_num=?");
 
@@ -108,7 +108,7 @@ public class AuctionDAO {
 		con = ConnectionUtil.getConnection();
 		try {
 			psmt = con
-					.prepareStatement("SELECT a.g_num,a.s_price,a.im_price,to_char(a.s_time,'yyyy-mm-dd hh24:mi:ss'),to_char(a.e_time,'yyyy-mm-dd hh24:mi:ss'),a.sold,a.cu_price,a.userid,"
+					.prepareStatement("SELECT a.g_num,a.s_price,a.im_price,to_char(a.s_time,'yyyy/mm/dd hh24:mi:ss'),to_char(a.e_time,'yyyy/mm/dd hh24:mi:ss'),a.sold,a.cu_price,a.userid,"
 							+ "g.gname,g.detail,g.img"
 							+ " FROM auction a,good g "
 							+ " WHERE a.g_num = g.g_num AND a.a_num=?");
@@ -160,12 +160,12 @@ public class AuctionDAO {
 
 		try {
 			con = ConnectionUtil.getConnection();
-			sql = "SELECT a.a_num,a.s_price,a.im_price,a.s_time,a.e_time,a.sold,a.cu_price,a.userid,"
+			sql = "SELECT a.a_num,a.s_price,a.im_price,to_char(a.s_time,'yyyy/mm/dd hh24:mi:ss'),to_char(a.e_time,'yyyy/mm/dd hh24:mi:ss'),a.sold,a.cu_price,a.userid,"
 					+ "g.g_num,g.gname,g.detail,g.img"
 					+ " FROM auction a,good g "
 					+ " WHERE a.g_num = g.g_num " +
 					" AND a.e_time>=sysdate AND a.sold='0'" +
-					" ORDER BY a.e_time , a.a_num";
+					" ORDER BY a.e_time, a.a_num";
 			psmt = con.prepareStatement(sql);
 
 			rs = psmt.executeQuery();
@@ -220,10 +220,10 @@ public class AuctionDAO {
 
 		try {
 			con = ConnectionUtil.getConnection();
-			sql = "SELECT a.a_num,a.s_price,a.im_price,a.s_time,a.e_time,a.sold,a.cu_price,a.userid,"
+			sql = "SELECT a.a_num,a.s_price,a.im_price,to_char(a.s_time,'yyyy/mm/dd hh24:mi:ss'),to_char(a.e_time,'yyyy/mm/dd hh24:mi:ss'),a.sold,a.cu_price,a.userid,"
 					+ "g.g_num,g.gname,g.detail,g.img"
 					+ " FROM auction a,good g "
-					+ " WHERE a.g_num = g.g_num AND a.e_time<sysdate AND a.userid=?" +
+					+ " WHERE a.g_num = g.g_num AND (a.e_time<sysdate OR a.sold='1') AND a.userid=?" +
 					" ORDER BY a.e_time , a.a_num";
 			psmt = con.prepareStatement(sql);
 			psmt.setString(1, userid);
@@ -278,11 +278,11 @@ public class AuctionDAO {
 
 		try {
 			con = ConnectionUtil.getConnection();
-			sql = "SELECT a.a_num,a.s_price,a.im_price,a.s_time,a.e_time,a.sold,a.cu_price,userid,"
+			sql = "SELECT a.a_num,a.s_price,a.im_price,to_char(a.s_time,'yyyy/mm/dd hh24:mi:ss'),to_char(a.e_time,'yyyy/mm/dd hh24:mi:ss'),a.sold,a.cu_price,userid,"
 					+ "g.g_num,g.gname,g.detail,g.img"
 					+ " FROM auction a,good g "
 					+ " WHERE a.g_num = g.g_num" +
-					" AND a.sold='1'" +
+					" AND (a.sold='1' OR a.e_time<sysdate) " +
 					" ORDER BY a.e_time desc, a.a_num";
 			psmt = con.prepareStatement(sql);
 
@@ -341,7 +341,7 @@ public class AuctionDAO {
 
 		try {
 			con = ConnectionUtil.getConnection();
-			sql = "SELECT a.a_num,a.s_price,a.im_price,a.s_time,a.e_time,a.sold,a.cu_price,a.userid,"
+			sql = "SELECT a.a_num,a.s_price,a.im_price,to_char(a.s_time,'yyyy/mm/dd hh24:mi:ss'),to_char(a.e_time,'yyyy/mm/dd hh24:mi:ss'),a.sold,a.cu_price,a.userid,"
 					+ "g.g_num,g.gname,g.detail,g.img"
 					+ " FROM auction a,good g "
 					+ " WHERE a.g_num = g.g_num " +
@@ -411,10 +411,10 @@ public class AuctionDAO {
 
 		try {
 			con = ConnectionUtil.getConnection();
-			sql = "SELECT a.a_num,a.s_price,a.im_price,a.s_time,a.e_time,a.sold,a.cu_price,a.userid,"
+			sql = "SELECT a.a_num,a.s_price,a.im_price,to_char(a.s_time,'yyyy/mm/dd hh24:mi:ss'),to_char(a.e_time,'yyyy/mm/dd hh24:mi:ss'),a.sold,a.cu_price,a.userid,"
 					+ "g.g_num,g.gname,g.detail,g.img"
 					+ " FROM auction a,good g "
-					+ " WHERE a.g_num = g.g_num AND sold = '1' " +
+					+ " WHERE a.g_num = g.g_num AND (a.sold = '1' OR a.e_time<sysdate) " +
 					"order by a.e_time desc , a.a_num";
 			psmt = con.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE,
 					ResultSet.CONCUR_READ_ONLY);
