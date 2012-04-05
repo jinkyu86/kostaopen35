@@ -25,7 +25,11 @@ public class Buy {
 	 * 구매한 날짜
 	 */
 	private Date buyDate;
-
+	/**
+	 * 구매취소한 날짜
+	 */
+	private Date cancelbuyDate;
+	
 	/**
 	 * 현재 구매 상태(결제 유뮤확인)
 	 */
@@ -75,6 +79,15 @@ public class Buy {
 	public void setBuyDate(Date buyDate) {
 		this.buyDate = buyDate;
 	}
+	public Date getcancelbuyDate() {
+		return cancelbuyDate;
+	}
+
+	public void setcancelbuyDate(Date cancelbuyDate) {
+		this.cancelbuyDate = cancelbuyDate;
+	}
+	
+	
 
 	public String getPayState() {
 		return payState;
@@ -95,9 +108,9 @@ public class Buy {
 	@Override
 	public String toString() {
 		return "Buy [good=" + good + ", member=" + member + ", buynum="
-				+ buynum + ", qty=" + qty + ", buyDate=" + buyDate
+				+ buynum + ", qty=" + qty + ", buyDate=" + buyDate+", cancelbuyDate=" + cancelbuyDate
 				+ ", payState=" + payState + ", totalPrice=" + totalPrice + "]";
 	}
-
+	
 	
 }

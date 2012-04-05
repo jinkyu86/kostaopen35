@@ -240,9 +240,9 @@ public class BuyDAO {
 		con=ConnectionUtil.getConnection();
 		String sql="SELECT user_num,m.userid,name,email,phone,zipcode,addr," +
 				"g.g_num,g_name,detail,g_price,photo," +
-				"buy_num,qty,buy_date,pay_state,total_price " +
+				"buy_num,qty,buy_date,cancel_date,pay_state,total_price " +
 				"FROM member m,good g, buy b " +
-				"WHERE m.userid=b.userid AND g.g_num=b.g_num AND m.userid=? AND pay_state=1 ORDER BY buy_date DESC ";
+				"WHERE m.userid=b.userid AND g.g_num=b.g_num AND m.userid=? AND pay_state=1 ORDER BY cancel_date DESC ";
 		
 			psmt=con.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
 			psmt.setString(1, userid1);
@@ -272,8 +272,9 @@ public class BuyDAO {
 				String buy_num=rs.getString(13);
 				long qty=Long.parseLong(rs.getString(14));
 				Date buy_date=rs.getDate(15);
-				String pay_state=rs.getString(16);
-				long total_price=Long.parseLong(rs.getString(17));
+				Date cancel_date=rs.getDate(16);
+				String pay_state=rs.getString(17);
+				long total_price=Long.parseLong(rs.getString(18));
 				
 				member=new Member();
 				member.setUserNum(user_num);
@@ -295,6 +296,7 @@ public class BuyDAO {
 				buy.setBuynum(buy_num);
 				buy.setQty(qty);
 				buy.setBuyDate(buy_date);
+				buy.setcancelbuyDate(cancel_date);
 				buy.setPayState(pay_state);
 				buy.setTotalPrice(total_price);
 				
@@ -435,25 +437,25 @@ public class BuyDAO {
 //			e.printStackTrace();
 //		}	
 //	}
-//
-//	//결제하기 (buy table의 pay_state를 1로 set, buy_date를 결제날짜로 바꿈)
-//	public static void payBuy(String buynum){
-//		Connection con=null;
-//		PreparedStatement psmt=null;
-//		con=ConnectionUtil.getConnection();
-//		
-//		try {
-//			String sql="UPDATE buy SET pay_state=1,buy_date=SYSDATE WHERE buy_num=?";
-//			psmt=con.prepareStatement(sql);
-//			
-//			psmt.setString(1, buynum);
-//			psmt.executeUpdate();
-//			
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}	
-//		
-//	}
+
+	//구매취소하기 (buy table의 pay_state를 1로 set, cancel_date를 취소날짜로 set)
+	public static void cancelBuy(String buynum){
+		Connection con=null;
+		PreparedStatement psmt=null;
+		con=ConnectionUtil.getConnection();
+		
+		try {
+			String sql="UPDATE buy SET pay_state=1,cancel_date=SYSDATE WHERE buy_num=?";
+			psmt=con.prepareStatement(sql);
+			
+			psmt.setString(1, buynum);
+			psmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}	
+		
+	}
 
 	
 	

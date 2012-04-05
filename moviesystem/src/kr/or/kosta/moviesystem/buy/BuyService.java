@@ -46,12 +46,12 @@ public class BuyService extends HttpServlet{
 		}else if("viewCanceledBuyList".equals(method)){
 			viewCanceledBuyList(request,response);
 		}
-//		else if("cancelBuyListForm".equals(method)){
-//			cancelBuyListForm(request,response);
-//		}
-//		else if("cancelBuy".equals(method)){
-//			cancelBuy(request,response);
-//		}
+		else if("cancelBuyListForm".equals(method)){
+			cancelBuyListForm(request,response);
+		}
+		else if("cancelBuy".equals(method)){
+			cancelBuy(request,response);
+		}
 //		else if("removeBuyList".equals(method)){
 //			removeBuyList(request,response);
 //		}
@@ -63,6 +63,47 @@ public class BuyService extends HttpServlet{
 		}
 	}
 
+	private void cancelBuy(HttpServletRequest request,
+			HttpServletResponse response)throws ServletException, IOException {
+		String[] cancelBuyList=request.getParameterValues("chkbox");
+		
+		for(int i=0;i<cancelBuyList.length;i++){
+			BuyDAO.cancelBuy(cancelBuyList[i]);
+			//System.out.println(cancelBuyList[i]);
+		}
+		
+		RequestDispatcher rd=request.getRequestDispatcher("/BuyService?method=cancelBuyListForm");
+		rd.forward(request, response);
+		
+		
+	}
+
+	//일주일 전까지 구매한 물품만 취소가능합니다. 일주일 전 물품 cancelable buyList보내줌.
+	private void cancelBuyListForm(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException{
+		int page=1;
+		if(request.getParameter("page")!=null){
+			page=Integer.parseInt(request.getParameter("page"));
+		}
+		int length=10;
+		
+		HttpSession session=request.getSession();
+		Member member=(Member)session.getAttribute("LOGIN_MEMBER");
+		String userid=member.getUserid();
+		
+		ArrayList<Buy>buyList=BuyDAO.selectCancelableBuyList(userid,length, page);
+		int buyCount=BuyDAO.selectCancelableBuyListCount(userid);
+		request.setAttribute("CANCELABLE_BUY_LIST", buyList);
+		
+		String pageLinkTag=PageUtil.generate(page, buyCount, length, "/moviesystem/BuyService?method=cancelBuyListForm&userid="+userid);
+		System.out.println(pageLinkTag);
+		
+		request.setAttribute("PAGE_LINK_TAG", pageLinkTag);
+		
+		RequestDispatcher rd=request.getRequestDispatcher("/buy/cancelBuy.jsp");
+		rd.forward(request, response);
+		
+	}
 
 	private void viewCanceledBuyList(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException{
