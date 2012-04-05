@@ -130,29 +130,40 @@
 	   <img align="right" src="webimg/block.GIF" title="신고하기" border="0" width="230"/></a></td>
 	   </tr>
 	   
-	   <tr>
-	   <td>
-	   <a href="/bookchange/BoardService?method=searchBoardList&categoryNo=&column=email&keyword=${sessionScope.LOGIN_EMAIL.email}">내가 등록한 책 보기</a>
-	   </td>
-	   <tr>	  
+   <tr>
+	   <td align="center">
+	   <form action="/bookchange/BoardService" method="post">
+	   <input type="hidden" name="method" value="searchBoardList">
+	   <input type="hidden" name="categoryNo">
+	   <input type="hidden" name="column" value="email">
+	   <input type="hidden" name="keyword" value="${sessionScope.LOGIN_EMAIL.email}">
+	   <input type="submit" value=" 등록한 책 목록 "></td>
+	   </form>
+	   </tr>	  
 	   
 	   <tr>
-	   <td>
-	   <a href="/bookchange/ChangeService?method=acceptChangeList">나와 교환을 원하는 책 보기</a>
-	   </td>
-	   <tr>
+	   <td align="center">
+	   <form action="/bookchange/ChangeService" method="post">
+	   <input type="hidden" name="method" value="requestChangeList">
+	   <input type="submit" value="요청한 교환신청"></td>
+	   </form>	   
+	   </tr>
 	   
 	   <tr>
-	   <td>
-	   <a href="/bookchange/ChangeService?method=requestChangeList">내가 교환을 원하는 책 보기</a>
-	   </td>
+	   <td align="center">
+	   <form action="/bookchange/ChangeService" method="post">
+	   <input type="hidden" name="method" value="acceptChangeList">
+	   <input type="submit" value="들어온 교환신청"></td>
+	   </form>	   
+	   </tr>
+	   
 	   <tr>
-	     
-	    <tr>
-	   <td>
-	   <a href="/bookchange/ChangeService?method=matchChangeList">나와 교환 진행중인 책 보기</a>
-	   </td>
-	   <tr>
+	   <td align="center">
+	   <form action="/bookchange/ChangeService" method="post">
+	   <input type="hidden" name="method" value="matchChangeList">
+	   <input type="submit" value="교환진행중인 책 목록"></td>
+	   </form>	   
+	   </tr>
 	     
 	     
 	     
@@ -162,12 +173,14 @@
 	 </table>
 	 </tr>
 	 <td width="550" height="600" valign="top" bgcolor="#FFFFE0">
+	 <h5 align="center">교환진행중인 책 목록</h5>
 	  <table bordercolor="#FFA500" border="1" align="center">
 	   <tr align="center">
 	   	<th>My Book</th>
 	    <th>신청한사람</th>
 	    <th>Trade Book</th>
 		<th>신청일자</th>
+		<th>결과</th>
 	   </tr>
 	  <c:forEach var="change" items="${MATCH_LIST}">
        <tr>
@@ -187,11 +200,11 @@
        	</td>
        </tr>
       </c:forEach>
+	</table>
 	  <p align="center">
 		${PAGE_LINK_TAG}
 	  </p>
-	 </td>
-	</table>
+	
    </td>
   </tr>
  </table>
