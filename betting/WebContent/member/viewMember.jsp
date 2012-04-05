@@ -27,6 +27,8 @@
 				<td><input type="text" name="email" value="${MEMBER.email}" />
 				</td>
 			</tr>
+		</table>
+		<table border="0" align="center">
 			<tr>
 				<td><input type="submit" value="회원 정보 변경" /></td>
 				<td align="center"><input type="reset" value="리셋" /></td>
