@@ -46,11 +46,13 @@
 				<td><input type="text" name="email" value="${MEMBER.email}" />
 				</td>
 			</tr>
-			<tr>
+    	</table>
+    	<table border="0" align="center">
+    		<tr>
 				<td><input type="submit" value="회원 가입" /></td>
 				<td align="center"><input type="reset" value="리셋" /></td>
 			</tr>
-		</table>
+    	</table>
 	</form>
 </body>
 </html>
