@@ -135,7 +135,7 @@
 	 </tr>
 	 <td width="550" height="600" valign="top" bgcolor="#FFFFFF">
 	 <fieldset>
-	 <li><div class="txt01"><h4 align="center">MY INFORMATION</h4></div></li>
+	 <div class="txt01"><h4 align="center">MY INFORMATION</h4></div>
 	 </fieldset>
 	 <fieldset>
 	  <form action="/bookchange/MemberService" method="post">
