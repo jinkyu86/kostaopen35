@@ -38,8 +38,34 @@ public class BlockService extends HttpServlet {
 			searchBlockList(request, response);
 		}else if("addBlockForm".equals(method)){
 			addBlockForm(request,response);
+		}else if("selectMyBlockList".equals(method)){
+			selectMyBlockList(request,response);
 		}
 	}
+	private void selectMyBlockList(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException,IOException {
+		HttpSession session=request.getSession();
+		Member member=(Member)session.getAttribute("LOGIN_EMAIL");
+		int page=1;
+		int length=10;
+		if(request.getParameter("page")!=null){
+			page=Integer.parseInt(request.getParameter("page"));
+		}
+		if(member==null){
+			RequestDispatcher rd=request.getRequestDispatcher("");
+			rd.forward(request, response);
+			return;
+		}
+		String memberEmail=member.getEmail();
+		ArrayList<Block>blockList=BlockDAO.selectMyBlockList(length, page, memberEmail);
+		session.setAttribute("MY_BLOCK_LIST", blockList);
+		int blockCount=BlockDAO.selectMyBlockCount(memberEmail);
+		String pageLinkTag=PageUtil.generate(page, blockCount, length, "/bookchange/BlockService?method=selectMyBlockList");
+		request.setAttribute("PAGE_LINK_TAG", pageLinkTag);
+		RequestDispatcher rd=request.getRequestDispatcher("/block/viewMyBlockList.jsp");
+		rd.forward(request, response);
+	}
+
 	private void addBlockForm(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException,IOException{
 		RequestDispatcher rd=request.getRequestDispatcher("/block/addBlock.jsp");

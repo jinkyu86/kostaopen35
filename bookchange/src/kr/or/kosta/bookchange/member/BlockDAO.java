@@ -5,15 +5,70 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-import com.sun.org.apache.bcel.internal.generic.NEW;
-
-import oracle.net.aso.b;
-
-import kr.or.kosta.bookchange.board.Board;
 import kr.or.kosta.util.ConnectionUtil;
 
 public class BlockDAO {
 
+public static ArrayList<Block> selectMyBlockList(int length, int page, String email) {
+		
+		Connection con=null;
+		PreparedStatement ps=null;
+		String sql=null;
+		ResultSet rs=null;
+		ArrayList<Block> BlockList=new ArrayList<Block>();
+		
+		try {
+			con=ConnectionUtil.getConnection();
+			sql="select b.block_no,b.block_content,b.block_email, " +
+					"b.register_email,c.blockcondition_result,c.blockcondition_ing " +
+					"from tb_block b,tb_blockcondition c " +
+					"where b.register_email=? AND b.blockcondition_result=c.blockcondition_result ";
+			
+			ps=con.prepareStatement(sql,ResultSet.TYPE_SCROLL_INSENSITIVE,
+									ResultSet.CONCUR_READ_ONLY);
+			ps.setString(1, email);
+			rs=ps.executeQuery();
+			
+			if(page>1){rs.absolute((page-1)*length);}
+			int getRecord=0;
+			while (rs.next()&&getRecord<length) {
+				getRecord++;
+				int blockNo=rs.getInt(1);
+				String blockcontent=rs.getString(2);
+				String blockEmail=rs.getString(3);
+				String registerEmail=rs.getString(4);
+				String blockConditionResult=rs.getString(5);
+				String blockConditioning=rs.getString(6);
+				
+				Block block=new Block();
+				block.setBlockNo(blockNo);
+				block.setBlockContent(blockcontent);
+				
+				Member member=new Member();
+				member.setEmail(blockEmail);
+				block.setBlockmember(member);
+				
+				Member member2=new Member();
+				member2.setEmail(registerEmail);
+				block.setMember(member2);
+				
+				BlockCondition blockCondition=new BlockCondition();
+				blockCondition.setBlockConditionResult(Integer.parseInt(blockConditionResult));
+				blockCondition.setBlockConditionIng(blockConditioning);
+				block.setBlockCondition(blockCondition);				
+				
+				BlockList.add(block);
+				
+			}
+		
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		return BlockList;
+	}
+
+	
 	/**
 	 * @param length
 	 * @param page
@@ -172,7 +227,7 @@ public class BlockDAO {
 	}
 
 	/**
-	 * 신고결과(0,1,2)로 신고리스트 조회 - 신고검토완료된 글들만 블랙리스트(공지사항)에 띄워줄 때 사용
+	 * 신고접수가 완료된 글들만 블랙리스트(공지사항)에 띄워줄 때 사용
 	 * 
 	 * @param length
 	 * @param page
@@ -268,6 +323,30 @@ public class BlockDAO {
 			// TODO: handle exception
 		}
 		return blockCount;
+	}
+
+
+
+	public static int selectMyBlockCount(String email) {
+		Connection con=null;
+		ResultSet rs=null;
+		String sql=null;
+		PreparedStatement ps=null;
+		int BlockCount=0;
+		try {
+			con=ConnectionUtil.getConnection();
+			sql="select count(block_no) from tb_block Where register_email=?";
+			ps=con.prepareStatement(sql);
+			ps.setString(1, email);
+			rs=ps.executeQuery();
+			if(rs.next()){
+				BlockCount=rs.getInt(1);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		return BlockCount;
 	}
 	
 }
