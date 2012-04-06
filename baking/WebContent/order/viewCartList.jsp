@@ -40,7 +40,7 @@
 	<li><a href="/baking/GoodService?method=viewIndex">홈</a></li>			
 	<li><a href="/baking/RecipeService?method=viewGoodList">상품</a></li>		
 	<li><a href="/baking/RecipeService?method=viewRecipeList">레시피</a></li>			
-	<li><a href="/baking/OrderService?method=viewCartList">장바구니</a></li>			
+	<li><a href="/baking/OrderService?method=CartList">장바구니</a></li>			
 	<li><a href="/baking/OrderService?method=viewOrderList">주문조회</a></li>				
 	<li><a href="/baking/GoodService?method=viewIndex">마이레시피</a></li>		
 </ul>
@@ -68,7 +68,15 @@
 			<td>${order.good.goodNum}</td>
 			<td>${order.good.name}</td>
 			<td><img src="/baking/img/${order.good.good_division.gName }/${order.good.img}"/></td>
-			<td>${order.qty}</td>
+			<td>
+			<form action="/baking/OrderService" method="post">
+			<input type="text" name="qty" value="${order.qty}"/>
+			<input type="hidden" name="method" value="editOrder"/>
+			<input type="hidden" name="index" value="${i.count-1}"/>
+			<br/>
+			<input type="submit" value="수정"/>
+			</form>
+			</td>
 			<td>${order.good.option}</td>
 			<td>${order.qty*order.good.goodPrice}</td>
 			<td>
