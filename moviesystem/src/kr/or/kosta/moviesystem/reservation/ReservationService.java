@@ -78,6 +78,10 @@ public class ReservationService extends HttpServlet {
 			SelectSeat(request,response);
 		}else if("InsertReservation".equals(method)){
 			InsertReservation(request,response);
+		}else if("viewReservationTimeForm".equals(method)){
+			viewReservationTimeForm(request,response);
+		}else if("viewReservationSeat".equals(method)){
+			viewReservationSeat(request,response);
 		}
 		
 		
@@ -93,6 +97,33 @@ public class ReservationService extends HttpServlet {
 
 
 
+
+private void viewReservationSeat(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		String time=request.getParameter("time");
+		ScreenTime screenTime = new ScreenTime();
+		screenTime=ScreenTimeDAO.selectScreenTimeScrNum(time);
+		String scrnum=screenTime.getScrnum();
+		System.out.println("scrnum= "+scrnum);
+		//Reservation reservation=new Reservation();
+		
+		HttpSession session=request.getSession();
+		Member member=(Member)session.getAttribute("LOGIN_MEMBER");
+		String userid=member.getUserid();
+		//id와 scrnum을 조회해서 좌석을 알아낸다.		
+		ArrayList<Reservation> reservationList=ReservationDAO.selectSeatNumByScrnum(scrnum,userid);
+		
+		request.setAttribute("reservationList",reservationList);
+		System.out.println("reservationList = "+reservationList);
+
+		RequestDispatcher rd=request.getRequestDispatcher(
+				"/reservation/viewSeatList.jsp");
+				//4.JSP로 페이지 이동
+				rd.forward(request, response);
+		
+		
+		
+	}
 
 //	private void SelectSeat(HttpServletRequest request,
 //			HttpServletResponse response) throws ServletException, IOException {
@@ -254,11 +285,13 @@ public class ReservationService extends HttpServlet {
 		String resnum = request.getParameter("resnum");
 		String select = request.getParameter("select");
 	    Reservation reservation= new Reservation();
+	   
 	    reservation = ReservationDAO.selectReservation(resnum);
 //		Reservation reservation= new Reservation();
 //		reservation.setResnum(resnum);
 		request.setAttribute("select", select);
 		request.setAttribute("resnum",resnum);
+		 System.out.println("resnum"+resnum);
 		System.out.println("reservation"+reservation);
 		request.setAttribute("reservation",reservation);
 		
@@ -266,11 +299,11 @@ public class ReservationService extends HttpServlet {
 		
 		String finalSeat = null;
 		
-		if(reservation.getResQty()==1){
-			finalSeat="";
-		}else {
-			finalSeat="~"+finalSeatNum;
-		}
+//		if(reservation.getResQty()==1){
+//			finalSeat="";
+//		}else {
+//			finalSeat="~"+finalSeatNum;
+//		}
 		
 		request.setAttribute("finalSeatNum",finalSeat);
 		if(select.equals("1")){
@@ -278,7 +311,7 @@ public class ReservationService extends HttpServlet {
 					"/reservation/payment.jsp");
 					//4.JSP로 페이지 이동
 					rd.forward(request, response);
-		}else if(select.equals("2")){
+		}else	if(select.equals("2")){
 			RequestDispatcher rd=request.getRequestDispatcher(
 					"/reservation/cancel.jsp");
 					//4.JSP로 페이지 이동
@@ -290,6 +323,26 @@ public class ReservationService extends HttpServlet {
 					rd.forward(request, response);
 		}
 
+	}
+	
+	private void viewReservationTimeForm(HttpServletRequest request,
+			HttpServletResponse response) throws IOException, ServletException {
+		String mname = request.getParameter("mname");
+		HttpSession session=request.getSession();
+		Member member=(Member)session.getAttribute("LOGIN_MEMBER");
+		String userid=member.getUserid();
+	    Movie movie= new Movie();
+	    Reservation reservation= new Reservation();
+	    movie = MovieDAO.selectMovieNum(mname);
+	    String mnum=movie.getMnum();
+//		request.setAttribute("mname",mname);
+	    //userid와 mnom으로 group by time 으로 된 정보의 time sum(total_price) count(res_qty)
+	    ArrayList<Reservation>reservationList = ReservationDAO.selectReservationTime(userid,mnum);
+		request.setAttribute("reservationList",reservationList);
+		RequestDispatcher rd=request.getRequestDispatcher(
+					"/reservation/viewReservationTime.jsp");
+					//4.JSP로 페이지 이동
+					rd.forward(request, response);
 	}
 
 	private static void viewReservationByResNum(HttpServletRequest request,

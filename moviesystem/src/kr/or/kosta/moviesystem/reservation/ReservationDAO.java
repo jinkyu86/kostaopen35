@@ -40,8 +40,8 @@ public class ReservationDAO {
 				psmt.setString(1,reservation.getMovie().getMnum());
 				psmt.setString(2,member.getUserid());
 			    psmt.setString(3,reservation.getScreenTime().getScrnum());
-				psmt.setLong(4,reservation.getResQty());
-				psmt.setLong(5,reservation.getTotalPrice());
+				psmt.setLong(4,1);
+				psmt.setLong(5,8000);
 				psmt.setString(6, "결제완료");
 				psmt.setLong(7,SeatNumList.get(i));
 				psmt.executeUpdate();
@@ -86,8 +86,12 @@ public class ReservationDAO {
 		}
 	}
 
-	
-	
+	/**
+	 * group by 영화이름
+	 * where = userid=?
+	 * 출력=영화이름
+	 
+	 */
 	
 	public static ArrayList<Reservation> selectReservationList(int length,int page,String memberid){//반환값을 ArrayList로 한다.
 		Connection con =null;
@@ -98,14 +102,11 @@ public class ReservationDAO {
 		ArrayList<Reservation>reservationList=new ArrayList<Reservation>();
 		try{
 			con=ConnectionUtil.getConnection();
-			sql="SELECT   m.m_name,s.time,r.seat_num,r.res_date,r.res_qty,r.pay_state,r.res_num" +
+			sql="SELECT   m.m_name" +
 					
-					"  FROM  RESERVATION r ,MEMBER mem,"+
-					"                   MOVIE m,SCREENING_TIME s " +
-					"  WHERE  mem.userid=r.userid AND  r.scr_num=s.scr_num" +
-					"                      AND r.m_num=m.m_num " +
-					"                      AND  r.userid=?" +
-					"    ORDER BY r.res_date  DESC";
+					"  FROM  RESERVATION r , MOVIE m"+
+					"  WHERE r.m_num=m.m_num AND r.userid=?" +
+					"  GROUP BY m.m_name";
 			//rs.absolute()가  가능하도록 설정
 			psmt=con.prepareStatement(sql,
 					ResultSet.TYPE_SCROLL_INSENSITIVE,
@@ -121,31 +122,14 @@ public class ReservationDAO {
 			while(rs.next()&&getRecordCount<length){
 				getRecordCount++;
 				String m_name=rs.getString(1);
-				String time=rs.getString(2);
-				long seatnum=rs.getShort(3);					
-				Date resDate=rs.getDate(4);
-				long resQty=rs.getLong(5);
-				String payState=rs.getString(6);
-				String resnum=rs.getString(7);
-				
 				
 				reservation=new Reservation();
 				
 				Movie movie=new Movie();
-				ScreenTime screentime=new ScreenTime();
-				
 				
 				movie.setMname(m_name);
 				reservation.setMovie(movie);
-				screentime.setTime(time);
-				reservation.setScreenTime(screentime);
-				reservation.setSeatnum(seatnum);
-				reservation.setResDate(resDate);
-				reservation.setResQty(resQty);
-				reservation.setPayState(payState);
-				reservation.setResnum(resnum);
-				
-			
+							
 				reservationList.add(reservation);
 			}//end while
 		}catch(SQLException e){
@@ -153,6 +137,54 @@ public class ReservationDAO {
 		}
 		return reservationList;
 	}
+	
+	/**
+	 * userid와 mnom으로 group by time 으로 된 정보의 time sum(total_price) count(res_qty)
+
+	 */
+	
+	public static  ArrayList<Reservation> selectReservationTime(String userid, String mnum) {
+		Connection con=null;
+		PreparedStatement psmt=null;
+		String sql=null;
+		ResultSet rs=null;
+		Reservation reservation=null;
+		ArrayList<Reservation>reservationList=new ArrayList<Reservation>();
+		try {
+			con=ConnectionUtil.getConnection();
+			sql=" select time,sum(r.total_price),sum(r.res_Qty)" +
+					" from reservation r,screening_time s " +
+					" where r.scr_num=s.scr_num AND r.userid=? AND r.m_num=?" +
+					" group by time";
+			
+			
+				psmt=con.prepareStatement(sql);
+				psmt.setString(1,userid);
+				psmt.setString(2,mnum);
+				rs=psmt.executeQuery();
+				while(rs.next()){
+					String time=rs.getString(1);
+					long totalPrice=rs.getLong(2);
+					long resQty=rs.getShort(3);					
+					
+					reservation=new Reservation();
+					ScreenTime screentime=new ScreenTime();
+					screentime.setTime(time);
+					reservation.setScreenTime(screentime);
+					reservation.setTotalPrice(totalPrice);
+					reservation.setResQty(resQty);
+					
+					System.out.println("selectReservationTime.reservation= "+reservation);
+					reservationList.add(reservation);
+				}//end while
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return reservationList;
+	}
+	
+	
+	
 	/**
 	 * 회원아이디로 예매내역을 찾을 수 있는 메서드
 
@@ -431,8 +463,8 @@ public class ReservationDAO {
 		  
 		  try {
 			psmt=con.prepareStatement
-					  ("UPDATE RESERVATION SET pay_state=? WHERE res_num=?");
-			
+					  ("UPDATE RESERVATION SET pay_state=?,seat_num=0,total_price=0,res_qty=0 WHERE res_num=?");
+			   
 			   psmt.setString(1,"결제취소");
 			   psmt.setString(2, resnum);
 			   
@@ -474,7 +506,50 @@ public class ReservationDAO {
 	}
 	
 	
-	
+	/**
+	 * SCR_NUM으로 예약한 좌석 번호를 찾기
+	 * 
+	 */
+	public static ArrayList<Reservation> selectSeatNumByScrnum(String scrnum,String userid) {
+		Connection con=null;
+		PreparedStatement psmt=null;
+		String sql=null;
+		ResultSet rs=null;
+		//Reservation reservation=new Reservation();
+		ArrayList<Reservation>SeatList=new ArrayList<Reservation>();
+		try {
+			con=ConnectionUtil.getConnection();
+			sql="	SELECT seat_num , scr_num ,res_num,pay_state" +
+					"  FROM  reservation " +
+					"  WHERE  scr_num=? AND userid=?" ;
+		
+			
+				psmt=con.prepareStatement(sql);
+				psmt.setString(1,scrnum);
+				psmt.setString(2, userid);
+				
+				rs=psmt.executeQuery();
+				while(rs.next()){
+					int seatnum=rs.getInt(1);
+					String resnum=rs.getString(3);
+					String payState=rs.getString(4);
+					Reservation reservation=new Reservation();
+					ScreenTime screenTime=new ScreenTime();
+					
+					reservation.setSeatnum(seatnum);
+					reservation.setResnum(resnum);
+					screenTime.setScrnum(scrnum);
+					reservation.setPayState(payState);
+					reservation.setScreenTime(screenTime);
+					
+					SeatList.add(reservation);
+					System.out.println("SeatList"+SeatList+"seatnum = "+seatnum);
+				}//end while
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return SeatList;
+	}
 	
 	/**
 	 * SCR_NUM으로 예약한 좌석 번호를 찾기
@@ -522,13 +597,21 @@ public class ReservationDAO {
 		}
 		
 		for(int i=0;i<SelectSeatList.size();i++){
+			
 			num=SelectSeatList.get(i);
-			TotalSeatList.set(num-1, 1);
+			if(num!=0){
+				TotalSeatList.set(num-1, 1);
+			}
+		
 		}
 		
 		
 		return TotalSeatList;
 	}
+
+
+
+
 	
 	
 }
