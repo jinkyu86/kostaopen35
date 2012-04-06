@@ -36,8 +36,16 @@ public class BlockService extends HttpServlet {
 			removeBlock(request, response);
 		}else if("searchBlockList".equals(method)){
 			searchBlockList(request, response);
+		}else if("addBlockForm".equals(method)){
+			addBlockForm(request,response);
 		}
 	}
+	private void addBlockForm(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException,IOException{
+		RequestDispatcher rd=request.getRequestDispatcher("/block/addBlock.jsp");
+		rd.forward(request, response);
+	}
+
 	/**
 	 * 신고리스트에 접수내용 추가
 	 * 
@@ -65,7 +73,7 @@ public class BlockService extends HttpServlet {
 		
 		BlockDAO.insertBlock(block);
 		
-		RequestDispatcher rd=request.getRequestDispatcher("/block/addBlock.jsp");
+		RequestDispatcher rd=request.getRequestDispatcher("/BoardService?method=boardListAtMain");
 		rd.forward(request, response);
 	}
 
