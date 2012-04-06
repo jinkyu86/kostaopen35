@@ -63,6 +63,7 @@ public class MovieDAO {
 		}
 		return movieRankList;
 	}
+	
 	/**
 	 * 영화 등록
 	 * 
@@ -149,6 +150,51 @@ public class MovieDAO {
 	}
 
 	/**
+	 * 영화이름으로 영화 번호찾기
+	 * 
+	 * @param mnum
+	 */
+	public static Movie selectMovieNum(String mname) {
+		Connection con = null;
+		PreparedStatement psmt = null;
+		String sql = null;
+		ResultSet rs = null;
+		Movie movie = null;
+		
+		try{
+			con = ConnectionUtil.getConnection();
+			sql="select m_num, m_name, launch_date, genre, poster, end_date, m_price, content from MOVIE "
+					+"where m_name=?";
+			psmt = con.prepareStatement(sql);
+			psmt.setString(1,mname);
+			rs = psmt.executeQuery();
+			if(rs.next()){
+				String mnum = rs.getString(1);
+				mname = rs.getString(2);
+				Date lDate = rs.getDate(3);
+				String genre = rs.getString(4);
+				String poster = rs.getString(5);
+				Date eDate = rs.getDate(6);
+				long mprice = rs.getLong(7);
+				String content = rs.getString(8);
+				
+				movie = new Movie();
+				movie.setMnum(mnum);
+				movie.setMname(mname);
+				movie.setLaunchDate(lDate);
+				movie.setGenre(genre);
+				movie.setPoster(poster);
+				movie.setEndDate(eDate);
+				movie.setMprice(mprice);
+				movie.setContent(content);
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return movie;
+	}
+	
+	/**
 	 * 영화번호로 영화 찾기
 	 * 
 	 * @param mnum
@@ -213,6 +259,8 @@ public class MovieDAO {
 			schwhere = " and launch_date<=sysdate";
 		}else if("schedule".equals(gubun)){
 			schwhere = "and launch_date>sysdate";
+		}else if("reservation".equals(gubun)){
+			schwhere = "and end_date>sysdate";
 		}else{
 			schwhere = "";
 		}
