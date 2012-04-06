@@ -10,6 +10,7 @@
 <script src="http://code.jquery.com/jquery-1.7.1.js"></script>
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.js"></script>
 <script src="/moviesystem/js/common.jsp"></script>
+
 <script type="text/javascript">
 $(document).ready(function(){
 	$("#my_form").validate({
@@ -32,30 +33,37 @@ $(document).ready(function(){
 });
 
 </script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('#my_page').css('background-color','#C4E2FF');
+		$('.top_row').css('background-color','#C4E2FF');
+	});
+</script>
 </head>
 <body>
 
 <table width="90%" align="center">
 	<!-- 상단 메뉴 시작 -->
 	<tr>
-		<td colspan="2">
+		<td colspan="3">
 			<jsp:include page="/common/top.jsp"></jsp:include>
 		</td>
 	</tr>
 	<!-- 상단 메뉴 끝 -->
-</table>
-
-
-<table border="1" align="center">
 	<tr>
-		<td rowspan=3><img src="/moviesystem/gphoto/${GOOD.photo}" width="200" height="200"></td>
-		<td>상품명</td><td>${GOOD.gname}</td>
+<td width=10%></td>
+<td>
+
+<table class="table_style" align="center">
+	<tr>
+		<td rowspan=3 width="200"><img src="/moviesystem/gphoto/${GOOD.photo}" width="200" height="200"></td>
+		<th class="top_row" width="80">상품명</th><td>${GOOD.gname}</td>
 	</tr>
 	<tr>
-		<td>상품 가격</td><td>${GOOD.gprice}</td>
+		<th class="top_row">상품 가격</th><td>${GOOD.gprice}</td>
 	</tr>
 	<tr>
-		<td>상품 설명</td><td width="500">${GOOD.detail}</td>
+		<th class="top_row">상품 설명</th><td width="500">${GOOD.detail}</td>
 	</tr>
 
 </table>
@@ -75,6 +83,10 @@ $(document).ready(function(){
 			
 		</tr>
 	</form>
+</table>
+</td>
+<td width=10%></td>
+</tr>
 </table>
 </body>
 </html>

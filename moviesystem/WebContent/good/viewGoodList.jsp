@@ -52,14 +52,12 @@
 </table>
 
 <table align="center" border="0">
-	<tr align="center">	
-		<td width="500">	
-			<form action="/moviesystem/GoodService" method="post">
+	<tr align="center">		
+		<form action="/moviesystem/GoodService" method="post">
 			<input type="hidden" name="method" value="searchGoodList"/>
-			상품명 : <input type="text" name="keyword"/>
-			<input type="submit" value="검색"/>
-			</form>
-		</td>
+			<td>상품명 : <input type="text" name="keyword"/></td>
+			<td><input type="submit" value="검색"/></td>
+		</form>
 	</tr>
 </table>
 

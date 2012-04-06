@@ -10,6 +10,12 @@
 <script src="http://code.jquery.com/jquery-1.7.1.js"></script>
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.js"></script>
 <script src="/moviesystem/js/common.jsp"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		//$('#my_page').css('background-color','#C4E2FF');
+		$('#top_row').css('background-color','#C4E2FF');
+	});
+</script>
 
 <script type="text/javascript">
 $(document).ready(function(){
@@ -59,81 +65,73 @@ $(document).ready(function(){
 <table width="90%" align="center">
 	<!-- 상단 메뉴 시작 -->
 	<tr>
-		<td colspan="2">
+		<td colspan="3">
 			<jsp:include page="/common/top.jsp"></jsp:include>
 		</td>
 	</tr>
 	<!-- 상단 메뉴 끝 -->
 	
-</table>
-
-<table border="1" align="center">
 	<tr>
-		<th>이미지</th>
-		<th>상품명</th>
-		<th>단가</th>
-		<th width="200">개수</th>	
-		<th>총가격</th>
-		<th>기타</th>	
-		
-	</tr>
-
-	<c:forEach var="buy"  items="${sessionScope.CART_LIST }" varStatus="i">
-	<tr>
-
-		<td>
-			<img src="/moviesystem/gphoto/${buy.good.photo}" width="100" height="100"/>
+		<td width=20%>
 		</td>
 		<td>
-			${buy.good.gname}
-		</td>
-		<td>
-			${buy.good.gprice}
-		</td>
+			<table class="table_style" align="center">
+				<h1 align="center">장바구니</h1>
+				<tr id="top_row">
+					<th width="110">이미지</th>
+					<th>상품명</th>
+					<th>단가</th>
+					<th width="200">개수</th>	
+					<th>총가격</th>
+					<th width="50">기타</th>	
+				</tr>
 
-		<td>
+				<c:forEach var="buy"  items="${sessionScope.CART_LIST }" varStatus="i">
+				<tr>
+					<td><img src="/moviesystem/gphoto/${buy.good.photo}" width="100" height="100"/></td>
+					<td>${buy.good.gname}</td>
+					<td>${buy.good.gprice}</td>
+					<td>
+						<form action="/moviesystem/GoodService" method="post" id="my_form">
+							<input type="hidden" name="method" value="editCartList"/>
+							<input type="text" name="qty${i.count-1}" value="${buy.qty}" size=6/>
+							<input type="submit" value="수량변경"/><br/>
+							<input type="hidden" name="index" value="${i.count-1}"/>	
+							<div id="qtymsg${i.count-1}"></div>	
+						</form>
+					</td>	
+					<td>${buy.good.gprice*buy.qty}</td>
+					<td>
+						<form action="/moviesystem/GoodService" method="post">
+							<input type="hidden" name="method"value="removeCartList"/>
+							<input type="hidden" name="index" value="${i.count-1}"/>
+							<input type="submit" value="삭제"/>
+						</form>
+					</td>
+				</tr><br/>
+				</c:forEach>
+			</table>
 
-			<form action="/moviesystem/GoodService" method="post" id="my_form">
-				<input type="hidden" name="method" value="editCartList"/>
-				<input type="text" name="qty" id="qty${i.count-1}" value="${buy.qty}" size=6/>
-				<input type="submit" value="수량변경"/><br/>
-				<input type="hidden" name="index" value="${i.count-1}"/>	
-				<div id="qtymsg${i.count-1}"></div>	
-				
-			</form>
-	
-		</td>	
-		<td>
-			${buy.good.gprice*buy.qty}
+			<table border="0" align="center" width="400">
+				<tr align="center"><br/>
+					<td>
+						<c:if test="${sessionScope.CART_LIST[0] ne null}">
+							<form action="/moviesystem/BuyService" method="post" class="my_form">
+								<input type="hidden" name="method" value="addBuy"/>	
+								<input type="submit" value="결제하기" />
+							</form>
+						</c:if>
+					</td>
+				</tr><br/>
+				<tr>
+					<p align="center">
+						<a href="/moviesystem/GoodService?method=viewGoodList">쇼핑하러가기</a>
+					</p>
+				</tr>
+			</table>		
 		</td>
-		<td>
-			<form action="/moviesystem/GoodService" method="post">
-				<input type="hidden" name="method"value="removeCartList"/>
-				<input type="hidden" name="index" value="${i.count-1}"/>
-				<input type="submit" value="삭제"/>
-			</form>
+		<td width=20%>
 		</td>
-	</tr><br/>
-		
-	</c:forEach>
-</table>
-
-
-<table border="0" align="center" width="400">
-	<tr align="center"><br/>
-		<td>
-		<c:if test="${sessionScope.CART_LIST[0] ne null}">
-			<form action="/moviesystem/BuyService" method="post" class="my_form">
-				<input type="hidden" name="method" value="addBuy"/>	
-				<input type="submit" value="결제하기" />
-			</form>
-		</c:if>
-		</td>
-	</tr><br/>
-	<tr>
-		<p align="center">
-			<a href="/moviesystem/GoodService?method=viewGoodList">쇼핑하러가기</a>
-		</p>
 	</tr>
 </table>
 </body>
