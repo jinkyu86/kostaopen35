@@ -90,48 +90,14 @@ $(document).ready(function () {
 				<font color="white" style="font-size: 27px">2012 프로야구 베팅</font>
 			</p>
 
-			<c:choose>
-				<c:when test="${sessionScope.LOGIN_MEMBER==null}">
-				</c:when>
-				<c:otherwise>
-					<p>
-					<table border="0" align="right">
-						<tr>
-							<td colspan="2" align="center"><font color="white">${sessionScope.LOGIN_MEMBER.name}
-									님 환영합니다</font></td>
-						</tr>
-						<tr>
-							<td align="center"><font color="white">순위 : ${RANK }
-									위|</font></td>
-							<td align="center"><font color="white">미네랄 : ${MINERAL}
-									</font></td>
-						</tr>
-						<tr>
-							<td colspan="2" align="right"><a
-								href="/betting/MemberService?method=logout"> <font
-									color="white">로그아웃</font>
-							</a></td>
-						</tr>
-						<tr>
-							<td colspan="2" align="right"><a
-								href="/betting/MemberService?method=editMemberForm"><font
-									color="white"> 정보수정</font></a></td>
-						</tr>
-						<tr>
-							<td colspan="2" align="right"><a
-								href="/betting/MemberBetDataService?method=viewMemberBetDataByIDList">
-									<font color="white">나의 배팅 정보</font>
-							</a></td>
-						</tr>
-					</table>
-					</p>
-				</c:otherwise>
-			</c:choose>
+	
 		</header>
 		<nav>
 			<!-- top nav -->
 			<div class="menu">
 				<ul>
+										<li><a
+						href="/betting/index.jsp">홈</a></li>
 					<li><a
 						href="/betting/MatchService?method=viewMatchListToVistor">경기
 							일정</a></li>
