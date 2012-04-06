@@ -41,7 +41,7 @@
 	<li><a href="/baking/GoodService?method=viewIndex">홈</a></li>			
 	<li><a href="/baking/RecipeService?method=viewGoodList">상품</a></li>		
 	<li><a href="/baking/RecipeService?method=viewRecipeList">레시피</a></li>			
-	<li><a href="/baking/OrderService?method=viewCartList">장바구니</a></li>			
+	<li><a href="/baking/OrderService?method=CartList">장바구니</a></li>			
 	<li><a href="/baking/OrderService?method=viewOrderList">주문조회</a></li>				
 	<li><a href="/baking/GoodService?method=viewIndex">마이레시피</a></li>		
 </ul>
