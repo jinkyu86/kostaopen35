@@ -5,14 +5,62 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>회원가입</title>
-<link rel="Stylesheet" href="jquery.validate.password.css"/>
+<link rel="Stylesheet" href="/betting/member/jquery.validate.password.css"/>
 <style>
 	#password_row label.error { display:none !important; }
 </style>
+    <script src="http://code.jquery.com/jquery-1.7.js"></script>
+    <script  src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.js"></script>
+    <script src="/betting/member/jquery.validate.password.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#add_member').validate({
+                rules: {
+                    id: {
+                    	required:true,
+						minlength:4
+                        
+                    },
+                    
+                            
+                    name: {
+                        required: true,
+                        minlength:4
+                    }
+                },
+                messages: {
+                    id: {
+                        required: '아이디를 입력해주세요.',
+                        minlength: '{0}글자 이상 입력해주세요.'
+                    },
+                   name: {
+                        required: '이름을 입력해주세요.',
+                        minlength: '{0}글자 이상 입력해주세요.'
+                    }
+                }
+            });
+            
+            $("#id").change(function() {
+				//userid에 입력한 값을 리턴
+			
+				var id=$("#id").val();
+				
+				$.ajax('/betting/MemberService', {
+					data:{"method":"checkMemberID"
+						,"id": id
+					},
+					success : function(data) {
+						$('#idcheck').html(data);
+					}
+				});
+            });
+        });
+<%--
 <script src="http://code.jquery.com/jquery-1.7.js"></script>
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.js"></script>
 <script src="jquery.validate.password.js"></script>
 <script type="text/javascript">
+
 		$(document).ready(function(){
 			$('#add_member').validate({
 				rules:{
@@ -54,6 +102,7 @@
 					label.prependTo(element.parent().next());
 				},
 			});
+		
 				$("#id").change(function() {
 				//userid에 입력한 값을 리턴
 				var id=$("#id").val();
@@ -68,6 +117,7 @@
 				});
 			});
 		});
+		--%>	
 </script>
 </head>
 <body>
