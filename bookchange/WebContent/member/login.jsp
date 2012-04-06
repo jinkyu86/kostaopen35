@@ -7,30 +7,28 @@
 <title>로그인</title>
 <script src="http//code.jquery.com/jquery-1.7.js"></script>
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.js"></script>
-
-
 <script>
 $(document).ready(function(){
-	$('#my_form').validate({
+	$("#my_form").validate({
 		rules:{
+			
 			email:"required email",
-				
+			
+			
 			pw:{
 				required:true,
 				minlength:3
 				}
 			},
-
-		messages:{
-			email:{
-				required:'이메일을 입력해주세요',
+		messages: {
+			email: {
+				required: '이메일을 입력해주세요',
 			},
-			pw:{
-				required:"비밀번호를 입력해주세요",
-				minlength:"3자이상 입력해주세요"
+			pw: {
+				required: "비밀번호를 입력해주세요",
+				minlength: "3자이상 입력해주세요"
 			}
-			}
-		
+		}
 		});
 	});	
 	</script>
@@ -43,15 +41,16 @@ $(document).ready(function(){
   	<input type="hidden"name="method"value="login">
 	
   	    <tr>
-  		<td align="center">아이디</td>
-  		<td><input type="text" name="email"/></td>
+	  		<td> 아이디</td>
+  			<td><input type="text" name="email"/></td>
   		</tr>
   		<tr>
-  		<td>비밀번호</td>
-  		<td><input type="password" name="pw"/></td>
+	  		<td>비밀번호</td>
+	  		<td><input type="password" name="pw"/></td>
   		</tr>
-  		<td align="center"><input type="submit" value="로그인"/></td>
-  		<td align="center"><input type="reset" value="취소"/></td>
+  		<td><input type="submit" value="로그인"/></td>
+  		
+  		<td><input type="reset" value="취소"/></td>
   		
   	</form>	  
   </table>	
