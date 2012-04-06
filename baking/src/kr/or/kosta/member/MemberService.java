@@ -10,8 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import kr.or.kosta.student.Student;
-import kr.or.kosta.student.StudentDAO;
+
 
 public class MemberService extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -243,7 +242,7 @@ public class MemberService extends HttpServlet {
 	public static void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String memberid= request.getParameter("memberid");
 		String password = request.getParameter("password");
-		Member member = MemberDAO.login(memberid);
+		Member member = MemberDAO.login(memberid,password);
 		if(member!=null){
 			HttpSession session = request.getSession();
 			session.setAttribute("member", member);
@@ -281,9 +280,10 @@ public class MemberService extends HttpServlet {
 	 * 
 	 * @param request
 	 * @param response
+	 * @throws IOException 
 	 */
 	public void checkMemberID(HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response) throws IOException {
 		String memberid=request.getParameter("memberid");
 		String name=request.getParameter("name");
 		String reginum=request.getParameter("reginum");
