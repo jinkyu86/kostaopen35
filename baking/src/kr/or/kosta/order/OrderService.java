@@ -45,8 +45,8 @@ public class OrderService extends HttpServlet {
 			addOrderForm(request,response);
 		}else if("removeCart".equals(method)){		//장바구니 삭제
 			removeCart(request,response);
-		}else if("editOrder".equals(method)){		//장바구니 수정
-			editOrder(request,response);
+		}else if("editCart".equals(method)){		//장바구니 수정
+			editCart(request,response);
 		}else if("viewCartList".equals(method)){	//장바구니
 			viewCartList(request,response);
 		}else if("CartList".equals(method)){		//장바구니
@@ -181,7 +181,7 @@ public class OrderService extends HttpServlet {
 	}
 	
 	//장바구니수정
-	public void editOrder(HttpServletRequest request,
+	public void editCart(HttpServletRequest request,
 			HttpServletResponse response) throws IOException,ServletException{
 		int index=Integer.parseInt(request.getParameter("index"));
 		int qty=Integer.parseInt(request.getParameter("qty"));
