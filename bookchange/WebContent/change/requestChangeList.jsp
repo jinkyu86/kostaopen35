@@ -189,7 +189,7 @@
 		<a href="/bookchange/BoardService?method=viewBoardWhenCancel&boardNo=${change.demandBoard.boardNo}&agreeBoardNo=${change.agreeBoard.boardNo}">
 		<img src="/bookchange/bookimg/${change.demandBoard.boardPhoto}"height="100" width="100"></a></td>
 		<td align="center">${change.changeDate}</td>
-       </tr>
+	   </tr>
       </c:forEach>
       </table>
 	  <p align="center">
