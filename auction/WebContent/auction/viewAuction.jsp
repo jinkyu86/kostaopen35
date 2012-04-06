@@ -32,7 +32,7 @@
 	});
 </script>
 </head>
-<body background="/auction/gphoto/mina.jpg"/>
+<body background="/auction/gphoto/leemj.jpg"/>
 <script type="text/javascript">
 <c:if test="${ERROR!=null}">
 	alert("${ERROR}");
@@ -59,7 +59,7 @@
 		</c:choose>
 	</li>
 </ui>
-	<table  align="center"  border="1" bgcolor="skyblue">
+	<table  align="center"  border="1">
 	<form action="/auction/BidService" method="post">
 	<input type="hidden" name="method" value="addBid"/>
 	<input type="hidden" name="aNum" value="${AUCTION.aNum }"/>
@@ -102,7 +102,7 @@
 		</p>
 	</li>
 </ui>
-<table border="1" align="center" bgcolor="skyblue">
+<table border="1" align="center">
 	<tr>
 		<th colspan="2"><h4>입찰중인 유저</h4></th>
 	</tr>
