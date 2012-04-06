@@ -78,7 +78,7 @@
  });
 </script>
 </head>
-<body background="/auction/gphoto/seo3.jsp">
+<body background="/auction/gphoto/seo3.jpg">
 	<h1 align="center">경매등록</h1>
 	<form action="/auction/AuctionService" method="post" id="my_form">
 		<input type="hidden" name="method" value="addAuction" />
