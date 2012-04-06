@@ -21,7 +21,7 @@
  <c:forEach var="board" items="${BOARD_LIST}">
  <table border="1" width="530" height="70">
  <tr>
-  <td height="70" width="70" rowspan="4"><a href="/bookchange/BoardService?method=viewBoard&boardNo=${board.boardNo}"><img src="/bookchange/bookimg/${board.boardPhoto}" height="70" width="70"></a></td>
+  <td height="70" width="70" rowspan="4"><a href="/bookchange/BoardService?method=viewBoard&boardNo=${board.boardNo}"><img src="/bookchange/bookimg/${board.boardPhoto}" height="70" width="70" border="0"></a></td>
  </tr>
  <tr>
   <td><b>Á¦¸ñ</b>:${board.boardTitle}</td>
