@@ -75,8 +75,28 @@ public class MemberService extends HttpServlet {
 			viewMemberRankingListForm(request, response);
 		} else if("viewMember".equals(method)){
 			viewMember(request,response);
+		} else if("viewHome".equals(method)){
+			viewHome(request,response);
 		}
 	}// end method doPost
+
+	private void viewHome(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		Member member1 = (Member) session.getAttribute("LOGIN_MEMBER");
+			String ID = member1.getId();
+		
+		long mineral=MemberDAO.selectMineralByID(ID);
+		request.setAttribute("MINERAL", mineral);
+		
+		long rank =MemberDAO.selectMemberRanking(ID);
+		request.setAttribute("RANK", rank);
+		
+		RequestDispatcher rd = request
+				.getRequestDispatcher("index.jsp");
+		rd.forward(request, response);
+		
+	}
 
 	private void viewMember(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
