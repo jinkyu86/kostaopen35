@@ -21,8 +21,8 @@
 $(document).ready(function(){
 
 	$("#my_page").css('background-color','#C4E2FF');
-	$("#member_info").css('background-color','#C4E2FF'); 
-	
+	$("#member_info").css('background-color','#ebfbff'); 
+
 	$("#my_form").validate({
 		rules:{
 			pwvalid:{
