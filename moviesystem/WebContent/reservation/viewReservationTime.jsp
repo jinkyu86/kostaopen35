@@ -37,28 +37,21 @@
 
 <table border="1" align="center">
 	<tr>
-		<th>영화</th>
-		
+		<th>시간</th>
+		<th>수량</th>
+		<th>가격</th>
 	</tr>
 
-<c:forEach var="reservation" items="${RESERVATION_LIST}">
+<c:forEach var="reservation" items="${reservationList}">
  		
 		<tr>
 		<td>
-			<c:choose>
-									<c:when test="${fn:length(reservation.movie.mname)>9}">
-										<a href="/moviesystem/ReservationService?method=viewReservationTimeForm&mname=${reservation.movie.mname}">
-										${fn:substring(reservation.movie.mname, 0, 8)}
-										</a>
-									</c:when>
-									<c:otherwise>
-										<a href="/moviesystem/ReservationService?method=viewReservationTimeForm&mname=${reservation.movie.mname}">
-										${reservation.movie.mname}
-										</a>
-									</c:otherwise>
-			</c:choose>
-			
+			<a href="/moviesystem/ReservationService?method=viewReservationSeat&time=${reservation.screenTime.time}">
+			${reservation.screenTime.time}
+			</a>
 		</td>
+		<td>${reservation.resQty}</td>
+		<td>${reservation.totalPrice}</td>
 		</tr>
 </c:forEach>		
 		

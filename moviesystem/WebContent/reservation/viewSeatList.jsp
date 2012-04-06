@@ -3,12 +3,11 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"  %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<title>ReservationListById</title>
+<title>Insert title here</title>
 <link rel="stylesheet" href="/moviesystem/css/Layout.css">
 <script src="http://code.jquery.com/jquery-1.7.1.js"></script>
 <script src="/moviesystem/js/common.jsp"></script>
@@ -35,40 +34,70 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
 <table border="1" align="center">
 	<tr>
-		<th>영화</th>
-		
+		<th>좌석</th>
+		<th>결제상태</th>
+		<th>취소</th>
+
 	</tr>
 
-<c:forEach var="reservation" items="${RESERVATION_LIST}">
- 		
-		<tr>
-		<td>
-			<c:choose>
-									<c:when test="${fn:length(reservation.movie.mname)>9}">
-										<a href="/moviesystem/ReservationService?method=viewReservationTimeForm&mname=${reservation.movie.mname}">
-										${fn:substring(reservation.movie.mname, 0, 8)}
-										</a>
-									</c:when>
-									<c:otherwise>
-										<a href="/moviesystem/ReservationService?method=viewReservationTimeForm&mname=${reservation.movie.mname}">
-										${reservation.movie.mname}
-										</a>
-									</c:otherwise>
-			</c:choose>
-			
-		</td>
-		</tr>
+
+<c:forEach var="reservation" items="${reservationList}" >
+ 	
+ 	<tr>
+ 		<td>${reservation.seatnum}</td>
+ 		<td>${reservation.payState}</td>
+
+ 		<c:choose>
+			<c:when test="${reservation.payState=='결제완료' }">
+				<td><a href="/moviesystem/ReservationService?method=viewReservationByResNumForm&resnum=${reservation.resnum}&select=${2}">
+				<input type="button" value="취소"/>
+				</a></td>
+			</c:when>
+		</c:choose>	
+ 	
+ 	
+ 	</tr>
+	
 </c:forEach>		
 		
+		
+	
+
 
 </table>
 
 
-<p align="center">
-	${PAGE_LINK_TAG}
-</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -83,6 +112,7 @@
 	</tr>
 	<!-- 하단 내용 끝 -->
 </table>
+
 
 </body>
 </html>
