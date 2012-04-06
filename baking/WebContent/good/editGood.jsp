@@ -19,11 +19,11 @@ pageEncoding="utf-8"%>
 	a:hover {text-decoration:none}
 	a {color:#000000; text-decoration:none; }
 </style>
-<script type="text/javascript">
+<!-- <script type="text/javascript">
 function editGood(){
 		location.href="/baking/GoodService?method=editGood&goodNum="+${GOOD.goodNum};
 }
-</script>
+</script> -->
  <script>
 		$(document).ready(function(){
 			$('#my_form').validate({
@@ -65,7 +65,7 @@ function editGood(){
 			 $('#uplodify').uploadify({
 			 	cancelImg: '/baking/uploadify/cancel.png',
         		uploader: '/baking/uploadify/uploadify.swf',
-        		script: '/baking/UploadServlet',
+        		script: '/baking/GoodUploadServlet',
         		multi: false,
         		auto: false,
 			 fileExt     : '*.jpg;*.jpeg;*.gif;*.png',
@@ -128,11 +128,11 @@ function editGood(){
 	<a href="/baking/GoodService?method=viewDivisionGoodList&division=1">- 쿠키</a>
 	<a href="/baking/GoodService?method=viewDivisionGoodList&division=2">- 케이크</a>  
 	<a href="/baking/GoodService?method=viewDivisionGoodList&division=3">- 초콜릿</a>	
-
 	<ul class="column">
 	<form id="my_form" action="/baking/GoodService" method="post">
 	<input type="hidden" name="method" value="editGood">
 	<input type="hidden"  name="img" id="img" value=""/>
+	<input type="hidden" name="goodNum" value="${Good.goodNum}">
 		<table border="1" align="center">
 			<tr>
 				<td>상품명</td>

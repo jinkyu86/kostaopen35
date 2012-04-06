@@ -60,7 +60,7 @@ pageEncoding="utf-8"%>
 			 $('#uplodify').uploadify({
 			 	cancelImg: '/baking/uploadify/cancel.png',
         		uploader: '/baking/uploadify/uploadify.swf',
-        		script: '/baking/UploadServlet',
+        		script: '/baking/GoodUploadServlet',
         		multi: false,
         		auto: false,
 			 fileExt     : '*.jpg;*.jpeg;*.gif;*.png',
