@@ -72,10 +72,7 @@ public class RecipeService extends HttpServlet{
 	// 전체레시피 리스트 
 	public void viewRecipeList(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException{
-			Member member = new Member();
-			member.setMemberid("ADMIN");			
-			HttpSession session = request.getSession();
-			session.setAttribute("member",member);
+
 /////////////////////////////////////////////////
 			
 			
