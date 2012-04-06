@@ -7,7 +7,7 @@ import java.io.IOException;
 import javax.servlet.ServletException;
 
 import kr.or.kosta.member.MemberService;
-import kr.or.kosta.student.StudentService;
+
 
 import org.junit.Test;
 import org.springframework.mock.web.MockHttpServletRequest;
@@ -99,7 +99,7 @@ public class MemberServiceTest {
 	}
 
 	@Test
-	public void testLogin() {
+	public void testLogin() throws ServletException, IOException {
 		MockHttpServletRequest request= new MockHttpServletRequest();
 		request.addParameter("memberid", "jun123");
 		request.addParameter("password", "1234");
