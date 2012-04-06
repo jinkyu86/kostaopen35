@@ -122,7 +122,7 @@
 	<tr>
 	 <table cellpadding="0" cellspacing="0" border="0">
 	   <tr>
-	   <td><a href="">
+	   <td><a href="/bookchange/BlockService?method=addBlockForm">
 	   <img align="right" src="webimg/block.GIF" title="신고하기" border="0" width="230"/></a></td>
 	   </tr>
 	   
@@ -135,7 +135,11 @@
 	   <input type="hidden" name="keyword" value="${sessionScope.LOGIN_EMAIL.email}">
 	   <input type="submit" value=" 등록한 책 목록 "></td>
 	   </form>
-	   </tr>	  
+	   </tr>	
+	   
+	   <tr>
+		<td height="10"></td>
+		</tr>  
 	   
 	   <tr>
 	   <td align="center">
@@ -146,6 +150,10 @@
 	   </tr>
 	   
 	   <tr>
+		<td height="10"></td>
+		</tr>
+	   
+	   <tr>
 	   <td align="center">
 	   <form action="/bookchange/ChangeService" method="post">
 	   <input type="hidden" name="method" value="acceptChangeList">
@@ -154,14 +162,41 @@
 	   </tr>
 	   
 	   <tr>
+		<td height="10"></td>
+		</tr>
+	   
+	   <tr>
 	   <td align="center">
 	   <form action="/bookchange/ChangeService" method="post">
 	   <input type="hidden" name="method" value="matchChangeList">
 	   <input type="submit" value="교환진행중인 책 목록"></td>
 	   </form>	   
 	   </tr>
+	   
+	   <tr>
+		<td height="10"></td>
+		</tr>
+	   
+	   <tr>
+	   <td align="center">
+	   <form action="/bookchange/ChangeService" method="post">
+	   <input type="hidden" name="method" value="matchChangeResultList">
+	   <input type="submit" value="교환완료된 책 목록"></td>
+	   </form>	   
+	   </tr>
 	     
-	     
+	      <tr>
+		<td height="10"></td>
+		</tr>
+		
+	   <tr>
+    <td align="center">
+    <form action="/bookchange/BlockService" method="post">
+      <input type="hidden" name="method" value="selectMyBlockList">
+      <input type="submit" value="신고내역보러가기">
+    </form>
+    </td>
+    </tr>  
 	     
 	     </c:otherwise>
 	  </c:choose>

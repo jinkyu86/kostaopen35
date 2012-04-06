@@ -53,7 +53,7 @@
 	<td>
 	<table cellpadding="0" cellspacing="0" border="0">
 	 <tr>
-	 <td width="220" height="600" valign="top" bgcolor="#F8F8F8">
+	 <td width="250" height="600" valign="top" bgcolor="#F8F8F8">
 	 <table cellpadding="0" cellspacing="0" border="0">
 	 <!--로그인-->
 	  <tr>
@@ -126,8 +126,8 @@
 	</tr>
 	<tr>
 	 <table cellpadding="0" cellspacing="0" border="0">
-	   <tr>
-	   <td><a href="">
+	  <tr>
+	   <td><a href="/bookchange/BlockService?method=addBlockForm">
 	   <img align="right" src="webimg/block.GIF" title="신고하기" border="0" width="230"/></a></td>
 	   </tr>
 	   
@@ -140,7 +140,11 @@
 	   <input type="hidden" name="keyword" value="${sessionScope.LOGIN_EMAIL.email}">
 	   <input type="submit" value=" 등록한 책 목록 "></td>
 	   </form>
-	   </tr>	  
+	   </tr>	
+	   
+	   <tr>
+		<td height="10"></td>
+		</tr>  
 	   
 	   <tr>
 	   <td align="center">
@@ -151,6 +155,10 @@
 	   </tr>
 	   
 	   <tr>
+		<td height="10"></td>
+		</tr>
+	   
+	   <tr>
 	   <td align="center">
 	   <form action="/bookchange/ChangeService" method="post">
 	   <input type="hidden" name="method" value="acceptChangeList">
@@ -159,14 +167,41 @@
 	   </tr>
 	   
 	   <tr>
+		<td height="10"></td>
+		</tr>
+	   
+	   <tr>
 	   <td align="center">
 	   <form action="/bookchange/ChangeService" method="post">
 	   <input type="hidden" name="method" value="matchChangeList">
 	   <input type="submit" value="교환진행중인 책 목록"></td>
 	   </form>	   
 	   </tr>
+	   
+	   <tr>
+		<td height="10"></td>
+		</tr>
+	   
+	   <tr>
+	   <td align="center">
+	   <form action="/bookchange/ChangeService" method="post">
+	   <input type="hidden" name="method" value="matchChangeResultList">
+	   <input type="submit" value="교환완료된 책 목록"></td>
+	   </form>	   
+	   </tr>
 	     
-	     
+	      <tr>
+		<td height="10"></td>
+		</tr>
+		
+	   <tr>
+    <td align="center">
+    <form action="/bookchange/BlockService" method="post">
+      <input type="hidden" name="method" value="selectMyBlockList">
+      <input type="submit" value="신고내역보러가기">
+    </form>
+    </td>
+    </tr>  
 	     
 	     </c:otherwise>
 	  </c:choose>
@@ -175,29 +210,27 @@
 	   <tr>
 	   <td>
 	   
- 
-	 <table align="left">
-		<tr align="left"><th>분야별 찾기</th></tr>
-		<tr><td align="left"><a href="/bookchange/BoardService?method=searchBoardList&categoryNo=&column=title&keyword=">전체보기</a></td></tr>
-		<tr><td align="left"><a href="/bookchange/BoardService?method=searchBoardList&categoryNo=0&column=title&keyword=">만화/잡지</a></td></tr>
-		<tr><td align="left"><a href="/bookchange/BoardService?method=searchBoardList&categoryNo=1&column=title&keyword=">학습/참고서</a></td></tr>
-		<tr><td align="left"><a href="/bookchange/BoardService?method=searchBoardList&categoryNo=2&column=title&keyword=">취업/수험서</a></td></tr>
-		<tr><td align="left"><a href="/bookchange/BoardService?method=searchBoardList&categoryNo=3&column=title&keyword=">컴퓨터/IT</a></td></tr>
-		<tr><td align="left"><a href="/bookchange/BoardService?method=searchBoardList&categoryNo=4&column=title&keyword=">소설/시/에세이</a></td></tr>
-		<tr><td align="left"><a href="/bookchange/BoardService?method=searchBoardList&categoryNo=5&column=title&keyword=">가정/생활/요리</a></td></tr>
-		<tr><td align="left"><a href="/bookchange/BoardService?method=searchBoardList&categoryNo=6&column=title&keyword=">여행/취미/레저</a></td></tr>
-		<tr><td align="left"><a href="/bookchange/BoardService?method=searchBoardList&categoryNo=7&column=title&keyword=">종교/해외도서</a></td></tr>
-		<tr><td align="left"><a href="/bookchange/BoardService?method=searchBoardList&categoryNo=8&column=title&keyword=">기타도서</a></td></tr>
-		<tr><td align="left"><a href="/bookchange/BoardService?method=searchBoardList&categoryNo=9&column=title&keyword=">유아/아동</a></td></tr>
-	</table>
-	   
 	   </td>	   
 	   </tr>
 	 </table>
 	 </tr>
 	 <td width="550" height="600" valign="top" bgcolor="#FAFAD2">
-	 	<table width="550" height="600" cellpadding="0" cellspacing="0" border="1">
+	 	<table width="550" height="600" cellpadding="0" cellspacing="0" border="0">
 	 	<td>
+	 	
+	 	<table align="center" border="0">
+<tr><td align="left"><a href="/bookchange/BoardService?method=searchBoardList&categoryNo=&column=title&keyword="><small>전체보기</small></a></td>
+		<td align="left"><a href="/bookchange/BoardService?method=searchBoardList&categoryNo=0&column=title&keyword="><small>만화/잡지</small></a></td>
+		<td align="left"><a href="/bookchange/BoardService?method=searchBoardList&categoryNo=1&column=title&keyword="><small>학습/참고서</small></a></td>
+		<td align="left"><a href="/bookchange/BoardService?method=searchBoardList&categoryNo=2&column=title&keyword="><small>취업/수험서</small></a></td>
+		<td align="left"><a href="/bookchange/BoardService?method=searchBoardList&categoryNo=3&column=title&keyword="><small>컴퓨터/IT</small></a></td>
+		<td align="left"><a href="/bookchange/BoardService?method=searchBoardList&categoryNo=4&column=title&keyword="><small>소설/시/에세이</small></a></td></tr>
+		<tr><td align="left"><a href="/bookchange/BoardService?method=searchBoardList&categoryNo=5&column=title&keyword="><small>가정/생활/요리</small></a></td>
+		<td align="left"><a href="/bookchange/BoardService?method=searchBoardList&categoryNo=6&column=title&keyword="><small>여행/취미/레저</small></a></td>
+		<td align="left"><a href="/bookchange/BoardService?method=searchBoardList&categoryNo=7&column=title&keyword="><small>종교/해외도서</small></a></td>
+		<td align="left"><a href="/bookchange/BoardService?method=searchBoardList&categoryNo=8&column=title&keyword="><small>기타도서</small></a></td>
+		<td align="left"><a href="/bookchange/BoardService?method=searchBoardList&categoryNo=9&column=title&keyword="><small>유아/아동</small></a></td></tr>
+ </table>
 	 	
 	 	
 <c:choose>
@@ -237,6 +270,7 @@
 	</table>	 	
    	</c:when>
  </c:choose>
+ 
  
 	 	<table align="center" border="1">
  		<tr align="center">
