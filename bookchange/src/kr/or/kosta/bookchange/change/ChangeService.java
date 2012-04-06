@@ -108,6 +108,13 @@ public class ChangeService extends HttpServlet {
 		String agreeBoardNo=request.getParameter("agreeBoardNo");
 		String demandBoardNo=request.getParameter("demandBoardNo");
 		
+		String conditionResult=request.getParameter("conditionResult");
+		
+		if(conditionResult.equals("2") || conditionResult.equals("3")){
+			request.setAttribute("ERROR","이미 다른 분과 교환중이므로 교환할 수 없습니다 :)");
+			RequestDispatcher rd=request.getRequestDispatcher("/ChangeService?method=matchChangeList");
+			rd.forward(request, response);
+		}else{		
 		Board agreeBoard=new Board();
 		agreeBoard.setBoardNo(Integer.parseInt(agreeBoardNo));
 		
@@ -123,6 +130,7 @@ public class ChangeService extends HttpServlet {
 		request.setAttribute("ERROR","교환신청을 수락하셨습니다.");
 		RequestDispatcher rd=request.getRequestDispatcher("/ChangeService?method=matchChangeList");
 		rd.forward(request, response);
+		}
 	}
 
 	private void requestChangeList(HttpServletRequest request,
