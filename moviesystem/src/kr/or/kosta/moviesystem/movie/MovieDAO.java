@@ -213,8 +213,6 @@ public class MovieDAO {
 			schwhere = " and launch_date<=sysdate";
 		}else if("schedule".equals(gubun)){
 			schwhere = "and launch_date>sysdate";
-		}else if("reservation".equals(gubun)){
-			schwhere = "and end_date>sysdate";
 		}else{
 			schwhere = "";
 		}
