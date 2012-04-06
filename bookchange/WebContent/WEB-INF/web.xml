@@ -61,4 +61,15 @@
     <url-pattern>/UploadServlet</url-pattern>
   </servlet-mapping>
   
+    <servlet>
+    <description></description>
+    <display-name>QaService</display-name>
+    <servlet-name>QaService</servlet-name>
+    <servlet-class>kr.or.kosta.bookchange.board.QaService</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>QaService</servlet-name>
+    <url-pattern>/QaService</url-pattern>
+  </servlet-mapping>
+  
 </web-app>
