@@ -33,20 +33,13 @@
 		</c:choose>
 		<header>
 			<p>
-				<font color="white" style="font-size: 30px">2012 프로야구 베팅</font>
+				<font color="white" style="font-size: 27px">2012 프로야구 베팅</font>
 			</p>
 
 			<c:choose>
 				<c:when test="${sessionScope.LOGIN_MEMBER==null}">
 				</c:when>
 				<c:otherwise>
-					<!--<p align="right">
-						${sessionScope.LOGIN_MEMBER.name} 님 순위 : ${RANK }위 <br /> <a
-							href="/betting/MemberService?method=logout"> 로그아웃 </a> <a
-							href="/betting/MemberService?method=editMemberForm"> 정보수정</a> <a
-							href="/betting/MemberBetDataService?method=viewMemberBetDataByIDList">
-							나의 배팅 정보</a>
-					</p>-->
 					<p>
 					<table border="0" align="right">
 						<tr>
@@ -85,6 +78,8 @@
 			<!-- top nav -->
 			<div class="menu">
 				<ul>
+										<li><a
+						href="/betting/index.jsp">홈</a></li>
 					<li><a
 						href="/betting/MatchService?method=viewMatchListToVistor">경기
 							일정</a></li>
@@ -113,8 +108,11 @@
 			</div>
 		</nav>
 		<!-- end of top nav -->
-		<section id="content"></section>
+		<section id="content">
+			홈화면
+		</section>
 		</li>
 	</ul>
+	
 </body>
 </html>
