@@ -84,17 +84,19 @@ public class MemberService extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		Member member1 = (Member) session.getAttribute("LOGIN_MEMBER");
+		if (member1 != null) {
 			String ID = member1.getId();
 		
-		long mineral=MemberDAO.selectMineralByID(ID);
-		request.setAttribute("MINERAL", mineral);
+			long mineral=MemberDAO.selectMineralByID(ID);
+			request.setAttribute("MINERAL", mineral);
 		
-		long rank =MemberDAO.selectMemberRanking(ID);
-		request.setAttribute("RANK", rank);
-		
-		RequestDispatcher rd = request
-				.getRequestDispatcher("index.jsp");
-		rd.forward(request, response);
+			long rank =MemberDAO.selectMemberRanking(ID);
+			request.setAttribute("RANK", rank);
+		}
+			
+			RequestDispatcher rd = request
+					.getRequestDispatcher("index.jsp");
+			rd.forward(request, response);
 		
 	}
 
