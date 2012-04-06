@@ -10,6 +10,45 @@ import kr.or.kosta.moviesystem.util.ConnectionUtil;
 
 public class GoodDAO {
 	
+	public static void editGood(Good good) {
+
+		Connection con=null;
+		PreparedStatement psmt=null;
+		con=ConnectionUtil.getConnection();
+	
+		try {
+			String sql="UPDATE good SET g_name=?,detail=?,g_price=?,photo=? WHERE g_num=?";
+			psmt=con.prepareStatement(sql);
+		
+			psmt.setString(1, good.getGname());
+			psmt.setString(2, good.getDetail());
+			psmt.setLong(3, good.getGprice());
+			psmt.setString(4, good.getPhoto());
+			psmt.setString(5, good.getGnum());
+			psmt.executeUpdate();
+		
+		} catch (SQLException e) {
+			e.printStackTrace();
+			}		
+	}
+	
+	public static void deleteGood(String gnum) {
+	
+		Connection con=null;
+		PreparedStatement psmt=null;
+		con=ConnectionUtil.getConnection();
+	
+		try {
+			String sql="DELETE FROM good WHERE g_num=?";
+			psmt=con.prepareStatement(sql);
+		
+			psmt.setString(1, gnum);
+			psmt.executeUpdate();
+		
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}	
+	}
 	/**
 	 * 전체 상품의 리스트를 알 수 있는 메서드
 	 * 
@@ -234,11 +273,5 @@ public class GoodDAO {
 		}
 
 	}
-
-
-
-
-
-
 
 }

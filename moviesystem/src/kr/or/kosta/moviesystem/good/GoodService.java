@@ -13,8 +13,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import kr.or.kosta.moviesystem.buy.Buy;
+import kr.or.kosta.moviesystem.buy.BuyDAO;
 import kr.or.kosta.moviesystem.good.Good;
 import kr.or.kosta.moviesystem.good.GoodDAO;
+import kr.or.kosta.moviesystem.member.Member;
 import kr.or.kosta.moviesystem.util.PageUtil;
 
 public class GoodService extends HttpServlet{
@@ -49,13 +51,87 @@ public class GoodService extends HttpServlet{
 			editCartList(request,response);
 		}else if("searchGoodList".equals(method)){
 			searchGoodList(request, response);
+		}else if("addGoodForm".equals(method)){
+			addGoodForm(request,response);
+		}else if("addGood".equals(method)){
+			addGood(request,response);
+		}else if("viewManageGoodList".equals(method)){
+			viewManageGoodList(request, response);
+		}else if("deleteGood".equals(method)){
+			deleteGood(request,response);
+		}else if("editGoodForm".equals(method)){
+			editGoodForm(request,response);
+		}else if("editGood".equals(method)){
+			editGood(request,response);
 		}
-//		else if("addGoodForm".equals(method)){
-//			addGoodForm(request,response);
-//		}else if("addGood".equals(method)){
-//			addGood(request,response);
-//		}
 	}
+
+	private void editGood(HttpServletRequest request,
+			HttpServletResponse response)throws ServletException, IOException  {
+		String gnum=request.getParameter("gnum");
+		String gname=request.getParameter("gname");
+		String detail=request.getParameter("detail");
+		String photo=request.getParameter("photo");
+		long gprice=Long.parseLong(request.getParameter("gprice"));
+		
+		Good good=new Good();
+		good.setGnum(gnum);
+		good.setGname(gname);
+		good.setDetail(detail);
+		good.setGprice(gprice);
+		good.setPhoto(photo);
+		
+		GoodDAO.editGood(good);
+		
+		RequestDispatcher rd=request.getRequestDispatcher("/GoodService?method=editGoodForm");
+		rd.forward(request, response);
+	}
+
+	private void editGoodForm(HttpServletRequest request,
+			HttpServletResponse response)throws ServletException, IOException {
+		
+		String gnum=request.getParameter("gnum");
+		Good good=GoodDAO.selectGood(gnum);
+		request.setAttribute("GOOD", good);
+	
+		RequestDispatcher rd=request.getRequestDispatcher("/good/editGoodForm.jsp");
+		rd.forward(request, response);
+		
+	}
+
+	private void deleteGood(HttpServletRequest request,
+			HttpServletResponse response)throws ServletException, IOException{
+		
+		String gnum=request.getParameter("gnum");
+		
+		GoodDAO.deleteGood(gnum);
+
+		RequestDispatcher rd=request.getRequestDispatcher("/GoodService?method=viewManageGoodList");
+		rd.forward(request, response);
+		
+	}
+
+	private void viewManageGoodList(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		int page=1;
+		if(request.getParameter("page")!=null){
+			page=Integer.parseInt(request.getParameter("page"));
+		}
+		int length=5;
+		
+		ArrayList<Good>goodList=GoodDAO.selectGoodList(length,page);
+		int goodCount=GoodDAO.selectGoodCount();
+		request.setAttribute("GOOD_LIST", goodList);
+		
+		String pageLinkTag=PageUtil.generate(page, goodCount, length, "/moviesystem/GoodService?method=viewManageGoodList");
+		System.out.println(pageLinkTag);
+		
+		request.setAttribute("PAGE_LINK_TAG", pageLinkTag);
+		
+		RequestDispatcher rd=request.getRequestDispatcher("/good/viewManageGoodList.jsp");
+		rd.forward(request, response);
+	}
+
 	private void searchGoodList(HttpServletRequest request,
 			HttpServletResponse response)throws IOException, ServletException {
 		int page=1;
@@ -91,18 +167,18 @@ public class GoodService extends HttpServlet{
 			HttpServletResponse response)throws IOException, ServletException {
 
 		int index=Integer.parseInt(request.getParameter("index"));
-//		Map map = request.getParameterMap();
-//		
-//		Iterator<String> keys= map.keySet().iterator();
-//		String qty = null;
-//		
-//		while(keys.hasNext()){
-//			String str = keys.next();
-//			if(str.indexOf("qty") > -1)
-//				qty=request.getParameter(str);
-//		}
+		Map map = request.getParameterMap();
 		
-		String qty=request.getParameter("qty");
+		Iterator<String> keys= map.keySet().iterator();
+		String qty = null;
+		
+		while(keys.hasNext()){
+			String str = keys.next();
+			if(str.indexOf("qty") > -1)
+				qty=request.getParameter(str);
+		}
+		
+		//String qty=request.getParameter("qty");
 		HttpSession session=request.getSession();
 		ArrayList<Buy>cartList=(ArrayList)session.getAttribute("CART_LIST");
 		Buy buy=cartList.get(index);
@@ -241,20 +317,37 @@ public class GoodService extends HttpServlet{
 	 * @throws IOException 
 	 * @throws ServletException 
 	 */
-//	public void addGoodForm(HttpServletRequest request,	HttpServletResponse response) throws ServletException, IOException {
-//		/* default generated stub */;
-//		RequestDispatcher rd=request.getRequestDispatcher("/good/addGood.jsp");
-//		rd.forward(request, response);
-//	}
-//
-//	/**
-//	 * 상품 등록
-//	 * 
-//	 * @param request
-//	 * @param response
-//	 */
-//	public void addGood(HttpServletRequest request, HttpServletResponse response) {
-//		/* default generated stub */;
-//		
-//	}
+	public void addGoodForm(HttpServletRequest request,	
+			HttpServletResponse response) throws ServletException, IOException {
+		
+		RequestDispatcher rd=request.getRequestDispatcher("/good/addGood.jsp");
+		rd.forward(request, response);
+	}
+
+	/**
+	 * 상품 등록
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	public void addGood(HttpServletRequest request, 
+			HttpServletResponse response) throws ServletException, IOException{
+		
+		String gname=request.getParameter("gname");
+		long gprice=Long.parseLong(request.getParameter("gprice"));
+		String detail=request.getParameter("detail");
+		String photo=request.getParameter("photo");
+		
+		Good good =new Good();
+		good.setGname(gname);
+		good.setGprice(gprice);
+		good.setDetail(detail);
+		good.setPhoto(photo+".jpg");
+		
+		GoodDAO.insertGood(good);
+		
+		RequestDispatcher rd=request.getRequestDispatcher("/GoodService?method=viewGoodList");
+		rd.forward(request, response);
+		
+	}
 }
