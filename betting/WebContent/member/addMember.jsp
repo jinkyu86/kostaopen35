@@ -67,7 +67,7 @@
 	<h3 align="center">회원가입</h3>
 	<form  id="add_member" action="/betting/MemberService" method="post">
 		<input type="hidden" name="method" value="addMember" />
-		<table border="1" align="center">
+		<table border="0" align="center">
 			<tr>
 				<th>ID</th>
 				<td><input type="text" name="id" id="id"  /></td>
