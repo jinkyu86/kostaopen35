@@ -34,36 +34,18 @@
 		$("#email").validate({
 			rules:{
 				email:{
-					required:true,
 					email:true
 				},
-				address:{
-					required:true
-				},
 				tel:{
-					required:true,
 					digits:true
-				},
-				pw:{
-					required:true,
-					minlength:4
 				}
 			},
 			messages:{
 				email:{
-					required:"email을 입력해주세요.",
 					email:"메일 형식에 맞게 써주세요."
 				},
-				address:{
-					required:"주소를 입력해주세요."
-				},
 				tel:{
-					required:"전화번호를 입력해주세요.",
 					digits:"숫자만 입력해주세요."
-				},
-				pw:{
-					required:"비밀번호를 입력해주세요.",
-					minlength:"4자 이상 입력해주세요."
 				}
 			}
 		});
@@ -186,45 +168,10 @@
 	 <table cellpadding="0" cellspacing="0" border="0">
 	   <c:choose>
 	   	<c:when test="${sessionScope.LOGIN_EMAIL!=null}">
-	   	 <tr>
+	   	<!--  <tr>
 	     <td><a href="">
 	     <img align="right" src="webimg/block.GIF" title="신고하기" border="0" width="230"/></a></td>
-	     </tr>
-	   		   
-	    <tr>
-	   <td align="center">
-	   <form action="/bookchange/BoardService" method="post">
-	   <input type="hidden" name="method" value="searchBoardList">
-	   <input type="hidden" name="categoryNo">
-	   <input type="hidden" name="column" value="email">
-	   <input type="hidden" name="keyword" value="${sessionScope.LOGIN_EMAIL.email}">
-	   <input type="submit" value=" 등록한 책 목록 "></td>
-	   </form>
-	   </tr>	  
-	   
-	   <tr>
-	   <td align="center">
-	   <form action="/bookchange/ChangeService" method="post">
-	   <input type="hidden" name="method" value="requestChangeList">
-	   <input type="submit" value="요청한 교환신청"></td>
-	   </form>	   
-	   </tr>
-	   
-	   <tr>
-	   <td align="center">
-	   <form action="/bookchange/ChangeService" method="post">
-	   <input type="hidden" name="method" value="acceptChangeList">
-	   <input type="submit" value="들어온 교환신청"></td>
-	   </form>	   
-	   </tr>
-	   
-	   <tr>
-	   <td align="center">
-	   <form action="/bookchange/ChangeService" method="post">
-	   <input type="hidden" name="method" value="matchChangeList">
-	   <input type="submit" value="교환진행중인 책 목록"></td>
-	   </form>	   
-	   </tr>
+	     </tr> -->
 	   
 	    </c:when>
 		<c:otherwise>
