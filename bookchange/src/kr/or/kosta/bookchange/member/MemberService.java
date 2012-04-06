@@ -1,5 +1,7 @@
 package kr.or.kosta.bookchange.member;
 
+
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -63,9 +65,18 @@ public class MemberService extends HttpServlet {
 			viewMemberEmail(request, response);
 		}else if ("viewMemberPw".equals(method)) {
 			viewMemberPw(request, response);
+		}else if ("viewMemberPwAndEmail".equals(method)) {
+			viewMemberPwAndEmail(request,response);
 		}
 	}
 
+	private void viewMemberPwAndEmail(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException,IOException{
+
+		RequestDispatcher rd=request.getRequestDispatcher("/member/IdAndPw.jsp");
+		rd.forward(request, response);
+		
+	}
 	private void removeMemberForm(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException,IOException {
 		RequestDispatcher rd=request.getRequestDispatcher("removeMember.jsp");
@@ -328,71 +339,77 @@ public class MemberService extends HttpServlet {
 			rd.forward(request, response);
 		}
 	}
-/**
- * 전화번호로 이메일 검색
- * @param request
- * @param response
- * @throws IOException
- * @throws ServletException
- */
-	
-	public void viewMemberEmail(HttpServletRequest request,
-			HttpServletResponse response)throws IOException,ServletException {
-			
-	
-			String tel=request.getParameter("tel");
-		
-			Member member=MemberDAO.selectMemberTel(tel);
-
-			if(tel==null||tel.equals("")){
-				request.getAttribute("ERROR"+"전화번호를 입력하시오.");
-			}else if (!member.getTel().equals(tel)) {
-				request.getAttribute("ERROR"+"전화번호를 잘못 입력하셨습니다.");
-			}else if (member.getTel().equals(tel)) {
-				
-		
-				request.getAttribute("ERROR"+"이메일를 찾았습니다.");
-				request.setAttribute("MEMBER",member);
-				RequestDispatcher rd=request.getRequestDispatcher("/member/nomalmemberListemailresult.jsp");
-				rd.forward(request, response);
-			}
-	}
 	/**
-	 * 이메일과 전화번호로 검색
+	 * 전화번호로 이메일 검색
 	 * @param request
 	 * @param response
 	 * @throws IOException
 	 * @throws ServletException
 	 */
-	
-	public void viewMemberPw(HttpServletRequest request,
-			HttpServletResponse response)throws IOException,ServletException {
-			
-			Member member=new Member();
-			String email=request.getParameter("email");
-			String tel=request.getParameter("tel");
 		
-			member=MemberDAO.selectMember(email, tel);
-			
-			if(tel.equals(null)||tel.equals("")||email.equals(null)||email.equals("")){
-				request.getAttribute("ERROR"+"이메일과 전화번호를 입력하시오.");
-			}else if (!member.getEmail().equals(email)||!member.getTel().equals(tel)) {
-				request.getAttribute("ERROR"+"이메일과 전화번호를 잘못 입력하였습니다.");
-				
-			}else {
+		public void viewMemberEmail(HttpServletRequest request,
+				HttpServletResponse response)throws IOException,ServletException {
 				
 				
-				request.getAttribute("ERROR"+"비밀번호를 찾았습니다.");
+				String tel=request.getParameter("tel");
+				Member member=MemberDAO.selectMemberTel(tel);
+				
+		
 
-			
-				request.setAttribute("MEMBER",member);
-				
-				RequestDispatcher rd=request.getRequestDispatcher("/member/nomalmemberListepwresult.jsp");
-				rd.forward(request, response);
-			}
-			
+				if(tel==null||tel.equals("")){
+					request.setAttribute("ERROR","전화번호를 입력하시오.");
+					RequestDispatcher rd=request.getRequestDispatcher("/MemberService?method=viewMemberPwAndEmail");
+					rd.forward(request, response);
+				}else if (!member.getTel().equals(tel)) {
+					request.setAttribute("ERROR","전화번호를 잘못 입력하셨습니다.");
+					RequestDispatcher rd=request.getRequestDispatcher("/MemberService?method=viewMemberPwAndEmail");
+					rd.forward(request, response);
+				}else{
+					String email=member.getEmail();
+					request.setAttribute("ERROR", "당신의 Email은 "+email+"입니다");
+					RequestDispatcher rd=request.getRequestDispatcher("/BoardService?method=boardListAtMain");
+					rd.forward(request, response);
+				}
+		}
+		/**
+		 * 이메일과 전화번호로 검색
+		 * @param request
+		 * @param response
+		 * @throws IOException
+		 * @throws ServletException
+		 */
 		
-	}
+		public void viewMemberPw(HttpServletRequest request,
+				HttpServletResponse response)throws IOException,ServletException {
+				
+				Member member=new Member();
+				String email=request.getParameter("email");
+				String tel=request.getParameter("tel");
+			
+				member=MemberDAO.selectMember(email, tel);
+				
+				if(tel.equals(null)||tel.equals("")||email.equals(null)||email.equals("")){
+					request.setAttribute("ERROR","이메일과 전화번호를 입력하시오.");
+					RequestDispatcher rd=request.getRequestDispatcher("/MemberService?method=viewMemberPwAndEmail");
+					rd.forward(request, response);
+				}else if (!member.getEmail().equals("email")&&!member.getTel().equals("tel")) {
+					request.setAttribute("ERROR","이메일과 전화번호를 잘못 입력하였습니다.");
+					RequestDispatcher rd=request.getRequestDispatcher("/MemberService?method=viewMemberPwAndEmail");
+					rd.forward(request, response);
+				}else {
+					
+					
+					request.getAttribute("ERROR"+"비밀번호를 찾았습니다.");
+					
+					String pw=member.getPw();
+					request.setAttribute("ERROR", "당신의 Email은 "+pw+"입니다");
+					
+					RequestDispatcher rd=request.getRequestDispatcher("/BoardService?method=boardListAtMain");
+					rd.forward(request, response);
+				}
+				
+			
+		}
 
 	/**
 	 * 전체 회원명단 보기
