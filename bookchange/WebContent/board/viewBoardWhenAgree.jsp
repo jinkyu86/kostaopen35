@@ -207,6 +207,7 @@
 	  <form action="/bookchange/ChangeService" method="post">
 	  <input type="hidden" name="method" value="matchChange">
 	   <input type="hidden" name="demandBoardNo" value="${BOARD.boardNo}">
+	   <input type="hidden" name="conditionResult" value="${BOARD.condition.conditionResult}">
 	   <input type="hidden" name="agreeBoardNo" value="${AGREE_BOARD_NO}">
 	<td>  <input type="submit" value="교환신청수락"></td></tr></table>
 	  </form>
