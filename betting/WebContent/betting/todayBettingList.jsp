@@ -42,8 +42,8 @@
 			<!-- top nav -->
 			<div class="menu">
 				<ul>
-					<li><a
-						href="/betting/index.jsp">홈</a></li>
+							<li><a
+						href="/betting/MemberService?method=viewHome">홈</a></li>
 					<li><a
 						href="/betting/MatchService?method=viewMatchListToVistor">경기
 							일정</a></li>
