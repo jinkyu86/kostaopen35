@@ -631,4 +631,20 @@ public class ChangeDAO {
 		}
 		return changeRequestCount;
 	}
+
+	public static void deleteChange(int boardNo){
+		Connection con=null;
+		PreparedStatement ps=null;
+		
+		try{
+			con=ConnectionUtil.getConnection();
+			ps=con.prepareStatement("Delete from tb_change where agree_board_no=? or demand_board_no=?");
+			
+			ps.setInt(1, boardNo);
+			ps.setInt(2, boardNo);
+			ps.executeUpdate();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
 }
