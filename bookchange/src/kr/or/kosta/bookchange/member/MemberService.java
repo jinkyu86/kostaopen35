@@ -3,12 +3,17 @@ package kr.or.kosta.bookchange.member;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import kr.or.kosta.bookchange.board.Board;
+import kr.or.kosta.bookchange.board.BoardDAO;
+import kr.or.kosta.bookchange.change.ChangeDAO;
 import kr.or.kosta.util.PageUtil;
 
 
@@ -237,8 +242,8 @@ public class MemberService extends HttpServlet {
 	public void logout(HttpServletRequest request, HttpServletResponse response) throws IOException,ServletException{
 		HttpSession session=request.getSession();
 		session.invalidate();//세션 강제 종료
-		System.out.println("로그아웃되었습니다");
-		RequestDispatcher rd=request.getRequestDispatcher("/main.jsp");
+		request.setAttribute("ERROR", "로그아웃 되었습니다.");
+		RequestDispatcher rd=request.getRequestDispatcher("/BoardService?method=boardListAtMain");
 		rd.forward(request, response);
 		
 	}
@@ -269,7 +274,7 @@ public class MemberService extends HttpServlet {
 		String email=request.getParameter("email");
 		String pw=request.getParameter("pw");
 		Member member=MemberDAO.selectMember(email);
-		
+		ArrayList<Board>boardList=BoardDAO.selectBoardListbyEmailWhenDelete(email);		
 		if(pw==null){
 			request.setAttribute("ERROR", "비밀번호를 입력하세요.");
 			RequestDispatcher rd=request.getRequestDispatcher("/BoardService?method=boardListAtMain");
@@ -279,8 +284,14 @@ public class MemberService extends HttpServlet {
 			RequestDispatcher rd=request.getRequestDispatcher("/BoardService?method=boardListAtMain");
 			rd.forward(request, response);
 		}else if (member.getPw().equals(pw)) {
-		
+			for(int i=0; i<boardList.size(); i++){
+				Board board=boardList.get(i);
+				int boardNo=board.getBoardNo();
+				ChangeDAO.deleteChange(boardNo);
+			}
 			MemberDAO.deleteMember(email);
+			BoardDAO.deleteBoardbyEmail(email);
+			
 			System.out.println("회원이 삭제 되었습니다.");
 			request.setAttribute("ERROR", "탈퇴되었습니다.");
 			
