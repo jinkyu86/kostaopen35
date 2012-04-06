@@ -8,7 +8,6 @@ import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 
-import kr.or.kosta.bookchange.change.Change;
 import kr.or.kosta.util.ConnectionUtil;
 
 public class MemberDAO {
@@ -181,21 +180,13 @@ public class MemberDAO {
 		/* default generated stub */;
 		Connection con=null;
 		PreparedStatement ps=null;
-		PreparedStatement ps1=null;
-		PreparedStatement ps2=null;
+		
 		con=ConnectionUtil.getConnection();
 		
-		Change change=new Change();
-		change.getDemandBoard().getMember().getEmail();
 		try {
 			ps=con.prepareStatement("DELETE FROM tb_member where email=?");
-			ps1=con.prepareStatement("DELETE FROM tb_board where email=?");
-			ps2=con.prepareStatement("DELETE FROM tb_change where )
 			ps.setString(1, email);
-			ps1.setString(1, email);
 			ps.executeUpdate();
-			ps.executeUpdate();
-			
 		} catch (Exception e) {
 			// TODO: handle exception
 			
