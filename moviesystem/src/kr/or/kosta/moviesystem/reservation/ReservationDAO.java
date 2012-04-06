@@ -255,9 +255,9 @@ public class ReservationDAO {
 
 		try{
 			con=ConnectionUtil.getConnection();
-			sql="SELECT count(userid)"+
-			       " From reservation"+
-				   " WHERE userid=?";
+			sql="SELECT count(distinct m_num)" +
+					"  From reservation"+
+					"  WHERE userid=?";
 			//rs.absolute()가  가능하도록 설정
 			psmt=con.prepareStatement(sql);
 			psmt.setString(1,userid);

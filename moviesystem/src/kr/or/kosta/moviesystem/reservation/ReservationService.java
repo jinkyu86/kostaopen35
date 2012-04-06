@@ -602,7 +602,7 @@ private void InsertReservation(HttpServletRequest request,
 		ArrayList<Reservation>reservationList=ReservationDAO.selectReservationList(length,page,userid);
 		//2.request에 1의 page에 해당하는 학생 정보 저장
 		request.setAttribute("RESERVATION_LIST",reservationList);
-		System.out.println("성공");
+		System.out.println("성공"+reservationList);
 		
 		//페이지에 해당하는 학생수 조회
 		int reservationCount=ReservationDAO.selectReservationCount(userid);
