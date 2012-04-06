@@ -61,7 +61,7 @@
 			 $('#uplodify').uploadify({
 			 	cancelImg: '/baking/uploadify/cancel.png',
         		uploader: '/baking/uploadify/uploadify.swf',
-        		cript: "/baking/UploadServlet",		
+        		script: '/baking/UploadServlet',
         		multi: true,
         		auto: false,
 			  fileExt     : '*.jpg;*.jpeg;*.gif;*.png',
@@ -80,7 +80,10 @@
 			   					
 		});
 			
-			    $('#addPhoto').click(function (event) {
+			    $('#addPhoto').submit(function (event) {
+			    	var selectData=$('#division').val();
+
+			    	$('#uplodify').uploadifySettings('scriptData', { 'code1': selectData });
 			       $('#uplodify').uploadifyUpload();
 			    	 event.preventDefault();
 			    });
@@ -91,30 +94,35 @@
 
 <ul>	
 	<div ALIGN="right">
-		<a href="">로그인</a>|
-		<a href="">ID/PW 찾기</a>|
+	<c:choose> 
+		<c:when test="${sessionScope.member==null}">
+		<a href="/baking/member/loginForm.jsp">로그인</a>
 		<a href="">회원가입</a>
+		</c:when>
+		<c:otherwise>
+		<a href="/baking/MemberService?method=logout">로그아웃</a>
+		</c:otherwise>
+	</c:choose>
 	</div>
 <body>		
 <header>
-	<P><font size=4>title</font></p>
-	<div style="margin-left: 500px; ">
-		ID:<input type="text" id=""/>
-		PW:<input type="password" id=""/>
-	</div>		
+	<h1>HOME BAKING MALL</h1><br><br>
 </header>
 <nav>
-<!-- top nav -->
-<div class="menu">
+<!-- top nav -->	
+<div class="menu">			
 <ul>			
-	<li><a href="/baking/GoodService?method=viewGoodList">홈</a></li>			
+	<li><a href="/baking/GoodService?method=viewIndex">홈</a></li>			
 	<li><a href="/baking/GoodService?method=viewGoodList">상품</a></li>		
 	<li><a href="/baking/RecipeService?method=viewRecipeList">레시피</a></li>			
-	<li><a href="/baking/OrderService?method=">장바구니</a></li>			
+	<li><a href="/baking/OrderService?method=viewCartList">장바구니</a></li>			
 	<li><a href="/baking/OrderService?method=viewOrderList">주문조회</a></li>				
-	<li><a href="">마이레시피</a></li>		
+	<li><a href="/baking/GoodService?method=viewIndex">마이레시피</a></li>		
 </ul>
 </div>
+</nav>
+<!-- top nav -->
+
 </nav>
 
 <!-- end of top nav -->
@@ -126,7 +134,8 @@
 <!-- RECIPE:레시피명, 레시피재료 ,레시피설명 RECIPE_PHOTO:레시피사진 RECIPE_GOODLIST:레시피관련상품 -->
 
 	<ul class="column">
-		<form id="insert_form" action="/baking/RecipeService" method="post">
+	
+		<form id="insert_form" action="" method="post">
 		<input type="hidden" name="method" value="addRecipe" />
 		<input type="hidden"  name="photo" id="photo" value=""/>
 		
@@ -142,7 +151,7 @@
 				
 				<td>레시피구분</td>
 				<td>
-				<select name="division">
+				<select name="division" id="division">
 					<c:forEach var="division" items="${DIVISION_LIST}" >
 						<option value="${division.division}">
 							${division.gName}

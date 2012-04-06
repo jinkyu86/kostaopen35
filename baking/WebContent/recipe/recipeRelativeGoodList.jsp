@@ -20,28 +20,30 @@
 
 <ul>	
 	<div ALIGN="right">
-		<a href="">로그인</a>|
-		<a href="">ID/PW 찾기</a>|
+	<c:choose> 
+		<c:when test="${sessionScope.member==null}">
+		<a href="/baking/member/loginForm.jsp">로그인</a>
 		<a href="">회원가입</a>
+		</c:when>
+		<c:otherwise>
+		<a href="/baking/MemberService?method=logout">로그아웃</a>
+		</c:otherwise>
+	</c:choose>
 	</div>
 <body>		
 <header>
-	<P><font size=4>title</font></p>
-	<div style="margin-left: 500px; ">
-		ID:<input type="text" id=""/>
-		PW:<input type="password" id=""/>
-	</div>		
+	<h1>HOME BAKING MALL</h1><br><br>
 </header>
 <nav>
 <!-- top nav -->	
 <div class="menu">			
 <ul>			
-	<li><a href="">홈</a></li>			
-	<li><a href="">상품</a></li>		
+	<li><a href="/baking/GoodService?method=viewIndex">홈</a></li>			
+	<li><a href="/baking/GoodService?method=viewGoodList">상품</a></li>		
 	<li><a href="/baking/RecipeService?method=viewRecipeList">레시피</a></li>			
-	<li><a href="">장바구니</a></li>			
-	<li><a href="">주문조회</a></li>				
-	<li><a href="">마이레시피</a></li>		
+	<li><a href="/baking/OrderService?method=viewCartList">장바구니</a></li>			
+	<li><a href="/baking/OrderService?method=viewOrderList">주문조회</a></li>				
+	<li><a href="/baking/GoodService?method=viewIndex">마이레시피</a></li>		
 </ul>
 </div>
 </nav>
