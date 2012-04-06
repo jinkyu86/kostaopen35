@@ -52,7 +52,7 @@
 	<td>
 	<table cellpadding="0" cellspacing="0" border="0">
 	 <tr>
-	 <td width="220" height="600" valign="top" bgcolor="#F8F8F8">
+	 <td width="250" height="600" valign="top" bgcolor="#F8F8F8">
 	 <table cellpadding="0" cellspacing="0" border="0">
 	 <!--로그인-->
 	  <tr>
@@ -130,11 +130,11 @@
 	   <c:choose>
 	   	<c:when test="${sessionScope.LOGIN_EMAIL!=null}">
 	   	 <tr>
-	     <td><a href="">
-	     <img align="right" src="webimg/block.GIF" title="신고하기" border="0" width="230"/></a></td>
-	     </tr>
-	   		   
-	    <tr>
+	   <td><a href="/bookchange/BlockService?method=addBlockForm">
+	   <img align="right" src="webimg/block.GIF" title="신고하기" border="0" width="250"/></a></td>
+	   </tr>
+	   
+   <tr>
 	   <td align="center">
 	   <form action="/bookchange/BoardService" method="post">
 	   <input type="hidden" name="method" value="searchBoardList">
@@ -143,7 +143,11 @@
 	   <input type="hidden" name="keyword" value="${sessionScope.LOGIN_EMAIL.email}">
 	   <input type="submit" value=" 등록한 책 목록 "></td>
 	   </form>
-	   </tr>	  
+	   </tr>	
+	   
+	   <tr>
+		<td height="10"></td>
+		</tr>  
 	   
 	   <tr>
 	   <td align="center">
@@ -154,6 +158,10 @@
 	   </tr>
 	   
 	   <tr>
+		<td height="10"></td>
+		</tr>
+	   
+	   <tr>
 	   <td align="center">
 	   <form action="/bookchange/ChangeService" method="post">
 	   <input type="hidden" name="method" value="acceptChangeList">
@@ -162,10 +170,26 @@
 	   </tr>
 	   
 	   <tr>
+		<td height="10"></td>
+		</tr>
+	   
+	   <tr>
 	   <td align="center">
 	   <form action="/bookchange/ChangeService" method="post">
 	   <input type="hidden" name="method" value="matchChangeList">
 	   <input type="submit" value="교환진행중인 책 목록"></td>
+	   </form>	   
+	   </tr>
+	   
+	   <tr>
+		<td height="10"></td>
+		</tr>
+	   
+	   <tr>
+	   <td align="center">
+	   <form action="/bookchange/ChangeService" method="post">
+	   <input type="hidden" name="method" value="matchChangeResultList">
+	   <input type="submit" value="교환완료된 책 목록"></td>
 	   </form>	   
 	   </tr>
 	   
