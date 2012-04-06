@@ -4,13 +4,6 @@ public class Block {
 
 	public Member member;
 	private Member blockmember;
-	public Member getBlockmember() {
-		return blockmember;
-	}
-
-	public void setBlockmember(Member blockmember) {
-		this.blockmember = blockmember;
-	}
 	public BlockCondition blockCondition;
 	/**
 	 * 신고번호
@@ -21,6 +14,15 @@ public class Block {
 	 */
 	private String blockContent;
 
+	
+	public Member getBlockmember() {
+		return blockmember;
+	}
+
+	public void setBlockmember(Member blockmember) {
+		this.blockmember = blockmember;
+	}
+	
 
 	public Member getMember() {
 		return member;
