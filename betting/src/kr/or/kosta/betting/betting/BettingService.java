@@ -173,6 +173,7 @@ public class BettingService extends HttpServlet {
 
 					MemberBetDataDAO.insultMemberBetData(mbd);
 					MemberDAO.updateMineralByID(ID, meneral);
+					request.setAttribute("SUCCESS", "성공적으로 베팅에 참여하였습니다.");
 				} else {
 					awaySeleRating = awaySeleRating + 1;
 					awayTotMineral = awayTotMineral + betMineral;
