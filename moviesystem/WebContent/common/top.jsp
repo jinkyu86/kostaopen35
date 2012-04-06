@@ -15,7 +15,7 @@
 	</tr>
 	<!-- ìµ ìë¨ ë©ë´ ë -->
 	<tr>
-		<td colspan="2"  height="70px" valign="top">
+		<td colspan="3"  height="70px" valign="top">
 			<!-- í ë©ë´ ìì -->
 			<table class="topmenu" align="center">
 				<tr align="center">
