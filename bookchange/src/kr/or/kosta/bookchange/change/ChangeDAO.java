@@ -647,4 +647,112 @@ public class ChangeDAO {
 			e.printStackTrace();
 		}
 	}
+
+	/**나와 교환중인 사람 리스트 보기 교환완료 눌렀을때 ㅋ**/
+	public static ArrayList<Change> selectMatchResultList(int length, int page, String email) {
+		Connection con=null;
+		PreparedStatement ps=null;
+		ResultSet rs=null;
+		ArrayList<Change>changeList=new ArrayList<Change>();
+		String sql=null;
+		
+		try {
+			con=ConnectionUtil.getConnection();
+			sql="Select c.change_no, c.change_date, c.condition_result, c.agree_board_no, c.demand_board_no, " +
+					"d.condition_result, d.condition_ing, a.board_no, a.board_title, a.board_want, a.board_photo, " +
+					"a.board_content, a.email, a.deal_no, a.condition_result, a.category_no, b.board_no, b.board_title,	" +
+					"b.board_want, b.board_photo, b.board_content, b.email, b.deal_no, b.condition_result, " +
+					"b.category_no, ca.category_no, ca.category_name " +
+					"FROM tb_change c, tb_board a, tb_board b, tb_condition d, tb_category ca " +
+					"WHERE a.email=? AND c.agree_board_no=b.board_no AND c.demand_board_no=a.board_no " +
+					"AND c.condition_result=d.condition_result AND ca.category_no=a.category_no " +
+					"AND c.condition_result='3' " +
+					"ORDER BY c.change_no";
+			ps=con.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			ps.setString(1, email);
+			rs=ps.executeQuery();
+			
+			if(page>1){
+				rs.absolute((page-1)*length);
+			}
+			int recordCount=0;
+			while(rs.next()&&recordCount<length){
+				recordCount++;
+				int changeNo=rs.getInt(1);
+				Date changeDate=rs.getDate(2);
+				int changeConditionResult=rs.getInt(3);
+				int changeAgreeBoardNo=rs.getInt(4);
+				int changeDemandBoardNo=rs.getInt(5);
+				String conditionIng=rs.getString(7);
+				String demandBoardTitle=rs.getString(9);
+				String demandBoardWant=rs.getString(10);
+				String demandBoardPhoto=rs.getString(11);
+				String demandBoardContent=rs.getString(12);
+				String demandBoardEmail=rs.getString(13);
+				int demandBoardConditionResult=rs.getInt(15);
+				int demandBoardCategoryNo=rs.getInt(16);
+				String agreeBoardTitle=rs.getString(18);
+				String agreeBoardWant=rs.getString(19);
+				String agreeBoardPhoto=rs.getString(20);
+				String agreeBoardContent=rs.getString(21);
+				String agreeBoardEmail=rs.getString(22);
+				int agreeBoardConditionResult=rs.getInt(24);
+				int agreeBoardCategoryNo=rs.getInt(25);
+				String categoryName=rs.getString(27);
+				
+				
+				Category agreeCategory=new Category();
+				agreeCategory.setCategoryNo(agreeBoardCategoryNo);
+				agreeCategory.setCategoryName(categoryName);
+				Category demandCategory=new Category();
+				demandCategory.setCategoryNo(demandBoardCategoryNo);
+				demandCategory.setCategoryName(categoryName);
+				
+				Condition agreeCondition=new Condition();
+				agreeCondition.setConditionResult(agreeBoardConditionResult);
+				Condition demandCondition=new Condition();
+				demandCondition.setConditionResult(demandBoardConditionResult);
+				Condition changeCondition=new Condition();
+				changeCondition.setConditionResult(changeConditionResult);
+				changeCondition.setConditionIng(conditionIng);
+				
+				Member agreeMember=new Member();
+				agreeMember.setEmail(demandBoardEmail);
+				Member demandMember=new Member();
+				demandMember.setEmail(agreeBoardEmail);
+				
+				Board agreeBoard=new Board();
+				agreeBoard.setBoardNo(changeAgreeBoardNo);
+				agreeBoard.setBoardPhoto(agreeBoardPhoto);
+				agreeBoard.setBoardContent(agreeBoardContent);
+				agreeBoard.setBoardTitle(agreeBoardTitle);
+				agreeBoard.setBoardWant(agreeBoardWant);
+				agreeBoard.setCategory(agreeCategory);
+				agreeBoard.setCondition(agreeCondition);
+				agreeBoard.setMember(agreeMember);
+				
+				Board demandBoard=new Board();
+				demandBoard.setBoardContent(demandBoardContent);
+				demandBoard.setBoardNo(changeDemandBoardNo);
+				demandBoard.setBoardPhoto(demandBoardPhoto);
+				demandBoard.setBoardTitle(demandBoardTitle);
+				demandBoard.setBoardWant(demandBoardWant);
+				demandBoard.setCategory(demandCategory);
+				demandBoard.setCondition(demandCondition);
+				demandBoard.setMember(demandMember);
+				
+				Change change=new Change();
+				change.setChangeNo(changeNo);
+				change.setChangeDate(changeDate);
+				change.setCondition(changeCondition);
+				change.setAgreeBoard(demandBoard);
+				change.setDemandBoard(agreeBoard);
+				
+				changeList.add(change);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return changeList;
+	}
 }

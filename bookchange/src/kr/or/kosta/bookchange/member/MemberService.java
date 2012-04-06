@@ -392,17 +392,13 @@ public class MemberService extends HttpServlet {
 					request.setAttribute("ERROR","이메일과 전화번호를 입력하시오.");
 					RequestDispatcher rd=request.getRequestDispatcher("/MemberService?method=viewMemberPwAndEmail");
 					rd.forward(request, response);
-				}else if (!member.getEmail().equals("email")&&!member.getTel().equals("tel")) {
-					request.setAttribute("ERROR","이메일과 전화번호를 잘못 입력하였습니다.");
+				}else if (member==null) {
+					request.setAttribute("ERROR","일치하는 회원정보가 없습니다.");
 					RequestDispatcher rd=request.getRequestDispatcher("/MemberService?method=viewMemberPwAndEmail");
 					rd.forward(request, response);
 				}else {
-					
-					
-					request.getAttribute("ERROR"+"비밀번호를 찾았습니다.");
-					
 					String pw=member.getPw();
-					request.setAttribute("ERROR", "당신의 Email은 "+pw+"입니다");
+					request.setAttribute("ERROR", "당신의 비밀번호는 "+pw+"입니다");
 					
 					RequestDispatcher rd=request.getRequestDispatcher("/BoardService?method=boardListAtMain");
 					rd.forward(request, response);

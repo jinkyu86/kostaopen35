@@ -49,22 +49,49 @@ public class ChangeService extends HttpServlet {
 			matchChangeList(request,response);
 		}else if("completeChange".equals(method)){
 			completeChange(request,response);
+		}else if("matchChangeResultList".equals(method)){
+			matchChangeResultList(request,response);
 		}
 	}
 	
 	
 
+	private void matchChangeResultList(HttpServletRequest request,
+			HttpServletResponse response) throws IOException,ServletException{
+			HttpSession session=request.getSession();
+			Member member=(Member)session.getAttribute("LOGIN_EMAIL");
+			int page=1;
+			int length=10;
+			if(request.getParameter("page")!=null){
+				page=Integer.parseInt(request.getParameter("page"));
+			}
+			if(member==null){
+				RequestDispatcher rd=request.getRequestDispatcher("");
+				rd.forward(request, response);
+				return;
+			}
+			String memberEmail=member.getEmail();
+			ArrayList<Change>matchList=ChangeDAO.selectMatchResultList(length, page, memberEmail);
+			session.setAttribute("MATCH_LIST", matchList);
+			int demandChangeCount=ChangeDAO.selectChangeRequestCount(memberEmail);
+			String pageLinkTag=PageUtil.generate(page, demandChangeCount, length, "/bookchange/ChangeService?method=matchChangeList");
+			request.setAttribute("PAGE_LINK_TAG", pageLinkTag);
+			RequestDispatcher rd=request.getRequestDispatcher("/change/matchChangeResultList.jsp");
+			rd.forward(request, response);
+		
+	}
+
 	private void completeChange(HttpServletRequest request,
 			HttpServletResponse response) throws IOException,ServletException {
 		String BoardNo=request.getParameter("BoardNo");
 		String ChangeNo=request.getParameter("ChangeNo");
+					
+			ChangeDAO.completeChange(Integer.parseInt(ChangeNo), Integer.parseInt(BoardNo));
+			request.setAttribute("ERROR", "교환이 완료되었습니다.");
+			
+			RequestDispatcher rd=request.getRequestDispatcher("/ChangeService?method=matchChangeResultList");
+			rd.forward(request, response);
 		
-		
-		ChangeDAO.completeChange(Integer.parseInt(ChangeNo), Integer.parseInt(BoardNo));
-		request.setAttribute("ERROR", "교환이 완료되었습니다.");
-		
-		RequestDispatcher rd=request.getRequestDispatcher("/main.jsp");
-		rd.forward(request, response);
 	}
 
 	private void matchChangeList(HttpServletRequest request,
