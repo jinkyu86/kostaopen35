@@ -47,14 +47,14 @@
 				<input type="hidden" name="method" value="login"/>
 				<tr>
 					<td>ID:</td>
-					<td><input type="text" name="userid" ></td>
+					<td><input type="text" name="userid" tabindex="1"></td>
 					<td rowspan="2" ">
-					<input type="submit" value="로그인" >
+					<input type="submit" value="로그인" tabindex="3">
 					</td>
 				</tr>
 				<tr>
 					<td id="pw">PASSWORD:</td>
-					<td><input type="password" name="pw" ></td>
+					<td><input type="password" name="pw" tabindex="2"></td>
 				</tr>
 				</form>		
 			</table>
