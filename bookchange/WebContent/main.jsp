@@ -193,6 +193,19 @@
 	   </form>	   
 	   </tr>
 	   
+	      <tr>
+		<td height="10"></td>
+		</tr>
+		
+	   <tr>
+    <td align="center">
+    <form action="/bookchange/BlockService" method="post">
+      <input type="hidden" name="method" value="selectMyBlockList">
+      <input type="submit" value="신고내역보러가기">
+    </form>
+    </td>
+    </tr>  
+	   
 	    </c:when>
 		<%-- <c:otherwise>
 		  <tr>
