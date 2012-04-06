@@ -346,7 +346,7 @@ public class GoodService extends HttpServlet{
 		
 		GoodDAO.insertGood(good);
 		
-		RequestDispatcher rd=request.getRequestDispatcher("/GoodService?method=viewGoodList");
+		RequestDispatcher rd=request.getRequestDispatcher("/GoodService?method=viewManageGoodList");
 		rd.forward(request, response);
 		
 	}
