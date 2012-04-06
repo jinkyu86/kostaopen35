@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 
-
 public class MemberService extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -245,7 +244,7 @@ public class MemberService extends HttpServlet {
 		Member member = MemberDAO.login(memberid,password);
 		if(member!=null){
 			HttpSession session = request.getSession();
-			session.setAttribute("member", member);
+			session.setAttribute("LOGIN", member);
 			RequestDispatcher rd = request.getRequestDispatcher("GoodService?method=viewGoodList");
 			rd.forward(request, response);
 		}else{
@@ -282,6 +281,26 @@ public class MemberService extends HttpServlet {
 	 * @param response
 	 * @throws IOException 
 	 */
+
+//	public void checkMemberID(HttpServletRequest request,
+//			HttpServletResponse response) {
+//		String memberid=request.getParameter("memberid");
+//		String name=request.getParameter("name");
+//		String reginum=request.getParameter("reginum");
+//		Member member =MemberDAO.selectMemberByid(name,reginum);
+//		
+//		response.setCharacterEncoding("utf-8");
+//		PrintWriter out=response.getWriter();
+//		
+//		if(member==null){
+//			out.print(memberid+"는 사용 가능한 아이디입니다.");
+//		}else{
+//			out.print(memberid+"는 이미 사용중인 아이디입니다.");
+//		}
+//		out.flush();
+//		out.close();
+//	}
+
 	public void checkMemberID(HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
 		String memberid=request.getParameter("memberid");
@@ -300,6 +319,7 @@ public class MemberService extends HttpServlet {
 		out.flush();
 		out.close();
 	}
+
 
 	/**
 	 * 회원아이디 찾기

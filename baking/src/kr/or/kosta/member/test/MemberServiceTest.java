@@ -98,6 +98,25 @@ public class MemberServiceTest {
 		
 	}
 
+
+//	@Test
+//	public void testLogin() {
+//		MockHttpServletRequest request= new MockHttpServletRequest();
+//		request.addParameter("memberid", "jun123");
+//		request.addParameter("password", "1234");
+//		
+//		MockHttpServletResponse response = new MockHttpServletResponse();
+//		MockHttpSession session = new MockHttpSession();
+//		
+//		request.setSession(session);
+//		
+//		MemberService service = new MemberService();
+//		service.login(request, response);
+//		
+//		System.out.println("testLogin:request :"+request);
+//		System.out.println("testLogin:session :"+session);
+//	}
+
 	@Test
 	public void testLogin() throws ServletException, IOException {
 		MockHttpServletRequest request= new MockHttpServletRequest();
@@ -116,6 +135,7 @@ public class MemberServiceTest {
 		System.out.println("testLogin:session :"+session);
 	}
 
+
 	@Test
 	public void testLoginForm() {
 		fail("Not yet implemented");
@@ -126,16 +146,16 @@ public class MemberServiceTest {
 		fail("Not yet implemented");
 	}
 
-	@Test
-	public void testCheckMemberID() throws ServletException, IOException {
-		MemberService service=new MemberService();
-		MockHttpServletRequest request=new MockHttpServletRequest();
-		MockHttpServletResponse response=new MockHttpServletResponse();
-		request.addParameter("memberid", "kim123");
-		request.addParameter("name", "ฑ่ลยวั");
-		request.addParameter("reginum", "80102-12345");
-		service.checkMemberID(request, response);
-	}
+//	@Test
+//	public void testCheckMemberID() throws ServletException, IOException {
+//		MemberService service=new MemberService();
+//		MockHttpServletRequest request=new MockHttpServletRequest();
+//		MockHttpServletResponse response=new MockHttpServletResponse();
+//		request.addParameter("memberid", "kim123");
+//		request.addParameter("name", "ฑ่ลยวั");
+//		request.addParameter("reginum", "80102-12345");
+//		service.checkMemberID(request, response);
+//	}
 
 	@Test
 	public void testSearchMemberID() {
