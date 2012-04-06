@@ -9,10 +9,10 @@ pageEncoding="utf-8"%>
 <script type="text/javascript">
 function deleteGood(){
 	var flag=confirm("이 상품을 삭제하시겠습니까?");
-	if(flag){
+	if(true){
 		location.href="/baking/GoodService?method=removeGood&goodNum="+${GOOD.goodNum};
+		alert("상품이 삭제되었습니다");
 	}
-	alert("상품이 삭제되었습니다");
 }
 </script>
 <link rel="stylesheet" href="/baking/styles.css" type="text/css" media="screen" />	
