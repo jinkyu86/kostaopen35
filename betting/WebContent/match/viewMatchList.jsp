@@ -98,8 +98,28 @@
 			<td>${match.awayTeam.name}</td>
 			<td>${match.loc.loc}</td>
 			<td>${match.matchTime}</td>
-			<td>${match.winTeam.name}</td>
-			<td>${match.score}</td>
+			<c:choose>
+				<c:when test="${match.winTeam.num == null}">
+					<td colspan="2" align="center">
+						진행중
+					</td>
+				</c:when>
+				<c:when test="${match.winTeam.num == '9'}">
+					<td colspan="2" align="center">
+						무승부
+					</td>
+				</c:when>
+				<c:when test="${match.winTeam.num == '10'}">
+					<td colspan="2" align="center">
+						취소
+					</td>
+				</c:when>
+				<c:otherwise>
+					<td>${match.winTeam.name}</td>
+					<td>${match.score}</td>
+				</c:otherwise>
+			</c:choose>
+			
 			
 		</tr>
 		</c:forEach>
