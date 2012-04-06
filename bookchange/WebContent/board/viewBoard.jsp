@@ -27,7 +27,7 @@
 		<table cellpadding="0" cellspacing="0" border="0">
 		<tr align="right">
 			<td width="25"></td>
-			<td><a href="main.jsp"><img src="webimg/home.gif" border="0"/></a></td>
+			<td><a href="/bookchange/BoardService"><img src="webimg/home.gif" border="0"/></a></td>
 			<td><a href="/bookchange/BoardService?method=viewBoardList"><img src="webimg/board.GIF" border="0"/></a></td>
 		<c:choose>
 		<c:when test="${sessionScope.LOGIN_EMAIL==null}">	

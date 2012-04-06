@@ -39,16 +39,6 @@
     <servlet-name>ChangeService</servlet-name>
     <url-pattern>/ChangeService</url-pattern>
   </servlet-mapping>
-  <servlet>
-    <description></description>
-    <display-name>HomepageService</display-name>
-    <servlet-name>HomepageService</servlet-name>
-    <servlet-class>kr.or.kosta.bookchange.homepage.HomepageService</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>HomepageService</servlet-name>
-    <url-pattern>/HomepageService</url-pattern>
-  </servlet-mapping>
   
   <servlet>
     <description></description>
