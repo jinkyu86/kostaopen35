@@ -47,6 +47,19 @@ function no(){
 </style>
 <script>
 	$(document).ready(function(){
+		$('#buy').submit(function(event){
+			if(confirm('구매하시겠습니까?')==true){
+				alert('구매하였습니다');
+				return true;
+			}else{
+				alert('취소하셨습니다');
+				return false;
+			}
+		});
+	});
+</script>
+<script>
+	$(document).ready(function(){
 		$('#order').validate({
 			rules:{
 				name:{
@@ -131,7 +144,7 @@ function no(){
 	<li><a href="/baking/GoodService?method=viewIndex">홈</a></li>			
 	<li><a href="/baking/RecipeService?method=viewGoodList">상품</a></li>		
 	<li><a href="/baking/RecipeService?method=viewRecipeList">레시피</a></li>			
-	<li><a href="/baking/OrderService?method=viewCartList">장바구니</a></li>			
+	<li><a href="/baking/OrderService?method=CartList">장바구니</a></li>			
 	<li><a href="/baking/OrderService?method=viewOrderList">주문조회</a></li>		
 	<li><a href="/baking/GoodService?method=viewIndex">마이레시피</a></li>		
 </ul>
@@ -233,7 +246,7 @@ function no(){
 </table>
 </form>
 <center>
-<form action="/baking/OrderService" method="post">
+<form action="/baking/OrderService" id="buy" method="post">
 	<input type="hidden" name="method" value="addOrder"/>
 	<input type="submit" value="구매하기"/>
 </form>
