@@ -76,7 +76,7 @@ public class MatchService extends HttpServlet {
 		request.setAttribute("MATCH_LIST", matchList);
 		int matchCount = MatchDAO.selectMatchCount();
 		String pageLinkTag = PageUtil.generate(page, matchCount, length,
-				"MatchService?method=viewMatchList");
+				"MatchService?method=viewMatchListToVistor");
 		request.setAttribute("PAGE_LINK_TAG", pageLinkTag);
 		RequestDispatcher rd = request
 				.getRequestDispatcher("/match/viewMatchListToVistor.jsp");
