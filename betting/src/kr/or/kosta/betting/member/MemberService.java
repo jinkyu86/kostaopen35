@@ -259,9 +259,10 @@ public class MemberService extends HttpServlet {
 				
 				long rank =MemberDAO.selectMemberRanking(id);
 				request.setAttribute("RANK", rank);
-				
+				request.setAttribute("SUCCESS", id+"님이 로그인 하셨습니다.");
 			}// end else
 		}// end if
+		
 		RequestDispatcher rd = request
 				.getRequestDispatcher("index.jsp");
 		rd.forward(request, response);
