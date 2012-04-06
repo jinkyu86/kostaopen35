@@ -79,7 +79,7 @@ public class MemberService extends HttpServlet {
 	}
 	private void removeMemberForm(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException,IOException {
-		RequestDispatcher rd=request.getRequestDispatcher("removeMember.jsp");
+		RequestDispatcher rd=request.getRequestDispatcher("/member/removeMember.jsp");
 		rd.forward(request, response);
 	}
 	/**
@@ -326,7 +326,7 @@ public class MemberService extends HttpServlet {
 			request.setCharacterEncoding("utf-8");
 			request.setAttribute("ERROR","로그인하시기 바랍니다.");
 			
-			RequestDispatcher rd=request.getRequestDispatcher("/main.jsp");
+			RequestDispatcher rd=request.getRequestDispatcher("/BoardService?method=boardListAtMain");
 			rd.forward(request, response);
 		}else{
 			String email=member.getEmail();
@@ -360,8 +360,8 @@ public class MemberService extends HttpServlet {
 					request.setAttribute("ERROR","전화번호를 입력하시오.");
 					RequestDispatcher rd=request.getRequestDispatcher("/MemberService?method=viewMemberPwAndEmail");
 					rd.forward(request, response);
-				}else if (!member.getTel().equals(tel)) {
-					request.setAttribute("ERROR","전화번호를 잘못 입력하셨습니다.");
+				}else if (member==null) {
+					request.setAttribute("ERROR","전화번호가 일치하는 회원이 없습니다.");
 					RequestDispatcher rd=request.getRequestDispatcher("/MemberService?method=viewMemberPwAndEmail");
 					rd.forward(request, response);
 				}else{

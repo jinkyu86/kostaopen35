@@ -153,7 +153,7 @@ public class BoardService extends HttpServlet {
 			request.setCharacterEncoding("utf-8");
 			request.setAttribute("ERROR","로그인하시기 바랍니다.");
 			
-			RequestDispatcher rd=request.getRequestDispatcher("/main.jsp");
+			RequestDispatcher rd=request.getRequestDispatcher("/BoardService?method=boardListAtMain");
 			rd.forward(request, response);
 		}else{
 					
