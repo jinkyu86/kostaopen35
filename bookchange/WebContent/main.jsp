@@ -170,12 +170,12 @@
 	   </tr>
 	   
 	    </c:when>
-		<c:otherwise>
+		<%-- <c:otherwise>
 		  <tr>
 	      <td><a href="">
 	      <img align="right" src="webimg/block.GIF" title="신고하기" border="0" width="230"/></a></td>
 	      </tr>
-		</c:otherwise>
+		</c:otherwise> --%>
 	   </c:choose>
 	 </table>
 	 </tr>
