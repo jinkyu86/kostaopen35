@@ -428,7 +428,14 @@ public class MemberService extends HttpServlet {
 		}
 		//한페이지당 보여줄 학생의 수
 		int length=5;
-		String keyword=request.getParameter("keyword");
+		String keyword="";
+		if (request.getParameter("keyword")!=null){
+			keyword = request.getParameter("keyword");;
+		}
+		String colum = "";
+		if(request.getParameter("column")!=null){
+			colum = request.getParameter("column");
+		}
 		//1.StudentDAO에서 페이지에 해당하는 학생조회 메서드를 호출
 		ArrayList<Member>memberList=null;
 		int memberCount=0;
@@ -458,12 +465,10 @@ public class MemberService extends HttpServlet {
 		
 		//2.request에 1의 페이지에 해당하는 학생 정보 저장
 		request.setAttribute("MEMBER_LIST",memberList);
-		
 		//다른 페이지로 이동하는 링크태그 만듬
 		//PageUtil.getnerate(현페이지,전체건수,한페이지당보여울 row수, 주소);
 		String pageLinkTag=PageUtil.generate
-				(page, memberCount, length, "/moviesystem/MemberService?method=searchMemberList&column=" +
-						request.getParameter("column")+"&keyword="+request.getParameter("keyword"));
+				(page, memberCount, length, "/moviesystem/MemberService?method=searchMemberList&column=" +colum+"&keyword="+keyword);
 		
 		request.setAttribute("PAGE_LINK_TAG",pageLinkTag);
 		
