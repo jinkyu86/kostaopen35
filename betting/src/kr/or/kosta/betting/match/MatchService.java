@@ -2,6 +2,7 @@ package kr.or.kosta.betting.match;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -72,7 +73,7 @@ public class MatchService extends HttpServlet {
 		}
 		int length = 10;
 
-		ArrayList<Match> matchList = MatchDAO.selectMatchList(page,length);
+		List<Match> matchList = MatchDAO.selectMatchList(page,length);
 		request.setAttribute("MATCH_LIST", matchList);
 		int matchCount = MatchDAO.selectMatchCount();
 		String pageLinkTag = PageUtil.generate(page, matchCount, length,
@@ -254,7 +255,7 @@ public class MatchService extends HttpServlet {
 		}
 		int length = 10;
 
-		ArrayList<Match> matchList = MatchDAO.selectMatchList(page,length);
+		List<Match> matchList = MatchDAO.selectMatchList(page,length);
 		request.setAttribute("MATCH_LIST", matchList);
 		int matchCount = MatchDAO.selectMatchCount();
 		String pageLinkTag = PageUtil.generate(page, matchCount, length,
