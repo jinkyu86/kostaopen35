@@ -1,21 +1,50 @@
 package kr.or.kosta.good;
 
+import java.io.IOException;
+import java.io.Reader;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import kr.or.kosta.gooddivision.Good_division;
 import kr.or.kosta.recipe.Recipe;
 import kr.or.kosta.util.ConnectionUtil;
 
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+
 public class GoodDAO {
+	private static String resource="sqlmap-config.xml";
+	private static Reader sqlReader;
+	static{
+		try {
+			sqlReader=Resources.getResourceAsReader(resource);//sqlmap-config.xml을 읽어들임.
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+	}
+	private static SqlSessionFactory sqlMapper=
+	new SqlSessionFactoryBuilder().build(sqlReader); //sql쿼리를 읽어서 map(key:insertDepartment,value:insert into.... 가 들어감)에 저장(SqlSessionFactory)
 
 	/**
 	 * 상품추가 
 	 */
-	public static void insertGood(Good good) {
+	public static void insertGood(Good good){
+		SqlSession session=null;
+		try{
+			session = sqlMapper.openSession(true); //sql맵에 있는 쿼리 실행.
+			session.insert("Good.insertGood",good);
+		}finally{
+			session.close();
+		}
+	}
+	/*public static void insertGood(Good good) {
 		Connection con=null;
 		PreparedStatement psmt=null;
 		con=ConnectionUtil.getConnection();
@@ -35,11 +64,22 @@ public class GoodDAO {
 			e.printStackTrace();
 		}
 	}
-
+*/
 	/**
 	 * 상품리스트 보기
 	 */
-	public static ArrayList<Good> selectGoodList() {
+	public static List<Good> selectGoodList() {
+		SqlSession session = null;
+		List<Good> goodList =null;
+		try{
+			session = sqlMapper.openSession(true); //sql맵에 있는 쿼리 실행.
+			goodList = session.selectList("Good.selectGoodList");
+		}finally{
+			session.close();
+		}
+		return goodList;
+	}
+	/*public static ArrayList<Good> selectGoodList() {
 		Connection con=null;
 		PreparedStatement psmt=null;
 		ResultSet rs=null;
@@ -143,11 +183,22 @@ public class GoodDAO {
 		}
 		return goodList;
 	}
-
+*/
 	/**
 	 * 상품상세보기
 	 */
 	public static Good selectGood(int goodnum) {
+		SqlSession session = null;
+		Good good=null;
+		try{
+		     session = sqlMapper.openSession(true); //sql맵에 있는 쿼리 실행.
+		     good = session.selectOne("Good.selectGood",goodnum);
+		}finally{
+			session.close();
+		}
+		return good;
+	}
+	/*public static Good selectGood(int goodnum) {
 		Connection con=null;
 		PreparedStatement psmt=null;
 		ResultSet rs=null;
@@ -188,12 +239,21 @@ public class GoodDAO {
 			e.printStackTrace();
 		}
 		return good;
-	}
+	}*/
 
 	/**
 	 * 상품삭제
 	 */
 	public static void deleteGood(int goodnum) {
+		SqlSession session=null;
+		try{
+			session = sqlMapper.openSession(true); //sql맵에 있는 쿼리 실행.
+			session.delete("Good.deleteGood",goodnum);
+		}finally{
+			session.close();
+		}
+	}
+	/*public static void deleteGood(int goodnum) {
 		Connection con =null;
 		PreparedStatement psmt=null;
 		con=ConnectionUtil.getConnection();
@@ -206,12 +266,21 @@ public class GoodDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
+	}*/
 
 	/**
 	 * 상품수정
 	 */
 	public static void updateGood(Good good) {
+		SqlSession session=null;
+		try{
+			session = sqlMapper.openSession(true); //sql맵에 있는 쿼리 실행.
+			session.update("Good.updateGood",good);
+		}finally{
+			session.close();
+		}
+	}
+	/*public static void updateGood(Good good) {
 		Connection con=null;
 		PreparedStatement psmt=null;
 		String sql="update good"+
@@ -233,7 +302,7 @@ public class GoodDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
+	}*/
 	
 	//레시피관련 상품조회
 	public static ArrayList<Good>selectRecipeList(int recipeNum){
@@ -264,7 +333,6 @@ public class GoodDAO {
 			psmt=con.prepareStatement(sql);
 			psmt.setInt(1, recipeNum);
 			rs=psmt.executeQuery();
-			
 			
 			while(rs.next()){
 				Good good = new Good();
@@ -301,7 +369,18 @@ public class GoodDAO {
 		return arrayList;
 	}
 	
-	public static ArrayList<Good> viewDivisionGoodList(int division){
+	public static List<Good> viewDivisionGoodList(int division){
+		SqlSession session = null;
+		List<Good> divisionGoodList = null;
+		try{
+			session = sqlMapper.openSession();
+			divisionGoodList = session.selectList("Good.viewDivisionGoodList",division);
+		}finally{
+			session.close();
+		}
+		return divisionGoodList;
+	}
+	/*public static ArrayList<Good> viewDivisionGoodList(int division){
 		Connection con=null;
 		PreparedStatement psmt=null;
 		ResultSet rs=null;
@@ -346,5 +425,5 @@ public class GoodDAO {
 			e.printStackTrace();
 		}
 		return goodList;
-	}
+	}*/
 }
