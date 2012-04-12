@@ -1,12 +1,10 @@
 package kr.or.kosta.auction.good.test;
 
-import static org.junit.Assert.*;
-
 import java.util.ArrayList;
+import java.util.List;
 
 import kr.or.kosta.auction.good.Good;
 import kr.or.kosta.auction.good.GoodDAO;
-
 import org.junit.Test;
 
 public class GoodDAOTest {
@@ -14,7 +12,7 @@ public class GoodDAOTest {
 	@Test
 	public void testInsertGood() {
 		Good good=new Good();
-		good.setgNum("21");
+		good.setgNum("22");
 		good.setgName("±èÁø¼ö");
 		good.setDetail("È¦·Ñ·Ñ·Î·Ñ");
 		good.setImg("s1.jpg");
@@ -23,38 +21,35 @@ public class GoodDAOTest {
 
 	@Test
 	public void testUpdateGood() {
-		Good good=GoodDAO.selectGood("70");
+		Good good=new Good();
 		good.setgName("editGood");
 		good.setDetail("TEST");
 		good.setImg("s1.jpg");
+		good.setgNum("122");
 		GoodDAO.updateGood(good);
 		
 	}
 
 	@Test
 	public void testDeleteGood() {
-		GoodDAO.deleteGood("22");
+		GoodDAO.deleteGood("122");
 	}
 
 	@Test
 	public void testSelectGood() {
-		Good good=GoodDAO.selectGood("1");
+		Good good=GoodDAO.selectGood("121");
 		System.out.println(good.toString());
 	}
 
 	@Test
 	public void testSelectGoodList() {
-			ArrayList<Good>goodList=
-					GoodDAO.selectGoodList();
-			for(int i=0; i<goodList.size(); i++){
-				Good good=goodList.get(i);
-				System.out.println(good.toString());
-		}
+		List<Good> goodList=GoodDAO.selectGoodList();
+		System.out.println("GoodDAO:selectGood:good"+goodList);
 	}
 
 	@Test
 	public void testSelectGoodListIntInt() {
-		ArrayList<Good>good1List=GoodDAO.selectGoodList(5, 1);
+		List<Good>good1List=GoodDAO.selectGoodList(1, 2);
 		System.out.println("good1List:"+good1List);
 	}
 
