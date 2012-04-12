@@ -33,7 +33,6 @@ public class GoodDAO {
 	 * @param good
 	 */
 	public static void insertGood(Good good) {
-		
 		SqlSession session=null;
 		try{
 			session=sqlMapper.openSession(true);

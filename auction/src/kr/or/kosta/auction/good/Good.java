@@ -4,7 +4,7 @@ public class Good {
 
 	private String gNum;//물품고유번호
 	private String gName;//물품의 이름
-	private String detail;//물품 살세설명
+	private String detail;//물품 상세설명
 	private String img;//물품의 이미지
 
 	public String getgNum() {

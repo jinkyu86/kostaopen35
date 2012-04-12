@@ -13,7 +13,11 @@ public class GoodDAOTest {
 
 	@Test
 	public void testInsertGood() {
-		Good good=GoodDAO.selectGood("1");
+		Good good=new Good();
+		good.setgNum("21");
+		good.setgName("±èÁø¼ö");
+		good.setDetail("È¦·Ñ·Ñ·Î·Ñ");
+		good.setImg("s1.jpg");
 		GoodDAO.insertGood(good);
 	}
 
