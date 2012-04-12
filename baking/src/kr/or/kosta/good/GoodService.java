@@ -101,7 +101,7 @@ public class GoodService extends HttpServlet {
 		//데이터 베이스에서 상품정보 조회
 		Good good = GoodDAO.selectGood(goodNum);
 		//상품 관련 레시피 조회
-		ArrayList<Recipe> recipeList = RecipeDAO.selectRecipeList(goodNum);
+		List<Recipe> recipeList = RecipeDAO.selectGoodToRecipeList(goodNum);
 		ArrayList<Photo> photoList = PhotoDAO.selectGoodPhotoList(goodNum);
 			
 		request.setAttribute("GOOD", good);

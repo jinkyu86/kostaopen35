@@ -1,9 +1,7 @@
 package kr.or.kosta.good.test;
 
-import java.util.ArrayList;
+import java.util.List;
 
-import kr.or.kosta.good.Good;
-import kr.or.kosta.good.GoodDAO;
 import kr.or.kosta.recipe.Recipe;
 import kr.or.kosta.recipe.RecipeDAO;
 
@@ -73,7 +71,7 @@ public class GoodDAOTest {
 	
 	@Test
 	public void testSelectRecipeList(){
-		ArrayList<Recipe> arrayList = RecipeDAO.selectRecipeList(7);
+		List<Recipe> arrayList = RecipeDAO.selectGoodToRecipeList(7);
 		for(int i=0;i<arrayList.size();i++){
 			Recipe recipe = arrayList.get(i);
 			System.out.println(recipe);
