@@ -67,9 +67,122 @@ public class MovieService extends HttpServlet{
 			MovieTimeList(request, response);
 		}else if("Main".equals(method)){
 			Main(request, response);
+		}else if("adminMovieList".equals(method)){
+			adminMovieList(request, response);
+		}else if("adminMovieListSch".equals(method)){
+			adminMovieListSch(request, response);
+		}else if("adminRankingList".equals(method)){
+			adminRankingList(request, response);
+		}else if("adminMovie".equals(method)){
+			adminMovie(request, response);
 		}
 	}
 	
+	private void adminMovie(HttpServletRequest request,
+			HttpServletResponse response) throws IOException, ServletException{
+		String mnum = request.getParameter("mnum");
+		String gubun = "total";
+		String method = request.getParameter("method");
+		
+		if(request.getParameter("gubun")!=null){
+			gubun = request.getParameter("gubun");
+		}
+		
+		request.setAttribute("gubun", gubun);
+		request.setAttribute("method", method);
+		
+		Movie movie = MovieDAO.selectMovie(mnum);
+		//System.out.println(movie);
+		request.setAttribute("Movie", movie);
+		
+		RequestDispatcher rd = request.getRequestDispatcher("/movie/adminMovie.jsp");
+		rd.forward(request, response);
+		
+	}
+
+	private void adminRankingList(HttpServletRequest request,
+			HttpServletResponse response) throws IOException, ServletException{
+		List<Movie>movieList = MovieDAO.rankingMovieList();
+		String method = request.getParameter("method");		
+		String pageLinkTag=null;
+		
+		request.setAttribute("MovieList",movieList);
+		
+		request.setAttribute("method", method);
+		request.setAttribute("page_Link_Tag", pageLinkTag);
+		
+		RequestDispatcher rd = request.getRequestDispatcher("/movie/adminMovieList.jsp");
+		rd.forward(request, response);
+		
+	}
+
+	private void adminMovieListSch(HttpServletRequest request,
+			HttpServletResponse response) throws IOException, ServletException{
+		int page = 1;
+		int length = 5;
+		int movieCnt = 0;
+		String method = request.getParameter("method");
+		String schCode = request.getParameter("schCode");
+		String schString = request.getParameter("schString");
+		List<Movie>movieList = null;
+		String pageLink = null;
+		String pageLinkTag=null;
+		
+		if(request.getParameter("page")!=null){
+			page = Integer.parseInt(request.getParameter("page"));
+		}
+		movieList = MovieDAO.selectMovieListSearch(page, length, schCode, schString);
+		movieCnt = MovieDAO.selectMovieListSearchCnt(schCode, schString);
+		
+		
+		pageLink = "MovieService?method=adminMovieListSch&schCode="+schCode+"&schString="+schString;
+		pageLinkTag = PageUtil.generate(page, movieCnt, length, pageLink);
+		
+		request.setAttribute("schCode",schCode);
+		request.setAttribute("method", method);
+		request.setAttribute("schString",schString);
+		request.setAttribute("MovieList", movieList);
+		request.setAttribute("page_Link_Tag", pageLinkTag);
+		
+		RequestDispatcher rd = request.getRequestDispatcher("/movie/adminMovieList.jsp");
+		rd.forward(request, response);
+		
+	}
+
+	private void adminMovieList(HttpServletRequest request,
+			HttpServletResponse response) throws IOException, ServletException{
+		int page = 1;
+		int length = 5;
+		String gubun = "total";
+		String method = "adminMovieList";
+		
+		if(request.getParameter("page")!=null){
+			page = Integer.parseInt(request.getParameter("page"));
+		}
+		if(request.getParameter("gubun")!=null){
+			gubun = request.getParameter("gubun");
+		}
+		if(request.getParameter("method")!=null){
+			method = request.getParameter("method");
+		}
+		request.setAttribute("gubun",gubun);
+		request.setAttribute("method", method);
+		String pageLink = "MovieService?method=adminMovieList&gubun="+gubun;
+		
+		List<Movie>movieList = MovieDAO.selectMovieList(page, length, gubun);
+		request.setAttribute("MovieList",movieList);
+
+		int MovieCnt = MovieDAO.selectMovieCount(gubun);
+		
+		//System.out.println(pageLink);
+		String pageLinkTag = PageUtil.generate(page, MovieCnt, length, pageLink);
+		request.setAttribute("page_Link_Tag", pageLinkTag);
+		
+		RequestDispatcher rd = request.getRequestDispatcher("/movie/adminMovieList.jsp");
+		rd.forward(request, response);
+		
+	}
+
 	private void Main(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
 		List<Movie>screenMovieList = MovieDAO.selectMovieList(1, 3, "screen");
 		List<Movie>scheduleMovieList = MovieDAO.selectMovieList(1, 3, "schedule");
