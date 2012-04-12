@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Good">
+	
+	<parameterMap type="kr.or.kosta.good.Good"
+		id="insertParameterMap">
+			<parameter property="g_num"/>
+			<parameter property="gname"/>
+			<parameter property="detail"/>
+			<parameter property="img"/>
+	</parameterMap>
+	
+	<insert id="insertGood"
+		parameterMap="insertParameterMap">
+		INSERT INTO good
+		(g_num, gname, detail, img)
+		VALUES(GOOD_SEQ.nextval, ?, ?, ?);		
+	</insert>
+				
+</mapper>
