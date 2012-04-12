@@ -12,20 +12,17 @@
 		<property name="driver"
 			value="oracle.jdbc.driver.OracleDriver" />
 		<property name="url"
-				value="jdbc:oracle:thin:@127.0.0.1:1521:ORCL" />
+				value="jdbc:oracle:thin:@192.168.0.12:1521:XE" />
 		<property name="username"
-					value="test" />
+					value="scott" />
 		<property name="password"
-			value="test" />
+			value="tiger" />
 	</dataSource>
 
 </environment>
 </environments>
 <mappers>
-	<mapper resource="Department.xml" />
-	<mapper resource="Student.xml" />
-	<mapper resource="Professor.xml" />
-	<mapper resource="Board.xml" />
+	<mapper resource="Good.xml" />
 </mappers>
 </configuration>
 
