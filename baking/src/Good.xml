@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper      
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"      
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    	
+<mapper namespace="Good">
+	
+<parameterMap type="kr.or.kosta.good.Good" id="insertParameterMap">
+	<parameter property="good_division.division"/> 
+	<parameter property="goodPrice"/>
+	<parameter property="qty"/>
+	<parameter property="name"/>
+	<parameter property="explantion"/>
+	<parameter property="img"/>
+	<parameter property="option"/>
+</parameterMap>
+
+<insert id="insertGood" parameterMap="insertParameterMap">
+	insert into good values(good_seq.nextval,?,?,?,?,?,?,?)
+</insert>
+
+<parameterMap type="kr.or.kosta.good.Good" id="updateParameterMap">
+	<parameter property="good_division.division"/> 
+	<parameter property="goodPrice"/>
+	<parameter property="qty"/>
+	<parameter property="name"/>
+	<parameter property="explantion"/>
+	<parameter property="img"/>
+	<parameter property="option"/>
+	<parameter property="goodNum"/>
+</parameterMap>
+
+<update id="updateGood" parameterMap="updateParameterMap">
+	update good
+	set division=?,good_price=?,qty=?,name=?,explantion=?,img=?,g_option=?
+	where good_num=?
+</update>
+
+<delete id="deleteGood">
+	delete from good
+	where good_num=#{good_num}
+</delete>
+
+<resultMap id="selectResultMap" type="kr.or.kosta.good.Good">
+	<result property="good_division.division" column="division" /> 
+	<result property="goodPrice" column="goodPrice"/>
+	<result property="qty" column="qty"/>
+	<result property="name" column="name"/>
+	<result property="explantion" column="explantion"/>
+	<result property="img" column="img"/>
+	<result property="option" column="g_option"/>
+	<result property="good_division.gName" column="gName"/>
+</resultMap>
+
+<select id="selectGood" resultMap="selectResultMap">
+	SELECT g.division as division,
+			 good_price as goodPrice,
+			 qty,
+			 name,
+			 explantion,
+			 img,
+			 g_option,
+			 g_name as gName
+	FROM good g JOIN good_division gd
+			ON g.division=gd.division
+	WHERE good_num=#{good_num}
+</select>
+
+<resultMap id="selectResultMapGoodList" type="kr.or.kosta.good.Good">
+	<result property="good_division.division" column="division" /> 
+	<result property="goodPrice" column="goodPrice"/>
+	<result property="qty" column="qty"/>
+	<result property="name" column="name"/>
+	<result property="explantion" column="explantion"/>
+	<result property="img" column="img"/>
+	<result property="option" column="g_option"/>
+	<result property="good_division.gName" column="gName"/>
+	<result property="goodNum" column="goodNum"/>
+</resultMap>
+
+<select id="selectGoodList" resultMap="selectResultMapGoodList">
+  SELECT good_num as goodNum,
+		   	g.division as division,
+			good_price as goodPrice,
+			qty,
+			name,
+			explantion,
+			img,
+			g_option,
+			g_name as gName
+	FROM good g JOIN good_division gd
+			ON g.division=gd.division
+</select>
+
+
+<select id="viewDivisionGoodList" resultMap="selectResultMapGoodList">
+	select good_num as goodNum,
+		   	g.division as division,
+			good_price as goodPrice,
+			qty,
+			name,
+			explantion,
+			img,
+			g_option,
+			g_name as gName
+	FROM good g JOIN good_division gd
+			ON g.division=gd.division
+	WHERE gd.division=#{division}
+</select>
+
+
+<resultMap id="selectGoodToRecipeListMap" type="kr.or.kosta.recipe.Recipe">
+	<result property="good.goodNum" column="goodNum" />
+	<result property="recipeNum" column="recipeNum" />
+	<result property="title" column="title" />
+	<result property="content" column="content" />
+	<result property="img" column="img" />
+	<result property="material" column="material" />
+	<result property="good_division.division" column="division" /> 
+	<result property="good_division.gName" column="gName" />
+</resultMap>
+
+<select id="selectGoodToRecipeList" resultMap="selectGoodToRecipeListMap">
+select grr.good_num as goodNum,
+		r.recipe_num as recipeNum,
+		r.title as title,
+		r.content as content ,
+		r.img as img,
+		r.material as material,
+		r.division as division,
+		d.g_name as gName
+from good_recipe_relation grr,recipe r,good_division d
+	where grr.recipe_num=r.recipe_num and d.division=r.division and grr.good_num=#{goodNum}
+</select>
+</mapper>
