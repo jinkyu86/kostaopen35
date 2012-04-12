@@ -33,7 +33,7 @@ public class MatchDAOTest {
 	@Test
 	public void testInsertMatch() {
 		Match match = new Match();
-		match.setMatchTime("2012/04/01 12:00:00");
+		match.setMatchTime("2012/05/01 12:00:00");
 				
 		Team hTeam = new Team();
 		hTeam.setNum("1");
@@ -50,11 +50,11 @@ public class MatchDAOTest {
 				
 		MatchDAO.insertMatch(match);
 	}
-	@Test
-	public void testSelectWinTeam() {
-		String winTeam = MatchDAO.selectWinTeam("10001");
-		System.out.println(winTeam);
-	}
+//	@Test
+//	public void testSelectWinTeam() {
+//		String winTeam = MatchDAO.selectWinTeam("10001");
+//		System.out.println(winTeam);
+//	}
 	@Test
 	public void testUpdateMatch(){
 		Match match = new Match();
@@ -63,7 +63,7 @@ public class MatchDAOTest {
 		match.setScore("4:6");
 		
 		Team hTeam = new Team();
-		hTeam.setNum("1");
+		hTeam.setNum("3");
 		
 		Team aTeam = new Team();
 		aTeam.setNum("6");
@@ -86,5 +86,18 @@ public class MatchDAOTest {
 		Match match = MatchDAO.selectMatch("10000");
 		System.out.println(match);
 	}
-		
+	@Test
+	public void testSelectMatchCount(){
+		int count = MatchDAO.selectMatchCount();
+		System.out.println(count);
+	}
+	@Test
+	public void testSelectMatchTime(){
+		String matchTime = MatchDAO.selectMatchTime("10213");
+		System.out.println(matchTime);
+	}
+	@Test
+	public void testDeleteMatch(){
+		MatchDAO.deleteMatch("10112");
+	}
 }
