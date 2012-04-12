@@ -343,34 +343,42 @@ public class MatchDAO {
 	//매치 업데이트
 	public static void updateMatch(Match match) {
 		/* default generated stub */;
-		Connection con = null;
-		PreparedStatement ps = null;
-		String sql = null;
-				
-		try {
-		con=ConnectionUtil.getConnection();
-		sql="UPDATE match" +
-				" SET match_num=?" +
-				", match_time=TO_DATE(?,'yyyy/mm/dd hh24:mi:ss')" +
-				", match_result_score=? " +
-				",home_team_num=?, away_team_num=? ,win_team_num=? " +
-				" ,loc_num=?"+
-				" WHERE match_num=?";
-			
-			ps=con.prepareStatement(sql);
-			ps.setString(1, match.getNum());
-			ps.setString(2, match.getMatchTime().toString());
-			ps.setString(3, match.getScore());
-			ps.setString(4, match.getHomeTeam().getNum());
-			ps.setString(5, match.getAwayTeam().getNum());
-			ps.setString(6, match.getWinTeam().getNum());
-			ps.setString(7, match.getLoc().getNum());
-			ps.setString(8, match.getNum());
-			ps.executeUpdate();
-		} catch (Exception e) {
-			e.printStackTrace();
+		SqlSession session = null; 
+		try{
+		session = sqlMapper.openSession(true);
+		session.update("Match.updateMatch",match);
 		}
-		
+		finally{
+			session.close();
+		}
+//		Connection con = null;
+//		PreparedStatement ps = null;
+//		String sql = null;
+//				
+//		try {
+//		con=ConnectionUtil.getConnection();
+//		sql="UPDATE match" +
+//				" SET match_num=?" +
+//				", match_time=TO_DATE(?,'yyyy/mm/dd hh24:mi:ss')" +
+//				", match_result_score=? " +
+//				",home_team_num=?, away_team_num=? ,win_team_num=? " +
+//				" ,loc_num=?"+
+//				" WHERE match_num=?";
+//			
+//			ps=con.prepareStatement(sql);
+//			ps.setString(1, match.getNum());
+//			ps.setString(2, match.getMatchTime().toString());
+//			ps.setString(3, match.getScore());
+//			ps.setString(4, match.getHomeTeam().getNum());
+//			ps.setString(5, match.getAwayTeam().getNum());
+//			ps.setString(6, match.getWinTeam().getNum());
+//			ps.setString(7, match.getLoc().getNum());
+//			ps.setString(8, match.getNum());
+//			ps.executeUpdate();
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		
 	}
 
 	/**
@@ -380,27 +388,35 @@ public class MatchDAO {
 	 */
 	public static void insertMatch(Match match) {
 		/* default generated stub */;
-		Connection con = null;
-		PreparedStatement ps = null;
-		String sql = null;
-				
-		try {
-		con=ConnectionUtil.getConnection();
-		sql="INSERT INTO match (match_num" +
-				", match_time" +
-				",home_team_num, away_team_num " +
-				" ,loc_num) "+
-				 " VALUES(s_match.nextval,TO_DATE(?,'yyyy/mm/dd hh24:mi:ss'),?,?,?)";
-			
-			ps=con.prepareStatement(sql);
-			ps.setString(1, match.getMatchTime());
-			ps.setString(2, match.getHomeTeam().getNum());
-			ps.setString(3, match.getAwayTeam().getNum());
-			ps.setString(4, match.getLoc().getNum());
-			ps.executeUpdate();			
-		} catch (Exception e) {
-			e.printStackTrace();
+		SqlSession session = null;
+		try{
+		session = sqlMapper.openSession(true);
+		session.insert("Match.insertMatch",match);
 		}
+		finally{
+				session.close();
+		}
+//		Connection con = null;
+//		PreparedStatement ps = null;
+//		String sql = null;
+//				
+//		try {
+//		con=ConnectionUtil.getConnection();
+//		sql="INSERT INTO match (match_num" +
+//				", match_time" +
+//				",home_team_num, away_team_num " +
+//				" ,loc_num) "+
+//				 " VALUES(s_match.nextval,TO_DATE(?,'yyyy/mm/dd hh24:mi:ss'),?,?,?)";
+//			
+//			ps=con.prepareStatement(sql);
+//			ps.setString(1, match.getMatchTime());
+//			ps.setString(2, match.getHomeTeam().getNum());
+//			ps.setString(3, match.getAwayTeam().getNum());
+//			ps.setString(4, match.getLoc().getNum());
+//			ps.executeUpdate();			
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
 	}
 
 
@@ -409,102 +425,135 @@ public class MatchDAO {
 	 * 
 	 * @param matchnum
 	 */
-	public static String selectWinTeam(String matchNum) {
-		/* default generated stub */;
-		Connection con = null;
-		PreparedStatement ps = null;
-		String sql = null;
-		ResultSet rs =null;
-		sql="SELECT win_team_num"+
-				" FROM match"+
-				" WHERE match_num=?";
-		String winTeam = null;
-		con=ConnectionUtil.getConnection();
-		try {
-			ps=con.prepareStatement(sql);
-			ps.setString(1, matchNum);
-			rs=ps.executeQuery();
-			
-			if(rs.next()){
-				winTeam=rs.getString(1);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return winTeam;
-	
-	
-	}
+//	public static String selectWinTeam1(String matchNum) {
+//		/* default generated stub */;
+//		Connection con = null;
+//		PreparedStatement ps = null;
+//		String sql = null;
+//		ResultSet rs =null;
+//		sql="SELECT win_team_num"+
+//				" FROM match"+
+//				" WHERE match_num=?";
+//		String winTeam = null;
+//		con=ConnectionUtil.getConnection();
+//		try {
+//			ps=con.prepareStatement(sql);
+//			ps.setString(1, matchNum);
+//			rs=ps.executeQuery();
+//			
+//			if(rs.next()){
+//				winTeam=rs.getString(1);
+//			}
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//		return winTeam;
+//	
+//	
+//	}
 	//match 카운트 메서드
 	public static int selectMatchCount(){
-		Connection con = null;
-		PreparedStatement psmt = null;
-		String sql = null;
-		ResultSet rs =null;
-		int matchCount=0;
-				
-		try {
-			con = ConnectionUtil.getConnection();
-			sql = "SELECT COUNT(match_num)"
-					+ " FROM match m,team h,team a,team w,loc l"
-					+ " WHERE m.home_team_num=h.team_num "
-					+ " AND m.away_team_num=a.team_num"
-					+ " AND m.win_team_num=w.team_num(+)"
-					+ " AND m.loc_num=l.loc_num";
-
-			psmt = con.prepareStatement(sql);
-			rs = psmt.executeQuery();
-			if (rs.next()) {
-				matchCount = rs.getInt(1);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
+		
+		SqlSession session = null;
+		int count=0;
+		try{
+		session = sqlMapper.openSession(true);
+		count = session.selectOne("selectMatchCount");
+		
 		}
-		return matchCount;
+		finally{
+			session.close();
+		}
+		return count;
+		
+//		Connection con = null;
+//		PreparedStatement psmt = null;
+//		String sql = null;
+//		ResultSet rs =null;
+//		int matchCount=0;
+//				
+//		try {
+//			con = ConnectionUtil.getConnection();
+//			sql = "SELECT COUNT(match_num)"
+//					+ " FROM match m,team h,team a,team w,loc l"
+//					+ " WHERE m.home_team_num=h.team_num "
+//					+ " AND m.away_team_num=a.team_num"
+//					+ " AND m.win_team_num=w.team_num(+)"
+//					+ " AND m.loc_num=l.loc_num";
+//
+//			psmt = con.prepareStatement(sql);
+//			rs = psmt.executeQuery();
+//			if (rs.next()) {
+//				matchCount = rs.getInt(1);
+//			}
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		return matchCount;
 	}
 	//경기데이터 삭제 메서드
 	public static void deleteMatch (String matchNum) {
 		// TODO Auto-generated method stub
-		Connection con = null;
-		PreparedStatement psmt = null;
-		con = ConnectionUtil.getConnection();
-		try {
-			psmt = con.prepareStatement("DELETE FROM tb_match "+
-			                                                    " WHERE match_num = ?");
-			psmt.setString(1, matchNum);
-			psmt.executeUpdate();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}		
+		SqlSession session = null;
+		try{
+		session = sqlMapper.openSession(true);
+		session.delete("deleteMatch",matchNum);
+		}
+		finally{
+			session.close();
+		}
+//		Connection con = null;
+//		PreparedStatement psmt = null;
+//		con = ConnectionUtil.getConnection();
+//		try {
+//			psmt = con.prepareStatement("DELETE FROM tb_match "+
+//			                                                    " WHERE match_num = ?");
+//			psmt.setString(1, matchNum);
+//			psmt.executeUpdate();
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}		
 	}
 	
 	public static String selectMatchTime(String matchNum){
-		Connection con = null;
-		PreparedStatement psmt = null;
-		String sql = null;
-		ResultSet rs =null;
-		String matchTime=null;
-				
-		try {
-			con = ConnectionUtil.getConnection();
-			sql = "SELECT TO_CHAR(match_time,'yyyy/mm/dd hh24:mi:ss')"
-					+ " FROM match m,team h,team a,team w,loc l"
-					+ " WHERE m.home_team_num=h.team_num "
-					+ " AND m.away_team_num=a.team_num"
-					+ " AND m.win_team_num=w.team_num(+)"
-					+ " AND m.loc_num=l.loc_num"
-					+ " AND m.match_num=?";
-
-			psmt = con.prepareStatement(sql);
-			psmt.setString(1, matchNum);
-			rs = psmt.executeQuery();
-			if (rs.next()) {
-				matchTime = rs.getString(1);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
+		
+		SqlSession session = null;
+		String matchTime= null;
+		try{
+		session = sqlMapper.openSession(true);
+		matchTime= session.selectOne("selectMatchTime",matchNum);
+		
+		}
+		finally{
+			session.close();
 		}
 		return matchTime;
+//		Connection con = null;
+//		PreparedStatement psmt = null;
+//		String sql = null;
+//		ResultSet rs =null;
+//		String matchTime=null;
+//				
+//		try {
+//			con = ConnectionUtil.getConnection();
+//			sql = "SELECT TO_CHAR(match_time,'yyyy/mm/dd hh24:mi:ss')"
+//					+ " FROM match m,team h,team a,team w,loc l"
+//					+ " WHERE m.home_team_num=h.team_num "
+//					+ " AND m.away_team_num=a.team_num"
+//					+ " AND m.win_team_num=w.team_num(+)"
+//					+ " AND m.loc_num=l.loc_num"
+//					+ " AND m.match_num=?";
+//
+//			psmt = con.prepareStatement(sql);
+//			psmt.setString(1, matchNum);
+//			rs = psmt.executeQuery();
+//			if (rs.next()) {
+//				matchTime = rs.getString(1);
+//			}
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		return matchTime;
 	}
 	
 	
