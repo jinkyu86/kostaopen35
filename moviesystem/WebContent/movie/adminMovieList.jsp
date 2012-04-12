@@ -13,7 +13,22 @@
 <link rel="stylesheet" href="/moviesystem/css/Layout.css">
 <script src="http://code.jquery.com/jquery-1.7.1.js"></script>
 <script src="/moviesystem/js/common.jsp"></script>
+<c:choose>
+	<c:when test="${method eq 'adminMovieList'}">
+		<script>
+			alert("#");
+		</script>
+	</c:when>
+	<c:otherwise>
+		<script>
+			$(function(){
+				$('#movie_rank').css('background-color','#C4E2FF');
+			});
+		</script>
+	</c:otherwise>
+</c:choose>
 </head>
+
 <body>
 <table width="90%" align="center">
 	<!-- 상단 메뉴 시작 -->
@@ -35,13 +50,13 @@
 		<td>
 			<!-- 페이지 제목 시작 -->
 			<div class="admin_menu" >
-				<span class="admin_subMenu"><a href="/moviesystem/MovieService?method=adminMovieList">전체</a></span>
+				<span class="admin_subMenu"  id="movie_total"><a href="/moviesystem/MovieService?method=adminMovieList">전체</a></span>
 				<span style="font-color:#000000;">&nbsp;|&nbsp;</span>
-				<span class="admin_subMenu"><a href="/moviesystem/MovieService?method=adminMovieList&gubun=screen">상영작</a></span>
+				<span class="admin_subMenu" id="movie_screen"><a href="/moviesystem/MovieService?method=adminMovieList&gubun=screen">상영작</a></span>
 				<span style="font-color:#000000;">&nbsp;|&nbsp;</span>
-				<span class="admin_subMenu"><a href="/moviesystem/MovieService?method=adminMovieList&gubun=schedule">상영예정작</a></span>
+				<span class="admin_subMenu" id="movie_schedule"><a href="/moviesystem/MovieService?method=adminMovieList&gubun=schedule">상영예정작</a></span>
 				<span style="font-color:#000000;">&nbsp;|&nbsp;</span>
-				<span class="admin_subMenu"><a href="/moviesystem/MovieService?method=adminRankingList">예매 순위</a></span>
+				<span class="admin_subMenu" id="movie_rank"><a href="/moviesystem/MovieService?method=adminRankingList">예매 순위</a></span>
 			</div>
 			<!-- 페이지 제목 끝 -->
 			
