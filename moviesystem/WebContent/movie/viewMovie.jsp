@@ -18,7 +18,7 @@
 		$('#movie_sub').css('display', 'block');
 		
 		$('#button').click(function(){
-			$('#vieMovie').submit();
+			$('#viewMovie').submit();
 		});
 		$('#reservation').hover(function(){
 			//$('#reservation').addClass('hover');
@@ -112,7 +112,7 @@
 	<tr>
 		<td clospan="2">
 			<p align="center">
-				<form action="/moviesystem/MovieService" id="vieMovie">
+				<form action="/moviesystem/MovieService" id="viewMovie">
 					<input type="hidden" name="method" value="viewMovieList">
 					<input type="hidden" name="gubun" value="${gubun}">
 					<span id="button">목록</span>
