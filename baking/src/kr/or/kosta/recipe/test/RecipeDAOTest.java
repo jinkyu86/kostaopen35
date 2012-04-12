@@ -1,9 +1,11 @@
 package kr.or.kosta.recipe.test;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import kr.or.kosta.good.Good;
 import kr.or.kosta.good.GoodDAO;
+import kr.or.kosta.gooddivision.Good_division;
 import kr.or.kosta.photo.Photo;
 import kr.or.kosta.photo.PhotoDAO;
 import kr.or.kosta.recipe.Recipe;
@@ -22,7 +24,14 @@ public class RecipeDAOTest {
 //		recipe.setImg("Img.jpg");
 //		recipe.setMaterial("Material");
 //		
+//		Good_division division = new  Good_division();
+//		
+//		division.setDivision(1);
+//		
+//		recipe.setGood_division(division);
+//		
 //		RecipeDAO.insertRecipe(recipe);
+//		
 //		System.out.println("insert 완료");
 //		
 //	}
@@ -45,14 +54,14 @@ public class RecipeDAOTest {
 //		System.out.println("delete 완료");
 //	}
 	
-	@Test
-	public void testselectrecipeList(){
-		ArrayList<Recipe> arrayList = RecipeDAO.selectRecipeList(1);
-		for (int i = 0; i < arrayList.size(); i++) {
-			Recipe recipe = arrayList.get(i);
-			System.out.println(recipe);
-		}
-	}
+//	@Test
+//	public void testselectrecipeList(){
+//		ArrayList<Recipe> arrayList = (ArrayList<Recipe>) RecipeDAO.selectRecipeList();
+//		for (int i = 0; i < arrayList.size(); i++) {
+//			Recipe recipe = arrayList.get(i);
+//			System.out.println(recipe);
+//		}
+//	}
 	
 //	@Test
 //	public void testselectrecipe(){
@@ -94,5 +103,21 @@ public class RecipeDAOTest {
 //			Photo photo=arrayList.get(i);
 //			System.out.println(photo);
 //		}
+//	}
+	
+	@Test
+	public void testselectGoodRelationRecipeList(){
+		ArrayList<Recipe> list=(ArrayList<Recipe>) RecipeDAO.selectGoodRelationRecipeList(7);
+		
+		for (int i = 0; i < list.size(); i++) {
+			Recipe recipe= list.get(i);
+			System.out.println(recipe);
+		}
+	}
+	
+//	@Test
+//	public void testmaxRecipeNumber(){
+//		int maxNumber=RecipeDAO.maxRecipeNumber();
+//		System.out.println(maxNumber);
 //	}
 }

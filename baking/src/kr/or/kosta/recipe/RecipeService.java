@@ -77,7 +77,7 @@ public class RecipeService extends HttpServlet{
 			
 			
 //			데이터베이스에서 전체레시피 조회
-			ArrayList<Recipe> recipeList= RecipeDAO.selectRecipeList();
+			List<Recipe> recipeList= RecipeDAO.selectRecipeList();
 //			request에 전체 레시피 리스트 저장
 			request.setAttribute("RECIPE_LIST", recipeList);
 			
@@ -91,7 +91,7 @@ public class RecipeService extends HttpServlet{
 			int division=Integer.parseInt(request.getParameter("division"));
 			
 //			데이터베이스에서 레시피구분리스트 조회
-			ArrayList<Recipe> recipeList= RecipeDAO.selectDivisionRecipeList(division);
+			List<Recipe> recipeList= RecipeDAO.selectDivisionRecipeList(division);
 //			request에 레시피구분리스트 리스트 저장
 			request.setAttribute("RECIPE_DIVISION_LIST", recipeList);
 		
@@ -109,7 +109,7 @@ public class RecipeService extends HttpServlet{
 //			레시피관련 상품정보 조회
 			ArrayList<Good>recipeRelativeGoodList=GoodDAO.selectRecipeList(recipeNum);
 //			레시피관련 이미지 조회
-			ArrayList<Photo>recipePhotoList=PhotoDAO.selectRecipePhotoList(recipeNum);
+			List<Photo>recipePhotoList=PhotoDAO.selectRecipePhotoList(recipeNum);
 			System.out.println(recipePhotoList);
 //			request에 레시피정보, 레시피관련 상품정보, 레시피관련 이미지 저장
 			request.setAttribute("RECIPE", recipe);
