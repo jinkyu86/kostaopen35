@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+		
+<mapper namespace="Photo">		
+	<parameterMap type="kr.or.kosta.photo.Photo" id="insertParameterMap">
+	   	<parameter property="image"/>
+		<parameter property="good_division.division"/>
+	</parameterMap>
+
+	<resultMap type="kr.or.kosta.photo.Photo" id="selectRecipeResultMap">
+		<result property="p_num"				  column="p_num"/>
+		<result property="recipe_num"			  column="recipe_num"/>
+		<result property="image"				  column="image"/>
+		<result property="good_division.division" column="division"/>
+		<result property="good_division.gName"	  column="g_name"/>
+	</resultMap>
+	
+	<resultMap type="kr.or.kosta.photo.Photo" id="selectGoodResultMap">
+		<result property="p_num"				  column="p_num"/>
+		<result property="recipe_num"			  column="recipe_num"/>
+		<result property="image"				  column="image"/>
+	</resultMap>
+	
+
+	<insert id="insertPhoto" parameterMap="insertParameterMap">
+		INSERT INTO photo(p_num, recipe_num, image, division)
+		VALUES(photo_seq.nextval, #{rerecipe_num}, ?, ?)
+	</insert>
+	
+	<select id="selectRecipePhotoList" resultMap="selectRecipeResultMap">
+		SELECT p.p_num		as p_num,
+			   p.recipe_num	as recipe_num,
+			   p.image		as image,
+			   d.division	as division,
+			   d.g_name		as g_name
+		FROM recipe r JOIN photo p
+		ON r.recipe_num = p.recipe_num
+		JOIN good_division d
+		ON p.division=d.division
+		WHERE  p.recipe_num=#{recipeNum}
+		ORDER BY p.image
+	</select>
+	
+	
+	
+	<select id="selectGoodPhotoList" resultMap="selectGoodResultMap">
+		SELECT p.p_num		as p_num,
+			   p.recipe_num	as recipe_num,
+			   p.image		as image
+		FROM good g JOIN photo p
+		ON g.good_num = p.good_num
+		WHERE  g.good_num=#{goodNum}
+	</select>
+	
+		
+</mapper>
+
