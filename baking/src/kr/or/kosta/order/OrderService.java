@@ -3,6 +3,7 @@ package kr.or.kosta.order;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -104,7 +105,7 @@ public class OrderService extends HttpServlet {
 		HttpSession session=request.getSession();
 		Member member=(Member)session.getAttribute("LOGIN");
 		String memberid=member.getMemberid();
-		ArrayList<Order>orderList=OrderDAO.selectOrderList(memberid);
+		List<Order>orderList=OrderDAO.selectOrderList(memberid);
 		request.setAttribute("ORDER_LIST",orderList);
 		RequestDispatcher rd=request.getRequestDispatcher("/order/viewOrderList.jsp");
 		rd.forward(request, response);
