@@ -5,10 +5,9 @@
 
 <mapper namespace="Good">
 	
-	<parameterMap type="kr.or.kosta.good.Good"
+	<parameterMap type="kr.or.kosta.auction.good.Good"
 		id="insertParameterMap">
-			<parameter property="g_num"/>
-			<parameter property="gname"/>
+			<parameter property="gName"/>
 			<parameter property="detail"/>
 			<parameter property="img"/>
 	</parameterMap>
@@ -17,7 +16,57 @@
 		parameterMap="insertParameterMap">
 		INSERT INTO good
 		(g_num, gname, detail, img)
-		VALUES(GOOD_SEQ.nextval, ?, ?, ?);		
+		VALUES(GOOD_SEQ.nextval,?,?,?)
 	</insert>
+	
+	<parameterMap type="kr.or.kosta.auction.good.Good"
+		id="updateParameterMap">
+			<parameter property="gName"/>
+			<parameter property="detail"/>
+			<parameter property="img"/>
+			<parameter property="gNum"/>
+	</parameterMap>
+	
+	<update id="updateGood"
+		parameterMap="updateParameterMap">
+			UPDATE good
+			SET gname=?,
+				   detail=?,
+				   img=?
+			WHERE g_num=?
+	</update>
+	
+	<delete id="deleteGood">
+		DELETE FROM good
+		WHERE g_num=#{g_num}
+	</delete>
+	
+<resultMap id="selectResultMap"
+	type="kr.or.kosta.auction.good.Good">
+		<result property="gNum" column="gNum"/>
+		<result property="gName" column="gName"/>
+		<result property="detail" column="detail"/>
+		<result property="img" column="img"/>
+</resultMap>
+
+<select id="selectGood"
+	resultMap="selectResultMap">
+		SELECT g_num as gNum,
+					 gname as gName,
+					 detail as detail,
+					 img as img
+		FROM good
+		WHERE g_num=#{g_num}
+</select>
+
+<select id="selectGoodList"
+	resultMap="selectResultMap">
+		SELECT g_num as gNum,
+					 gname as gName,
+					 detail as detail,
+					 img as img
+		FROM good
+</select>
+			
 				
 </mapper>
