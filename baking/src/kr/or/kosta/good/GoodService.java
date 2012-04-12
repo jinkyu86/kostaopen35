@@ -2,6 +2,7 @@ package kr.or.kosta.good;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,8 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import kr.or.kosta.gooddivision.GoodDivisionDAO;
 import kr.or.kosta.gooddivision.Good_division;
-import kr.or.kosta.member.Member;
-import kr.or.kosta.member.MemberDAO;
 import kr.or.kosta.photo.Photo;
 import kr.or.kosta.photo.PhotoDAO;
 import kr.or.kosta.recipe.Recipe;
@@ -75,7 +74,7 @@ public class GoodService extends HttpServlet {
 	private void viewIndex(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		GoodDAO goodDAO = new GoodDAO();
-		ArrayList<Good> goodList = goodDAO.selectGoodList();
+		List<Good> goodList = goodDAO.selectGoodList();
 		request.setAttribute("GOOD_LIST",goodList);
 		RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
 		rd.forward(request, response);
@@ -87,7 +86,7 @@ public class GoodService extends HttpServlet {
 	public void viewGoodList(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		GoodDAO goodDAO = new GoodDAO();
-		ArrayList<Good> goodList = goodDAO.selectGoodList();
+		List<Good> goodList = goodDAO.selectGoodList();
 		request.setAttribute("GOOD_LIST",goodList);
 		RequestDispatcher rd = request.getRequestDispatcher("/good/viewGoodList.jsp");
 		rd.forward(request, response);
@@ -119,7 +118,6 @@ public class GoodService extends HttpServlet {
 	 */
 	public void addGood(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//1.파라메터 정보 리턴
-		/*int goodNum = Integer.parseInt(request.getParameter("goodNum"));*/
 		int division = Integer.parseInt(request.getParameter("division"));
 		int goodPrice = Integer.parseInt(request.getParameter("goodPrice"));
 		int qty = Integer.parseInt(request.getParameter("qty"));
@@ -130,7 +128,6 @@ public class GoodService extends HttpServlet {
 		
 		//2.Good 객체 생성, 1의 속성을 저장
 		Good good= new Good();
-		/*good.setGoodNum(goodNum);*/
 		good.setGoodPrice(goodPrice);
 		good.setQty(qty);
 		good.setName(name);
@@ -232,7 +229,7 @@ public class GoodService extends HttpServlet {
 	private void viewDivisionGoodList(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		int division = Integer.parseInt(request.getParameter("division"));
-		ArrayList<Good> goodList = GoodDAO.viewDivisionGoodList(division);
+		List<Good> goodList = GoodDAO.viewDivisionGoodList(division);
 		request.setAttribute("viewGoodList", goodList);
 		RequestDispatcher rd = request.getRequestDispatcher("/good/viewDivisionGoodList.jsp");
 		rd.forward(request, response);
