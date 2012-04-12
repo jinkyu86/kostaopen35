@@ -1,11 +1,19 @@
 package kr.or.kosta.auction.member;
 
+import java.io.IOException;
+import java.io.Reader;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+
+import kr.or.kosta.auction.good.Good;
 import kr.or.kosta.auction.util.ConnectionUtil;
 
 
@@ -14,48 +22,80 @@ public class MemberDAO {
 	/**
 	 * @param member
 	 */
+	private static String resource="sqlmap-config.xml";
+	private static Reader sqlReader;
+	static{
+			try {
+				sqlReader=Resources.getResourceAsReader(resource);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+	}
+	private static SqlSessionFactory sqlMapper =
+			new SqlSessionFactoryBuilder().build(sqlReader);
+	
 	public static void insertMember(Member member) {
-		Connection con = null;
-		PreparedStatement psmt = null;
-		con = ConnectionUtil.getConnection();
-		try {
-			psmt = con.prepareStatement("INSERT INTO MEMBER"
-					+ " (userid,pw,email,name,coin,emoney)"
-					+ " VALUES(?,?,?,?,'100','5000000')");
-			psmt.setString(1, member.getUserid());
-			psmt.setString(2, member.getPw());
-			psmt.setString(3, member.getEmail());
-			psmt.setString(4, member.getName());
-			psmt.executeUpdate();
-		} catch (Exception e) {
-			e.printStackTrace();
+		SqlSession session=null;
+		try{
+			session=sqlMapper.openSession(true);
+			session.insert("Member.insertMEmber", member);
+		}
+		finally{
+			session.close();
 		}
 	}
-
+//	public static void insertMember(Member member) {
+//		Connection con = null;
+//		PreparedStatement psmt = null;
+//		con = ConnectionUtil.getConnection();
+//		try {
+//			psmt = con.prepareStatement("INSERT INTO MEMBER"
+//					+ " (userid,pw,email,name,coin,emoney)"
+//					+ " VALUES(?,?,?,?,'100','5000000')");
+//			psmt.setString(1, member.getUserid());
+//			psmt.setString(2, member.getPw());
+//			psmt.setString(3, member.getEmail());
+//			psmt.setString(4, member.getName());
+//			psmt.executeUpdate();
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//	}
 
 	public static void updateMember(Member member) {
-		Connection con = null;
-		PreparedStatement psmt = null;
-		con = ConnectionUtil.getConnection();
-		try {
-			psmt = con.prepareStatement("UPDATE MEMBER " +
-													  "SET pw=?," +
-													  "email=?," +
-													  "name=?," +
-													  "coin=?," +
-													  "emoney=? " +
-													  "WHERE userid=?");
-			psmt.setString(1, member.getPw());
-			psmt.setString(2, member.getEmail());
-			psmt.setString(3, member.getName());
-			psmt.setString(4, member.getCoin());
-			psmt.setString(5, member.getEmoney());
-			psmt.setString(6, member.getUserid());
-			psmt.executeUpdate();
-		} catch (Exception e) {
-			e.printStackTrace();
+		SqlSession session=null;
+		try{
+			session=sqlMapper.openSession(true);
+			session.update("Member.updateMember", member);
+		}
+		finally{
+			session.close();
 		}
 	}
+
+//	public static void updateMember(Member member) {
+//		Connection con = null;
+//		PreparedStatement psmt = null;
+//		con = ConnectionUtil.getConnection();
+//		try {
+//			psmt = con.prepareStatement("UPDATE MEMBER " +
+//													  "SET pw=?," +
+//													  "email=?," +
+//													  "name=?," +
+//													  "coin=?," +
+//													  "emoney=? " +
+//													  "WHERE userid=?");
+//			psmt.setString(1, member.getPw());
+//			psmt.setString(2, member.getEmail());
+//			psmt.setString(3, member.getName());
+//			psmt.setString(4, member.getCoin());
+//			psmt.setString(5, member.getEmoney());
+//			psmt.setString(6, member.getUserid());
+//			psmt.executeUpdate();
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//	}
 
 	/**
 	 * @param userid
