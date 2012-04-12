@@ -2,6 +2,7 @@ package kr.or.kosta.auction.good;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -138,7 +139,7 @@ public class GoodService extends HttpServlet {
 
 	private void viewGoodList(HttpServletRequest request,
 			HttpServletResponse response) throws IOException, ServletException{
-		ArrayList<Good>goodList=GoodDAO.selectGoodList();
+		List<Good>goodList=GoodDAO.selectGoodList();
 		
 		request.setAttribute("GOOD_LIST", goodList);
 		
