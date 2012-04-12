@@ -1,7 +1,7 @@
 package kr.or.kosta.betting.betting;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -16,7 +16,6 @@ import kr.or.kosta.betting.member.Member;
 import kr.or.kosta.betting.member.MemberDAO;
 import kr.or.kosta.betting.memberbetdata.MemberBetData;
 import kr.or.kosta.betting.memberbetdata.MemberBetDataDAO;
-import kr.or.kosta.betting.util.PageUtil;
 import kr.or.kosta.betting.util.now;
 
 /**
@@ -49,9 +48,7 @@ public class BettingService extends HttpServlet {
 		if (method == null) {
 			method = "todayBettingList";
 		}
-		if ("viewBettingList".equals(method)) {
-			viewBettingList(request, response);
-		}else if("bettingGameForm".equals(method)){
+		if("bettingGameForm".equals(method)){
 			bettingGameForm(request,response);
 		}else if("todayBettingList".equals(method)){
 			todayBettingList(request,response);
@@ -79,7 +76,7 @@ public class BettingService extends HttpServlet {
 	private void todayBettingList(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		String date = now.Date();
-		ArrayList<Match> matchList = MatchDAO.selectMatchByDate(date);
+		List<Match> matchList = MatchDAO.selectMatchByDate(date);
 		request.setAttribute("TODAY_MATCH",matchList);
 		RequestDispatcher rd = request
 				.getRequestDispatcher("/betting/todayBettingList.jsp");
@@ -225,9 +222,15 @@ public class BettingService extends HttpServlet {
 			} else {
 				request.setAttribute("ERROR", "마감 되었습니다.");
 			}
-		
+			
+			String matchNum = request.getParameter("matchno");
+			request.setAttribute("CHECK", check);
+			Betting bettingHome = BettingDAO.selectBettingByHome(matchNum);
+			request.setAttribute("BETTING_HOME", bettingHome);
+			Betting bettingAway = BettingDAO.selectBettingByAway(matchNum);
+			request.setAttribute("BETTING_AWAY", bettingAway);
 			RequestDispatcher rd = request
-					.getRequestDispatcher("/BettingService?method=todayBettingList");
+					.getRequestDispatcher("/betting/viewBettingGame.jsp");
 			rd.forward(request, response);
 		} else {
 			request.setAttribute("ERROR", "로그인 해주세요.");
@@ -247,49 +250,25 @@ public class BettingService extends HttpServlet {
 	 * @throws IOException 
 	 * @throws ServletException 
 	 */
-	public void viewBettingList(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		/* default generated stub */;
-		int page = 1;
-		if (request.getParameter("page") != null) {
-			page = Integer.parseInt(request.getParameter("page"));
-		}
-		int length = 10;
-
-		ArrayList<Betting> bettingList = BettingDAO.selectBettingList(page, length);
-		request.setAttribute("BETTING_LIST", bettingList);
-		int bettingCount = BettingDAO.selectBettingCount();
-		String pageLinkTag = PageUtil.generate(page, bettingCount, length,
-				"MatchService?method=viewBettingList");
-		request.setAttribute("PAGE_LINK_TAG", pageLinkTag);
-		RequestDispatcher rd = request
-				.getRequestDispatcher("/betting/viewBettingList.jsp");
-		rd.forward(request, response);
-	}
-
-	/**
-	 * 선택한 번호의 베팅 데이터 조회 메서드
-	 * 
-	 * @param request
-	 * @param response
-	 */
-	public void viewBetting(HttpServletRequest request,
-			HttpServletResponse response) {
-		/* default generated stub */;
-	
-	}
-
-	/**
-	 * 베팅 데이터 업데이트 메서드
-	 * 
-	 * @param request
-	 * @param response
-	 */
-	public void updateBettingForm(HttpServletRequest request,
-			HttpServletResponse response) {
-		/* default generated stub */;
-	
-	}
+//	public void viewBettingList(HttpServletRequest request,
+//			HttpServletResponse response) throws ServletException, IOException {
+//		/* default generated stub */;
+//		int page = 1;
+//		if (request.getParameter("page") != null) {
+//			page = Integer.parseInt(request.getParameter("page"));
+//		}
+//		int length = 10;
+//
+//		ArrayList<Betting> bettingList = BettingDAO.selectBettingList(page, length);
+//		request.setAttribute("BETTING_LIST", bettingList);
+//		int bettingCount = BettingDAO.selectBettingCount();
+//		String pageLinkTag = PageUtil.generate(page, bettingCount, length,
+//				"MatchService?method=viewBettingList");
+//		request.setAttribute("PAGE_LINK_TAG", pageLinkTag);
+//		RequestDispatcher rd = request
+//				.getRequestDispatcher("/betting/viewBettingList.jsp");
+//		rd.forward(request, response);
+//	}
 
 	/**
 	 * 베팅 폼 구현 메서드
@@ -306,9 +285,9 @@ public class BettingService extends HttpServlet {
 		String matchTime = MatchDAO.selectMatchTime(matchNum);
 		int check = now.hourCheck(matchTime);
 		request.setAttribute("CHECK", check);
-		Betting bettingHome = BettingDAO.selectBettingListByHome(matchNum);
+		Betting bettingHome = BettingDAO.selectBettingByHome(matchNum);
 		request.setAttribute("BETTING_HOME", bettingHome);
-		Betting bettingAway = BettingDAO.selectBettingListByAway(matchNum);
+		Betting bettingAway = BettingDAO.selectBettingByAway(matchNum);
 		request.setAttribute("BETTING_AWAY", bettingAway);
 		RequestDispatcher rd = request
 				.getRequestDispatcher("/betting/viewBettingGame.jsp");
