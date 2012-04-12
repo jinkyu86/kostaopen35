@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.RequestDispatcher;
@@ -35,6 +36,7 @@ public class MovieService extends HttpServlet{
 		String method = request.getParameter("method");
 		if(method==null){
 			method="Main";
+			//method="viewMovieList";
 		}
 		//System.out.println(method);
 		if("viewMovieList".equals(method)){
@@ -69,9 +71,9 @@ public class MovieService extends HttpServlet{
 	}
 	
 	private void Main(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
-		ArrayList<Movie>screenMovieList = MovieDAO.selectMovieList(1, 3, "screen");
-		ArrayList<Movie>scheduleMovieList = MovieDAO.selectMovieList(1, 3, "schedule");
-		ArrayList<Movie>rankingMovieList = MovieDAO.rankingMovieList();
+		List<Movie>screenMovieList = MovieDAO.selectMovieList(1, 3, "screen");
+		List<Movie>scheduleMovieList = MovieDAO.selectMovieList(1, 3, "schedule");
+		List<Movie>rankingMovieList = MovieDAO.rankingMovieList();
 		
 		request.setAttribute("screenMovieList", screenMovieList);
 		request.setAttribute("scheduleMovieList", scheduleMovieList);
@@ -100,7 +102,7 @@ public class MovieService extends HttpServlet{
 			HttpServletResponse response) throws IOException, ServletException{
 		
 		int Moviecnt = MovieDAO.selectMovieCount("");
-		ArrayList<Movie> movieList = MovieDAO.selectMovieList(1, Moviecnt, "");
+		List<Movie> movieList = MovieDAO.selectMovieList(1, Moviecnt, "");
 		
 		request.setAttribute("MovieList", movieList);
 		
@@ -117,7 +119,7 @@ public class MovieService extends HttpServlet{
 	 */
 	public void rankingMovieList(HttpServletRequest request,
 			HttpServletResponse response) throws IOException, ServletException {
-		ArrayList<Movie>movieList = MovieDAO.rankingMovieList();
+		List<Movie>movieList = MovieDAO.rankingMovieList();
 		request.setAttribute("MovieList",movieList);
 		
 		RequestDispatcher rd = request.getRequestDispatcher("/movie/viewMovieRank.jsp");
@@ -256,24 +258,16 @@ public class MovieService extends HttpServlet{
 		String method = request.getParameter("method");
 		String schCode = request.getParameter("schCode");
 		String schString = request.getParameter("schString");
-		ArrayList<Movie>movieList = null;
+		List<Movie>movieList = null;
 		String pageLink = null;
 		String pageLinkTag=null;
 		
 		if(request.getParameter("page")!=null){
 			page = Integer.parseInt(request.getParameter("page"));
 		}
+		movieList = MovieDAO.selectMovieListSearch(page, length, schCode, schString);
+		movieCnt = MovieDAO.selectMovieListSearchCnt(schCode, schString);
 		
-		if("mname".equals(schCode)){
-			movieList = MovieDAO.selectMovieListbyMname(page, length, schString);
-			movieCnt = MovieDAO.selectMovieListbyMnameCount(schString);
-		}else if("genre".equals(schCode)){
-			movieList = MovieDAO.selectMovieListbyGenre(page, length, schString);
-			movieCnt = MovieDAO.selectMovieListbyGenreCount(schString);
-		}else if("content".equals(schCode)){
-			movieList = MovieDAO.selectMovieListByContent(page, length, schString);
-			movieCnt = MovieDAO.selectMovieListByContentCount(schString);
-		}
 		
 		pageLink = "MovieService?method=searchMovieList&schCode="+schCode+"&schString="+schString;
 		pageLinkTag = PageUtil.generate(page, movieCnt, length, pageLink);
@@ -341,7 +335,7 @@ public class MovieService extends HttpServlet{
 		request.setAttribute("method", method);
 		String pageLink = "MovieService?method=viewMovieList&gubun="+gubun;
 		
-		ArrayList<Movie>movieList = MovieDAO.selectMovieList(page, length, gubun);
+		List<Movie>movieList = MovieDAO.selectMovieList(page, length, gubun);
 		request.setAttribute("MovieList",movieList);
 
 		int MovieCnt = MovieDAO.selectMovieCount(gubun);
