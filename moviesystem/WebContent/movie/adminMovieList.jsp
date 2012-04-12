@@ -74,7 +74,7 @@
 				<tr>
 					<td class="movieList_img"><img src="/moviesystem/movieimg/${movieList.poster}.jpg" class="poster_style"></td>
 					<td>
-						<a href="/moviesystem/MovieService?method=viewMovie&gubun=${gubun}&mnum=${movieList.mnum}"><b>${movieList.mname}</b></a><br/>
+						<a href="/moviesystem/MovieService?method=adminMovie&gubun=${gubun}&mnum=${movieList.mnum}"><b>${movieList.mname}</b></a><br/>
 						장르 : ${movieList.genre}&nbsp;&nbsp;&nbsp;<br/>
 						개봉일 : <fmt:formatDate value="${movieList.launchDate}" pattern="yyyy-MM-dd"/><br/>
 					</td>
