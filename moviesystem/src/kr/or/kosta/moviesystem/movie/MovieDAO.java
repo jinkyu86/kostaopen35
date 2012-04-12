@@ -2,14 +2,7 @@ package kr.or.kosta.moviesystem.movie;
 
 import java.io.IOException;
 import java.io.Reader;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-
-import kr.or.kosta.moviesystem.util.ConnectionUtil;
 
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.RowBounds;
@@ -17,541 +10,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
+
 public class MovieDAO {
-	/**
-	 * 영화 예매 순위
-	 * 
-	 * @parameter 없음
-	 */
-	public static ArrayList rankingMovieList(){
-		Connection con = null;
-		PreparedStatement psmt = null;
-		String sql = null;
-		ResultSet rs = null;
-		ArrayList<Movie>movieRankList = new ArrayList<Movie>();
-		int getRsCnt = 0;
-		try{
-			con = ConnectionUtil.getConnection();
-			sql = "select m_num, m_name, launch_date, genre, poster, end_date, m_price, content"
-					+", (select count(*) from reservation where m_num=m.m_num) "
-					+"from MOVIE m "
-					+"order by (select count(*) from reservation where m_num=m.m_num) desc";
-			psmt = con.prepareStatement(sql);
-			
-			rs = psmt.executeQuery();
-			while(rs.next()&&getRsCnt<3){
-				getRsCnt++;
-				String mnum = rs.getString(1);
-				String mname = rs.getString(2);
-				Date lDate = rs.getDate(3);
-				String genre = rs.getString(4);
-				String poster = rs.getString(5);
-				Date eDate = rs.getDate(6);
-				long mprice = rs.getLong(7);
-				String content = rs.getString(8);
-				long RankCount = rs.getLong(9);
-				
-				Movie movie = new Movie();
-				movie.setMnum(mnum);
-				movie.setMname(mname);
-				movie.setLaunchDate(lDate);
-				movie.setGenre(genre);
-				movie.setPoster(poster);
-				movie.setEndDate(eDate);
-				movie.setMprice(mprice);
-				movie.setContent(content);
-				movie.setMResCount(RankCount);
-				
-				movieRankList.add(movie);
-			}
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-		return movieRankList;
-	}
-	/**
-	 * 영화 등록
-	 * 
-	 * @param movie
-	 */
-	public static void insertMovie(Movie movie) {
-		Connection con = null;
-		PreparedStatement psmt = null;
-		String sql = null;
-		
-		//System.out.println(movie);
-		try {
-			con = ConnectionUtil.getConnection();
-			sql = "insert into MOVIE(m_num, m_name, launch_date, genre, poster, end_date, m_price, content)"
-					+"values(m_seq.nextval, ?, ?, ?, ?, ?, ?, ?)";
-			psmt = con.prepareStatement(sql);
-			psmt.setString(1, movie.getMname());
-			psmt.setString(2, movie.getLaunchDate().toString());
-			psmt.setString(3, movie.getGenre());
-			psmt.setString(4, movie.getPoster());
-			psmt.setString(5, movie.getEndDate().toString());
-			psmt.setLong(6, movie.getMprice());
-			psmt.setString(7, movie.getContent());
-			
-			psmt.executeUpdate();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	/**
-	 * 영화 삭제
-	 * 
-	 * @param mnum
-	 */
-	public static void deleteMovie(String mnum) {
-		Connection con = null;
-		PreparedStatement psmt = null;
-		String sql = null;
-		
-		try{
-			con = ConnectionUtil.getConnection();
-			sql = "delete from MOVIE where m_num=?";
-			psmt = con.prepareStatement(sql);
-			psmt.setString(1, mnum);
-			psmt.execute();
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-	}
-
-	/**
-	 * 전체 영화 수를 알 수 있는 메소드
-	 */
-	public static int selectMovieCount(String gubun) {
-		Connection con = null;
-		PreparedStatement psmt = null;
-		String sql = null;
-		ResultSet rs = null;
-		int movieCount = 0;
-		String schwhere = null;
-		
-		if("screen".equals(gubun)){
-			schwhere = " and launch_date<=sysdate";
-		}else if("schedule".equals(gubun)){
-			schwhere = "and launch_date>sysdate";
-		}else{
-			schwhere = "";
-		}
-		try{
-			con = ConnectionUtil.getConnection();
-			sql = "select count(*) from MOVIE where 1=1"+schwhere;
-			psmt = con.prepareStatement(sql);
-			rs = psmt.executeQuery();
-			
-			if(rs.next()){
-				int mCount = rs.getInt(1);
-				movieCount = mCount;
-			}
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-		return movieCount;
-	}
-
-	/**
-	 * 영화번호로 영화 찾기
-	 * 
-	 * @param mnum
-	 */
-	public static Movie selectMovie(String mnum) {
-		Connection con = null;
-		PreparedStatement psmt = null;
-		String sql = null;
-		ResultSet rs = null;
-		Movie movie = null;
-		
-		try{
-			con = ConnectionUtil.getConnection();
-			sql="select m_num, m_name, launch_date, genre, poster, end_date, m_price, content from MOVIE "
-					+"where m_num=?";
-			psmt = con.prepareStatement(sql);
-			psmt.setString(1,mnum);
-			rs = psmt.executeQuery();
-			if(rs.next()){
-				String mnum2 = rs.getString(1);
-				String mname = rs.getString(2);
-				Date lDate = rs.getDate(3);
-				String genre = rs.getString(4);
-				String poster = rs.getString(5);
-				Date eDate = rs.getDate(6);
-				long mprice = rs.getLong(7);
-				String content = rs.getString(8);
-				
-				movie = new Movie();
-				movie.setMnum(mnum);
-				movie.setMname(mname);
-				movie.setLaunchDate(lDate);
-				movie.setGenre(genre);
-				movie.setPoster(poster);
-				movie.setEndDate(eDate);
-				movie.setMprice(mprice);
-				movie.setContent(content);
-			}
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-		return movie;
-	}
-
-	/**
-	 * 전체 영화 리스트
-	 * 
-	 * @param page
-	 * @param length
-	 */
-	public static ArrayList selectMovieList(int page, int length, String gubun) {
-		Connection con = null;
-		PreparedStatement psmt = null;
-		String sql = null;
-		ArrayList<Movie>movieList = new ArrayList<Movie>();
-		ResultSet rs = null;
-		int num = (page-1)*length;
-		int GetRsCount = 0;
-		String schwhere = null;
-		
-		if("screen".equals(gubun)){
-			schwhere = " and launch_date<=sysdate";
-		}else if("schedule".equals(gubun)){
-			schwhere = "and launch_date>sysdate";
-		}else if("reservation".equals(gubun)){
-			schwhere = "and end_date>sysdate";
-		}else{
-			schwhere = "";
-		}
-		try{
-			con = ConnectionUtil.getConnection();
-			sql = "select m_num, m_name, launch_date, genre, poster, end_date, m_price, content from MOVIE where 1=1 "+ schwhere +" order by launch_date";
-			psmt = con.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-			
-			rs = psmt.executeQuery();
-			
-			if(num>0){
-				rs.absolute(num);
-			}
-			while(rs.next()&&GetRsCount<length){
-				GetRsCount++;
-				String mnum = rs.getString(1);
-				String mname = rs.getString(2);
-				Date lDate = rs.getDate(3);
-				String genre = rs.getString(4);
-				String poster = rs.getString(5);
-				Date eDate = rs.getDate(6);
-				long mprice = rs.getLong(7);
-				String content = rs.getString(8);
-				
-				
-				Movie movie = new Movie();
-				movie.setMnum(mnum);
-				movie.setMname(mname);
-				movie.setLaunchDate(lDate);
-				movie.setGenre(genre);
-				movie.setEndDate(eDate);
-				movie.setMprice(mprice);
-				movie.setContent(content);
-				movie.setPoster(poster);
-				
-				movieList.add(movie);
-			}
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-		return movieList;
-	}
-
-	/**
-	 * 영화이름으로 영화 리스트를 알 수 있는 메서드
-	 * 
-	 * @param page
-	 * @param length
-	 * @param mname
-	 */
-	public static ArrayList selectMovieListbyMname(int page, int length, String mname) {
-		Connection con = null;
-		PreparedStatement psmt = null;
-		String sql = null;
-		ArrayList<Movie>movieList = new ArrayList<Movie>();
-		ResultSet rs = null;
-		int getRsCount = 0;
-		int num = (page-1)*length;
-		
-		try{
-			con = ConnectionUtil.getConnection();
-			sql = "select m_num, m_name, launch_date, genre, poster, end_date, m_price, content "
-					+"from MOVIE where m_name like ?";
-			psmt = con.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-			psmt.setString(1, "%"+mname+"%");
-			
-			rs = psmt.executeQuery();
-			
-			if(num>0){
-				rs.absolute(num);
-			}
-			while(rs.next()&&getRsCount<length){
-				getRsCount++;
-				String mnum = rs.getString(1);
-				String mname2 = rs.getString(2);
-				Date lDate = rs.getDate(3);
-				String genre = rs.getString(4);
-				String poster = rs.getString(5);
-				Date eDate = rs.getDate(6);
-				long mprice = rs.getLong(7);
-				String content = rs.getString(8);
-				
-				Movie movie = new Movie();
-				movie.setMnum(mnum);
-				movie.setMname(mname2);
-				movie.setLaunchDate(lDate);
-				movie.setGenre(genre);
-				movie.setEndDate(eDate);
-				movie.setMprice(mprice);
-				movie.setContent(content);
-				movie.setPoster(poster);
-				
-				movieList.add(movie);
-			}
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-		return movieList;
-	}
-
-	/**
-	 * 영화 이름으로 찾은 리스트의 수를 알 수 있는 메서드
-	 * 
-	 * @param mName
-	 */
-	public static int selectMovieListbyMnameCount(String mName) {
-		/* default generated stub */;
-		Connection con = null;
-		PreparedStatement psmt = null;
-		ResultSet rs = null;
-		String sql = null;
-		int searchMovieCount = 0;
-		
-		try{
-			con = ConnectionUtil.getConnection();
-			sql = "select count(*) from MOVIE where m_name like ?";
-			psmt = con.prepareStatement(sql);
-			psmt.setString(1, "%"+ mName +"%");
-			
-			rs = psmt.executeQuery();
-			
-			if(rs.next()){
-				searchMovieCount = rs.getInt(1);
-			}
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-		return searchMovieCount;
-	}
-
-	/**
-	 * 영화의 장르로 영화를 찾을 수 있는 메서드
-	 * 
-	 * @param page
-	 * @param length
-	 * @param genre
-	 */
-	public static ArrayList selectMovieListbyGenre(int page, int length, String genre) {
-		Connection con = null;
-		PreparedStatement psmt = null;
-		ResultSet rs = null;
-		int num = (page-1)*length;
-		int getRsCount = 0;
-		String sql = null;
-		ArrayList<Movie>movieList= new ArrayList<Movie>();
-		
-		try{
-			con = ConnectionUtil.getConnection();
-			sql = "select m_num, m_name, launch_date, genre, poster, end_date, m_price, content "
-					+"from MOVIE where genre like ?";
-			psmt = con.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-			psmt.setString(1, "%"+genre+"%");
-			
-			rs = psmt.executeQuery();
-			
-			if(num>0){
-				rs.absolute(num);
-			}
-			while(rs.next()&&getRsCount<length){
-				getRsCount++;
-				String mnum = rs.getString(1);
-				String mname2 = rs.getString(2);
-				Date lDate = rs.getDate(3);
-				String genre2 = rs.getString(4);
-				String poster = rs.getString(5);
-				Date eDate = rs.getDate(6);
-				long mprice = rs.getLong(7);
-				String content = rs.getString(8);
-				
-				Movie movie = new Movie();
-				movie.setMnum(mnum);
-				movie.setMname(mname2);
-				movie.setLaunchDate(lDate);
-				movie.setGenre(genre2);
-				movie.setEndDate(eDate);
-				movie.setMprice(mprice);
-				movie.setContent(content);
-				movie.setPoster(poster);
-				
-				movieList.add(movie);
-			}
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-		return movieList;
-	}
-
-	/**
-	 * 영화 장르로 찾은 영화의 수를 알 수 있는 메서드
-	 * 
-	 * @param genre
-	 */
-	public static int selectMovieListbyGenreCount(String genre) {
-		Connection con = null;
-		PreparedStatement psmt = null;
-		String sql = null;
-		int schMovieCount = 0;
-		ResultSet rs = null;
-		try{
-			con = ConnectionUtil.getConnection();
-			sql = "select count(*) from MOVIE where genre like ?";
-			psmt = con.prepareStatement(sql);
-			psmt.setString(1, "%"+ genre +"%");
-			
-			rs = psmt.executeQuery();
-			
-			if(rs.next()){
-				schMovieCount = rs.getInt(1);
-			}
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-		return schMovieCount;
-	}
-
-	/**
-	 * 영화의 내용으로 영화를 찾을 수 있는 메서드
-	 * 
-	 * @param page
-	 * @param length
-	 * @param content
-	 */
-	public static ArrayList selectMovieListByContent(int page, int length,
-			String content) {
-		Connection con = null;
-		PreparedStatement psmt = null;
-		ResultSet rs = null;
-		String sql = null;
-		int num = (page-1)*length;
-		int getRsCount = 0;
-		ArrayList<Movie>movieList = new ArrayList<Movie>();
-		
-		try{
-			con = ConnectionUtil.getConnection();
-			sql = "select m_num, m_name, launch_date, genre, poster, end_date, m_price, content "
-					+"from MOVIE where content like ?";
-			psmt = con.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-			psmt.setString(1, "%"+content+"%");
-			rs = psmt.executeQuery();
-			
-			if(num>0){
-				rs.absolute(num);
-			}
-			
-			while(rs.next()&&getRsCount<length){
-				getRsCount++;
-				String mnum = rs.getString(1);
-				String mname2 = rs.getString(2);
-				Date lDate = rs.getDate(3);
-				String genre2 = rs.getString(4);
-				String poster = rs.getString(5);
-				Date eDate = rs.getDate(6);
-				long mprice = rs.getLong(7);
-				String content2 = rs.getString(8);
-				
-				Movie movie = new Movie();
-				movie.setMnum(mnum);
-				movie.setMname(mname2);
-				movie.setLaunchDate(lDate);
-				movie.setGenre(genre2);
-				movie.setEndDate(eDate);
-				movie.setMprice(mprice);
-				movie.setContent(content2);
-				movie.setPoster(poster);
-				
-				movieList.add(movie);
-			}
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-		return movieList;
-	}
-
-	/**
-	 * 영화의 내용으로 찾은 영화의 수를 알 수 있는 메서드
-	 * 
-	 * @param count
-	 */
-	public static int selectMovieListByContentCount(String content) {
-		Connection con = null;
-		PreparedStatement psmt = null;
-		String sql = null;
-		ResultSet rs = null;
-		int schMovieCount = 0;
-
-		try{
-			con = ConnectionUtil.getConnection();
-			sql = "select count(*) from MOVIE where content like ?";
-			psmt = con.prepareStatement(sql);
-			psmt.setString(1, "%"+ content +"%");
-			
-			rs = psmt.executeQuery();
-			
-			if(rs.next()){
-				schMovieCount = rs.getInt(1);
-			}
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-		return schMovieCount;
-	}
-
-	/**
-	 * 영화를 업데이트 할 수 있는 메서드
-	 * 
-	 * @param movie
-	 */
-	public static void updateMovie(Movie movie) {
-		Connection con = null;
-		PreparedStatement psmt = null;
-		String sql = null;
-		
-		try{
-			con = ConnectionUtil.getConnection();
-			sql = "update MOVIE set m_name=?, launch_date=?, genre=?, poster=?, end_date=?"
-					+", m_price=?, content=? where m_num=?";
-			psmt = con.prepareStatement(sql);
-			psmt.setString(1, movie.getMname());
-			psmt.setString(2, movie.getLaunchDate().toString());
-			psmt.setString(3, movie.getGenre());
-			psmt.setString(4, movie.getPoster());
-			psmt.setString(5, movie.getEndDate().toString());
-			psmt.setLong(6, movie.getMprice());
-			psmt.setString(7, movie.getMnum());
-			
-			psmt.executeUpdate();
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-	}
-	/*
 	private static String resource="sqlmap-config.xml";
 	private static Reader sqlReader;
 	static{
@@ -563,25 +23,23 @@ public class MovieDAO {
 	}
 	private static SqlSessionFactory sqlMapper =
 			new SqlSessionFactoryBuilder().build(sqlReader);
-	public static List selectMovieList(int page, int length, String gubun){
+	
+	public static List<Movie> selectMovieList(int page, int length, String gubun){
 		SqlSession session = null;
 		List<Movie> movieList = null;
-		String schwhere = null;
 		
-		if("screen".equals(gubun)){
-			schwhere = " and launch_date<=sysdate";
-		}else if("schedule".equals(gubun)){
-			schwhere = "and launch_date>sysdate";
-		}else if("reservation".equals(gubun)){
-			schwhere = "and end_date>sysdate";
-		}else{
-			schwhere = "";
-		}
 		try{
-			
 			session = sqlMapper.openSession(true);
-			RowBounds rowBounds = new RowBounds((page-1)*length,length);
-			movieList = session.selectList("Movie.selectMovie",schwhere,rowBounds);
+			RowBounds rowBounds = new RowBounds((page-1)*length, length);
+			if("screen".equals(gubun)){
+				movieList = session.selectList("MovieService.selectMovieListScreen", null, rowBounds);
+			}else if("schedule".equals(gubun)){
+				movieList = session.selectList("MovieService.selectMovieListSchedule", null, rowBounds);
+			}else if("reservation".equals(gubun)){
+				movieList = session.selectList("MovieService.selectMovieListReservation", null, rowBounds);
+			}else{
+				movieList = session.selectList("MovieService.selectMovieListTotal", null, rowBounds);
+			}
 		}finally{
 			session.close();
 		}
@@ -590,36 +48,86 @@ public class MovieDAO {
 	public static int selectMovieCount(String gubun){
 		SqlSession session = null;
 		Integer mcount = 0;
-		String schwhere = null;
-		
-		if("screen".equals(gubun)){
-			schwhere = " and launch_date<=sysdate";
-		}else if("schedule".equals(gubun)){
-			schwhere = "and launch_date>sysdate";
-		}else if("reservation".equals(gubun)){
-			schwhere = "and end_date>sysdate";
-		}else{
-			schwhere = "";
-		}
 		try{
 			session = sqlMapper.openSession(true);
-			mcount = session.selectOne("Movie.selectMovieListCount", schwhere);
+			if("screen".equals(gubun)){
+				mcount = session.selectOne("MovieService.selectMovieListScreenCnt");
+			}else if("schedule".equals(gubun)){
+				mcount = session.selectOne("MovieService.selectMovieListScheduleCnt");
+			}else if("reservation".equals(gubun)){
+				mcount = session.selectOne("MovieService.selectMovieListReservationCnt");
+			}else{	
+				mcount = session.selectOne("MovieService.selectMovieListTotalCnt");
+			}
 		}finally{
 			session.close();
 		}
 		return mcount;
-	}
+	}	
 	
 	public static List<Movie> rankingMovieList(){
 		SqlSession session = null;
 		List<Movie> movieList = null;
 		try{
 			session = sqlMapper.openSession(true);
-			movieList = session.selectList("Movie.selectMovieRanking");
+			RowBounds rowBounds = new RowBounds(0,3);
+			movieList = session.selectList("MovieService.selectMovieRanking", null, rowBounds);
 		}finally{
 			session.close();
 		}
 		return movieList;
 	}
-	*/
+	
+	public static Movie selectMovie(String mnum){
+		SqlSession session = null;
+		Movie movie = null;
+		try{
+			session = sqlMapper.openSession(true);
+			movie = session.selectOne("MovieService.selectMovie",mnum);
+		}finally{
+			session.close();
+		}
+		return movie;
+	}
+	
+	public static List<Movie> selectMovieListSearch(int page, int length, String schCode, String schString){
+		SqlSession session = null;
+		List<Movie> movieList = null;
+		String exeQuery = null;
+		try{
+			session = sqlMapper.openSession(true);
+			RowBounds rowBounds = new RowBounds((page-1)*length, length);
+			if("mname".equals(schCode)){
+				exeQuery = "MovieService.selectMovieListByMname";
+			}else if("genre".equals(schCode)){
+				exeQuery = "MovieService.selectMovieListByGenre";
+			}else if("content".equals(schCode)){
+				exeQuery = "MovieService.selectMovieListByContent";
+			}
+			movieList = session.selectList(exeQuery,"%"+schString+"%", rowBounds);
+		}finally{
+			session.close();
+		}
+		return movieList;
+	}
+	
+	public static int selectMovieListSearchCnt(String schCode, String schString){
+		SqlSession session = null;
+		Integer mcnt = 0;
+		String schQuery = null;
+		try{
+			session = sqlMapper.openSession(true);
+			if("mname".equals(schCode)){
+				schQuery = "MovieService.selectMovieListByMnameCount";
+			}else if("genre".equals(schCode)){
+				schQuery = "MovieService.selectMovieListByGenreCount";
+			}else if("content".equals(schCode)){
+				schQuery = "MovieService.selectMovieListByContentCount";
+			}
+			mcnt = session.selectOne(schQuery,"%"+schString+"%");
+		}finally{
+			session.close();
+		}
+		return mcnt;
+	}
 }
