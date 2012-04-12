@@ -161,7 +161,13 @@ public class MatchService extends HttpServlet {
 		Match match = MatchDAO.selectMatch(matchNo);
 		ArrayList<Team> teamList = TeamDAO.selectTeamList();
 		ArrayList<Loc> locList = LocDAO.selectLocList();
-		int betting = BettingDAO.selectBettingMatchCount(matchNo);
+		int betting = 0;
+		if(BettingDAO.selectBettingByHome(matchNo).equals(null)){
+			
+		}else{
+			betting = 2;
+		}
+		
 		request.setAttribute("BETTING", betting);
 		request.setAttribute("TEAM_LIST", teamList);
 		request.setAttribute("MATCH", match);
