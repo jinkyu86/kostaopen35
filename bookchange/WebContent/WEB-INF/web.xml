@@ -62,4 +62,15 @@
     <url-pattern>/QaService</url-pattern>
   </servlet-mapping>
   
+  <servlet>
+    <description></description>
+    <display-name>BlockService</display-name>
+    <servlet-name>BlockService</servlet-name>
+    <servlet-class>kr.or.kosta.bookchange.member.BlockService</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>BlockService</servlet-name>
+    <url-pattern>/BlockService</url-pattern>
+  </servlet-mapping>
+  
 </web-app>
