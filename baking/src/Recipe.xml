@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+		
+<mapper namespace="Recipe">		
+	<parameterMap type="kr.or.kosta.recipe.Recipe" id="insertParameterMap">
+	   	<parameter property="recipeNum"/>
+		<parameter property="title"/>
+		<parameter property="content"/>
+		<parameter property="img"/>
+		<parameter property="material"/>
+		<parameter property="good_division.division"/>
+	</parameterMap>
+	
+	<parameterMap type="kr.or.kosta.recipe.Recipe" id="updateParameterMap">
+		<parameter property="title"/>
+		<parameter property="content"/>
+		<parameter property="img"/>
+		<parameter property="material"/>
+		<parameter property="recipeNum"/>
+	</parameterMap>
+	
+	<resultMap type="kr.or.kosta.recipe.Recipe" id="selectResultMap">
+		<result property="recipeNum"			  column="recipe_num"/>
+		<result property="title"				  column="title"/>
+		<result property="content"				  column="content"/>
+		<result property="img"					  column="img"/>
+		<result property="material"				  column="material"/>
+		<result property="good_division.division" column="division"/>
+		<result property="good_division.gName"	  column="g_name"/>
+	</resultMap>
+	
+	<resultMap type="kr.or.kosta.recipe.Recipe" id="selectRecipeResultMap">
+		<result property="recipeNum"			  column="recipe_num"/>
+		<result property="title"				  column="title"/>
+		<result property="content"				  column="content"/>
+		<result property="img"					  column="img"/>
+		<result property="material"				  column="material"/>
+		<result property="good_division.gName"	  column="g_name"/>
+	</resultMap>
+	
+	
+	<insert id="insertRecipe" parameterMap="insertParameterMap">
+		INSERT INTO RECIPE(recipe_num, title, content, img, material, division)
+		VALUES(?, ?, ?, ?, ?, ?)
+	</insert>
+	
+	<update id="updateRecipe" parameterMap="updateParameterMap">
+		UPDATE RECIPE SET title=?, content=?, img=?, material=?
+		WHERE recipe_num=?
+	</update>
+	
+	<delete id="deleteRecipe">
+		DELETE FROM recipe
+		WHERE recipe_num=#{recipenum}
+	</delete>
+	
+	<select id="selectRecipeList" resultMap="selectResultMap">
+		SELECT r.recipe_num as recipe_num,
+			   r.title 		as title,
+			   r.content 	as content,
+			   r.img 		as img,
+			   r.material 	as material,
+			   r.division 	as division,
+			   g.g_name 	as g_name
+		FROM recipe r JOIN good_division g
+		ON r.division=g.division
+	</select>
+	
+	<select id="selectDivisionRecipeList" resultMap="selectResultMap">
+		SELECT r.recipe_num as recipe_num,
+			   r.title 		as title,
+			   r.content 	as content,
+			   r.img 		as img,
+			   r.material 	as material,
+			   r.division 	as division,
+			   g.g_name 	as g_name
+		FROM recipe r JOIN good_division g
+		ON r.division=g.division
+		WHERE r.division=#{division}
+	</select>
+	
+	<select id="selectRecipe" resultMap="selectResultMap">
+		SELECT r.recipe_num as recipe_num,
+			   r.title 		as title,
+			   r.content 	as content,
+			   r.img 		as img,
+			   r.material 	as material,
+			   r.division 	as division,
+			   g.g_name 	as g_name
+		FROM recipe r JOIN good_division g
+		ON r.division=g.division
+		where r.recipe_num=#{recipe_num}
+	</select>
+	
+	<select id="selectGoodRelationRecipeList" resultMap="selectRecipeResultMap">
+		SELECT r.recipe_num as recipe_num,
+			   r.title 		as title,
+			   r.content 	as content,
+			   r.img 		as img,
+			   r.material 	as material,
+			   d.g_name 	as g_name
+		FROM good_recipe_relation grr JOIN recipe r
+		ON grr.recipe_num=r.recipe_num
+		JOIN good_division d
+		ON d.division=r.division
+		WHERE grr.good_num=#{goodNum}
+	</select>
+	
+	
+	<select id="maxRecipeNumber" resultType="java.lang.Integer">
+		SELECT max(recipe_num)
+		FROM recipe
+	</select>
+
+</mapper>
+
