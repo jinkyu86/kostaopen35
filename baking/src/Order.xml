@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Order">
+
+<parameterMap
+   type="kr.or.kosta.order.Order"
+   id="insertParameterMap">
+	<parameter property="member.memberid"/>
+	<parameter property="good.goodNum"/>
+	<parameter property="qty"/>
+	<parameter property="good.goodPrice"/>
+</parameterMap>
+
+<insert id="insertOrder"
+	parameterMap="insertParameterMap">
+			INSERT INTO g_order
+			(order_num,memberid,good_num,qty,price,buy_date)
+			VALUES (order_seq.nextval,?,?,?,?,sysdate)
+</insert>
+
+<resultMap
+   type="kr.or.kosta.order.Order"
+   id="selectResultMap">
+	<result property="good.goodNum" column="goodNum"/>
+	<result property="good.name" column="gname"/>
+	<result property="good.explantion" column="explantion"/>
+	<result property="good.img" column="img"/>
+	<result property="member.name" column="name"/>
+	<result property="member.zipcode" column="zipcode"/>
+	<result property="member.address" column="address"/>
+	<result property="member.strAddress" column="strAddress"/>
+	<result property="member.phoneNumber" column="phoneNumber"/>
+	<result property="member.telNumber" column="telNumber"/>
+	<result property="orderNum" column="orderNum"/>
+	<result property="memberid" column="memberid"/>
+	<result property="qty" column="qty"/>
+	<result property="price" column="price"/>
+</resultMap>
+<select id="selectOrder"
+	resultMap="selectResultMap">
+		SELECT g.good_num as goodNum,g.name as gname,g.explantion as explantion,g.img as img,
+			   m.name as name,m.zipcode as zipcode,m.address as address,m.str_address as strAddress,m.phone_number as phoneNumber,m.tel_number as telNumber,
+			   o.order_num as orderNum,o.memberid as memberid,o.qty as qty,o.price as price
+		FROM good g JOIN g_order o ON g.good_num=o.good_num
+		JOIN member m ON m.memberid=o.memberid
+		WHERE o.order_num=#{order_num}
+</select>
+
+<resultMap
+   type="kr.or.kosta.order.Order"
+   id="selectResultMaps">
+	<result property="memberid" column="memberid"/>
+	<result property="orderNum" column="orderNum"/>
+	<result property="qty" column="qty"/>
+	<result property="price" column="price"/>
+	<result property="buyDate" column="buyDate"/>
+	<result property="good.goodNum" column="goodNum"/>
+	<result property="good.name" column="gname"/>
+	<result property="good.explantion" column="explantion"/>
+	<result property="good.img" column="img"/>
+	<result property="good.option" column="goption"/>
+	<result property="member.password" column="pw"/>
+	<result property="member.name" column="name"/>
+	<result property="member.regiNumber" column="regiNumber"/>
+	<result property="member.zipcode" column="zipcode"/>
+	<result property="member.address" column="address"/>
+	<result property="member.strAddress" column="strAddress"/>
+	<result property="member.email" column="email"/>
+	<result property="member.phoneNumber" column="phoneNumber"/>
+	<result property="member.telNumber" column="telNumber"/>
+	<result property="good.good_division.division" column="division"/>
+	<result property="good.good_division.gName" column="dname"/>
+</resultMap>
+
+<select id="selectOrderList"
+	resultMap="selectResultMaps">
+		SELECT o.memberid as memberid,o.order_num as orderNum,o.qty as qty,o.price as price,to_char(o.buy_date,'yyyy/mm/dd hh24:mi') as buyDate,
+			   g.good_num as goodNum,g.name as gname,g.explantion as explantion,g.img as img,g.g_option as goption,
+			   m.password as pw,m.name as name,m.regi_number as regiNumber,m.zipcode as zipcode,m.address as address,m.str_address as strAddress,m.email as email,m.phone_number as phoneNumber,m.tel_number as telNumber,
+			   d.division as division,d.g_name as dname
+		FROM g_order o JOIN good g ON o.good_num=g.good_num JOIN member m ON o.memberid=m.memberid JOIN good_division d ON g.division=d.division
+		WHERE o.memberid like #{memberid}
+</select>
+</mapper>
