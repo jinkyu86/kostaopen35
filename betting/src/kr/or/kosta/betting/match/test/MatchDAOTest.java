@@ -1,6 +1,7 @@
 package kr.or.kosta.betting.match.test;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import kr.or.kosta.betting.loc.Loc;
 import kr.or.kosta.betting.match.Match;
@@ -14,15 +15,15 @@ public class MatchDAOTest {
 
 	@Test
 	public void testSelectMatchList() {
-		ArrayList<Match> page1List = MatchDAO.selectMatchList(1, 5);
+		List<Match> page1List = MatchDAO.selectMatchList(1, 5);
 		System.out.println("page1List:" + page1List);
-		ArrayList<Match> page2List = MatchDAO.selectMatchList(1, 5);
+		List<Match> page2List = MatchDAO.selectMatchList(2, 5);
 		System.out.println("page2List:" + page2List);
 
 	}
 	@Test
 	public void testSelectMatchByDate() {
-		ArrayList<Match> matchList = MatchDAO.selectMatchByDate("2012/03/28");
+		List<Match> matchList = MatchDAO.selectMatchByDate("2012/03/28");
 		for(int i=0;i<matchList.size();i++){
 			Match match = matchList.get(i);
 			System.out.println(match);
