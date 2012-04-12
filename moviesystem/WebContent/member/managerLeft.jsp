@@ -3,5 +3,5 @@
 				<div id="member_manage">&nbsp;&nbsp;&nbsp;Member Manage</div>
 				<div id="member_list">&nbsp;&nbsp;-&nbsp;<a href="/moviesystem/MemberService?method=viewMemberList">Member List</a></div>
 				<div id="member_search">&nbsp;&nbsp;-&nbsp;<a href="/moviesystem/MemberService?method=searchMemberList">Member Search</a></div>
-				
+				<div id="movie_List">&nbsp;&nbsp;-&nbsp;<a href="/moviesystem/MovieService?method=adminMovieList">Movie List</a></div>
 			</div>
