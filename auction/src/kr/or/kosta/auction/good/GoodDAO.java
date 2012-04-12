@@ -1,34 +1,62 @@
 package kr.or.kosta.auction.good;
 
+import java.io.IOException;
+import java.io.Reader;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+
 import kr.or.kosta.auction.util.ConnectionUtil;
 
 public class GoodDAO {
+	
+	private static String resource="sqlmap-config.xml";
+	private static Reader sqlReader;
+	static{
+			try {
+				sqlReader=Resources.getResourceAsReader(resource);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+	}
+	private static SqlSessionFactory sqlMapper =
+			new SqlSessionFactoryBuilder().build(sqlReader);
 
 	/**
 	 * @param good
 	 */
 	public static void insertGood(Good good) {
-		Connection con=null;
-		PreparedStatement psmt=null;
-		con=ConnectionUtil.getConnection();
-		try {
-		psmt=con.prepareStatement(
-				"INSERT INTO good "+
-				"(g_num, gname, detail, img) "+
-				"VALUES (GOOD_SEQ.nextval, ?, ?, ?)");
-		psmt.setString(1, good.getgName());
-		psmt.setString(2, good.getDetail());
-		psmt.setString(3, good.getImg());
-		psmt.executeQuery();
-		} catch (SQLException e) {
-			e.printStackTrace();
+		
+		SqlSession session=null;
+		try{
+			session=sqlMapper.openSession(true);
+			session.insert("Good.insertGood", good);
 		}
+		finally{
+			session.close();
+		}
+//		Connection con=null;
+//		PreparedStatement psmt=null;
+//		con=ConnectionUtil.getConnection();
+//		try {
+//		psmt=con.prepareStatement(
+//				"INSERT INTO good "+
+//				"(g_num, gname, detail, img) "+
+//				"VALUES (GOOD_SEQ.nextval, ?, ?, ?)");
+//		psmt.setString(1, good.getgName());
+//		psmt.setString(2, good.getDetail());
+//		psmt.setString(3, good.getImg());
+//		psmt.executeQuery();
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
 	}
 
 	/**
