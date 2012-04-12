@@ -45,7 +45,7 @@
 </update>
 
 <delete id="deleteMatch">
-	DELETE FROM tb_match
+	DELETE FROM match
 	WHERE match_num=#{matchnum}
 </delete>
 
@@ -86,7 +86,7 @@
 				ON m.home_team_num=h.team_num
 				JOIN team a
 				ON m.away_team_num=a.team_num
-				RIGHT JOIN  team w
+				LEFT JOIN  team w
 				ON m.win_team_num=w.team_num
 				JOIN loc l
 				ON  m.loc_num=l.loc_num
@@ -112,7 +112,7 @@
 				ON m.home_team_num=h.team_num
 				JOIN team a
 				ON m.away_team_num=a.team_num
-				RIGHT JOIN  team w
+				LEFT JOIN  team w
 				ON m.win_team_num=w.team_num
 				JOIN loc l
 				ON  m.loc_num=l.loc_num
@@ -139,7 +139,7 @@
 				ON m.home_team_num=h.team_num
 				JOIN team a
 				ON m.away_team_num=a.team_num
-				RIGHT JOIN  team w
+				LEFT JOIN  team w
 				ON m.win_team_num=w.team_num
 				JOIN loc l
 				ON  m.loc_num=l.loc_num
@@ -147,5 +147,29 @@
 	ORDER BY match_num DESC
 </select>
 
+<select id="selectMatchCount" resultType="java.lang.Integer">
+	 SELECT COUNT(*)
+	FROM match m JOIN team h
+				ON m.home_team_num=h.team_num
+				JOIN team a
+				ON m.away_team_num=a.team_num
+				LEFT JOIN  team w
+				ON m.win_team_num=w.team_num
+				JOIN loc l
+				ON  m.loc_num=l.loc_num
+</select>
+
+<select id="selectMatchTime" resultType="java.lang.String">
+   SELECT TO_CHAR(match_time,'yyyy/mm/dd hh24:mi:ss')
+   FROM match m JOIN team h
+				ON m.home_team_num=h.team_num
+				JOIN team a
+				ON m.away_team_num=a.team_num
+				LEFT JOIN  team w
+				ON m.win_team_num=w.team_num
+				JOIN loc l
+				ON  m.loc_num=l.loc_num
+	WHERE m.match_num=#{matchnum}
+</select>
 
 </mapper>
