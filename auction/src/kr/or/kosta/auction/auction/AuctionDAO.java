@@ -82,12 +82,12 @@ public class AuctionDAO {
 		}
 		return auctionList;
 	}
-	public static Auction selectAuctionSoldById(String userid){
+	public static List<Auction> selectAuctionSoldById(String userid){
 		SqlSession session = null;
-		Auction auction = null;
+		List<Auction> auction = null;
 		try{
 			session = sqlMapper.openSession(true);
-			auction = session.selectOne("selectAuctionSoldById",userid);
+			auction = session.selectList("selectAuctionSoldById",userid);
 		} finally {
 			session.close();
 		}
