@@ -130,4 +130,13 @@ public class MovieDAO {
 		}
 		return mcnt;
 	}
+	public static void addMovie(Movie movie){
+		SqlSession session = null;
+		try{
+			session = sqlMapper.openSession(true);
+			session.insert("MovieService.addMovie",movie);
+		}finally{
+			session.close();
+		}
+	}
 }
