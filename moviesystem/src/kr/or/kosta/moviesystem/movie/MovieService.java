@@ -203,7 +203,7 @@ public class MovieService extends HttpServlet{
 			HttpServletResponse response) throws IOException, ServletException{
 		String mnum = request.getParameter("mnum");
 		
-		ArrayList<ScreenTime> screenTimeList = ScreenTimeDAO.selectScreen(mnum);
+		List<ScreenTime> screenTimeList = ScreenTimeDAO.selectScreen(mnum);
 
 		JSONArray jsonArray = JSONArray.fromObject(screenTimeList);
 

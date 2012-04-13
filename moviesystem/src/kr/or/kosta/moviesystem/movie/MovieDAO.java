@@ -24,6 +24,20 @@ public class MovieDAO {
 	private static SqlSessionFactory sqlMapper =
 			new SqlSessionFactoryBuilder().build(sqlReader);
 	
+	
+	public static List selectMovieList(){
+		SqlSession session = null;
+		List<Movie>movieList=null;
+		try{
+			session= sqlMapper.openSession(true);
+			movieList=session.selectList("Movie.selectMovieList");
+			
+		}finally{
+			session.close();
+		}
+		return movieList;
+	}
+	
 	public static List<Movie> selectMovieList(int page, int length, String gubun){
 		SqlSession session = null;
 		List<Movie> movieList = null;
