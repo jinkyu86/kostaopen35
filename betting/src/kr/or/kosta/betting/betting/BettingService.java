@@ -164,12 +164,14 @@ public class BettingService extends HttpServlet {
 
 					Member member = new Member();
 					member.setId(ID);
+					member.setMineral(meneral);
 
 					mbd.setBetting(betting1);
 					mbd.setMember(member);
 
 					MemberBetDataDAO.insultMemberBetData(mbd);
-					MemberDAO.updateMineralByID(ID, meneral);
+					
+					MemberDAO.updateMineralByID(member);
 					request.setAttribute("SUCCESS", "성공적으로 베팅에 참여하였습니다.");
 				} else {
 					awaySeleRating = awaySeleRating + 1;
@@ -211,12 +213,13 @@ public class BettingService extends HttpServlet {
 
 					Member member = new Member();
 					member.setId(ID);
+					member.setMineral(meneral);
 
 					mbd.setBetting(betting1);
 					mbd.setMember(member);
 
 					MemberBetDataDAO.insultMemberBetData(mbd);
-					MemberDAO.updateMineralByID(ID, meneral);
+					MemberDAO.updateMineralByID(member);
 					request.setAttribute("SUCCESS", "성공적으로 베팅에 참여하였습니다.");
 				}
 			} else {
