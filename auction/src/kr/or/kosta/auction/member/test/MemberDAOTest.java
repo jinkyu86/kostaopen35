@@ -46,7 +46,7 @@ public class MemberDAOTest {
 
 	@Test
 	public void testSelectMember() {
-		Member member=MemberDAO.selectMember("jojo1");
+		Member member=MemberDAO.selectMember("apple");
 		System.out.println(member.toString());
 	}
 
