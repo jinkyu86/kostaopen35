@@ -1,7 +1,7 @@
 package kr.or.kosta.betting.memberbetdata;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -73,8 +73,11 @@ public class MemberBetDataService extends HttpServlet {
 			String mbdNum = request.getParameter("mbdnum");
 		
 			mineral = mineral + betMineral;
-		
-			MemberDAO.updateMineralByID(ID, mineral);
+			
+			Member member = new Member();
+			member.setId(ID);
+			member.setMineral(mineral);
+			MemberDAO.updateMineralByID(member);
 			MemberBetDataDAO.updateMemberBetData(mbdNum);
 		
 			request.setAttribute("SUCCESS", "미네랄을 돌려드렸습니다.");
@@ -159,7 +162,10 @@ public class MemberBetDataService extends HttpServlet {
 
 					BettingDAO.updateBetting(aBetting);
 
-					MemberDAO.updateMineralByID(ID, mineral);
+					Member member = new Member();
+					member.setId(ID);
+					member.setMineral(mineral);
+					MemberDAO.updateMineralByID(member);
 
 					MemberBetDataDAO.deleteMemberbetData(mbdNum);
 
@@ -196,7 +202,10 @@ public class MemberBetDataService extends HttpServlet {
 
 					BettingDAO.updateBetting(hBetting);
 
-					MemberDAO.updateMineralByID(ID, mineral);
+					Member member = new Member();
+					member.setId(ID);
+					member.setMineral(mineral);
+					MemberDAO.updateMineralByID(member);
 
 					MemberBetDataDAO.deleteMemberbetData(mbdNum);
 					
@@ -240,8 +249,11 @@ public class MemberBetDataService extends HttpServlet {
 			String mbdNum = request.getParameter("mbdnum");
 		
 			mineral = mineral + betMineral;
-		
-			MemberDAO.updateMineralByID(ID, mineral);
+			
+			Member member = new Member();
+			member.setId(ID);
+			member.setMineral(mineral);
+			MemberDAO.updateMineralByID(member);
 			MemberBetDataDAO.updateMemberBetData(mbdNum);
 		
 			request.setAttribute("SUCCESS", "미네랄을 지급하였습니다.");
@@ -278,7 +290,7 @@ public class MemberBetDataService extends HttpServlet {
 			}
 			int length = 10;
 
-			ArrayList<MemberBetData> mbdList = MemberBetDataDAO
+			List<MemberBetData> mbdList = MemberBetDataDAO
 					.selectMemberBetDataListByID(page, length, ID);
 			request.setAttribute("MBD_LIST", mbdList);
 			int mbdCount = MemberBetDataDAO.selectMemberBetDataByIDCount(ID);
@@ -315,9 +327,9 @@ public class MemberBetDataService extends HttpServlet {
 			String matchTime = MatchDAO.selectMatchTime(matchNum);
 			int check = now.hourCheck(matchTime);
 			request.setAttribute("CHECK", check);
-			Betting bettingHome = BettingDAO.selectBettingListByHome(matchNum);
+			Betting bettingHome = BettingDAO.selectBettingByHome(matchNum);
 			request.setAttribute("BETTING_HOME", bettingHome);
-			Betting bettingAway = BettingDAO.selectBettingListByAway(matchNum);
+			Betting bettingAway = BettingDAO.selectBettingByAway(matchNum);
 			request.setAttribute("BETTING_AWAY", bettingAway);
 			MemberBetData mbd = MemberBetDataDAO.selectMemberBetData(mbdNum);
 			request.setAttribute("MBD", mbd);
