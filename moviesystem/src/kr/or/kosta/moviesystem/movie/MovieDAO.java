@@ -30,7 +30,7 @@ public class MovieDAO {
 		List<Movie>movieList=null;
 		try{
 			session= sqlMapper.openSession(true);
-			movieList=session.selectList("Movie.selectMovieList");
+			movieList=session.selectList("MovieService.selectMovieList");
 			
 		}finally{
 			session.close();
