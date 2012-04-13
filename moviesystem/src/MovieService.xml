@@ -53,6 +53,7 @@
 	select m_num, m_name, launch_date, genre, poster, end_date, m_price, content
 	from MOVIE
 	where 1=1 and end_date<![CDATA[>]]>sysdate
+		and m_num in (select m_num from screening_time where to_date(time,'yyyy-mm-dd') <![CDATA[>]]><![CDATA[=]]> to_date(sysdate, 'yyyy-mm-dd'))
 	order by launch_date desc
 </select>
 <select id="selectMovieListReservationCnt" resultType="java.lang.Integer">
@@ -137,4 +138,10 @@
 <delete id="removeMovie">
 	delete from Movie where m_num=#{mnum}
 </delete>
+
+<select id="selectMovieNum" resultMap="resultMapSelectMovieList">
+	select m_num, m_name, launch_date, genre, poster, end_date, m_price, content
+	from MOVIE
+	where m_name=#{mname}
+</select>
 </mapper>
