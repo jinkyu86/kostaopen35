@@ -74,9 +74,9 @@
 				   ,away_team_num AS anum
 				   ,a.team_name AS aname
 				   ,a.photo AS aphoto
-				   ,win_team_num AS hnum
-				   ,w.team_name AS name
-				   ,w.photo AS photo
+				   ,win_team_num AS wnum
+				   ,w.team_name AS wname
+				   ,w.photo AS wphoto
 				   ,m.loc_num AS locnum
 				   ,l.loc AS loc
 				   ,b.bet_num AS bettingnum
@@ -120,9 +120,9 @@
 				   ,away_team_num AS anum
 				   ,a.team_name AS aname
 				   ,a.photo AS aphoto
-				   ,win_team_num AS hnum
-				   ,w.team_name AS name
-				   ,w.photo AS photo
+				   ,win_team_num AS wnum
+				   ,w.team_name AS wname
+				   ,w.photo AS wphoto
 				   ,m.loc_num AS locnum
 				   ,l.loc AS loc
 				   ,b.bet_num AS bettingnum
