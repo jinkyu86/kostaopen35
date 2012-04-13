@@ -40,7 +40,7 @@ function check_display(obj){
 function memcheck(memid){
 	if(memid!='mmanager'){
 		alert('접근이 제한된 페이지입니다.');
-		history.back();
+		location.href='/moviesystem/MovieService'
 	}
 }
 var loginsession = '${sessionScope.LOGIN_MEMBER}';
