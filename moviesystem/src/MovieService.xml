@@ -103,4 +103,38 @@
 	from MOVIE
 	where content like #{content}
 </select>
+
+<parameterMap type="kr.or.kosta.moviesystem.movie.Movie" id="addParameterMap">
+	<parameter property="mname"/>
+	<parameter property="launchDate"/>
+	<parameter property="genre"/>
+	<parameter property="poster"/>
+	<parameter property="endDate"/>
+	<parameter property="mprice"/>
+	<parameter property="content"/>
+</parameterMap>
+<insert id="addMovie" parameterMap="addParameterMap">
+	insert into MOVIE(m_num, m_name, launch_date, genre, poster, end_date, m_price, content)
+	values(m_seq.nextval, ?, ?, ?, ?, ?, ?, ?)
+</insert>
+
+<parameterMap type="kr.or.kosta.moviesystem.movie.Movie" id="editParameterMap">
+	<parameter property="mname"/>
+	<parameter property="launchDate"/>
+	<parameter property="genre"/>
+	<parameter property="poster"/>
+	<parameter property="endDate"/>
+	<parameter property="mprice"/>
+	<parameter property="content"/>
+	<parameter property="mnum"/>
+</parameterMap>
+<update id="editMovie" parameterMap="editParameterMap">
+	update MOVIE set m_name=?, launch_date=?, genre=?, poster=?, end_date=?
+		, m_price=?, content=? 
+	where m_num=?
+</update>
+
+<delete id="removeMovie">
+	delete from Movie where m_num=#{mnum}
+</delete>
 </mapper>
