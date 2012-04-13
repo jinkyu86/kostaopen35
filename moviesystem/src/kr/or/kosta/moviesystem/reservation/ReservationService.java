@@ -3,6 +3,7 @@ package kr.or.kosta.moviesystem.reservation;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -18,6 +19,7 @@ import kr.or.kosta.moviesystem.movie.Movie;
 import kr.or.kosta.moviesystem.movie.MovieDAO;
 import kr.or.kosta.moviesystem.screentime.ScreenTime;
 import kr.or.kosta.moviesystem.screentime.ScreenTimeDAO;
+
 import kr.or.kosta.moviesystem.util.PageUtil;
 
 
@@ -111,7 +113,7 @@ private void viewReservationSeat(HttpServletRequest request,
 		Member member=(Member)session.getAttribute("LOGIN_MEMBER");
 		String userid=member.getUserid();
 		//id와 scrnum을 조회해서 좌석을 알아낸다.		
-		ArrayList<Reservation> reservationList=ReservationDAO.selectSeatNumByScrnum(scrnum,userid);
+		List<Reservation> reservationList=ReservationDAO.selectSeatNumByScrnumAndUserid(scrnum,userid);
 		
 		request.setAttribute("reservationList",reservationList);
 		System.out.println("reservationList = "+reservationList);
@@ -183,7 +185,7 @@ private void viewReservationSeat(HttpServletRequest request,
 		
 		System.out.println("seat="+seat+"count="+count+"scrnum="+scrnum);
 		
-		ArrayList<Integer>TotalSeatList=new ArrayList<Integer>();
+		List<Integer>TotalSeatList=new ArrayList<Integer>();
 		SeatNumList.add(seat);
 		
 		if(count>1){
@@ -246,7 +248,7 @@ private void viewReservationSeat(HttpServletRequest request,
 		reservation.setResQty(Integer.parseInt(resQty));
 		reservation.setTotalPrice(Integer.parseInt(resQty)*8000);
 		
-		ArrayList<Integer>TotalSeatList=new ArrayList<Integer>();
+		List<Integer>TotalSeatList=new ArrayList<Integer>();
 		ArrayList<Integer>SeatNumList=new ArrayList<Integer>();
 		
 		
@@ -255,7 +257,8 @@ private void viewReservationSeat(HttpServletRequest request,
 		session.setAttribute("COUNT",resQty);
 		session.setAttribute("SeatNumList", SeatNumList);
 
-
+		System.out.println("reservation="+reservation);
+		System.out.println("SeatNumList="+SeatNumList);
 		TotalSeatList=ReservationDAO.selectTotalList(scrnum);
 
 		request.setAttribute("TotalSeatList",TotalSeatList);
@@ -337,7 +340,7 @@ private void viewReservationSeat(HttpServletRequest request,
 	    String mnum=movie.getMnum();
 //		request.setAttribute("mname",mname);
 	    //userid와 mnom으로 group by time 으로 된 정보의 time sum(total_price) count(res_qty)
-	    ArrayList<Reservation>reservationList = ReservationDAO.selectReservationTime(userid,mnum);
+	    List<Reservation>reservationList = ReservationDAO.selectReservationTime(userid,mnum);
 		request.setAttribute("reservationList",reservationList);
 		RequestDispatcher rd=request.getRequestDispatcher(
 					"/reservation/viewReservationTime.jsp");
@@ -368,7 +371,7 @@ private void viewReservationSeat(HttpServletRequest request,
 		String mnum = request.getParameter("mnum");
 		System.out.println(mnum);
 		
-		ArrayList<ScreenTime> screenTimeList = ScreenTimeDAO.selectScreen(mnum);
+		List<ScreenTime> screenTimeList = ScreenTimeDAO.selectScreen(mnum);
 		System.out.println(screenTimeList);
 		JSONArray jsonArray = JSONArray.fromObject(screenTimeList);
 		System.out.println("jsonArray : "+jsonArray);
@@ -432,7 +435,8 @@ private void viewReservationSeat(HttpServletRequest request,
 					request.setAttribute("userid",userid);
 					int MovieTotalCnt = MovieDAO.selectMovieCount("");
 					//1.전체영화 리스트 조회
-					ArrayList<Movie>movieList=MovieDAO.selectMovieList(1,MovieTotalCnt, "reservation");
+					//ArrayList<Movie>movieList=MovieDAO.selectMovieList(1,MovieTotalCnt, "reservation");
+					List<Movie>movieList=MovieDAO.selectMovieList();
 					//2.request에 저장
 					request.setAttribute("MOVIE_LIST",movieList);
 					//3.학생추가 페이지 이동 객체 생성
@@ -451,8 +455,14 @@ private void InsertReservation(HttpServletRequest request,
 	HttpSession session=request.getSession();
 	Member member=(Member)session.getAttribute("LOGIN_MEMBER");
 	Reservation reservation=(Reservation)session.getAttribute("RESERVATION");
-	ArrayList<Integer> SeatNumList=(ArrayList<Integer>)session.getAttribute("SeatNumList");
-	ReservationDAO.insertReservation(member,reservation, SeatNumList);
+	reservation.setMember(member);
+	List<Integer> SeatNumList=(List<Integer>)session.getAttribute("SeatNumList");
+	
+	for(int i=0;i<SeatNumList.size();i++){
+		reservation.setSeatnum(SeatNumList.get(i));
+		ReservationDAO.insertReservation(reservation);
+	}
+	
 	
 	
 	RequestDispatcher rd=
@@ -599,7 +609,7 @@ private void InsertReservation(HttpServletRequest request,
 		Member member=(Member)session.getAttribute("LOGIN_MEMBER");
 		String userid=member.getUserid();
 		//1.StudentDAO에서 페이지에 해당하는 학생조회 메서들 호출
-		ArrayList<Reservation>reservationList=ReservationDAO.selectReservationList(length,page,userid);
+		List<Reservation>reservationList=ReservationDAO.selectReservationList(length,page,userid);
 		//2.request에 1의 page에 해당하는 학생 정보 저장
 		request.setAttribute("RESERVATION_LIST",reservationList);
 		System.out.println("성공"+reservationList);

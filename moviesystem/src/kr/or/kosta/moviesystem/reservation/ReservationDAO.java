@@ -1,5 +1,7 @@
 package kr.or.kosta.moviesystem.reservation;
 
+import java.io.IOException;
+import java.io.Reader;
 import java.sql.Date;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,6 +9,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.RowBounds;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 
 
@@ -17,74 +27,73 @@ import kr.or.kosta.moviesystem.screentime.ScreenTime;
 import kr.or.kosta.moviesystem.util.ConnectionUtil;
 
 
-
 public class ReservationDAO {
 
 	
-	/**
-	 * 영화를 선택해 예약목록에 등록하는 기능
-	 
-	 */
-	public static void insertReservation(Member member,Reservation reservation,ArrayList<Integer> SeatNumList) {
-		Connection con=null;
-		PreparedStatement psmt=null;
-		
-		
-		for(int i=0;i<SeatNumList.size();i++){
-			try{
-				con=ConnectionUtil.getConnection();
-				psmt=con.prepareStatement(
-						"INSERT INTO RESERVATION" +
-						"(RES_NUM, M_NUM,USERID, RES_DATE, SCR_NUM, RES_QTY, TOTAL_PRICE, PAY_STATE,SEAT_NUM)"+
-						"VALUES(res_seq.nextval,?,?,sysdate,?,?,?,?,?)");
-				psmt.setString(1,reservation.getMovie().getMnum());
-				psmt.setString(2,member.getUserid());
-			    psmt.setString(3,reservation.getScreenTime().getScrnum());
-				psmt.setLong(4,1);
-				psmt.setLong(5,8000);
-				psmt.setString(6, "결제완료");
-				psmt.setLong(7,SeatNumList.get(i));
-				psmt.executeUpdate();
-				
-			}catch(Exception e){
+	private static String resource="sqlmap-config.xml";
+	private static Reader sqlReader;
+	static{
+			try {
+				sqlReader=Resources.getResourceAsReader(resource);
+			} catch (IOException e) {
 				e.printStackTrace();
 			}
-		}
-
-		
-		
-		
 	}
-	
-	
+	private static SqlSessionFactory sqlMapper =
+			new SqlSessionFactoryBuilder().build(sqlReader);
 	
 	/**
 	 * 영화를 선택해 예약목록에 등록하는 기능
 	 
 	 */
 	public static void insertReservation(Reservation reservation) {
-		Connection con=null;
-		PreparedStatement psmt=null;
 		
+		SqlSession session= null;
 		try{
-			con=ConnectionUtil.getConnection();
-			psmt=con.prepareStatement(
-					"INSERT INTO RESERVATION" +
-					"(RES_NUM, M_NUM,USERID, RES_DATE, SCR_NUM, RES_QTY, TOTAL_PRICE, PAY_STATE,SEAT_NUM)"+
-					"VALUES(res_seq.nextval,?,?,sysdate,?,?,?,?,?)");
-			psmt.setString(1,reservation.getMovie().getMnum());
-			psmt.setString(2,reservation.getMember().getUserid());
-		    psmt.setString(3,reservation.getScreenTime().getScrnum());
-			psmt.setLong(4,reservation.getResQty());
-			psmt.setLong(5,reservation.getTotalPrice());
-			psmt.setString(6, "결제대기");
-			psmt.setLong(7,reservation.getSeatnum());
-			psmt.executeUpdate();
-			
-		}catch(Exception e){
-			e.printStackTrace();
+			session = sqlMapper.openSession(true);
+			System.out.println("1 reservation = "+reservation);
+			session.insert("Reservation.insertReservation",reservation);	
 		}
+		finally{
+			//Connection을 ConnectionPool에 반납해야지 안끊긴다. 
+			//그리고 이건 무조건 반납해야지 멈추지 않으니 finally에 써주어야한다.
+			session.close();
+		}
+		
+		
 	}
+	
+	
+	
+
+	
+	/**
+	 * 영화를 선택해 예약목록에 등록하는 기능
+	 
+	 */
+//	public static void insertReservation(Reservation reservation) {
+//		Connection con=null;
+//		PreparedStatement psmt=null;
+//		
+//		try{
+//			con=ConnectionUtil.getConnection();
+//			psmt=con.prepareStatement(
+//					"INSERT INTO RESERVATION" +
+//					"(RES_NUM, M_NUM,USERID, RES_DATE, SCR_NUM, RES_QTY, TOTAL_PRICE, PAY_STATE,SEAT_NUM)"+
+//					"VALUES(res_seq.nextval,?,?,sysdate,?,?,?,?,?)");
+//			psmt.setString(1,reservation.getMovie().getMnum());
+//			psmt.setString(2,reservation.getMember().getUserid());
+//		    psmt.setString(3,reservation.getScreenTime().getScrnum());
+//			psmt.setLong(4,reservation.getResQty());
+//			psmt.setLong(5,reservation.getTotalPrice());
+//			psmt.setString(6, "결제대기");
+//			psmt.setLong(7,reservation.getSeatnum());
+//			psmt.executeUpdate();
+//			
+//		}catch(Exception e){
+//			e.printStackTrace();
+//		}
+//	}
 
 	/**
 	 * group by 영화이름
@@ -93,47 +102,21 @@ public class ReservationDAO {
 	 
 	 */
 	
-	public static ArrayList<Reservation> selectReservationList(int length,int page,String memberid){//반환값을 ArrayList로 한다.
-		Connection con =null;
-		PreparedStatement psmt=null;
-		String sql=null;//쿼리문 저장할 곳
-		ResultSet rs=null;//커리문의 주소를 받아온다.(rs.next()는 쿼리문이있으면 true 없으면 flase
-		Reservation reservation=null;
-		ArrayList<Reservation>reservationList=new ArrayList<Reservation>();
+	public static List<Reservation> selectReservationList(int length,int page,String memberid){//반환값을 ArrayList로 한다.
+		SqlSession session=null;
+		List<Reservation> reservationList=null;
 		try{
-			con=ConnectionUtil.getConnection();
-			sql="SELECT   m.m_name" +
-					
-					"  FROM  RESERVATION r , MOVIE m"+
-					"  WHERE r.m_num=m.m_num AND r.userid=?" +
-					"  GROUP BY m.m_name";
-			//rs.absolute()가  가능하도록 설정
-			psmt=con.prepareStatement(sql,
-					ResultSet.TYPE_SCROLL_INSENSITIVE,
-					ResultSet.CONCUR_READ_ONLY);
-			psmt.setString(1,memberid);
-			rs=psmt.executeQuery();//쿼리 결과를 rs에 저장
-			System.out.println("page="+page+"length"+length);
-			if(page>1){
-				rs.absolute((page-1)*length);
-			}
-			//가져온 레코드 개수
-			int getRecordCount=0;
-			while(rs.next()&&getRecordCount<length){
-				getRecordCount++;
-				String m_name=rs.getString(1);
-				
-				reservation=new Reservation();
-				
-				Movie movie=new Movie();
-				
-				movie.setMname(m_name);
-				reservation.setMovie(movie);
-							
-				reservationList.add(reservation);
-			}//end while
-		}catch(SQLException e){
-			e.printStackTrace();
+			session = sqlMapper.openSession(true);
+			RowBounds rowBounds=new RowBounds((page-1)*length,length);
+			reservationList=
+					session.selectList("Reservation.selectReservationListByUserId",memberid,rowBounds);
+			
+		}
+		
+		finally{
+			//Connection을 ConnectionPool에 반납해야지 안끊긴다. 
+			//그리고 이건 무조건 반납해야지 멈추지 않으니 finally에 써주어야한다.
+			session.close();
 		}
 		return reservationList;
 	}
@@ -143,42 +126,18 @@ public class ReservationDAO {
 
 	 */
 	
-	public static  ArrayList<Reservation> selectReservationTime(String userid, String mnum) {
-		Connection con=null;
-		PreparedStatement psmt=null;
-		String sql=null;
-		ResultSet rs=null;
-		Reservation reservation=null;
-		ArrayList<Reservation>reservationList=new ArrayList<Reservation>();
-		try {
-			con=ConnectionUtil.getConnection();
-			sql=" select time,sum(r.total_price),sum(r.res_Qty)" +
-					" from reservation r,screening_time s " +
-					" where r.scr_num=s.scr_num AND r.userid=? AND r.m_num=?" +
-					" group by time";
+	public static List<Reservation> selectReservationTime(String userid, String mnum) {
+		SqlSession session = null;
+		List<Reservation>reservationList=null;
+		try{
+			session= sqlMapper.openSession(true);
+			HashMap<String,String> parameter=new HashMap<String,String>();
+			parameter.put("userid",userid);
+			parameter.put("mnum",mnum);
+			reservationList=session.selectList("Reservation.selectReservationTime",parameter);
 			
-			
-				psmt=con.prepareStatement(sql);
-				psmt.setString(1,userid);
-				psmt.setString(2,mnum);
-				rs=psmt.executeQuery();
-				while(rs.next()){
-					String time=rs.getString(1);
-					long totalPrice=rs.getLong(2);
-					long resQty=rs.getShort(3);					
-					
-					reservation=new Reservation();
-					ScreenTime screentime=new ScreenTime();
-					screentime.setTime(time);
-					reservation.setScreenTime(screentime);
-					reservation.setTotalPrice(totalPrice);
-					reservation.setResQty(resQty);
-					
-					System.out.println("selectReservationTime.reservation= "+reservation);
-					reservationList.add(reservation);
-				}//end while
-		} catch (SQLException e) {
-			e.printStackTrace();
+		}finally{
+			session.close();
 		}
 		return reservationList;
 	}
@@ -247,31 +206,21 @@ public class ReservationDAO {
 	 * 
 	 */
 	public static int selectReservationCount(String userid) {
-		Connection con =null;
-		PreparedStatement psmt=null;
-		String sql=null;//쿼리문 저장할 곳
-		ResultSet rs=null;//커리문의 주소를 받아온다.(rs.next()는 쿼리문이있으면 true 없으면 flase
-		int reservationCount=0;
-
+		SqlSession session=null;
+		Integer count=null;
 		try{
-			con=ConnectionUtil.getConnection();
-			sql="SELECT count(distinct m_num)" +
-					"  From reservation"+
-					"  WHERE userid=?";
-			//rs.absolute()가  가능하도록 설정
-			psmt=con.prepareStatement(sql);
-			psmt.setString(1,userid);
-			rs=psmt.executeQuery();//쿼리 결과를 rs에 저장
-			
-			System.out.println("userid= "+userid);
-			if(rs.next()){
-				reservationCount=rs.getInt(1);
-			}
-		}catch(SQLException e){
-			e.printStackTrace();
+			session = sqlMapper.openSession(true);
+			count=
+				session.selectOne("Reservation.selectReservationListByUserIdCount",userid);
+
 		}
-		return reservationCount;
 		
+		finally{
+			//Connection을 ConnectionPool에 반납해야지 안끊긴다. 
+			//그리고 이건 무조건 반납해야지 멈추지 않으니 finally에 써주어야한다.
+			session.close();
+		}
+		return count;
 	}
 
 	/**
@@ -510,95 +459,82 @@ public class ReservationDAO {
 	 * SCR_NUM으로 예약한 좌석 번호를 찾기
 	 * 
 	 */
-	public static ArrayList<Reservation> selectSeatNumByScrnum(String scrnum,String userid) {
-		Connection con=null;
-		PreparedStatement psmt=null;
-		String sql=null;
-		ResultSet rs=null;
-		//Reservation reservation=new Reservation();
-		ArrayList<Reservation>SeatList=new ArrayList<Reservation>();
-		try {
-			con=ConnectionUtil.getConnection();
-			sql="	SELECT seat_num , scr_num ,res_num,pay_state" +
-					"  FROM  reservation " +
-					"  WHERE  scr_num=? AND userid=?" ;
-		
+	public static List<Reservation> selectSeatNumByScrnumAndUserid(String scrnum,String userid) {
+		SqlSession session = null;
+		List<Reservation>reservationList=null;
+		try{
+			session= sqlMapper.openSession(true);
+			HashMap<String,String> parameter=new HashMap<String,String>();
+			parameter.put("scrnum",scrnum);
+			parameter.put("userid",userid);
+			reservationList=session.selectList("Reservation.selectSeatNumByScrnumAndUserid",parameter);
 			
-				psmt=con.prepareStatement(sql);
-				psmt.setString(1,scrnum);
-				psmt.setString(2, userid);
-				
-				rs=psmt.executeQuery();
-				while(rs.next()){
-					int seatnum=rs.getInt(1);
-					String resnum=rs.getString(3);
-					String payState=rs.getString(4);
-					Reservation reservation=new Reservation();
-					ScreenTime screenTime=new ScreenTime();
-					
-					reservation.setSeatnum(seatnum);
-					reservation.setResnum(resnum);
-					screenTime.setScrnum(scrnum);
-					reservation.setPayState(payState);
-					reservation.setScreenTime(screenTime);
-					
-					SeatList.add(reservation);
-					System.out.println("SeatList"+SeatList+"seatnum = "+seatnum);
-				}//end while
-		} catch (SQLException e) {
-			e.printStackTrace();
+		}finally{
+			session.close();
 		}
-		return SeatList;
+		return reservationList;
 	}
 	
 	/**
 	 * SCR_NUM으로 예약한 좌석 번호를 찾기
-	 * 
-	 */
-	public static ArrayList selectSeatNumByScrnum(String scrnum) {
-		Connection con=null;
-		PreparedStatement psmt=null;
-		String sql=null;
-		ResultSet rs=null;
-		ArrayList<Integer>SeatList=new ArrayList<Integer>();
-		try {
-			con=ConnectionUtil.getConnection();
-			sql="	SELECT seat_num " +
-					"  FROM  reservation " +
-					"  WHERE  scr_num=? " ;
+	 * 		SqlSession session=null;
+		List<Student> studentList=null;
+		try{
+			session = sqlMapper.openSession(true);
+			studentList=
+				session.selectList("Student.selectStudentList");
 		
-			
-				psmt=con.prepareStatement(sql);
-				psmt.setString(1,scrnum);
-				rs=psmt.executeQuery();
-				while(rs.next()){
-					int seatnum=rs.getInt(1);
-								
-		
-					SeatList.add(seatnum);
-					System.out.println("seatnum = "+seatnum);
-				}//end while
-		} catch (SQLException e) {
-			e.printStackTrace();
+
 		}
-		return SeatList;
+		
+		finally{
+			//Connection을 ConnectionPool에 반납해야지 안끊긴다. 
+			//그리고 이건 무조건 반납해야지 멈추지 않으니 finally에 써주어야한다.
+			session.close();
+		}
+		return studentList;
+	 */
+	public static List selectSeatNumByScrnum(String scrnum) {
+		System.out.println("selectSeatNumByScrnum:scrnum="+scrnum);
+		SqlSession session=null;
+		List<Reservation> reservationList=null;
+		try{
+			session = sqlMapper.openSession(true);
+			reservationList=
+				session.selectList("Reservation.selectSeatNumByScrnum",scrnum);
+		
+
+		}
+		
+		finally{
+			//Connection을 ConnectionPool에 반납해야지 안끊긴다. 
+			//그리고 이건 무조건 반납해야지 멈추지 않으니 finally에 써주어야한다.
+			session.close();
+		}
+		return reservationList;
 	}
 	/**
 	 *Total seatList
 	 * 
 	 */
-	public static ArrayList selectTotalList(String scrnum) {
-		ArrayList<Integer>SelectSeatList=new ArrayList<Integer>();
+	public static List selectTotalList(String scrnum) {
+		List<Reservation>SelectSeatList=null;
+		System.out.println("scrnum="+scrnum);
 		SelectSeatList=ReservationDAO.selectSeatNumByScrnum(scrnum);
+		
 		ArrayList<Integer>TotalSeatList=new ArrayList<Integer>();
+		System.out.println("SelectSeatList="+SelectSeatList);
 		int num;
+		
 		for(int i=0;i<40;i++){
 			TotalSeatList.add(0);
 		}
 		
+		
+		
 		for(int i=0;i<SelectSeatList.size();i++){
 			
-			num=SelectSeatList.get(i);
+			num=(int) SelectSeatList.get(i).getSeatnum();
 			if(num!=0){
 				TotalSeatList.set(num-1, 1);
 			}
