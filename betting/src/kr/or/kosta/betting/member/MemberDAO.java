@@ -376,7 +376,7 @@ public class MemberDAO {
 		SqlSession session = null;
 		try{
 			session = sqlMapper.openSession(true);
-			session.update("Member.updateMember",member );
+			session.update("Member.updateMineralByID",member );
 
 		}
 		finally{
