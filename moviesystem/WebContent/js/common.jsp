@@ -37,6 +37,12 @@ function check_display(obj){
 		$('#reservation_sub').css('display', 'none');
 	}
 }
+function memcheck(memid){
+	if(memid!='mmanager'){
+		alert('접근이 제한된 페이지입니다.');
+		history.back();
+	}
+}
 var loginsession = '${sessionScope.LOGIN_MEMBER}';
 $(document).ready(function(){
 	menu_hover('movie',3);
