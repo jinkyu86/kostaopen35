@@ -61,6 +61,7 @@
 				return false;
 			}
 			//alert($('#method').val());
+			
 			$("#movie_poster").uploadifyUpload();
 			event.preventDefault();
 		});
