@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+		
+<mapper namespace="Bid">		
+<parameterMap
+   type="kr.or.kosta.auction.bid.Bid"
+   id="insertParameterMap">
+   	<parameter property="auction.aNum"/>
+   	<parameter property="member.userid"/>
+	<parameter property="bidPrice"/>
+</parameterMap>
+
+<insert id="insertBid" 
+     parameterMap="insertParameterMap">
+	INSERT INTO BID
+				(bidnum,a_num,userid,bid_time,bid_price,moneyback)
+	VALUES (BID_SEQ.NEXTVAL,?,?,sysdate,?,0)
+</insert>
+
+<parameterMap
+   type="kr.or.kosta.auction.bid.Bid"
+   id="updateParameterMap">
+   	<parameter property="member.userid"/>
+	<parameter property="auction.aNum"/>
+	<parameter property="bidTime"/>
+	<parameter property="bidPrice"/>
+	<parameter property="moneyback"/>
+	<parameter property="bidNum"/>
+</parameterMap>
+
+<update id="updateBid"
+	parameterMap="updateParameterMap">
+	UPDATE BID
+	SET userid=?,
+		  a_num=?,
+		  bid_time=to_date(?,'yyyy/mm/dd hh24:mi:ss'),
+		  bid_price=?,
+		  moneyback=?
+	WHERE bidnum=?
+</update>
+
+<update id="updateMoneybackById">
+	UPDATE BID
+	SET moneyback=1
+	WHERE userid=#{userid}
+</update>
+
+<update id="updateMoneybackByIdInAuction">
+	UPDATE BID
+	SET moneyback=1
+	WHERE a_num=#{aNum} AND userid=#{userid}
+</update>
+
+<delete id="deleteBidById">
+	DELETE FROM BID
+	WHERE userid=#{userid}
+</delete>
+
+<resultMap id="selectResultMap" type="kr.or.kosta.auction.bid.Bid">
+	<result property="bidNum" column="bidnum"/>
+	<result property="auction.aNum" column="a_num"/>
+	<result property="member.userid" column="userid"/>
+	<result property="bidTime" column="bid_time"/>
+	<result property="bidPrice" column="bid_price"/>
+	<result property="moneyback" column="moneyback"/>
+	<result property="auction.good.gNum" column="g_num"/>
+	<result property="auction.sPrice" column="s_price"/>
+	<result property="auction.imPrice" column="im_price"/>
+	<result property="auction.sTime" column="s_time"/>
+	<result property="auction.eTime" column="e_time"/>
+	<result property="auction.sold" column="sold"/>
+	<result property="auction.cuPrice" column="cu_price"/>
+	<result property="member.pw" column="pw"/>
+	<result property="member.name" column="name"/>
+	<result property="member.email" column="email"/>
+	<result property="member.coin" column="coin"/>
+	<result property="member.emoney" column="emoney"/>
+	<result property="auction.good.gName" column="gname"/>
+	<result property="auction.good.detail" column="detail"/>
+	<result property="auction.good.img" column="img"/>
+</resultMap>
+
+<select id="selectBid" resultMap="selectResultMap">
+	SELECT b.bidnum as bidnum,
+				b.a_num as a_num,
+				b.userid as userid,
+				to_char(b.bid_time,'yyyy/mm/dd hh24:mi:ss') as bid_time,
+				b.bid_price as bid_price,
+				b.moneyback as moneyback,
+				a.g_num as g_num,
+				a.s_price as s_price,
+				a.im_price as im_price,
+				a.s_time as s_time,
+				a.e_time as e_time,
+				a.sold as sold,
+				a.cu_price as cu_price,
+				m.pw as pw,
+				m.name as name,
+				m.email as email,
+				m.coin as coin,
+				m.emoney as emoney,
+				g.gname as gname,
+				g.detail as detail,
+				g.img as img
+	FROM BID b JOIN AUCTION a ON b.a_num=a.a_num
+	         JOIN MEMBER m ON b.userid=m.userid
+			 JOIN GOOD g ON a.g_num=g.g_num
+	WHERE b.bidnum=#{bidNum}
+</select>
+
+<select id="selectBidList" resultMap="selectResultMap">
+	SELECT b.a_num as a_num,
+				b.userid as userid,
+				to_char(b.bid_time,'yyyy/mm/dd hh24:mi:ss') as bid_time,
+				b.bid_price as bid_price,
+				b.moneyback as moneyback,
+				a.g_num as g_num,
+				a.s_price as s_price,
+				a.im_price as im_price,
+				a.s_time as s_time,
+				a.e_time as e_time,
+				a.sold as sold,
+				a.cu_price as cu_price,
+				m.pw as pw,
+				m.name as name,
+				m.email as email,
+				m.coin as coin,
+				m.emoney as emoney,
+				g.gname as gname,
+				g.detail as detail,
+				g.img as img
+	FROM BID b JOIN AUCTION a ON b.a_num=a.a_num
+	         JOIN MEMBER m ON b.userid=m.userid
+			 JOIN GOOD g ON a.g_num=g.g_num
+</select>
+
+<select id="selectBidListByAuctionNum" resultMap="selectResultMap">
+	SELECT b.a_num as a_num,
+				b.userid as userid,
+				to_char(b.bid_time,'yyyy/mm/dd hh24:mi:ss') as bid_time,
+				b.bid_price as bid_price,
+				b.moneyback as moneyback,
+				a.g_num as g_num,
+				a.s_price as s_price,
+				a.im_price as im_price,
+				a.s_time as s_time,
+				a.e_time as e_time,
+				a.sold as sold,
+				a.cu_price as cu_price,
+				m.pw as pw,
+				m.name as name,
+				m.email as email,
+				m.coin as coin,
+				m.emoney as emoney,
+				g.gname as gname,
+				g.detail as detail,
+				g.img as img
+	FROM BID b JOIN AUCTION a ON b.a_num=a.a_num
+	         JOIN MEMBER m ON b.userid=m.userid
+			 JOIN GOOD g ON a.g_num=g.g_num
+	WHERE b.a_num=#{aNum}
+	ORDER BY b.bid_price DESC
+</select>
+
+<select id="selectBidListByID" resultMap="selectResultMap">
+	SELECT b.a_num as a_num,
+				b.userid as userid,
+				to_char(b.bid_time,'yyyy/mm/dd hh24:mi:ss') as bid_time,
+				b.bid_price as bid_price,
+				b.moneyback as moneyback,
+				a.g_num as g_num,
+				a.s_price as s_price,
+				a.im_price as im_price,
+				a.s_time as s_time,
+				a.e_time as e_time,
+				a.sold as sold,
+				a.cu_price as cu_price,
+				m.pw as pw,
+				m.name as name,
+				m.email as email,
+				m.coin as coin,
+				m.emoney as emoney,
+				g.gname as gname,
+				g.detail as detail,
+				g.img as img
+	FROM BID b JOIN AUCTION a ON b.a_num=a.a_num
+	         JOIN MEMBER m ON b.userid=m.userid
+			 JOIN GOOD g ON a.g_num=g.g_num
+	WHERE b.userid=#{userid}
+	ORDER BY bid_time DESC
+</select>
+
+<select id="selectMoneybackByIdCount" resultType="java.lang.Integer">
+	SELECT count(b.bidnum)
+	FROM BID b JOIN MEMBER m ON b.userid=m.userid
+	WHERE b.moneyback='0' AND b.userid=#{userid}
+</select>
+</mapper>
+
