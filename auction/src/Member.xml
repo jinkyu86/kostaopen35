@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Member">
+	
+	<parameterMap type="kr.or.kosta.auction.member.Member"
+		id="insertParameterMap">
+			<parameter property="userid"/>
+			<parameter property="pw"/>
+			<parameter property="email"/>
+			<parameter property="name"/>
+			<parameter property="coin"/>
+			<parameter property="emoney"/>
+	</parameterMap>
+	
+	<insert id="insertMember"
+		parameterMap="insertParameterMap">
+		INSERT INTO member
+		(userid, pw, email, name, coin, emoney)
+		VALUES(?,?,?,?,?,?)
+	</insert>
+	
+	
+			
+				
+</mapper>
+	
