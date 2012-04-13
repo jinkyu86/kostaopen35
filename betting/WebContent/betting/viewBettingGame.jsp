@@ -139,6 +139,7 @@
 	<input type="hidden" name="home" value="${BETTING_HOME.num }"/>
 	<input type="hidden" name="away" value="${BETTING_AWAY.num }"/>
 	<input type="hidden" name="matchtime" value="${BETTING_HOME.match.matchTime}"/>
+	<input type="hidden" name="matchno" value="${BETTING_HOME.match.num }"/>
 	<c:choose>
 		<c:when test="${CHECK == '1' }">	
 			<table border="0" align="center">

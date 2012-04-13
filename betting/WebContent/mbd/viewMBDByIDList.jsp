@@ -76,7 +76,7 @@
 		</nav>
 		<!-- end of top nav -->
 		<section id="content">
-			<h3 align="center">나의 베팅데이터</h3>
+			<h2 align="center">나의 베팅데이터</h2>
 	<table border="1" align="center">
 		<tr>
 			<th>번호</th>

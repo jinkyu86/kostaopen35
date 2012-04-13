@@ -199,12 +199,12 @@
 								<c:choose>
 									<c:when test="${MBD.giveMineralConfirm=='0' }">
 										<table border="0" align="center">
+											<tr><th>배팅 성공</th></tr>
 											<tr>
 												<td>
 													<input type="submit" value="배당금 받기" /> 
 													<input type="hidden" name="method" value="giveMineral" />
 												</td>
-												<th>배팅 성공</th>
 											</tr>
 										</table>
 									</c:when>
@@ -221,12 +221,13 @@
 								<c:choose>
 									<c:when test="${MBD.giveMineralConfirm=='0' }">
 										<table border="0" align="center">
+											<tr><th>무승부</th></tr>
 											<tr>
 												<td>
 													<input type="submit" value="베팅금 돌려받기" /> 
 													<input type="hidden" name="method" value="recoveryMineral" />
 												</td>
-												<th>무승부</th>
+												
 											</tr>
 										</table>
 									</c:when>
@@ -243,12 +244,13 @@
 								<c:choose>
 									<c:when test="${MBD.giveMineralConfirm=='0' }">
 										<table border="0" align="center">
+											<tr><th>경기취소</th></tr>
 											<tr>
 												<td>
 													<input type="submit" value="베팅금 돌려받기" /> 
 													<input type="hidden" name="method" value="recoveryMineral" />
 												</td>
-												<th>경기취소</th>
+												
 											</tr>
 										</table>
 									</c:when>
@@ -283,12 +285,13 @@
 								<c:choose>
 									<c:when test="${MBD.giveMineralConfirm=='0' }">
 										<table border="0" align="center">
+											<tr><th>배팅 성공</th></tr>
 											<tr>
 												<td>
 													<input type="submit" value="배당금 받기" /> 
 													<input type="hidden" name="method" value="giveMineral" />
 												</td>
-												<th>배팅 성공</th>
+												
 											</tr>
 										</table>
 									</c:when>
@@ -305,12 +308,13 @@
 								<c:choose>
 									<c:when test="${MBD.giveMineralConfirm=='0' }">
 										<table border="0" align="center">
+											<tr><th>무승부</th></tr>
 											<tr>
 												<td>
 													<input type="submit" value="베팅금 돌려받기" /> 
 													<input type="hidden" name="method" value="recoveryMineral" />
 												</td>
-												<th>무승부</th>
+												
 											</tr>
 										</table>
 									</c:when>
@@ -327,12 +331,13 @@
 								<c:choose>
 									<c:when test="${MBD.giveMineralConfirm=='0' }">
 										<table border="0" align="center">
+											<tr><th>경기취소</th></tr>
 											<tr>
 												<td>
 													<input type="submit" value="베팅금 돌려받기" /> 
 													<input type="hidden" name="method" value="recoveryMineral" />
 												</td>
-												<th>경기취소</th>
+												
 											</tr>
 										</table>
 									</c:when>

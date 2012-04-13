@@ -73,6 +73,7 @@
 		</nav>
 		<!-- end of top nav -->
 		<section id="content">
+			<h2 align="center">랭킹 리스트</h2>
 			<table border="1" align="center">
 		<tr>
 			<th>랭킹</th>
@@ -83,9 +84,9 @@
 		<c:forEach var="member" items="${MEMBER_LIST}">
 
 			<tr>
-				<td>${member.rank}</td>
-				<td>${member.id}</td>
-				<td>${member.mineral}</td>
+				<td align="center">${member.rank}</td>
+				<td align="center">${member.id}</td>
+				<td align="center">${member.mineral}</td>
 			</tr>
 
 		</c:forEach>

@@ -87,10 +87,10 @@
 		</tr>
 		<c:forEach var="match" items="${MATCH_LIST }">
 		<tr>
-			<td>${match.homeTeam.name}</td>
-			<td>${match.awayTeam.name}</td>
-			<td>${match.loc.loc}</td>
-			<td>${match.matchTime}</td>
+			<td align="center">${match.homeTeam.name}</td>
+			<td align="center">${match.awayTeam.name}</td>
+			<td align="center">${match.loc.loc}</td>
+			<td align="center">${match.matchTime}</td>
 			<c:choose>
 				<c:when test="${match.winTeam.num == null}">
 					<td colspan="2" align="center">
@@ -108,8 +108,8 @@
 					</td>
 				</c:when>
 				<c:otherwise>
-					<td>${match.winTeam.name}</td>
-					<td>${match.score}</td>
+					<td align="center">${match.winTeam.name}</td>
+					<td align="center">${match.score}</td>
 				</c:otherwise>
 			</c:choose>
 		</tr>

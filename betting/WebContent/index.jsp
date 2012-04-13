@@ -43,7 +43,7 @@
 					<p>
 					<table border="0" align="right">
 						<tr>
-							<td colspan="2" align="center"><font color="white">${sessionScope.LOGIN_MEMBER.name}
+							<td colspan="2" align="right"><font color="white">${sessionScope.LOGIN_MEMBER.name}
 									님 환영합니다</font></td>
 						</tr>
 						<tr>

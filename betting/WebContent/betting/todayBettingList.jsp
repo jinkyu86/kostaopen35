@@ -84,14 +84,14 @@
 		</tr>
 		<c:forEach var="match" items="${TODAY_MATCH}">
 		<tr>
-			<td>
+			<td align="center">
 				<a href="/betting/BettingService?method=bettingGameForm&matchno=${match.num }">
 					${match.num}
 				</a>
 			</td>
-			<td>2012 프로야구 ${match.homeTeam.name} vs ${match.awayTeam.name}</td>
-			<td>${match.loc.loc}</td>
-			<td>${match.matchTime}</td>
+			<td align="center">2012 프로야구 ${match.homeTeam.name} vs ${match.awayTeam.name}</td>
+			<td align="center">${match.loc.loc}</td>
+			<td align="center">${match.matchTime}</td>
 			
 		</tr>
 		</c:forEach>
