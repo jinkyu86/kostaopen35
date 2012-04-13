@@ -45,7 +45,7 @@
 			<table class="table_style" align="right">
 				<c:forEach var="movieList" items="${MovieList}" varStatus="n">
 					<tr>
-						<td rowspan="2" class="movieList_img"><img src="/moviesystem/movieimg/${movieList.poster}.jpg" class="poster_style"></td>
+						<td rowspan="2" class="movieList_img"><img src="/moviesystem/movieimg/${movieList.poster}" class="poster_style"></td>
 						<td><a href="/moviesystem/MovieService?method=viewMovie&gubun=${gubun}&mnum=${movieList.mnum}"><b>${movieList.mname}</b></a></td>
 					</tr>
 					<tr>
