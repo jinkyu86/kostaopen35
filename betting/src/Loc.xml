@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+		
+<mapper namespace="Loc">		
+<resultMap id="selectResultMap"
+	type="kr.or.kosta.betting.loc.Loc">
+		<result property="num" column="loc_num"/>
+		<result property="loc" column="loc"/>
+</resultMap>
+
+<select id="selectLoc" resultMap="selectResultMap">
+	SELECT loc_num,loc
+	FROM loc
+	WHERE loc_num=#{locnum}
+</select>
+
+<select id="selectLocList" resultMap="selectResultMap">
+	SELECT loc_num, loc
+	FROM loc
+</select>
+
+</mapper>
+
