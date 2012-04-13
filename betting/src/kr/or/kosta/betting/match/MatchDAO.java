@@ -2,11 +2,6 @@ package kr.or.kosta.betting.match;
 
 import java.io.IOException;
 import java.io.Reader;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.ibatis.io.Resources;
@@ -14,10 +9,6 @@ import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
-
-import kr.or.kosta.betting.loc.Loc;
-import kr.or.kosta.betting.team.Team;
-import kr.or.kosta.betting.util.ConnectionUtil;
 
 public class MatchDAO {
 	private static String resource="sqlmap-config.xml";
