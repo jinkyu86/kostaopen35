@@ -10,15 +10,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<parameter property="userid"/>
 		<parameter property="pw"/>
 		<parameter property="email"/>
-		<parameter property="name"/>
-		<parameter property="coin"/>
-		<parameter property="emoney"/>
+		<parameter property="name"/>		
 	</parameterMap>
 	
 	<insert id="insertMember"
 	parameterMap="insertParameterMap">INSERT INTO member
 		(userid, pw, email, name, coin, emoney)
-		VALUES(?,?,?,?,?,?)</insert>
+		VALUES(?,?,?,?,'100','5000000')
+		</insert>
 	
 	<parameterMap type="kr.or.kosta.auction.member.Member"
 	id="updateParameterMap">
