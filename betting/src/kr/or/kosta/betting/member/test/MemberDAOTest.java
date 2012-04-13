@@ -1,6 +1,6 @@
 package kr.or.kosta.betting.member.test;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import kr.or.kosta.betting.member.Member;
 import kr.or.kosta.betting.member.MemberDAO;
@@ -11,10 +11,10 @@ public class MemberDAOTest {
 
 	@Test
 	public void testSelectMemberListIntInt() {
-		ArrayList<Member>page1List=
+		List<Member>page1List=
 				MemberDAO.selectMemberList(5, 1);
 		System.out.println("page1List:"+page1List);
-		ArrayList<Member>page2List=
+		List<Member>page2List=
 				MemberDAO.selectMemberList(5, 2);
 		System.out.println("page2List:"+page2List);
 	}
@@ -40,7 +40,7 @@ public class MemberDAOTest {
 		
 	}
 	@Test
-	public void selectMemberByID(){
+	public void testSelectMemberByID(){
 		Member member =MemberDAO.selectMemberByID("jun1");
 		
 		System.out.println(member);
@@ -48,18 +48,18 @@ public class MemberDAOTest {
 		
 	}
 	@Test
-	public void selectMemberRankingList(){
+	public void testSelectMemberRankingList(){
 		
-		ArrayList<Member>page1List=
+		List<Member>page1List=
 				MemberDAO.selectMemberRankingList(5, 1);
 		System.out.println("page1List:"+page1List);
-		ArrayList<Member>page2List=
+		List<Member>page2List=
 				MemberDAO.selectMemberRankingList(5, 2);
 		System.out.println("page2List:"+page2List);
 		
 	}
 	@Test
-	public void updateMember(){
+	public void testUpdateMember(){
 		
 		Member member = new Member();
 		member.setId("jun123");
@@ -71,15 +71,29 @@ public class MemberDAOTest {
 		
 	}
 	@Test
-	public void selectMemberCount(){
+	public void testSelectMemberCount(){
 		int memberCount=MemberDAO.selectMemberCount();
 		System.out.println(memberCount);
 		
 	}
 	@Test
-	public void selectMemberRanking(){
+	public void testSelectMemberRanking(){
 		long rank=MemberDAO.selectMemberRanking("jun1");
 		System.out.println(rank);
 		
+	}
+	
+	@Test
+	public void testSelectMineralByID(){
+		long mineral=MemberDAO.selectMineralByID("jun1");
+		System.out.println(mineral);
+	}
+	
+	@Test
+	public void testUpdateMineralByID(){
+		Member member = new Member();
+		member.setId("jun123");
+		member.setMineral(7000);
+		MemberDAO.updateMineralByID(member);
 	}
 }
