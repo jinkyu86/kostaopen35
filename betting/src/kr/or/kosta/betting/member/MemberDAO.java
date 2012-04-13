@@ -410,7 +410,7 @@ public class MemberDAO {
 		long rank = 0;
 		try{
 			session = sqlMapper.openSession(true);
-			session.insert("Member.selectMemberRanking",id );
+			rank = session.selectOne("Member.selectMemberRanking",id );
 		}
 		finally{
 			session.close();
