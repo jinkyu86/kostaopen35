@@ -51,8 +51,13 @@ public class AuctionDAOTest {
 		}
 	@Test
 	public void TestselectAuctionSoldById(){
-		Auction auction = AuctionDAO.selectAuctionSoldById("cheol");
+		Auction auction = AuctionDAO.selectAuctionSoldById("admin");
 		System.out.println(auction);
+	}
+	@Test
+	public void TestselectAuctionSoldList(){
+		List<Auction> selectAuctionSoldList = AuctionDAO.selectAuctionSoldList();
+		System.out.println("AuctionDAO:selectAuctionSoldList:"+selectAuctionSoldList);
 	}
 	/* 
 	@Test

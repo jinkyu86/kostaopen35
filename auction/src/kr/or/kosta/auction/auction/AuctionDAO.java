@@ -93,6 +93,17 @@ public class AuctionDAO {
 		}
 		return auction;
 	}
+	public static List<Auction> selectAuctionSoldList(){
+		SqlSession session = null;
+		List<Auction> auctionSoldList = null;
+		try{
+			session = sqlMapper.openSession(true);
+			auctionSoldList = session.selectList("selectAuctionSoldList");
+		} finally {
+			session.close();
+		}
+		return auctionSoldList;
+	}
 }
 /*
  * @param auction
