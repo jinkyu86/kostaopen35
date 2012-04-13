@@ -5,65 +5,18 @@ import kr.or.kosta.order.Order;
 
 public class Member {
 
-	/**
-	 * 회원아이디
-	 */
-	private String memberid;
-
-	/**
-	 * 패스워드
-	 */
-	private String password;
-
-	/**
-	 * 회원이름
-	 */
-	private String name;
-
-	/**
-	 * 주민등록번호
-	 */
-	private String regiNumber;
-
-	/**
-	 * 비밀번호찾기힌트
-	 */
-	private String pwHint;
-
-	/**
-	 * 패스워드찾기정답
-	 */
-	private String pwAnswer;
-
-	/**
-	 * 우편번호
-	 */
-	private String zipcode;
-
-	/**
-	 * 주소
-	 */
-	private String address;
-
-	/**
-	 * 상세주소
-	 */
-	private String strAddress;
-
-	/**
-	 * 이메일
-	 */
-	private String email;
-
-	/**
-	 * 핸드폰번호
-	 */
-	private String phoneNumber;
-
-	/**
-	 * 유선전화번호
-	 */
-	private String telNumber;
+	private String memberid;	//회원아이디
+	private String password;	//패스워드
+	private String name;		//회원이름
+	private String regiNumber;	//주민번호
+	private String pwHint;		//비밀번호힌트
+	private String pwAnswer;	//비밀번호정답
+	private String zipcode;		//우편번호
+	private String address;		//주소
+	private String strAddress;	//상세주소
+	private String email;		//메일
+	private String phoneNumber;	//핸드폰번호
+	private String telNumber;	//유선전화
 
 	public String getMemberid() {
 		return memberid;
