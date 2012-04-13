@@ -1,6 +1,5 @@
 package kr.or.kosta.betting.match.test;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import kr.or.kosta.betting.loc.Loc;
