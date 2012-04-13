@@ -1,6 +1,6 @@
 package kr.or.kosta.betting.loc.test;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import kr.or.kosta.betting.loc.Loc;
 import kr.or.kosta.betting.loc.LocDAO;
@@ -11,7 +11,7 @@ public class LocDAOTest {
 
 	@Test
 	public void testSelectLocList() {
-		ArrayList<Loc> locList = LocDAO.selectLocList();
+		List<Loc> locList = LocDAO.selectLocList();
 		for(int i=0;i<locList.size();i++){
 			Loc loc =locList.get(i);
 			System.out.println(loc);
