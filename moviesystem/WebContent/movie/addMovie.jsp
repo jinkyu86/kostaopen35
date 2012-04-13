@@ -8,8 +8,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>영화정보 입력</title>
 <link rel="stylesheet" href="/moviesystem/css/Layout.css">
+<link rel="stylesheet" href="/moviesystem/uploadify/uploadify.css">
 <script src="http://code.jquery.com/jquery-1.7.1.js"></script>
 <script src="/moviesystem/js/common.jsp"></script>
+<script src="/moviesystem/uploadify/jquery.uploadify.v2.1.4.js"></script>
+<script src="/moviesystem/uploadify/swfobject.js"></script>
 <script>
 	$(function(){
 		memcheck('${LOGIN_MEMBER.userid}');
@@ -20,7 +23,8 @@
 		});
 		$('#cancel').click(function(){history.back();});
 		
-		$("#confirm").click(function(){
+		$("#confirm").click(function(event){
+			//alert($('#method').val());
 			if($('#movie_name').val()==''){
 				alert('영화이름을 입력하세요.');
 				$('#movie_name').focus();
@@ -31,11 +35,11 @@
 				$('#movie_genre').focus();
 				return false;
 			}
-			if($('#movie_poster').val()==''){
-				alert('포스터를 입력하세요.');
-				$('#movie_poster').focus();
-				return false;
-			}
+			//if($('#movie_poster').val()==''){
+			//	alert('포스터를 입력하세요.');
+			//	$('#movie_poster').focus();
+			//	return false;
+			//}
 			if($('#movie_sdate').val()==''){
 				alert('상영기간을 입력하세요.');
 				$('#movie_sdate').focus();
@@ -56,8 +60,27 @@
 				$('#movie_content').focus();
 				return false;
 			}
-
-			$('#movie_form').submit();
+			//alert($('#method').val());
+			$("#movie_poster").uploadifyUpload();
+			event.preventDefault();
+		});
+		$("#movie_poster").uploadify({
+			cancelImg : '/moviesystem/uploadify/cancel.png',
+			uploader : '/moviesystem/uploadify/uploadify.swf',
+			script : '/moviesystem/MovieService?method=MovieImgUpload',
+			//sizeLimit : 20097152,
+			multi : false,
+			auto : false,
+			fileExt : '*.jpg;*.jpeg;*.png;*.gif',
+			fileDexc : 'Web Image Files(.jpg, .gif, .png)',
+			buttonText : 'Select Photo',
+			onComplete : function(event, queueID, fileObj, response, data){
+				//업로드 완료 되었을 때 할일
+				alert(response+"를 서버에 저장했습니다.");
+				$("#poster_name").val(response);
+				// form의 action 설정된 서블릿으로 입력정보 전송
+				$('#movie_form').submit();
+			}
 		});
 	});
 </script>
@@ -109,7 +132,7 @@
 				<tr>
 					<td style="width:15%;border-right:1px solid #9191C8;text-align:center">포스터</td>
 					<td style="width:85%;padding-left:20px;">
-						<input type="text" name="movie_poster" id="movie_poster" value="${Movie.poster}">
+						<input type="file" name="movie_poster" id="movie_poster" >&nbsp;${Movie.poster}
 					</td>
 				</tr>
 				<tr>
