@@ -318,8 +318,8 @@ public class MemberService extends HttpServlet {
 	
 	private void viewMemberList(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		ArrayList<Member> memberList=MemberDAO.selectMemberList();
-		request.setAttribute("MEMBER_LIST",memberList);
+		//ArrayList<Member> memberList=MemberDAO.selectMemberList();
+		//request.setAttribute("MEMBER_LIST",memberList);
 		RequestDispatcher rd=request.getRequestDispatcher("/member/viewMemberList.jsp");
 		rd.forward(request, response);
 	}

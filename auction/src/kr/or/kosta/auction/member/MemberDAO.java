@@ -10,13 +10,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import kr.or.kosta.auction.good.Good;
 import kr.or.kosta.auction.util.ConnectionUtil;
-
 
 public class MemberDAO {
 
@@ -224,6 +224,13 @@ public class MemberDAO {
 //		}
 //		return memberList;
 //	}
+	public static List<Member> selectMemberList(int page,int length) {
+		SqlSession session = sqlMapper.openSession(true);
+		RowBounds rowBounds= new RowBounds((page-1)*length,length);
+		List<Member> member=
+		session.selectList("Member.selectMemberList",null,rowBounds);
+		return member;
+	}
 
 	
 	

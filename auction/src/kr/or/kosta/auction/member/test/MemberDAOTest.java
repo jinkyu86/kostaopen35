@@ -3,7 +3,10 @@ package kr.or.kosta.auction.member.test;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import kr.or.kosta.auction.good.Good;
+import kr.or.kosta.auction.good.GoodDAO;
 import kr.or.kosta.auction.member.Member;
 import kr.or.kosta.auction.member.MemberDAO;
 
@@ -13,52 +16,50 @@ public class MemberDAOTest {
 
 	@Test
 	public void testInsertMember() {
-		Member member = new Member();
-		member.setUserid("zzang");
+		Member member=new Member();
+		member.setUserid("jojo1");
 		member.setPw("1234");
-		member.setEmail("JZZANG@naver.com");
-		member.setName("짱구");
-		member.setCoin("300");
-		member.setEmoney("100");
-				
+		member.setEmail("jojo@naver.com");
+		member.setName("조조");
+		member.setCoin("500");
+		member.setEmoney("3000");
 		MemberDAO.insertMember(member);
-		System.out.println("입력햇어요.");
 	}
 
 	@Test
-	public void testUpdateMember() {
-		Member member = new Member();
-		member.setUserid("jung");
-		member.setPw("12345");
-		member.setEmail("jungwon87@naver.com");
-		member.setName("정원");
+	public void testUpdateGood() {
+		Member member=new Member();		
+		member.setPw("2222");
+		member.setEmail("jjo@naver.com");
+		member.setName("쪼");
 		member.setCoin("300");
-		member.setEmoney("300");
-		
+		member.setEmoney("2000");
+		member.setUserid("jojo1");
 		MemberDAO.updateMember(member);
-		System.out.println("수정햇어요.");
+		
 	}
 
 	@Test
 	public void testDeleteMember() {
-		MemberDAO.deleteMember("minsik");
-		System.out.println("지웠어요.");
+		MemberDAO.deleteMember("jojo1");
 	}
 
 	@Test
-	public void testselectMember() {
-		Member member = MemberDAO.selectMember("jung");		
-	    System.out.println(member);
+	public void testSelectMember() {
+		Member member=MemberDAO.selectMember("jojo1");
+		System.out.println(member.toString());
 	}
-	
-	 @Test
-	 public void selectAuctionTest2() {
-	  ArrayList<Member> memberList = MemberDAO.selectMemberList();
-	  for(int i =0; i<memberList.size();i++){
-	   Member member = memberList.get(i);
-	   System.out.println(member);
-	   
-	  }
-	 }
+
+	@Test
+	public void testSelectMemberList() {
+		List<Member> memberList=MemberDAO.selectMemberList();
+		System.out.println("MemberDAO:selectMember:member"+memberList);
+	}
+
+	@Test
+	public void testSelectMemberListIntInt() {
+		List<Member> memberList=MemberDAO.selectMemberList(1, 2);
+		System.out.println("memberList:"+memberList);
+	}
 
 }
