@@ -79,10 +79,21 @@ public class MemberBetDataService extends HttpServlet {
 			member.setMineral(mineral);
 			MemberDAO.updateMineralByID(member);
 			MemberBetDataDAO.updateMemberBetData(mbdNum);
-		
+			
+			String matchNum = MemberBetDataDAO.selectMatchNum(mbdNum);
+			String matchTime = MatchDAO.selectMatchTime(matchNum);
+			int check = now.hourCheck(matchTime);
+			request.setAttribute("CHECK", check);
+			Betting bettingHome = BettingDAO.selectBettingByHome(matchNum);
+			request.setAttribute("BETTING_HOME", bettingHome);
+			Betting bettingAway = BettingDAO.selectBettingByAway(matchNum);
+			request.setAttribute("BETTING_AWAY", bettingAway);
+			MemberBetData mbd = MemberBetDataDAO.selectMemberBetData(mbdNum);
+			request.setAttribute("MBD", mbd);
+						
 			request.setAttribute("SUCCESS", "미네랄을 돌려드렸습니다.");
 			RequestDispatcher rd = request
-				.getRequestDispatcher("/MemberBetDataService?method=viewMemberBetDataByIDList");
+					.getRequestDispatcher("/mbd/viewMBDByID.jsp");
 			rd.forward(request, response);
 		} else {
 			request.setAttribute("ERROR", "로그인 해주세요");
@@ -255,10 +266,20 @@ public class MemberBetDataService extends HttpServlet {
 			member.setMineral(mineral);
 			MemberDAO.updateMineralByID(member);
 			MemberBetDataDAO.updateMemberBetData(mbdNum);
-		
+			
+			String matchNum = MemberBetDataDAO.selectMatchNum(mbdNum);
+			String matchTime = MatchDAO.selectMatchTime(matchNum);
+			int check = now.hourCheck(matchTime);
+			request.setAttribute("CHECK", check);
+			Betting bettingHome = BettingDAO.selectBettingByHome(matchNum);
+			request.setAttribute("BETTING_HOME", bettingHome);
+			Betting bettingAway = BettingDAO.selectBettingByAway(matchNum);
+			request.setAttribute("BETTING_AWAY", bettingAway);
+			MemberBetData mbd = MemberBetDataDAO.selectMemberBetData(mbdNum);
+			request.setAttribute("MBD", mbd);
 			request.setAttribute("SUCCESS", "미네랄을 지급하였습니다.");
 			RequestDispatcher rd = request
-					.getRequestDispatcher("/MemberBetDataService?method=viewMemberBetDataByIDList");
+					.getRequestDispatcher("/mbd/viewMBDByID.jsp");
 			rd.forward(request, response);
 		} else {
 			request.setAttribute("ERROR", "로그인 해주세요");
