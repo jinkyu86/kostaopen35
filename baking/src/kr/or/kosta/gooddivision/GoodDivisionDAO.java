@@ -1,70 +1,50 @@
 package kr.or.kosta.gooddivision;
 
+import java.io.IOException;
+import java.io.Reader;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+
+import kr.or.kosta.member.Member;
 import kr.or.kosta.util.ConnectionUtil;
 
 public class GoodDivisionDAO {
-
+	
+	private static String resource="sqlmap-config.xml";
+	private static Reader sqlReader;
+	static{
+			try {
+				sqlReader=Resources.getResourceAsReader(resource);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+	}
+	private static SqlSessionFactory sqlMapper =
+			new SqlSessionFactoryBuilder().build(sqlReader);
+	
+	
 	/**
 	 * 상품리스트 조회
 	 */
-	public static ArrayList<Good_division> selectGooddivisionList() {
-		Connection con=null;
-		PreparedStatement psmt=null;
-		ResultSet rs=null;
-		ArrayList<Good_division> gooddivisionList=new ArrayList<Good_division>();
-		String sql="select division,g_name from good_division";
-		try {
-			con=ConnectionUtil.getConnection();
-			psmt=con.prepareStatement(sql);
-			rs=psmt.executeQuery();
-			while(rs.next()){
-				int division=rs.getInt(1);
-				String gName=rs.getString(2);
-				
-				Good_division good_division = new Good_division();
-				good_division.setDivision(division);
-				good_division.setgName(gName);
-				
-				gooddivisionList.add(good_division);
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+	public static List<Good_division> selectGooddivisionList() {
+		SqlSession session=null;
+		List<Good_division> good_divisionList = null;
+		try{
+		session = sqlMapper.openSession(true);
+		good_divisionList=session.selectList("Good_division.selectGoodDivision");
+		}finally{
+			session.close();
 		}
-		return gooddivisionList;
+		return good_divisionList;
 	}
-	
-	/**
-	 * 상품코드로 상품이름 검색. 만들었으나 활용하지않음..
-	 */
-	public static Good_division selectDivisionName(int division){
-		Connection con=null;
-		PreparedStatement psmt=null;
-		ResultSet rs=null;
-		String sql="select division,g_name from good_division where division=?";
-		Good_division good_division = new Good_division();
-		try {
-			con=ConnectionUtil.getConnection();
-			psmt=con.prepareStatement(sql);
-			psmt.setInt(1, division);
-			rs=psmt.executeQuery();
-			if(rs.next()){
-				division = rs.getInt(1);
-				String gName=rs.getString(2);
-				
-				good_division.setDivision(division);
-				good_division.setgName(gName);
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return good_division;
-	}
+
 }
