@@ -25,7 +25,9 @@
 	<mapper resource="Buy.xml" />
 	<mapper resource="Good.xml" />
 	<mapper resource="Member.xml" />
-	<mapper resource="MovieService.xml" />			
+	<mapper resource="MovieService.xml" />		
+		<mapper resource="Reservation.xml" />
+			<mapper resource="ScreenTime.xml" />	
 </mappers>
 </configuration>
 
