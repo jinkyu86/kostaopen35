@@ -41,7 +41,7 @@ public class MovieService extends HttpServlet{
 			method="Main";
 			//method="viewMovieList";
 		}
-		//System.out.println(method);
+		System.out.println(method);
 		if("viewMovieList".equals(method)){
 			// 영화 리스트 출력 메서드 호출
 			viewMovieList(request, response);
@@ -57,7 +57,7 @@ public class MovieService extends HttpServlet{
 		}else if("editMovieForm".equals(method)){
 			editMovieForm(request, response);
 		}else if("editMovie".equals(method)){
-			editMovieForm(request, response);
+			editMovie(request, response);
 		}else if("addMovieForm".equals(method)){
 			addMovieForm(request, response);
 		}else if("addMovie".equals(method)){
@@ -301,32 +301,39 @@ public class MovieService extends HttpServlet{
 	public void editMovie(HttpServletRequest request,
 			HttpServletResponse response) throws IOException, ServletException{
 		String mnum = request.getParameter("mnum");
-		String mname = request.getParameter("mname");
-		String genre = request.getParameter("genre");
-		String poster = request.getParameter("poster");
-		String content = request.getParameter("content");
-		Date ldate = new Date(request.getParameter("ldate"));
-		Date edate = new Date(request.getParameter("edate"));
+		String mname = request.getParameter("movie_name");
+		String genre = request.getParameter("movie_genre");
+		String poster = request.getParameter("movie_poster");
+		String content = request.getParameter("movie_content");
 		String gubun = request.getParameter("gubun");
 		
+		try {
+			DateFormat formatter ; 
+	        Date Sdate ;
+	        Date Edate ;
+	        formatter = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss");	
+	        Sdate = (Date)formatter.parse(request.getParameter("movie_sdate")+"T00:00:00");
+	        Edate = (Date)formatter.parse(request.getParameter("movie_edate")+"T00:00:00");
+	        
+	        Movie movie = new Movie();
+	        movie.setMnum(mnum);
+			movie.setMname(mname);
+			movie.setLaunchDate(Sdate);
+			movie.setGenre(genre);
+			movie.setPoster(poster);
+			movie.setEndDate(Edate);
+			movie.setContent(content);
+			
+			MovieDAO.editMovie(movie);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
-		
-		Movie movie = new Movie();
-		movie.setMnum(mnum);
-		movie.setMname(mname);
-		movie.setLaunchDate(ldate);
-		movie.setGenre(genre);
-		movie.setPoster(poster);
-		movie.setEndDate(edate);
-		movie.setContent(content);
-		
-		MovieDAO.updateMovie(movie);
-		
-		request.setAttribute("mnum", mnum);
 		request.setAttribute("gubun", gubun);
-		
-		RequestDispatcher rd = request.getRequestDispatcher("/movie/viewMovie.jsp");
-		rd.forward(request, response);
+		request.setAttribute("mnum", mnum);
+		RequestDispatcher rd = request.getRequestDispatcher("/MovieService?method=adminMovie");
+		rd.forward(request,  response);
 		
 	}
 
@@ -341,13 +348,14 @@ public class MovieService extends HttpServlet{
 		String mnum = request.getParameter("mnum");
 		String gubun = request.getParameter("gubun");
 		
-		request.setAttribute("gubun", gubun);
-		
 		Movie movie = MovieDAO.selectMovie(mnum);
 		
 		request.setAttribute("Movie", movie);
+		request.setAttribute("gubun", gubun);
+		request.setAttribute("mnum", mnum);
+		request.setAttribute("method", request.getParameter("method"));
 		
-		RequestDispatcher rd = request.getRequestDispatcher("/movie/editMovie.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("/movie/addMovie.jsp");
 		rd.forward(request, response);
 	}
 
@@ -361,11 +369,11 @@ public class MovieService extends HttpServlet{
 			HttpServletResponse response) throws IOException, ServletException {
 		String mnum = request.getParameter("mnum");
 		String gubun = request.getParameter("gubun");
-		MovieDAO.deleteMovie(mnum);
+		MovieDAO.removeMovie(mnum);
 		
 		request.setAttribute("gubun", gubun);
 		
-		RequestDispatcher rd = request.getRequestDispatcher("/MovieService?method=viewMovieList");
+		RequestDispatcher rd = request.getRequestDispatcher("/MovieService?method=adminMovieList");
 		rd.forward(request, response);
 	}
 
