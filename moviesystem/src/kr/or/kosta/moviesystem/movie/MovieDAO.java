@@ -157,4 +157,15 @@ public class MovieDAO {
 			session.close();
 		}
 	}
+	public static Movie selectMovieNum(String Mname){
+		SqlSession session = null;
+		Movie movie = null;
+		try{
+			session = sqlMapper.openSession(true);
+			movie = session.selectOne("MovieService.selectMovieNum",Mname);
+		}finally{
+			session.close();
+		}
+		return movie;
+	}
 }
