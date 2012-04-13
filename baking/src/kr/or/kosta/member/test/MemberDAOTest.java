@@ -9,103 +9,82 @@ import org.junit.Test;
 public class MemberDAOTest {
 
 //	@Test
-//	public void testInsertMember() {
-//		Member member=new Member();
-//		member.setAddress("서울시 도봉구 쌍문동");
-//		member.setEmail("thkims76@naver.com");
-//		member.setMemberid("thkims76");
-//		member.setName("김태한");
+//	public void testInsertMember(){
+//		Member member = new Member();
+//		member.setMemberid("Test11");
 //		member.setPassword("1234");
-//		member.setPhoneNumber("010-000-0000");
-//		member.setPwAnswer("1487");
-//		member.setPwHint("비밀번호");
-//		member.setRegiNumber("1111");
-//		member.setStrAddress("406호");
-//		member.setTelNumber("02-333-3333");
-//		member.setZipcode("631-310");
+//		member.setName("test");
+//		member.setRegiNumber("00000000000010");
+//		member.setPwAnswer("Test");
+//		member.setPwHint("Test");
+//		member.setEmail("Test@mail.com");
+//		member.setAddress("Test");
+//		member.setStrAddress("Test");
+//		member.setZipcode("000000");
+//		member.setTelNumber("01000000000");
+//		member.setPhoneNumber("031000000");
+//		
 //		MemberDAO.insertMember(member);
-//		System.out.println("testInsertMember");
-//	}
-//
-//	@Test
-//	public void testSelectMemberByid() {
-//		Member member=new Member();
-//		member.setAddress("서울시 도봉구 쌍문동");
-//		member.setEmail("thkims76@naver.com");
-//		member.setMemberid("fhrtks");
-//		member.setName("김태한");
-//		member.setPassword("1234");
-//		member.setPhoneNumber("010-000-0000");
-//		member.setPwAnswer("1487");
-//		member.setPwHint("비밀번호");
-//		member.setRegiNumber("1111");
-//		member.setStrAddress("406호");
-//		member.setTelNumber("02-333-3333");
-//		member.setZipcode("631-310");
-//		MemberDAO.selectMemberByid(member.getName(),member.getRegiNumber());
-//		System.out.println("testiSelectMemberByid");
 //		
 //	}
-//
+	
 //	@Test
-//	public void testSelectMemberBypw() {
-//		Member member=new Member();
-//		member.setAddress("서울시 도봉구 쌍문동");
-//		member.setEmail("thkims76@naver.com");
-//		member.setMemberid("thkims76");
-//		member.setName("김태한");
-//		member.setPassword("0000");
-//		member.setPhoneNumber("010-000-0000");
-//		member.setPwAnswer("1487");
-//		member.setPwHint("비밀번호");
-//		member.setRegiNumber("1111");
-//		member.setStrAddress("406호");
-//		member.setTelNumber("02-333-3333");
-//		member.setZipcode("631-310");
-//		MemberDAO.selectMemberBypw(member.getPwHint(), member.getPwAnswer());
-//		System.out.println("testiSelectMemberByPw");
-//	}
-//
-//	@Test
-//	public void testDeleteMember() {
-//		Member member=new Member();
-//		member.setName("김태한");
-//		member.setPassword("1111");
-//		member.setRegiNumber("0000");
-//		MemberDAO.deleteMember(member.getPassword(),member.getRegiNumber());
-//		System.out.println("testiDeleteMember");
-//	}
-//
-//	@Test
-//	public void testUpdateMember() {
-//		Member member=new Member();
-//		member.setAddress("서울시 강북구");
-//		member.setEmail("thkims76@naver.com");
-//		member.setMemberid("thkims76");
-//		member.setName("김태한");
-//		member.setPassword("1234");
-//		member.setPhoneNumber("010-000-0000");
-//		member.setPwAnswer("1487");
-//		member.setPwHint("비밀번호");
-//		member.setRegiNumber("1111");
-//		member.setStrAddress("406호");
-//		member.setTelNumber("02-333-3333");
-//		member.setZipcode("631-310");
+//	public void testUpdateMember(){
+//		Member member = new Member();
+//		member.setMemberid("Test11");
+//		member.setPassword("1234567");
+//		member.setEmail("Test@mail.com");
+//		member.setAddress("Test");
+//		member.setStrAddress("Test");
+//		member.setZipcode("000000");
+//		member.setTelNumber("01000000000");
+//		member.setPhoneNumber("031000000");
+//		
 //		MemberDAO.updateMember(member);
-//		System.out.println("testUpdateMember");
-//	}
-//
-//	@Test
-//	public void testLogin() {
-//		Member member=new Member();
+//		
 //	}
 	
-	@Test
-	public void testSelectMember(){
-		Member member=new Member();
-		member=MemberDAO.selsctMember("yubi");
-		
-		System.out.println(member);
-	}
+//	@Test
+//	public void testDeleteMember(){
+//		System.out.println("aa");
+//		MemberDAO.deleteRecipe("Test");
+//		System.out.println("삭제완료");
+//	}
+	
+//	@Test
+//	public void testselectIdSearchMember(){
+//		Member member1 = new Member();
+//		member1.setName("관리자");
+//		member1.setRegiNumber("8709011160000");
+//		
+//		Member member2= MemberDAO.selectMemberByid(member1);
+//		System.out.println(member2);
+//	}
+	
+//	@Test
+//	public void testselectPwSearchMember(){
+//		Member member1= new Member();
+//		member1.setPwHint("Test");
+//		member1.setPwAnswer("Test");
+//		
+//		Member member2=MemberDAO.selectMemberBypw(member1);
+//		System.out.println(member2);
+//	}
+	
+//	@Test
+//	public void testselectLogin(){
+//		Member member1= new Member();
+//		member1.setMemberid("ADMIN");
+//		member1.setPassword("database");
+//		
+//		Member member2=MemberDAO.login(member1);
+//		System.out.println(member2);
+//	}
 
+//	@Test
+//	public void testselectMember(){
+//		Member member =MemberDAO.selsctMember("ADMIN");
+//		System.out.println(member);
+//		
+//	}
 }

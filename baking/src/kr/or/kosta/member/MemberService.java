@@ -61,8 +61,11 @@ public class MemberService extends HttpServlet {
 		String memberid=request.getParameter("memberid");
 		String name=request.getParameter("name");
 		String reginum=request.getParameter("reginum");
+		Member mem = new Member();
+		mem.setName(name);
+		mem.setRegiNumber(reginum);
 		
-		Member member=MemberDAO.selectMemberByid(name, reginum);
+		Member member=MemberDAO.selectMemberByid(mem);
 				
 				request.setAttribute("Member",member);
 				
@@ -137,7 +140,11 @@ public class MemberService extends HttpServlet {
 				String name=request.getParameter("name");
 				String reginum=request.getParameter("reginum");
 				
-				Member member=MemberDAO.selectMemberByid(name, reginum);
+				Member mem = new Member();
+				mem.setName(name);
+				mem.setRegiNumber(reginum);
+				
+				Member member=MemberDAO.selectMemberByid(mem);
 				
 				request.setAttribute("Member",member);
 				
@@ -161,7 +168,7 @@ public class MemberService extends HttpServlet {
 				String memberid=request.getParameter("memberid");
 				String pw=request.getParameter("pw");
 				String reginum=request.getParameter("reginum");
-				MemberDAO.deleteMember(pw, reginum);
+//				MemberDAO.deleteMember(pw, reginum);
 				
 				RequestDispatcher rd=
 						request.getRequestDispatcher(
@@ -241,7 +248,11 @@ public class MemberService extends HttpServlet {
 	public static void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String memberid= request.getParameter("memberid");
 		String password = request.getParameter("password");
-		Member member = MemberDAO.login(memberid,password);
+		Member mem = new  Member();
+		mem.setMemberid(memberid);
+		mem.setPassword(password);
+		
+		Member member = MemberDAO.login(mem);
 		if(member!=null){
 			HttpSession session = request.getSession();
 			session.setAttribute("LOGIN", member);
@@ -306,7 +317,12 @@ public class MemberService extends HttpServlet {
 		String memberid=request.getParameter("memberid");
 		String name=request.getParameter("name");
 		String reginum=request.getParameter("reginum");
-		Member member =MemberDAO.selectMemberByid(name,reginum);
+		
+		Member mem = new Member();
+		mem.setName(name);
+		mem.setRegiNumber(reginum);
+		
+		Member member =MemberDAO.selectMemberByid(mem);
 		
 		response.setCharacterEncoding("utf-8");
 		PrintWriter out=response.getWriter();
