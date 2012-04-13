@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Member">
+	
+<parameterMap type="kr.or.kosta.moviesystem.member.Member" id="insertParameterMap">
+	<parameter property="userid"/>
+	<parameter property="name"/>
+	<parameter property="pw"/>
+	<parameter property="email"/>
+	<parameter property="phone"/>
+	<parameter property="zipcode"/>
+	<parameter property="addr"/>
+</parameterMap>
+
+<insert id="insertMember" parameterMap="insertParameterMap">
+	INSERT INTO MEMBER
+					(user_num,userid,name,pw,email,phone,zipcode,addr,reg_date,mem_state)
+	VALUES (mem_seq.nextval,?,?,?,?,?,?,?,sysdate,'1')
+</insert>
+
+
+<parameterMap type="kr.or.kosta.moviesystem.member.Member"  id="updateParameterMap">
+	<parameter property="name"/>
+	<parameter property="pw"/>
+	<parameter property="email"/>
+	<parameter property="phone"/>
+	<parameter property="zipcode"/>
+	<parameter property="addr"/>		
+	<parameter property="userid"/>			
+</parameterMap>
+
+<update id="editMember" parameterMap="updateParameterMap">
+	UPDATE MEMBER
+	SET name=?,pw=?,email=?,phone=?,zipcode=?,addr=?
+	WHERE userid=?
+</update>
+
+<parameterMap type="kr.or.kosta.moviesystem.member.Member"  id="dropParameterMap">
+	<parameter property="dropReason"/>
+	<parameter property="userid"/>		
+</parameterMap>
+
+<update id="dropMember" parameterMap="dropParameterMap">
+	UPDATE member 
+	SET name=' ',pw=' ',email=' ',phone=' ',zipcode=' ',addr=' ',mem_state='2',drop_reason=?,drop_date=sysdate 
+	WHERE userid=?
+</update>
+
+<resultMap id="selectResultMap" type="kr.or.kosta.moviesystem.member.Member">
+	<result property="userNum" column="user_num"/>
+	<result property="userid" column="userid"/>
+	<result property="name" column="name"/>
+	<result property="pw" column="pw"/>
+	<result property="email" column="email"/>
+	<result property="phone" column="phone"/>
+	<result property="zipcode" column="zipcode"/>
+	<result property="addr" column="addr"/>
+	<result property="regDate" column="reg_date"/>
+	<result property="memState" column="mem_state"/>
+	<result property="dropDate" column="drop_date"/>
+	<result property="dropReason" column="drop_reason"/>
+</resultMap>
+
+<select id="selectMemberById" resultMap="selectResultMap">
+	SELECT user_num,userid,name,pw,email,phone,zipcode,addr,reg_date,mem_state,drop_date,drop_reason
+	FROM member 
+	WHERE userid=#{userid}
+</select>
+
+<select id="selectMemberList" resultMap="selectResultMap">
+	SELECT user_num,userid,name,pw,email,phone,zipcode,
+			  addr,reg_date,mem_state,drop_date,drop_reason
+	FROM member
+</select>
+
+<select id="selectMemberListCount" resultType="java.lang.Integer">
+	SELECT count(*) FROM member
+</select>
+
+<select id="searchMemberListByAddr" resultMap="selectResultMap">
+	SELECT user_num,userid,name,pw,email,phone,zipcode,addr,reg_date,mem_state,drop_date,drop_reason
+	FROM member 
+	WHERE addr like #{user_num}
+</select>
+
+<select id="searchMemberListByAddrCount" resultType="java.lang.Integer">
+	SELECT count(*) 
+	FROM member
+	WHERE addr like #{user_num}
+</select>
+
+<select id="searchMemberListByEmail" resultMap="selectResultMap">
+	SELECT user_num,userid,name,pw,email,phone,zipcode,addr,reg_date,mem_state,drop_date,drop_reason
+	FROM member 
+	WHERE email like #{user_num}
+</select>
+
+<select id="searchMemberListByEmailCount" resultType="java.lang.Integer">
+	SELECT count(*) 
+	FROM member
+	WHERE email like #{user_num}
+</select>
+
+<select id="searchMemberListByName" resultMap="selectResultMap">
+	SELECT user_num,userid,name,pw,email,phone,zipcode,addr,reg_date,mem_state,drop_date,drop_reason
+	FROM member 
+	WHERE name like #{user_num}
+</select>
+
+<select id="searchMemberListByNameCount" resultType="java.lang.Integer">
+	SELECT count(*) 
+	FROM member
+	WHERE name like #{user_num}
+</select>
+
+<select id="searchMemberListByPhone" resultMap="selectResultMap">
+	SELECT user_num,userid,name,pw,email,phone,zipcode,addr,reg_date,mem_state,drop_date,drop_reason
+	FROM member 
+	WHERE phone like #{user_num}
+</select>
+
+<select id="searchMemberListByPhoneCount" resultType="java.lang.Integer">
+	SELECT count(*) 
+	FROM member
+	WHERE phone like #{user_num}
+</select>
+
+<select id="findIdMember" resultMap="selectResultMap">
+	SELECT user_num,userid,name,pw,email,phone,zipcode,addr,reg_date,mem_state,drop_date,drop_reason
+	FROM member 
+	WHERE email=#{email} AND name=#{name}
+</select>
+
+<select id="findPwMember" resultMap="selectResultMap">
+	SELECT user_num,userid,name,pw,email,phone,zipcode,addr,reg_date,mem_state,drop_date,drop_reason
+	FROM member 
+	WHERE email=#{email} AND name=#{name} AND userid=#{userid}
+</select>
+
+
+
+</mapper>
