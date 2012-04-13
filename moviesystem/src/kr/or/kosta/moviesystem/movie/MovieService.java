@@ -3,6 +3,9 @@ package kr.or.kosta.moviesystem.movie;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -246,24 +249,34 @@ public class MovieService extends HttpServlet{
 	 */
 	public void addMovie(HttpServletRequest request,
 			HttpServletResponse response) throws IOException, ServletException{
-		String mname = request.getParameter("mname");
-		String genre = request.getParameter("genre");
-		String poster = request.getParameter("poster");
-		String content = request.getParameter("content");
-		Date ldate = new Date(request.getParameter("ldate"));
-		Date edate = new Date(request.getParameter("edate"));
+		String mname = request.getParameter("movie_name");
+		String genre = request.getParameter("movie_genre");
+		String poster = request.getParameter("movie_poster");
+		String content = request.getParameter("movie_content");
+		try {
+			DateFormat formatter ; 
+	        Date Sdate ;
+	        Date Edate ;
+	        formatter = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss");	
+	        Sdate = (Date)formatter.parse(request.getParameter("movie_sdate")+"T00:00:00");
+	        Edate = (Date)formatter.parse(request.getParameter("movie_edate")+"T00:00:00");
+	        
+	        Movie movie = new Movie();
+			movie.setMname(mname);
+			movie.setGenre(genre);
+			movie.setPoster(poster);
+			movie.setContent(content);
+			movie.setLaunchDate(Sdate);
+			movie.setEndDate(Edate);
+			
+			MovieDAO.addMovie(movie);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
-		Movie movie = new Movie();
-		movie.setMname(mname);
-		movie.setGenre(genre);
-		movie.setPoster(poster);
-		movie.setContent(content);
-		movie.setLaunchDate(ldate);
-		movie.setEndDate(edate);
 		
-		MovieDAO.insertMovie(movie);
-		
-		RequestDispatcher rd = request.getRequestDispatcher("/moviesystem/MovieService?method=viewMovieList");
+		RequestDispatcher rd = request.getRequestDispatcher("/MovieService?method=adminMovieList");
 		rd.forward(request,  response);
 	}
 
