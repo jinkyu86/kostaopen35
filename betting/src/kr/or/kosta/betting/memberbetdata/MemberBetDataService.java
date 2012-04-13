@@ -71,7 +71,25 @@ public class MemberBetDataService extends HttpServlet {
 			long betMineral = Long.parseLong(request.getParameter("bmineral"));
 			long mineral = MemberDAO.selectMineralByID(ID);
 			String mbdNum = request.getParameter("mbdnum");
-		
+			String confirm = request.getParameter("confirm");
+			
+			if(confirm.equals("1")){
+				String matchNum = MemberBetDataDAO.selectMatchNum(mbdNum);
+				String matchTime = MatchDAO.selectMatchTime(matchNum);
+				int check = now.hourCheck(matchTime);
+				request.setAttribute("CHECK", check);
+				Betting bettingHome = BettingDAO.selectBettingByHome(matchNum);
+				request.setAttribute("BETTING_HOME", bettingHome);
+				Betting bettingAway = BettingDAO.selectBettingByAway(matchNum);
+				request.setAttribute("BETTING_AWAY", bettingAway);
+				MemberBetData mbd = MemberBetDataDAO.selectMemberBetData(mbdNum);
+				request.setAttribute("MBD", mbd);
+				request.setAttribute("ERROR", "이미 지급하였습니다.");
+				RequestDispatcher rd = request
+						.getRequestDispatcher("/mbd/viewMBDByID.jsp");
+				rd.forward(request, response);
+				return;
+			}
 			mineral = mineral + betMineral;
 			
 			Member member = new Member();
@@ -258,6 +276,25 @@ public class MemberBetDataService extends HttpServlet {
 			long betMineral = Long.parseLong(request.getParameter("emineral"));
 			long mineral = MemberDAO.selectMineralByID(ID);
 			String mbdNum = request.getParameter("mbdnum");
+			String confirm = request.getParameter("confirm");
+			
+			if(confirm.equals("1")){
+				String matchNum = MemberBetDataDAO.selectMatchNum(mbdNum);
+				String matchTime = MatchDAO.selectMatchTime(matchNum);
+				int check = now.hourCheck(matchTime);
+				request.setAttribute("CHECK", check);
+				Betting bettingHome = BettingDAO.selectBettingByHome(matchNum);
+				request.setAttribute("BETTING_HOME", bettingHome);
+				Betting bettingAway = BettingDAO.selectBettingByAway(matchNum);
+				request.setAttribute("BETTING_AWAY", bettingAway);
+				MemberBetData mbd = MemberBetDataDAO.selectMemberBetData(mbdNum);
+				request.setAttribute("MBD", mbd);
+				request.setAttribute("ERROR", "이미 지급하였습니다.");
+				RequestDispatcher rd = request
+						.getRequestDispatcher("/mbd/viewMBDByID.jsp");
+				rd.forward(request, response);
+				return;
+			}
 		
 			mineral = mineral + betMineral;
 			
