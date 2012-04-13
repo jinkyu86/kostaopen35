@@ -367,6 +367,7 @@
 	<input type="hidden" name="away" value="${BETTING_AWAY.num }"/>
 	<input type="hidden" name="mbdnum" value="${MBD.num }"/>
 	<input type="hidden" name="matchtime" value="${BETTING_HOME.match.matchTime}"/>
+	<input type="hidden" name="confirm" value="${MBD.giveMineralConfirm }"/>
 	</form>
 		</section>
 		</li>
