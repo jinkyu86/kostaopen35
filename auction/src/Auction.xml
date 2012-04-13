@@ -121,7 +121,26 @@
  	g.detail	   as detail,
  	g.img   	   as img
  	FROM auction a JOIN good g ON a.g_num = g.g_num
- 	WHERE (a.e_time<sysdate OR a.sold='1') AND a.userid=#{userid}
+ 	WHERE (a.e_time &lt;sysdate OR a.sold='1') AND a.userid=#{userid}
+    ORDER BY a.e_time , a.a_num
+</select>
+
+<select id="selectAuctionSoldList" resultMap="selectResultMap">
+	SELECT 
+	a.a_num as anum,
+	a.g_num as gnum,
+	a.s_price 	   as sprice,
+	a.im_price	   as imprice,
+	to_char(a.s_time,'yyyy/mm/dd hh24:mi:ss') as stime,
+	to_char(a.e_time,'yyyy/mm/dd hh24:mi:ss') as etime, 
+	a.sold 		   as sold,
+	a.cu_price	   as cuprice,
+	a.userid	   as userid,
+ 	g.gname   	   as gname,
+ 	g.detail	   as detail,
+ 	g.img   	   as img
+ 	FROM auction a JOIN good g ON a.g_num = g.g_num
+ 	WHERE (a.e_time &lt;sysdate OR a.sold='1')
     ORDER BY a.e_time , a.a_num
 </select>
 
