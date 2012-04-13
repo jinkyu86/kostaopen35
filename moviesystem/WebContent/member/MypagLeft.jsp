@@ -15,6 +15,7 @@
 				<c:if  test="${LOGIN_MEMBER.userid=='mmanager'}">
 					<div id="member_manage">&nbsp;&nbsp;-&nbsp;<a href="/moviesystem/MemberService?method=viewMemberList">Member Manage</a></div>
 					<div id="good_management">&nbsp;&nbsp;-&nbsp;<a href="/moviesystem/GoodService?method=viewManageGoodList">Good Management</a></div>
+					<div id="movie_List">&nbsp;&nbsp;-&nbsp;<a href="/moviesystem/MovieService?method=adminMovieList">Movie List</a></div>
 				</c:if>
 			</div>
 
