@@ -92,10 +92,10 @@
 	 FROM member
 </select>
 
-<select id="selectMemberRanking" resultType="java.lang.Integer">
+<select id="selectMemberRanking" resultType="java.lang.Long">
      SELECT count(*)
 	 FROM member
-	 WHERE mineral>(SELECT mineral FROM member WHERE id=#{id})
+	 WHERE mineral &gt; (SELECT mineral FROM member WHERE id=#{id})
 </select>
 
 <resultMap id="selectRankingResultMap"
