@@ -1,7 +1,7 @@
 package kr.or.kosta.auction.bid;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -189,7 +189,7 @@ public class BidService extends HttpServlet {
 	
 	private void viewBidList(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		ArrayList bidList=BidDAO.selectBidList();
+		List<Bid> bidList=BidDAO.selectBidList();
 		request.setAttribute("BID_LIST", bidList);
 		
 		RequestDispatcher rd=request.getRequestDispatcher("/bid/viewBidList.jsp");
