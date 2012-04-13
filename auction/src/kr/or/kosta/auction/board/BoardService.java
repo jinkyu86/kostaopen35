@@ -2,6 +2,7 @@ package kr.or.kosta.auction.board;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -146,7 +147,7 @@ public class BoardService extends HttpServlet {
 		//한페이지당 보여줄 게시물수
 		int length=10;
 			
-		ArrayList<Board> boardList=	BoardDAO.selectBoardList(length,page);
+		List<Board> boardList=	BoardDAO.selectBoardList(page, length);
 		//2.request에 1의페이지 학생 정보 저장
 		request.setAttribute("BOARD_LIST", boardList);
 		//전체 학생의 수 조회
@@ -180,7 +181,7 @@ public class BoardService extends HttpServlet {
 		}
 		int length=10;
 		
-		ArrayList<Board> boardList=null;
+		List<Board> boardList=null;
 		int boardCount = 0;
 		if(request.getParameter("keyword")==null||request.getParameter("keyword").equals("")){
 			boardList = BoardDAO.selectBoardList(length, page);

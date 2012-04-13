@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 
 import kr.or.kosta.auction.board.Board;
-import kr.or.kosta.auction.board.BoardDAO;
+import kr.or.kosta.auction.board.BoardDAO1;
 import kr.or.kosta.auction.member.Member;
 
 import org.junit.Test;
@@ -23,7 +23,7 @@ public class BoardDAOTest {
 		member.setUserid("park");
 		board.setMember(member);
 		
-		BoardDAO.insertBoard(board);	
+		BoardDAO1.insertBoard(board);	
 	}
 	
 	@Test
@@ -34,7 +34,7 @@ public class BoardDAOTest {
 		board.setContent("이 사이트 앞으로 자주 애용할께요^^");
 		board.setbNum("22");
 		
-		BoardDAO.updateBoard(board);
+		BoardDAO1.updateBoard(board);
 	}
 	
 	@Test
@@ -42,18 +42,18 @@ public class BoardDAOTest {
 		Board board = new Board();
 		board.setbNum("23");
 		
-		BoardDAO.deleteBoard("23");
+		BoardDAO1.deleteBoard("23");
 	}
 
 	@Test
 	public void testselectBoard() {
-		Board board = BoardDAO.selectBoard("2");
+		Board board = BoardDAO1.selectBoard("2");
 		System.out.println(board);
 	}
 	
 	@Test
 	public void testSelectBoardList() {
-		ArrayList<Board> boardList = BoardDAO.selectBoardList();
+		ArrayList<Board> boardList = BoardDAO1.selectBoardList();
 		for (int i = 0; i < boardList.size(); i++) {
 			Board board = boardList.get(i);
 			System.out.println(board);
