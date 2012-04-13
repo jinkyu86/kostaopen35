@@ -40,7 +40,7 @@ public class MemberDAO {
 		SqlSession session=null;
 		try{
 			session=sqlMapper.openSession(true);
-			session.insert("Member.insertMEmber", member);
+			session.insert("Member.insertMember", member);
 		}
 		finally{
 			session.close();
@@ -136,7 +136,7 @@ public class MemberDAO {
 		Member member=null;
 		try{
 			session=sqlMapper.openSession(true);
-			member=session.selectOne("selectGood", userid);
+			member=session.selectOne("selectMember", userid);
 		}
 		finally{
 			session.close();
