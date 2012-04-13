@@ -21,8 +21,6 @@ public class MemberDAOTest {
 		member.setPw("1234");
 		member.setEmail("jojo@naver.com");
 		member.setName("Á¶Á¶");
-		member.setCoin("500");
-		member.setEmoney("3000");
 		MemberDAO.insertMember(member);
 	}
 
