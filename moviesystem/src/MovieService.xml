@@ -164,22 +164,5 @@
 	where m_name=#{mname}
 </select>
 
-<resultMap id="selectResultMovie" type="kr.or.kosta.moviesystem.movie.Movie">
-		<result property="mname" column="m_name"/>
-		<result property="mnum" column="m_num"/>
-		<result property="screenTime.time" column="time"/>
-		<result property="screenTime.scrnum" column="scrnum"/>
-		
-</resultMap>
-
-<select id="selectMovieList" resultMap="selectResultMovie">
-		select  m.m_name as m_name ,
-					 m.m_num as m_num,
-					 s.time as time,
-					 s.scr_num as scrnum
-		from  screening_time s JOIN movie m
-		on s.m_num=m.m_num
-		where  s.time>sysdate
-</select>
 
 </mapper>
