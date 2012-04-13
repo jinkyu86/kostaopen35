@@ -3,6 +3,7 @@ package kr.or.kosta.moviesystem.member;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -143,7 +144,7 @@ public class MemberService extends HttpServlet {
 			page=Integer.parseInt(request.getParameter("page"));
 		}
 		int length=5;
-		ArrayList<Member> memberList=MemberDAO.selectMemberList(length, page);
+		List<Member> memberList=MemberDAO.selectMemberList(length, page);
 		request.setAttribute("MEMBER_LIST", memberList);
 		
 		int memberCount=MemberDAO.selectMemberListCount();
@@ -240,9 +241,11 @@ public class MemberService extends HttpServlet {
 	 */
 	public void editMemberForm(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException{
-		String userid=request.getParameter("userid");
+		HttpSession session=request.getSession();
+		Member member1=(Member)session.getAttribute("LOGIN_MEMBER");
+		String userid=member1.getUserid();
 		Member member=MemberDAO.selectMemberById(userid);
-		request.setAttribute("LOGIN_MEMBER",member);
+		session.setAttribute("LOGIN_MEMBER", member);
 		
 		RequestDispatcher rd=request.getRequestDispatcher("member/editMember.jsp");
 		rd.forward(request, response);
@@ -437,7 +440,7 @@ public class MemberService extends HttpServlet {
 			colum = request.getParameter("column");
 		}
 		//1.StudentDAO에서 페이지에 해당하는 학생조회 메서드를 호출
-		ArrayList<Member>memberList=null;
+		List<Member>memberList=null;
 		int memberCount=0;
 		if(request.getParameter("keyword")==null||
 				request.getParameter("keyword").equals("")){
