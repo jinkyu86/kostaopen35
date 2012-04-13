@@ -1,7 +1,6 @@
 package kr.or.kosta.betting.match;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -137,8 +136,8 @@ public class MatchService extends HttpServlet {
 	public void addMatchForm(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		/* default generated stub */;
-		ArrayList<Team> teamList = TeamDAO.selectTeamList();
-		ArrayList<Loc> locList = LocDAO.selectLocList();
+		List<Team> teamList = TeamDAO.selectTeamList();
+		List<Loc> locList = LocDAO.selectLocList();
 		request.setAttribute("TEAM_LIST", teamList);
 		request.setAttribute("LOC_LIST",locList);
 		RequestDispatcher rd = request
@@ -159,8 +158,8 @@ public class MatchService extends HttpServlet {
 		/* default generated stub */;
 		String matchNo = request.getParameter("matchno");
 		Match match = MatchDAO.selectMatch(matchNo);
-		ArrayList<Team> teamList = TeamDAO.selectTeamList();
-		ArrayList<Loc> locList = LocDAO.selectLocList();
+		List<Team> teamList = TeamDAO.selectTeamList();
+		List<Loc> locList = LocDAO.selectLocList();
 		int betting = 0;
 		if(BettingDAO.selectBettingByHome(matchNo).equals(null)){
 			
