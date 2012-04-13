@@ -139,4 +139,22 @@ public class MovieDAO {
 			session.close();
 		}
 	}
+	public static void editMovie(Movie movie){
+		SqlSession session = null;
+		try{
+			session = sqlMapper.openSession(true);
+			session.update("MovieService.editMovie",movie);
+		}finally{
+			session.close();
+		}
+	}
+	public static void removeMovie(String mnum){
+		SqlSession session = null;
+		try{
+			session = sqlMapper.openSession(true);
+			session.delete("MovieService.removeMovie",mnum);
+		}finally{
+			session.close();
+		}
+	}
 }
