@@ -26,6 +26,8 @@
 	<mapper resource="Betting.xml"/>
 	<mapper resource="MemberBettingData.xml"/>
 	<mapper resource="Member.xml"/>
+	<mapper resource="Loc.xml"/>
+	<mapper resource="Team.xml"/>
 </mappers>
 </configuration>
 
