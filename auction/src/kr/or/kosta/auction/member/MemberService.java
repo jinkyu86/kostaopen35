@@ -215,9 +215,9 @@ public class MemberService extends HttpServlet {
 		//DB에 있는 정보로 회원정보 갱신
 		member=MemberDAO.selectMember(userid);
 		//해당ID의 최근 입찰한 5개의 입찰리스트 호출
-		ArrayList<Bid> bidList=BidDAO.selectBidListByID(5, 1, userid);
+		List<Bid> bidList=BidDAO.selectBidListByID(5, 1, userid);
 		//해당ID의 낙찰된 입찰리스트
-		ArrayList<Auction> soldList=AuctionDAO.selectSoldListById(userid);
+		List<Auction> soldList=AuctionDAO.selectSoldListById(userid);
 		for(int i=0;i<soldList.size();i++){
 			String aNum=soldList.get(i).getaNum();
 			BidDAO.updateMoneybackByIdInAuction(userid, aNum);
