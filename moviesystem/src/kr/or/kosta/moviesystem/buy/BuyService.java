@@ -1,7 +1,7 @@
 package kr.or.kosta.moviesystem.buy;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -87,7 +87,7 @@ public class BuyService extends HttpServlet{
 		Member member=(Member)session.getAttribute("LOGIN_MEMBER");
 		String userid=member.getUserid();
 		
-		ArrayList<Buy>buyList=BuyDAO.selectCancelableBuyList(userid,length, page);
+		List<Buy>buyList=BuyDAO.selectCancelableBuyList(userid,length, page);
 		int buyCount=BuyDAO.selectCancelableBuyListCount(userid);
 		request.setAttribute("CANCELABLE_BUY_LIST", buyList);
 		
@@ -114,7 +114,7 @@ public class BuyService extends HttpServlet{
 		Member member=(Member)session.getAttribute("LOGIN_MEMBER");
 		String userid=member.getUserid();
 		
-		ArrayList<Buy>buyList=BuyDAO.selectCanceledBuyList(userid,length, page);
+		List<Buy>buyList=BuyDAO.selectCanceledBuyList(userid,length, page);
 		int buyCount=BuyDAO.selectCanceledBuyListCount(userid);
 		request.setAttribute("CANCELED_BUY_LIST", buyList);
 		
@@ -146,7 +146,7 @@ public class BuyService extends HttpServlet{
 		Member member=(Member)session.getAttribute("LOGIN_MEMBER");
 		String userid=member.getUserid();
 		
-		ArrayList<Buy>buyList=BuyDAO.selectBuyList(userid,length, page);
+		List<Buy>buyList=BuyDAO.selectBuyList(userid,length, page);
 		int buyCount=BuyDAO.selectBuyCountByUerid(userid);
 		request.setAttribute("BUY_LIST", buyList);
 		
@@ -176,11 +176,12 @@ public class BuyService extends HttpServlet{
 			rd.forward(request, response);
 			return;
 		}
-		ArrayList<Buy>cartList=(ArrayList)session.getAttribute("CART_LIST");
+		List<Buy>cartList=(List)session.getAttribute("CART_LIST");
 				
 		for(int i=0;i<cartList.size();i++){
 			Buy buy=cartList.get(i);
 			buy.setMember(member);
+			buy.setTotalPrice(buy.getQty()*buy.getGood().getGprice());
 			BuyDAO.insertBuy(buy);
 		}
 		session.removeAttribute("CART_LIST");
@@ -189,52 +190,6 @@ public class BuyService extends HttpServlet{
 		rd.forward(request, response);
 		
 	}
-
-//	/**
-//	 * 구매목록 삭제
-//	 * 
-//	 * @param request
-//	 * @param response
-//	 */
-//	private void removeBuyList(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
-//		
-//		String buynum=request.getParameter("buynum");
-//		BuyDAO.deleteBuy(buynum);
-//		ArrayList<Buy> buyList=BuyDAO.selectBuyList("jun123", 1, 1);
-//		//파라미터 userid로 수정하기
-//		request.setAttribute("BUY_LIST", buyList);
-//		RequestDispatcher rd=request.getRequestDispatcher("/buy/viewBuyList.jsp");
-//		rd.forward(request, response);
-//	}
-//
-//	/**
-//	 * 구매목록 변경
-//	 * 
-//	 * @param request
-//	 * @param response
-//	 * @throws IOException 
-//	 * @throws ServletException 
-//	 */
-//	public void editBuyList(HttpServletRequest request,
-//			HttpServletResponse response) throws ServletException, IOException {
-//		/* default generated stub */
-//		String buynum=request.getParameter("buynum");
-//		long qty=Long.parseLong(request.getParameter("qty"));
-//		long Price=Long.parseLong(request.getParameter("Price"));
-//		
-//		Buy buy=new Buy();
-//		buy.setBuynum(buynum);
-//		buy.setQty(qty);
-//		buy.setTotalPrice(qty*Price);
-//		BuyDAO.editBuy(buy);
-//		
-//		ArrayList<Buy>buyList=BuyDAO.selectBuyList("jun123", 1, 1);
-//		//파라미터 userid로 수정하기
-//		request.setAttribute("BUY_LIST", buyList);
-//		
-//		RequestDispatcher rd=request.getRequestDispatcher("/buy/viewBuyList.jsp");
-//		rd.forward(request, response);
-//	}
 
 	/**
 	 * 결제 완료 화면 폼으로 이동

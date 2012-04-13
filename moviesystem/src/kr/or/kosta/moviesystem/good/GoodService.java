@@ -3,6 +3,7 @@ package kr.or.kosta.moviesystem.good;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
@@ -119,8 +120,8 @@ public class GoodService extends HttpServlet{
 		}
 		int length=5;
 		
-		ArrayList<Good>goodList=GoodDAO.selectGoodList(length,page);
-		int goodCount=GoodDAO.selectGoodCount();
+		List<Good>goodList=GoodDAO.selectGoodList(length,page);
+		int goodCount=GoodDAO.selectGoodListCount();
 		request.setAttribute("GOOD_LIST", goodList);
 		
 		String pageLinkTag=PageUtil.generate(page, goodCount, length, "/moviesystem/GoodService?method=viewManageGoodList");
@@ -140,13 +141,13 @@ public class GoodService extends HttpServlet{
 		}
 		int length=8;
 		
-		ArrayList<Good>goodList=null;
+		List<Good>goodList=null;
 		int goodCount=0;
 		String keyword=request.getParameter("keyword");
 		
 		if(keyword==null||keyword.equals("")){
 			goodList=GoodDAO.selectGoodList(length, page);
-			goodCount=GoodDAO.selectGoodCount();
+			goodCount=GoodDAO.selectGoodListCount();
 		}
 		else{
 			goodList=GoodDAO.selectGoodListByName(length, page, keyword);
@@ -279,8 +280,8 @@ public class GoodService extends HttpServlet{
 		}
 		int length=8;
 		
-		ArrayList<Good>goodList=GoodDAO.selectGoodList(length,page);
-		int goodCount=GoodDAO.selectGoodCount();
+		List<Good>goodList=GoodDAO.selectGoodList(length,page);
+		int goodCount=GoodDAO.selectGoodListCount();
 		request.setAttribute("GOOD_LIST", goodList);
 		
 		String pageLinkTag=PageUtil.generate(page, goodCount, length, "/moviesystem/GoodService?method=viewGoodList");
