@@ -2,6 +2,7 @@ package kr.or.kosta.moviesystem.screentime;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -47,7 +48,7 @@ public class ScreenTimeService extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		String mnum = request.getParameter("mnum");
 		System.out.println("mnum= "+mnum);
-		ArrayList<ScreenTime>screenTimeList=ScreenTimeDAO.selectScreen(mnum);
+		List<ScreenTime>screenTimeList=ScreenTimeDAO.selectScreen(mnum);
 		request.setAttribute("SCREENTIME_LIST",screenTimeList);
 		System.out.println("screenTimeList = "+screenTimeList);
 		
