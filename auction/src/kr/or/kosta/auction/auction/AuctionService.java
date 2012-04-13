@@ -2,6 +2,7 @@ package kr.or.kosta.auction.auction;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -92,7 +93,7 @@ public class AuctionService extends HttpServlet {
 	private void addAuctionForm(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException,IOException{
 		// 1.전체 물품 리스트 조회
-		ArrayList<Good>goodList=
+		List<Good>goodList=
 				GoodDAO.selectGoodList();
 		//2.request에 저장
 		request.setAttribute("GOOD_LIST",goodList);
@@ -168,7 +169,7 @@ public class AuctionService extends HttpServlet {
 				//2.수정할 학생의 정보 조회
 				Auction  auction = AuctionDAO.selectAuction(aNum);
 				//3.전체 물품 리스트 조회
-				ArrayList<Good> goodList=
+				List<Good> goodList=
 						GoodDAO.selectGoodList();
 				//4.request에 저장
 				request.setAttribute("AUCTION", auction);
@@ -192,7 +193,7 @@ public class AuctionService extends HttpServlet {
 				//2.DB에서 경매번호가 일치하는 경매 조회
 				int size=5;
 				Auction auction = AuctionDAO.selectAuction(aNum);
-				ArrayList<Bid> bidList=BidDAO.selectBidListByAuctionNum(aNum, size);
+				List<Bid> bidList=BidDAO.selectBidListByAuctionNum(aNum, size);
 				//3.request에 2에서 조회한 경매의 정보 저장
 				//   이름-STUDENT
 				request.setAttribute("AUCTION",auction);

@@ -1,7 +1,6 @@
 package kr.or.kosta.auction.auction.test;
 
-import java.sql.Date;
-import java.util.ArrayList;
+import java.util.List;
 
 import kr.or.kosta.auction.auction.Auction;
 import kr.or.kosta.auction.auction.AuctionDAO;
@@ -14,7 +13,7 @@ public class AuctionDAOTest {
 
 	@Test
 	public void selectAuctionTest() {
-		Auction auction = AuctionDAO.selectAuction("12");
+		Auction auction = AuctionDAO.selectAuction("85");
 		System.out.println(auction);
 	}
 	@Test
@@ -37,19 +36,25 @@ public class AuctionDAOTest {
 	@Test
 	public void testDeleteAuction(){
 		
-		AuctionDAO.deleteAuction("10");
+		AuctionDAO.deleteAuction("172");
 			
 	}
 	
 	@Test
-	public void selectAuctionTest2() {
-		ArrayList<Auction> auctionList = AuctionDAO.selectAuctionList();
-		for(int i =0; i<auctionList.size();i++){
-			Auction auction = auctionList.get(i);
-			System.out.println(auction);
+	public void TestselectAuctionList() {
+		List<Auction> auctionList = AuctionDAO.selectAuctionList();
+		System.out.println("AuctionDAO:selectAuctionList:"+auctionList);
+		//for(int i =0; i<auctionList.size();i++){
+			//Auction auction = auctionList.get(i);
+			//System.out.println(auction);
 			
 		}
+	@Test
+	public void TestselectAuctionSoldById(){
+		Auction auction = AuctionDAO.selectAuctionSoldById("cheol");
+		System.out.println(auction);
 	}
+	/* 
 	@Test
 	public void SelectSoldAuctionTest() {
 		ArrayList<Auction> auctionList = AuctionDAO.selectSoldList();
@@ -72,12 +77,25 @@ public class AuctionDAOTest {
 		ArrayList<Auction> page2List = AuctionDAO.selectSoldList(3, 2);
 		System.out.println("page2List:" + page2List);
 	}
+	*/
 	@Test
 	public void testUpdateAuction(){
-		Auction auction = AuctionDAO.selectAuction("4");
+		Auction auction = new Auction();
+		Good good = new Good();
+	
+		good.setgNum("17");
+		auction.setaNum("172");
+		auction.setsTime("2012/03/28");
+		auction.seteTime("2012/03/29");
+		auction.setCuPrice("100");
+		auction.setImPrice("10000");
+		auction.setSold(1);
+		auction.setsPrice("10");
 		auction.setsPrice("20");
+		auction.setUserid("lee");
+		
+		auction.setGood(good);
 		AuctionDAO.updateAuction(auction);
-		selectAuctionTest();
 	}
 	
 }
