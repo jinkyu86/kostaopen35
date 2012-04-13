@@ -23,6 +23,9 @@
 </environments>
 <mappers>
 	<mapper resource="Match.xml"/>
+	<mapper resource="Betting.xml"/>
+	<mapper resource="MemberBettingData.xml"/>
+	<mapper resource="Member.xml"/>
 </mappers>
 </configuration>
 
