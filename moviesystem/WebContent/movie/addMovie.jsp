@@ -10,6 +10,58 @@
 <link rel="stylesheet" href="/moviesystem/css/Layout.css">
 <script src="http://code.jquery.com/jquery-1.7.1.js"></script>
 <script src="/moviesystem/js/common.jsp"></script>
+<script>
+	$(function(){
+		memcheck('${LOGIN_MEMBER.userid}');
+		$('#member_manage').css('background-color','#C4E2FF');
+		$('#movie_List').css('background-color','#EBFBFF');
+		$('#movie_list').click(function(){
+			location.href='/moviesystem/MovieService?method=adminMovieList';
+		});
+		$('#cancel').click(function(){history.back();});
+		
+		$("#confirm").click(function(){
+			alert("#");
+			if($('#movie_name').val()==''){
+				alert('영화이름을 입력하세요.');
+				$('#movie_name').focus();
+				return false;
+			}
+			if($('#movie_genre').val()==''){
+				alert('영화 장르를 입력하세요.');
+				$('#movie_genre').focus();
+				return false;
+			}
+			if($('#movie_poster').val()==''){
+				alert('포스터를 입력하세요.');
+				$('#movie_poster').focus();
+				return false;
+			}
+			if($('#movie_sdate').val()==''){
+				alert('상영기간을 입력하세요.');
+				$('#movie_sdate').focus();
+				return false;
+			}
+			if($('#movie_edate').val()==''){
+				alert('상영기간을 입력하세요.');
+				$('#movie_edate').focus();
+				return false;
+			}
+			if($('#movie_price').val()==''){
+				alert('관람 가격 입력하세요.');
+				$('#movie_price').focus();
+				return false;
+			}
+			if($('#movie_content').val()==''){
+				alert('영화 소개를 입력하세요.');
+				$('#movie_content').focus();
+				return false;
+			}
+			
+			$('#movie_form').submit();
+		});
+	});
+</script>
 </head>
 <body>
 <table width="90%" align="center">
@@ -30,6 +82,59 @@
 		
 		<!-- 본문 내용 시작 -->
 		<td>
+			<form name="movie_form" id="movie_form" method="post" action="/moviesystem/MovieService">
+			<input type="hidden" name="method" id="method" value="addMovie">
+			<input type="hidden" name="poster_name" id="poster_name">
+			<table class="table_style" align="right" border="1px" cellspacing="0" bgcolor="#ffffff">
+				<tr>
+					<td style="width:15%;text-align:center">영화명</td>
+					<td style="width:85%;padding-left:20px;">
+						<input type="text" name="movie_name" id="movie_name" style="width:70%;">
+					</td>
+				</tr>
+				<tr>
+					<td style="width:15%;border-right:1px solid #9191C8;text-align:center">장르</td>
+					<td style="width:85%;padding-left:20px;">
+						<input type="text" name="movie_genre" id="movie_genre">
+					</td>
+				</tr>
+				<tr>
+					<td style="width:15%;border-right:1px solid #9191C8;text-align:center">포스터</td>
+					<td style="width:85%;padding-left:20px;">
+						<input type="text" name="movie_poster" id="movie_poster">
+					</td>
+				</tr>
+				<tr>
+					<td style="width:15%;border-right:1px solid #9191C8;text-align:center">상영기간</td>
+					<td style="width:85%;padding-left:20px;">
+						<input type="text" name="movie_sdate" id="movie_sdate" style="width:100px">
+						~
+						<input type="text" name="movie_edate" id="movie_edate" style="width:100px">
+					</td>
+				</tr>
+				<tr>
+					<td style="width:15%;border-right:1px solid #9191C8;text-align:center">가격</td>
+					<td style="width:85%;padding-left:20px;">
+						<input type="text" name="movie_price" id="movie_price">
+					</td>
+				</tr>
+				<tr>
+					<td style="width:15%;border-right:1px solid #9191C8;text-align:center">소개</td>
+					<td style="width:85%;padding-left:20px;">
+						<textarea name="movie_content" id="movie_content" style="width:95%;height:300px;"></textarea>
+					</td>
+				</tr>
+			</table>
+			</form>
+			<table style="width:100%;padding-top:15px;">
+				<tr>
+					<td style="width:100%;text-align:center">
+						<span class="button1" id="confirm">확인</span>
+						<span class="button1" id="cancel">취소</span>
+						<span class="button1" id="movie_list">목록</span>
+					</td>
+				</tr>
+			</table>
 		</td>
 	</tr>
 	<!-- 본문 내용 끝 -->
