@@ -23,6 +23,7 @@
 </environments>
 <mappers>
 	<mapper resource="Good.xml" />
+	<mapper resource="Member.xml" />
 </mappers>
 </configuration>
 
