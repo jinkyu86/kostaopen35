@@ -1,64 +1,52 @@
 package kr.or.kosta.moviesystem.member;
 
+import java.io.IOException;
+import java.io.Reader;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 
-import kr.or.kosta.moviesystem.util.ConnectionUtil;
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.RowBounds;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 
 
 public class MemberDAO {
-
+	
+	private static String resource="sqlmap-config.xml";
+	private static Reader sqlReader;
+	static{
+			try {
+				sqlReader=Resources.getResourceAsReader(resource);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+	}
+	private static SqlSessionFactory sqlMapper =
+			new SqlSessionFactoryBuilder().build(sqlReader);
+	
 	/**
 	 * ID로 회원을 찾을 수 있는 메서드
 	 * 
 	 * @param memberid
 	 */
 	public static Member selectMemberById(String userid) {
-		Connection con=null;
-		PreparedStatement psmt=null;
-		String sql=null;
-		ResultSet rs=null;
+		SqlSession session = null;
 		Member member=null;
 		try{
-			con=ConnectionUtil.getConnection();
-			sql="SELECT user_num,userid,name,pw,email,phone,zipcode,addr,reg_date,mem_state " +
-					"FROM member WHERE userid=?";
-			psmt=con.prepareStatement(sql);
-			psmt.setString(1,userid);
-			rs=psmt.executeQuery();
-			if(rs.next()){
-				String userNum=rs.getString(1);
-				userid=rs.getString(2);
-				String name=rs.getString(3);
-				String pw=rs.getString(4);
-				String email=rs.getString(5);
-				String phone=rs.getString(6);
-				String zipcode=rs.getString(7);
-				String addr=rs.getString(8);
-				Date regDate=rs.getDate(9);
-				String memState=rs.getString(10);
-				
-				member=new Member();
-				member.setUserNum(userNum);
-				member.setUserid(userid);
-				member.setName(name);
-				member.setPw(pw);
-				member.setEmail(email);
-				member.setPhone(phone);
-				member.setZipcode(zipcode);
-				member.setAddr(addr);
-				member.setRegDate(regDate);
-				member.setMemState(memState);
-				
-			}
+			session= sqlMapper.openSession(true);
+			member=session.selectOne("Member.selectMemberById",userid);
 			
-		}catch (SQLException e) {
-			e.printStackTrace();
+		}finally{
+			session.close();
 		}
 		return member;
 	}
@@ -69,28 +57,15 @@ public class MemberDAO {
 	 * @param member
 	 */
 	public static void insertMember(Member member) {
-		Connection con=null;
-		PreparedStatement psmt=null;
-		con=ConnectionUtil.getConnection();
-		try{	
-			psmt=con.prepareStatement(
-					"INSERT INTO MEMBER" +
-					"(user_num,userid,name,pw,email,phone,zipcode,addr,reg_date,mem_state)" +
-					"VALUES (mem_seq.nextval,?,?,?,?,?,?,?,sysdate,'1')"
-					);
-			psmt.setString(1,member.getUserid());
-			psmt.setString(2,member.getName());
-			psmt.setString(3,member.getPw());
-			psmt.setString(4,member.getEmail());
-			psmt.setString(5,member.getPhone());
-			psmt.setString(6,member.getZipcode());
-			psmt.setString(7,member.getAddr());
-			
-			psmt.executeUpdate();
-			
-		}catch(Exception e){
-			e.printStackTrace();
-		}	
+		SqlSession session=null;
+		try{
+			session = sqlMapper.openSession(true);
+			session.insert("Member.insertMember",member);
+		}//Exxeption여부와 상관업이 반드시 실행
+		finally{
+			//Connection을 ConnectionPoll에 반납
+			session.close();
+		}
 	}
 
 	/**
@@ -100,29 +75,13 @@ public class MemberDAO {
 	 * @param pw
 	 */
 	public static void editMember(Member member) {
-		 Connection con=null;
-		 PreparedStatement psmt=null;
-		 con=ConnectionUtil.getConnection();
-
-		 
-		 try {
-			 psmt=con.prepareStatement
-					  ("UPDATE MEMBER " +
-					  	"SET pw=?,email=?,phone=?,zipcode=?,addr=? " +
-					  	"WHERE userid=?");
-			 psmt.setString(1, member.getPw());
-			 psmt.setString(2,member.getEmail());
-			 psmt.setString(3,member.getPhone());
-			 psmt.setString(4,member.getZipcode());
-			 psmt.setString(5,member.getAddr());
-			 psmt.setString(6,member.getUserid());
-	
-			 
-			 psmt.executeUpdate();
-		 }catch (SQLException e) {
-				e.printStackTrace();
-			}
-		
+		SqlSession session = null;
+		try{
+			session=sqlMapper.openSession(true);
+			session.update("Member.editMember",member);
+		}finally{
+			session.close();
+		}
 	}
 
 	/**
@@ -132,32 +91,13 @@ public class MemberDAO {
 	 * @param pw
 	 */
 	public static void dropMember(Member member) {
-		 Connection con=null;
-		 PreparedStatement psmt=null;
-		 con=ConnectionUtil.getConnection();
-		 
-		 try {
-			 psmt=con.prepareStatement
-					  ("UPDATE MEMBER " +
-					  	"SET name=?,pw=?,email=?,phone=?,zipcode=?,addr=?," +
-					  	"mem_state='2',drop_reason=?,drop_date=sysdate WHERE userid=?");
-			 
-			 psmt.setString(1,"  ");
-			 psmt.setString(2,"  ");
-			 psmt.setString(3,"  ");
-			 psmt.setString(4,"  ");
-			 psmt.setString(5,"  ");
-			 psmt.setString(6,"  ");
-			 psmt.setString(7,member.getDropReason());
-			 psmt.setString(8,member.getUserid());
-		
-			 
-			 psmt.executeUpdate();
-			 
-		 }catch (SQLException e) {
-				e.printStackTrace();
-			}
-		
+		SqlSession session = null;
+		try{
+			session=sqlMapper.openSession(true);
+			session.update("Member.dropMember",member);
+		}finally{
+			session.close();
+		}		
 	}
 
 	/**
@@ -166,85 +106,35 @@ public class MemberDAO {
 	 * @param length
 	 * @param page
 	 */
-	public static ArrayList<Member> selectMemberList(int length, int page) {
-		 Connection con = null;
-		 String sql = null;
-		 ResultSet rs = null;
-		 PreparedStatement psmt=null;
-		 ArrayList<Member>memberList=new ArrayList<Member>();
-		 
-		 try{
-			 con = ConnectionUtil.getConnection();
-			 sql="SELECT user_num,userid,name,pw,email,phone,zipcode,addr,reg_date,mem_state " +
-					 "FROM member";
-			 psmt = con.prepareStatement
-						(sql,ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-			 rs = psmt.executeQuery();
-			 
-			 if(page>1){
-					rs.absolute((page-1)*length);
-					}
-			 int getRecordCount=0;
-			 while(rs.next()&&getRecordCount<length){
-				 getRecordCount++;
-				 String userNum=rs.getString(1);
-				 String userid=rs.getString(2);
-				 String name=rs.getString(3);
-				 String pw=rs.getString(4);
-					String email=rs.getString(5);
-					String phone=rs.getString(6);
-					String zipcode=rs.getString(7);
-					String addr=rs.getString(8);
-					Date regDate=rs.getDate(9);
-					String memState=rs.getString(10);
-					
-					Member member=new Member();
-					member.setUserNum(userNum);
-					member.setUserid(userid);
-					member.setName(name);
-					member.setPw(pw);
-					member.setEmail(email);
-					member.setPhone(phone);
-					member.setZipcode(zipcode);
-					member.setAddr(addr);
-					member.setRegDate(regDate);
-					member.setMemState(memState);
-					
-					memberList.add(member);
-					
-			 }
-			 
-			 
-		 }catch (SQLException e) {
-				e.printStackTrace();
-			}	
-		 
+	public static List<Member> selectMemberList(int length, int page) {
+		SqlSession session = null;
+		List<Member> memberList=null;
+		try{
+			session=sqlMapper.openSession(true);
+			RowBounds rowBounds=new RowBounds((page-1)*length,length);
+			memberList=session.selectList("Member.selectMemberList",null,rowBounds);
+			
+		}finally{
+			session.close();
+		}
 		return memberList;
-	}
+	 }
+
 
 	/**
 	 * 전체 회원의 수를 알 수 있는 메서드
 	 */
 	public static int selectMemberListCount() {
-		 Connection con = null;
-		 PreparedStatement psmt=null;
-		 String sql = null;
-		 ResultSet rs = null;
-		 int memberCount=0;
-		 try {
-			 con = ConnectionUtil.getConnection();
-			 sql="SELECT count(userid)" +
-			 		"FROM member";
-			 psmt = con.prepareStatement(sql);
-			 rs = psmt.executeQuery();
-				
-			 if(rs.next()){
-					memberCount=rs.getInt(1);
-				}
-		 }catch (SQLException e) {
-				e.printStackTrace();
-			}	
-		return memberCount;
+		SqlSession session = null;
+		Integer count=null;
+		try{
+			session=sqlMapper.openSession(true);
+			count=session.selectOne("Member.selectMemberListCount");
+			
+		}finally{
+			session.close();
+		}
+		return count;
 	}
 
 	/**
@@ -254,58 +144,17 @@ public class MemberDAO {
 	 * @param page
 	 * @param name
 	 */
-	public static ArrayList<Member> searchMemberListByName(int length, int page, String name) {
-		Connection con = null;
-		String sql = null;
-		ResultSet rs = null;
-		PreparedStatement psmt=null;
-		ArrayList<Member>memberList=new ArrayList<Member>();
-		
-		 try {
-			 con = ConnectionUtil.getConnection();
-			 sql="SELECT user_num,userid,name,pw,email,phone,zipcode,addr,reg_date,mem_state " +
-			 		"FROM member WHERE name like ?";
-			 
-			 psmt = con.prepareStatement
-						(sql,ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-			 psmt.setString(1,"%"+name+"%");
-			 rs = psmt.executeQuery();
-			 
-			 if(page>1){
-					rs.absolute((page-1)*length);
-					}
-			 int getRecordCount=0;
-			while(rs.next()&&getRecordCount<length){
-				getRecordCount++;
-				String userNum=rs.getString(1);
-				String userid=rs.getString(2);
-				name=rs.getString(3);
-				String pw=rs.getString(4);
-				String email=rs.getString(5);
-				String phone=rs.getString(6);
-				String zipcode=rs.getString(7);
-				String addr=rs.getString(8);
-				Date regDate=rs.getDate(9);
-				String memState=rs.getString(10);
-				
-				Member member=new Member();
-				member.setUserNum(userNum);
-				member.setUserid(userid);
-				member.setName(name);
-				member.setPw(pw);
-				member.setEmail(email);
-				member.setPhone(phone);
-				member.setZipcode(zipcode);
-				member.setAddr(addr);
-				member.setRegDate(regDate);
-				member.setMemState(memState);
-				
-				memberList.add(member);
-			}
-			 
-		 }catch (SQLException e) {
-				e.printStackTrace();
-			}	
+	public static List<Member> searchMemberListByName(int length, int page, String name) {
+		SqlSession session = null;
+		List<Member> memberList=null;
+		try{
+			session= sqlMapper.openSession(true);
+			RowBounds rowBounds=new RowBounds((page-1)*length,length);
+			memberList=session.selectList("Member.searchMemberListByName","%"+name+"%",rowBounds);
+			
+		}finally{
+			session.close();
+		}
 		return memberList;
 	}
 
@@ -315,29 +164,16 @@ public class MemberDAO {
 	 * @param name
 	 */
 	public static int searchMemberListByNameCount(String name) {
-		 Connection con = null;
-		 String sql = null;
-		 ResultSet rs = null;
-		 PreparedStatement psmt=null;
-		 int  memberCount=0;
-		 
-		 try{
-			 con = ConnectionUtil.getConnection();
-			 sql="SELECT count(name)" +
-			 		"FROM member WHERE name like ?";
-			 psmt = con.prepareStatement(sql);
-			 psmt.setString(1,"%"+name+"%");
-			 rs = psmt.executeQuery();
-			 
-			 if(rs.next()){
-				 memberCount=rs.getInt(1);
-				}
-			 
-		 }catch (SQLException e) {
-				e.printStackTrace();
-			}	
-		
-		return memberCount;
+		SqlSession session = null;
+		Integer count=null;
+		try{
+			session=sqlMapper.openSession(true);
+			count=session.selectOne("Member.searchMemberListByNameCount","%"+name+"%");
+			
+		}finally{
+			session.close();
+		}
+		return count;
 	}
 
 	/**
@@ -347,58 +183,17 @@ public class MemberDAO {
 	 * @param page
 	 * @param phone
 	 */
-	public static ArrayList<Member> searchMemberListByPhone(int length, int page, String phone) {
-		Connection con = null;
-		String sql = null;
-		ResultSet rs = null;
-		PreparedStatement psmt=null;
-		ArrayList<Member>memberList=new ArrayList<Member>();
-		
-		 try {
-			 con = ConnectionUtil.getConnection();
-			 sql="SELECT user_num,userid,name,pw,email,phone,zipcode,addr,reg_date,mem_state " +
-			 		"FROM member WHERE phone like ?";
-			 
-			 psmt = con.prepareStatement
-						(sql,ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-			 psmt.setString(1,"%"+phone+"%");
-			 rs = psmt.executeQuery();
-			 
-			 if(page>1){
-					rs.absolute((page-1)*length);
-					}
-			 int getRecordCount=0;
-			while(rs.next()&&getRecordCount<length){
-				getRecordCount++;
-				String userNum=rs.getString(1);
-				String userid=rs.getString(2);
-				String name=rs.getString(3);
-				String pw=rs.getString(4);
-				String email=rs.getString(5);
-				phone=rs.getString(6);
-				String zipcode=rs.getString(7);
-				String addr=rs.getString(8);
-				Date regDate=rs.getDate(9);
-				String memState=rs.getString(10);
-				
-				Member member=new Member();
-				member.setUserNum(userNum);
-				member.setUserid(userid);
-				member.setName(name);
-				member.setPw(pw);
-				member.setEmail(email);
-				member.setPhone(phone);
-				member.setZipcode(zipcode);
-				member.setAddr(addr);
-				member.setRegDate(regDate);
-				member.setMemState(memState);
-				
-				memberList.add(member);
-			}
-			 
-		 }catch (SQLException e) {
-				e.printStackTrace();
-			}	
+	public static List<Member> searchMemberListByPhone(int length, int page, String phone) {
+		SqlSession session = null;
+		List<Member> memberList=null;
+		try{
+			session= sqlMapper.openSession(true);
+			RowBounds rowBounds=new RowBounds((page-1)*length,length);
+			memberList=session.selectList("Member.searchMemberListByPhone","%"+phone+"%",rowBounds);
+			
+		}finally{
+			session.close();
+		}
 		return memberList;
 	}
 
@@ -408,29 +203,16 @@ public class MemberDAO {
 	 * @param phone
 	 */
 	public static int searchMemberListByPhoneCount(String phone) {
-		 Connection con = null;
-		 String sql = null;
-		 ResultSet rs = null;
-		 PreparedStatement psmt=null;
-		 int  memberCount=0;
-		 
-		 try{
-			 con = ConnectionUtil.getConnection();
-			 sql="SELECT count(phone)" +
-			 		"FROM member WHERE phone like ?";
-			 psmt = con.prepareStatement(sql);
-			 psmt.setString(1,"%"+phone+"%");
-			 rs = psmt.executeQuery();
-			 
-			 if(rs.next()){
-				 memberCount=rs.getInt(1);
-				}
-			 
-		 }catch (SQLException e) {
-				e.printStackTrace();
-			}	
-		
-		return memberCount;
+		SqlSession session = null;
+		Integer count=null;
+		try{
+			session=sqlMapper.openSession(true);
+			count=session.selectOne("Member.searchMemberListByPhoneCount","%"+phone+"%");
+			
+		}finally{
+			session.close();
+		}
+		return count;
 	}
 
 	/**
@@ -440,58 +222,17 @@ public class MemberDAO {
 	 * @param page
 	 * @param email
 	 */
-	public static ArrayList<Member> searchMemberListByEmail(int length, int page, String email) {
-		Connection con = null;
-		String sql = null;
-		ResultSet rs = null;
-		PreparedStatement psmt=null;
-		ArrayList<Member>memberList=new ArrayList<Member>();
-		
-		 try {
-			 con = ConnectionUtil.getConnection();
-			 sql="SELECT user_num,userid,name,pw,email,phone,zipcode,addr,reg_date,mem_state " +
-			 		"FROM member WHERE email like ?";
-			 
-			 psmt = con.prepareStatement
-						(sql,ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-			 psmt.setString(1,"%"+email+"%");
-			 rs = psmt.executeQuery();
-			 
-			 if(page>1){
-					rs.absolute((page-1)*length);
-					}
-			 int getRecordCount=0;
-			while(rs.next()&&getRecordCount<length){
-				getRecordCount++;
-				String userNum=rs.getString(1);
-				String userid=rs.getString(2);
-				String name=rs.getString(3);
-				String pw=rs.getString(4);
-				email=rs.getString(5);
-				String phone=rs.getString(6);
-				String zipcode=rs.getString(7);
-				String addr=rs.getString(8);
-				Date regDate=rs.getDate(9);
-				String memState=rs.getString(10);
-				
-				Member member=new Member();
-				member.setUserNum(userNum);
-				member.setUserid(userid);
-				member.setName(name);
-				member.setPw(pw);
-				member.setEmail(email);
-				member.setPhone(phone);
-				member.setZipcode(zipcode);
-				member.setAddr(addr);
-				member.setRegDate(regDate);
-				member.setMemState(memState);
-				
-				memberList.add(member);
-			}
-			 
-		 }catch (SQLException e) {
-				e.printStackTrace();
-			}	
+	public static List<Member> searchMemberListByEmail(int length, int page, String email) {
+		SqlSession session = null;
+		List<Member> memberList=null;
+		try{
+			session= sqlMapper.openSession(true);
+			RowBounds rowBounds=new RowBounds((page-1)*length,length);
+			memberList=session.selectList("Member.searchMemberListByEmail","%"+email+"%",rowBounds);
+			
+		}finally{
+			session.close();
+		}
 		return memberList;
 	}
 
@@ -501,29 +242,16 @@ public class MemberDAO {
 	 * @param email
 	 */
 	public static int searchMemberListByEmailCount(String email) {
-		 Connection con = null;
-		 String sql = null;
-		 ResultSet rs = null;
-		 PreparedStatement psmt=null;
-		 int  memberCount=0;
-		 
-		 try{
-			 con = ConnectionUtil.getConnection();
-			 sql="SELECT count(email)" +
-			 		"FROM member WHERE email like ?";
-			 psmt = con.prepareStatement(sql);
-			 psmt.setString(1,"%"+email+"%");
-			 rs = psmt.executeQuery();
-			 
-			 if(rs.next()){
-				 memberCount=rs.getInt(1);
-				}
-			 
-		 }catch (SQLException e) {
-				e.printStackTrace();
-			}	
-		
-		return memberCount;
+		SqlSession session = null;
+		Integer count=null;
+		try{
+			session=sqlMapper.openSession(true);
+			count=session.selectOne("Member.searchMemberListByEmailCount","%"+email+"%");
+			
+		}finally{
+			session.close();
+		}
+		return count;
 	}
 
 	/**
@@ -533,58 +261,17 @@ public class MemberDAO {
 	 * @param page
 	 * @param addr
 	 */
-	public static ArrayList<Member> searchMemberListByAddr(int length, int page, String addr) {
-		Connection con = null;
-		String sql = null;
-		ResultSet rs = null;
-		PreparedStatement psmt=null;
-		ArrayList<Member>memberList=new ArrayList<Member>();
-		
-		 try {
-			 con = ConnectionUtil.getConnection();
-			 sql="SELECT user_num,userid,name,pw,email,phone,zipcode,addr,reg_date,mem_state " +
-			 		"FROM member WHERE addr like ?";
-			 
-			 psmt = con.prepareStatement
-						(sql,ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-			 psmt.setString(1,"%"+addr+"%");
-			 rs = psmt.executeQuery();
-			 
-			 if(page>1){
-					rs.absolute((page-1)*length);
-					}
-			 int getRecordCount=0;
-			while(rs.next()&&getRecordCount<length){
-				getRecordCount++;
-				String userNum=rs.getString(1);
-				String userid=rs.getString(2);
-				String name=rs.getString(3);
-				String pw=rs.getString(4);
-				String email=rs.getString(5);
-				String phone=rs.getString(6);
-				String zipcode=rs.getString(7);
-				addr=rs.getString(8);
-				Date regDate=rs.getDate(9);
-				String memState=rs.getString(10);
-				
-				Member member=new Member();
-				member.setUserNum(userNum);
-				member.setUserid(userid);
-				member.setName(name);
-				member.setPw(pw);
-				member.setEmail(email);
-				member.setPhone(phone);
-				member.setZipcode(zipcode);
-				member.setAddr(addr);
-				member.setRegDate(regDate);
-				member.setMemState(memState);
-				
-				memberList.add(member);
-			}
-			 
-		 }catch (SQLException e) {
-				e.printStackTrace();
-			}	
+	public static List<Member> searchMemberListByAddr(int length, int page, String addr) {
+		SqlSession session = null;
+		List<Member> memberList=null;
+		try{
+			session= sqlMapper.openSession(true);
+			RowBounds rowBounds=new RowBounds((page-1)*length,length);
+			memberList=session.selectList("Member.searchMemberListByAddr","%"+addr+"%",rowBounds);
+			
+		}finally{
+			session.close();
+		}
 		return memberList;
 	}
 
@@ -594,29 +281,16 @@ public class MemberDAO {
 	 * @param addr
 	 */
 	public static int searchMemberListByAddrCount(String addr) {
-		 Connection con = null;
-		 String sql = null;
-		 ResultSet rs = null;
-		 PreparedStatement psmt=null;
-		 int  memberCount=0;
-		 
-		 try{
-			 con = ConnectionUtil.getConnection();
-			 sql="SELECT count(addr)" +
-			 		"FROM member WHERE addr like ?";
-			 psmt = con.prepareStatement(sql);
-			 psmt.setString(1,"%"+addr+"%");
-			 rs = psmt.executeQuery();
-			 
-			 if(rs.next()){
-				 memberCount=rs.getInt(1);
-				}
-			 
-		 }catch (SQLException e) {
-				e.printStackTrace();
-			}	
-		
-		return memberCount;
+		SqlSession session = null;
+		Integer count=null;
+		try{
+			session=sqlMapper.openSession(true);
+			count=session.selectOne("Member.searchMemberListByAddrCount","%"+addr+"%");
+			
+		}finally{
+			session.close();
+		}
+		return count;
 	}
 
 	/**
@@ -626,50 +300,18 @@ public class MemberDAO {
 	 * @param name
 	 */
 	public static Member findMemberId(String email, String name) {
-		Connection con=null;
-		PreparedStatement psmt=null;
-		String sql=null;
-		ResultSet rs=null;
+		SqlSession session = null;
 		Member member=null;
-		con=ConnectionUtil.getConnection();
 		try{
+			session= sqlMapper.openSession(true);
+			HashMap<String,String> parameter=new HashMap<String,String>();
+			parameter.put("email",email);
+			parameter.put("name",name);
+			member=session.selectOne("Member.findIdMember",parameter);
 			
-			sql="SELECT user_num,userid,name,pw,email,phone,zipcode,addr,reg_date,mem_state " +
-					"FROM member WHERE email=? AND name=?";
-			psmt=con.prepareStatement(sql);
-			psmt.setString(1,email);
-			psmt.setString(2,name);
-			psmt.executeUpdate();
-			rs=psmt.executeQuery();
-			
-			while(rs.next()){
-				String userNum=rs.getString(1);
-				String userid=rs.getString(2);
-				name=rs.getString(3);
-				String pw=rs.getString(4);
-				email=rs.getString(5);
-				String phone=rs.getString(6);
-				String zipcode=rs.getString(7);
-				String addr=rs.getString(8);
-				Date regDate=rs.getDate(9);
-				String memState=rs.getString(10);
-				
-				member=new Member();
-				member.setUserNum(userNum);
-				member.setUserid(userid);
-				member.setName(name);
-				member.setPw(pw);
-				member.setEmail(email);
-				member.setPhone(phone);
-				member.setZipcode(zipcode);
-				member.setAddr(addr);
-				member.setRegDate(regDate);
-				member.setMemState(memState);
-			}
-		}catch (SQLException e) {
-				e.printStackTrace();
-			}
-		
+		}finally{
+			session.close();
+		}
 		return member;
 	}
 
@@ -681,50 +323,19 @@ public class MemberDAO {
 	 * @param id
 	 */
 	public static Member findMemberPw(String email, String name, String userid) {
-		Connection con=null;
-		PreparedStatement psmt=null;
-		String sql=null;
-		ResultSet rs=null;
+		SqlSession session = null;
 		Member member=null;
 		try{
-			con=ConnectionUtil.getConnection();
-			sql="SELECT user_num,userid,name,pw,email,phone,zipcode,addr,reg_date,mem_state " +
-					"FROM member WHERE email=? AND name=? AND userid=?";
-			psmt=con.prepareStatement(sql);
-			psmt.setString(1,email);
-			psmt.setString(2,name);
-			psmt.setString(3,userid);
+			session= sqlMapper.openSession(true);
+			HashMap<String,String> parameter=new HashMap<String,String>();
+			parameter.put("email",email);
+			parameter.put("name",name);
+			parameter.put("userid",userid);
+			member=session.selectOne("Member.findIdMember",parameter);
 			
-			rs=psmt.executeQuery();
-			
-			if(rs.next()){
-				String userNum=rs.getString(1);
-				userid=rs.getString(2);
-				name=rs.getString(3);
-				String pw=rs.getString(4);
-				email=rs.getString(5);
-				String phone=rs.getString(6);
-				String zipcode=rs.getString(7);
-				String addr=rs.getString(8);
-				Date regDate=rs.getDate(9);
-				String memState=rs.getString(10);
-				
-				member=new Member();
-				member.setUserNum(userNum);
-				member.setUserid(userid);
-				member.setName(name);
-				member.setPw(pw);
-				member.setEmail(email);
-				member.setPhone(phone);
-				member.setZipcode(zipcode);
-				member.setAddr(addr);
-				member.setRegDate(regDate);
-				member.setMemState(memState);
-			}
-		}catch (SQLException e) {
-				e.printStackTrace();
-			}
-		
+		}finally{
+			session.close();
+		}
 		return member;
 	}
 
