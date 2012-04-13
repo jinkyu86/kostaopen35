@@ -21,7 +21,6 @@
 		$('#cancel').click(function(){history.back();});
 		
 		$("#confirm").click(function(){
-			alert("#");
 			if($('#movie_name').val()==''){
 				alert('영화이름을 입력하세요.');
 				$('#movie_name').focus();
@@ -57,12 +56,13 @@
 				$('#movie_content').focus();
 				return false;
 			}
-			
+
 			$('#movie_form').submit();
 		});
 	});
 </script>
 </head>
+
 <body>
 <table width="90%" align="center">
 	<!-- 상단 메뉴 시작 -->
@@ -83,45 +83,53 @@
 		<!-- 본문 내용 시작 -->
 		<td>
 			<form name="movie_form" id="movie_form" method="post" action="/moviesystem/MovieService">
-			<input type="hidden" name="method" id="method" value="addMovie">
+			<c:choose>
+				<c:when test="${method eq 'addMovieForm'}">
+					<input type="hidden" name="method" id="method" value="addMovie">
+				</c:when>
+				<c:otherwise>
+					<input type="hidden" name="method" id="method" value="editMovie">
+				</c:otherwise>
+			</c:choose>
+			<input type="hidden" name="mnum" value="${Movie.mnum}">
 			<input type="hidden" name="poster_name" id="poster_name">
 			<table class="table_style" align="right" border="1px" cellspacing="0" bgcolor="#ffffff">
 				<tr>
 					<td style="width:15%;text-align:center">영화명</td>
 					<td style="width:85%;padding-left:20px;">
-						<input type="text" name="movie_name" id="movie_name" style="width:70%;">
+						<input type="text" name="movie_name" id="movie_name"  value="${Movie.mname}" style="width:70%;">
 					</td>
 				</tr>
 				<tr>
 					<td style="width:15%;border-right:1px solid #9191C8;text-align:center">장르</td>
 					<td style="width:85%;padding-left:20px;">
-						<input type="text" name="movie_genre" id="movie_genre">
+						<input type="text" name="movie_genre" id="movie_genre" value="${Movie.genre}">
 					</td>
 				</tr>
 				<tr>
 					<td style="width:15%;border-right:1px solid #9191C8;text-align:center">포스터</td>
 					<td style="width:85%;padding-left:20px;">
-						<input type="text" name="movie_poster" id="movie_poster">
+						<input type="text" name="movie_poster" id="movie_poster" value="${Movie.poster}">
 					</td>
 				</tr>
 				<tr>
 					<td style="width:15%;border-right:1px solid #9191C8;text-align:center">상영기간</td>
 					<td style="width:85%;padding-left:20px;">
-						<input type="text" name="movie_sdate" id="movie_sdate" style="width:100px">
+						<input type="text" name="movie_sdate" id="movie_sdate" style="width:100px" value="<fmt:formatDate value="${Movie.launchDate}" pattern="yyyy-MM-dd"/>">
 						~
-						<input type="text" name="movie_edate" id="movie_edate" style="width:100px">
+						<input type="text" name="movie_edate" id="movie_edate" style="width:100px" value="<fmt:formatDate value="${Movie.endDate}" pattern="yyyy-MM-dd"/>">
 					</td>
 				</tr>
 				<tr>
 					<td style="width:15%;border-right:1px solid #9191C8;text-align:center">가격</td>
 					<td style="width:85%;padding-left:20px;">
-						<input type="text" name="movie_price" id="movie_price">
+						<input type="text" name="movie_price" id="movie_price" value="${Movie.mprice}">
 					</td>
 				</tr>
 				<tr>
 					<td style="width:15%;border-right:1px solid #9191C8;text-align:center">소개</td>
 					<td style="width:85%;padding-left:20px;">
-						<textarea name="movie_content" id="movie_content" style="width:95%;height:300px;"></textarea>
+						<textarea name="movie_content" id="movie_content" style="width:95%;height:300px;">${Movie.content}</textarea>
 					</td>
 				</tr>
 			</table>
