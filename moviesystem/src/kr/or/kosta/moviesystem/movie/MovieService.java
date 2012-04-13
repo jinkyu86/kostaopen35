@@ -332,7 +332,7 @@ public class MovieService extends HttpServlet{
 			HttpServletResponse response) throws IOException, ServletException{
 		String mname = request.getParameter("movie_name");
 		String genre = request.getParameter("movie_genre");
-		String poster = request.getParameter("movie_poster");
+		String poster = request.getParameter("poster_name");
 		String content = request.getParameter("movie_content");
 		try {
 			DateFormat formatter ; 
