@@ -121,7 +121,7 @@ public class BettingService extends HttpServlet {
 						.selectBettingTotMineral(homeBetNum);
 				long awayTotMineral = BettingDAO
 						.selectBettingTotMineral(awayBetNum);
-				long meneral = MemberDAO.selectMineralByID(ID);
+				long mineral = MemberDAO.selectMineralByID(ID);
 
 				if (distNum.equals("1")) {
 					homeSeleRating = homeSeleRating + 1;
@@ -131,8 +131,21 @@ public class BettingService extends HttpServlet {
 							/ homeTotMineral;
 					awayBetRating = ((double) homeTotMineral + awayTotMineral)
 							/ awayTotMineral;
-					meneral = meneral - betMineral;
-
+					mineral = mineral - betMineral;
+					
+					if(mineral<0){
+						request.setAttribute("ERROR", "미네랄이 부족합니다.");
+						String matchNum = request.getParameter("matchno");
+						request.setAttribute("CHECK", check);
+						Betting bettingHome = BettingDAO.selectBettingByHome(matchNum);
+						request.setAttribute("BETTING_HOME", bettingHome);
+						Betting bettingAway = BettingDAO.selectBettingByAway(matchNum);
+						request.setAttribute("BETTING_AWAY", bettingAway);
+						RequestDispatcher rd = request
+								.getRequestDispatcher("/betting/viewBettingGame.jsp");
+						rd.forward(request, response);
+						return;
+					}
 					if (homeTotMineral == 0) {
 						homeBetRating = 1;
 					}
@@ -164,7 +177,7 @@ public class BettingService extends HttpServlet {
 
 					Member member = new Member();
 					member.setId(ID);
-					member.setMineral(meneral);
+					member.setMineral(mineral);
 
 					mbd.setBetting(betting1);
 					mbd.setMember(member);
@@ -180,8 +193,22 @@ public class BettingService extends HttpServlet {
 							/ awayTotMineral;
 					homeBetRating = ((double) homeTotMineral + awayTotMineral)
 							/ homeTotMineral;
-					meneral = meneral - betMineral;
-
+					mineral = mineral - betMineral;
+					
+					if(mineral<0){
+						request.setAttribute("ERROR", "미네랄이 부족합니다.");
+						String matchNum = request.getParameter("matchno");
+						request.setAttribute("CHECK", check);
+						Betting bettingHome = BettingDAO.selectBettingByHome(matchNum);
+						request.setAttribute("BETTING_HOME", bettingHome);
+						Betting bettingAway = BettingDAO.selectBettingByAway(matchNum);
+						request.setAttribute("BETTING_AWAY", bettingAway);
+						RequestDispatcher rd = request
+								.getRequestDispatcher("/betting/viewBettingGame.jsp");
+						rd.forward(request, response);
+						return;
+					}
+					
 					if (homeTotMineral == 0) {
 						homeBetRating = 1;
 					}
@@ -213,7 +240,7 @@ public class BettingService extends HttpServlet {
 
 					Member member = new Member();
 					member.setId(ID);
-					member.setMineral(meneral);
+					member.setMineral(mineral);
 
 					mbd.setBetting(betting1);
 					mbd.setMember(member);
