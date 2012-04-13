@@ -13,16 +13,47 @@
 <link rel="stylesheet" href="/moviesystem/css/Layout.css">
 <script src="http://code.jquery.com/jquery-1.7.1.js"></script>
 <script src="/moviesystem/js/common.jsp"></script>
+<script>
+	$(function(){
+		memcheck('${LOGIN_MEMBER.userid}');
+		$('#member_manage').css('background-color','#C4E2FF');
+		$('#movie_List').css('background-color','#EBFBFF');
+	});
+</script>
 <c:choose>
 	<c:when test="${method eq 'adminMovieList'}">
-		<script>
-			alert("#");
-		</script>
+		<c:choose>
+			<c:when test="${gubun eq 'screen'}">
+				<script>
+					$(function(){
+						$('#movie_screen').css('background-color','#C4E2FF');
+						$('#movie_screen').css('font-weight','bold');
+					});
+				</script>
+			</c:when>
+			<c:when test="${gubun eq 'schedule'}">
+				<script>
+					$(function(){
+						$('#movie_schedule').css('background-color','#C4E2FF');
+						$('#movie_schedule').css('font-weight','bold');
+					});
+				</script>
+			</c:when>
+			<c:otherwise>
+				<script>
+					$(function(){
+						$('#movie_total').css('background-color','#C4E2FF');
+						$('#movie_total').css('font-weight','bold');
+					});
+				</script>
+			</c:otherwise>
+		</c:choose>
 	</c:when>
 	<c:otherwise>
 		<script>
 			$(function(){
 				$('#movie_rank').css('background-color','#C4E2FF');
+				$('#movie_rank').css('font-weight','bold');
 			});
 		</script>
 	</c:otherwise>
@@ -110,8 +141,11 @@
 		<td>
 			<table align="center" style="width:100%">
 				<tr>
-					<td align="center">
+					<td align="center" style="width:90%">
 						${page_Link_Tag}
+					</td>
+					<td style="font-size:10pt;">
+						<a href="/moviesystem/MovieService?method=addMovieForm">글쓰기</a>
 					</td>
 				</tr>
 			</table>
