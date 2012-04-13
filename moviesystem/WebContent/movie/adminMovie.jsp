@@ -1,11 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"  %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>Admin MovieView</title>
 <style>
 	.admin_subMenu{font-color:#000000;}
@@ -15,62 +15,113 @@
 <script src="/moviesystem/js/common.jsp"></script>
 <script>
 	$(function(){
+		memcheck('${LOGIN_MEMBER.userid}');
 		$('#button').click(function(){
+			$('#method').val('adminMovieList');
 			$('#adminMovie').submit();
 		});
+		$('#edit').click(function(){
+			$('#method').val('editMovieForm');
+			$('#mnum').val('${Movie.mnum}');
+			$('#adminMovie').submit();
+		});
+		$('#del').click(function(){
+			$('#method').val('removeMovie');
+			$('#mnum').val('${Movie.mnum}');
+			if(confirm('ì‚­ì œí•˜ì‹œê² ìŠµë‹ˆê¹Œ?')){
+				$('#adminMovie').submit();
+			}
+		});
+		$('#member_manage').css('background-color','#C4E2FF');
+		$('#movie_List').css('background-color','#EBFBFF');
 	});
 </script>
+<c:choose>
+	<c:when test="${gubun eq 'screen'}">
+		<script>
+			$(function(){
+				$('#movie_screen').css('background-color','#C4E2FF');
+				$('#movie_screen').css('font-weight','bold');
+			});
+		</script>
+	</c:when>
+	<c:when test="${gubun eq 'schedule'}">
+		<script>
+			$(function(){
+				$('#movie_schedule').css('background-color','#C4E2FF');
+				$('#movie_schedule').css('font-weight','bold');
+			});
+		</script>
+	</c:when>
+	<c:when test="${gubun eq 'total'}">
+		<script>
+			$(function(){
+				$('#movie_total').css('background-color','#C4E2FF');
+				$('#movie_total').css('font-weight','bold');
+			});
+		</script>
+	</c:when>
+	<c:otherwise>
+		<script>
+			$(function(){
+				$('#movie_rank').css('background-color','#C4E2FF');
+				$('#movie_rank').css('font-weight','bold');
+			});
+		</script>
+	</c:otherwise>
+</c:choose>
+
 </head>
 <body>
 <table width="90%" align="center">
-	<!-- »ó´Ü ¸Ş´º ½ÃÀÛ -->
+	<!-- ìƒë‹¨ ë©”ë‰´ ì‹œì‘ -->
 	<tr>
 		<td colspan="2">
 			<jsp:include page="/common/top.jsp"></jsp:include>
 		</td>
 	</tr>
-	<!-- »ó´Ü ¸Ş´º ³¡ -->
+	<!-- ìƒë‹¨ ë©”ë‰´ ë -->
 	
 	<tr>
-		<!-- ÁÂÃø ¸Ş´º ½ÃÀÛ -->
+		<!-- ì¢Œì¸¡ ë©”ë‰´ ì‹œì‘ -->
 		<td rowspan="2" valign="top" style="width:20%">
 			<jsp:include page="/member/managerLeft.jsp"></jsp:include>
 		</td>
-		<!-- ÁÂÃø ¸Ş´º ³¡ -->
+		<!-- ì¢Œì¸¡ ë©”ë‰´ ë -->
 		
-		<!-- º»¹® ³»¿ë ½ÃÀÛ -->
+		<!-- ë³¸ë¬¸ ë‚´ìš© ì‹œì‘ -->
 		<td>
-			<!-- ÆäÀÌÁö Á¦¸ñ ½ÃÀÛ -->
+			<!-- í˜ì´ì§€ ì œëª© ì‹œì‘ -->
 			<div class="admin_menu" >
-				<span class="admin_subMenu"><a href="/moviesystem/MovieService?method=adminMovieList">ÀüÃ¼</a></span>
+				<span class="admin_subMenu"  id="movie_total"><a href="/moviesystem/MovieService?method=adminMovieList">ì „ì²´</a></span>
 				<span style="font-color:#000000;">&nbsp;|&nbsp;</span>
-				<span class="admin_subMenu"><a href="/moviesystem/MovieService?method=adminMovieList&gubun=screen">»ó¿µÀÛ</a></span>
+				<span class="admin_subMenu" id="movie_screen"><a href="/moviesystem/MovieService?method=adminMovieList&gubun=screen">ìƒì˜ì‘</a></span>
 				<span style="font-color:#000000;">&nbsp;|&nbsp;</span>
-				<span class="admin_subMenu"><a href="/moviesystem/MovieService?method=adminMovieList&gubun=schedule">»ó¿µ¿¹Á¤ÀÛ</a></span>
+				<span class="admin_subMenu" id="movie_schedule"><a href="/moviesystem/MovieService?method=adminMovieList&gubun=schedule">ìƒì˜ì˜ˆì •ì‘</a></span>
 				<span style="font-color:#000000;">&nbsp;|&nbsp;</span>
-				<span class="admin_subMenu"><a href="/moviesystem/MovieService?method=adminRankingList">¿¹¸Å ¼øÀ§</a></span>
+				<span class="admin_subMenu" id="movie_rank"><a href="/moviesystem/MovieService?method=adminRankingList">ì˜ˆë§¤ ìˆœìœ„</a></span>
 			</div>
-			<!-- ÆäÀÌÁö Á¦¸ñ ³¡ -->
+			<!-- í˜ì´ì§€ ì œëª© ë -->
 			<table class="table_style" align="right">
 				<tr>
 					<td rowspan="5" style="border-right:1px solid #9191C8;width:210px;" align="center"><img src="/moviesystem/movieimg/${Movie.poster}.jpg" class="poster_style2"></td>
 					<td>${Movie.mname}</td>
 				</tr>
 				<tr>
-					<td>Àå¸£ : ${Movie.genre}</td>
+					<td>ì¥ë¥´ : ${Movie.genre}</td>
 				</tr>
 				<tr>
-					<td>°³ºÀÀÏ : ${Movie.launchDate}</td>
+					<td>ê°œë´‰ì¼ : ${Movie.launchDate}</td>
 				</tr>
 				<tr>
-					<td>°¡°İ : ${Movie.mprice}</td>
+					<td>ê°€ê²© : ${Movie.mprice}</td>
 				</tr>
 				<tr>
 					<td>
 						<c:choose>
 							<c:when test="${sessionScope.LOGIN_MEMBER eq null}"></c:when>
 							<c:otherwise>
-								<a href="/moviesystem/ScreenTimeService?method=viewScreenTimeListBymnum&mnum=${Movie.mnum}"><span id="reservation" class="button1">¿¹¸ÅÇÏ±â</span></a>
+								<a href="/moviesystem/ScreenTimeService?method=viewScreenTimeListBymnum&mnum=${Movie.mnum}"><span id="reservation" class="button1">ì˜ˆë§¤í•˜ê¸°</span></a>
 							</c:otherwise>
 						</c:choose>
 					</td>
@@ -79,7 +130,7 @@
 					<td colspan="2" style="background-color:#9191C8;padding-top:1px"></td>
 				</tr>
 				<tr>
-					<td colspan="2">ÁÙ°Å¸®<br/><br/>
+					<td colspan="2">ì¤„ê±°ë¦¬<br/><br/>
 						${Movie.content}	
 					</td>
 				</tr>
@@ -89,21 +140,24 @@
 	<tr>
 		<td clospan="2">
 			<p align="center">
-				<form action="/moviesystem/MovieService" id="adminMovie">
-					<input type="hidden" name="method" value="adminMovieList">
+				<form action="/moviesystem/MovieService" id="adminMovie" method="post">
+					<input type="hidden" name="method" id="method">
 					<input type="hidden" name="gubun" value="${gubun}">
-					<span id="button">¸ñ·Ï</span>
+					<input type="hidden" name="mnum" id="mnum">
+					<span id="button">ëª©ë¡</span>
+					<span id="edit" class="button1">ìˆ˜ì •</span>
+					<span id="del" class="button1">ì‚­ì œ</span>
 				</form>
 			</p>
 		</td>
 	</tr>
-	<!-- º»¹® ³»¿ë ³¡ -->
+	<!-- ë³¸ë¬¸ ë‚´ìš© ë -->
 	<tr>
 		<td colspan="2">
 			<jsp:include page="/common/footer.jsp"></jsp:include>
 		</td>
 	</tr>
-	<!-- ÇÏ´Ü ³»¿ë ³¡ -->
+	<!-- í•˜ë‹¨ ë‚´ìš© ë -->
 </table>
 </body>
 </html>
