@@ -2,7 +2,7 @@ package kr.or.kosta.betting.member;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,8 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import org.apache.catalina.Session;
 
 import kr.or.kosta.betting.util.PageUtil;
 
@@ -156,7 +154,7 @@ public class MemberService extends HttpServlet {
 	public void addMemberForm(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 
-		ArrayList<Member> memberList = MemberDAO.selectMemberList(1, 5);
+		List<Member> memberList = MemberDAO.selectMemberList(1, 5);
 
 		request.setAttribute("MEMBER_LIST", memberList);
 
@@ -356,7 +354,7 @@ public class MemberService extends HttpServlet {
 		int length = 10;
 
 		
-		ArrayList<Member> memberList = MemberDAO.selectMemberList(length, page);
+		List<Member> memberList = MemberDAO.selectMemberList(length, page);
 
 		request.setAttribute("MEMBER", memberList);
 
@@ -407,7 +405,7 @@ public class MemberService extends HttpServlet {
 				"/betting/MemberService?method=viewMemberRankingListForm");
 		request.setAttribute("PAGE_LINK_TAG", pageLinkTag);
 
-		ArrayList<Member> memberRankingList = MemberDAO
+		List<Member> memberRankingList = MemberDAO
 				.selectMemberRankingList(length, page);
 
 		request.setAttribute("MEMBER_LIST", memberRankingList);
