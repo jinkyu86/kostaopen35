@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+		
+<mapper namespace="Reservation">
+	
+<resultMap id="selectResultMap"
+type="kr.or.kosta.moviesystem.reservation.Reservation">
+	<result property="resnum" column="resnum"/>
+    <result property="movie.mnum" 	column="mnum"/>
+    <result property="member.userid" 	column="userid"/>
+    <result property="resDate" 		column="resDate"/>
+    <result property="screenTime.scrnum" column="scrnum"/>
+    <result property="resQty" column="resQty"/>
+    <result property="totalPrice" column="totalPrice"/>
+	    <result property="payState" column="payState"/>
+		    <result property="seatnum" column="seatnum"/>
+</resultMap>		
+
+<select id="selectSeatNumByScrnum"
+				resultMap="selectResultMap">
+		SELECT res_num   as resnum,
+						m_num    as mnum,
+						userid   as userid,
+						res_date       as resDate,
+						scr_num  as scrnum,
+						res_qty   as resQty,
+						total_price     as totalPrice,
+						pay_state as payState,
+						seat_num as seatnum	
+		FROM reservation
+		WHERE scr_num = #{scrnum}
+</select>
+  
+<parameterMap
+   type="kr.or.kosta.moviesystem.reservation.Reservation"
+   id="insertParameterMap">
+	<parameter property="movie.mnum"/>
+	<parameter property="member.userid"/>
+	<parameter property="screenTime.scrnum"/>
+	<parameter property="resQty"/>
+	<parameter property="totalPrice"/>
+	<parameter property="seatnum"/>
+</parameterMap>
+
+<insert id="insertReservation" 
+     parameterMap="insertParameterMap">
+     INSERT  INTO   reservation
+	                   (res_num,   m_num,userid, res_date,   scr_num,res_qty,total_price,pay_state,seat_num)
+    VALUES (res_seq.nextval,?,           ?,      sysdate,         ?,           ?,               ?             ,'결제완료',        ?)
+</insert>
+
+<resultMap id="selectResultMname"
+type="kr.or.kosta.moviesystem.reservation.Reservation">
+	<result property="movie.mname" 	column="mname"/>
+</resultMap>	
+
+<select id="selectReservationListByUserId"
+				resultMap="selectResultMname">
+		SELECT 	m.m_name as mname
+		FROM reservation r  JOIN movie m
+				 ON r.m_num=m.m_num
+				 WHERE r.userid = #{userid}
+				 GROUP BY m.m_name
+</select>
+
+<select id="selectReservationListByUserIdCount"
+				resultType="java.lang.Integer">
+		SELECT count(distinct r.m_num)
+		FROM reservation r  JOIN movie m
+				 ON r.m_num=m.m_num
+				 WHERE r.userid = #{userid}
+</select>
+
+
+
+<resultMap id="selectResultTime" type="kr.or.kosta.moviesystem.reservation.Reservation">
+		<result property="screenTime.time" column="time"/>
+	</resultMap>
+
+
+<select id="selectReservationTime" resultMap="selectResultTime">
+	select s.time as time,
+		sum(r.total_price) as totalPrice,
+		sum(r.res_Qty) as resQty
+		from reservation r JOIN screening_time s
+		ON r.scr_num=s.scr_num
+		where r.userid=#{userid} AND r.m_num=#{mnum}
+		group by time
+</select>
+
+<resultMap id="selectResultSeatNum" type="kr.or.kosta.moviesystem.reservation.Reservation">
+		<result property="seatnum" column="seat_num"/>
+		<result property="screenTime.scrnum" column="scr_num"/>
+		<result property="resnum" column="res_num"/>
+		<result property="payState" column="pay_state"/>
+	</resultMap>
+
+
+<select id="selectSeatNumByScrnumAndUserid" resultMap="selectResultSeatNum">
+		SELECT seat_num , scr_num ,res_num,pay_state
+		 FROM  reservation
+		WHERE  scr_num=#{scrnum} AND userid=#{userid}
+</select>
+
+
+
+</mapper>
+
+
+					
+					
+					
