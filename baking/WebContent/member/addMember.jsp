@@ -153,6 +153,8 @@
 <ul class="column">
 
 <form action="/baking/MemberService" method="post" id="signup" >
+<input type="hidden" name="method" value="addMember" />
+
 <table style="border: 2px solid #ddd;"  width="700px" >
 	
 	<tr>
