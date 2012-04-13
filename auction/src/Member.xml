@@ -1,29 +1,80 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper
-	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="Member">
-	
+
 	<parameterMap type="kr.or.kosta.auction.member.Member"
-		id="insertParameterMap">
-			<parameter property="userid"/>
-			<parameter property="pw"/>
-			<parameter property="email"/>
-			<parameter property="name"/>
-			<parameter property="coin"/>
-			<parameter property="emoney"/>
+	id="insertParameterMap">
+		<parameter property="userid"/>
+		<parameter property="pw"/>
+		<parameter property="email"/>
+		<parameter property="name"/>
+		<parameter property="coin"/>
+		<parameter property="emoney"/>
 	</parameterMap>
 	
 	<insert id="insertMember"
-		parameterMap="insertParameterMap">
-		INSERT INTO member
+	parameterMap="insertParameterMap">INSERT INTO member
 		(userid, pw, email, name, coin, emoney)
-		VALUES(?,?,?,?,?,?)
-	</insert>
+		VALUES(?,?,?,?,?,?)</insert>
 	
+	<parameterMap type="kr.or.kosta.auction.member.Member"
+	id="updateParameterMap">
+		<parameter property="pw"/>
+		<parameter property="email"/>
+		<parameter property="name"/>
+		<parameter property="coin"/>
+		<parameter property="emoney"/>
+		<parameter property="userid"/>
+	</parameterMap>
 	
-			
-				
+	<update id="updateMember"
+	parameterMap="updateParameterMap">UPDATE member
+		SET pw=?,
+		email=?,
+		name=?,
+		coin=?,
+		emoney=?
+		WHERE userid=?</update>
+		
+	<delete id="deleteMember">DELETE FROM member
+		WHERE userid=#{userid}
+		</delete>
+		
+		
+	<resultMap id="selectResultMap"
+	type="kr.or.kosta.auction.member.Member">
+		<result property="userid" column="userid"/>
+		<result property="pw" column="pw"/>
+		<result property="email" column="email"/>
+		<result property="name" column="name"/>
+		<result property="coin" column="coin"/>
+		<result property="emoney" column="emoney"/>
+	</resultMap>
+	
+	<select id="selectMember"
+	resultMap="selectResultMap">SELECT userid as userid,
+		pw as pw,
+		email as email,
+		name as name,
+		coin as coin,
+		emoney as emoney
+		FROM member
+		WHERE userid=#{userid}
+		</select>
+	
+
+	<select id="selectMemberList"
+	resultMap="selectResultMap">
+		SELECT userid as userid,
+			   pw as pw,
+			   email as email,
+			   name as name,
+			   coin as coin,
+			   emoney as emoney	
+		FROM member
+		</select>
+		
 </mapper>
-	
