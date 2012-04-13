@@ -1,6 +1,6 @@
 package kr.or.kosta.betting.team.test;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import kr.or.kosta.betting.team.Team;
 import kr.or.kosta.betting.team.TeamDAO;
@@ -11,7 +11,7 @@ public class TeamDAOTest {
 
 	@Test
 	public void testSelectTeamList() {
-		ArrayList<Team>teamList = TeamDAO.selectTeamList();
+		List<Team>teamList = TeamDAO.selectTeamList();
 		for(int i=0;i<teamList.size();i++){
 			Team team = teamList.get(i);
 			System.out.println(team);
