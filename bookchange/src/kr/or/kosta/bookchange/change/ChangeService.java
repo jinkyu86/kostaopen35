@@ -1,7 +1,7 @@
 package kr.or.kosta.bookchange.change;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -71,7 +71,7 @@ public class ChangeService extends HttpServlet {
 				return;
 			}
 			String memberEmail=member.getEmail();
-			ArrayList<Change>matchList=ChangeDAO.selectMatchResultList(length, page, memberEmail);
+			List<Change>matchList=ChangeDAO.selectMatchResultList(length, page, memberEmail);
 			session.setAttribute("MATCH_LIST", matchList);
 			int demandChangeCount=ChangeDAO.selectChangeRequestCount(memberEmail);
 			String pageLinkTag=PageUtil.generate(page, demandChangeCount, length, "/bookchange/ChangeService?method=matchChangeList");
@@ -109,7 +109,7 @@ public class ChangeService extends HttpServlet {
 			return;
 		}
 		String memberEmail=member.getEmail();
-		ArrayList<Change>matchList=ChangeDAO.selectMatchList(length, page, memberEmail);
+		List<Change>matchList=ChangeDAO.selectMatchList(length, page, memberEmail);
 		session.setAttribute("MATCH_LIST", matchList);
 		int demandChangeCount=ChangeDAO.selectChangeRequestCount(memberEmail);
 		String pageLinkTag=PageUtil.generate(page, demandChangeCount, length, "/bookchange/ChangeService?method=matchChangeList");
@@ -120,10 +120,9 @@ public class ChangeService extends HttpServlet {
 
 	private void cancelChange(HttpServletResponse response,
 			HttpServletRequest request) throws ServletException,IOException{
-		String agreeBoardNo=request.getParameter("agreeBoardNo");
 		String demandBoardNo=request.getParameter("demandBoardNo");
 		
-		ChangeDAO.cancelChange(Integer.parseInt(agreeBoardNo),Integer.parseInt(demandBoardNo));
+		ChangeDAO.cancelChange(Integer.parseInt(demandBoardNo));
 		
 		request.setAttribute("ERROR","교환요청이 취소되었습니다.");
 		RequestDispatcher rd=request.getRequestDispatcher("/ChangeService?method=requestChangeList");
@@ -175,7 +174,7 @@ public class ChangeService extends HttpServlet {
 			return;
 		}
 		String memberEmail=member.getEmail();
-		ArrayList<Change>demandList=ChangeDAO.selectChangeRequestList(length, page, memberEmail);
+		List<Change>demandList=ChangeDAO.selectChangeRequestList(length, page, memberEmail);
 		session.setAttribute("DEMAND_CHANGE_LIST", demandList);
 		int demandChangeCount=ChangeDAO.selectChangeRequestCount(memberEmail);
 		String pageLinkTag=PageUtil.generate(page, demandChangeCount, length, "/bookchange/ChangeService?method=requestChangeList");
@@ -199,7 +198,7 @@ public class ChangeService extends HttpServlet {
 			return;
 		}
 		String memberEmail=member.getEmail();
-		ArrayList<Change>agreeList=ChangeDAO.selectChangeMyboardList(length, page, memberEmail);
+		List<Change>agreeList=ChangeDAO.selectChangeMyboardList(length, page, memberEmail);
 		session.setAttribute("AGREE_CHANGE_LIST", agreeList);
 		int agreeChangeCount=ChangeDAO.selectChangeMyboardCount(memberEmail);
 		String pageLinkTag=PageUtil.generate(page, agreeChangeCount, length, "/bookchange/ChangeService?method=acceptChangeList");
