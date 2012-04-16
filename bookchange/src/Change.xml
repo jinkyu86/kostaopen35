@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Change">
+<parameterMap type="kr.or.kosta.bookchange.change.Change" id="insertChange">
+   	<parameter property="agreeBoard.boardNo"/>
+	<parameter property="demandBoard.boardNo"/>
+</parameterMap>
+<insert id="insertChange" parameterMap="insertChange">
+     INSERT  INTO   tb_change(change_no, change_date, condition_result, agree_board_no, demand_board_no) 
+	 VALUES (change_seq.nextval,sysdate,1,?,?)
+</insert>
+<parameterMap type="kr.or.kosta.bookchange.change.Change" id="insertUpdateBoard">
+	<parameter property="demandBoard.boardNo"/>
+</parameterMap>
+<update id="insertUpdateBoard" parameterMap="insertUpdateBoard">
+	UPDATE tb_board SET condition_result=1 where board_no=?
+</update>
+
+
+
+<parameterMap type="kr.or.kosta.bookchange.change.Change" id="insertMatch">
+   	<parameter property="demandBoard.boardNo"/>
+	<parameter property="agreeBoard.boardNo"/>
+</parameterMap>
+<insert id="insertMatch" parameterMap="insertMatch">
+     INSERT INTO tb_change(change_no, change_date, condition_result, agree_board_no, demand_board_no) 
+	 VALUES(change_seq.nextval,sysdate,2,?,?)
+</insert>
+<parameterMap type="kr.or.kosta.bookchange.change.Change" id="matchUpdateChange">
+	<parameter property="agreeBoard.boardNo"/>
+	<parameter property="demandBoard.boardNo"/>
+</parameterMap>
+<update id="matchUpdateChange" parameterMap="matchUpdateChange">
+	Update tb_change set condition_result=2 where agree_board_no=? and demand_board_no=?
+</update>
+<parameterMap type="kr.or.kosta.bookchange.change.Change" id="matchUpdateBoard">
+	<parameter property="agreeBoard.boardNo"/>
+	<parameter property="demandBoard.boardNo"/>
+</parameterMap>
+<update id="matchUpdateBoard" parameterMap="matchUpdateBoard">
+	Update tb_board set condition_result=2 where board_no=? or board_no=?
+</update>
+
+
+
+<delete id="cancelChange">
+	DELETE FROM tb_change where demand_board_no=#{demandBoardNo}
+</delete>
+<update id="cancelUpdateBoard">
+	UPDATE tb_board set condition_result=0 where board_no=#{demandBoardNo}
+</update>
+
+
+
+<update id="completeChangeUpdate">
+	UPDATE tb_change set condition_result=3 where agree_board_no=#{agreeBoard.boardNo}
+</update>
+<update id="completeBoardUpdate">
+	UPDATE tb_board set condition_result=3 where board_no=#{agreeBoard.boardNo}
+</update>
+
+
+
+<delete id="deleteChange">
+     Delete from tb_change where agree_board_no=#{boardNo} or demand_board_no=#{boardNo}
+</delete>
+
+
+
+<resultMap type="kr.or.kosta.bookchange.change.Change" id="selectResultMap">
+   	<result property="changeNo" column="changeNo"/>
+	<result property="changeDate" column="changeDate"/>
+	<result property="condition.conditionResult" column="conditionResult"/>
+	<result property="condition.conditionIng" column="conditionIng"/>
+	<result property="agreeBoard.boardNo" column="agreeBoardNo"/>
+	<result property="agreeBoard.boardTitle" column="agreeBoardTitle"/>
+	<result property="agreeBoard.boardWant" column="agreeBoardWant"/>
+	<result property="agreeBoard.boardPhoto" column="agreeBoardPhoto"/>
+	<result property="agreeBoard.boardContent" column="agreeBoardContent"/>
+	<result property="agreeBoard.member.email" column="agreeBoardMemberEmail"/>
+	<result property="agreeBoard.deal.dealNo" column="agreeBoardDealNo"/>
+	<result property="agreeBoard.condition.conditionResult" column="agreeBoardConditionResult"/>
+	<result property="agreeBoard.category.categoryNo" column="agreeBoardCategoryNo"/>
+	<result property="agreeBoard.category.categoryName" column="categoryName"/>
+	<result property="demandBoard.boardNo" column="demandBoardNo"/>
+	<result property="demandBoard.boardTitle" column="demandBoardTitle"/>
+	<result property="demandBoard.boardWant" column="demandBoardWant"/>
+	<result property="demandBoard.boardPhoto" column="demandBoardPhoto"/>
+	<result property="demandBoard.boardContent" column="demandBoardContent"/>
+	<result property="demandBoard.member.email" column="demandBoardMemberEmail"/>
+	<result property="demandBoard.deal.dealNo" column="demandBoardDealNo"/>
+	<result property="demandBoard.condition.conditionResult" column="demandBoardConditionResult"/>
+	<result property="demandBoard.category.categoryNo" column="demandBoardCategoryNo"/>
+	<result property="demandBoard.condition.conditionResult" column="demandBoardConditionResult"/>
+	<result property="demandBoard.category.categoryNo" column="demandBoardCategoryNo"/>
+	<result property="demandBoard.category.categoryName" column="categoryName"/>
+</resultMap>
+<select id="selectChangeRequestList" resultMap="selectResultMap">
+    Select c.change_no as changeNo, c.change_date as changeDate, d.condition_result as conditionResult, d.condition_ing conditionIng,
+	a.board_no as demandBoardNo, a.board_title as demandBoardTitle, a.board_want as demandBoardWant, a.board_photo as demandBoardPhoto,
+	a.board_content as demandBoardContent, a.email as demandBoardMemberEmail, a.deal_no as demandBoardDealNo, a.condition_result as demandBoardContionResult,
+	a.category_no as demandBoardCategoryNo, b.board_no as agreeBoardNo, b.board_title as agreeBoardTitle, b.board_want as agreeBoardWant,
+	b.board_photo as agreeBoardPhoto, b.board_content as agreeBoardContent, b.email as agreeBoardMemberEmail, b.deal_no as agreeBoardDealNo, 
+	b.condition_result as agreeBoardConditionResult, b.category_no as agreeBoardCategoryNo, ca.category_no as categoryNo, 
+	ca.category_name as categoryName
+	FROM tb_change c, tb_board a, tb_board b, tb_condition d, tb_category ca
+	WHERE a.email=#{email} AND c.agree_board_no=b.board_no AND c.demand_board_no=a.board_no
+	AND c.condition_result=d.condition_result AND ca.category_no=a.category_no
+	AND c.condition_result='1'
+	ORDER BY c.change_no
+</select>
+<select id="selectChangeRequestListCount" resultType="java.lang.Integer">
+	SELECT  count(*) 
+	FROM  tb_change c, tb_condition d, tb_board b 
+	WHERE b.email=#{email} AND c.demand_board_no=b.board_no AND c.condition_result='1'
+	AND c.condition_result=d.condition_result
+</select>
+
+<select id="selectChangeMyboardList" resultMap="selectResultMap">
+    Select c.change_no as changeNo, c.change_date as changeDate, d.condition_result as conditionResult, d.condition_ing conditionIng,
+	a.board_no as demandBoardNo, a.board_title as demandBoardTitle, a.board_want as demandBoardWant, a.board_photo as demandBoardPhoto,
+	a.board_content as demandBoardContent, a.email as demandBoardMemberEmail, a.deal_no as demandBoardDealNo, a.condition_result as demandBoardContionResult,
+	a.category_no as demandBoardCategoryNo, b.board_no as agreeBoardNo, b.board_title as agreeBoardTitle, b.board_want as agreeBoardWant,
+	b.board_photo as agreeBoardPhoto, b.board_content as agreeBoardContent, b.email as agreeBoardMemberEmail, b.deal_no as agreeBoardDealNo, 
+	b.condition_result as agreeBoardConditionResult, b.category_no as agreeBoardCategoryNo, ca.category_no as categoryNo, 
+	ca.category_name as categoryName
+	FROM tb_change c, tb_board a, tb_board b, tb_condition d, tb_category ca
+	WHERE b.email=#{email} AND c.agree_board_no=b.board_no AND c.demand_board_no=a.board_no
+	AND c.condition_result=d.condition_result AND ca.category_no=a.category_no
+	AND c.condition_result='1'
+	ORDER BY c.change_no
+</select>
+<select id="selectChangeMyboardListCount" resultType="java.lang.Integer">
+	SELECT  count(*) 
+	FROM  tb_change c, tb_condition d, tb_board b 
+	WHERE b.email=#{email} AND c.agree_board_no=b.board_no AND c.condition_result='1'
+	AND c.condition_result=d.condition_result
+</select>
+
+<select id="selectMatchList" resultMap="selectResultMap">
+    Select c.change_no as changeNo, c.change_date as changeDate, d.condition_result as conditionResult, d.condition_ing conditionIng,
+	a.board_no as demandBoardNo, a.board_title as demandBoardTitle, a.board_want as demandBoardWant, a.board_photo as demandBoardPhoto,
+	a.board_content as demandBoardContent, a.email as demandBoardMemberEmail, a.deal_no as demandBoardDealNo, a.condition_result as demandBoardContionResult,
+	a.category_no as demandBoardCategoryNo, b.board_no as agreeBoardNo, b.board_title as agreeBoardTitle, b.board_want as agreeBoardWant,
+	b.board_photo as agreeBoardPhoto, b.board_content as agreeBoardContent, b.email as agreeBoardMemberEmail, b.deal_no as agreeBoardDealNo, 
+	b.condition_result as agreeBoardConditionResult, b.category_no as agreeBoardCategoryNo, ca.category_no as categoryNo, 
+	ca.category_name as categoryName
+	FROM tb_change c, tb_board a, tb_board b, tb_condition d, tb_category ca
+	WHERE a.email=#{email} AND c.agree_board_no=b.board_no AND c.demand_board_no=a.board_no
+	AND c.condition_result=d.condition_result AND ca.category_no=a.category_no
+	AND c.condition_result='2'
+	ORDER BY c.change_no
+</select>
+<select id="selectMatchListCount" resultType="java.lang.Integer">
+	SELECT  count(*) 
+	FROM  tb_change c, tb_condition d, tb_board b 
+	WHERE b.email=#{email} AND c.demand_board_no=b.board_no AND c.condition_result='2'
+	AND c.condition_result=d.condition_result
+</select>
+
+
+
+<select id="selectMatchResultList" resultMap="selectResultMap">
+    Select c.change_no as changeNo, c.change_date as changeDate, d.condition_result as conditionResult, d.condition_ing conditionIng,
+	a.board_no as demandBoardNo, a.board_title as demandBoardTitle, a.board_want as demandBoardWant, a.board_photo as demandBoardPhoto,
+	a.board_content as demandBoardContent, a.email as demandBoardMemberEmail, a.deal_no as demandBoardDealNo, a.condition_result as demandBoardContionResult,
+	a.category_no as demandBoardCategoryNo, b.board_no as agreeBoardNo, b.board_title as agreeBoardTitle, b.board_want as agreeBoardWant,
+	b.board_photo as agreeBoardPhoto, b.board_content as agreeBoardContent, b.email as agreeBoardMemberEmail, b.deal_no as agreeBoardDealNo, 
+	b.condition_result as agreeBoardConditionResult, b.category_no as agreeBoardCategoryNo, ca.category_no as categoryNo, 
+	ca.category_name as categoryName
+	FROM tb_change c, tb_board a, tb_board b, tb_condition d, tb_category ca
+	WHERE a.email=#{email} AND c.agree_board_no=b.board_no AND c.demand_board_no=a.board_no
+	AND c.condition_result=d.condition_result AND ca.category_no=a.category_no
+	AND c.condition_result='3'
+	ORDER BY c.change_no
+</select>
+<select id="selectMatchResultListCount" resultType="java.lang.Integer">
+	SELECT  count(*) 
+	FROM  tb_change c, tb_condition d, tb_board b 
+	WHERE b.email=#{email} AND c.demand_board_no=b.board_no AND c.condition_result='3'
+	AND c.condition_result=d.condition_result
+</select>
+</mapper>		
