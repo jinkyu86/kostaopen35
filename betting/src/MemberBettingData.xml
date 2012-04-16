@@ -196,4 +196,9 @@
 				ON e.id = d.id
 	  WHERE d.personal_betting_num= #{mbdnum}
 </select>
+<select id="selectMineralConfirm" resultType="java.lang.Integer">
+	SELECT give_mineral_confirm
+	FROM member_betting_data
+	WHERE personal_betting_num = #{mbdnum}
+</select>
 </mapper>
