@@ -628,4 +628,17 @@ public class MemberBetDataDAO {
 //		}
 //		return mbd;
 	}
+	public static int selectMineralConfirm(String mbdNum){
+		SqlSession session = null;
+		int confirm = 0;
+		try{
+		session = sqlMapper.openSession(true);
+		confirm = session.selectOne("selectMineralConfirm", mbdNum);
+		}
+		finally{
+			session.close();
+		}
+		return confirm;
+	}
+	
 }

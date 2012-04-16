@@ -72,4 +72,10 @@ public class MemberBatDataDAOTest {
 				MemberBetDataDAO.selectMemberBetData("14");
 		System.out.println(mbd);
 	}
+	
+	@Test
+	public void testSelectMineralConfirm(){
+		int confirm = MemberBetDataDAO.selectMineralConfirm("2");
+		System.out.println(confirm);
+	}
 }

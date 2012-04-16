@@ -71,9 +71,9 @@ public class MemberBetDataService extends HttpServlet {
 			long betMineral = Long.parseLong(request.getParameter("bmineral"));
 			long mineral = MemberDAO.selectMineralByID(ID);
 			String mbdNum = request.getParameter("mbdnum");
-			String confirm = request.getParameter("confirm");
+			int confirm = MemberBetDataDAO.selectMineralConfirm(mbdNum);
 			
-			if(confirm.equals("1")){
+			if(confirm==1){
 				String matchNum = MemberBetDataDAO.selectMatchNum(mbdNum);
 				String matchTime = MatchDAO.selectMatchTime(matchNum);
 				int check = now.hourCheck(matchTime);
@@ -276,9 +276,9 @@ public class MemberBetDataService extends HttpServlet {
 			long betMineral = Long.parseLong(request.getParameter("emineral"));
 			long mineral = MemberDAO.selectMineralByID(ID);
 			String mbdNum = request.getParameter("mbdnum");
-			String confirm = request.getParameter("confirm");
+			int confirm = MemberBetDataDAO.selectMineralConfirm(mbdNum);
 			
-			if(confirm.equals("1")){
+			if(confirm==1){
 				String matchNum = MemberBetDataDAO.selectMatchNum(mbdNum);
 				String matchTime = MatchDAO.selectMatchTime(matchNum);
 				int check = now.hourCheck(matchTime);
