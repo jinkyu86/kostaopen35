@@ -27,6 +27,7 @@ public class GoodService extends HttpServlet{
         super();
     }
     
+    //내가 수정햇어
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request,response);
 	}
