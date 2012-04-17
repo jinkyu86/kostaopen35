@@ -8,10 +8,13 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import kr.or.kosta.betting.betting.BettingDAO;
 import kr.or.kosta.betting.loc.Loc;
 import kr.or.kosta.betting.loc.LocDAO;
+import kr.or.kosta.betting.member.Member;
+import kr.or.kosta.betting.member.MemberDAO;
 import kr.or.kosta.betting.team.Team;
 import kr.or.kosta.betting.team.TeamDAO;
 import kr.or.kosta.betting.util.PageUtil;
@@ -66,6 +69,17 @@ public class MatchService extends HttpServlet {
 
 	private void viewMatchListToVistor(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		Member member1 = (Member) session.getAttribute("LOGIN_MEMBER");
+		if (member1 != null) {
+			String ID = member1.getId();
+		
+			long mineral=MemberDAO.selectMineralByID(ID);
+			request.setAttribute("MINERAL", mineral);
+		
+			long rank =MemberDAO.selectMemberRanking(ID);
+			request.setAttribute("RANK", rank);
+		}
 		int page = 1;
 		if (request.getParameter("page") != null) {
 			page = Integer.parseInt(request.getParameter("page"));
@@ -97,6 +111,7 @@ public class MatchService extends HttpServlet {
 	public void addMatch(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		/* default generated stub */;
+
 		String homeTeamNo = request.getParameter("hometeamno");
 		String awayTeamNo = request.getParameter("awayteamno");
 		String locNo = request.getParameter("locno");
@@ -136,6 +151,17 @@ public class MatchService extends HttpServlet {
 	public void addMatchForm(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		/* default generated stub */;
+		HttpSession session = request.getSession();
+		Member member1 = (Member) session.getAttribute("LOGIN_MEMBER");
+		if (member1 != null) {
+			String ID = member1.getId();
+		
+			long mineral=MemberDAO.selectMineralByID(ID);
+			request.setAttribute("MINERAL", mineral);
+		
+			long rank =MemberDAO.selectMemberRanking(ID);
+			request.setAttribute("RANK", rank);
+		}
 		List<Team> teamList = TeamDAO.selectTeamList();
 		List<Loc> locList = LocDAO.selectLocList();
 		request.setAttribute("TEAM_LIST", teamList);
@@ -156,6 +182,17 @@ public class MatchService extends HttpServlet {
 	public void editMatchForm(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		/* default generated stub */;
+		HttpSession session = request.getSession();
+		Member member1 = (Member) session.getAttribute("LOGIN_MEMBER");
+		if (member1 != null) {
+			String ID = member1.getId();
+		
+			long mineral=MemberDAO.selectMineralByID(ID);
+			request.setAttribute("MINERAL", mineral);
+		
+			long rank =MemberDAO.selectMemberRanking(ID);
+			request.setAttribute("RANK", rank);
+		}
 		String matchNo = request.getParameter("matchno");
 		Match match = MatchDAO.selectMatch(matchNo);
 		List<Team> teamList = TeamDAO.selectTeamList();
@@ -254,6 +291,17 @@ public class MatchService extends HttpServlet {
 	public void viewMatchList(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		/* default generated stub */;
+		HttpSession session = request.getSession();
+		Member member1 = (Member) session.getAttribute("LOGIN_MEMBER");
+		if (member1 != null) {
+			String ID = member1.getId();
+		
+			long mineral=MemberDAO.selectMineralByID(ID);
+			request.setAttribute("MINERAL", mineral);
+		
+			long rank =MemberDAO.selectMemberRanking(ID);
+			request.setAttribute("RANK", rank);
+		}
 		int page = 1;
 		if (request.getParameter("page") != null) {
 			page = Integer.parseInt(request.getParameter("page"));
