@@ -74,19 +74,9 @@ public class MemberBetDataService extends HttpServlet {
 			int confirm = MemberBetDataDAO.selectMineralConfirm(mbdNum);
 			
 			if(confirm==1){
-				String matchNum = MemberBetDataDAO.selectMatchNum(mbdNum);
-				String matchTime = MatchDAO.selectMatchTime(matchNum);
-				int check = now.hourCheck(matchTime);
-				request.setAttribute("CHECK", check);
-				Betting bettingHome = BettingDAO.selectBettingByHome(matchNum);
-				request.setAttribute("BETTING_HOME", bettingHome);
-				Betting bettingAway = BettingDAO.selectBettingByAway(matchNum);
-				request.setAttribute("BETTING_AWAY", bettingAway);
-				MemberBetData mbd = MemberBetDataDAO.selectMemberBetData(mbdNum);
-				request.setAttribute("MBD", mbd);
 				request.setAttribute("ERROR", "이미 지급하였습니다.");
 				RequestDispatcher rd = request
-						.getRequestDispatcher("/mbd/viewMBDByID.jsp");
+						.getRequestDispatcher("/MemberBetDataService?method=viewMBDByIDForm&mbdnum="+mbdNum);
 				rd.forward(request, response);
 				return;
 			}
@@ -98,20 +88,20 @@ public class MemberBetDataService extends HttpServlet {
 			MemberDAO.updateMineralByID(member);
 			MemberBetDataDAO.updateMemberBetData(mbdNum);
 			
-			String matchNum = MemberBetDataDAO.selectMatchNum(mbdNum);
-			String matchTime = MatchDAO.selectMatchTime(matchNum);
-			int check = now.hourCheck(matchTime);
-			request.setAttribute("CHECK", check);
-			Betting bettingHome = BettingDAO.selectBettingByHome(matchNum);
-			request.setAttribute("BETTING_HOME", bettingHome);
-			Betting bettingAway = BettingDAO.selectBettingByAway(matchNum);
-			request.setAttribute("BETTING_AWAY", bettingAway);
-			MemberBetData mbd = MemberBetDataDAO.selectMemberBetData(mbdNum);
-			request.setAttribute("MBD", mbd);
+//			String matchNum = MemberBetDataDAO.selectMatchNum(mbdNum);
+//			String matchTime = MatchDAO.selectMatchTime(matchNum);
+//			int check = now.hourCheck(matchTime);
+//			request.setAttribute("CHECK", check);
+//			Betting bettingHome = BettingDAO.selectBettingByHome(matchNum);
+//			request.setAttribute("BETTING_HOME", bettingHome);
+//			Betting bettingAway = BettingDAO.selectBettingByAway(matchNum);
+//			request.setAttribute("BETTING_AWAY", bettingAway);
+//			MemberBetData mbd = MemberBetDataDAO.selectMemberBetData(mbdNum);
+//			request.setAttribute("MBD", mbd);
 						
 			request.setAttribute("SUCCESS", "미네랄을 돌려드렸습니다.");
 			RequestDispatcher rd = request
-					.getRequestDispatcher("/mbd/viewMBDByID.jsp");
+					.getRequestDispatcher("MemberBetDataService?method=viewMBDByIDForm&mbdnum="+mbdNum);
 			rd.forward(request, response);
 		} else {
 			request.setAttribute("ERROR", "로그인 해주세요");
@@ -279,19 +269,19 @@ public class MemberBetDataService extends HttpServlet {
 			int confirm = MemberBetDataDAO.selectMineralConfirm(mbdNum);
 			
 			if(confirm==1){
-				String matchNum = MemberBetDataDAO.selectMatchNum(mbdNum);
-				String matchTime = MatchDAO.selectMatchTime(matchNum);
-				int check = now.hourCheck(matchTime);
-				request.setAttribute("CHECK", check);
-				Betting bettingHome = BettingDAO.selectBettingByHome(matchNum);
-				request.setAttribute("BETTING_HOME", bettingHome);
-				Betting bettingAway = BettingDAO.selectBettingByAway(matchNum);
-				request.setAttribute("BETTING_AWAY", bettingAway);
-				MemberBetData mbd = MemberBetDataDAO.selectMemberBetData(mbdNum);
-				request.setAttribute("MBD", mbd);
+//				String matchNum = MemberBetDataDAO.selectMatchNum(mbdNum);
+//				String matchTime = MatchDAO.selectMatchTime(matchNum);
+//				int check = now.hourCheck(matchTime);
+//				request.setAttribute("CHECK", check);
+//				Betting bettingHome = BettingDAO.selectBettingByHome(matchNum);
+//				request.setAttribute("BETTING_HOME", bettingHome);
+//				Betting bettingAway = BettingDAO.selectBettingByAway(matchNum);
+//				request.setAttribute("BETTING_AWAY", bettingAway);
+//				MemberBetData mbd = MemberBetDataDAO.selectMemberBetData(mbdNum);
+//				request.setAttribute("MBD", mbd);
 				request.setAttribute("ERROR", "이미 지급하였습니다.");
 				RequestDispatcher rd = request
-						.getRequestDispatcher("/mbd/viewMBDByID.jsp");
+						.getRequestDispatcher("MemberBetDataService?method=viewMBDByIDForm&mbdnum="+mbdNum);
 				rd.forward(request, response);
 				return;
 			}
@@ -304,19 +294,19 @@ public class MemberBetDataService extends HttpServlet {
 			MemberDAO.updateMineralByID(member);
 			MemberBetDataDAO.updateMemberBetData(mbdNum);
 			
-			String matchNum = MemberBetDataDAO.selectMatchNum(mbdNum);
-			String matchTime = MatchDAO.selectMatchTime(matchNum);
-			int check = now.hourCheck(matchTime);
-			request.setAttribute("CHECK", check);
-			Betting bettingHome = BettingDAO.selectBettingByHome(matchNum);
-			request.setAttribute("BETTING_HOME", bettingHome);
-			Betting bettingAway = BettingDAO.selectBettingByAway(matchNum);
-			request.setAttribute("BETTING_AWAY", bettingAway);
-			MemberBetData mbd = MemberBetDataDAO.selectMemberBetData(mbdNum);
-			request.setAttribute("MBD", mbd);
+//			String matchNum = MemberBetDataDAO.selectMatchNum(mbdNum);
+//			String matchTime = MatchDAO.selectMatchTime(matchNum);
+//			int check = now.hourCheck(matchTime);
+//			request.setAttribute("CHECK", check);
+//			Betting bettingHome = BettingDAO.selectBettingByHome(matchNum);
+//			request.setAttribute("BETTING_HOME", bettingHome);
+//			Betting bettingAway = BettingDAO.selectBettingByAway(matchNum);
+//			request.setAttribute("BETTING_AWAY", bettingAway);
+//			MemberBetData mbd = MemberBetDataDAO.selectMemberBetData(mbdNum);
+//			request.setAttribute("MBD", mbd);
 			request.setAttribute("SUCCESS", "미네랄을 지급하였습니다.");
 			RequestDispatcher rd = request
-					.getRequestDispatcher("/mbd/viewMBDByID.jsp");
+					.getRequestDispatcher("/MemberBetDataService?method=viewMBDByIDForm&mbdnum="+mbdNum);
 			rd.forward(request, response);
 		} else {
 			request.setAttribute("ERROR", "로그인 해주세요");
@@ -341,7 +331,13 @@ public class MemberBetDataService extends HttpServlet {
 		Member member1 = (Member) session.getAttribute("LOGIN_MEMBER");
 		if (member1 != null) {
 			String ID = member1.getId();
-
+			
+			long mineral=MemberDAO.selectMineralByID(ID);
+			request.setAttribute("MINERAL", mineral);
+			
+			long rank =MemberDAO.selectMemberRanking(ID);
+			request.setAttribute("RANK", rank);
+			
 			int page = 1;
 			if (request.getParameter("page") != null) {
 				page = Integer.parseInt(request.getParameter("page"));
@@ -380,6 +376,14 @@ public class MemberBetDataService extends HttpServlet {
 		HttpSession session = request.getSession();
 		Member member1 = (Member) session.getAttribute("LOGIN_MEMBER");
 		if (member1 != null) {
+			String ID = member1.getId();
+
+			long mineral=MemberDAO.selectMineralByID(ID);
+			request.setAttribute("MINERAL", mineral);
+			
+			long rank =MemberDAO.selectMemberRanking(ID);
+			request.setAttribute("RANK", rank);
+						
 			String mbdNum = request.getParameter("mbdnum");
 			String matchNum = MemberBetDataDAO.selectMatchNum(mbdNum);
 			String matchTime = MatchDAO.selectMatchTime(matchNum);
