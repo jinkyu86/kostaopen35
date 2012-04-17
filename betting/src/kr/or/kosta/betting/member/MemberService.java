@@ -100,6 +100,19 @@ public class MemberService extends HttpServlet {
 
 	private void viewMember(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+		
+		HttpSession session = request.getSession();
+		Member member1 = (Member) session.getAttribute("LOGIN_MEMBER");
+		if (member1 != null) {
+			String ID = member1.getId();
+		
+			long mineral=MemberDAO.selectMineralByID(ID);
+			request.setAttribute("MINERAL", mineral);
+		
+			long rank =MemberDAO.selectMemberRanking(ID);
+			request.setAttribute("RANK", rank);
+		}
+			
 		String id=request.getParameter("ID");
 		Member member=MemberDAO.selectMemberByID(id);
 		
@@ -232,13 +245,20 @@ public class MemberService extends HttpServlet {
 		 */
 		
 		HttpSession session=request.getSession();
+			
 		Member member1=(Member)session.getAttribute("LOGIN_MEMBER");
 		String ID = member1.getId();
 
 		Member member = MemberDAO.selectMemberByID(ID);
-
+		
+		
 		request.setAttribute("MEMBER", member);
-
+		long mineral=MemberDAO.selectMineralByID(ID);
+		request.setAttribute("MINERAL", mineral);
+	
+		long rank =MemberDAO.selectMemberRanking(ID);
+		request.setAttribute("RANK", rank);
+		
 		RequestDispatcher rd = request
 				.getRequestDispatcher("/member/editMember.jsp");
 		rd.forward(request, response);
@@ -371,18 +391,6 @@ public class MemberService extends HttpServlet {
 	}
 
 	
-	/**
-	 * 모든 멤버리스트를 미네랄로 오름차순 정렬한 메서드
-	 * 
-	 * @param request
-	 * @param response
-	 */
-	public void viewMemberRankingList(HttpServletRequest request,
-			HttpServletResponse response) {
-		/* default generated stub */;
-
-	}
-
 	public void viewMemberRankingListForm(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		/* default generated stub */;
@@ -393,7 +401,18 @@ public class MemberService extends HttpServlet {
 		 * @param request
 		 * @param response
 		 */
-
+		HttpSession session = request.getSession();
+		Member member1 = (Member) session.getAttribute("LOGIN_MEMBER");
+		if (member1 != null) {
+			String ID = member1.getId();
+		
+			long mineral=MemberDAO.selectMineralByID(ID);
+			request.setAttribute("MINERAL", mineral);
+		
+			long rank =MemberDAO.selectMemberRanking(ID);
+			request.setAttribute("RANK", rank);
+		}
+			
 		int page = 1;
 		if (request.getParameter("page") != null) {
 			page = Integer.parseInt(request.getParameter("page"));
