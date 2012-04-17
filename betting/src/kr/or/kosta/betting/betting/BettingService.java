@@ -75,6 +75,17 @@ public class BettingService extends HttpServlet {
 	//오늘자 베팅 리스트 조회
 	private void todayBettingList(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		Member member1 = (Member) session.getAttribute("LOGIN_MEMBER");
+		if (member1 != null) {
+			String ID = member1.getId();
+		
+			long mineral=MemberDAO.selectMineralByID(ID);
+			request.setAttribute("MINERAL", mineral);
+		
+			long rank =MemberDAO.selectMemberRanking(ID);
+			request.setAttribute("RANK", rank);
+		}
 		String date = now.Date();
 		List<Match> matchList = MatchDAO.selectMatchByDate(date);
 		request.setAttribute("TODAY_MATCH",matchList);
@@ -134,15 +145,10 @@ public class BettingService extends HttpServlet {
 					mineral = mineral - betMineral;
 					
 					if(mineral<0){
-						request.setAttribute("ERROR", "미네랄이 부족합니다.");
 						String matchNum = request.getParameter("matchno");
-						request.setAttribute("CHECK", check);
-						Betting bettingHome = BettingDAO.selectBettingByHome(matchNum);
-						request.setAttribute("BETTING_HOME", bettingHome);
-						Betting bettingAway = BettingDAO.selectBettingByAway(matchNum);
-						request.setAttribute("BETTING_AWAY", bettingAway);
+						request.setAttribute("ERROR", "미네랄이 부족합니다.");
 						RequestDispatcher rd = request
-								.getRequestDispatcher("/betting/viewBettingGame.jsp");
+								.getRequestDispatcher("/BettingService?method=bettingGameForm&matchno="+matchNum);
 						rd.forward(request, response);
 						return;
 					}
@@ -196,15 +202,15 @@ public class BettingService extends HttpServlet {
 					mineral = mineral - betMineral;
 					
 					if(mineral<0){
-						request.setAttribute("ERROR", "미네랄이 부족합니다.");
 						String matchNum = request.getParameter("matchno");
-						request.setAttribute("CHECK", check);
-						Betting bettingHome = BettingDAO.selectBettingByHome(matchNum);
-						request.setAttribute("BETTING_HOME", bettingHome);
-						Betting bettingAway = BettingDAO.selectBettingByAway(matchNum);
-						request.setAttribute("BETTING_AWAY", bettingAway);
+						request.setAttribute("ERROR", "미네랄이 부족합니다.");
+//						request.setAttribute("CHECK", check);
+//						Betting bettingHome = BettingDAO.selectBettingByHome(matchNum);
+//						request.setAttribute("BETTING_HOME", bettingHome);
+//						Betting bettingAway = BettingDAO.selectBettingByAway(matchNum);
+//						request.setAttribute("BETTING_AWAY", bettingAway);
 						RequestDispatcher rd = request
-								.getRequestDispatcher("/betting/viewBettingGame.jsp");
+								.getRequestDispatcher("/BettingService?method=bettingGameForm&matchno="+matchNum);
 						rd.forward(request, response);
 						return;
 					}
@@ -254,13 +260,8 @@ public class BettingService extends HttpServlet {
 			}
 			
 			String matchNum = request.getParameter("matchno");
-			request.setAttribute("CHECK", check);
-			Betting bettingHome = BettingDAO.selectBettingByHome(matchNum);
-			request.setAttribute("BETTING_HOME", bettingHome);
-			Betting bettingAway = BettingDAO.selectBettingByAway(matchNum);
-			request.setAttribute("BETTING_AWAY", bettingAway);
 			RequestDispatcher rd = request
-					.getRequestDispatcher("/betting/viewBettingGame.jsp");
+					.getRequestDispatcher("/BettingService?method=bettingGameForm&matchno="+matchNum);
 			rd.forward(request, response);
 		} else {
 			request.setAttribute("ERROR", "로그인 해주세요.");
@@ -311,6 +312,17 @@ public class BettingService extends HttpServlet {
 	public void bettingGameForm(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		/* default generated stub */;
+		HttpSession session = request.getSession();
+		Member member1 = (Member) session.getAttribute("LOGIN_MEMBER");
+		if (member1 != null) {
+			String ID = member1.getId();
+		
+			long mineral=MemberDAO.selectMineralByID(ID);
+			request.setAttribute("MINERAL", mineral);
+		
+			long rank =MemberDAO.selectMemberRanking(ID);
+			request.setAttribute("RANK", rank);
+		}
 		String matchNum = request.getParameter("matchno");
 		String matchTime = MatchDAO.selectMatchTime(matchNum);
 		int check = now.hourCheck(matchTime);
