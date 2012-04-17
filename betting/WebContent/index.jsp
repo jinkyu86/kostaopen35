@@ -19,6 +19,7 @@
 </head>
 <body>
 	<ul>
+		<!--
 		<c:choose>
 			<c:when test="${sessionScope.LOGIN_MEMBER==null}">
 				<div ALIGN="right">
@@ -31,6 +32,8 @@
 			<c:otherwise>
 			</c:otherwise>
 		</c:choose>
+		-->
+	
 		<header>
 			<p>
 				<font color="white" style="font-size: 27px">2012 프로야구 베팅</font>
@@ -38,6 +41,20 @@
 
 			<c:choose>
 				<c:when test="${sessionScope.LOGIN_MEMBER==null}">
+					<table border="0" align="right">
+						<tr>
+							<td align="right">
+								<a href="/betting/MemberService?method=loginForm" onfocus=blur()><font
+									color=black>로그인</font></a>
+							</td>
+						</tr>
+						<tr>
+							<td align="right">		
+								<a href="/betting/MemberService?method=addMemberForm" onfocus=blur()><font
+									color=black>회원가입</font></a>
+							</td>
+						</tr>
+					</table>
 				</c:when>
 				<c:otherwise>
 					<p>
