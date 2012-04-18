@@ -22,8 +22,8 @@
 	</tr>
 	<c:forEach var="member" items="${MEMBER_LIST}">
 	<tr>
-	<form action="/auction/MemberService" method="post">
-	<input type="hidden" name="method" value="editMemberByadmin" />
+	<form action="/auction/viewMemberList.action" method="post">
+	
 	<td><input type="text" name="userid" value="${member.userid}" readOnly="readOnly" /></label></td> 
 	<td><input type="password" name="pw" value="${member.pw}" /></td>
 	<td><input type="text" name="email" value="${member.email}"/></td>
@@ -35,7 +35,7 @@
 		<input type="reset" value="취소"/>
 	</td>
 	<td>
-		<a href="/auction/MemberService?method=removeMember&userid=${member.userid }">
+		<a href="/auction/removeMember.action?userid=${member.userid }">
 			<img src="/auction/menu/delete.jpg"/>
 		</a>
 	</td>
@@ -44,7 +44,7 @@
 	</c:forEach>
 </table>
 <p align="center">
-	<a href="/auction/AuctionService?method=viewAuctionList">경매목록 보기</a>
+	<a href="/auction/viewAuctionList.action">경매목록 보기</a>
 </p>
 </body>
 </html>

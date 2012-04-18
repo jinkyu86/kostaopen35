@@ -10,8 +10,8 @@
 <body>
 	<h1 align="center">회원수정</h1>
 	<table align="center">
-		<form action="/auction/MemberService" method="post">
-			<input type="hidden" name="method" value="editMember" />
+		<form action="/auction/editMember.action" method="post">
+			
 			<tr>
 				<td>아이디</td>
 				<td><input type="text" name="userid"

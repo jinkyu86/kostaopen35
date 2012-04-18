@@ -9,8 +9,8 @@
 <body background="/auction/gphoto/seo.jpg">
 	<h4  align="center">로그인</h4>
 	<table  align="center">
-		<form action="/auction/MemberService" method="post">
-		<input type="hidden" name="method" value="login"/>
+		<form action="/auction/login.action" method="post">
+		
 		<tr>
 			<td>아이디</td>
 			<td><input type="text"   name="userid"/></td>

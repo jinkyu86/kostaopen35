@@ -56,7 +56,7 @@
 	<tr>
 		<td><img src="/auction/gphoto/${bid.auction.good.img }" height="100" width="100"></td>
 		<td align="center">
-			<a href="/auction/AuctionService?method=viewAuction&aNum=${bid.auction.aNum }">
+			<a href="/auction/viewAuction.action?aNum=${bid.auction.aNum }">
 				${bid.auction.good.gName }
 			</a>
 		</td>
@@ -78,7 +78,7 @@
 	<tr>
 		<td><img src="/auction/gphoto/${sold.good.img }" height="100" width="100"></td>
 		<td align="center">
-			<a href="/auction/AuctionService?method=viewAuction&aNum=${sold.aNum }">
+			<a href="/auction/viewAuction.action?aNum=${sold.aNum }">
 				${sold.good.gName }
 			</a>
 		</td>
@@ -88,24 +88,24 @@
 	</c:forEach>
 </table>
 	  <p align="center">
-	    <a href="/auction/BidService?method=moneyBack&userid=${MEMBER.userid}">
+	    <a href="/auction/moneyBack.action?userid=${MEMBER.userid}">
 	    유찰된 코인 emoney로 돌려받기
 	    </a>
 	  </p>
 	  <p align="center">
-	    <a href="/auction/MemberService?method=editMemberForm&userid=${MEMBER.userid}">
+	    <a href="/auction/editMemberForm.action?userid=${MEMBER.userid}">
 	    회원수정
 	    </a>
 	  </p>
 	  <p align="center">
 	 
-	    <a  id="removeMemberLink" href="/auction/MemberService?method=removeMember&userid=${MEMBER.userid}">
+	    <a  id="removeMemberLink" href="/auction/removeMember.action?userid=${MEMBER.userid}">
            회원탈퇴
 		</a>
 	   </p> 
 	  
 	<p align="center">
-	   <a href="/auction/AuctionService?method=viewAuctionList">경매목록보기</a> 
+	   <a href="/auction/viewAuctionList.action">경매목록보기</a> 
 	</p>
 </body>
 </html>

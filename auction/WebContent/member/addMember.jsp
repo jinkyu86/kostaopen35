@@ -82,10 +82,9 @@
 </head>
 <body background="/auction/gphoto/seo.jpg">
 	<h1 align="center">회원가입</h1>
-	<form  action="/auction/MemberService" 
+	<form  action="/auction/addMember.action" 
 		method="post" id="my_form">
-		<input type="hidden"  name="method"
-		  value="addMember"/>
+		
 		<table align="center">
 			<tr>
 				<td>아이디</td>
