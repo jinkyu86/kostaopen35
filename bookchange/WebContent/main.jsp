@@ -115,6 +115,7 @@
 		 <td><div align="right">
 		 <form action="/bookchange/MemberService" method="post">
 	  	 <input type="hidden" name="method" value="editMemberForm">
+	  	 
 	  	   <input type="submit" value="정보수정"/>
 	  	 </form>
 		 </div></td>
