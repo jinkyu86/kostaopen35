@@ -31,7 +31,7 @@
 				<tr>
 					<c:forEach var="rankingMovieList" items="${rankingMovieList}" varStatus="n">
 						<td class="main_td">
-							<img src="/moviesystem/movieimg/${rankingMovieList.poster}" class="main_img" style="margin:5px 0 5px 0"><br/>
+							<img src="/moviesystem/movieimg/${rankingMovieList.poster}" class="main_img" style="margin:5px 0 5px 0" alt="${rankingMovieList.poster}"><br/>
 							<span title="${rankingMovieList.mname}">
 								<c:choose>
 									<c:when test="${fn:length(rankingMovieList.mname)>9}">
@@ -55,7 +55,7 @@
 				<tr>
 					<c:forEach var="screenMovieList" items="${screenMovieList}" varStatus="n">
 						<td class="main_td">
-							<img src="/moviesystem/movieimg/${screenMovieList.poster}" class="main_img" style="margin:5px 0 5px 0"><br/>
+							<img src="/moviesystem/movieimg/${screenMovieList.poster}"  class="main_img" style="margin:5px 0 5px 0" alt="${screenMovieList.poster}"><br/>
 							<span title="${screenMovieList.mname}">
 								<c:choose>
 									<c:when test="${fn:length(screenMovieList.mname)>9}">
@@ -79,7 +79,7 @@
 				<tr>
 					<c:forEach var="scheduleMovieList" items="${scheduleMovieList}" varStatus="n">
 						<td class="main_td">
-							<img src="/moviesystem/movieimg/${scheduleMovieList.poster}" class="main_img" style="margin:5px 0 5px 0"><br/>
+							<img src="/moviesystem/movieimg/${scheduleMovieList.poster}" class="main_img" style="margin:5px 0 5px 0" alt="${scheduleMovieList.poster}"><br/>
 							<span title="${scheduleMovieList.mname}">
 							<c:choose>
 								<c:when test="${fn:length(scheduleMovieList.mname)>9}">
