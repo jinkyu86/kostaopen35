@@ -5,6 +5,7 @@ package kr.or.kosta.bookchange.member;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,6 +13,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import org.apache.catalina.Session;
 
 import kr.or.kosta.bookchange.board.Board;
 import kr.or.kosta.bookchange.board.BoardDAO;
@@ -105,7 +108,7 @@ public class MemberService extends HttpServlet {
 		MemberDAO.insertMember(member);
 		
 		request.setAttribute("ERROR", "회원가입이 완료되었습니다.");
-		RequestDispatcher rd=request.getRequestDispatcher("main.jsp");
+		RequestDispatcher rd=request.getRequestDispatcher("/BoardService?method=boardListAtMain");
 		rd.forward(request, response);
 		
 	}
@@ -133,7 +136,7 @@ public class MemberService extends HttpServlet {
 			HttpServletResponse response)throws IOException,ServletException {
 		
 		String email=request.getParameter("email");
-		Member member=MemberDAO.selectMember(email);
+		Member member=MemberDAO.selectMemberemail(email);
 		response.setContentType("text/html;charset=utf-8");
 		
 		PrintWriter out=response.getWriter();
@@ -188,9 +191,10 @@ public class MemberService extends HttpServlet {
 	 */
 	public void editMemberForm(HttpServletRequest request,
 			HttpServletResponse response)throws IOException,ServletException {
-		/* default generated stub */;
-		String email=request.getParameter("email");
-		Member member=MemberDAO.selectMember(email);
+		/* default generated stub */
+		HttpSession session=request.getSession();
+		Member member=(Member) session.getAttribute("LOGIN_EMAIL");		
+		
 		request.setAttribute("MEMBER", member);
 		RequestDispatcher rd=request.getRequestDispatcher("/member/editmember.jsp");
 		rd.forward(request, response);
@@ -207,7 +211,7 @@ public class MemberService extends HttpServlet {
 		String email=request.getParameter("email");
 		String pw=request.getParameter("pw");
 		
-		Member member =MemberDAO.selectMember(email);
+		Member member =MemberDAO.selectMemberemail(email);
 		
 		if (member==null) {
 			request.setAttribute("ERROR","존재하지 않는 아이디");
@@ -284,8 +288,8 @@ public class MemberService extends HttpServlet {
 		/* default generated stub */;
 		String email=request.getParameter("email");
 		String pw=request.getParameter("pw");
-		Member member=MemberDAO.selectMember(email);
-		ArrayList<Board>boardList=BoardDAO.selectBoardListbyEmailWhenDelete(email);		
+		Member member=MemberDAO.selectMemberemail(email);
+		List<Board>boardList=BoardDAO.selectBoardListbyEmailWhenDelete(email);		
 		if(pw==null){
 			request.setAttribute("ERROR", "비밀번호를 입력하세요.");
 			RequestDispatcher rd=request.getRequestDispatcher("/BoardService?method=boardListAtMain");
@@ -330,7 +334,7 @@ public class MemberService extends HttpServlet {
 			rd.forward(request, response);
 		}else{
 			String email=member.getEmail();
-			member=MemberDAO.selectMember(email);
+			member=MemberDAO.selectMemberemail(email);
 		
 			request.setAttribute("MEMBER",member);
 			//System.out.println(email+"회원정보가 보입니다.");
@@ -352,7 +356,7 @@ public class MemberService extends HttpServlet {
 				
 				
 				String tel=request.getParameter("tel");
-				Member member=MemberDAO.selectMemberTel(tel);
+				Member member=MemberDAO.selectMemberemailTel(tel);
 				
 		
 
@@ -386,7 +390,7 @@ public class MemberService extends HttpServlet {
 				String email=request.getParameter("email");
 				String tel=request.getParameter("tel");
 			
-				member=MemberDAO.selectMember(email, tel);
+				member=MemberDAO.selectMemberListByPw(email, tel);
 				
 				if(tel.equals(null)||tel.equals("")||email.equals(null)||email.equals("")){
 					request.setAttribute("ERROR","이메일과 전화번호를 입력하시오.");
@@ -424,7 +428,7 @@ public class MemberService extends HttpServlet {
 		  }
 		int length=5;//페이지내용크기
 
-		ArrayList<Member>memberList=
+		List<Member>memberList=
 				MemberDAO.selectMemberList(length, page);//맴버호출 
 		request.setCharacterEncoding("utf-8");
 		request.setAttribute("MEMBER_LIST", memberList);
@@ -456,7 +460,7 @@ public class MemberService extends HttpServlet {
 		}
 		int length=5;
 		
-		ArrayList<Member> memberList=null;
+		List<Member> memberList=null;
 		int memberCount=0;
 
 		if(request.getParameter("keyword")==null||
@@ -470,7 +474,7 @@ public class MemberService extends HttpServlet {
 				memberList=
 							MemberDAO.selectMemberListByEmail(length, page, request.getParameter("keyword"));
 				memberCount=
-						MemberDAO.selectMemberCount(request.getParameter("keyword"));
+						MemberDAO.selectMemberCountemail(request.getParameter("keyword"));
 				
 							
 		}
