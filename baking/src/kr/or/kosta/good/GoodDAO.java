@@ -34,8 +34,9 @@ public class GoodDAO {
 
 	/**
 	 * 상품추가 
+	 * @return 
 	 */
-	public static void insertGood(Good good){
+	public static int insertGood(Good good){
 		SqlSession session=null;
 		try{
 			session = sqlMapper.openSession(true); //sql맵에 있는 쿼리 실행.
@@ -43,6 +44,7 @@ public class GoodDAO {
 		}finally{
 			session.close();
 		}
+		return good.getGoodNum();
 	}
 	/*public static void insertGood(Good good) {
 		Connection con=null;
@@ -187,12 +189,12 @@ public class GoodDAO {
 	/**
 	 * 상품상세보기
 	 */
-	public static Good selectGood(int goodnum) {
+	public static Good selectGood(int goodNum) {
 		SqlSession session = null;
 		Good good=null;
 		try{
 		     session = sqlMapper.openSession(true); //sql맵에 있는 쿼리 실행.
-		     good = session.selectOne("Good.selectGood",goodnum);
+		     good = session.selectOne("Good.selectGood",goodNum);
 		}finally{
 			session.close();
 		}
