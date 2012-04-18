@@ -22,8 +22,11 @@
 </environment>
 </environments>
 <mappers>
+	<mapper resource="Bid.xml" />
 	<mapper resource="Good.xml" />
 	<mapper resource="Member.xml" />
+	<mapper resource="Board.xml"/>
+	<mapper resource="Auction.xml"/>
 </mappers>
 </configuration>
 
