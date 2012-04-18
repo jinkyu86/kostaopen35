@@ -14,14 +14,14 @@ public class QaDAOTestInsert {
 	public void testInsertQa() {
 		Qa qa=new Qa();
 		
-		qa.setQaContent("너는 누구냐 오빠는 직거래만 하는데 괜찮니?");
+		qa.setQaContent("직거래만 하는데 괜찮니?");
 		
 		Member member=new Member();
 		member.setEmail("hoihoi@nate.com");
 		qa.setMember(member);
 		
 		Board board=new Board();
-		board.setBoardNo(23);
+		board.setBoardNo(20);
 		qa.setBoard(board);
 		
 		QaDAO.insertQa(qa);

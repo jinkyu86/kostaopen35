@@ -2,6 +2,7 @@ package kr.or.kosta.bookchange.board;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -88,7 +89,7 @@ public class BoardService extends HttpServlet {
 		
 		int length=8;
 		
-		ArrayList<Board> boardList=BoardDAO.selectBoardList(length, page);
+		List<Board> boardList=BoardDAO.selectBoardList(length, page);
 		request.setCharacterEncoding("utf-8");
 		request.setAttribute("BOARD_LIST",boardList);
 				
@@ -157,8 +158,8 @@ public class BoardService extends HttpServlet {
 			rd.forward(request, response);
 		}else{
 					
-		ArrayList<Category> categoryList=CategoryDAO.selectCategory();//카테고리 정보 조회
-		ArrayList<Deal> dealList=DealDAO.selectDeal();//거래방법 조회
+		List<Category> categoryList=CategoryDAO.selectCategory();//카테고리 정보 조회
+		List<Deal> dealList=DealDAO.selectDeal();//거래방법 조회
 		
 		request.setAttribute("CATEGORY_LIST",categoryList);
 		request.setAttribute("DEAL_LIST",dealList);
@@ -216,8 +217,8 @@ public class BoardService extends HttpServlet {
 		String boardNo=request.getParameter("boardNo");
 		Board board=BoardDAO.selectBoard(boardNo);//수정할 게시물 정보 조회
 			
-		ArrayList<Category> categoryList=CategoryDAO.selectCategory();//카테고리 정보 조회
-		ArrayList<Deal> dealList=DealDAO.selectDeal();//거래방법 조회
+		List<Category> categoryList=CategoryDAO.selectCategory();//카테고리 정보 조회
+		List<Deal> dealList=DealDAO.selectDeal();//거래방법 조회
 		
 		request.setAttribute("BOARD",board);
 		request.setAttribute("CATEGORY_LIST",categoryList);
@@ -259,13 +260,18 @@ public class BoardService extends HttpServlet {
 		int qaCount=QaDAO.selectQaCount(boardNo);
 		int length=10;
 		//여기부턴 댓글 리스트
-		int page=(qaCount/length)+1;
+		int page;
+		if(qaCount%10==0){
+			page=qaCount/length;
+		}else{
+			page=(qaCount/length)+1;
+		}
 		
 		if(request.getParameter("page")!=null){
 			page=Integer.parseInt(request.getParameter("page"));
 		}
 				
-		ArrayList<Qa> qaList=QaDAO.selectQaList(length, page, boardNo);
+		List<Qa> qaList=QaDAO.selectQaList(length, page, boardNo);
 		request.setCharacterEncoding("utf-8");
 		request.setAttribute("QA_LIST",qaList);
 				
@@ -294,11 +300,11 @@ public class BoardService extends HttpServlet {
 		
 		int length=10;
 		
-		ArrayList<Board> boardList=BoardDAO.selectBoardList(length, page);
+		List<Board> boardList=BoardDAO.selectBoardList(length, page);
 		request.setCharacterEncoding("utf-8");
 		request.setAttribute("BOARD_LIST",boardList);
 		
-		ArrayList<Category> categoryList=CategoryDAO.selectCategory();//카테고리 정보 조회
+		List<Category> categoryList=CategoryDAO.selectCategory();//카테고리 정보 조회
 		
 		request.setAttribute("CATEGORY_LIST",categoryList);
 				
@@ -322,7 +328,7 @@ public class BoardService extends HttpServlet {
 		
 		int length=10;
 		
-		ArrayList<Board> boardList=null;
+		List<Board> boardList=null;
 		int boardCount=0;	
 		
 		if(!request.getParameter("categoryNo").equals("")){
@@ -369,7 +375,7 @@ public class BoardService extends HttpServlet {
 		String categoryNo=request.getParameter("categoryNo");
 		request.setAttribute("CATEGORY",categoryNo);
 		
-		ArrayList<Category> categoryList=CategoryDAO.selectCategory();//카테고리 정보 조회
+		List<Category> categoryList=CategoryDAO.selectCategory();//카테고리 정보 조회
 		request.setAttribute("CATEGORY_LIST",categoryList);
 		
 		String pageLinkTag=PageUtil.generate(page, boardCount, length,
@@ -405,7 +411,7 @@ public class BoardService extends HttpServlet {
 		
 		int length=10;
 		
-		ArrayList<Board> boardList=null;
+		List<Board> boardList=null;
 		int boardCount=0;
 		
 		boardList=BoardDAO.selectBoardListbyEmailWhenAdd(length, page, request.getParameter("keyword"));
@@ -440,7 +446,7 @@ public class BoardService extends HttpServlet {
 			page=Integer.parseInt(request.getParameter("page"));
 		}
 		
-		ArrayList<Qa> qaList=QaDAO.selectQaList(length, page, boardNo);
+		List<Qa> qaList=QaDAO.selectQaList(length, page, boardNo);
 		request.setCharacterEncoding("utf-8");
 		request.setAttribute("QA_LIST",qaList);
 		
@@ -475,7 +481,7 @@ public class BoardService extends HttpServlet {
 			page=Integer.parseInt(request.getParameter("page"));
 		}
 		
-		ArrayList<Qa> qaList=QaDAO.selectQaList(length, page, boardNo);
+		List<Qa> qaList=QaDAO.selectQaList(length, page, boardNo);
 		request.setCharacterEncoding("utf-8");
 		request.setAttribute("QA_LIST",qaList);
 

@@ -9,7 +9,7 @@ public class BoardDAOTestDelete {
 
 	@Test
 	public void test() {
-		BoardDAO.deleteBoard("23");
+		BoardDAO.deleteBoard("182");
 	}
 
 }

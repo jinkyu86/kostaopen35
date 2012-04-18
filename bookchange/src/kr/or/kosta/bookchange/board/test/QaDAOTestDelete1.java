@@ -9,7 +9,7 @@ public class QaDAOTestDelete1 {
 
 	@Test
 	public void test() {
-		QaDAO.deleteQabyQaNo("2");
+		System.out.println(QaDAO.selectQaCount("17"));
 	}
 
 }

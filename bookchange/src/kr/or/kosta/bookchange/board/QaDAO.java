@@ -1,20 +1,50 @@
 package kr.or.kosta.bookchange.board;
 
+import java.io.IOException;
+import java.io.Reader;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.RowBounds;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import kr.or.kosta.bookchange.member.Member;
 import kr.or.kosta.util.ConnectionUtil;
 
 public class QaDAO {
+	
+	private static String resource="sqlmap-config.xml";
+	private static Reader sqlReader;
+	static{
+		try{
+			sqlReader=Resources.getResourceAsReader(resource);
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+	}
+	private static SqlSessionFactory sqlMapper=new SqlSessionFactoryBuilder().build(sqlReader);
 
 	/**
 	 * 상품문의 내용 보기	 */
-	public static ArrayList<Qa> selectQaList(int length, int page, String boardNo) {
-		Connection con=null;
+	public static List<Qa> selectQaList(int length, int page, String boardNo) {
+		SqlSession session=null;
+		List<Qa> qaList=null;
+		try{
+			session=sqlMapper.openSession(true);
+			RowBounds rowBounds=new RowBounds((page-1)*length,length);
+			qaList=session.selectList("Qa.selectQaList",boardNo,rowBounds);
+		}finally{
+			session.close();
+		}
+		return qaList;
+		/*Connection con=null;
 		PreparedStatement ps=null;
 		String sql=null;
 		ResultSet rs=null;
@@ -61,13 +91,21 @@ public class QaDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return qaList;
+		return qaList;*/
 	}
 
 	/**
 	 * 상품문의 추가	 */
 	public static void insertQa(Qa qa) {
-		Connection con=null;
+		SqlSession session=null;
+		try{
+			session=sqlMapper.openSession(true);
+			session.insert("insertQa",qa);
+		}finally{
+			session.close();
+		}
+		
+		/*Connection con=null;
 		PreparedStatement ps=null;
 		String sql=null;
 		
@@ -84,12 +122,19 @@ public class QaDAO {
 		
 		}catch(SQLException e){
 			e.printStackTrace();
-		}
+		}*/
 	}
 
 	/**	 * 상품문의 수정 */
 	public static void updateQa(Qa qa) {
-		Connection con=null;
+		SqlSession session=null;
+		try{
+			session=sqlMapper.openSession(true);
+			session.update("updateQa",qa);
+		}finally{
+			session.close();
+		}
+		/*Connection con=null;
 		PreparedStatement ps=null;
 		
 		con=ConnectionUtil.getConnection();
@@ -105,12 +150,20 @@ public class QaDAO {
 			e.printStackTrace();
 		}
 		
-		
+		*/
 	}
 
 	/**	 * 상품문의 삭제(직접 삭제했을때)	 */
 	public static void deleteQabyQaNo(String qaNo) {
-		Connection con=null;
+		SqlSession session=null;
+		try{
+			session=sqlMapper.openSession(true);
+			session.delete("deleteQa",qaNo);
+		}finally{
+			session.close();
+		}
+		
+		/*Connection con=null;
 		PreparedStatement ps=null;
 		
 		con=ConnectionUtil.getConnection();
@@ -122,14 +175,22 @@ public class QaDAO {
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}
+		}*/
 		
 				
 	}
 	
 	/**	 * 상품문의 삭제(관련 게시물이 삭제됐을때)	 */
 	public static void deleteQabyBoardNo(String boardNo) {
-		Connection con=null;
+		SqlSession session=null;
+		try{
+			session=sqlMapper.openSession(true);
+			session.delete("deleteQaByBoardNo",boardNo);
+		}finally{
+			session.close();
+		}
+		
+		/*	Connection con=null;
 		PreparedStatement ps=null;
 		
 		con=ConnectionUtil.getConnection();
@@ -142,14 +203,25 @@ public class QaDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+		*/
 				
 	}
 
 	/**
 	 * 상품문의 카운트 수	 */
 	public static int selectQaCount(String boardNo) {
-		Connection con=null;
+		SqlSession session=null;
+		int count;
+		try{
+			session=sqlMapper.openSession(true);
+			count=session.selectOne("selectQaCount",boardNo);
+		}finally{
+			session.close();
+		}
+		return count;
+	}
+	
+		/*Connection con=null;
 		PreparedStatement ps=null;
 		String sql=null;
 		ResultSet rs=null;
@@ -176,5 +248,5 @@ public class QaDAO {
 			e.printStackTrace();
 		}
 		return qaCount;
-	}
+	}*/
 }

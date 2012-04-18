@@ -15,7 +15,7 @@ public class BoardDAOTestInsert {
 	public void testInsertBoard() {
 		Board board=new Board();
 		
-		board.setBoardContent("기가막힌 요리책입니다. 백과사전과 교환 원합니다");
+		board.setBoardContent("테스트용 게시물");
 		board.setBoardPhoto("u.jpg");
 		board.setBoardTitle("슈퍼푸드로 만든 건강한 요리");
 		board.setBoardWant("백과사전");

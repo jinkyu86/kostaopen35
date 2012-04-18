@@ -1,20 +1,52 @@
 package kr.or.kosta.bookchange.board;
 
+import java.io.IOException;
+import java.io.Reader;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.RowBounds;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import kr.or.kosta.bookchange.change.Condition;
 import kr.or.kosta.bookchange.member.Member;
 import kr.or.kosta.util.ConnectionUtil;
 
 public class BoardDAO {
+	
+	private static String resource="sqlmap-config.xml";
+	private static Reader sqlReader;
+	static{
+		try{
+			sqlReader=Resources.getResourceAsReader(resource);
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+	}
+	private static SqlSessionFactory sqlMapper=new SqlSessionFactoryBuilder().build(sqlReader);
 
 	/**	 * 게시물리스트 조회 */
-	public static ArrayList<Board> selectBoardList(int length, int page) {
-		Connection con=null;
+	public static List<Board> selectBoardList(int length, int page) {
+		SqlSession session=null;
+		List<Board> boardList=null;
+		try{
+			session=sqlMapper.openSession(true);
+			RowBounds rowBounds=new RowBounds((page-1)*length,length);
+			boardList=session.selectList("Board.selectBoardList",null,rowBounds);
+		}finally{
+			session.close();
+		}
+		return boardList;
+		
+		/*Connection con=null;
 		PreparedStatement ps=null;
 		String sql=null;
 		ResultSet rs=null;
@@ -78,12 +110,22 @@ public class BoardDAO {
 			e.printStackTrace();
 		}		
 		return boardList;
-		
+		*/
 	}
 
 	/**	 * 전체게시물 수 리턴 */
 	public static int selectBoardCount() {
-		Connection con=null;
+		SqlSession session=null;
+		int count;
+		try{
+		session = sqlMapper.openSession(true);
+		count=session.selectOne("selectBoardCount");
+		}finally{
+			session.close();
+		}
+		return count;
+		
+		/*Connection con=null;
 		PreparedStatement ps=null;
 		String sql=null;
 		ResultSet rs=null;
@@ -107,12 +149,23 @@ public class BoardDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return boardCount;
+		return boardCount;*/
 	}
 
 	/**	 * 카테고리별 게시물 조회 */
-	public static ArrayList<Board> selectBoardListbyCategory(int length, int page, String categoryNo) {
-		Connection con=null;
+	public static List<Board> selectBoardListbyCategory(int length, int page, String categoryNo) {
+		SqlSession session=null;
+		List<Board> boardList=null;
+		try{
+		session = sqlMapper.openSession(true);
+		RowBounds rowBounds=new RowBounds((page-1)*length,length);
+		boardList=session.selectList("Board.selectBoardListByCategory",categoryNo,rowBounds);
+		}finally{
+			session.close();
+		}
+		return boardList;
+		
+		/*Connection con=null;
 		PreparedStatement ps=null;
 		String sql=null;
 		ResultSet rs=null;
@@ -168,13 +221,23 @@ public class BoardDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}		
-		return boardList;
+		return boardList;*/
 	}
 
 	/**
 	 * 카테고리별 게시물 수 리턴	 */
 	public static int selectBoardCategoryCount(String categoryNo) {
-		Connection con=null;
+		SqlSession session=null;
+		int count;
+		try{
+		session = sqlMapper.openSession(true);
+		count=session.selectOne("selectBoardListByCategoryCount",categoryNo);
+		}finally{
+			session.close();
+		}
+		return count;
+	
+		/*Connection con=null;
 		PreparedStatement ps=null;
 		String sql=null;
 		ResultSet rs=null;
@@ -200,13 +263,24 @@ public class BoardDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}		
-		return boardCount;
+		return boardCount;*/
 	}
 
 	/**
 	 * 제목으로 검색한 게시물 조회	 */
-	public static ArrayList<Board> selectBoardListbyTitle(int length, int page, String title) {
-		Connection con=null;
+	public static List<Board> selectBoardListbyTitle(int length, int page, String title) {
+		SqlSession session=null;
+		List<Board> boardList=null;
+		try{
+		session = sqlMapper.openSession(true);
+		RowBounds rowBounds=new RowBounds((page-1)*length,length);
+		boardList=session.selectList("Board.selectBoardListByTitle","%"+title+"%",rowBounds);
+		}finally{
+			session.close();
+		}
+		return boardList;
+		
+	/*	Connection con=null;
 		PreparedStatement ps=null;
 		String sql=null;
 		ResultSet rs=null;
@@ -263,13 +337,22 @@ public class BoardDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}		
-		return boardList;
+		return boardList;*/
 	}
 
 	/**
 	 * 제목으로 검색한  게시물 수 리턴	 */
 	public static int selectBoardTitleCount(String title) {
-		Connection con=null;
+		SqlSession session=null;
+		int count;
+		try{
+		session = sqlMapper.openSession(true);
+		count=session.selectOne("selectBoardListByTitleCount","%"+title+"%");
+		}finally{
+			session.close();
+		}
+		return count;
+		/*Connection con=null;
 		PreparedStatement ps=null;
 		String sql=null;
 		ResultSet rs=null;
@@ -294,13 +377,23 @@ public class BoardDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}		
-		return boardCount;
+		return boardCount;*/
 	}
 
 	/**
 	 * 게시물 보기	 */
 	public static Board selectBoard(String boardNo) {
-		Connection con=null;
+		SqlSession session=null;
+		Board board=null;
+		try{
+			session=sqlMapper.openSession(true);
+			board=session.selectOne("selectBoard",boardNo);
+		}finally{
+			session.close();
+		}
+		return board;
+		
+		/*Connection con=null;
 		PreparedStatement ps=null;
 		String sql=null;
 		ResultSet rs=null;
@@ -370,13 +463,13 @@ public class BoardDAO {
 				deal.setDealWay(dealWay);
 				board.setDeal(deal);
 				
-				/*Qa qa=new Qa();
+				Qa qa=new Qa();
 				qa.setQaContent(qaContent);
 				Member member2=new Member();
 				member2.setEmail(qaEmail);
 				qa.setMember(member2);
 				
-				board.setQa(qa);*/
+				board.setQa(qa);
 						
 			}
 			
@@ -384,13 +477,21 @@ public class BoardDAO {
 			e.printStackTrace();
 		}
 
-		return board;	
+		return board;	*/
 	}
 
 	/**
 	 * 게시물 추가(물품 등록)	 */
 	public static void insertBoard(Board board) {
-		Connection con=null;
+		SqlSession session=null;
+		try{
+			session=sqlMapper.openSession(true);
+			session.insert("Board.insertBoard",board);
+		}finally{
+			session.close();
+		}
+		
+		/*Connection con=null;
 		PreparedStatement ps=null;
 		con=ConnectionUtil.getConnection();
 		
@@ -409,14 +510,23 @@ public class BoardDAO {
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}
+		}*/
 
 	}
 
 	/**
 	 * 게시물 수정	 */
 	public static void updateBoard(Board board) {
-		Connection con=null;
+		SqlSession session=null;
+		try{
+			session=sqlMapper.openSession(true);
+			session.update("Board.updateBoard",board);
+		}finally{
+			session.close();
+		}
+		
+		
+		/*Connection con=null;
 		PreparedStatement ps=null;
 		con=ConnectionUtil.getConnection();
 		
@@ -438,13 +548,21 @@ public class BoardDAO {
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}
+		}*/
 	}
 
 	/**
 	 * 게시물 삭제	 */
 	public static void deleteBoard(String boardNo) {
-		Connection con=null;
+		SqlSession session=null;
+		try{
+			session=sqlMapper.openSession(true);
+			session.delete("Board.deleteBoard",boardNo);
+		}finally{
+			session.close();
+		}
+		
+		/*Connection con=null;
 		PreparedStatement ps=null;
 		con=ConnectionUtil.getConnection();
 		QaDAO.deleteQabyBoardNo(boardNo);//게시물 삭제됐을때 여기 딸려있던 문의글도 다 삭제해버림
@@ -456,14 +574,26 @@ public class BoardDAO {
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}
+		}*/
 		
 		
 	}
 
 	/**	 * 자기가 올린 게시물 조회 */
-	public static ArrayList<Board> selectBoardListbyEmail(int length, int page, String email) {
-		Connection con=null;
+	public static List<Board> selectBoardListbyEmail(int length, int page, String email) {
+		SqlSession session=null;
+		List<Board> boardList=null;
+		try{
+		session = sqlMapper.openSession(true);
+		RowBounds rowBounds=new RowBounds((page-1)*length,length);
+		boardList=session.selectList("Board.selectBoardListByEmail","%"+email+"%",rowBounds);
+		}finally{
+			session.close();
+		}
+		return boardList;
+		
+		
+		/*Connection con=null;
 		PreparedStatement ps=null;
 		String sql=null;
 		ResultSet rs=null;
@@ -520,13 +650,22 @@ public class BoardDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}		
-		return boardList;
+		return boardList;*/
 	}
 
 	/**
 	 * 자기가 올린 게시물 수 리턴	 */
 	public static int selectBoardEmailCount(String email) {
-		Connection con=null;
+		SqlSession session=null;
+		int count;
+		try{
+		session = sqlMapper.openSession(true);
+		count=session.selectOne("selectBoardListByEmailCount","%"+email+"%");
+		}finally{
+			session.close();
+		}
+		return count;
+		/*Connection con=null;
 		PreparedStatement ps=null;
 		String sql=null;
 		ResultSet rs=null;
@@ -551,12 +690,26 @@ public class BoardDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}		
-		return boardCount;
+		return boardCount;*/
 	}
 
 	/**	 * 카테고리&제목 게시물 조회 */
-	public static ArrayList<Board> selectBoardListbyCategoryandTitle(int length, int page, String categoryNo, String title) {
-		Connection con=null;
+	public static List<Board> selectBoardListbyCategoryandTitle(int length, int page, String categoryNo, String title) {
+		SqlSession session=null;
+		List<Board> boardList=null;
+		try{
+		session = sqlMapper.openSession(true);
+		RowBounds rowBounds=new RowBounds((page-1)*length,length);
+		HashMap<String,String> parameters=new HashMap<String,String>();
+		parameters.put("categoryNo", categoryNo);
+		parameters.put("title", "%"+title+"%");//들어가는 값이 두개 이상일때 요렇게 한다.
+		boardList=session.selectList("Board.selectBoardListByCategoryAndTitle",parameters,rowBounds);
+		}finally{
+			session.close();
+		}
+		return boardList;
+		
+		/*	Connection con=null;
 		PreparedStatement ps=null;
 		String sql=null;
 		ResultSet rs=null;
@@ -615,13 +768,26 @@ public class BoardDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}		
-		return boardList;
+		return boardList;*/
 	}
 
 	/**
 	 * 카테고리&제목 게시물 수 리턴	 */
 	public static int selectBoardCategoryandTitleCount(String categoryNo, String title) {
-		Connection con=null;
+		SqlSession session=null;
+		int count;
+		try{
+		session = sqlMapper.openSession(true);
+		HashMap<String,String>parameters=new HashMap<String,String>();
+		parameters.put("categoryNo", categoryNo);
+		parameters.put("title", "%"+title+"%");//들어가는 값이 두개 이상일때 요렇게 한다.
+		count=session.selectOne("selectBoardListByCategoryAndTitleCount",parameters);
+		}finally{
+			session.close();
+		}
+		return count;
+		
+		/*Connection con=null;
 		PreparedStatement ps=null;
 		String sql=null;
 		ResultSet rs=null;
@@ -649,12 +815,26 @@ public class BoardDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}		
-		return boardCount;
+		return boardCount;*/
 	}
 
 	/**	 * 카테고리&이메일 검색 게시물 조회 */
-	public static ArrayList<Board> selectBoardListbyCategoryandEmail(int length, int page, String categoryNo, String email) {
-		Connection con=null;
+	public static List<Board> selectBoardListbyCategoryandEmail(int length, int page, String categoryNo, String email) {
+		SqlSession session=null;
+		List<Board> boardList=null;
+		try{
+		session = sqlMapper.openSession(true);
+		RowBounds rowBounds=new RowBounds((page-1)*length,length);
+		HashMap<String,String>parameters=new HashMap<String,String>();
+		parameters.put("categoryNo", categoryNo);
+		parameters.put("email", "%"+email+"%");//들어가는 값이 두개 이상일때 요렇게 한다.
+		boardList=session.selectList("Board.selectBoardListByCategoryAndEmail",parameters,rowBounds);
+		}finally{
+			session.close();
+		}
+		return boardList;
+		
+		/*Connection con=null;
 		PreparedStatement ps=null;
 		String sql=null;
 		ResultSet rs=null;
@@ -713,13 +893,25 @@ public class BoardDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}		
-		return boardList;
+		return boardList;*/
 	}
 
 	/**
 	 * 카테고리&이메일 검색 게시물 수 리턴	 */
 	public static int selectBoardCategoryandEmailCount(String categoryNo, String email) {
-		Connection con=null;
+		SqlSession session=null;
+		int count;
+		try{
+		session = sqlMapper.openSession(true);
+		HashMap<String,String>parameters=new HashMap<String,String>();
+		parameters.put("categoryNo", categoryNo);
+		parameters.put("email", "%"+email+"%");//들어가는 값이 두개 이상일때 요렇게 한다.
+		count=session.selectOne("selectBoardListByCategoryAndEmailCount",parameters);
+		}finally{
+			session.close();
+		}
+		return count;
+		/*Connection con=null;
 		PreparedStatement ps=null;
 		String sql=null;
 		ResultSet rs=null;
@@ -747,12 +939,23 @@ public class BoardDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}		
-		return boardCount;
+		return boardCount;*/
 	}
 
-	/**	 * 자기가 올린 게시물 조회 */
-	public static ArrayList<Board> selectBoardListbyEmailWhenAdd(int length, int page, String email) {
-		Connection con=null;
+	/**	 * 자기가 올린 게시물 조회 교환가능한것만!*/
+	public static List<Board> selectBoardListbyEmailWhenAdd(int length, int page, String email) {
+		SqlSession session=null;
+		List<Board> boardList=null;
+		try{
+		session = sqlMapper.openSession(true);
+		RowBounds rowBounds=new RowBounds((page-1)*length,length);
+		boardList=session.selectList("Board.selectBoardListByEmailWhenAdd","%"+email+"%",rowBounds);
+		}finally{
+			session.close();
+		}
+		return boardList;
+		
+		/*Connection con=null;
 		PreparedStatement ps=null;
 		String sql=null;
 		ResultSet rs=null;
@@ -810,13 +1013,22 @@ public class BoardDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}		
-		return boardList;
+		return boardList;*/
 	}
 
 	/**
 	 * 자기가 올린 게시물 수 리턴	 */
 	public static int selectBoardEmailWhenAddCount(String email) {
-		Connection con=null;
+		SqlSession session=null;
+		int count;
+		try{
+		session = sqlMapper.openSession(true);
+		count=session.selectOne("Board.selectBoardListByEmailWhenAddCount","%"+email+"%");
+		}finally{
+			session.close();
+		}
+		return count;
+		/*Connection con=null;
 		PreparedStatement ps=null;
 		String sql=null;
 		ResultSet rs=null;
@@ -842,11 +1054,22 @@ public class BoardDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}		
-		return boardCount;
+		return boardCount;*/
 	}
 	
+	/*멤버 정보 오픈*/
 	public static Member viewMemberInfo(String email){
-		Connection con=null;
+		SqlSession session=null;
+		Member member=null;
+		try{
+		session = sqlMapper.openSession(true);
+		member=session.selectOne("Board.viewMemberInfo",email);
+		}finally{
+			session.close();
+		}
+		return member;
+		
+		/*Connection con=null;
 		PreparedStatement ps=null;
 		ResultSet rs=null;
 		Member member=null;
@@ -871,13 +1094,21 @@ public class BoardDAO {
 			e.printStackTrace();
 		}
 		return member;
-		
+		*/
 	}
 
 	/**
-	 * 게시물 삭제	 */
+	 * 게시물 삭제 탈퇴했을때! 테스트 안해봤음.	 */
 	public static void deleteBoardbyEmail(String email) {
-		Connection con=null;
+		SqlSession session=null;
+		try{
+		session = sqlMapper.openSession(true);
+		session.delete("Board.deleteBoardByEmail");
+		}finally{
+			session.close();
+		}
+		
+		/*Connection con=null;
 		PreparedStatement ps=null;
 		con=ConnectionUtil.getConnection();
 		//QaDAO.deleteQabyBoardNo(boardNo);//게시물 삭제됐을때 여기 딸려있던 문의글도 다 삭제해버림
@@ -890,13 +1121,23 @@ public class BoardDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+		*/
 		
 	}
 
-	/**	 * 자기가 올린 게시물 조회 */
-	public static ArrayList<Board> selectBoardListbyEmailWhenDelete(String email) {
-		Connection con=null;
+	/**	 * 자기가 올린 게시물 조회 (지울때? 언제 쓰는지 모르겠네 일단 테스트 안 해봤음)*/
+	public static List<Board> selectBoardListbyEmailWhenDelete(String email) {
+		SqlSession session=null;
+		List<Board> boardList=null;
+		try{
+		session = sqlMapper.openSession(true);
+		boardList=session.selectList("Board.selectBoardListByEmail",email);
+		}finally{
+			session.close();
+		}
+		return boardList;
+		
+		/*Connection con=null;
 		PreparedStatement ps=null;
 		String sql=null;
 		ResultSet rs=null;
@@ -949,6 +1190,6 @@ public class BoardDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}		
-		return boardList;
+		return boardList;*/
 	}
 }

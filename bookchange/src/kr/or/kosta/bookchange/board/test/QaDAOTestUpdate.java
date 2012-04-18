@@ -11,8 +11,8 @@ public class QaDAOTestUpdate {
 	@Test
 	public void test() {
 		Qa qa=new Qa();
-		qa.setQaContent("사기꾼 아니죠?");
-		qa.setQaNo(1);
+		qa.setQaContent("13일의 금요일이다!");
+		qa.setQaNo(201);
 		
 		QaDAO.updateQa(qa);
 	}

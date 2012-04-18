@@ -17,8 +17,8 @@ public class BoardDAOTestUpdate {
 		board.setBoardContent("상태 아주 굿이에요 굿");
 		board.setBoardWant("코스모폴리탄");
 		board.setBoardPhoto("u.jpg");
-		board.setBoardTitle("좋은 요리책입니다");
-		board.setBoardNo(22);
+		board.setBoardTitle("요리책입니다");
+		board.setBoardNo(182);
 		
 		Category category=new Category();
 		category.setCategoryNo(5);
