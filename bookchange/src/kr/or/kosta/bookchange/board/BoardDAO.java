@@ -1103,7 +1103,7 @@ public class BoardDAO {
 		SqlSession session=null;
 		try{
 		session = sqlMapper.openSession(true);
-		session.delete("Board.deleteBoardByEmail");
+		session.delete("Board.deleteBoardByEmail",email);
 		}finally{
 			session.close();
 		}
