@@ -212,17 +212,17 @@
 	  <table bordercolor="#FFA500" border="1" align="center">
 	   <tr align="center">
 	   	<th>My Book</th>
-	    <th>신청한사람</th>
+	    <th>신청받는사람</th>
 	    <th>Trade Book</th>
 		<th>신청일자</th>
 	   </tr>
 	  <c:forEach var="change" items="${DEMAND_CHANGE_LIST}">
        <tr>
-        <td><img src="/bookchange/bookimg/${change.agreeBoard.boardPhoto}" height="100" width="100"></td>
+        <td><img src="/bookchange/bookimg/${change.demandBoard.boardPhoto}" height="100" width="100"></td>
         <td align="center">${change.agreeBoard.member.email}</td>
         <td align="center">
-		<a href="/bookchange/BoardService?method=viewBoardWhenCancel&boardNo=${change.demandBoard.boardNo}&agreeBoardNo=${change.agreeBoard.boardNo}">
-		<img src="/bookchange/bookimg/${change.demandBoard.boardPhoto}"height="100" width="100"></a></td>
+		<a href="/bookchange/BoardService?method=viewBoardWhenCancel&boardNo=${change.agreeBoard.boardNo}&agreeBoardNo=${change.demandBoard.boardNo}">
+		<img src="/bookchange/bookimg/${change.agreeBoard.boardPhoto}"height="100" width="100"></a></td>
 		<td align="center">${change.changeDate}</td>
 	   </tr>
       </c:forEach>
