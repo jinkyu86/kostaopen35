@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
-  <display-name>baking</display-name>
+  <display-name>struts20120417</display-name>
+  
+  <filter>
+  	<filter-name>struts2</filter-name>
+	<filter-class>org.apache.struts2.dispatcher.FilterDispatcher</filter-class>
+  </filter>
+  
+  <filter-mapping>
+  	<filter-name>struts2</filter-name>
+	<url-pattern>/*</url-pattern>
+  </filter-mapping>
+  
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
     <welcome-file>index.htm</welcome-file>
@@ -9,91 +20,4 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
-  <servlet>
-    <description></description>
-    <display-name>GoodService</display-name>
-    <servlet-name>GoodService</servlet-name>
-    <servlet-class>kr.or.kosta.good.GoodService</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>GoodService</servlet-name>
-    <url-pattern>/GoodService</url-pattern>
-  </servlet-mapping>
-  
-  <servlet>
-    <description></description>
-    <display-name>GoodDivisionService</display-name>
-    <servlet-name>GoodDivisionService</servlet-name>
-    <servlet-class>kr.or.kosta.gooddivision.GoodDivisionService</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>GoodDivisionService</servlet-name>
-    <url-pattern>/GoodDivisionService</url-pattern>
-  </servlet-mapping>
-  
-  <servlet>
-    <description></description>
-    <display-name>MemberService</display-name>
-    <servlet-name>MemberService</servlet-name>
-    <servlet-class>kr.or.kosta.member.MemberService</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>MemberService</servlet-name>
-    <url-pattern>/MemberService</url-pattern>
-  </servlet-mapping>
-  
-  <servlet>
-    <description></description>
-    <display-name>MyrecipeService</display-name>
-    <servlet-name>MyrecipeService</servlet-name>
-    <servlet-class>kr.or.kosta.myrecipe.MyrecipeService</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>MyrecipeService</servlet-name>
-    <url-pattern>/MyrecipeService</url-pattern>
-  </servlet-mapping>
-  
-  <servlet>
-    <description></description>
-    <display-name>OrderService</display-name>
-    <servlet-name>OrderService</servlet-name>
-    <servlet-class>kr.or.kosta.order.OrderService</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>OrderService</servlet-name>
-    <url-pattern>/OrderService</url-pattern>
-  </servlet-mapping>
-  
-  <servlet>
-    <description></description>
-    <display-name>RecipeService</display-name>
-    <servlet-name>RecipeService</servlet-name>
-    <servlet-class>kr.or.kosta.recipe.RecipeService</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>RecipeService</servlet-name>
-    <url-pattern>/RecipeService</url-pattern>
-  </servlet-mapping>
-  
-  <servlet>
-    <description></description>
-    <display-name>UploadServlet</display-name>
-    <servlet-name>UploadServlet</servlet-name>
-    <servlet-class>kr.or.kosta.file.receive.UploadServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>UploadServlet</servlet-name>
-    <url-pattern>/UploadServlet</url-pattern>
-  </servlet-mapping>
-  
-  <servlet>
-    <description></description>
-    <display-name>GoodUploadServlet</display-name>
-    <servlet-name>GoodUploadServlet</servlet-name>
-    <servlet-class>kr.or.kosta.file.receive.GoodUploadServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>GoodUploadServlet</servlet-name>
-    <url-pattern>/GoodUploadServlet</url-pattern>
-  </servlet-mapping>
 </web-app>
