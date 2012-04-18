@@ -26,6 +26,7 @@
 	<mapper resource="Category.xml"/>
 	<mapper resource="Deal.xml"/>
 	<mapper resource="Qa.xml"/>
+	<mapper resource="Change.xml"/>
 </mappers>
 </configuration>
 
