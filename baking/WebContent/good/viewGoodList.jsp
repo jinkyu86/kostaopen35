@@ -36,12 +36,12 @@ pageEncoding="utf-8"%>
 <!-- top nav -->	
 <div class="menu">			
 <ul>			
-	<li><a href="/baking/GoodService?method=viewIndex">홈</a></li>			
-	<li><a href="/baking/GoodService?method=viewGoodList">상품</a></li>		
-	<li><a href="/baking/RecipeService?method=viewRecipeList">레시피</a></li>			
+	<li><a href="/baking/viewIndex.action">홈</a></li>			
+	<li><a href="/baking/viewGoodList.action">상품</a></li>		
+	<li><a href="/baking/viewRecipeList.action">레시피</a></li>			
 	<li><a href="/baking/OrderService?method=CartList">장바구니</a></li>			
 	<li><a href="/baking/OrderService?method=viewOrderList">주문조회</a></li>				
-	<li><a href="/baking/GoodService?method=viewIndex">마이레시피</a></li>		
+	<li><a href="/baking/vGoodService?method=viewIndex">마이레시피</a></li>		
 </ul>	
 </div>
 </nav>
@@ -49,19 +49,19 @@ pageEncoding="utf-8"%>
 
 <!-- content -->
 <section id="content">	
-	<a href="/baking/GoodService?method=viewDivisionGoodList&division=1">- 쿠키</a>
-	<a href="/baking/GoodService?method=viewDivisionGoodList&division=2">- 케이크</a>  
-	<a href="/baking/GoodService?method=viewDivisionGoodList&division=3">- 초콜릿</a>
+	<a href="/baking/viewDivisionGoodList.action?division=1">- 쿠키</a>
+	<a href="/baking/viewDivisionGoodList.action?division=2">- 케이크</a>  
+	<a href="/baking/viewDivisionGoodList.action?division=3">- 초콜릿</a>
 	<c:if test="${sessionScope.member.memberid=='ADMIN'}">
 		<center>
-		<a href="/baking/GoodService?method=addGoodForm"><input type="button" value="상품등록"> </a>
+		<a href="/baking/addGoodForm.action"><input type="button" value="상품등록"> </a>
 		</center>
 	</c:if>
 <ul class="column">			        
 	<c:forEach var="good" items="${GOOD_LIST}">        
 	<li>        
 	<section class="block">							
-	<a href="/baking/GoodService?method=viewGood&goodNum=${good.goodNum}" ><img src="/baking/img/${good.good_division.gName }/${good.img}"/></a>				
+	<a href="/baking/viewGood.action?goodNum=${good.goodNum}"><img src="/baking/img/${good.good_division.gName }/${good.img}"/></a>				
 	<center><h5>${good.name }</h5>	</center>														
 	<center><p>${good.goodPrice }원</p></center>			        
 	</section>			    

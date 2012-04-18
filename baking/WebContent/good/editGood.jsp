@@ -132,7 +132,7 @@ function editGood(){
 	<form id="my_form" action="/baking/GoodService" method="post">
 	<input type="hidden" name="method" value="editGood">
 	<input type="hidden"  name="img" id="img" value=""/>
-	<input type="hidden" name="goodNum" value="${Good.goodNum}">
+	<input type="hidden" name="goodNum" value="${GOOD.goodNum}">
 		<table border="1" align="center">
 			<tr>
 				<td>상품명</td>
