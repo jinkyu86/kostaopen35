@@ -6,6 +6,7 @@
 <mapper namespace="Good">
 	
 <parameterMap type="kr.or.kosta.good.Good" id="insertParameterMap">
+	<parameter property="goodNum"/>
 	<parameter property="good_division.division"/> 
 	<parameter property="goodPrice"/>
 	<parameter property="qty"/>
@@ -16,7 +17,10 @@
 </parameterMap>
 
 <insert id="insertGood" parameterMap="insertParameterMap">
-	insert into good values(good_seq.nextval,?,?,?,?,?,?,?)
+	<selectKey keyProperty="goodNum" resultType="java.lang.Integer" order="BEFORE">
+		select good_seq.nextval from dual
+	</selectKey>
+	insert into good values(?,?,?,?,?,?,?,?)
 </insert>
 
 <parameterMap type="kr.or.kosta.good.Good" id="updateParameterMap">
@@ -42,6 +46,7 @@
 </delete>
 
 <resultMap id="selectResultMap" type="kr.or.kosta.good.Good">
+	<result property="goodNum" column="goodNum"/>
 	<result property="good_division.division" column="division" /> 
 	<result property="goodPrice" column="goodPrice"/>
 	<result property="qty" column="qty"/>
@@ -53,7 +58,8 @@
 </resultMap>
 
 <select id="selectGood" resultMap="selectResultMap">
-	SELECT g.division as division,
+	SELECT good_num as goodNum, 
+			 g.division as division,
 			 good_price as goodPrice,
 			 qty,
 			 name,
@@ -63,7 +69,7 @@
 			 g_name as gName
 	FROM good g JOIN good_division gd
 			ON g.division=gd.division
-	WHERE good_num=#{good_num}
+	WHERE good_num=#{goodNum}
 </select>
 
 <resultMap id="selectResultMapGoodList" type="kr.or.kosta.good.Good">
