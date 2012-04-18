@@ -36,7 +36,7 @@ public class MemberDAO {
 			new SqlSessionFactoryBuilder().build(sqlReader);
 	
 	
-	public static void insertMember(Member member) {
+	public static String insertMember(Member member) {
 		SqlSession session=null;
 		try{
 			session=sqlMapper.openSession(true);
@@ -45,6 +45,7 @@ public class MemberDAO {
 		finally{
 			session.close();
 		}
+		return member.getUserid();
 	}
 //	public static void insertMember(Member member) {
 //		Connection con = null;
