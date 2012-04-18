@@ -75,7 +75,7 @@
 			<div class="menu_title" >Movie</div>
 			<table class="table_style" align="right">
 				<tr>
-					<td rowspan="5" style="border-right:1px solid #9191C8;width:210px;" align="center"><img src="/moviesystem/movieimg/${Movie.poster}" class="poster_style2"></td>
+					<td rowspan="5" style="border-right:1px solid #9191C8;width:210px;" align="center"><img src="/moviesystem/movieimg/${Movie.poster}" class="poster_style2" alt="${Movie.poster}"></td>
 					<td>${Movie.mname}</td>
 				</tr>
 				<tr>
