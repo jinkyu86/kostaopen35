@@ -36,12 +36,12 @@ pageEncoding="utf-8"%>
 <!-- top nav -->	
 <div class="menu">			
 <ul>			
-	<li><a href="/baking/GoodService?method=viewIndex">홈</a></li>			
-	<li><a href="/baking/GoodService?method=viewGoodList">상품</a></li>		
-	<li><a href="/baking/RecipeService?method=viewRecipeList">레시피</a></li>			
+	<li><a href="/baking/viewIndex.action">홈</a></li>			
+	<li><a href="/baking/viewGoodList.action">상품</a></li>		
+	<li><a href="/baking/viewRecipeList.action">레시피</a></li>			
 	<li><a href="/baking/OrderService?method=CartList">장바구니</a></li>			
 	<li><a href="/baking/OrderService?method=viewOrderList">주문조회</a></li>				
-	<li><a href="/baking/GoodService?method=viewIndex">마이레시피</a></li>			
+	<li><a href="/baking/GoodService?method=viewIndex">마이레시피</a></li>					
 </ul>	
 </div>
 </nav>
@@ -49,11 +49,11 @@ pageEncoding="utf-8"%>
 
 <!-- content -->
 <section id="content">	
-	<c:if test="${sessionScope.member.memberid=='ADMIN'}">
+	<%-- <c:if test="${sessionScope.member.memberid=='ADMIN'}">
 		<center>
 		<a href="/baking/GoodService?method=addGoodForm"><input type="button" value="상품등록"> </a>
 		</center>
-	</c:if>
+	</c:if> --%>
 <ul class="column">			        
 	<c:forEach var="good" items="${GOOD_LIST}">        
 	<li>        
