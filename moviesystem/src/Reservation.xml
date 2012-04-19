@@ -105,6 +105,13 @@ type="kr.or.kosta.moviesystem.reservation.Reservation">
 </select>
 
 
+<update id="updateReservation">
+     UPDATE RESERVATION
+	 SET pay_state='결제취소',seat_num=0,total_price=0,res_qty=0
+	 WHERE res_num=#{resnum}
+</update>
+
+
 
 </mapper>
 
