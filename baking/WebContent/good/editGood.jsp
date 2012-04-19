@@ -112,12 +112,12 @@ function editGood(){
 <!-- top nav -->	
 <div class="menu">			
 <ul>			
-	<li><a href="/baking/GoodService?method=viewIndex">홈</a></li>			
-	<li><a href="/baking/GoodService?method=viewGoodList">상품</a></li>		
-	<li><a href="/baking/RecipeService?method=viewRecipeList">레시피</a></li>			
+	<li><a href="/baking/viewIndex.action">홈</a></li>			
+	<li><a href="/baking/viewGoodList.action">상품</a></li>		
+	<li><a href="/baking/viewRecipeList.action">레시피</a></li>			
 	<li><a href="/baking/OrderService?method=CartList">장바구니</a></li>			
 	<li><a href="/baking/OrderService?method=viewOrderList">주문조회</a></li>				
-	<li><a href="/baking/GoodService?method=viewIndex">마이레시피</a></li>	
+	<li><a href="/baking/GoodService?method=viewIndex">마이레시피</a></li>		
 </ul>	
 </div>
 </nav>
@@ -125,9 +125,9 @@ function editGood(){
 
 <!-- content -->
 <section id="content">	
-	<a href="/baking/GoodService?method=viewDivisionGoodList&division=1">- 쿠키</a>
-	<a href="/baking/GoodService?method=viewDivisionGoodList&division=2">- 케이크</a>  
-	<a href="/baking/GoodService?method=viewDivisionGoodList&division=3">- 초콜릿</a>	
+	<a href="/baking/viewDivisionGoodList.action?division=1">- 쿠키</a>
+	<a href="/baking/viewDivisionGoodList.action?division=2">- 케이크</a>  
+	<a href="/baking/viewDivisionGoodList.action?division=3">- 초콜릿</a>
 	<ul class="column">
 	<form id="my_form" action="/baking/GoodService" method="post">
 	<input type="hidden" name="method" value="editGood">

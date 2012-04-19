@@ -41,7 +41,7 @@ pageEncoding="utf-8"%>
 	<li><a href="/baking/viewRecipeList.action">레시피</a></li>			
 	<li><a href="/baking/OrderService?method=CartList">장바구니</a></li>			
 	<li><a href="/baking/OrderService?method=viewOrderList">주문조회</a></li>				
-	<li><a href="/baking/vGoodService?method=viewIndex">마이레시피</a></li>		
+	<li><a href="/baking/GoodService?method=viewIndex">마이레시피</a></li>		
 </ul>	
 </div>
 </nav>
@@ -61,7 +61,7 @@ pageEncoding="utf-8"%>
 	<c:forEach var="good" items="${GOOD_LIST}">        
 	<li>        
 	<section class="block">							
-	<a href="/baking/viewGood.action?goodNum=${good.goodNum}"><img src="/baking/img/${good.good_division.gName }/${good.img}"/></a>				
+	<a href="/baking/viewGood.action?goodnum=${good.goodNum}"><img src="/baking/img/${good.good_division.gName }/${good.img}"/></a>				
 	<center><h5>${good.name }</h5>	</center>														
 	<center><p>${good.goodPrice }원</p></center>			        
 	</section>			    
