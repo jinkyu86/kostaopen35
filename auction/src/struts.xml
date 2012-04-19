@@ -15,8 +15,8 @@
 	<action name="viewAuction" class="kr.or.kosta.auction.auction.AuctionService"
 			 method="viewAuction">
 			<param name="aliases">
-				#{'aNum':'anum',
-				 'aNum':'auction.aNum',
+				#{ 'anum':'auction.anum',
+				'anum':'anum',
 				 'img':'auction.good.img',
 				 'gName':'auction.good.gName'
 				}
