@@ -1,32 +1,271 @@
+
 package kr.or.kosta.auction.auction;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import com.opensymphony.xwork2.ModelDriven;
 
 import kr.or.kosta.auction.bid.Bid;
 import kr.or.kosta.auction.bid.BidDAO;
 import kr.or.kosta.auction.good.Good;
 import kr.or.kosta.auction.good.GoodDAO;
 
-public class AuctionService extends HttpServlet {
+public class AuctionService implements ModelDriven  {
 	private static final long serialVersionUID = 1L;
+	
+	@Override
+	public Object getModel() {
+		// TODO Auto-generated method stub
+		return auction;
+	}
 
 	/**
 	 * @param request
 	 * @param response
 	 */
+	 private int page;
+	    
+	    private String aNum;
+	    private String gNum;
+	    private Auction AUCTION;
+	    private Good GOOD;
+	    private Bid BID;
+	    
+	    private Auction auction = new Auction();
+	    private Good good = new Good();
+	    private List<Auction>AUCTION_LIST;
+	    private List<Auction>SOLD_LIST;
+	    
+	    private String PAGE_LINK_TAG;
+	    
+	    private List<Good>GOOD_LIST;
+	    private List<Bid>BID_LIST;
+	    
+	     
+
+	public List<Auction> getSOLD_LIST() {
+			return SOLD_LIST;
+		}
+
+		public void setSOLD_LIST(List<Auction> sOLD_LIST) {
+			SOLD_LIST = sOLD_LIST;
+		}
+
+	public int getPage() {
+			return page;
+		}
+
+		public void setPage(int page) {
+			this.page = page;
+		}
+
+		public String getaNum() {
+			return aNum;
+		}
+
+		public void setaNum(String aNum) {
+			this.aNum = aNum;
+		}
+
+		public String getgNum() {
+			return gNum;
+		}
+
+		public void setgNum(String gNum) {
+			this.gNum = gNum;
+		}
+
+		public Auction getAUCTION() {
+			return AUCTION;
+		}
+
+		public void setAUCTION(Auction aUCTION) {
+			AUCTION = aUCTION;
+		}
+
+		public Good getGOOD() {
+			return GOOD;
+		}
+
+		public void setGOOD(Good gOOD) {
+			GOOD = gOOD;
+		}
+
+		public Bid getBID() {
+			return BID;
+		}
+
+		public void setBID(Bid bID) {
+			BID = bID;
+		}
+
+		public Auction getAuction() {
+			return auction;
+		}
+
+		public void setAuction(Auction auction) {
+			this.auction = auction;
+		}
+
+		public Good getGood() {
+			return good;
+		}
+
+		public void setGood(Good good) {
+			this.good = good;
+		}
+
+		public List<Auction> getAUCTION_LIST() {
+			return AUCTION_LIST;
+		}
+
+		public void setAUCTION_LIST(List<Auction> aUCTION_LIST) {
+			AUCTION_LIST = aUCTION_LIST;
+		}
+
+		public String getPAGE_LINK_TAG() {
+			return PAGE_LINK_TAG;
+		}
+
+		public void setPAGE_LINK_TAG(String pAGE_LINK_TAG) {
+			PAGE_LINK_TAG = pAGE_LINK_TAG;
+		}
+
+		public List<Good> getGOOD_LIST() {
+			return GOOD_LIST;
+		}
+
+		public void setGOOD_LIST(List<Good> gOOD_LIST) {
+			GOOD_LIST = gOOD_LIST;
+		}
+
+		public List<Bid> getBID_LIST() {
+			return BID_LIST;
+		}
+
+		public void setBID_LIST(List<Bid> bID_LIST) {
+			BID_LIST = bID_LIST;
+		}
+
+	public String addAuction() throws Exception {
+		AuctionDAO.insertAuction(auction);
+		return "success";
+	}
+	
+	public String addAuctionForm() throws Exception{
+		// 1.전체 물품 리스트 조회
+		GOOD_LIST= GoodDAO.selectGoodList();
+		GOOD = GoodDAO.selectGood(gNum);
+		return "success";
+	}
+
+	/**
+	 * @param request
+	 * @param response
+	 */
+	public String editAuction() throws Exception{
+		AuctionDAO.updateAuction(auction);
+		return "success";
+	}
+
+	/**
+	 * @param request
+	 * @param response
+	 */
+	public String editAuctionForm() throws Exception{
+		//1.수정할 경매의 경매 번호 리턴
+		AUCTION = AuctionDAO.selectAuction(aNum);
+				//3.전체 물품 리스트 조회
+		GOOD_LIST = GoodDAO.selectGoodList();
+		return "success";
+	}
+
+	/**
+	 * @param request
+	 * @param response
+	 */
+	public String viewAuction() throws Exception{
+				//1.a_num 파라메터 리턴받아서 변수에 저장
+				//2.DB에서 경매번호가 일치하는 경매 조회
+				int size=5;
+				AUCTION = AuctionDAO.selectAuction(aNum);
+				BID_LIST = BidDAO.selectBidListByAuctionNum(aNum, size);
+				//3.request에 2에서 조회한 경매의 정보 저장
+				//   이름-STUDENT
+				//4./auction/viewAuction.jsp로 이동 객체 생성
+				//5.4의 JSP로 이동	
+			return "success";
+	}
+
+	public String viewAuctionList() throws Exception{
+		//1.AuctionDAO에서 전체 경매조회 메서드 호출
+		AUCTION_LIST=AuctionDAO.selectAuctionList();
+		SOLD_LIST=AuctionDAO.selectAuctionSoldList();
+		return "success";
+	    
+	}
+
+	public String removeAuction() throws Exception{
+		AuctionDAO.deleteAuction(aNum);
+		return "success";
+///AuctionService?method=viewAuctionList
+	}
+}
+
+/*
+package kr.or.kosta.auction.auction;
+
+import java.io.IOException;
+import java.util.List;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.opensymphony.xwork2.ModelDriven;
+
+import kr.or.kosta.auction.bid.Bid;
+import kr.or.kosta.auction.bid.BidDAO;
+import kr.or.kosta.auction.good.Good;
+import kr.or.kosta.auction.good.GoodDAO;
+
+public class AuctionService implements ModelDriven {
+	private static final long serialVersionUID = 1L;
+	private List<Auction> AUCTION_LIST;
+	private List<Auction> SOLD_LIST;
+	
+	public List<Auction> getAUCTION_LIST() {
+		return AUCTION_LIST;
+	}
+
+	public void setAUCTION_LIST(List<Auction> aUCTION_LIST) {
+		AUCTION_LIST = aUCTION_LIST;
+	}
+
+	public List<Auction> getSOLD_LIST() {
+		return SOLD_LIST;
+	}
+
+	public void setSOLD_LIST(List<Auction> sOLD_LIST) {
+		SOLD_LIST = sOLD_LIST;
+	}
+
+	@Override
+	public Object getModel() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/**
+	 * @param request
+	 * @param response
+	 
 	public AuctionService() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-
+	/*
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		doPost(request, response);
@@ -56,7 +295,7 @@ public class AuctionService extends HttpServlet {
 		}
 		
 	}
-
+	
 	private void addAuction(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException,IOException {
 		String aNum = request.getParameter("aNum");
@@ -113,7 +352,7 @@ public class AuctionService extends HttpServlet {
 	/**
 	 * @param request
 	 * @param response
-	 */
+	 
 	private void editAuction(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException,IOException{
 		//1.파라메터정보 리턴
@@ -161,7 +400,7 @@ public class AuctionService extends HttpServlet {
 	/**
 	 * @param request
 	 * @param response
-	 */
+	 
 	private void editAuctionForm(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException,IOException{
 		//1.수정할 경매의 경매 번호 리턴
@@ -185,7 +424,7 @@ public class AuctionService extends HttpServlet {
 	/**
 	 * @param request
 	 * @param response
-	 */
+	 
 	private void viewAuction(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException,IOException{
 				//1.a_num 파라메터 리턴받아서 변수에 저장
@@ -205,20 +444,12 @@ public class AuctionService extends HttpServlet {
 				rd.forward(request, response);
 	}
 
-	private void viewAuctionList(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException,IOException{
+	public String viewAuctionList() throws Exception{
 		//1.AuctionDAO에서 전체 경매조회 메서드 호출
-		List<Auction> auctionList=AuctionDAO.selectAuctionList();
-		List<Auction> soldList=AuctionDAO.selectAuctionSoldList();
-		
-		//2.request에 1의 전체 경매 정보 저장
-		request.setAttribute("AUCTION_LIST", auctionList);
-		request.setAttribute("SOLD_LIST", soldList);
-		//3. /auction/viewAuctionList.jsp로 페이지이동
-		RequestDispatcher rd=request.getRequestDispatcher("/auction/viewAuctionList.jsp");
-		//4.JSP로 페이지 이동
-		rd.forward(request, response);
-	}
+		AUCTION_LIST=AuctionDAO.selectAuctionList();
+		SOLD_LIST=AuctionDAO.selectAuctionSoldList();
+		return "success";
+		}
 
 	private void removeAuction(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException,IOException{
@@ -231,3 +462,4 @@ public class AuctionService extends HttpServlet {
 ///AuctionService?method=viewAuctionList
 	}
 }
+*/
