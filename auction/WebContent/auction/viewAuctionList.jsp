@@ -73,9 +73,9 @@
 	</tr>
 	<th>사진</th><th>상품명</th><th>가격</th><th>마감시간</th><th>상세보기</th>
 	<c:forEach var="auction" items="${AUCTION_LIST}">
-	<form action="/auction/AuctionService" method="post">
+	<form action="/auction/viewAuction.action" method="post">
 	<input type="hidden" name="method" value="viewAuction"/>
-	<input type="hidden" name="aNum" value="${auction.aNum }"/>
+	<input type="hidden" name="anum" value="${auction.aNum }"/>
 	<tr>
 		<td align="center"><img src="/auction/gphoto/${auction.good.img}" width="130" height="130"></td>
 		<td align="center">${auction.good.gName}</td>
