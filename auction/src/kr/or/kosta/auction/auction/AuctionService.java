@@ -67,10 +67,16 @@ public class AuctionService implements ModelDriven  {
 			this.aNum = aNum;
 		}
 
+		public String getAnum() {
+			return aNum;
+		}
+		public void setAnum(String aNum) {
+			this.aNum = aNum;
+		}
+
 		public String getgNum() {
 			return gNum;
 		}
-
 		public void setgNum(String gNum) {
 			this.gNum = gNum;
 		}

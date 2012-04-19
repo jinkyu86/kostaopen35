@@ -56,14 +56,22 @@ public class Auction {
 		this.good = good;
 	}
 
-	public String getANum() {
+
+
+	public String getaNum() {
 		return aNum;
 	}
 
-	public void setANum(String aNum) {
+	public void setaNum(String aNum) {
 		this.aNum = aNum;
 	}
+	public String getAnum() {
+		return aNum;
+	}
 
+	public void setAnum(String aNum) {
+		this.aNum = aNum;
+	}
 	public String getsPrice() {
 		return sPrice;
 	}
