@@ -7,11 +7,19 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import org.apache.struts2.interceptor.ServletRequestAware;
+import org.apache.struts2.interceptor.ServletResponseAware;
+import org.apache.struts2.interceptor.SessionAware;
+import org.apache.struts2.util.ServletContextAware;
+
+import com.opensymphony.xwork2.ModelDriven;
 
 import kr.or.kosta.moviesystem.buy.Buy;
 import kr.or.kosta.moviesystem.buy.BuyDAO;
@@ -20,226 +28,177 @@ import kr.or.kosta.moviesystem.good.GoodDAO;
 import kr.or.kosta.moviesystem.member.Member;
 import kr.or.kosta.moviesystem.util.PageUtil;
 
-public class GoodService extends HttpServlet{
+public class GoodService implements ModelDriven, ServletContextAware, ServletRequestAware, ServletResponseAware, SessionAware{
 	private static final long serialVersionUID = 1L;
 	
-    public GoodService() {
+	private ServletContext servletContext;
+	private HttpServletRequest request;
+	private HttpServletResponse response;
+	private Map session;
+	
+	private int page;
+	private List<Good>GOOD_LIST;
+	private String PAGE_LINK_TAG;
+	private Good GOOD;
+	private String gnum;
+	private List<Buy>CART_LIST;
+	private String qty;
+	private String keyword;
+	private int index;
+	
+	private Good good=new Good();
+	
+	@Override
+	public Object getModel() {
+		return good;
+	}
+	
+	@Override
+	public void setSession(Map<String, Object> session) {
+		this.session=session;		
+	}
+	@Override
+	public void setServletResponse(HttpServletResponse response) {
+		this.response=response;
+	}
+	@Override
+	public void setServletRequest(HttpServletRequest request) {
+		this.request=request;
+		
+	}
+	@Override
+	public void setServletContext(ServletContext context) {
+		this.servletContext=context;
+		
+	}
+
+	public GoodService() {
         super();
     }
-    
-    //내가 수정햇어
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doPost(request,response);
+	
+    public String getKeyword() {
+		return keyword;
+	}
+	public void setKeyword(String keyword) {
+		this.keyword = keyword;
+	}
+	public int getIndex() {
+		return index;
+	}
+	public void setIndex(int index) {
+		this.index = index;
+	}
+	public String getQty() {
+		return qty;
+	}
+	public void setQty(String qty) {
+		this.qty = qty;
+	}
+	public List<Buy> getCART_LIST() {
+		return CART_LIST;
+	}
+	public void setCART_LIST(List<Buy> cART_LIST) {
+		CART_LIST = cART_LIST;
+	}
+	public Good getGOOD() {
+		return GOOD;
+	}
+	public void setGOOD(Good gOOD) {
+		GOOD = gOOD;
+	}
+	public String getGnum() {
+		return gnum;
+	}
+	public void setGnum(String gnum) {
+		this.gnum = gnum;
+	}
+	public Good getGood() {
+		return good;
+	}
+
+	public void setGood(Good good) {
+		this.good = good;
+	}
+
+	public int getPage() {
+		return page;
+	}
+
+	public void setPage(int page) {
+		this.page = page;
+	}
+
+	public List<Good> getGOOD_LIST() {
+		return GOOD_LIST;
+	}
+
+	public void setGOOD_LIST(List<Good> gOOD_LIST) {
+		GOOD_LIST = gOOD_LIST;
+	}
+
+	public String getPAGE_LINK_TAG() {
+		return PAGE_LINK_TAG;
+	}
+
+	public void setPAGE_LINK_TAG(String pAGE_LINK_TAG) {
+		PAGE_LINK_TAG = pAGE_LINK_TAG;
 	}
 	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");
-		String method=request.getParameter("method");
-		
-		if(method==null){
-			method="viewGoodList";
-		}
-		if("viewGoodList".equals(method)){
-			viewGoodList(request,response);
-		}else if("viewGood".equals(method)){
-			viewGood(request,response);
-		}else if("viewCartList".equals(method)){
-			viewCartList(request,response);
-		}else if("addCartList".equals(method)){
-			addCartList(request,response);
-		}else if("removeCartList".equals(method)){
-			removeCartList(request,response);
-		}else if("editCartList".equals(method)){
-			editCartList(request,response);
-		}else if("searchGoodList".equals(method)){
-			searchGoodList(request, response);
-		}else if("addGoodForm".equals(method)){
-			addGoodForm(request,response);
-		}else if("addGood".equals(method)){
-			addGood(request,response);
-		}else if("viewManageGoodList".equals(method)){
-			viewManageGoodList(request, response);
-		}else if("deleteGood".equals(method)){
-			deleteGood(request,response);
-		}else if("editGoodForm".equals(method)){
-			editGoodForm(request,response);
-		}else if("editGood".equals(method)){
-			editGood(request,response);
-		}
-	}
-
-	private void editGood(HttpServletRequest request,
-			HttpServletResponse response)throws ServletException, IOException  {
-		String gnum=request.getParameter("gnum");
-		String gname=request.getParameter("gname");
-		String detail=request.getParameter("detail");
-		String photo=request.getParameter("photo");
-		long gprice=Long.parseLong(request.getParameter("gprice"));
-		
-		Good good=new Good();
-		good.setGnum(gnum);
-		good.setGname(gname);
-		good.setDetail(detail);
-		good.setGprice(gprice);
-		good.setPhoto(photo);
-		
-		GoodDAO.editGood(good);
-		
-		RequestDispatcher rd=request.getRequestDispatcher("/GoodService?method=editGoodForm");
-		rd.forward(request, response);
-	}
-
-	private void editGoodForm(HttpServletRequest request,
-			HttpServletResponse response)throws ServletException, IOException {
-		
-		String gnum=request.getParameter("gnum");
-		Good good=GoodDAO.selectGood(gnum);
-		request.setAttribute("GOOD", good);
-	
-		RequestDispatcher rd=request.getRequestDispatcher("/good/editGoodForm.jsp");
-		rd.forward(request, response);
-		
-	}
-
-	private void deleteGood(HttpServletRequest request,
-			HttpServletResponse response)throws ServletException, IOException{
-		
-		String gnum=request.getParameter("gnum");
-		
-		GoodDAO.deleteGood(gnum);
-
-		RequestDispatcher rd=request.getRequestDispatcher("/GoodService?method=viewManageGoodList");
-		rd.forward(request, response);
-		
-	}
-
-	private void viewManageGoodList(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		int page=1;
-		if(request.getParameter("page")!=null){
-			page=Integer.parseInt(request.getParameter("page"));
-		}
-		int length=5;
-		
-		List<Good>goodList=GoodDAO.selectGoodList(length,page);
-		int goodCount=GoodDAO.selectGoodListCount();
-		request.setAttribute("GOOD_LIST", goodList);
-		
-		String pageLinkTag=PageUtil.generate(page, goodCount, length, "/moviesystem/GoodService?method=viewManageGoodList");
-		System.out.println(pageLinkTag);
-		
-		request.setAttribute("PAGE_LINK_TAG", pageLinkTag);
-		
-		RequestDispatcher rd=request.getRequestDispatcher("/good/viewManageGoodList.jsp");
-		rd.forward(request, response);
-	}
-
-	private void searchGoodList(HttpServletRequest request,
-			HttpServletResponse response)throws IOException, ServletException {
-		int page=1;
-		if(request.getParameter("page")!=null){
-			page=Integer.parseInt(request.getParameter("page"));	
+	/**
+	 * 전체 상품 목록 리스트
+	 * 
+	 * @param request
+	 * @param response
+	 * @throws IOException 
+	 * @throws ServletException 
+	 */
+	public String viewGoodList() throws Exception {
+		if(page==0){
+			page=1;
 		}
 		int length=8;
 		
-		List<Good>goodList=null;
-		int goodCount=0;
-		String keyword=request.getParameter("keyword");
-		
-		if(keyword==null||keyword.equals("")){
-			goodList=GoodDAO.selectGoodList(length, page);
-			goodCount=GoodDAO.selectGoodListCount();
-		}
-		else{
-			goodList=GoodDAO.selectGoodListByName(length, page, keyword);
-			goodCount=GoodDAO.selectGoodListByNameCount(keyword);
-		}
-		request.setAttribute("GOOD_LIST", goodList);
-		
-		String pageLinkTag=PageUtil.generate(page, goodCount, length, "GoodService?method=searchGoodList&keyword="+keyword);
-		System.out.println(pageLinkTag);
-		
-		request.setAttribute("PAGE_LINK_TAG", pageLinkTag);
-		
-		RequestDispatcher rd=request.getRequestDispatcher("/good/viewGoodList.jsp");
-		rd.forward(request, response);
-	}
-
-	private void editCartList(HttpServletRequest request,
-			HttpServletResponse response)throws IOException, ServletException {
-
-		int index=Integer.parseInt(request.getParameter("index"));
-		Map map = request.getParameterMap();
-		
-		Iterator<String> keys= map.keySet().iterator();
-		String qty = null;
-		
-		while(keys.hasNext()){
-			String str = keys.next();
-			if(str.indexOf("qty") > -1)
-				qty=request.getParameter(str);
-		}
-		
-		//String qty=request.getParameter("qty");
-		HttpSession session=request.getSession();
-		ArrayList<Buy>cartList=(ArrayList)session.getAttribute("CART_LIST");
-		Buy buy=cartList.get(index);
-		buy.setQty(Long.parseLong(qty));
-		cartList.set(index, buy);
-		session.setAttribute("CART_LIST", cartList);
-		RequestDispatcher rd=request.getRequestDispatcher("/good/viewCartList.jsp");
-		rd.forward(request, response);
-		
-	}
-
-	private void removeCartList(HttpServletRequest request,
-			HttpServletResponse response) throws IOException, ServletException{
-	
-		int index=Integer.parseInt(request.getParameter("index"));
-		HttpSession session=request.getSession();
-		ArrayList<Buy>cartList=(ArrayList)session.getAttribute("CART_LIST");
-		Buy buy=cartList.get(index);
-//		if(buy.getQty()==1){
-			cartList.remove(index);
-//		}
-//		else{
-//			long qty=buy.getQty();
-//			buy.setQty(qty-1);
-//			cartList.set(index, buy);
-//		}
-		
-		session.setAttribute("CART_LIST",cartList);
-		RequestDispatcher rd= request.getRequestDispatcher("/good/viewCartList.jsp");
-		rd.forward(request, response);
+		GOOD_LIST=GoodDAO.selectGoodList(length,page);
+		int goodCount=GoodDAO.selectGoodListCount();	
+		PAGE_LINK_TAG=PageUtil.generate(page, goodCount, length,
+				"/moviesystem/viewGoodList.action");
+		return "success";
 	}
 	
-
-	private void viewCartList(HttpServletRequest request,
-			HttpServletResponse response) throws IOException, ServletException{
-		RequestDispatcher rd=request.getRequestDispatcher("/good/viewCartList.jsp");
-		rd.forward(request, response);
+	/**
+	 * 선택한 상품이 보여지는 기능
+	 * 
+	 * @param request
+	 * @param response
+	 * @throws IOException 
+	 * @throws ServletException 
+	 */
+	public String viewGood() throws Exception {
+		GOOD=GoodDAO.selectGood(gnum);
+		return "success";
 	}
+	
+	public String viewCartList() throws Exception{
+		return "success";
+	}
+	
+	public String addCartList() throws Exception{
 
-	private void addCartList(HttpServletRequest request,
-			HttpServletResponse response) throws IOException, ServletException{
-		String gnum=request.getParameter("gnum");
-		String qty=request.getParameter("qty");
-
-		Good good=GoodDAO.selectGood(gnum);
+		GOOD=GoodDAO.selectGood(gnum);
 
 		Buy buy=new Buy();
-		buy.setGood(good);
+		buy.setGood(GOOD);
 		buy.setQty(Long.parseLong(qty));
 
-		HttpSession session=request.getSession();
-		ArrayList<Buy>cartList=null;
+		List<Buy>cartList=null;
 		int putedBuyIndex=-1;
 		
-		if(session.getAttribute("CART_LIST")==null){
+		if(session.get("CART_LIST")==null){
 			cartList=new ArrayList<Buy>();
+			session.put("CART_LIST", cartList);
 		}
 		else{
-			cartList=(ArrayList)session.getAttribute("CART_LIST");
+			cartList=(List<Buy>)session.get("CART_LIST");
 			
 			for(int i=0;i<cartList.size();i++){
 				Buy putedBuy=cartList.get(i);
@@ -257,99 +216,112 @@ public class GoodService extends HttpServlet{
 			putedBuy.setQty(putedBuy.getQty()+Long.parseLong(qty));
 			cartList.set(putedBuyIndex, putedBuy);
 		}
+		session.put("CART_LIST", cartList);
+		return "success";
+	}
+	
+	public String editCartList()throws Exception {
+		Map map = request.getParameterMap();
 		
-		session.setAttribute("CART_LIST", cartList);
+		Iterator<String> keys= map.keySet().iterator();
+		String qty = null;
 		
-		RequestDispatcher rd=request.getRequestDispatcher("/good/viewCartList.jsp");
-		rd.forward(request, response);
-		
+		while(keys.hasNext()){
+			String str = keys.next();
+			if(str.indexOf("qty") > -1)
+				qty=request.getParameter(str);
+		}
+		List<Buy>cartList=(List<Buy>)session.get("CART_LIST");
+		Buy buy=cartList.get(index);
+		buy.setQty(Long.parseLong(qty));
+		cartList.set(index, buy);
+		session.put("CART_LIST", cartList);
+		return "success";
 	}
 
-	/**
-	 * 전체 상품 목록 리스트
-	 * 
-	 * @param request
-	 * @param response
-	 * @throws IOException 
-	 * @throws ServletException 
-	 */
-	public void viewGoodList(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		int page=1;
-		if(request.getParameter("page")!=null){
-			page=Integer.parseInt(request.getParameter("page"));
+	public String removeCartList() throws Exception{
+		List<Buy>cartList=(List<Buy>)session.get("CART_LIST");
+		Buy buy=cartList.get(index);
+		cartList.remove(index);
+		return "success";
+	}
+	
+	public String searchGoodList() throws Exception {
+		
+		if(page==0){
+			page=1;
+		}
+		int length=8;
+		int goodCount=0;
+	
+		if(keyword==null||keyword.equals("")){
+			GOOD_LIST=GoodDAO.selectGoodList(length, page);
+			goodCount=GoodDAO.selectGoodListCount();
+		}
+		else{
+			GOOD_LIST=GoodDAO.selectGoodListByName(length, page, keyword);
+			goodCount=GoodDAO.selectGoodListByNameCount(keyword);
+		}
+
+		PAGE_LINK_TAG=PageUtil.generate(page, goodCount, length, 
+				"/moviesystem/searchGoodList.action?keyword="+keyword);
+		return "success";
+
+	}
+	
+	public String viewManageGoodList() throws Exception {
+		if(page==0){
+			page=1;
 		}
 		int length=8;
 		
-		List<Good>goodList=GoodDAO.selectGoodList(length,page);
+		GOOD_LIST=GoodDAO.selectGoodList(length,page);
 		int goodCount=GoodDAO.selectGoodListCount();
-		request.setAttribute("GOOD_LIST", goodList);
 		
-		String pageLinkTag=PageUtil.generate(page, goodCount, length, "/moviesystem/GoodService?method=viewGoodList");
-		System.out.println(pageLinkTag);
+		PAGE_LINK_TAG=PageUtil.generate(page, goodCount, length, 
+				"/moviesystem/viewManageGoodList.action");
 		
-		request.setAttribute("PAGE_LINK_TAG", pageLinkTag);
+		return "success";
+	}
 		
-		RequestDispatcher rd=request.getRequestDispatcher("/good/viewGoodList.jsp");
-		rd.forward(request, response);
+		/**
+		 * 상품 등록 폼
+		 * 
+		 * @param request
+		 * @param response
+		 * @throws IOException 
+		 * @throws ServletException 
+		 */
+		public String addGoodForm() throws Exception {
+			return "success";
+		}
+	
+		/**
+		 * 상품 등록
+		 * 
+		 * @param request
+		 * @param response
+		 */
+		public String addGood() throws Exception{
+			gnum=GoodDAO.insertGood(good);
+			return "success";
+		}
+		
+		public String deleteGood()throws Exception{
+			
+			GoodDAO.deleteGood(gnum);
+			return "success";
+		}
+		
+		public String editGoodForm()throws Exception {
+			
+			GOOD=GoodDAO.selectGood(gnum);
+			return "success";	
+		}
+
+	public String editGood()throws Exception  {
+		GoodDAO.editGood(good);
+		return "success";	
 	}
 
-	/**
-	 * 선택한 상품이 보여지는 기능
-	 * 
-	 * @param request
-	 * @param response
-	 * @throws IOException 
-	 * @throws ServletException 
-	 */
-	public void viewGood(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		/* default generated stub */;
-		String gnum=request.getParameter("gnum");
-		Good good=GoodDAO.selectGood(gnum);
-		request.setAttribute("GOOD", good);
-		RequestDispatcher rd=request.getRequestDispatcher("/good/viewGood.jsp");
-		rd.forward(request, response);
-	}
-
-	/**
-	 * 상품 등록 폼
-	 * 
-	 * @param request
-	 * @param response
-	 * @throws IOException 
-	 * @throws ServletException 
-	 */
-	public void addGoodForm(HttpServletRequest request,	
-			HttpServletResponse response) throws ServletException, IOException {
-		
-		RequestDispatcher rd=request.getRequestDispatcher("/good/addGood.jsp");
-		rd.forward(request, response);
-	}
-
-	/**
-	 * 상품 등록
-	 * 
-	 * @param request
-	 * @param response
-	 */
-	public void addGood(HttpServletRequest request, 
-			HttpServletResponse response) throws ServletException, IOException{
-		
-		String gname=request.getParameter("gname");
-		long gprice=Long.parseLong(request.getParameter("gprice"));
-		String detail=request.getParameter("detail");
-		String photo=request.getParameter("photo");
-		
-		Good good =new Good();
-		good.setGname(gname);
-		good.setGprice(gprice);
-		good.setDetail(detail);
-		good.setPhoto(photo+".jpg");
-		
-		GoodDAO.insertGood(good);
-		
-		RequestDispatcher rd=request.getRequestDispatcher("/GoodService?method=viewManageGoodList");
-		rd.forward(request, response);
-		
-	}
 }

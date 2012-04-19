@@ -24,7 +24,7 @@ public class GoodDAO {
 		}
 	private static SqlSessionFactory sqlMapper =new SqlSessionFactoryBuilder().build(sqlReader);
 
-	public static void insertGood(Good good) {
+	public static String insertGood(Good good) {
 		
 		SqlSession session=null;
 		try{
@@ -33,6 +33,7 @@ public class GoodDAO {
 		}finally{
 			session.close();
 		}
+		return good.getGnum();
 	}
 	
 	public static void editGood(Good good) {
