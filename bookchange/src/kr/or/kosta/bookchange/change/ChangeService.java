@@ -2,85 +2,231 @@ package kr.or.kosta.bookchange.change;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import kr.or.kosta.bookchange.board.Board;
 import kr.or.kosta.bookchange.board.BoardDAO;
 import kr.or.kosta.bookchange.member.Member;
 import kr.or.kosta.util.PageUtil;
 
-public class ChangeService extends HttpServlet {
+import org.apache.struts2.interceptor.ServletRequestAware;
+import org.apache.struts2.interceptor.ServletResponseAware;
+import org.apache.struts2.interceptor.SessionAware;
+import org.apache.struts2.util.ServletContextAware;
+
+import com.opensymphony.xwork2.ModelDriven;
+
+public class ChangeService implements ModelDriven,ServletContextAware,
+ServletRequestAware,ServletResponseAware,SessionAware {
 	
 	private static final long serialVersionUID = 1L;
+	private ServletContext servletContext;
+	private HttpServletRequest request;
+	private HttpServletResponse response;
+	private Map session;
 	
+	private Change change=new Change();
+	private Member member;
+	private List<Change>AGREE_CHANGE_LIST;
+	private List<Change>DEMAND_CHANGE_LIST;
+	private List<Change>MATCH_LIST;
+	
+	private int page;
+	private String email;
+	private String PAGE_LINK_TAG;
+	private String demandBoardNo;
+	private String result;
+	
+	
+	public String getResult() {
+		return result;
+	}
+
+	public void setResult(String result) {
+		this.result = result;
+	}
+
+	public String getDemandBoardNo() {
+		return demandBoardNo;
+	}
+
+	public void setDemandBoardNo(String demandBoardNo) {
+		this.demandBoardNo = demandBoardNo;
+	}
+
+	public List<Change> getMATCH_LIST() {
+		return MATCH_LIST;
+	}
+
+	public void setMATCH_LIST(List<Change> mATCH_LIST) {
+		MATCH_LIST = mATCH_LIST;
+	}
+
+	public Member getMember() {
+		return member;
+	}
+
+	public void setMember(Member member) {
+		this.member = member;
+	}
+
+	public List<Change> getDEMAND_CHANGE_LIST() {
+		return DEMAND_CHANGE_LIST;
+	}
+
+	public void setDEMAND_CHANGE_LIST(List<Change> dEMAND_CHANGE_LIST) {
+		DEMAND_CHANGE_LIST = dEMAND_CHANGE_LIST;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public Change getChange() {
+		return change;
+	}
+
+	public void setChange(Change change) {
+		this.change = change;
+	}
+
+	public List<Change> getAGREE_CHANGE_LIST() {
+		return AGREE_CHANGE_LIST;
+	}
+
+	public void setAGREE_CHANGE_LIST(List<Change> aGREE_CHANGE_LIST) {
+		AGREE_CHANGE_LIST = aGREE_CHANGE_LIST;
+	}
+
+	public int getPage() {
+		return page;
+	}
+
+	public void setPage(int page) {
+		this.page = page;
+	}
+
+	public String getPAGE_LINK_TAG() {
+		return PAGE_LINK_TAG;
+	}
+
+	public void setPAGE_LINK_TAG(String pAGE_LINK_TAG) {
+		PAGE_LINK_TAG = pAGE_LINK_TAG;
+	}
+
 	public ChangeService() {
 	        super();
 	}
-
-	protected void doGet(HttpServletRequest request, 
-			HttpServletResponse response) throws ServletException, IOException {
-		doPost(request,response);
+	
+	public void setSession(Map<String, Object> session) {
+		this.session=session;
+	}
+	public void setServletResponse(HttpServletResponse response) {
+		this.response=response;
+	}
+	public void setServletRequest(HttpServletRequest request) {
+		this.request=request;
+	}
+	public void setServletContext(ServletContext context) {
+		this.servletContext=context;
 	}
 
-	protected void doPost(HttpServletRequest request, 
-			HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");
-		String method=request.getParameter("method");
+	public Object getModel() {
+		return change;
+	}
+	/**========================= Method=============================== **/	
+	public String acceptChangeList() throws Exception{
+		int length=10;
+		if(page==0){
+			page=1;
+		}
+		member=(Member)session.get("LOGIN_EMAIL");
+		email=member.getEmail();
+		AGREE_CHANGE_LIST=ChangeDAO.selectChangeMyboardList(length, page, email);
+		int agreeChangeCount=ChangeDAO.selectChangeMyboardCount(email);
+		PAGE_LINK_TAG=PageUtil.generate(page, agreeChangeCount, length, 
+				"/bookchange/acceptChangeList.action");
+		return "success";
+	}
+
+	public String requestChangeList() throws Exception{
+		int length=10;
+		if(page==0){
+			page=1;
+		}
+		member=(Member)session.get("LOGIN_EMAIL");
+		email=member.getEmail();
+		DEMAND_CHANGE_LIST=ChangeDAO.selectChangeRequestList(length, page, email);
+		int demandChangeCount=ChangeDAO.selectChangeRequestCount(email);
+		PAGE_LINK_TAG=PageUtil.generate(page, demandChangeCount, length, 
+				"/bookchange/requestChangeList.action");
+		return "success";
+	}
+	
+	public String matchChangeList() throws Exception{
+		int length=10;
+		if(page==0){
+			page=1;
+		}
+		member=(Member)session.get("LOGIN_EMAIL");
+		email=member.getEmail();
+		MATCH_LIST=ChangeDAO.selectMatchList(length, page, email);
+		int demandChangeCount=ChangeDAO.selectChangeRequestCount(email);
+		PAGE_LINK_TAG=PageUtil.generate(page, demandChangeCount, length, 
+				"/bookchange/matchChangeList.action");
+		return "success";
+	}
+	
+	public String matchChangeResultList() throws Exception{
+		int length=10;
+		if(page==0){
+			page=1;
+		}
+		member=(Member)session.get("LOGIN_EMAIL");
+		email=member.getEmail();	
+		MATCH_LIST=ChangeDAO.selectMatchResultList(length, page, email);
+		int matchChangeCount=ChangeDAO.selectChangeRequestCount(email);
+		PAGE_LINK_TAG=PageUtil.generate(page, matchChangeCount, length, 
+				"/bookchange/matchChangeList.action");
+		return "success";
+	}
+
+	public String addChange() throws Exception {
+		ChangeDAO.insertChange(change);
+		request.setAttribute("ERROR","교환 신청되었습니다.");
+		return "success";
+	}
+	
+	public String cancelChange() throws Exception{
+		demandBoardNo=request.getParameter("demandBoardNo");
+		ChangeDAO.cancelChange(Integer.parseInt(demandBoardNo));
+		request.setAttribute("ERROR","교환요청이 취소되었습니다.");
+		return "success";
+	}
+	
+	public String matchChange() throws Exception {
+		result=request.getParameter("conditionResult");
 		
-		if("viewChange".equals(method)){
-			viewChange(request,response);
-		}else if("addChange".equals(method)){
-			addChange(request,response);
-		}else if("acceptChangeList".equals(method)){
-			acceptChangeList(request,response);
-		}else if("requestChangeList".equals(method)){
-			requestChangeList(request,response);
-		}else if("matchChange".equals(method)){
-			matchChange(request,response);
-		}else if("cancelChange".equals(method)){
-			cancelChange(response,request);
-		}else if("matchChangeList".equals(method)){
-			matchChangeList(request,response);
-		}else if("completeChange".equals(method)){
-			completeChange(request,response);
-		}else if("matchChangeResultList".equals(method)){
-			matchChangeResultList(request,response);
+		if(result.equals("2") || result.equals("3")){
+			request.setAttribute("ERROR","이미 다른 분과 교환중이므로 교환할 수 없습니다 :)");
+			return "fail";
+		}else{		
+		ChangeDAO.matchChange(change);
+		request.setAttribute("ERROR","교환신청을 수락하셨습니다.");
+		return "success";
 		}
 	}
 	
-	
-
-	private void matchChangeResultList(HttpServletRequest request,
-			HttpServletResponse response) throws IOException,ServletException{
-			HttpSession session=request.getSession();
-			Member member=(Member)session.getAttribute("LOGIN_EMAIL");
-			int page=1;
-			int length=10;
-			if(request.getParameter("page")!=null){
-				page=Integer.parseInt(request.getParameter("page"));
-			}
-			if(member==null){
-				RequestDispatcher rd=request.getRequestDispatcher("");
-				rd.forward(request, response);
-				return;
-			}
-			String memberEmail=member.getEmail();
-			List<Change>matchList=ChangeDAO.selectMatchResultList(length, page, memberEmail);
-			session.setAttribute("MATCH_LIST", matchList);
-			int demandChangeCount=ChangeDAO.selectChangeRequestCount(memberEmail);
-			String pageLinkTag=PageUtil.generate(page, demandChangeCount, length, "/bookchange/ChangeService?method=matchChangeList");
-			request.setAttribute("PAGE_LINK_TAG", pageLinkTag);
-			RequestDispatcher rd=request.getRequestDispatcher("/change/matchChangeResultList.jsp");
-			rd.forward(request, response);
-		
-	}
-
 	private void completeChange(HttpServletRequest request,
 			HttpServletResponse response) throws IOException,ServletException {
 		String BoardNo=request.getParameter("BoardNo");
@@ -94,149 +240,12 @@ public class ChangeService extends HttpServlet {
 		
 	}
 
-	private void matchChangeList(HttpServletRequest request,
-			HttpServletResponse response) throws IOException,ServletException{
-		HttpSession session=request.getSession();
-		Member member=(Member)session.getAttribute("LOGIN_EMAIL");
-		int page=1;
-		int length=10;
-		if(request.getParameter("page")!=null){
-			page=Integer.parseInt(request.getParameter("page"));
-		}
-		if(member==null){
-			RequestDispatcher rd=request.getRequestDispatcher("");
-			rd.forward(request, response);
-			return;
-		}
-		String memberEmail=member.getEmail();
-		List<Change>matchList=ChangeDAO.selectMatchList(length, page, memberEmail);
-		session.setAttribute("MATCH_LIST", matchList);
-		int demandChangeCount=ChangeDAO.selectChangeRequestCount(memberEmail);
-		String pageLinkTag=PageUtil.generate(page, demandChangeCount, length, "/bookchange/ChangeService?method=matchChangeList");
-		request.setAttribute("PAGE_LINK_TAG", pageLinkTag);
-		RequestDispatcher rd=request.getRequestDispatcher("/change/matchChangeList.jsp");
-		rd.forward(request, response);
-	}
-
-	private void cancelChange(HttpServletResponse response,
-			HttpServletRequest request) throws ServletException,IOException{
-		String demandBoardNo=request.getParameter("demandBoardNo");
-		
-		ChangeDAO.cancelChange(Integer.parseInt(demandBoardNo));
-		
-		request.setAttribute("ERROR","교환요청이 취소되었습니다.");
-		RequestDispatcher rd=request.getRequestDispatcher("/ChangeService?method=requestChangeList");
-		rd.forward(request, response);
-	}
-
-	private void matchChange(HttpServletRequest request,
-			HttpServletResponse response) throws IOException,ServletException {
-		String agreeBoardNo=request.getParameter("agreeBoardNo");
-		String demandBoardNo=request.getParameter("demandBoardNo");
-		
-		String conditionResult=request.getParameter("conditionResult");
-		
-		if(conditionResult.equals("2") || conditionResult.equals("3")){
-			request.setAttribute("ERROR","이미 다른 분과 교환중이므로 교환할 수 없습니다 :)");
-			RequestDispatcher rd=request.getRequestDispatcher("/ChangeService?method=matchChangeList");
-			rd.forward(request, response);
-		}else{		
-		Board agreeBoard=new Board();
-		agreeBoard.setBoardNo(Integer.parseInt(agreeBoardNo));
-		
-		Board demandBoard=new Board();
-		demandBoard.setBoardNo(Integer.parseInt(demandBoardNo));
-		
-		Change change=new Change();
-		change.setAgreeBoard(agreeBoard);
-		change.setDemandBoard(demandBoard);
-		
-		ChangeDAO.matchChange(change);
-		
-		request.setAttribute("ERROR","교환신청을 수락하셨습니다.");
-		RequestDispatcher rd=request.getRequestDispatcher("/ChangeService?method=matchChangeList");
-		rd.forward(request, response);
-		}
-	}
-
-	private void requestChangeList(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException,IOException{
-		HttpSession session=request.getSession();
-		Member member=(Member)session.getAttribute("LOGIN_EMAIL");
-		int page=1;
-		int length=10;
-		if(request.getParameter("page")!=null){
-			page=Integer.parseInt(request.getParameter("page"));
-		}
-		if(member==null){
-			RequestDispatcher rd=request.getRequestDispatcher("");
-			rd.forward(request, response);
-			return;
-		}
-		String memberEmail=member.getEmail();
-		List<Change>demandList=ChangeDAO.selectChangeRequestList(length, page, memberEmail);
-		session.setAttribute("DEMAND_CHANGE_LIST", demandList);
-		int demandChangeCount=ChangeDAO.selectChangeRequestCount(memberEmail);
-		String pageLinkTag=PageUtil.generate(page, demandChangeCount, length, "/bookchange/ChangeService?method=requestChangeList");
-		request.setAttribute("PAGE_LINK_TAG", pageLinkTag);
-		RequestDispatcher rd=request.getRequestDispatcher("/change/requestChangeList.jsp");
-		rd.forward(request, response);
-	}
-
-	private void acceptChangeList(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException,IOException{
-		HttpSession session=request.getSession();
-		Member member=(Member)session.getAttribute("LOGIN_EMAIL");
-		int page=1;
-		int length=10;
-		if(request.getParameter("page")!=null){
-			page=Integer.parseInt(request.getParameter("page"));
-		}
-		if(member==null){
-			RequestDispatcher rd=request.getRequestDispatcher("");
-			rd.forward(request, response);
-			return;
-		}
-		String memberEmail=member.getEmail();
-		List<Change>agreeList=ChangeDAO.selectChangeMyboardList(length, page, memberEmail);
-		session.setAttribute("AGREE_CHANGE_LIST", agreeList);
-		int agreeChangeCount=ChangeDAO.selectChangeMyboardCount(memberEmail);
-		String pageLinkTag=PageUtil.generate(page, agreeChangeCount, length, "/bookchange/ChangeService?method=acceptChangeList");
-		request.setAttribute("PAGE_LINK_TAG", pageLinkTag);
-		RequestDispatcher rd=request.getRequestDispatcher("/change/acceptChangeList.jsp");
-		rd.forward(request, response);
-	}
-
-	private void addChange(HttpServletRequest request,
-			HttpServletResponse response) throws IOException,ServletException {
-		String agreeBoardNo=request.getParameter("agreeBoardNo");
-		String demandBoardNo=request.getParameter("demandBoardNo");
-		
-		Board agreeBoard=new Board();
-		agreeBoard.setBoardNo(Integer.parseInt(agreeBoardNo));
-		
-		Board demandBoard=new Board();
-		demandBoard.setBoardNo(Integer.parseInt(demandBoardNo));
-		
-		Change change=new Change();
-		change.setAgreeBoard(agreeBoard);
-		change.setDemandBoard(demandBoard);
-		
-		ChangeDAO.insertChange(change);
-		
-		request.setAttribute("ERROR","교환 신청되었습니다.");
-		RequestDispatcher rd=request.getRequestDispatcher("/ChangeService?method=requestChangeList");
-		rd.forward(request, response);
-		
-	}
-	
-	private void viewChange(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException,IOException{
-		String num=request.getParameter("boardNo");
-		Board board=BoardDAO.selectBoard(num);
-		request.setAttribute("CHANGEBOARD", board);
-		RequestDispatcher rd=request.getRequestDispatcher("/board/viewBoard.jsp");
-		rd.forward(request, response);
-	}
-
+//	private void viewChange(HttpServletRequest request,
+//		HttpServletResponse response) throws ServletException,IOException{
+//		String num=request.getParameter("boardNo");
+//		Board board=BoardDAO.selectBoard(num);
+//		request.setAttribute("CHANGEBOARD", board);
+//		RequestDispatcher rd=request.getRequestDispatcher("/board/viewBoard.jsp");
+//		rd.forward(request, response);
+//	}
 }
