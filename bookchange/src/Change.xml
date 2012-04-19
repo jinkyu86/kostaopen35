@@ -5,12 +5,16 @@
 
 <mapper namespace="Change">
 <parameterMap type="kr.or.kosta.bookchange.change.Change" id="insertChange">
-   	<parameter property="agreeBoard.boardNo"/>
+   	<parameter property="changeNo"/>
+	<parameter property="agreeBoard.boardNo"/>
 	<parameter property="demandBoard.boardNo"/>
 </parameterMap>
 <insert id="insertChange" parameterMap="insertChange">
-     INSERT  INTO   tb_change(change_no, change_date, condition_result, agree_board_no, demand_board_no) 
-	 VALUES (change_seq.nextval,sysdate,1,?,?)
+	<selectKey keyProperty="changeNo" resultType="java.lang.Integer" order="BEFORE">
+		SELECT change_seq.nextval from dual
+	</selectKey>
+	 INSERT  INTO   tb_change(change_no, change_date, condition_result, agree_board_no, demand_board_no) 
+	 VALUES (?,sysdate,1,?,?)
 </insert>
 <parameterMap type="kr.or.kosta.bookchange.change.Change" id="insertUpdateBoard">
 	<parameter property="demandBoard.boardNo"/>
@@ -22,12 +26,16 @@
 
 
 <parameterMap type="kr.or.kosta.bookchange.change.Change" id="insertMatch">
+	<parameter property="changeNo"/>
    	<parameter property="demandBoard.boardNo"/>
 	<parameter property="agreeBoard.boardNo"/>
 </parameterMap>
 <insert id="insertMatch" parameterMap="insertMatch">
+	<selectKey keyProperty="changeNo" resultType="java.lang.Integer" order="BEFORE">
+		SELECT change_seq.nextval from dual
+	</selectKey>
      INSERT INTO tb_change(change_no, change_date, condition_result, agree_board_no, demand_board_no) 
-	 VALUES(change_seq.nextval,sysdate,2,?,?)
+	 VALUES(?,sysdate,2,?,?)
 </insert>
 <parameterMap type="kr.or.kosta.bookchange.change.Change" id="matchUpdateChange">
 	<parameter property="agreeBoard.boardNo"/>
