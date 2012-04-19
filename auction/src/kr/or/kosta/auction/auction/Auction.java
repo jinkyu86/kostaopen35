@@ -56,11 +56,11 @@ public class Auction {
 		this.good = good;
 	}
 
-	public String getaNum() {
+	public String getANum() {
 		return aNum;
 	}
 
-	public void setaNum(String aNum) {
+	public void setANum(String aNum) {
 		this.aNum = aNum;
 	}
 
