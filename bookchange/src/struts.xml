@@ -14,21 +14,41 @@
 	<constant name="struts.enable.DynamicMethodInvocation" value="true"/>
 	<constant name="struts.devMode" value="true"/>
 	<package name="default" namespace="/" extends="struts-default">
-		
-		<action name="login" class="kr.or.kosta.student.LoginService" method="login">
-			<!-- 파라메터 이름과 속성의 이름이 다를때 어떤 이름의 파라메터를 어떤 이름의 속성에 대입할지 설정-->
+		<action name="viewBoardList" class="kr.or.kosta.bookchange.board.BoardService" method="viewBoardList">
+			<result name="success">/board/viewBoardList.jsp</result>
+		</action>
+		<action name="viewBoard" class="kr.or.kosta.bookchange.board.BoardService" method="viewBoard">
 			<param name="aliases">
-				#{'deptno':'student.department.deptno'}
+				#{'boardNo':'boardNo'}
 			</param>
-			<result name="success">/student/welcome.jsp</result>
+			<result name="success">/board/viewBoard.jsp</result>
 		</action>
-		
-		<action name="welcome" class="kr.or.kosta.student.LoginService" method="welcome">
-			<!-- name="success" Action의 리턴값. Action이 success를 리턴했을때 이동할 페이지 설정-->
-			<result name="success">/student/welcome.jsp</result>
-			<!-- Action이 login 리턴시 이동할 페이지-->
-			<result name="login">/student/login.jsp</result>
+		<action name="boardListAtMain" class="kr.or.kosta.bookchange.board.BoardService" method="boardListAtMain">
+			<result name="success">/board/boardListAtMain.jsp</result>
 		</action>
-		
+		<action name="addBoardForm" class="kr.or.kosta.bookchange.board.BoardService" method="addBoardForm">
+			<result name="fail" type="chain">boardListAtMain</result>
+			<result name="success">/board/addBoard.jsp</result>
+		</action>
+		<action name="editBoardForm" class="kr.or.kosta.bookchange.board.BoardService" method="editBoardForm">
+			<param name="aliases">
+				#{'boardNo':'boardNo','board.boardNo'}
+			</param>
+			<result name="success">/board/editBoard.jsp</result>
+		</action>
+		<action name="searchBoardListWhenAdd" class="kr.or.kosta.bookchange.board.BoardService" method="searchBoardListWhenAdd">
+			<param name="aliases">
+				#{'boardNo':'boardNo','board.boardNo'}
+			</param>
+			<result name="fail" type="chain">viewBoard</result>
+			<result name="success">/board/viewBoardListWhenAdd.jsp</result>
+		</action>
+		<action name="viewBoardWhenCancel" class="kr.or.kosta.bookchange.board.BoardService" method="viewBoardWhenCancel">
+			<param name="aliases">
+				#{'boardNo':'boardNo','board.boardNo',
+				  'agreeBoardNo':'AGREE_BOARD_NO'}
+			</param>
+			<result name="success">/board/viewBoardWhenCancel.jsp</result>
+		</action>
 	</package>
 </struts>

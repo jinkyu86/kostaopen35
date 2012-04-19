@@ -108,7 +108,7 @@ public class MemberService extends HttpServlet {
 		MemberDAO.insertMember(member);
 		
 		request.setAttribute("ERROR", "회원가입이 완료되었습니다.");
-		RequestDispatcher rd=request.getRequestDispatcher("/BoardService?method=boardListAtMain");
+		RequestDispatcher rd=request.getRequestDispatcher("/boardListAtMain.action");
 		rd.forward(request, response);
 		
 	}
@@ -229,7 +229,7 @@ public class MemberService extends HttpServlet {
 			}
 		
 		}
-		RequestDispatcher rd=request.getRequestDispatcher("/BoardService?method=boardListAtMain");
+		RequestDispatcher rd=request.getRequestDispatcher("/left.jsp");
 		rd.forward(request, response);
 	
 	}
@@ -258,7 +258,7 @@ public class MemberService extends HttpServlet {
 		HttpSession session=request.getSession();
 		session.invalidate();//세션 강제 종료
 		request.setAttribute("ERROR", "로그아웃 되었습니다.");
-		RequestDispatcher rd=request.getRequestDispatcher("/BoardService?method=boardListAtMain");
+		RequestDispatcher rd=request.getRequestDispatcher("/index.jsp");
 		rd.forward(request, response);
 		
 	}

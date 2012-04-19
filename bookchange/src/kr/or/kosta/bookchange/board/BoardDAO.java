@@ -387,7 +387,7 @@ public class BoardDAO {
 		Board board=null;
 		try{
 			session=sqlMapper.openSession(true);
-			board=session.selectOne("selectBoard",boardNo);
+			board=session.selectOne("Board.selectBoard",boardNo);
 		}finally{
 			session.close();
 		}

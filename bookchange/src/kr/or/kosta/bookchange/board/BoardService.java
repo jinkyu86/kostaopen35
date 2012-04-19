@@ -3,65 +3,201 @@ package kr.or.kosta.bookchange.board;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.struts2.interceptor.ServletRequestAware;
+import org.apache.struts2.interceptor.ServletResponseAware;
+import org.apache.struts2.interceptor.SessionAware;
+import org.apache.struts2.util.ServletContextAware;
+
+import com.opensymphony.xwork2.ModelDriven;
+
 import kr.or.kosta.bookchange.change.Condition;
 import kr.or.kosta.bookchange.member.Member;
 import kr.or.kosta.bookchange.member.MemberDAO;
 import kr.or.kosta.util.PageUtil;
 
-public class BoardService extends HttpServlet { 
-	
+public class BoardService implements ModelDriven, ServletContextAware, ServletRequestAware, ServletResponseAware, SessionAware { 
 	private static final long serialVersionUID = 1L;
+	private Board board=new Board();
+	private Member LOGIN_EMAIL;
+	private Board BOARD;
+	private int page;
+	private int qapage;
+	private String boardNo;
+	private List<Board> BOARD_LIST;
+	private List<Qa> QA_LIST;
+	private List<Deal> DEAL_LIST;
+	private int QA_COUNT;
+	private List<Category> CATEGORY_LIST;
+	private String PAGE_LINK_TAG;
+	private String ERROR;
+	private ServletContext servletContext;
+	private HttpServletRequest request;
+	private HttpServletResponse response;
+	private Map session;	
+	private String keyword;
+	private String AGREE_BOARD_NO;
 	
-	 public BoardService() {
-	        super();
-	       
-	    }
-
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doPost(request,response);
+	
+	
+	public String getAGREE_BOARD_NO() {
+		return AGREE_BOARD_NO;
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("utf-8");
-		String method=request.getParameter("method");
-		if(method==null){
-			method="boardListAtMain";
-		}
-		if("viewBoardList".equals(method)){
-			viewBoardList(request,response);
-		}else if("viewBoard".equals(method)){
-			viewBoard(request,response);
-		}else if("editBoardForm".equals(method)){
-			editBoardForm(request,response);
-		}else if("editBoard".equals(method)){
-			editBoard(request,response);
-		}else if("removeBoard".equals(method)){
-			removeBoard(request,response);
-		}else if("addBoardForm".equals(method)){
-			addBoardForm(request,response);
-		}else if("addBoard".equals(method)){
-			addBoard(request,response);
-		}else if("searchBoardList".equals(method)){
-			searchBoardList(request,response);
-		}else if("searchBoardListWhenAdd".equals(method)){
-			searchBoardListWhenAdd(request,response);
-		}else if("viewBoardWhenAgree".equals(method)){
-			viewBoardWhenAgree(request,response);
-		}else if("viewBoardWhenCancel".equals(method)){
-			viewBoardWhenCancel(request,response);
-		}else if("boardListAtMain".equals(method)){
-			boardListAtMain(request,response);
-		}else if("viewMemberInfo".equals(method)){
-			viewMemberInfo(request,response);
-		}
+	public void setAGREE_BOARD_NO(String aGREE_BOARD_NO) {
+		AGREE_BOARD_NO = aGREE_BOARD_NO;
+	}
+
+	public String getKeyword() {
+		return keyword;
+	}
+
+	public void setKeyword(String keyword) {
+		this.keyword = keyword;
+	}
+
+	public Member getLOGIN_EMAIL() {
+		return LOGIN_EMAIL;
+	}
+
+	public void setLOGIN_EMAIL(Member lOGIN_EMAIL) {
+		LOGIN_EMAIL = lOGIN_EMAIL;
+	}
+
+	@Override
+	public void setSession(Map<String, Object> session) {
+		this.session=session;
+		
+	}
+
+	@Override
+	public void setServletResponse(HttpServletResponse response) {
+		this.response=response;
+		
+	}
+
+	@Override
+	public void setServletRequest(HttpServletRequest request) {
+		this.request=request;
+		
+	}
+
+	@Override
+	public void setServletContext(ServletContext context) {
+		this.servletContext=context;
+		
+	}
+
+	public String getERROR() {
+		return ERROR;
+	}
+
+	public void setERROR(String eRROR) {
+		ERROR = eRROR;
+	}
+
+	public List<Deal> getDEAL_LIST() {
+		return DEAL_LIST;
+	}
+
+	public void setDEAL_LIST(List<Deal> dEAL_LIST) {
+		DEAL_LIST = dEAL_LIST;
+	}
+
+	public int getQapage() {
+		return qapage;
+	}
+
+	public void setQapage(int qapage) {
+		this.qapage = qapage;
+	}
+
+	public Board getBOARD() {
+		return BOARD;
+	}
+
+	public void setBOARD(Board bOARD) {
+		BOARD = bOARD;
+	}
+
+	public List<Qa> getQA_LIST() {
+		return QA_LIST;
+	}
+
+	public void setQA_LIST(List<Qa> qA_LIST) {
+		QA_LIST = qA_LIST;
+	}
+
+	public int getQA_COUNT() {
+		return QA_COUNT;
+	}
+
+	public void setQA_COUNT(int qA_COUNT) {
+		QA_COUNT = qA_COUNT;
+	}
+
+	public String getBoardNo() {
+		return boardNo;
+	}
+
+	public void setBoardNo(String boardNo) {
+		this.boardNo = boardNo;
+	}
+
+	public List<Board> getBOARD_LIST() {
+		return BOARD_LIST;
+	}
+
+	public void setBOARD_LIST(List<Board> bOARD_LIST) {
+		BOARD_LIST = bOARD_LIST;
+	}
+
+	public List<Category> getCATEGORY_LIST() {
+		return CATEGORY_LIST;
+	}
+
+	public void setCATEGORY_LIST(List<Category> cATEGORY_LIST) {
+		CATEGORY_LIST = cATEGORY_LIST;
+	}
+
+	public String getPAGE_LINK_TAG() {
+		return PAGE_LINK_TAG;
+	}
+
+	public void setPAGE_LINK_TAG(String pAGE_LINK_TAG) {
+		PAGE_LINK_TAG = pAGE_LINK_TAG;
+	}
+
+	@Override
+	public Object getModel() {
+		return board;
+	}
+	
+	public Board getBoard() {
+		return board;
+	}
+
+
+	public void setBoard(Board board) {
+		this.board = board;
+	}
+	
+	
+	public int getPage() {
+		return page;
+	}
+
+	public void setPage(int page) {
+		this.page = page;
 	}
 
 	private void viewMemberInfo(HttpServletRequest request,
@@ -79,33 +215,23 @@ public class BoardService extends HttpServlet {
 		
 	}
 
-	private void boardListAtMain(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	public String boardListAtMain() throws Exception {
 		int page=1;
-		
-		if(request.getParameter("page")!=null){
-			page=Integer.parseInt(request.getParameter("page"));
-		}
 		
 		int length=8;
 		
-		List<Board> boardList=BoardDAO.selectBoardList(length, page);
-		request.setCharacterEncoding("utf-8");
-		request.setAttribute("BOARD_LIST",boardList);
+		BOARD_LIST=BoardDAO.selectBoardList(length, page);
 				
 		int boardCount=BoardDAO.selectBoardCount();
 		
-		String pageLinkTag=PageUtil.generate(page, boardCount, length, "/bookchange/BoardService?" +
-				"method=viewBoardList");
-		request.setAttribute("PAGE_LINK_TAG",pageLinkTag);
+		PAGE_LINK_TAG=PageUtil.generate(page, boardCount, length, "/bookchange/viewBoardList.action");
 		
-		RequestDispatcher rd=request.getRequestDispatcher("/main.jsp");
-		rd.forward(request, response);
+		return "success";
 	}
 
 	/**
 	 * 게시물 추가 */
-	public void addBoard(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public String addBoard() throws Exception {
 		String boardTitle=request.getParameter("boardTitle");
 		String boardWant=request.getParameter("boardWant");
 		String boardPhoto=request.getParameter("boardPhoto");
@@ -147,25 +273,19 @@ public class BoardService extends HttpServlet {
 
 	/**
 	 * 게시물 추가 창(물품등록 화면) */
-	public void addBoardForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session=request.getSession();
-		Member member=(Member) session.getAttribute("LOGIN_EMAIL");
-		if(member==null){
-			request.setCharacterEncoding("utf-8");
-			request.setAttribute("ERROR","로그인하시기 바랍니다.");
+	public String addBoardForm() throws Exception {
+		LOGIN_EMAIL=(Member)session.get("LOGIN_EMAIL");
+		
+		if(LOGIN_EMAIL==null){
+			ERROR="로그인하시기 바랍니다.";
 			
-			RequestDispatcher rd=request.getRequestDispatcher("/BoardService?method=boardListAtMain");
-			rd.forward(request, response);
+			return "fail";
 		}else{
 					
-		List<Category> categoryList=CategoryDAO.selectCategory();//카테고리 정보 조회
-		List<Deal> dealList=DealDAO.selectDeal();//거래방법 조회
-		
-		request.setAttribute("CATEGORY_LIST",categoryList);
-		request.setAttribute("DEAL_LIST",dealList);
-		
-		RequestDispatcher rd=request.getRequestDispatcher("/board/addBoard.jsp");
-		rd.forward(request, response);
+		CATEGORY_LIST=CategoryDAO.selectCategory();//카테고리 정보 조회
+		DEAL_LIST=DealDAO.selectDeal();//거래방법 조회
+
+		return "success";
 		}
 	}
 
@@ -213,20 +333,14 @@ public class BoardService extends HttpServlet {
 
 	/**
 	 * 게시물 수정 창 */
-	public void editBoardForm(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
-		String boardNo=request.getParameter("boardNo");
-		Board board=BoardDAO.selectBoard(boardNo);//수정할 게시물 정보 조회
+	public String editBoardForm() throws Exception {
+		
+		BOARD=BoardDAO.selectBoard(boardNo);//수정할 게시물 정보 조회
 			
-		List<Category> categoryList=CategoryDAO.selectCategory();//카테고리 정보 조회
-		List<Deal> dealList=DealDAO.selectDeal();//거래방법 조회
+		CATEGORY_LIST=CategoryDAO.selectCategory();//카테고리 정보 조회
+		DEAL_LIST=DealDAO.selectDeal();//거래방법 조회
 		
-		request.setAttribute("BOARD",board);
-		request.setAttribute("CATEGORY_LIST",categoryList);
-		request.setAttribute("DEAL_LIST",dealList);
-		
-		RequestDispatcher rd=request.getRequestDispatcher("/board/editBoard.jsp");
-		rd.forward(request, response);
-
+		return "success";
 	}
 
 	/**
@@ -252,70 +366,45 @@ public class BoardService extends HttpServlet {
 
 	/**
 	 * 게시물 보기	 */
-	public void viewBoard(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
-		String boardNo=request.getParameter("boardNo");
+	public String viewBoard() throws Exception {
+		BOARD=BoardDAO.selectBoard(boardNo);
 		
-		Board board=BoardDAO.selectBoard(boardNo);
-		
-		int qaCount=QaDAO.selectQaCount(boardNo);
+		QA_COUNT=QaDAO.selectQaCount(boardNo);
 		int length=10;
 		//여기부턴 댓글 리스트
-		int page;
-		if(qaCount%10==0){
-			page=qaCount/length;
+		
+		if(QA_COUNT%10==0){
+			qapage=QA_COUNT/length;
 		}else{
-			page=(qaCount/length)+1;
+			qapage=(QA_COUNT/length)+1;
 		}
 		
-		if(request.getParameter("page")!=null){
-			page=Integer.parseInt(request.getParameter("page"));
+		if(page!=0){
+			qapage=page;
 		}
 				
-		List<Qa> qaList=QaDAO.selectQaList(length, page, boardNo);
-		request.setCharacterEncoding("utf-8");
-		request.setAttribute("QA_LIST",qaList);
-				
-		//int qaCount=QaDAO.selectQaCount(boardNo);
+		QA_LIST=QaDAO.selectQaList(length, qapage, boardNo);
 		
-		String pageLinkTag=PageUtil.generate(page, qaCount, length, "/bookchange/BoardService?" +
-				"method=viewBoard&boardNo="+boardNo);
-		request.setAttribute("PAGE_LINK_TAG",pageLinkTag);
+		PAGE_LINK_TAG=PageUtil.generate(qapage, QA_COUNT, length, "/bookchange/viewBoard.action?boardNo="+boardNo);
 		//댓글 리스트 조회 완료
-		
-		request.setAttribute("BOARD",board);
-		request.setAttribute("QA_LIST",qaList);
-		request.setAttribute("QA_COUNT",qaCount);
-		
-		RequestDispatcher rd=request.getRequestDispatcher("/board/viewBoard.jsp");
-		rd.forward(request, response);
+		return "success";
 	}
 
 	/**	 * 게시물 전체 리스트 보기	  */
-	public void viewBoardList(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
-		int page=1;
-		
-		if(request.getParameter("page")!=null){
-			page=Integer.parseInt(request.getParameter("page"));
+	public String viewBoardList() throws Exception {
+
+		int length=10;		
+		if(page==0){
+			page=1;
 		}
 		
-		int length=10;
+		BOARD_LIST=BoardDAO.selectBoardList(length, page);				
+		CATEGORY_LIST=CategoryDAO.selectCategory();//카테고리 정보 조회
 		
-		List<Board> boardList=BoardDAO.selectBoardList(length, page);
-		request.setCharacterEncoding("utf-8");
-		request.setAttribute("BOARD_LIST",boardList);
+		int boardCount=BoardDAO.selectBoardCount();		
+		PAGE_LINK_TAG=PageUtil.generate(page, boardCount, length, "/bookchange/viewBoardList.action");
 		
-		List<Category> categoryList=CategoryDAO.selectCategory();//카테고리 정보 조회
-		
-		request.setAttribute("CATEGORY_LIST",categoryList);
-				
-		int boardCount=BoardDAO.selectBoardCount();
-		
-		String pageLinkTag=PageUtil.generate(page, boardCount, length, "/bookchange/BoardService?" +
-				"method=viewBoardList");
-		request.setAttribute("PAGE_LINK_TAG",pageLinkTag);
-		
-		RequestDispatcher rd=request.getRequestDispatcher("/board/viewBoardList.jsp");
-		rd.forward(request, response);
+		return "success";
 	}
 
 	/**	 * 게시물 검색	 */
@@ -388,20 +477,16 @@ public class BoardService extends HttpServlet {
 	}
 
 	/**	 * 게시물 검색(교환신청할때 자기 목록 뜨게하기)	 */
-	public void searchBoardListWhenAdd(HttpServletRequest request,	HttpServletResponse response) throws ServletException, IOException {
+	public String searchBoardListWhenAdd() throws Exception {
 		
 		//내가 원하는 물건 리턴
-		String boardNo=request.getParameter("boardNo");
-		Board board=BoardDAO.selectBoard(boardNo);
-		if(board.getCondition().getConditionResult()==2||board.getCondition().getConditionResult()==3){
-			request.setAttribute("ERROR","선택한 책은 이미 교환중이므로 신청할 수 없습니다 :)");
-			RequestDispatcher rd=request.getRequestDispatcher("/BoardService?method=viewBoard&boardNo="+boardNo);
-			rd.forward(request, response);
+		
+		BOARD=BoardDAO.selectBoard(boardNo);
+		if(BOARD.getCondition().getConditionResult()==2||BOARD.getCondition().getConditionResult()==3){
+			ERROR="선택한 책은 이미 교환중이므로 신청할 수 없습니다 :)";
+			return "fail";
 		}else{
-		request.setCharacterEncoding("utf-8");
-		request.setAttribute("BOARD", board);
-		
-		
+	
 		//내 물건 목록 리턴
 		int page=1;
 		
@@ -411,21 +496,15 @@ public class BoardService extends HttpServlet {
 		
 		int length=10;
 		
-		List<Board> boardList=null;
 		int boardCount=0;
 		
-		boardList=BoardDAO.selectBoardListbyEmailWhenAdd(length, page, request.getParameter("keyword"));
-		boardCount=BoardDAO.selectBoardEmailWhenAddCount(request.getParameter("keyword"));
+		BOARD_LIST=BoardDAO.selectBoardListbyEmailWhenAdd(length, page, keyword);
+		boardCount=BoardDAO.selectBoardEmailWhenAddCount(keyword);
 				
-		request.setCharacterEncoding("utf-8");
-		request.setAttribute("BOARD_LIST", boardList);
+		PAGE_LINK_TAG=PageUtil.generate(page, boardCount, length,
+				"/bookchange/searchBoardListWhenAdd.action?keyword="+keyword);
 		
-		String pageLinkTag=PageUtil.generate(page, boardCount, length,
-				"/bookchange/BoardService?method=searchBoardListWhenAdd&keyword="+request.getParameter("keyword"));
-		request.setAttribute("PAGE_LINK_TAG",pageLinkTag);
-		
-		RequestDispatcher rd=request.getRequestDispatcher("/board/viewBoardListWhenAdd.jsp");
-		rd.forward(request,response);
+		return "success";
 		}
 	}
 
@@ -466,36 +545,29 @@ public class BoardService extends HttpServlet {
 
 	/**
 	 * 게시물 보기 취소할때	 */
-	public void viewBoardWhenCancel(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
-		String boardNo=request.getParameter("boardNo");//상대방 번호
-		String agreeBoardNo=request.getParameter("agreeBoardNo");//내 번호
+	public String viewBoardWhenCancel() throws Exception {
 		
-		Board board=BoardDAO.selectBoard(boardNo);
+		BOARD=BoardDAO.selectBoard(boardNo);
 		
-		int qaCount=QaDAO.selectQaCount(boardNo);
+		QA_COUNT=QaDAO.selectQaCount(boardNo);
 		int length=10;
 		//여기부턴 댓글 리스트
-		int page=(qaCount/length)+1;
 		
-		if(request.getParameter("page")!=null){
-			page=Integer.parseInt(request.getParameter("page"));
+		if(QA_COUNT%10==0){
+			qapage=QA_COUNT/length;
+		}else{
+			qapage=(QA_COUNT/length)+1;
 		}
 		
-		List<Qa> qaList=QaDAO.selectQaList(length, page, boardNo);
-		request.setCharacterEncoding("utf-8");
-		request.setAttribute("QA_LIST",qaList);
-
-		String pageLinkTag=PageUtil.generate(page, qaCount, length, "/bookchange/BoardService?" +
-				"method=viewBoard&boardNo="+boardNo);
-		request.setAttribute("PAGE_LINK_TAG",pageLinkTag);
+		if(page!=0){
+			qapage=page;
+		}
+				
+		QA_LIST=QaDAO.selectQaList(length, qapage, boardNo);
+		
+		PAGE_LINK_TAG=PageUtil.generate(qapage, QA_COUNT, length, "/bookchange/viewBoard.action?boardNo="+boardNo);
 		//댓글 리스트 조회 완료
 		
-		request.setAttribute("BOARD",board);
-		request.setAttribute("QA_LIST",qaList);
-		request.setAttribute("AGREE_BOARD_NO",agreeBoardNo);
-		request.setAttribute("QA_COUNT",qaCount);
-		
-		RequestDispatcher rd=request.getRequestDispatcher("/board/viewBoardWhenCancel.jsp");
-		rd.forward(request, response);
+		return "success";
 	}
 }
