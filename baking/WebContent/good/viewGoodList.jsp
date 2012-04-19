@@ -6,6 +6,11 @@ pageEncoding="utf-8"%>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title></title>
+<script type="text/javascript">
+function addGood(){
+		location.href="/baking/addGoodForm.action";
+}
+</script>
 <link rel="stylesheet" href="/baking/styles.css" type="text/css" media="screen" />	
 <link rel="stylesheet" type="text/css" href="print.css" media="print" />
 <style type="text/css">
@@ -54,7 +59,8 @@ pageEncoding="utf-8"%>
 	<a href="/baking/viewDivisionGoodList.action?division=3">- 초콜릿</a>
 	<c:if test="${sessionScope.member.memberid=='ADMIN'}">
 		<center>
-		<a href="/baking/addGoodForm.action"><input type="button" value="상품등록"> </a>
+		<!-- <a href="/baking/addGoodForm.action"><input type="button" value="상품등록"></a> -->
+		<input type="button" value="상품등록" onclick="addGood()">
 		</center>
 	</c:if>
 <ul class="column">			        
