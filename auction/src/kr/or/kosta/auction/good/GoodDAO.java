@@ -34,7 +34,7 @@ public class GoodDAO {
 	/**
 	 * @param good
 	 */
-	public static void insertGood(Good good) {
+	public static String insertGood(Good good) {
 		SqlSession session=null;
 		try{
 			session=sqlMapper.openSession(true);
@@ -43,6 +43,8 @@ public class GoodDAO {
 		finally{
 			session.close();
 		}
+		
+		return good.getgNum();
 //		Connection con=null;
 //		PreparedStatement psmt=null;
 //		con=ConnectionUtil.getConnection();
@@ -133,7 +135,7 @@ public class GoodDAO {
 		Good good=null;
 		try{
 			session=sqlMapper.openSession(true);
-			good=session.selectOne("selectGood", gNum);
+			good=session.selectOne("Good.selectGood", gNum);
 		}
 		finally{
 			session.close();

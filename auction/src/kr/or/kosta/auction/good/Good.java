@@ -2,10 +2,10 @@ package kr.or.kosta.auction.good;
 
 public class Good {
 
-	private String gNum;//물품고유번호
-	private String gName;//물품의 이름
-	private String detail;//물품 상세설명
-	private String img;//물품의 이미지
+	private String gNum;
+	private String gName;
+	private String detail;
+	private String img;
 
 	public String getgNum() {
 		return gNum;
@@ -13,10 +13,22 @@ public class Good {
 	public void setgNum(String gNum) {
 		this.gNum = gNum;
 	}
+	public String getGnum() {
+		return gNum;
+	}
+	public void setGnum(String gNum) {
+		this.gNum = gNum;
+	}	
 	public String getgName() {
 		return gName;
 	}
 	public void setgName(String gName) {
+		this.gName = gName;
+	}
+	public String getGname() {
+		return gName;
+	}
+	public void setGname(String gName) {
 		this.gName = gName;
 	}
 	public String getDetail() {

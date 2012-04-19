@@ -12,9 +12,9 @@ public class GoodDAOTest {
 	@Test
 	public void testInsertGood() {
 		Good good=new Good();
-		good.setgNum("22");
-		good.setgName("±èÁø¼ö");
-		good.setDetail("È¦·Ñ·Ñ·Î·Ñ");
+		good.setgNum("49");
+		good.setgName("ddd");
+		good.setDetail("123124");
 		good.setImg("s1.jpg");
 		GoodDAO.insertGood(good);
 	}
