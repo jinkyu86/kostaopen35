@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+	"http://struts.apache.org/dtds/struts-2.0.dtd">
+
+
+<struts>
+	<constant name="struts.i18n.encoding"	value="euc-kr"/>
+	<constant name="struts.action.extension" value="action"/>
+	
+	<constant name="struts.enable.DynamicMethodInvocation" value="true"/>
+	<constant name="struts.devMode" value="true"/>
+
+	<package name="root" namespace="/" extends="struts-default">
+		<action name="viewRecipeList" class="kr.or.kosta.recipe.RecipeService" method="viewRecipeList">
+			<result name="success">/recipe/viewRecipeList.jsp</result>
+		</action>
+		
+		<action name="recipeRelativeGoodList" class="kr.or.kosta.recipe.RecipeService" method="recipeRelativeGoodList">
+			<result name="success">/recipe/recipeRelativeGoodList.jsp</result>
+		</action>
+		
+		<action name="viewRecipe" class="kr.or.kosta.recipe.RecipeService" method="viewRecipe">
+			<param name="aliases">
+				#{'recipeNum':'recipeNum'}
+			</param>
+			<result name="success">/recipe/viewRecipe.jsp</result>
+		</action>
+		
+		<action name="viewGood" class="kr.or.kosta.recipe.RecipeService" method="viewGood">
+			<param name="aliases">	
+			#{'goodNum':'goodNum'}
+			</param>
+			<result name="success" type="chain">viewGood</result>
+		</action>
+		
+		<action name="addRecipeForm" class="kr.or.kosta.recipe.RecipeService" method="addRecipeForm">
+			<result name="success">/recipe/addRecipe.jsp</result>
+		</action>
+		
+		<action name="addRecipe" class="kr.or.kosta.recipe.RecipeService" method="addRecipe">
+			<param name="aliases">
+			#{ 'recipeNum':'recipeNum',
+			   'recipeNum':'recipe.num',
+			   'division':'good_division.division'
+			  }	
+			 </param>
+			<result name="success" type="chain">viewRecipe</result>
+		</action>
+		
+		<action name="editRecipeForm" class="kr.or.kosta.recipe.RecipeService" method="editRecipeForm">
+			<result name="success" >/recipe/editRecipe.jsp</result>
+		</action>
+		
+		<action name="editRecipe" class="kr.or.kosta.recipe.RecipeService" method="editRecipe">
+			<param name="aliases">
+			#{ 'recipeNum':'recipeNum',
+			   'recipeNum':'recipe.num',
+			    'division':'good_division.division'
+			  }	
+			  </param>
+			<result name="success" type="chain">viewRecipe</result>
+		</action>
+	</package>
+	
+</struts>
+ 
