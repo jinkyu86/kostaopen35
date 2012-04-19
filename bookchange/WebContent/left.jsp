@@ -137,8 +137,7 @@
 	   
 	   <tr>
 	   <td>
-	   <form action="/bookchange/ChangeService" method="post" target="main">
-	   <input type="hidden" name="method" value="matchChangeList">
+	   <form action="/bookchange/matchChangeList.action" method="post" target="main">
 	   <input type="submit" value="교환진행중인 책 목록"></td>
 	   </form>	   
 	   </tr>
