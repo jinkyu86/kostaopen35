@@ -5,6 +5,7 @@
 <mapper namespace="Member">
 	
 <parameterMap type="kr.or.kosta.moviesystem.member.Member" id="insertParameterMap">
+	<parameter property="userNum"/>
 	<parameter property="userid"/>
 	<parameter property="name"/>
 	<parameter property="pw"/>
@@ -15,9 +16,13 @@
 </parameterMap>
 
 <insert id="insertMember" parameterMap="insertParameterMap">
+	<selectKey keyProperty="userNum" resultType="java.lang.String" order="BEFORE">
+   	select mem_seq.nextval from dual
+	</selectKey>
+	
 	INSERT INTO MEMBER
 					(user_num,userid,name,pw,email,phone,zipcode,addr,reg_date,mem_state)
-	VALUES (mem_seq.nextval,?,?,?,?,?,?,?,sysdate,'1')
+	VALUES (?,?,?,?,?,?,?,?,sysdate,'1')
 </insert>
 
 
@@ -27,25 +32,25 @@
 	<parameter property="email"/>
 	<parameter property="phone"/>
 	<parameter property="zipcode"/>
-	<parameter property="addr"/>		
-	<parameter property="userid"/>			
+	<parameter property="addr"/>
+	<parameter property="userNum"/>			
 </parameterMap>
 
 <update id="editMember" parameterMap="updateParameterMap">
-	UPDATE MEMBER
+	UPDATE member
 	SET name=?,pw=?,email=?,phone=?,zipcode=?,addr=?
-	WHERE userid=?
+	WHERE user_num=?
 </update>
 
 <parameterMap type="kr.or.kosta.moviesystem.member.Member"  id="dropParameterMap">
 	<parameter property="dropReason"/>
-	<parameter property="userid"/>		
+	<parameter property="userNum"/>		
 </parameterMap>
 
 <update id="dropMember" parameterMap="dropParameterMap">
 	UPDATE member 
 	SET name=' ',pw=' ',email=' ',phone=' ',zipcode=' ',addr=' ',mem_state='2',drop_reason=?,drop_date=sysdate 
-	WHERE userid=?
+	WHERE user_num=?
 </update>
 
 <resultMap id="selectResultMap" type="kr.or.kosta.moviesystem.member.Member">
@@ -62,6 +67,12 @@
 	<result property="dropDate" column="drop_date"/>
 	<result property="dropReason" column="drop_reason"/>
 </resultMap>
+
+<select id="selectMember" resultMap="selectResultMap">
+	SELECT user_num,userid,name,pw,email,phone,zipcode,addr,reg_date,mem_state,drop_date,drop_reason
+	FROM member 
+	WHERE user_num=#{userNum}
+</select>
 
 <select id="selectMemberById" resultMap="selectResultMap">
 	SELECT user_num,userid,name,pw,email,phone,zipcode,addr,reg_date,mem_state,drop_date,drop_reason
