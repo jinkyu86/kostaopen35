@@ -86,21 +86,21 @@
 	</select>
 	
 	<select id="pwSearchMember" parameterMap="selectpwSearchParameterMap" resultMap="selectResultMap">
-		SELECT memberid, password, name, regi_number, pw_hint, pw_answer, zipcode, address
+		SELECT memberid, password, name, regi_number, pw_hint, pw_answer, zipcode, address,
 			   str_address, email, phone_number, tel_number
 		FROM member
 		WHERE PW_hint=? AND PW_answer=?
 	</select>
 		
 	<select id="login" parameterMap="selectLoginParameterMap" resultMap="selectResultMap">	
-		SELECT memberid, password, name, regi_number, pw_hint, pw_answer, zipcode, address
+		SELECT memberid, password, name, regi_number, pw_hint, pw_answer, zipcode, address,
 			   str_address, email, phone_number, tel_number
 		FROM member
 		WHERE memberid=? AND password=?
 	</select>
 	
 	<select id="selectMember" resultMap="selectResultMap">	
-		SELECT memberid, password, name, regi_number, pw_hint, pw_answer, zipcode, address
+		SELECT memberid, password, name, regi_number, pw_hint, pw_answer, zipcode, address,
 			   str_address, email, phone_number, tel_number
 		FROM member
 		WHERE memberid=#{memberid}
