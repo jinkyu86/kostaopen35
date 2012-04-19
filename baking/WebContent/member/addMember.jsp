@@ -121,10 +121,12 @@
 	<c:choose> 
 		<c:when test="${sessionScope.member==null}">
 		<a href="/baking/member/loginForm.jsp">로그인</a>
-		<a href="">회원가입</a>
+		<a href="/baking/member/addMemberForm.action">회원가입</a>
 		</c:when>
 		<c:otherwise>
-		<a href="/baking/MemberService?method=logout">로그아웃</a>
+		${sessionScope.member.memberid}님 어서오세요! &nbsp&nbsp
+		<a href="/baking/logout.action">로그아웃</a>
+		<a href="/baking/viewMember.action">회원정보</a>
 		</c:otherwise>
 	</c:choose>
 	</div>
@@ -136,12 +138,12 @@
 <!-- top nav -->	
 <div class="menu">			
 <ul>			
-	<li><a href="/baking/GoodService?method=viewIndex">홈</a></li>			
-	<li><a href="/baking/GoodService?method=viewGoodList">상품</a></li>		
-	<li><a href="/baking/RecipeService?method=viewRecipeList">레시피</a></li>			
-	<li><a href="/baking/OrderService?method=CartList">장바구니</a></li>			
-	<li><a href="/baking/OrderService?method=viewOrderList">주문조회</a></li>				
-	<li><a href="/baking/GoodService?method=viewIndex">마이레시피</a></li>		
+	<li><a href="/baking/viewIndex.action">홈</a></li>			
+	<li><a href="/baking/viewGoodList.action">상품</a></li>		
+	<li><a href="/baking/viewRecipeList.action">레시피</a></li>			
+	<li><a href="/baking/CartList.action">장바구니</a></li>			
+	<li><a href="/baking/viewOrderList.action">주문조회</a></li>				
+	<li><a href="/baking/viewIndex.action">마이레시피</a></li>			
 </ul>
 </div>
 </nav>
@@ -152,14 +154,12 @@
 <section id="content">			
 <ul class="column">
 
-<form action="/baking/MemberService" method="post" id="signup" >
-<input type="hidden" name="method" value="addMember" />
-
+<form action="/baking/addMember.action" method="post" id="signup" >
 <table style="border: 2px solid #ddd;"  width="700px" >
 	
 	<tr>
 		<td align="center">아이디</td>
-		<td style="border: 2px solid #ddd;" width="550px" height="37px" >
+		<td style="border: 2px solid #ddd;" width="550px" height="37px">
 			<input type="text" size=11 name="memberid"/>(영문소문자/숫자, 4~16자)
 		</td>
 	</tr>

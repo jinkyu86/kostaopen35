@@ -20,28 +20,29 @@ pageEncoding="utf-8"%>
 	<c:choose> 
 		<c:when test="${sessionScope.member==null}">
 		<a href="/baking/member/loginForm.jsp">로그인</a>
-		<a href="">회원가입</a>
+		<a href="/baking/member/addMemberForm.action">회원가입</a>
 		</c:when>
 		<c:otherwise>
 		${sessionScope.member.memberid}님 어서오세요! &nbsp&nbsp
-		<a href="/baking/MemberService?method=logout">로그아웃</a>
+		<a href="/baking/logout.action">로그아웃</a>
+		<a href="/baking/viewMember.action">회원정보</a>
 		</c:otherwise>
 	</c:choose>
 	</div>
 <body>
 <header>
-<a href="/baking/GoodService?method=viewIndex"><h1>HOME BAKING MALL</h1></a><br><br>
+<a href="/baking/viewIndex.action"><h1>HOME BAKING MALL</h1></a><br><br>
 </header>
 <nav>
 <!-- top nav -->	
 <div class="menu">			
 <ul>			
-	<li><a href="/baking/GoodService?method=viewIndex">홈</a></li>			
-	<li><a href="/baking/GoodService?method=viewGoodList">상품</a></li>				
-	<li><a href="/baking/RecipeService?method=viewRecipeList">레시피</a></li>			
-	<li><a href="/baking/RecipeService?method=">장바구니</a></li>			
-	<li><a href="/baking/RecipeService?method=">주문조회</a></li>				
-	<li><a href="/baking/RecipeService?method=viewOrderList">마이레시피</a></li>	
+	<li><a href="/baking/viewIndex.action">홈</a></li>			
+	<li><a href="/baking/viewGoodList.action">상품</a></li>		
+	<li><a href="/baking/viewRecipeList.action">레시피</a></li>			
+	<li><a href="/baking/CartList.action">장바구니</a></li>			
+	<li><a href="/baking/viewOrderList.action">주문조회</a></li>				
+	<li><a href="/baking/viewIndex.action">마이레시피</a></li>		
 </ul>	
 </div>
 </nav>
@@ -50,8 +51,7 @@ pageEncoding="utf-8"%>
 <!-- content -->
 <section id="content">	
 		        
-	<form action="/baking/MemberService" method="post">
-	<input type="hidden" name="method" value="login">
+	<form action="/baking/login.action" method="post">
 	<center>
 	아이디<input type="text" name="memberid"><br></br>
 	패스워드<input type="password" name="password"><br></br>

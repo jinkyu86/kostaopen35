@@ -24,10 +24,12 @@
 	<c:choose> 
 		<c:when test="${sessionScope.member==null}">
 		<a href="/baking/member/loginForm.jsp">로그인</a>
-		<a href="/baking/MemberService?method=addMember">회원가입</a>
+		<a href="/baking/member/addMemberForm.action">회원가입</a>
 		</c:when>
 		<c:otherwise>
-		<a href="/baking/MemberService?method=logout">로그아웃</a>
+		${sessionScope.member.memberid}님 어서오세요! &nbsp&nbsp
+		<a href="/baking/logout.action">로그아웃</a>
+		<a href="/baking/viewMember.action">회원정보</a>
 		</c:otherwise>
 	</c:choose>
 	</div>
@@ -39,12 +41,12 @@
 <!-- top nav -->	
 <div class="menu">			
 <ul>			
-	<li><a href="/baking/GoodService?method=viewIndex">홈</a></li>			
-	<li><a href="/baking/GoodService?method=viewGoodList">상품</a></li>		
-	<li><a href="/baking/RecipeService?method=viewRecipeList">레시피</a></li>			
-	<li><a href="/baking/OrderService?method=CartList">장바구니</a></li>			
-	<li><a href="/baking/OrderService?method=viewOrderList">주문조회</a></li>				
-	<li><a href="/baking/GoodService?method=viewIndex">마이레시피</a></li>		
+	<li><a href="/baking/viewIndex.action">홈</a></li>			
+	<li><a href="/baking/viewGoodList.action">상품</a></li>		
+	<li><a href="/baking/viewRecipeList.action">레시피</a></li>			
+	<li><a href="/baking/CartList.action">장바구니</a></li>			
+	<li><a href="/baking/viewOrderList.action">주문조회</a></li>				
+	<li><a href="/baking/viewIndex.action">마이레시피</a></li>			
 </ul>
 </div>
 </nav>
@@ -55,10 +57,9 @@
 <section id="content">			
 <ul class="column">
 
-<form action="/baking/MemberService" method="post">
-<input type="hidden" name="method" value="editMember"/>
+<form action="/baking/editMember.action" method="post">
 <table style="border: 2px solid #ddd;"  width="700px" >
-	
+	<input type="hidden" name="memberid" value="${sessionScope.member.memberid}" >
 	<tr>
 		<td align="center">아이디</td>
 		<td style="border: 2px solid #ddd;" width="550px" height="37px" >
@@ -134,6 +135,11 @@
 	<input type="submit" value='수정'/>
 	<input type="reset" value='취소'/>
 </center>
+</form>
+
+<form action="/baking/removeMember.action" method="post">
+	<input type="hidden" name="memberid" value="${sessionScope.member.memberid}" >
+	<input type="submit" value='회원탈퇴'/>
 </form>
 
 </ul>
