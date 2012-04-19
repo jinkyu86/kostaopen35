@@ -7,6 +7,7 @@
 	
 	<parameterMap type="kr.or.kosta.auction.good.Good"
 		id="insertParameterMap">
+			<parameter property="gNum"/>
 			<parameter property="gName"/>
 			<parameter property="detail"/>
 			<parameter property="img"/>
@@ -14,9 +15,12 @@
 	
 	<insert id="insertGood"
 		parameterMap="insertParameterMap">
+	<selectKey keyProperty="gNum" resultType="java.lang.String" order="BEFORE">
+		SELECT good_seq.nextval FROM dual
+	</selectKey>
 		INSERT INTO good
 		(g_num, gname, detail, img)
-		VALUES(GOOD_SEQ.nextval,?,?,?)
+		VALUES(?,?,?,?)
 	</insert>
 	
 	<parameterMap type="kr.or.kosta.auction.good.Good"
