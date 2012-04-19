@@ -18,6 +18,8 @@ import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
+import com.opensymphony.xwork2.ModelDriven;
+
 import kr.or.kosta.file.receive.FileRenamePolicy;
 import kr.or.kosta.good.Good;
 import kr.or.kosta.good.GoodDAO;
@@ -29,189 +31,149 @@ import kr.or.kosta.photo.PhotoDAO;
 
 
 
-public class RecipeService extends HttpServlet{
-
-    public RecipeService() {
-        super();
-    }
-
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doPost(request,response);
-	}
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("utf-8");
-		String method=request.getParameter("method");
-		if(method==null){
-			method="viewRecipeList";
-//			method="addRecipe";
-//			method="addRecipeForm";
-		}
-		
-		if("viewRecipeList".equals(method)){				// 전체레시피 리스트 
-			viewRecipeList(request,response);				
-		}else if("recipeRelativeGoodList".equals(method)){  // 레시피구분 리스트
-			recipeRelativeGoodList(request,response);
-		}else if("viewRecipe".equals(method)){				// 레시피정보
-			viewRecipe(request,response);
-		}else if("addRecipe".equals(method)){				// 레시피추가
-			addRecipe(request, response);
-		}else if("addRecipeForm".equals(method)){			// 레시피추가 폼
-			addRecipeForm(request, response);
-		}else if("editRecipe".equals(method)){				// 레시피수정
-			editRecipe(request, response);
-		}else if("editRecipeForm".equals(method)){			// 레시피수정 폼
-			editRecipeForm(request, response);
-		}else if("removeRecipe".equals(method)){			// 레시피삭제
-			removeRecipe(request, response);
-		}
+public class RecipeService implements ModelDriven{
+	private List<Recipe> RECIPE_LIST;
+	private List<Recipe> RECIPE_DIVISION_LIST;
+	private List<Good> RECIPE_GOODLIST;
+	private List<Photo> RECIPE_PHOTO;
+	private List<Good_division> DIVISION_LIST;
+	private Recipe RECIPE;
+	private Recipe recipe;
+	private int recipeNum;
+	private int division;
+	
+	
+	@Override
+	public Object getModel() {
+		return recipe;
 	}
 	
 	
+	public List<Recipe> getRECIPE_LIST() {
+		return RECIPE_LIST;
+	}
+
+	public void setRECIPE_LIST(List<Recipe> rECIPE_LIST) {
+		RECIPE_LIST = rECIPE_LIST;
+	}
+
+	public List<Recipe> getRECIPE_DIVISION_LIST() {
+		return RECIPE_DIVISION_LIST;
+	}
+
+	public void setRECIPE_DIVISION_LIST(List<Recipe> rECIPE_DIVISION_LIST) {
+		RECIPE_DIVISION_LIST = rECIPE_DIVISION_LIST;
+	}
+
+	public List<Good> getRECIPE_GOODLIST() {
+		return RECIPE_GOODLIST;
+	}
+
+	public void setRECIPE_GOODLIST(List<Good> rECIPE_GOODLIST) {
+		RECIPE_GOODLIST = rECIPE_GOODLIST;
+	}
+
+	public List<Photo> getRECIPE_PHOTO() {
+		return RECIPE_PHOTO;
+	}
+
+	public void setRECIPE_PHOTO(List<Photo> rECIPE_PHOTO) {
+		RECIPE_PHOTO = rECIPE_PHOTO;
+	}
+
+	public List<Good_division> getDIVISION_LIST() {
+		return DIVISION_LIST;
+	}
+
+	public void setDIVISION_LIST(List<Good_division> dIVISION_LIST) {
+		DIVISION_LIST = dIVISION_LIST;
+	}
+
+	public Recipe getRECIPE() {
+		return RECIPE;
+	}
+
+	public void setRECIPE(Recipe rECIPE) {
+		RECIPE = rECIPE;
+	}
+
+	public Recipe getRecipe() {
+		return recipe;
+	}
+
+	public void setRecipe(Recipe recipe) {
+		this.recipe = recipe;
+	}
+
+	public int getDivision() {
+		return division;
+	}
+
+	public void setDivision(int division) {
+		this.division = division;
+	}
+	
+	public int getRecipeNum() {
+		return recipeNum;
+	}
+
+	public void setRecipeNum(int recipeNum) {
+		this.recipeNum = recipeNum;
+	}
 
 	// 전체레시피 리스트 
-	public void viewRecipeList(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException{
-
-/////////////////////////////////////////////////
-			
-			
-//			데이터베이스에서 전체레시피 조회
-			List<Recipe> recipeList= RecipeDAO.selectRecipeList();
-//			request에 전체 레시피 리스트 저장
-			request.setAttribute("RECIPE_LIST", recipeList);
-			
-			RequestDispatcher rd = request.getRequestDispatcher("/recipe/viewRecipeList.jsp");
-			rd.forward(request, response);
+	public String viewRecipeList() throws Exception{
+		System.out.println("RECIPE_LIST");
+		RECIPE_LIST= RecipeDAO.selectRecipeList();
+		return "success";
 	}
 	
 	// 레시피구분 리스트
-	public void recipeRelativeGoodList(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException{
-			int division=Integer.parseInt(request.getParameter("division"));
-			
-//			데이터베이스에서 레시피구분리스트 조회
-			List<Recipe> recipeList= RecipeDAO.selectDivisionRecipeList(division);
-//			request에 레시피구분리스트 리스트 저장
-			request.setAttribute("RECIPE_DIVISION_LIST", recipeList);
-		
-			RequestDispatcher rd = request.getRequestDispatcher("/recipe/recipeRelativeGoodList.jsp");
-			rd.forward(request, response);
+	public String recipeRelativeGoodList() throws Exception{
+		RECIPE_DIVISION_LIST= RecipeDAO.selectDivisionRecipeList(division);
+		return "success";
 	}
 	
 	//레시피정보
-	public void viewRecipe(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException{
-			int recipeNum=Integer.parseInt(request.getParameter("recipenum"));
-
-//			데이터베이스에서 레시피정보 조회
-			Recipe recipe =RecipeDAO.selectRecipe(recipeNum);
-//			레시피관련 상품정보 조회
-			ArrayList<Good>recipeRelativeGoodList=GoodDAO.selectRecipeList(recipeNum);
-//			레시피관련 이미지 조회
-			List<Photo>recipePhotoList=PhotoDAO.selectRecipePhotoList(recipeNum);
-			System.out.println(recipePhotoList);
-//			request에 레시피정보, 레시피관련 상품정보, 레시피관련 이미지 저장
-			request.setAttribute("RECIPE", recipe);
-			request.setAttribute("RECIPE_GOODLIST", recipeRelativeGoodList);
-			request.setAttribute("RECIPE_PHOTO", recipePhotoList);
-			
-			RequestDispatcher rd =request.getRequestDispatcher("/recipe/viewRecipe.jsp");
-			rd.forward(request, response);
+	public String viewRecipe() throws Exception{
+		RECIPE=RecipeDAO.selectRecipe(recipeNum);
+//		레시피관련 상품정보 조회
+		RECIPE_GOODLIST=GoodDAO.selectRecipeList(recipeNum);
+//		레시피관련 이미지 조회
+		RECIPE_PHOTO=PhotoDAO.selectRecipePhotoList(recipeNum);
+		return "success";
 	}
 
 	//레시피추가(미구현)
-	public void addRecipe(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-			request.setCharacterEncoding("utf-8");
-			System.out.println("method addRecipe");
-			
-			String title =request.getParameter("title");
-			String content =request.getParameter("content");
-			String img =request.getParameter("photo");
-			String material =request.getParameter("material");
-			int division =Integer.parseInt(request.getParameter("division"));
-
-			
-			Recipe recipe =new Recipe();
-			Good_division good_division=new Good_division();
-			
-			recipe.setTitle(title);
-			recipe.setContent(content);
-			recipe.setImg(img);
-			recipe.setMaterial(material);
-			good_division.setDivision(division);
-			recipe.setGood_division(good_division);
-			
-			System.out.println(recipe);
+	public String addRecipe() throws Exception {
 			RecipeDAO.insertRecipe(recipe);
-			
-			RequestDispatcher rd = request.getRequestDispatcher("/RecipeService?method=viewRecipeList");
-			rd.forward(request, response);
+			return "success";	
 	}
 
 	//레시피추가폼
-	public void addRecipeForm(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-			ArrayList<Good_division> arrayList = GoodDivisionDAO.selectGooddivisionList();
-			
-			request.setAttribute("DIVISION_LIST", arrayList);
-			
-			RequestDispatcher rd= request.getRequestDispatcher("/recipe/addRecipe.jsp");
-			rd.forward(request, response);
+	public String addRecipeForm() throws Exception {
+			DIVISION_LIST = GoodDivisionDAO.selectGooddivisionList();
+			return "success";	
 	}
 	
 
 	//레시피수정(미구현)
-	public void editRecipe(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-			int recipeNum=Integer.parseInt(request.getParameter("recipenum"));
-			String title =request.getParameter("title");
-			String content =request.getParameter("content");
-			String img =request.getParameter("img");
-			String material =request.getParameter("material");
-			int division =Integer.parseInt(request.getParameter("division"));
-			
-			
-			//1.상품테이블의 상품정보 insert
-			//2.이미지테이블의 이미지명 insert
-			
-			Recipe recipe =new Recipe();
-			Good_division good_division=new Good_division();
-			
-			recipe.setRecipeNum(recipeNum);
-			recipe.setTitle(title);
-			recipe.setContent(content);
-			recipe.setImg(img);
-			recipe.setMaterial(material);
-			good_division.setDivision(division);
-			recipe.setGood_division(good_division);
-			
+	public String editRecipe() throws Exception {			
 			RecipeDAO.updateRecipe(recipe);
-			
-			RequestDispatcher rd=request.getRequestDispatcher("/RecipeService?method=viewRecipe&recipenum="+recipeNum);
-			rd.forward(request, response);
-
-		
+			return "success";
 	}
 
 	//레시피수정폼
-	public void editRecipeForm(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher rd= request.getRequestDispatcher("/recipe/editRecipe.jsp");
-		rd.forward(request, response);
+	public String editRecipeForm() throws Exception {
+		DIVISION_LIST = GoodDivisionDAO.selectGooddivisionList();
+		return "success";
 	}
 
 	//레시피삭제
-	public void removeRecipe(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		int recipeNum=Integer.parseInt(request.getParameter("num"));
-		
-//		데이터베이스에서 해당레시피번호의 레시피삭제
+	public String removeRecipe() throws Exception {
 		RecipeDAO.deleteRecipe(recipeNum);
-		
-		RequestDispatcher rd = request.getRequestDispatcher("/RecipeService?method=viewRecipeList");
-		rd.forward(request, response);
+		return "success";
 	}
+
 	
 }

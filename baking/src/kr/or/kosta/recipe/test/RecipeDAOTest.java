@@ -14,7 +14,7 @@ import kr.or.kosta.recipe.RecipeDAO;
 import org.junit.Test;
 
 public class RecipeDAOTest {
-	
+//	
 //	@Test
 //	public void testinsertRecipe(){
 //		Recipe recipe = new Recipe();
@@ -35,7 +35,7 @@ public class RecipeDAOTest {
 //		System.out.println("insert 완료");
 //		
 //	}
-	
+//	
 //	@Test
 //	public void testupdateRecipe(){
 //		Recipe recipe = new Recipe();
@@ -54,14 +54,15 @@ public class RecipeDAOTest {
 //		System.out.println("delete 완료");
 //	}
 	
-//	@Test
-//	public void testselectrecipeList(){
-//		ArrayList<Recipe> arrayList = (ArrayList<Recipe>) RecipeDAO.selectRecipeList();
-//		for (int i = 0; i < arrayList.size(); i++) {
-//			Recipe recipe = arrayList.get(i);
-//			System.out.println(recipe);
-//		}
-//	}
+	@Test
+	public void testselectrecipeList(){
+		ArrayList<Good> arrayList =(ArrayList<Good>) GoodDAO.selectRecipeList(1);
+	
+		for (int i = 0; i < arrayList.size(); i++) {
+			Good good = arrayList.get(i);
+			System.out.println(good);
+		}
+	}
 	
 //	@Test
 //	public void testselectrecipe(){
@@ -104,16 +105,16 @@ public class RecipeDAOTest {
 //			System.out.println(photo);
 //		}
 //	}
-	
-	@Test
-	public void testselectGoodRelationRecipeList(){
-		ArrayList<Recipe> list=(ArrayList<Recipe>) RecipeDAO.selectGoodRelationRecipeList(7);
-		
-		for (int i = 0; i < list.size(); i++) {
-			Recipe recipe= list.get(i);
-			System.out.println(recipe);
-		}
-	}
+//	
+//	@Test
+//	public void testselectGoodRelationRecipeList(){
+//		ArrayList<Recipe> list=(ArrayList<Recipe>) RecipeDAO.selectGoodRelationRecipeList(7);
+//		
+//		for (int i = 0; i < list.size(); i++) {
+//			Recipe recipe= list.get(i);
+//			System.out.println(recipe);
+//		}
+//	}
 	
 //	@Test
 //	public void testmaxRecipeNumber(){
