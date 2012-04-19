@@ -509,38 +509,31 @@ public class BoardService implements ModelDriven, ServletContextAware, ServletRe
 	}
 
 	/**
-	 * 게시물 보기	 */
-	public void viewBoardWhenAgree(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
-		String boardNo=request.getParameter("boardNo");
-		String agreeBoardNo=request.getParameter("agreeBoardNo");
+	 * 게시물 보기 요청 수락할때 ㅋ */
+	public String viewBoardWhenAgree() throws Exception {
 		
-		Board board=BoardDAO.selectBoard(boardNo);
+		BOARD=BoardDAO.selectBoard(boardNo);
 		
-		int qaCount=QaDAO.selectQaCount(boardNo);
+		QA_COUNT=QaDAO.selectQaCount(boardNo);
 		int length=10;
 		//여기부턴 댓글 리스트
-		int page=(qaCount/length)+1;
 		
-		if(request.getParameter("page")!=null){
-			page=Integer.parseInt(request.getParameter("page"));
+		if(QA_COUNT%10==0){
+			qapage=QA_COUNT/length;
+		}else{
+			qapage=(QA_COUNT/length)+1;
 		}
 		
-		List<Qa> qaList=QaDAO.selectQaList(length, page, boardNo);
-		request.setCharacterEncoding("utf-8");
-		request.setAttribute("QA_LIST",qaList);
+		if(page!=0){
+			qapage=page;
+		}
+				
+		QA_LIST=QaDAO.selectQaList(length, qapage, boardNo);
 		
-		String pageLinkTag=PageUtil.generate(page, qaCount, length, "/bookchange/BoardService?" +
-				"method=viewBoard&boardNo="+boardNo);
-		request.setAttribute("PAGE_LINK_TAG",pageLinkTag);
+		PAGE_LINK_TAG=PageUtil.generate(qapage, QA_COUNT, length, "/bookchange/viewBoard.action?boardNo="+boardNo);
 		//댓글 리스트 조회 완료
-		
-		request.setAttribute("BOARD",board);
-		request.setAttribute("QA_LIST",qaList);
-		request.setAttribute("AGREE_BOARD_NO",agreeBoardNo);
-		request.setAttribute("QA_COUNT",qaCount);
-		
-		RequestDispatcher rd=request.getRequestDispatcher("/board/viewBoardWhenAgree.jsp");
-		rd.forward(request, response);
+
+		return "success";
 	}
 
 	/**

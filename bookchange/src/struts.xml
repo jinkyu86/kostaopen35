@@ -50,5 +50,12 @@
 			</param>
 			<result name="success">/board/viewBoardWhenCancel.jsp</result>
 		</action>
+		<action name="viewBoardWhenAgree" class="kr.or.kosta.bookchange.board.BoardService" method="viewBoardWhenAgree">
+			<param name="aliases">
+				#{'boardNo':'boardNo','board.boardNo',
+				  'agreeBoardNo':'AGREE_BOARD_NO'}
+			</param>
+			<result name="success">/board/viewBoardWhenAgree.jsp</result>
+		</action>
 	</package>
 </struts>
