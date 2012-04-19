@@ -17,7 +17,7 @@ public class MemberDAOTest {
 	@Test
 	public void testInsertMember() {
 		Member member=new Member();
-		member.setUserid("jojo1");
+		member.setUserid("joo6");
 		member.setPw("1234");
 		member.setEmail("jojo@naver.com");
 		member.setName("Á¶Á¶");
