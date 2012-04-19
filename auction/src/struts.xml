@@ -11,31 +11,56 @@
 	<constant name="struts.devMode" value="true"/>
 	
 	<package name="root" namespace="/" extends="struts-default">
-		<action name="viewBoard" class="kr.or.kosta.board.BoardService" method="viewBoard">
+		
+	<action name="viewAuction" class="kr.or.kosta.auction.auction.AuctionService"
+			 method="viewAuction">
 			<param name="aliases">
-				#{'num':'num'}
+				#{'aNum':'anum',
+				 'aNum':'auction.aNum',
+				 'img':'auction.good.img',
+				 'gName':'auction.good.gName'
+				}
 			</param>
-			<result name="success">/board/viewBoard.jsp</result>
+			<result name="success">
+				auction/viewAuction.jsp
+			</result>
 		</action>
-		<action name="viewBoardList" class="kr.or.kosta.board.BoardService" method="viewBoardList">
-			<result name="success">/board/viewBoardList.jsp</result>
+		
+		
+		<action name="viewAuctionList" 
+			class="kr.or.kosta.auction.auction.AuctionService" 
+			method="viewAuctionList">
+			
+			<result name="success">
+				/auction/viewAuctionList.jsp
+			</result>
 		</action>
-		<action name="removeBoard" class="kr.or.kosta.board.BoardService" method="removeBoard">
+		
+		<action name="removeAuction" 
+			class="kr.or.kosta.auction.auction.AuctionService"
+		 method="removeAuction">
+			<result name="success">
+			/auction/viewAuctionList.jsp
+			</result>
+		</action>
+
+		<action name="addAuctionForm" class="kr.or.kosta.auction.auction.AuctionService"
+			 method="addAuctionForm">
+			<result name="success">
+			/auction/addAuction.jsp</result>
+		</action>
+		
+		<action name="addBoard" class="kr.or.kosta.auction.auction.AuctionService" method="addAuction">
 			<param name="aliases">
-				#{'num':'num'}
+				#{'gNum':'auction.good.gNum'
+				  'gName':'auction.good.gName'
+				  'detail':'auction.good.detail'
+				  'img':'auction.good.img'
+				}
 			</param>
-			<result name="success">/board/viewBoardList.jsp</result>
-		</action>
-		<action name="addBoardForm" class="kr.or.kosta.board.BoardService" method="addBoardForm">
-			<result name="success">/board/addBoard.jsp</result>
-		</action>
-		<action name="addBoard" class="kr.or.kosta.board.BoardService" method="addBoard">
-			<param name="aliases">
-				#{'num':'num'
-					'num':'board.num'
-					'userid':'board.student.userid'}
-			</param>
-			<result name="success" type="chain">viewBoard</result>
+			<result name="success" type="chain">
+			viewAuction
+			</result>
 		</action>			
 	</package>
 </struts>
