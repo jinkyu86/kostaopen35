@@ -50,13 +50,26 @@ public class MemberDAO {
 		}
 		return member;
 	}
+	
+	public static Member selectMember(String userNum) {
+		SqlSession session = null;
+		Member member=null;
+		try{
+			session= sqlMapper.openSession(true);
+			member=session.selectOne("Member.selectMember",userNum);
+			
+		}finally{
+			session.close();
+		}
+		return member;
+	}
 
 	/**
 	 * 회원 입력하기
 	 * 
 	 * @param member
 	 */
-	public static void insertMember(Member member) {
+	public static String insertMember(Member member) {
 		SqlSession session=null;
 		try{
 			session = sqlMapper.openSession(true);
@@ -66,6 +79,7 @@ public class MemberDAO {
 			//Connection을 ConnectionPoll에 반납
 			session.close();
 		}
+		return member.getUserid();
 	}
 
 	/**

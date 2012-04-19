@@ -2,10 +2,11 @@ package kr.or.kosta.moviesystem.member;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 
 import javax.servlet.http.HttpServlet;
@@ -13,110 +14,244 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.struts2.interceptor.ServletRequestAware;
+import org.apache.struts2.interceptor.ServletResponseAware;
+import org.apache.struts2.interceptor.SessionAware;
+import org.apache.struts2.util.ServletContextAware;
 
-
-
+import com.opensymphony.xwork2.ModelDriven;
 import kr.or.kosta.moviesystem.util.PageUtil;
 
-
-
-
-public class MemberService extends HttpServlet {
+public class MemberService implements ModelDriven,ServletContextAware,ServletRequestAware,
+ServletResponseAware,SessionAware {
 	private static final long serialVersionUID = 1L;
+	private ServletContext servletContext;
+	private HttpServletRequest request;
+	private HttpServletResponse response;
+	private Map session;
+	private Member member=new Member();
+	private int page;
+	private String userNum;
+	private String userid;
+	private String pw;
+	private Member MEMBER;
+	private List<Member>MEMBER_LIST;
+	private String PAGE_LINK_TAG;  
+	private String keyword;
+	private String column; 
+		
+		
+	  @Override
+	public void setSession(Map<String, Object> session) {
+		  this.session=session;		
+		}
+
+	  @Override
+	public void setServletResponse(HttpServletResponse response) {
+		  this.response=response;
+	}
+
+	  @Override
+	public void setServletRequest(HttpServletRequest request) {
+		  this.request=request;
+		}
+	  
+	@Override
+	public void setServletContext(ServletContext context) {
+		this.servletContext=context;			
+	}
+
+	@Override
+	public Object getModel() {
+			return member;
+	}
 	
-	   public MemberService() {
+	   
+	
+	public String getKeyword() {
+		return keyword;
+	}
+
+	public void setKeyword(String keyword) {
+		this.keyword = keyword;
+	}
+
+	public String getColumn() {
+		return column;
+	}
+
+	public void setColumn(String column) {
+		this.column = column;
+	}
+
+	public Member getMember() {
+		return member;
+	}
+
+
+
+	public void setMember(Member member) {
+		this.member = member;
+	}
+
+
+
+	public int getPage() {
+		return page;
+	}
+
+
+
+	public void setPage(int page) {
+		this.page = page;
+	}
+
+	
+
+	public String getUserNum() {
+		return userNum;
+	}
+
+	public void setUserNum(String userNum) {
+		this.userNum = userNum;
+	}
+
+	public String getUserid() {
+		return userid;
+	}
+
+
+
+	public void setUserid(String userid) {
+		this.userid = userid;
+	}
+
+	public String getPw() {
+		return pw;
+	}
+
+	public void setPw(String pw) {
+		this.pw = pw;
+	}
+
+	public Member getMEMBER() {
+		return MEMBER;
+	}
+
+
+
+	public void setMEMBER(Member mEMBER) {
+		MEMBER = mEMBER;
+	}
+
+
+
+	public List<Member> getMEMBER_LIST() {
+		return MEMBER_LIST;
+	}
+
+
+
+	public void setMEMBER_LIST(List<Member> mEMBER_LIST) {
+		MEMBER_LIST = mEMBER_LIST;
+	}
+
+
+
+	public String getPAGE_LINK_TAG() {
+		return PAGE_LINK_TAG;
+	}
+
+
+
+	public void setPAGE_LINK_TAG(String pAGE_LINK_TAG) {
+		PAGE_LINK_TAG = pAGE_LINK_TAG;
+	}
+
+
+
+	public MemberService() {
 	        super();
 	     
 	    }
 	   
-	   protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-			doPost(request,response);
-		}
-	   
-	   protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		   request.setCharacterEncoding("utf-8");
-		   String  method=request.getParameter("method");
-		   System.out.println(method);
-		   if(method==null){
-			   RequestDispatcher rd=request.getRequestDispatcher("/MovieService?method=Main");
-				rd.forward(request, response);
-				
-		   }if("viewMemberList".equals(method)){
-			   viewMemberList(request,response);
-		   }else if("addMemberForm".equals(method)){
-			   addMemberForm(request,response);
-		   }else if("addMember".equals(method)){
-			   addMember(request,response);
-		   }else if("loginForm".equals(method)){
-			   loginForm(request,response);
-		   }else if("login".equals(method)){
-			   login(request,response);
-		   }else if("checkMemberID".equals(method)){
-			   checkMemberID(request,response);
-		   }else if("editMemberForm".equals(method)){
-			   editMemberForm(request,response);
-		   }else if("editMember".equals(method)){
-			   editMember(request,response);
-		   }else if("viewMember".equals(method)){
-			   viewMember(request,response);
-		   }else if("dropMember".equals(method)){
-			   dropMember(request,response);
-		   }else if("dropMemberForm".equals(method)){
-			   dropMemberForm(request,response);
-		   }else if("findId".equals(method)){
-			   findId(request,response);
-		   }else if("findIdForm".equals(method)){
-			   findIdForm(request,response);
-		   }else if("findPwForm".equals(method)){
-			   findPwForm(request,response);
-		   }else if("findPw".equals(method)){
-			   findPw(request,response);
-		   }else if("logoutMember".equals(method)){
-			   logoutMember(request,response);
-		   }else if("mypage".equals(method)){
-			      mypage(request, response);
-		   }else if("searchMemberList".equals(method)){
-			   searchMemberList(request, response);
-		   }
-	   }
+//	   protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+//			doPost(request,response);
+//		}
+//	   
+//	   protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+//		   request.setCharacterEncoding("utf-8");
+//		   String  method=request.getParameter("method");
+//		   System.out.println(method);
+//		   if(method==null){
+//			   RequestDispatcher rd=request.getRequestDispatcher("/MovieService?method=Main");
+//				rd.forward(request, response);
+//				
+//		   }if("viewMemberList".equals(method)){
+//			   viewMemberList(request,response);
+//		   }else if("addMemberForm".equals(method)){
+//			   addMemberForm(request,response);
+//		   }else if("addMember".equals(method)){
+//			   addMember(request,response);
+//		   }else if("loginForm".equals(method)){
+//			   loginForm(request,response);
+//		   }else if("login".equals(method)){
+//			   login(request,response);
+//		   }else if("checkMemberID".equals(method)){
+//			   checkMemberID(request,response);
+//		   }else if("editMemberForm".equals(method)){
+//			   editMemberForm(request,response);
+//		   }else if("editMember".equals(method)){
+//			   editMember(request,response);
+//		   }else if("viewMember".equals(method)){
+//			   viewMember(request,response);
+//		   }else if("dropMember".equals(method)){
+//			   dropMember(request,response);
+//		   }else if("dropMemberForm".equals(method)){
+//			   dropMemberForm(request,response);
+//		   }else if("findId".equals(method)){
+//			   findId(request,response);
+//		   }else if("findIdForm".equals(method)){
+//			   findIdForm(request,response);
+//		   }else if("findPwForm".equals(method)){
+//			   findPwForm(request,response);
+//		   }else if("findPw".equals(method)){
+//			   findPw(request,response);
+//		   }else if("logoutMember".equals(method)){
+//			   logoutMember(request,response);
+//		   }else if("mypage".equals(method)){
+//			      mypage(request, response);
+//		   }else if("searchMemberList".equals(method)){
+//			   searchMemberList(request, response);
+//		   }
+//	   }
 			
-	   private void findPw(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		   String name=request.getParameter("name");
-			String email=request.getParameter("email");
-			String userid=request.getParameter("userid");
+	public String findPwForm() throws Exception {
+		   return "success";		
+	}
+
+	public String findPw() throws Exception {
+		String name=request.getParameter("name");
+		String email=request.getParameter("email");
+		String userid=request.getParameter("userid");
 			
-			Member member=MemberDAO.findMemberPw(email, name, userid);
+		Member member=MemberDAO.findMemberPw(email, name, userid);
 			
 			
 			if(member==null){
 				request.setAttribute("ERROR", "입력하신 정보와 일치하는 비밀번호가 없습니다");
-				RequestDispatcher rd=request.getRequestDispatcher("member/findPw.jsp");
-				rd.forward(request, response);
+				return "findPw";
 			}else	{
-					HttpSession session=request.getSession();
-					session.setAttribute("MEMBER",member);
-					RequestDispatcher rd=request.getRequestDispatcher("member/resultFindPw.jsp");
-					rd.forward(request, response);
+				session.put("MEMBER",member);
+				return "success";
 				}//end else
-			}		
-
-
-	private void findPwForm(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		   RequestDispatcher rd=request.getRequestDispatcher("member/findPw.jsp");
-			rd.forward(request, response);
-		
+			}	
+	
+	public String findIdForm() throws Exception {
+		return "success";
 	}
 
-	private void findIdForm(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		
-		RequestDispatcher rd=request.getRequestDispatcher("member/findId.jsp");
-		rd.forward(request, response);
-	}
-
-	private void findId(HttpServletRequest request,
-			HttpServletResponse response) throws IOException,ServletException {
+	public String findId() throws Exception { 
 		String name=request.getParameter("name");
 		String email=request.getParameter("email");
 		
@@ -125,64 +260,46 @@ public class MemberService extends HttpServlet {
 		
 		if(member==null){
 			request.setAttribute("ERROR", "입력하신 정보와 일치하는 아이디가 없습니다");
-			RequestDispatcher rd=request.getRequestDispatcher("member/findId.jsp");
-			rd.forward(request, response);
+			return "findId";
 		}else	{
-				HttpSession session=request.getSession();
-				session.setAttribute("MEMBER",member);
-				RequestDispatcher rd=request.getRequestDispatcher("member/resultFindId.jsp");
-				rd.forward(request, response);
+				session.put("MEMBER",member);
+				return "success";
 			}//end else
 		}		
 	
-
-	private void viewMemberList(HttpServletRequest request,
-				HttpServletResponse response) 
-		throws IOException,ServletException{
-		int page=1;
-		if(request.getParameter("page")!=null){
-			page=Integer.parseInt(request.getParameter("page"));
+	public String viewMemberList() throws Exception{
+		if(page==0){
+			page=1;
 		}
 		int length=5;
-		List<Member> memberList=MemberDAO.selectMemberList(length, page);
-		request.setAttribute("MEMBER_LIST", memberList);
-		
+		MEMBER_LIST=MemberDAO.selectMemberList(length, page);
 		int memberCount=MemberDAO.selectMemberListCount();
-		String pageLinkTag=PageUtil.generate
-				(page, memberCount, length, "MemberService?method=viewMemberList");
-		request.setAttribute("PAGE_LINK_TAG",pageLinkTag);
-		RequestDispatcher rd=request.getRequestDispatcher
-				("/member/viewMemberList.jsp");
-		//4.JSP로 페이지 이동
-		rd.forward(request, response);
+		PAGE_LINK_TAG=
+				PageUtil.generate(page,memberCount,length,"/moviesystem/viewMemberList.action");
+		return "success";
 	}
 
-	private void viewMember(HttpServletRequest request,
-			HttpServletResponse response) throws  ServletException,IOException{
-		String userid=request.getParameter("userid");
-		Member member=MemberDAO.selectMemberById(userid);
+	public String viewMember() throws Exception{
 		
-		request.setAttribute("MEMBER",member);
-		RequestDispatcher rd=request.getRequestDispatcher("/member/viewMember.jsp");
-		rd.forward(request, response);
-		
+		MEMBER=MemberDAO.selectMember(userNum);
+		return "success";		
 	}
 
-	private void checkMemberID(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		String userid=request.getParameter("userid");
-		Member member=MemberDAO.selectMemberById(userid);
-		response.setContentType("text/html;charset=utf-8");
-		PrintWriter out=response.getWriter();
-		if(member==null){
-			out.print(userid+"는 사용가능한 아이디입니다.");
-		}else{
-			out.print(userid="는 이미 사용중인 아이디입니다.");
-		}
-		out.flush();
-		out.close();
-
-	}
+//	private void checkMemberID(HttpServletRequest request,
+//			HttpServletResponse response) throws ServletException, IOException {
+//		String userid=request.getParameter("userid");
+//		Member member=MemberDAO.selectMemberById(userid);
+//		response.setContentType("text/html;charset=utf-8");
+//		PrintWriter out=response.getWriter();
+//		if(member==null){
+//			out.print(userid+"는 사용가능한 아이디입니다.");
+//		}else{
+//			out.print(userid="는 이미 사용중인 아이디입니다.");
+//		}
+//		out.flush();
+//		out.close();
+//
+//	}
 
 	/**
 	 * 회원가입 창으로 이동
@@ -192,44 +309,14 @@ public class MemberService extends HttpServlet {
 	 * @throws IOException 
 	 * @throws ServletException 
 	 */
-	public void addMemberForm(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher rd=request.getRequestDispatcher("/member/addMember.jsp");
-		rd.forward(request, response);
+	public String addMemberForm() throws Exception {
+		return "success";
 		
 	}
 
-	/**
-	 * 회원 등록
-	 * 
-	 * @param request
-	 * @param response
-	 */
-	public void addMember(HttpServletRequest request,
-			HttpServletResponse response) throws IOException,ServletException{
-		String userid=request.getParameter("userid");
-		String name=request.getParameter("name");
-		String pw=request.getParameter("pw");
-		String email=request.getParameter("email");
-		String phone=request.getParameter("phone");
-		String zipcode=request.getParameter("zipcode");
-		String addr=request.getParameter("addr");
-		
-		Member member=new Member();
-		member.setUserid(userid);
-		member.setName(name);
-		member.setPw(pw);
-		member.setEmail(email);
-		member.setPhone(phone);
-		member.setZipcode(zipcode);
-		member.setAddr(addr);
-		
-		MemberDAO.insertMember(member);
-		request.setAttribute("ERROR", "회원가입이 되었습니다.");
-		
-		RequestDispatcher rd=request.getRequestDispatcher("/member/login.jsp");
-		rd.forward(request, response);
-		
+	public String addMember() throws Exception{
+		userNum=MemberDAO.insertMember(member);
+		return "success";
 		
 	}
 
@@ -239,17 +326,11 @@ public class MemberService extends HttpServlet {
 	 * @param request
 	 * @param response
 	 */
-	public void editMemberForm(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException{
-		HttpSession session=request.getSession();
-		Member member1=(Member)session.getAttribute("LOGIN_MEMBER");
-		String userid=member1.getUserid();
-		Member member=MemberDAO.selectMemberById(userid);
-		session.setAttribute("LOGIN_MEMBER", member);
-		
-		RequestDispatcher rd=request.getRequestDispatcher("member/editMember.jsp");
-		rd.forward(request, response);
-		
+	public String editMemberForm() throws Exception{
+		Member member1=(Member)session.get("LOGIN_MEMBER");		
+		Member member=MemberDAO.selectMember(member1.getUserNum());
+		session.put("LOGIN_MEMBER", member);
+		return "success";
 	}
 
 	/**
@@ -258,81 +339,61 @@ public class MemberService extends HttpServlet {
 	 * @param request
 	 * @param response
 	 */
-	public void editMember(HttpServletRequest request,
-			HttpServletResponse response)
-	 throws IOException,ServletException{
-		String userid=request.getParameter("userid");
-		String name=request.getParameter("name");
-		String pw=request.getParameter("pw");
-		String email=request.getParameter("email");
-		String phone=request.getParameter("phone");
-		String zipcode=request.getParameter("zipcode");
-		String addr=request.getParameter("addr");
-		
-		Member member=new Member();
-		member.setUserid(userid);
-		member.setName(name);
-		member.setPhone(phone);
-		member.setPw(pw);
-		member.setEmail(email);
-		member.setZipcode(zipcode);
-		member.setAddr(addr);
-		
+	public String editMember() throws Exception{
 		MemberDAO.editMember(member);
-		Member member1=MemberDAO.selectMemberById(member.getUserid());
+		//userNum=member.getUserNum();
+		//Member member1=MemberDAO.selectMember(member.getUserNum());
 		request.setAttribute("ERROR","개인정보가 수정되었습니다");
-		request.setAttribute("LOGIN_MEMBER", member1);
-		
-		RequestDispatcher rd=request.getRequestDispatcher("/member/editMember.jsp");
-		rd.forward(request, response);
+		session.put("LOGIN_MEMBER",member);
+		return "success";
 	}
 
-	/**
-	 * 로그인 폼으로 이동
-	 * 
-	 * @param request
-	 * @param response
-	 * @throws IOException 
-	 * @throws ServletException 
-	 */
-	public void loginForm(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher rd=request.getRequestDispatcher("/member/login.jsp");
-		rd.forward(request, response);
+	public String loginForm() throws Exception {
+		return "success";
 		
 	}
-
-	/**
-	 * 회원 로그인
-	 * 
-	 * @param request
-	 * @param response
-	 * @throws IOException 
-	 * @throws ServletException 
-	 */
-	public void login(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	public String login() throws Exception {
 		String userid=request.getParameter("userid");
 		String pw=request.getParameter("pw");
 		Member member=MemberDAO.selectMemberById(userid);
 		
 		if(member==null){
 			request.setAttribute("ERROR", "존재하지 않는 아이디");
-			RequestDispatcher rd=request.getRequestDispatcher("member/login.jsp");
-			rd.forward(request, response);
+			return "login";	
 		}else{
 			if(!member.getPw().equals(pw)){
 				request.setAttribute("ERROR", "비밀번호 오류");
-				RequestDispatcher rd=request.getRequestDispatcher("member/login.jsp");
-				rd.forward(request, response);
+				return "login";	 
 			}else{
-				HttpSession session=request.getSession();
-				session.setAttribute("LOGIN_MEMBER", member);
-				RequestDispatcher rd=request.getRequestDispatcher("/MovieService?method=Main");
-				rd.forward(request, response);
+				session.put("LOGIN_MEMBER",member);
+				return "success";
 			}//end else
-		}//end if
+		}
 	}
+	
+//	public void login(HttpServletRequest request,
+//			HttpServletResponse response) throws ServletException, IOException {
+//		String userid=request.getParameter("userid");
+//		String pw=request.getParameter("pw");
+//		Member member=MemberDAO.selectMemberById(userid);
+//		
+//		if(member==null){
+//			request.setAttribute("ERROR", "존재하지 않는 아이디");
+//			RequestDispatcher rd=request.getRequestDispatcher("member/login.jsp");
+//			rd.forward(request, response);
+//		}else{
+//			if(!member.getPw().equals(pw)){
+//				request.setAttribute("ERROR", "비밀번호 오류");
+//				RequestDispatcher rd=request.getRequestDispatcher("member/login.jsp");
+//				rd.forward(request, response);
+//			}else{
+//				HttpSession session=request.getSession();
+//				session.setAttribute("LOGIN_MEMBER", member);
+//				RequestDispatcher rd=request.getRequestDispatcher("/MovieService?method=Main");
+//				rd.forward(request, response);
+//			}//end else
+//		}//end if
+//	}
 
 	/**
 	 * 회원 로그아웃
@@ -342,15 +403,10 @@ public class MemberService extends HttpServlet {
 	 * @throws IOException 
 	 * @throws ServletException 
 	 */
-	public void logoutMember(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session=request.getSession();
+	public String logoutMember() throws Exception {
 		
-		session.invalidate();
-		RequestDispatcher rd=
-				request.getRequestDispatcher(
-						"/MovieService?method=Main");
-		rd.forward(request, response);
+		session.remove("LOGIN_MEMBER");
+		return "success";
 		
 	}
 
@@ -360,13 +416,11 @@ public class MemberService extends HttpServlet {
 	 * @param request
 	 * @param response
 	 */
-	public void dropMemberForm(HttpServletRequest request,
-			HttpServletResponse response) throws IOException,ServletException{
-		String userid=request.getParameter("userid");
-		Member member=MemberDAO.selectMemberById(userid);
-		request.setAttribute("LOGIN_MEMBER", member);
-		RequestDispatcher rd=request.getRequestDispatcher("/member/dropMember.jsp");
-		rd.forward(request, response);
+	public String dropMemberForm() throws Exception{	
+		Member member1=(Member)session.get("LOGIN_MEMBER");		
+		Member member=MemberDAO.selectMember(member1.getUserNum());
+		session.put("LOGIN_MEMBER", member);
+		return "success";
 		
 	}
 
@@ -378,110 +432,83 @@ public class MemberService extends HttpServlet {
 	 * @throws IOException 
 	 * @throws ServletException 
 	 */
-	public void dropMember(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		String userid=request.getParameter("userid");
-		String name=request.getParameter("name");
-		String dropReason=request.getParameter("dropReason");
-		
-		Member member=new Member();
-		member.setUserid(userid);
-		member.setName(name);
-		member.setDropReason(dropReason);
-		
+	public String dropMember() throws Exception {
+			
 		MemberDAO.dropMember(member);
-		logoutMember(request, response);
+		logoutMember();
+		return "success";
 		
 	}
 	
-	private void mypage(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
-		  // session 객체 받기
-		  HttpSession session=request.getSession();
-		  // 로그인 세션 정보 받을 객체 생성 
-		  Member member = (Member)session.getAttribute("LOGIN_MEMBER");
-		  // 주소 저장할 객체 생성
-		  String url = null;
+	public String mypage() throws Exception{
+		Member member=(Member)session.get("LOGIN_MEMBER");	 
+		if(member==null){
+			 request.setAttribute("ERROR","로그인 후 사용가능한 서비스입니다.");
+			 return "login";
+			 // 주소 저장할 객체 생성
+			 //String url = null;
 		  
-		  // 생성된 로그인 세션 정보의 값 확인
-		  if(member==null){
-		   // 로그인 세션의 정보가 null일 경우 에러 메시지 request로 넘긴 후
-		   // login 페이지로 이동하도록 url선언
-		   request.setAttribute("ERROR","로그인 후 사용가능한 서비스입니다.");
-		   url = "/member/login.jsp";
+			 // 생성된 로그인 세션 정보의 값 확인
+		 
+			 // 로그인 세션의 정보가 null일 경우 에러 메시지 request로 넘긴 후
+			 // login 페이지로 이동하도록 url선언
+			 //url = "/member/login.jsp";
 		   
 		  }else{
+			  session.put("LOGIN_MEMBER",member);
+			  return "success";
 		   // 로그인 세션 정보가 null이 아닐 경우
 		   // mypage.jsp로 이동 하도록 url선언
-		   url = "/member/mypage.jsp";
+		   //url = "/member/mypage.jsp";
 		  }
-		  // RequestDispatcher 객체 선언하여 페이지 이동
-		  RequestDispatcher rd =request.getRequestDispatcher(url);
-		  rd.forward(request, response);
+		  
 		 }
 
 
 
-	public void searchMemberList(HttpServletRequest request,
-			HttpServletResponse response) throws IOException,ServletException{
-		//기본페이지 1
-		int page=1;
-		//파라메터 리턴
-		if(request.getParameter("page")!=null){
-			page=Integer.parseInt(request.getParameter("page"));
+	public String searchMemberList() throws Exception{
+		if(page==0){
+			page=1;
 		}
-		//한페이지당 보여줄 학생의 수
 		int length=5;
-		String keyword="";
-		if (request.getParameter("keyword")!=null){
+		int memberCount=0;
+		keyword="";
+		if (keyword!=null){
 			keyword = request.getParameter("keyword");;
 		}
-		String colum = "";
-		if(request.getParameter("column")!=null){
-			colum = request.getParameter("column");
+		column = "";
+		if(column!=null){
+			column = request.getParameter("column");
 		}
 		//1.StudentDAO에서 페이지에 해당하는 학생조회 메서드를 호출
-		List<Member>memberList=null;
-		int memberCount=0;
-		if(request.getParameter("keyword")==null||
-				request.getParameter("keyword").equals("")){
-			memberList=MemberDAO.selectMemberList(length, page);
+		
+		if(keyword==null||keyword.equals("")){
+			MEMBER_LIST=MemberDAO.selectMemberList(length, page);
 			memberCount=MemberDAO.selectMemberListCount();
 		}else{
-			if(request.getParameter("column").equals("name")){
-				memberList=MemberDAO.searchMemberListByName
+			if(column.equals("name")){
+				MEMBER_LIST=MemberDAO.searchMemberListByName
 						(length, page, request.getParameter("keyword"));
 				memberCount=MemberDAO.searchMemberListByNameCount(keyword);
-			}else if(request.getParameter("column").equals("email")){
-				memberList=MemberDAO.searchMemberListByEmail
+			}else if(column.equals("email")){
+				MEMBER_LIST=MemberDAO.searchMemberListByEmail
 						(length, page, request.getParameter("keyword"));
 				memberCount=MemberDAO.searchMemberListByEmailCount(keyword);
-			}else if(request.getParameter("column").equals("addr")){
-				memberList=MemberDAO.searchMemberListByAddr
+			}else if(column.equals("addr")){
+				MEMBER_LIST=MemberDAO.searchMemberListByAddr
 						(length, page, request.getParameter("keyword"));
 				memberCount=MemberDAO.searchMemberListByAddrCount(keyword);
-			}else if(request.getParameter("column").equals("phone")){
-				memberList=MemberDAO.searchMemberListByPhone
+			}else if(column.equals("phone")){
+				MEMBER_LIST=MemberDAO.searchMemberListByPhone
 						(length, page, request.getParameter("keyword"));
 				memberCount=MemberDAO.searchMemberListByPhoneCount(keyword);
 			}
 		}
 		
-		//2.request에 1의 페이지에 해당하는 학생 정보 저장
-		request.setAttribute("MEMBER_LIST",memberList);
-		//다른 페이지로 이동하는 링크태그 만듬
-		//PageUtil.getnerate(현페이지,전체건수,한페이지당보여울 row수, 주소);
-		String pageLinkTag=PageUtil.generate
-				(page, memberCount, length, "/moviesystem/MemberService?method=searchMemberList&column=" +colum+"&keyword="+keyword);
+		PAGE_LINK_TAG=PageUtil.generate
+				(page, memberCount, length, "/moviesystem/searchMemberList.action?column=" +column+"&keyword="+keyword);
 		
-		request.setAttribute("PAGE_LINK_TAG",pageLinkTag);
-		
-		
-		//3./student/viewStudentList.jsp로 페이지 이동
-		//객체생성
-		RequestDispatcher rd=request.getRequestDispatcher
-				("/member/searchMemberList.jsp");
-		//4.JSP로 페이지 이동
-		rd.forward(request, response);
+		return "success";
 		
 	}
 
