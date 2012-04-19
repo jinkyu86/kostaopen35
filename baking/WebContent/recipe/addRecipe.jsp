@@ -97,10 +97,12 @@
 	<c:choose> 
 		<c:when test="${sessionScope.member==null}">
 		<a href="/baking/member/loginForm.jsp">로그인</a>
-		<a href="">회원가입</a>
+		<a href="/baking/member/addMemberForm.action">회원가입</a>
 		</c:when>
 		<c:otherwise>
-		<a href="/baking/MemberService?method=logout">로그아웃</a>
+		${sessionScope.member.memberid}님 어서오세요! &nbsp&nbsp
+		<a href="/baking/logout.action">로그아웃</a>
+		<a href="/baking/viewMember.action">회원정보</a>
 		</c:otherwise>
 	</c:choose>
 	</div>

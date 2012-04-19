@@ -23,10 +23,12 @@
 	<c:choose> 
 		<c:when test="${sessionScope.member==null}">
 		<a href="/baking/member/loginForm.jsp">로그인</a>
-		<a href="">회원가입</a>
+		<a href="/baking/member/addMemberForm.action">회원가입</a>
 		</c:when>
 		<c:otherwise>
-		<a href="/baking/MemberService?method=logout">로그아웃</a>
+		${sessionScope.member.memberid}님 어서오세요! &nbsp&nbsp
+		<a href="/baking/logout.action">로그아웃</a>
+		<a href="/baking/viewMember.action">회원정보</a>
 		</c:otherwise>
 	</c:choose>
 	</div>
@@ -38,12 +40,12 @@
 <!-- top nav -->	
 <div class="menu">			
 <ul>			
-	<li><a href="/baking/GoodService?method=viewIndex">홈</a></li>			
-	<li><a href="/baking/GoodService?method=viewGoodList">상품</a></li>		
-	<li><a href="/baking/RecipeService?method=viewRecipeList">레시피</a></li>			
-	<li><a href="/baking/OrderService?method=CartList">장바구니</a></li>			
-	<li><a href="/baking/OrderService?method=viewOrderList">주문조회</a></li>				
-	<li><a href="/baking/GoodService?method=viewIndex">마이레시피</a></li>		
+	<li><a href="/baking/viewIndex.action">홈</a></li>			
+	<li><a href="/baking/viewGoodList.action">상품</a></li>		
+	<li><a href="/baking/viewRecipeList.action">레시피</a></li>			
+	<li><a href="/baking/CartList.action">장바구니</a></li>			
+	<li><a href="/baking/viewOrderList.action">주문조회</a></li>				
+	<li><a href="/baking/viewIndex.action">마이레시피</a></li>			
 </ul>
 </div>
 </nav>
@@ -52,15 +54,15 @@
 
 <!-- content -->
 <section id="content">
-	<a href="/baking/RecipeService?method=recipeRelativeGoodList&division=1">- 쿠키</a>&nbsp&nbsp      
-	<a href="/baking/RecipeService?method=recipeRelativeGoodList&division=2">- 케이크</a>&nbsp&nbsp      
-	<a href="/baking/RecipeService?method=recipeRelativeGoodList&division=3">- 초콜릿</a>			
+	<a href="/baking/recipeRelativeGoodList.action?division=1">- 쿠키</a>&nbsp&nbsp      
+	<a href="/baking/recipeRelativeGoodList.action?division=2">- 케이크</a>&nbsp&nbsp      
+	<a href="/baking/recipeRelativeGoodList.action?division=3">- 초콜릿</a>		
 <ul class="column">
 			        
 	<c:forEach var="recipeDivision" items="${RECIPE_DIVISION_LIST}">
 		<li>        
 		<section class="block">							
-			<a href="/baking/RecipeService?method=viewRecipe&recipenum=${recipeDivision.recipeNum }">
+			<a href="/baking/viewRecipe.action?recipeNum=${recipeDivision.recipeNum }">
 			<img src="/baking/img/recipe_${recipeDivision.good_division.gName}/${recipeDivision.img}" border=0  /></a> 	
 			<br/>									
 			<h5><center>${recipeDivision.title}</center></h5>																	        
