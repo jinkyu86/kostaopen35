@@ -6,13 +6,15 @@
 
 
 <struts>
-	<constant name="struts.i18n.encoding"	value="euc-kr"/>
+	<constant name="struts.i18n.encoding"	value="UTF-8"/>
 	<constant name="struts.action.extension" value="action"/>
 	
 	<constant name="struts.enable.DynamicMethodInvocation" value="true"/>
 	<constant name="struts.devMode" value="true"/>
 
 	<package name="root" namespace="/" extends="struts-default">
+		
+<!--Recipe-->		
 		<action name="viewRecipeList" class="kr.or.kosta.recipe.RecipeService" method="viewRecipeList">
 			<result name="success">/recipe/viewRecipeList.jsp</result>
 		</action>
@@ -62,6 +64,86 @@
 			  </param>
 			<result name="success" type="chain">viewRecipe</result>
 		</action>
+
+<!--Member-->
+		<action name="viewMember" class="kr.or.kosta.member.MemberService" method="viewMember">
+			<result name="success">/member/viewRecipe.jsp</result>
+		</action>
+		
+		<action name="login" class="kr.or.kosta.member.MemberService" method="login">			
+			<param name="aliases">
+				#{ 'memberid':'member.memberid',
+				   'password':'member.password'
+				  }
+			</param>	
+			<result name="success" type="chain">viewRecipeList</result>
+			<result name="fail">/member/loginFail.jsp</result>			
+		</action>
+		
+		<action name="loginForm" class="kr.or.kosta.member.MemberService" method="loginForm">
+			<result name="success">/member/loginForm.jsp</result>
+		</action>
+		
+		<action name="logout" class="kr.or.kosta.member.MemberService" method="logout">
+			<result name="success">/member/loginForm.jsp</result>
+		</action>
+		
+		<action name="viewMember" class="kr.or.kosta.member.MemberService" method="viewMember">
+			<result name="success">/member/viewMember.jsp</result>
+		</action>
+		
+		<action name="editMemberForm" class="kr.or.kosta.member.MemberService" method="editMemberForm">
+			<result name="success">/member/editMember.jsp</result>
+		</action>
+
+		<action name="editMember" class="kr.or.kosta.member.MemberService" method="editMember">
+			<param name="aliases">
+			#{ 'memberid'	:'memberid',
+			   'memberid'	:'member.memberid',
+			   'password'	:'member.password',
+			   'zipcode'	:'member.zipcode',
+			   'address'	:'member.address',
+			   'straddress' :'member.strAddress',
+			   'email'		:'member.email',
+			   'phonenum'	:'member.phoneNumber',
+			   'telnum' 	:'member.telNumber'
+			 }
+			 </param>
+
+			<result name="success">/member/viewMember.jsp</result>
+		</action>
+		
+		<action name="addMemberForm" class="kr.or.kosta.member.MemberService" method="addMemberForm">
+			<result name="success">/member/addMember.jsp</result>
+		</action>
+		
+		<action name="addMember" class="kr.or.kosta.member.MemberService" method="addMember">
+			<param name="aliases">
+			#{  'memberid'	:'memberid',
+				'memberid'	:'member.memberid',
+				'password'	:'member.password',
+				'name'		:'member.name',
+				'reginum'	:'member.regiNumber',
+				'pwhint'	:'member.pwHint',
+				'pwanswer'	:'member.pwAnswer',
+				'zipcode'	:'member.zipcode',
+				'address'	:'member.address',
+				'straddress':'member.strAddress',
+				'email'		:'member.email',
+				'phonenum'	:'member.phoneNumber',
+				'telnum'	:'member.telNumber'
+				}
+			</param>
+			<result name="success">/member/viewMember.jsp</result>
+		</action>
+		
+		<action name="removeMember" class="kr.or.kosta.member.MemberService" method="removeMember">
+			<param name="aliases">
+				#{  'memberid'	:'memberid' }
+			</param>
+			<result name="success" type="chain">viewRecipeList</result>
+		</action>
+		
 	</package>
 	
 </struts>
