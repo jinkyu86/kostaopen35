@@ -61,10 +61,10 @@ $(document).ready(function(){
 			<!--좌측 메뉴 끝 -->
 		<td>
 			<div class="menu_title" ><font size="5">개인정보수정</font></div>
+			 <form id="my_form" action="/moviesystem/editMember.action" method="post">
 			<table class="table_style" style="width:70%">
-		 <form id="my_form" action="/moviesystem/MemberService" method="post">
-		<input type="hidden" name="method" value="editMember"/>
 		
+		 <input type="hidden" name="userNum" value="${LOGIN_MEMBER.userNum}"/>
 		<tr>
 			<td>아이디</td>
 			<td><input type="text" name="userid" value="${LOGIN_MEMBER.userid}"   readOnly="readOnly"/></td>
@@ -105,11 +105,11 @@ $(document).ready(function(){
 				<input type="submit" value="개인정보 수정"/>
 				</td>
 			</tr>
-	</form>
+
 	</table>
+		</form>
 	<table >
-		<form action="/moviesystem/MemberService" method="post">
-			<input type="hidden" name="method" value="dropMemberForm"/>
+		<form action="/moviesystem/dropMemberForm.action" method="post">
 			<tr>
 				<td>
 				<input type="submit" value="회원탈퇴"/>

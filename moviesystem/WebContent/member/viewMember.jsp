@@ -75,12 +75,9 @@
 	</tr>
 		<tr>
 		<td colspan="2">
-			<p align="center">
-				<form action="/moviesystem/MemberService" method="post">
-					<input type="hidden" name="method" value="viewMemberList">
+				<form action="/moviesystem/viewMemberList.action" method="post">
 						<input type="submit" value="목록"/>
-				</form>
-			</p>
+				</form>			
 		</td>
 	</tr>
 </table>

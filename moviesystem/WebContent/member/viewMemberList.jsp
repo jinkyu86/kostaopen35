@@ -37,19 +37,6 @@
 		<td>
 			<div class="menu_title" ><font size="5">Member_List</font>	</div>
 			<table class="table_style" border="1">
-		<%-- table align="right">
-			<form action="/moviesystem/MemberService" method="post">
-			<input type="hidden" name="method" value="searchMemberList">
-				<select name="column">
-					<option value="이름">이름</option>
-					<option value="이메일">이메일</option>
-				</select>
-				<input type="text" name="keyword">
-				<br/>
-				<input type="submit" name="검색"/>
-			</form>
-			</table>--%>
-
 				<tr id="memberlist">
 					<th>회원번호</th>
 					<th>아이디</th>
@@ -63,7 +50,7 @@
 				<c:forEach var="member" items="${MEMBER_LIST}">
 				<tr>
 					<td>${member.userNum}</td>
-					<td><a href="/moviesystem/MemberService?method=viewMember&userid=${member.userid}">
+					<td><a href="/moviesystem/viewMember.action?userNum=${member.userNum}">
 					<font color="blue">${member.userid}</font></a></td>
 					<td>${member.name}</td>
 					<td>${member.email}</td>

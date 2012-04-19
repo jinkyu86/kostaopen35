@@ -43,8 +43,7 @@
 		<td>
 			<div class="menu_title" ><font size="5">Login</font>	</div>
 			<table class="table_style" style="width:50%">
-				<form action="/moviesystem/MemberService" method="post">
-				<input type="hidden" name="method" value="login"/>
+				<form action="/moviesystem/login.action" method="post">
 				<tr>
 					<td>ID:</td>
 					<td><input type="text" name="userid" tabindex="1"></td>
@@ -61,11 +60,11 @@
 		</td>
 			<tr>
 				<td colspan="2">
-				<a href="/moviesystem/MemberService?method=addMemberForm">
+				<a href="/moviesystem/addMemberForm.action">
 				<font size=2 >회원가입 |</font></a>
-				<a href="/moviesystem/MemberService?method=findIdForm">
+				<a href="/moviesystem/findIdForm.action">
 				<font size=2 >아이디</a>
-				/<a href="/moviesystem/MemberService?method=findPwForm">비밀번호</a> 찾기</font>
+				/<a href="/moviesystem/findPwForm.action">비밀번호</a> 찾기</font>
 				</td>
 			</tr>
 		</tr>

@@ -40,8 +40,7 @@
 		<td>
 			<div class="menu_title" ><font size="5">Find Password</font></div>
 			<table class="table_style" style="width:70%">
-				<form action="/moviesystem/MemberService" method="post">
-				<input type="hidden" name="method" value="findPw"/>
+				<form action="/moviesystem/findPw.action" method="post">
 				<tr>
 					<td>아이디</td>
 					<td> <input type="text" name="userid"/></td>

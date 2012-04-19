@@ -36,8 +36,8 @@
 		<td>
 			<div class="menu_title" ><font size="5">회원탈퇴</font></div>
 			<table class="table_style" style="width:70%">
-				<form action="/moviesystem/MemberService" method="post">
-				<input type="hidden" name="method"  value="dropMember"/>
+				<form action="/moviesystem/dropMember.action" method="post">
+				<input type="hidden" name=userNum  value="${LOGIN_MEMBER.userNum}"/>
 				  <tr>
 				  	<td>회원아이디</td>
 				  	<td><input type="text" name="userid"  value="${LOGIN_MEMBER.userid}" readOnly="readOnly"/></td>
@@ -48,7 +48,7 @@
 				  </tr>
 				  <tr>
 					  <td>탈퇴이유</td>
-					  <td><textarea></textarea></td>
+					  <td><textarea name="dropReason"></textarea></td>
 				  </tr>
 			</table>
 			<table>

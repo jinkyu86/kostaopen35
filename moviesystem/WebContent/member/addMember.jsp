@@ -84,8 +84,7 @@
 		<td>
 			<div class="menu_title" ><font size="5">Join</font></div>
 			<table class="table_style" style="width:80%">
-				<form id="my_form" action="/moviesystem/MemberService" method="post">
-				<input type="hidden"  name="method" value="addMember"/>
+				<form id="my_form" action="/moviesystem/addMember.action" method="post">
 				<tr>
 					<td><label>아이디</label></td>
 					<td><input type="text" name="userid" id="userid"/>

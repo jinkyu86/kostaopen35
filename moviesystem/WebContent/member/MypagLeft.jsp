@@ -6,16 +6,16 @@
 
 			<div class="left_menu1">
 				<div id="my_page">&nbsp;&nbsp;Manager Page</div>
-				<div id="member_info">&nbsp;&nbsp;-&nbsp;<a href="/moviesystem/MemberService?method=editMemberForm">Member Info</a></div>
-				<div id="buy_list">&nbsp;&nbsp;-&nbsp;<a href="/moviesystem/BuyService?method=viewBuyList">Buy List</a></div>
-				<div id="cancelable_buy_list">&nbsp;&nbsp;-&nbsp;<a href="/moviesystem/BuyService?method=cancelBuyListForm">Cancel Buy</a></div>
-				<div id="canceled_buy_list">&nbsp;&nbsp;-&nbsp;<a href="/moviesystem/BuyService?method=viewCanceledBuyList">Canceled Buy List</a></div>
-				<div id="reservation_list">&nbsp;&nbsp;-&nbsp;<a href="/moviesystem/ReservationService?method=viewReservationListById">Reservation List</a></div>
+				<div id="member_info">&nbsp;&nbsp;-&nbsp;<a href="/moviesystem/editMemberForm.action">Member Info</a></div>
+				<div id="buy_list">&nbsp;&nbsp;-&nbsp;<a href="/moviesystem/BviewBuyList.action"">Buy List</a></div>
+				<div id="cancelable_buy_list">&nbsp;&nbsp;-&nbsp;<a href="/moviesystem/cancelBuyListForm.action"">Cancel Buy</a></div>
+				<div id="canceled_buy_list">&nbsp;&nbsp;-&nbsp;<a href="/moviesystem/viewCanceledBuyList.action"">Canceled Buy List</a></div>
+				<div id="reservation_list">&nbsp;&nbsp;-&nbsp;<a href="/moviesystem/viewReservationListById.action"">Reservation List</a></div>
 			
 				<c:if  test="${LOGIN_MEMBER.userid=='mmanager'}">
-					<div id="member_manage">&nbsp;&nbsp;-&nbsp;<a href="/moviesystem/MemberService?method=viewMemberList">Member Manage</a></div>
-					<div id="good_management">&nbsp;&nbsp;-&nbsp;<a href="/moviesystem/GoodService?method=viewManageGoodList">Good Management</a></div>
-					<div id="movie_List">&nbsp;&nbsp;-&nbsp;<a href="/moviesystem/MovieService?method=adminMovieList">Movie List</a></div>
+					<div id="member_manage">&nbsp;&nbsp;-&nbsp;<a href="/moviesystem/viewMemberList.action"">Member Manage</a></div>
+					<div id="good_management">&nbsp;&nbsp;-&nbsp;<a href="/moviesystem/viewManageGoodList.action"">Good Management</a></div>
+					<div id="movie_List">&nbsp;&nbsp;-&nbsp;<a href="/moviesystem/adminMovieList.action"">Movie List</a></div>
 				</c:if>
 			</div>
 

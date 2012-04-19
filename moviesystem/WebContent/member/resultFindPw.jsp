@@ -45,8 +45,7 @@
 	</td>
 		<tr>
 	<td>
-		<form action="/moviesystem/MemberService" method="post">
-		<input type="hidden" name="method" value="loginForm"/>
+		<form action="/moviesystem/loginForm.action" method="post">
 	<input type="submit" value="·Î±×ÀÎ"/>
 	</form>
 	</td>

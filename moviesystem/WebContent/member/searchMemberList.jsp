@@ -41,9 +41,7 @@
 			<table class="sch_style" style="margin-bottom:10px;" align="center">
 				<tr>
 					<td align="center" style="padding:5px 5px 5px 5px;width:100%">
-						<form action="/moviesystem/MemberService" method="post">
-						<input type="hidden" name="method" value="searchMemberList">
-	
+						<form action="/moviesystem/searchMemberList.action" method="post">
 							<select name="column">
 								<option value="name">이름</option>
 								<option value="email">이메일</option>
@@ -71,7 +69,7 @@
 				<c:forEach var="member" items="${MEMBER_LIST}">
 				<tr>
 					<td>${member.userNum}</td>
-					<td><a href="/moviesystem/MemberService?method=viewMember&userid=${member.userid}">
+					<td><a href="/moviesystem/viewMember.action?userid=${member.userid}">
 					<font color="blue">${member.userid}</font></a></td>
 					<td>${member.name}</td>
 					<td>${member.email}</td>
