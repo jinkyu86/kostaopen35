@@ -111,7 +111,8 @@
 </select>
 
 <select id="selectBidList" resultMap="selectResultMap">
-	SELECT b.a_num as a_num,
+	SELECT b.bidnum as bidnum,
+				b.a_num as a_num,
 				b.userid as userid,
 				to_char(b.bid_time,'yyyy/mm/dd hh24:mi:ss') as bid_time,
 				b.bid_price as bid_price,

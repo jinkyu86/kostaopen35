@@ -2,6 +2,7 @@ package kr.or.kosta.auction.bid;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,43 +11,82 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.struts2.interceptor.SessionAware;
+
+import com.opensymphony.xwork2.ModelDriven;
+
 import kr.or.kosta.auction.auction.Auction;
 import kr.or.kosta.auction.auction.AuctionDAO;
 import kr.or.kosta.auction.member.Member;
 import kr.or.kosta.auction.member.MemberDAO;
 
-public class BidService extends HttpServlet {
+public class BidService implements ModelDriven,SessionAware{
 	private static final long serialVersionUID = 1L;
 	
-    public BidService() {
+	private Map session;
+	private String ERROR;
+	
+	private String anum;
+	private String userid;
+	
+	private List<Bid> BID_LIST;
+	private Bid bid=new Bid();
+	private Auction auction=new Auction();
+	private Member member=new Member();
+	
+   	public String getERROR() {
+		return ERROR;
+	}
+	public void setERROR(String eRROR) {
+		ERROR = eRROR;
+	}
+	public String getAnum() {
+		return anum;
+	}
+	public void setAnum(String anum) {
+		this.anum = anum;
+	}
+	public String getUserid() {
+		return userid;
+	}
+	public void setUserid(String userid) {
+		this.userid = userid;
+	}
+	public Bid getBid() {
+		return bid;
+	}
+	public void setBid(Bid bid) {
+		this.bid = bid;
+	}
+	public Auction getAuction() {
+		return auction;
+	}
+	public void setAuction(Auction auction) {
+		this.auction = auction;
+	}
+	public Member getMember() {
+		return member;
+	}
+	public void setMember(Member member) {
+		this.member = member;
+	}
+	public List<Bid> getBID_LIST() {
+		return BID_LIST;
+	}
+	public void setBID_LIST(List<Bid> bID_LIST) {
+		BID_LIST = bID_LIST;
+	}
+	
+	public BidService() {
         super();
     }
-    
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doPost(request,response);
+	
+	@Override
+	public Object getModel() {
+		return bid;
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");
-		String method=request.getParameter("method");
-		if(method==null){
-			method="viewBidList";
-		}
-		if("viewBidList".equals(method)){
-			viewBidList(request,response);
-		}else if("addBid".equals(method)){
-			addBid(request,response);
-		}else if("buy".equals(method)){
-			buy(request,response);
-		}else if("moneyBack".equals(method)){
-			moneyBack(request,response);
-		}
-	}
-
-	private void moneyBack(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		String userid=request.getParameter("userid");
-		
+	public String moneyBack() throws Exception {
 		//멤버정보 확인
 		Member member=MemberDAO.selectMember(userid);
 		
@@ -69,20 +109,13 @@ public class BidService extends HttpServlet {
 		//해당 멤버의 moneyback 받음을 표시
 		BidDAO.updateMoneybackById(userid);
 		
-		RequestDispatcher rd=request.getRequestDispatcher("/MemberService?method=viewMember");
-		rd.forward(request, response);
+		return "success";
 	}
 
-	private void buy(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session=request.getSession();
-		Member member=(Member)session.getAttribute("MEMBER");
-		if(member==null){
-			RequestDispatcher rd=request.getRequestDispatcher("/MemberService?method=loginForm");
-			//addBuy 메서드가 끝나고 나서 이동
-			rd.forward(request, response);
-			//메서드 종료
-			return;
-		}
+	public String buy() throws Exception {
+		Member member=(Member)session.get("MEMBER");
+		if(member==null)	return "login";
+		
 		Date date=new Date();
 		int year=date.getYear()+1900;
 		int month=date.getMonth()+1;
@@ -93,9 +126,8 @@ public class BidService extends HttpServlet {
 		int second=date.getSeconds();
 		
 		String sysdate=year+"-"+month+"-"+day+" "+hour+":"+minute+":"+second;
-		String aNum=(String)request.getParameter("aNum");
-		
-		Auction auction=AuctionDAO.selectAuction(aNum);
+				
+		auction=AuctionDAO.selectAuction(anum);
 		
 		//즉시구매가 추출
 		String imPrice=auction.getImPrice();
@@ -106,17 +138,15 @@ public class BidService extends HttpServlet {
 		Long longEmoney=Long.parseLong(downEmoney);
 		//회원의 emoney가 충분하지 않으면 에러메시지 출력
 		if((longEmoney-longImPrice)<0){
-			request.setAttribute("ERROR","emoney가 충분하지 않습니다");
-			RequestDispatcher rd=request.getRequestDispatcher("/AuctionService?method=viewAuction&aNum="+aNum);
-			rd.forward(request, response);
-			return;
+			ERROR="emoney가 충분하지 않습니다";
+			return "success";
 		}
 		
 		//회원 emoney차감
 		longEmoney-=longImPrice;
 		downEmoney=Long.toString(longEmoney);
 		
-		Bid bid=new Bid();
+		bid=new Bid();
 		
 		member.setEmoney(downEmoney);
 		auction.setSold(1);
@@ -134,33 +164,22 @@ public class BidService extends HttpServlet {
 		String userid=bid.getMember().getUserid();
 		
 		//해당 경매 낙찰자의 코인을 환불받은걸로 처리
-		BidDAO.updateMoneybackByIdInAuction(userid, aNum);
+		BidDAO.updateMoneybackByIdInAuction(userid, anum);
 		
-		request.setAttribute("ERROR","구매하셨습니다");
+		ERROR="구매하셨습니다";
 		
-		RequestDispatcher rd=request.getRequestDispatcher("/AuctionService?method=viewAuctionList");
-		rd.forward(request, response);
+		return "success";
 	}
 
-	private void addBid(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session=request.getSession();
-		Member member=(Member)session.getAttribute("MEMBER");
-		if(member==null){
-			RequestDispatcher rd=request.getRequestDispatcher("/MemberService?method=loginForm");
-			//addBuy 메서드가 끝나고 나서 이동
-			rd.forward(request, response);
-			//메서드 종료
-			return;
-		}
-		String aNum=(String)request.getParameter("aNum");
+	public String addBid() throws Exception {
+		Member member=(Member)session.get("MEMBER");
+		if(member==null) return "login";
 		
-		Auction auction=AuctionDAO.selectAuction(aNum);
+		auction=AuctionDAO.selectAuction(anum);
 		
 		//최근 입찰자 입력
 		String userid=member.getUserid();
 		auction.setUserid(userid);
-		
-		Bid bid=new Bid();
 		
 		//입찰가격 10원 증가
 		String upPrice=auction.getCuPrice();
@@ -183,18 +202,17 @@ public class BidService extends HttpServlet {
 		MemberDAO.updateMember(member);		
 		AuctionDAO.updateAuction(auction);
 		
-		RequestDispatcher rd=request.getRequestDispatcher("/AuctionService?method=viewAuction&a_num="+aNum);
-		rd.forward(request, response);
+		return "success";
 	}
 	
-	private void viewBidList(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		List<Bid> bidList=BidDAO.selectBidList();
-		request.setAttribute("BID_LIST", bidList);
-		
-		RequestDispatcher rd=request.getRequestDispatcher("/bid/viewBidList.jsp");
-		rd.forward(request, response);
-		
+	public String viewBidList() throws Exception {
+		BID_LIST=BidDAO.selectBidList();
+		return "success";		
 	}
+	@Override
+	public void setSession(Map<String, Object> session) {
+		this.session=session;		
+	}
+	
 
 }

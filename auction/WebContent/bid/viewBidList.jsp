@@ -35,7 +35,7 @@
 <p align="center">
 	${PAGE_LINK_TAG}
 <p align="center">
-	<a href="/ex20120305/StudentService?method=addStudentForm">학생추가</a>
+	<a href="/auction/addBid.action">입찰추가</a>
 	</p>
 </body>
 </html>
