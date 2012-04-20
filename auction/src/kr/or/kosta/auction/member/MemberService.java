@@ -110,7 +110,8 @@ public class MemberService implements ModelDriven, SessionAware  {
 	}
 
 	public String viewMember() throws Exception {
-		MEMBER = MemberDAO.selectMember(userid);
+		Member member=(Member)session.get("MEMBER");
+		MEMBER = MemberDAO.selectMember(member.getUserid());
 		return "success";
 
 	}
