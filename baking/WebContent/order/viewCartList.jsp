@@ -69,9 +69,8 @@
 			<td>${order.good.name}</td>
 			<td><img src="/baking/img/${order.good.good_division.gName }/${order.good.img}"/></td>
 			<td>
-			<form action="/baking/OrderService" method="post">
+			<form action="/baking/editCart.action" method="post">
 			<input type="text" name="qty" value="${order.qty}"/>
-			<input type="hidden" name="method" value="editCart"/>
 			<input type="hidden" name="index" value="${i.count-1}"/>
 			<br/>
 			<input type="submit" value="수정"/>
@@ -80,8 +79,7 @@
 			<td>${order.good.option}</td>
 			<td>${order.qty*order.good.goodPrice}</td>
 			<td>
-				<form action="/baking/OrderService" method="post">
-				<input type="hidden" name="method" value="removeCart"/>
+				<form action="/baking/removeCart.action" method="post">
 				<input type="hidden" name="index" value="${i.count-1}"/>
 				<input type="submit" value="장바구니삭제"/>
 				</form>
@@ -90,8 +88,7 @@
 		</c:forEach>
 	</table>
 	<center>
-		<form action="/baking/OrderService" method="post">
-			<input type="hidden" name="method" value="addOrderForm"/>
+		<form action="/baking/addOrderForm.action" method="post">
 			  <input type="submit" value="구매하러가기"/> 
 		</form>
 	</center>

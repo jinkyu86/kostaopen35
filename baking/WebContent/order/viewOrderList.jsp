@@ -66,7 +66,7 @@
 	<c:forEach var="order" items="${ORDER_LIST}">
 	<tr>
 		<td>
-		<a href="/baking/OrderService?method=viewOrder&orderNum=${order.orderNum}">
+		<a href="/baking/viewOrder.action?orderNum=${order.orderNum}">
 		${order.orderNum}</a>
 		</td>
 		<td>${order.memberid}</td>

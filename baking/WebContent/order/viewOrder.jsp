@@ -56,47 +56,47 @@
 <table border="1" align="center">
 	<tr>
 		<td colspan="2" align="center">
-		${ORDER.good.name}</td>
+		${order.good.name}</td>
 	</tr>
 	<tr rowspan="3">
 		<td>
-		<c:forEach var="order" items="${sessionScope.CART_LIST}" varStatus="i">
+		
 			<img src="/baking/img/${order.good.good_division.gName}/${order.good.img}"/>
-		</c:forEach>
+		
 		</td>
-		<td>수량:${ORDER.qty}
+		<td>수량:${order.qty}
 		<br/>
-		가격:${ORDER.price}</td>
+		가격:${order.price}</td>
 	<tr>
 		<td>구매자</td>
-		<td>${ORDER.member.name}</td>
+		<td>${order.member.name}</td>
 	</tr>
 	<tr>
 		<td>우편번호</td>
-		<td>${ORDER.member.zipcode}</td>
+		<td>${order.member.zipcode}</td>
 	</tr>
 	<tr>
 		<td rowspan="2">주소</td>
-		<td>${ORDER.member.address}</td>
+		<td>${order.member.address}</td>
 	</tr>
 	<tr>
-		<td>${ORDER.member.strAddress}</td>
+		<td>${order.member.strAddress}</td>
 	</tr>
 	<tr>
 		<td>휴대번호</td>
-		<td>${ORDER.member.phoneNumber}</td>
+		<td>${order.member.phoneNumber}</td>
 	</tr>
 	<tr>
 		<td>전화번호</td>
-		<td>${ORDER.member.telNumber}</td>
+		<td>${order.member.telNumber}</td>
 	</tr>
 	<tr>
 		<td>아이디</td>
-		<td>${ORDER.memberid}</td>
+		<td>${order.memberid}</td>
 	</tr>
 </table>
 	<p align="center">
-		<a href="/baking/GoodService?method=viewGoodList">
+		<a href="/baking/viewGoodList.action">
 		쇼핑하기
 		</a>
 	</p>

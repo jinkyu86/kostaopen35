@@ -246,8 +246,7 @@ function no(){
 </table>
 </form>
 <center>
-<form action="/baking/OrderService" id="buy" method="post">
-	<input type="hidden" name="method" value="addOrder"/>
+<form action="/baking/addOrder.action" id="buy" method="post">
 	<input type="submit" value="구매하기"/>
 </form>
 </center>
