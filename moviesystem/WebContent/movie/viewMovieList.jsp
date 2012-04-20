@@ -117,7 +117,7 @@
 			<table class="sch_style" style="margin-bottom:10px;" align="center">
 				<tr>
 					<td align="center" style="padding:5px 5px 5px 5px;width:100%">
-						<form method="post" name="sch_form" id="sch_form" action="/moviesystem/MovieService">
+						<form method="post" name="sch_form" id="sch_form" action="/moviesystem/searchMovieList.action">
 							<input type="hidden" name="method" value="searchMovieList">
 							<input type="hidden" name="gubun" value="${gubun}">
 							
