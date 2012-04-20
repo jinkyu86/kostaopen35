@@ -40,7 +40,7 @@ function check_display(obj){
 function memcheck(memid){
 	if(memid!='mmanager'){
 		alert('접근이 제한된 페이지입니다.');
-		location.href='/moviesystem/MovieService'
+		location.href='/moviesystem/main.action'
 	}
 }
 var loginsession = '${sessionScope.LOGIN_MEMBER}';
@@ -50,12 +50,12 @@ $(document).ready(function(){
 	menu_hover('buy',3);
 	
 	if(loginsession==null || loginsession==''){
-		$('#login').append('<a href="/moviesystem/MemberService?method=loginForm">login</a>');
-		$('#join').append('<a href="/moviesystem/MemberService?method=addMemberForm">join</a>');
-		$('#mypage').append('<a href="/moviesystem/MemberService?method=mypage">MyPage</a>');
+		$('#login').append('<a href="/moviesystem/loginForm.action">login</a>');
+		$('#join').append('<a href="/moviesystem/addMemberForm.action">join</a>');
+		$('#mypage').append('<a href="/moviesystem/mypage.action">MyPage</a>');
 	}else{
-		$('#login').append('<a href="/moviesystem/MemberService?method=logoutMember">logout</a>');
-		$('#join').append('<a href="/moviesystem/MemberService?method=editMemberForm">MemberInfo</a>');
-		$('#mypage').append('<a href="/moviesystem/MemberService?method=mypage">MyPage</a>');
+		$('#login').append('<a href="/moviesystem/logoutMember.action">logout</a>');
+		$('#join').append('<a href="/moviesystem/editMemberForm.action">MemberInfo</a>');
+		$('#mypage').append('<a href="/moviesystem/mypage.action">MyPage</a>');
 	}
 });
