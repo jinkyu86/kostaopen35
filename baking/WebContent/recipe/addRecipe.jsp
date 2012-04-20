@@ -34,7 +34,7 @@
                         required: true,
 						minlength:1
                     },
-					content: {
+					content1: {
 						required: true,
 						minlength:1
                     }
@@ -48,7 +48,7 @@
                         required: '레시피재료를 입력해주세요.',
 						minlength:'레시피재료를 입력해주세요'
                     },
-                    content: {
+                    content1: {
                     	required: '레시피설명을 입력해주세요.',
 						minlength:'레시피설명을 입력해주세요'
                     }
@@ -60,31 +60,34 @@
 		$(document).ready(function () {
 			 $('#uplodify').uploadify({
 			 	cancelImg: '/baking/uploadify/cancel.png',
-        		uploader: '/baking/uploadify/uploadify.swf',
-        		script: '/baking/UploadServlet',
-        		multi: true,
-        		auto: false,
+       		uploader: '/baking/uploadify/uploadify.swf',
+       		script: '/baking/addRecipe.action',
+       		multi: true,
+       		auto: false,
+       		fileDataName:'file',
 			  fileExt     : '*.jpg;*.jpeg;*.gif;*.png',
- 			  fileDesc    : 'Web Image Files (.jpg, .gif, .png)',
+			  fileDesc    : 'Web Image Files (.jpg, .gif, .png)',
 			  buttonText:'SELECT PHOTO',
 			  onComplete: function(event, queueID, fileObj,
 			             response, data){
-			  	alert(response+"를 서버에 저장 했습니다.");
-				//id가 photo인 객체선택 $('photo')
-				//value속성 수정  val(수정하고싶은값)
-				$('#photo').val(response);
-				//my_form의 action설정된 서블렛으로 입력정보
-				//전송
-				$('#insert_form').submit();
-			   }
-			   					
+			  	alert("이미지를 서버에 저장 했습니다.");
+			  $(location).attr("href","/baking/viewRecipeList.action"); 
+			  <%--전체 물건 리스트로 페이지 이동--%>
+			  }
 		});
-			
-			    $('#addPhoto').submit(function (event) {
-			    	var selectData=$('#division').val();
+			 $('#addRecipe').click(function (event) {
+			    	var title= $("#title").val();
+			        var division=$("#division").val();
+			    	var material=$("#material").val();
+			    	var content1=$("#content1").val();
 
-			    	$('#uplodify').uploadifySettings('scriptData', { 'code1': selectData });
-			       $('#uplodify').uploadifyUpload();
+			    	<%--파일전송시 이름/설명/가격 전송 설정--%>
+			    	$('#uplodify').uploadifySettings(
+			    		'scriptData',{
+			    			'title':title, 'division':division, 'material':material, 'content1':content1
+			    		});
+			    	
+			    	$('#uplodify').uploadifyUpload();
 			    	 event.preventDefault();
 			    });
 		});
@@ -136,18 +139,16 @@
 <!-- RECIPE:레시피명, 레시피재료 ,레시피설명 RECIPE_PHOTO:레시피사진 RECIPE_GOODLIST:레시피관련상품 -->
 
 	<ul class="column">
-	
-		<form id="insert_form" action="" method="post">
-		<input type="hidden" name="method" value="addRecipe" />
-		<input type="hidden"  name="photo" id="photo" value=""/>
-		
+
+		<form id="insert_form" action="/baking/addRecipe.action" method="post">
+
 		<table border="1" align="center" width="500px"> 
 			<tr>
 				<td colspan="2">레시피 추가</td>
 			</tr>
 			<tr>
 				<td>레시피명</td>
-				<td><input type="text" name="title" size=60/></td>
+				<td><input type="text" name="title" size=60 id="title"/></td>
 			</tr>
 			<tr>
 				
@@ -164,23 +165,24 @@
 			</tr>
 			<tr>
 				<td>레시피재료</td>
-				<td><textarea cols="47" rows="6" name="material"></textarea></td>
+				<td><textarea cols="47" rows="6" name="material" id="material"></textarea></td>
 			</tr>
 			<tr>
 				<td>레시피준비</td>
-				<td><textarea cols="47" rows="6" name="content"></textarea></td>
+				<td><textarea cols="47" rows="6" name="content1" id="content1"></textarea></td>
 			</tr>
 			<tr>
 				<td>리스트이미지</td>
-				<td><input type="file" name="file" id="uplodify" /></td>
+				<td><input type="file" name="file" id="uplodify" /></td>x
 			</tr>
 			
+				
 		</table>
-		<center>
-		<input type="submit" value="레시피등록" id="addPhoto"/>
-		<input type="reset" value="취소"/>
-		</center>
 		</form>
+		<center>
+	  	  	<input type="button"  id="addRecipe"  value="레시피등록"/>
+		</center>
+		
 	</ul>	
 </section>
 	
