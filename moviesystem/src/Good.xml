@@ -5,6 +5,7 @@
 	
 <mapper namespace="Good">
 <parameterMap type="kr.or.kosta.moviesystem.good.Good" id="insertParameterMap">
+	<parameter property="gnum"/>
 	<parameter property="gname"/>
 	<parameter property="detail"/>
 	<parameter property="gprice"/>
@@ -12,9 +13,12 @@
 </parameterMap>
 
 <insert id="insertGood" parameterMap="insertParameterMap">
+	<selectKey keyProperty="gnum" resultType="java.lang.String" order="BEFORE">
+		select SQ_GOOD.NEXTVAL from dual
+	</selectKey>
 	INSERT INTO good 
 	(g_num,g_name,detail,g_price,photo) 
-	VALUES(SQ_GOOD.NEXTVAL,?,?,?,?)
+	VALUES(?,?,?,?,?)
 </insert>
 	
 <parameterMap type="kr.or.kosta.moviesystem.good.Good" id="updateParameterMap">
