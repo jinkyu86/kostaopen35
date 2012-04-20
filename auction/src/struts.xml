@@ -71,7 +71,7 @@
 					'userid':'member.userid'}
 			</param>
 			<result name="success" type="chain">
-				viewMember
+				auction/viewAuctionList.jsp
 			</result>
 		</action>
 		
@@ -111,7 +111,7 @@
          		 'userid':'member.userid'}
           </param>
           <result name="success" type="chain">
-           viewMember
+           member/viewMember.jsp
           </result>
   </action>
 		
@@ -134,7 +134,7 @@
 			</param>
 		  	<result name="success" type="chain">
 			
-				viewMemberList
+				auction/viewAuctionList.jsp
 			</result>
 		</action>
 		
