@@ -53,15 +53,14 @@
 				<tr>
 					<td>${good.gnum}</td>
 					<td>
-						<a href="/moviesystem/GoodService?method=editGoodForm&gnum=${good.gnum }">
+						<a href="/moviesystem/editGoodForm.action?gnum=${good.gnum }">
 							<img src="/moviesystem/gphoto/${good.photo}" width="100" height="100">
 						</a>
 					</td>
 					<td>${good.gname}</td>
 					<td>${good.gprice}</td>
 					<td>
-						<form action="/moviesystem/GoodService" method="post">
-							<input type="hidden" name="method" value="deleteGood"/>
+						<form action="/moviesystem/deleteGood.action" method="post">
 							<input type="hidden" name="gnum" value="${good.gnum}"/>
 							<input type="submit" value="물건삭제"/>
 						</form>
@@ -78,8 +77,7 @@
 			<table align="center">
 			<tr>
 			<td>
-			<form action="/moviesystem/GoodService" method="post">
-				<input type="hidden" name="method" value="addGoodForm"/>
+			<form action="/moviesystem/addGoodForm.action" method="post">
 				<input type="submit" value="물건추가"/>
 			</form>
 			</td>

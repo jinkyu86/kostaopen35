@@ -63,7 +63,7 @@ $(document).ready(function(){
 		</td>
 		<!-- 좌측 메뉴 끝 -->
 <td>
-<form action="/moviesystem/GoodService" method="post" id="my_form">
+<form action="/moviesystem/editGood.action" method="post" id="my_form">
 <h1 align="center">물건정보수정</h1>
 <table class="table_style" align="center">
 	<tr>
@@ -87,7 +87,6 @@ $(document).ready(function(){
 	</tr>
 </table>
 	
-<input type="hidden" name="method" value="editGood"/>
 <input type="hidden" name="gnum" value="${GOOD.gnum }"/>
 <input type="submit" value="수정하기"/>
 </form>

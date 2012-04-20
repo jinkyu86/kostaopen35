@@ -62,7 +62,7 @@ $(document).ready(function(){
 </script>
 </head>
 <body>
-<table width="90%" align="center">
+<table width="90%" align="center" >
 	<!-- 상단 메뉴 시작 -->
 	<tr>
 		<td colspan="3">
@@ -75,8 +75,9 @@ $(document).ready(function(){
 		<td width=20%>
 		</td>
 		<td>
-			<table class="table_style" align="center">
-				<h1 align="center">장바구니</h1>
+		<h1 align="center">장바구니</h1>
+			<table class="table_style" align="center" >
+			
 				<tr id="top_row">
 					<th width="110">이미지</th>
 					<th>상품명</th>
@@ -92,19 +93,17 @@ $(document).ready(function(){
 					<td>${buy.good.gname}</td>
 					<td>${buy.good.gprice}</td>
 					<td>
-						<form action="/moviesystem/GoodService" method="post" id="my_form">
-							<input type="hidden" name="method" value="editCartList"/>
+						<form action="/moviesystem/editCartList.action" method="post" id="my_form">
 							<input type="text" name="qty${i.count-1}" value="${buy.qty}" size=6/>
 							<input type="submit" value="수량변경"/><br/>
-							<input type="hidden" name="index" value="${i.count-1}"/>	
+							<input type="hidden" name="index"  value="${i.count-1}"/>	
 							<div id="qtymsg${i.count-1}"></div>	
 						</form>
 					</td>	
 					<td>${buy.good.gprice*buy.qty}</td>
 					<td>
-						<form action="/moviesystem/GoodService" method="post">
-							<input type="hidden" name="method"value="removeCartList"/>
-							<input type="hidden" name="index" value="${i.count-1}"/>
+						<form action="/moviesystem/removeCartList.action" method="post">
+							<input type="hidden" name="index"  value="${i.count-1}"/>
 							<input type="submit" value="삭제"/>
 						</form>
 					</td>
@@ -112,21 +111,22 @@ $(document).ready(function(){
 				</c:forEach>
 			</table>
 
-			<table border="0" align="center" width="400">
-				<tr align="center"><br/>
-					<td>
+			<table align="center" width="400">
+				<tr><br/>
+					<td align="center">
 						<c:if test="${sessionScope.CART_LIST[0] ne null}">
-							<form action="/moviesystem/BuyService" method="post" class="my_form">
-								<input type="hidden" name="method" value="addBuy"/>	
+							<form action="/moviesystem/addBuy.action" method="post" class="my_form">
 								<input type="submit" value="결제하기" />
 							</form>
 						</c:if>
 					</td>
 				</tr><br/>
-				<tr>
-					<p align="center">
-						<a href="/moviesystem/GoodService?method=viewGoodList">쇼핑하러가기</a>
+				<tr align="center">
+				<td>
+					<p>
+						<a href="/moviesystem/viewGoodList.action">쇼핑하러가기</a>
 					</p>
+					</td>
 				</tr>
 			</table>		
 		</td>

@@ -69,12 +69,11 @@ $(document).ready(function(){
 </table>
 
 <table border="0" align="center">
-	<form action="/moviesystem/GoodService"method="post" id="my_form" align="center">
-		<input type="hidden"name="method"value="addCartList"/>
-		<input type="hidden"name="gnum"value="${GOOD.gnum}"/>
+	<form action="/moviesystem/addCartList.action"  method="post"  id="my_form"  align="center">
+		<input type="hidden"name="gnum" value="${GOOD.gnum}"/>
 		<tr>
 			<td  width="300" align="center">
-				수량 : <input type="text"name="qty" value="1" id="qty"size="6"/>
+				수량 : <input type="text" name="qty"  value="1" id="qty" size="6"/>
 				<input type="submit" value="장바구니 담기"/>
 			</td>
 		</tr>

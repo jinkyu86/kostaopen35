@@ -37,7 +37,7 @@
 	<tr>
 	<c:forEach var="good" items="${GOOD_LIST}" varStatus="i">	
 			<td align="center">
-				<a href="/moviesystem/GoodService?method=viewGood&gnum=${good.gnum}">
+				<a href="/moviesystem/viewGood.action?gnum=${good.gnum}">
 					<img src="/moviesystem/gphoto/${good.photo}" width="200" height="200"><br/>
 				</a>
 				상품명:${good.gname}<br/>
@@ -53,8 +53,7 @@
 
 <table align="center" border="0">
 	<tr align="center">		
-		<form action="/moviesystem/GoodService" method="post">
-			<input type="hidden" name="method" value="searchGoodList"/>
+		<form action="/moviesystem/searchGoodList.action" method="post">
 			<td>상품명 : <input type="text" name="keyword"/></td>
 			<td><input type="submit" value="검색"/></td>
 		</form>
