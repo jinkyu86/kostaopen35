@@ -22,6 +22,7 @@
 <parameterMap
    type="kr.or.kosta.betting.member.Member"
    id="updateParameterMap">
+   	<parameter property="name"/>
    	<parameter property="pw"/>
 	<parameter property="email"/>
 	<parameter property="id"/>
@@ -30,7 +31,7 @@
 <update id="updateMember" 
      parameterMap="updateParameterMap">
      UPDATE  member 
-	 SET pw=?,email=?
+	 SET name=?, pw=?,email=?
 	 WHERE id=?
 </update>
 
