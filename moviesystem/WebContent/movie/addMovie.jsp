@@ -19,7 +19,7 @@
 		$('#member_manage').css('background-color','#C4E2FF');
 		$('#movie_List').css('background-color','#EBFBFF');
 		$('#movie_list').click(function(){
-			location.href='/moviesystem/MovieService?method=adminMovieList';
+			location.href='/moviesystem/adminMovieList.action';
 		});
 		$('#cancel').click(function(){history.back();});
 		
