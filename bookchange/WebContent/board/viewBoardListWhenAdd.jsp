@@ -56,8 +56,7 @@
        <td><a href="/bookchange/viewBoard.action?boardNo=${good.boardNo}"><small>${good.boardTitle}</small></a></td>
        <td align="center"><small>${good.condition.conditionIng}</small></td>
        <td>
-       	<form action="/bookchange/ChangeService" method="post" target="main">
-       	<input type="hidden" name="method" value="addChange">
+       	<form action="/bookchange/addChange.action" method="post" target="main">
        	<input type="hidden" name="demandBoardNo" value="${good.boardNo}">
        	<input type="hidden" name="agreeBoardNo" value="${BOARD.boardNo}">
        	<input type="submit" value="교환신청">

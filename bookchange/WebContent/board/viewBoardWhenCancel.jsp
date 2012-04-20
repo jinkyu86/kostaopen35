@@ -47,8 +47,7 @@
 	  <input type="submit" value="교환신청">
 	  </form> --%>
 	  
-	  <form action="/bookchange/ChangeService" method="post">
-	  <input type="hidden" name="method" value="cancelChange">
+	  <form action="/bookchange/cancelChange.action" method="post">
 	   <input type="hidden" name="demandBoardNo" value="${AGREE_BOARD_NO}"><!-- 이게 상대방 게시물 번호 -->
 	   
 	<td> <input type="submit" value="교환신청취소"></td></tr></table>
