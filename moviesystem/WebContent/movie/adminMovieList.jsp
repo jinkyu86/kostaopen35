@@ -81,13 +81,13 @@
 		<td>
 			<!-- 페이지 제목 시작 -->
 			<div class="admin_menu" >
-				<span class="admin_subMenu"  id="movie_total"><a href="/moviesystem/MovieService?method=adminMovieList">전체</a></span>
+				<span class="admin_subMenu"  id="movie_total"><a href="/moviesystem/adminMovieList.action">전체</a></span>
 				<span style="font-color:#000000;">&nbsp;|&nbsp;</span>
-				<span class="admin_subMenu" id="movie_screen"><a href="/moviesystem/MovieService?method=adminMovieList&gubun=screen">상영작</a></span>
+				<span class="admin_subMenu" id="movie_screen"><a href="/moviesystem/adminMovieList.action?gubun=screen">상영작</a></span>
 				<span style="font-color:#000000;">&nbsp;|&nbsp;</span>
-				<span class="admin_subMenu" id="movie_schedule"><a href="/moviesystem/MovieService?method=adminMovieList&gubun=schedule">상영예정작</a></span>
+				<span class="admin_subMenu" id="movie_schedule"><a href="/moviesystem/adminMovieList.action?gubun=schedule">상영예정작</a></span>
 				<span style="font-color:#000000;">&nbsp;|&nbsp;</span>
-				<span class="admin_subMenu" id="movie_rank"><a href="/moviesystem/MovieService?method=adminRankingList">예매 순위</a></span>
+				<span class="admin_subMenu" id="movie_rank"><a href="/moviesystem/adminRankingList.action">예매 순위</a></span>
 			</div>
 			<!-- 페이지 제목 끝 -->
 			
@@ -116,11 +116,11 @@
 			
 			<!-- 영화 리스트 시작 -->
 			<table class="table_style" align="right">
-				<c:forEach var="movieList" items="${MovieList}" varStatus="n">
+				<c:forEach var="movieList" items="${MOVIE_LIST}" varStatus="n">
 				<tr>
 					<td class="movieList_img"><img src="/moviesystem/movieimg/${movieList.poster}" class="poster_style"></td>
 					<td>
-						<a href="/moviesystem/MovieService?method=adminMovie&gubun=${gubun}&mnum=${movieList.mnum}"><b>${movieList.mname}</b></a><br/>
+						<a href="/moviesystem/adminMovie.action?gubun=${gubun}&mnum=${movieList.mnum}"><b>${movieList.mname}</b></a><br/>
 						장르 : ${movieList.genre}&nbsp;&nbsp;&nbsp;<br/>
 						개봉일 : <fmt:formatDate value="${movieList.launchDate}" pattern="yyyy-MM-dd"/><br/>
 					</td>
@@ -142,10 +142,10 @@
 			<table align="center" style="width:100%">
 				<tr>
 					<td align="center" style="width:90%">
-						${page_Link_Tag}
+						${PAGE_LINK_TAG}
 					</td>
 					<td style="font-size:10pt;">
-						<a href="/moviesystem/MovieService?method=addMovieForm">글쓰기</a>
+						<a href="/moviesystem/addMovieForm.action">글쓰기</a>
 					</td>
 				</tr>
 			</table>
