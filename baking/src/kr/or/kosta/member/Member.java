@@ -18,6 +18,15 @@ public class Member {
 	private String phoneNumber;	//핸드폰번호
 	private String telNumber;	//유선전화
 
+//	memberid
+//	password
+//	zipcode
+//	address
+//	straddress	strAddress
+//	email
+//	phonenum	phoneNumber
+//	telnum		telNumber
+	
 	public String getMemberid() {
 		return memberid;
 	}

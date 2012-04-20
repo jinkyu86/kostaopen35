@@ -28,21 +28,21 @@ public class MemberDAOTest {
 //		
 //	}
 	
-//	@Test
-//	public void testUpdateMember(){
-//		Member member = new Member();
-//		member.setMemberid("Test11");
-//		member.setPassword("1234567");
-//		member.setEmail("Test@mail.com");
-//		member.setAddress("Test");
-//		member.setStrAddress("Test");
-//		member.setZipcode("000000");
-//		member.setTelNumber("01000000000");
-//		member.setPhoneNumber("031000000");
-//		
-//		MemberDAO.updateMember(member);
-//		
-//	}
+	@Test
+	public void testUpdateMember(){
+		Member member = new Member();
+		member.setMemberid("Test11");
+		member.setPassword("123456700");
+		member.setEmail("Test@mail.com");
+		member.setAddress("Test");
+		member.setStrAddress("Test");
+		member.setZipcode("000000");
+		member.setTelNumber("01000000000");
+		member.setPhoneNumber("031000000");
+		
+		MemberDAO.updateMember(member);
+		
+	}
 	
 //	@Test
 //	public void testDeleteMember(){

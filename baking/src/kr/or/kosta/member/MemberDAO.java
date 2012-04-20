@@ -52,7 +52,7 @@ public class MemberDAO {
 	}
 	
 	//회원삭제
-	public static void deleteRecipe(String memberId) {
+	public static void deleteMember(String memberId) {
 			SqlSession session=null;
 			try{
 			session = sqlMapper.openSession(true);
