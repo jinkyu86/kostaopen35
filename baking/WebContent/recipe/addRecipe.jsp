@@ -68,25 +68,50 @@
 			  fileExt     : '*.jpg;*.jpeg;*.gif;*.png',
 			  fileDesc    : 'Web Image Files (.jpg, .gif, .png)',
 			  buttonText:'SELECT PHOTO',
-			  onComplete: function(event, queueID, fileObj,
+			  
+			  onAllComplete: function(event, queueID, fileObj,
 			             response, data){
+				  var title= $("#title").val();
+			      var division=$("#division").val();
+			      var material=$("#material").val();
+			      var content1=$("#content1").val();
+			      $.ajax('/baking/addRecipe.action', {
+		        		data:{
+		        			'title':title, 'division':division, 'material':material, 'content1':content1
+			    		    ,'method':'complete'
+		        		},
+		                 success: function (data) {
+		                	 alert("이미지를 서버에 저장 했습니다.");
+		       			  $(location).attr("href","/baking/viewRecipeList.action"); 
+		                 }
+		        	 });
+		         
+			 <%--
 			  	alert("이미지를 서버에 저장 했습니다.");
 			  $(location).attr("href","/baking/viewRecipeList.action"); 
-			  <%--전체 물건 리스트로 페이지 이동--%>
-			  }
+			--%>
+			
+			 }
 		});
 			 $('#addRecipe').click(function (event) {
+				 <%--
 			    	var title= $("#title").val();
 			        var division=$("#division").val();
 			    	var material=$("#material").val();
 			    	var content1=$("#content1").val();
-
+					--%>
 			    	<%--파일전송시 이름/설명/가격 전송 설정--%>
+			    	<%--
 			    	$('#uplodify').uploadifySettings(
 			    		'scriptData',{
 			    			'title':title, 'division':division, 'material':material, 'content1':content1
+			    		    ,'method':'uncomplete'
 			    		});
-			    	
+			    	--%>
+			    	$('#uplodify').uploadifySettings(
+				    		'scriptData',{
+				    			'method':'uncomplete'
+				    		});
 			    	$('#uplodify').uploadifyUpload();
 			    	 event.preventDefault();
 			    });
