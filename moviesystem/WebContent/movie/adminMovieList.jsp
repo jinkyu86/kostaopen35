@@ -18,6 +18,14 @@
 		memcheck('${LOGIN_MEMBER.userid}');
 		$('#member_manage').css('background-color','#C4E2FF');
 		$('#movie_List').css('background-color','#EBFBFF');
+		$('#button').click(function(){
+			if($('#schString').val()==''){
+				alert('검색할 내용을 입력하세요.');
+				$('schString').focus();
+				return false;
+			}
+			$('#sch_form').submit();
+		});
 	});
 </script>
 <c:choose>
@@ -96,7 +104,7 @@
 			<table class="sch_style" style="margin-bottom:10px;" align="center">
 				<tr>
 					<td align="center" style="padding:5px 5px 5px 5px;width:100%">
-						<form method="post" name="sch_form" id="sch_form" action="/moviesystem/MovieService">
+						<form method="post" name="sch_form" id="sch_form" action="/moviesystem/adminMovieListSch.action">
 							<input type="hidden" name="method" value="adminMovieListSch">
 							<input type="hidden" name="gubun" value="${gubun}">
 							
