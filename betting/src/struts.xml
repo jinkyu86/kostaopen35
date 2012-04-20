@@ -277,7 +277,7 @@
 		<action name="cancleBetting" 
 		  class="kr.or.kosta.betting.memberbetdata.MemberBetDataService"
 		  method="cancleBetting">
-		  	<param name="aliases">
+		  	<!--<param name="aliases">
 		  		#{'mbdnum'='mbdnum',
 					'home'='home',
 					'away'='away',
@@ -286,7 +286,7 @@
 					'bmineral'='bmineral',
 					'districtnum'='districtnum'
 					}
-			</param>
+			</param>-->
 		  	<result name="success" type="chain">
 				viewMemberBetDataByIDList
 			</result>
@@ -301,7 +301,7 @@
 		<action name="giveMineral" 
 		  class="kr.or.kosta.betting.memberbetdata.MemberBetDataService"
 		  method="giveMineral">
-		  	<param name="aliases">
+		  	<!--<param name="aliases">
 		  		#{'mbdnum'='mbdnum',
 					'home'='home',
 					'away'='away',
@@ -310,7 +310,7 @@
 					'bmineral'='bmineral',
 					'districtnum'='districtnum'
 					}
-			</param>
+			</param>-->
 			<result name="success" type="chain">
 				viewMBDByIDForm
 			</result>
@@ -322,7 +322,7 @@
 		<action name="recoveryMineral" 
 		  class="kr.or.kosta.betting.memberbetdata.MemberBetDataService"
 		  method="recoveryMineral">
-		  	<param name="aliases">
+		  	<!--<param name="aliases">
 		  		#{'mbdnum'='mbdnum',
 					'home'='home',
 					'away'='away',
@@ -331,7 +331,7 @@
 					'bmineral'='bmineral',
 					'districtnum'='districtnum'
 					}
-			</param>
+			</param>-->
 			<result name="success" type="chain">
 				viewMBDByIDForm
 			</result>
@@ -343,7 +343,7 @@
 		<action name="mineral" 
 		  class="kr.or.kosta.betting.memberbetdata.MemberBetDataService"
 		  method="mineral">
-		  	<!--<param name="aliases">
+		  	<param name="aliases">
 		  		#{'mbdnum'='mbdnum',
 					'home'='home',
 					'away'='away',
@@ -352,7 +352,7 @@
 					'bmineral'='bmineral',
 					'districtnum'='districtnum'
 					}
-			</param>-->
+			</param>
 			<result name="givemineral" type="chain">
 				giveMineral
 			</result>
