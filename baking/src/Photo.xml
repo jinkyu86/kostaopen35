@@ -4,11 +4,7 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 		
 <mapper namespace="Photo">		
-	<parameterMap type="kr.or.kosta.photo.Photo" id="insertParameterMap">
-	   	<parameter property="image"/>
-		<parameter property="good_division.division"/>
-	</parameterMap>
-
+	
 	<resultMap type="kr.or.kosta.photo.Photo" id="selectRecipeResultMap">
 		<result property="p_num"				  column="p_num"/>
 		<result property="recipe_num"			  column="recipe_num"/>
@@ -23,10 +19,19 @@
 		<result property="image"				  column="image"/>
 	</resultMap>
 	
+	<parameterMap type="kr.or.kosta.photo.Photo" id="insertParameterMap">
+	   	<parameter property="p_num"/>
+		<parameter property="recipe_num"/>	
+		<parameter property="image"/>
+		<parameter property="good_division.division"/>
+	</parameterMap>
 
 	<insert id="insertPhoto" parameterMap="insertParameterMap">
+		<selectKey keyProperty="p_num" resultType="java.lang.Integer" order="BEFORE">
+			select photo_seq.nextval from dual
+		</selectKey>
 		INSERT INTO photo(p_num, recipe_num, image, division)
-		VALUES(photo_seq.nextval, #{rerecipe_num}, ?, ?)
+		VALUES(?, ?, ?, ?)
 	</insert>
 	
 	<select id="selectRecipePhotoList" resultMap="selectRecipeResultMap">

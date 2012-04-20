@@ -4,7 +4,7 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 		
 <mapper namespace="Recipe">		
-	<parameterMap type="kr.or.kosta.recipe.Recipe" id="insertParameterMap">
+	<parameterMap  type="kr.or.kosta.recipe.Recipe" id="insertParameterMap">
 	   	<parameter property="recipeNum"/>
 		<parameter property="title"/>
 		<parameter property="content"/>
@@ -42,9 +42,13 @@
 	
 	
 	<insert id="insertRecipe" parameterMap="insertParameterMap">
+		<selectKey keyProperty="recipeNum" resultType="java.lang.Integer" order="BEFORE">
+			select recipe_seq.nextval from dual
+		</selectKey>
 		INSERT INTO RECIPE(recipe_num, title, content, img, material, division)
 		VALUES(?, ?, ?, ?, ?, ?)
 	</insert>
+	
 	
 	<update id="updateRecipe" parameterMap="updateParameterMap">
 		UPDATE RECIPE SET title=?, content=?, img=?, material=?

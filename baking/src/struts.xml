@@ -41,14 +41,18 @@
 			<result name="success">/recipe/addRecipe.jsp</result>
 		</action>
 		
+		
 		<action name="addRecipe" class="kr.or.kosta.recipe.RecipeService" method="addRecipe">
 			<param name="aliases">
-			#{ 'recipeNum':'recipeNum',
-			   'recipeNum':'recipe.num',
-			   'division':'good_division.division'
-			  }	
-			 </param>
-			<result name="success" type="chain">viewRecipe</result>
+			#{'division':'recipe.good_division.division',
+			  'division':'division',
+			  'content1':'recipe.content'
+			  }
+			</param>
+			<result type="stream">
+			  		<param name="inputName">resultStream</param>
+					<param name="contentType">text/html;charset=UTF-8</param>	
+			</result>
 		</action>
 		
 		<action name="editRecipeForm" class="kr.or.kosta.recipe.RecipeService" method="editRecipeForm">
