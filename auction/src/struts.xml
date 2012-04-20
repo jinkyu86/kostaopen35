@@ -111,8 +111,8 @@
          		 'userid':'member.userid'}
           </param>
           <result name="success" type="chain">
-           member/viewMember.jsp
-          </result>
+           viewMember
+            </result>
   </action>
 		
 		<action name="editMemberForm" 
