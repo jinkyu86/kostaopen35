@@ -89,8 +89,9 @@ public class MemberService implements ModelDriven, SessionAware  {
 	}
 
 	public String removeMember() throws Exception {
-
+			
 		MemberDAO.deleteMember(userid);
+		session.remove("MEMBER");
 		return "success";
 	}
 
