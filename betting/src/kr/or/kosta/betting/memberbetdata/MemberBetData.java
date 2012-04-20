@@ -8,7 +8,7 @@ public class MemberBetData {
 	private Betting betting;
 
 	private Member member;
-
+     
 	/**
 	 * 데이터 번호
 	 */

@@ -346,7 +346,7 @@ public class MemberBetDataService implements ModelDriven
 		String result = null;
 		if(member!=null){
 			String ID = member.getId();
-			
+			    
 			MINERAL = MemberDAO.selectMineralByID(ID);
 			RANK = MemberDAO.selectMemberRanking(ID);
 			int check = now.hourCheck(matchtime);

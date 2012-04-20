@@ -18,7 +18,7 @@ public class MemberBetDataDAO {
 				sqlReader=Resources.getResourceAsReader(resource);
 			} catch (IOException e) {
 				e.printStackTrace();
-			}
+			}   
 	}
 	private static SqlSessionFactory sqlMapper =
 			new SqlSessionFactoryBuilder().build(sqlReader);
