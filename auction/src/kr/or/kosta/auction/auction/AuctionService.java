@@ -209,8 +209,7 @@ public class AuctionService implements ModelDriven  {
 		//1.AuctionDAO에서 전체 경매조회 메서드 호출
 		AUCTION_LIST=AuctionDAO.selectAuctionList();
 		SOLD_LIST=AuctionDAO.selectAuctionSoldList();
-		return "success";
-	    
+		return "success";   
 	}
 
 	public String removeAuction() throws Exception{
