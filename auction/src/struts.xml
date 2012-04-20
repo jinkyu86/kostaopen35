@@ -148,10 +148,13 @@
 	    <action name="login" class="kr.or.kosta.auction.member.MemberService"
 	    	    method="login">
 	    	    <param name="aliases">
-		  		#{'userid':'userid',
+		  		#{'userid':'member.userid',
+		  		   'pw':'member.pw',
+		  		  
+		  			'userid':'userid',
 		  		   'pw':'pw',
-		  		   'userid':'member.userid',
-		  		   'pw':'member.pw'}
+		  		   
+		  		   }
 		  		
 			 	</param>
 	    	    <result name="success">
