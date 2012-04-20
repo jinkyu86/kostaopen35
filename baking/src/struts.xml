@@ -148,6 +148,159 @@
 			<result name="success" type="chain">viewRecipeList</result>
 		</action>
 		
+<!--Order-->
+	<action name="viewOrderList" class="kr.or.kosta.order.OrderService" method="viewOrderList">
+			<param name="aliases">
+				#{'memberid':'memberid'}
+			</param>
+			<result name="success">/order/viewOrderList.jsp</result>
+		</action>
+		<action name="viewOrder" class="kr.or.kosta.order.OrderService" method="viewOrder">
+			<param name="aliases">
+				#{'orderNum':'orderNum'}
+			</param>
+			<result name="success">/order/viewOrder.jsp</result>
+		</action>
+		<action name="addOrderForm" class="kr.or.kosta.order.OrderService" method="addOrderForm">
+			<result name="success">/order/addOrder.jsp</result>
+		</action>
+		<action name="addOrder" class="kr.or.kosta.order.OrderService" method="addOrder">
+			<param name="aliases">
+				#{'name':'order.member.name',
+				  'zipcode':'order.member.zipcode',
+				  'address':'order.member.address',
+				  'strAddress':'order.member.strAddress',
+				  'telNumber':'order.member.telNumber',
+				  'phoneNumber':'order.member.phoneNumber',
+				  'email':'order.member.email'}
+			</param>
+			<result name="success" type="chain">viewOrderList</result>
+		</action>
+		<action name="removeCart" class="kr.or.kosta.order.OrderService" method="removeCart">
+			<param name="aliases">
+				#{'qty':'order.qty'}
+			</param>
+			<result name="success">/order/viewCartList.jsp</result>
+		</action>
+		<action name="editCart" class="kr.or.kosta.order.OrderService" method="editCart">
+			<param name="aliases">
+				#{'qty':'qty',
+				  'index':'index'}
+			</param>
+			<result name="success">/order/viewCartList.jsp</result>
+		</action>
+		<action name="CartList" class="kr.or.kosta.order.OrderService" method="CartList">
+			<result name="success" type="chain">viewCartList</result>
+		</action>
+		<action name="viewCartList" class="kr.or.kosta.order.OrderService" method="viewCartList">
+			<param name="aliases">
+				#{'goodNum':'order.good.goodNum',
+				  'qty':'order.qty'}
+			</param>
+			<result name="success">/order/viewCartList.jsp</result>
+		</action>
+		
+<!--Good-->
+	<action name="addGood" class="kr.or.kosta.good.GoodService" 
+			method="addGood">
+				<result type="stream">
+					<param name="inputName">
+						resultStream
+					</param>
+					<param name="contentType">
+						text/html;charset=utf-8
+					</param>
+			</result>
+		</action>
+		<action name="addGoodForm" class="kr.or.kosta.good.GoodService" 
+			method="addGoodForm">
+			<result name="success">/good/addGood.jsp</result>
+		</action>
+		<action name="viewGoodList" class="kr.or.kosta.good.GoodService" 
+			method="viewGoodList">
+		<result name="success">/good/viewGoodList.jsp</result>
+		</action>
+		<action name="viewGood" class="kr.or.kosta.good.GoodService" 
+			method="viewGood">
+				<param name="aliases">
+					#{'goodnum':'goodNum'}
+				</param> 
+			<result name="success">/good/viewGood.jsp</result>
+		</action>
+		<action name="editGood" class="kr.or.kosta.good.GoodService" 
+			method="editGood">
+				<param name="aliases">
+					#{'division':'good.good_division.division',
+					   'goodnum':'goodNum',
+					   'goodnum':'good.goodNum'
+					   }
+				</param>
+			<result name="success" type="chain">viewGood</result>
+		</action>
+		<action name="editGoodForm" class="kr.or.kosta.good.GoodService" 
+			method="editGoodForm">
+				<param name="aliases">
+					#{'goodnum':'goodNum'}
+				</param> 
+			<result name="success">/good/editGood.jsp</result>
+		</action>
+		<action name="removeGood" class="kr.or.kosta.good.GoodService" 
+			method="removeGood">
+				<param name="aliases">
+					#{'goodnum':'goodNum'}
+				</param> 
+
+			<result name="success" type="chain">
+				viewGoodList
+			</result>
+		</action>
+		<action name="viewDivisionGoodList" class="kr.or.kosta.good.GoodService" 
+			method="viewDivisionGoodList">
+				<param name="aliases">
+					#{'division':'good.good_division.division'}
+				</param>
+		<result name="success">/good/viewDivisionGoodList.jsp</result>
+		</action>
+		<action name="viewIndex" class="kr.or.kosta.good.GoodService" 
+			method="viewIndex">
+		<result name="success">index.jsp</result>
+		</action>
+		<action name="login" class="kr.or.kosta.member.MemberService" 
+			method="login">
+				<param name="aliases">
+						#{'userid':'userid',
+						'password':'password'}
+				</param>
+		<result name="success" type="chain">viewIndex</result>
+		<result name="loginFail">/member/loginFail.jsp</result>
+		</action>
+	
+	
+		<action name="viewMyrecipe" class="kr.or.kosta.myrecipe.MyrecipeService" 
+			method="viewMyrecipe">
+				<param name="aliases">
+					#{'boardnum':'boardNum'}
+				</param> 
+			<result name="success">/good/viewGood.jsp</result>
+		</action>
+		<action name="viewMyrecipeList" class="kr.or.kosta.myrecipe.MyrecipeService" 
+			method="viewMyrecipeList">
+		<result name="success">/myrecipe/viewMyrecipeList.jsp</result>
+		</action>
+		<action name="addMyrecipe" class="kr.or.kosta.myrecipe.MyrecipeService" 
+			method="addMyrecipe">
+				<param name="aliases">
+					#{'memberid':'myrecipe.member.memberid',
+						'boardNum':'boardNum',
+						'boardNum':'myrecipe.boardNum'
+						}
+				</param>
+		<result name="success" type="chain">viewMyrecipe</result>
+		</action>
+		<action name="addMyrecipeForm" class="kr.or.kosta.myrecipe.MyrecipeService" 
+			method="addMyrecipeForm">
+		<result name="success">/myrecipe/addMyrecipe.jsp</result>
+		</action>	
 	</package>
 	
 </struts>
