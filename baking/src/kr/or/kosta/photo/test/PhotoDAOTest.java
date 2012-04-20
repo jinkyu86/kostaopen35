@@ -16,26 +16,28 @@ public class PhotoDAOTest {
 //	public void testSelectGoodPhotoList() {
 //		fail("Not yet implemented");
 //	}
+	
 //
-	@Test
-	public void testSelectRecipePhotoList() {
-		ArrayList<Photo> arrayList=(ArrayList<Photo>) PhotoDAO.selectGoodPhotoList(1);
-		for (int i = 0; i < arrayList.size(); i++) {
-			Photo photo=arrayList.get(i);
-			System.out.println(photo);
-		}
-	}
-
 //	@Test
-//	public void testInsertPhoto() {
-//		Photo photo=new Photo();
-//		
-//		photo.setImage("test.jpg");
-//		Good_division good_division =new Good_division();
-//		good_division.setDivision(1);
-//		photo.setGood_division(good_division);
-//		PhotoDAO.insertPhoto(photo,30);
-//		
+//	public void testSelectRecipePhotoList() {
+//		ArrayList<Photo> arrayList=(ArrayList<Photo>) PhotoDAO.selectGoodPhotoList(1);
+//		for (int i = 0; i < arrayList.size(); i++) {
+//			Photo photo=arrayList.get(i);
+//			System.out.println(photo);
+//		}
 //	}
+
+	@Test
+	public void testInsertPhoto() {
+		Photo photo=new Photo();
+		
+		photo.setImage("test.jpg");
+		Good_division good_division =new Good_division();
+		good_division.setDivision(1);
+		photo.setGood_division(good_division);
+		photo.setRecipe_num(30);
+		PhotoDAO.insertPhoto(photo);
+		
+	}
 
 }

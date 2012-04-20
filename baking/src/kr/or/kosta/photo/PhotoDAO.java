@@ -63,11 +63,11 @@ public class PhotoDAO {
 
 	
 	//이미지추가
-	public static void insertPhoto(Photo photo, int recipe_num){
+	public static void insertPhoto(Photo photo){
 		SqlSession session=null;
 		try{
 		session = sqlMapper.openSession(true);
-//		session.insert("Recipe.insertRecipe",recipe_num,photo);
+		session.insert("Photo.insertPhoto",photo);
 
 		}finally{
 			session.close();
