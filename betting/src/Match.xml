@@ -77,9 +77,9 @@
 				   ,away_team_num AS anum
 				   ,a.team_name AS aname
 				   ,a.photo AS aphoto
-				   ,win_team_num AS hnum
-				   ,w.team_name AS name
-				   ,w.photo AS photo
+				   ,win_team_num AS wnum
+				   ,w.team_name AS wname
+				   ,w.photo AS wphoto
 				   ,m.loc_num AS locnum
 				   ,l.loc AS loc
 	FROM match m JOIN team h
@@ -90,7 +90,7 @@
 				ON m.win_team_num=w.team_num
 				JOIN loc l
 				ON  m.loc_num=l.loc_num
-	ORDER BY match_num DESC
+	ORDER BY matchtime DESC
 </select>
 
 <select id="selectMatch" resultMap="selectResultMap">
@@ -103,9 +103,9 @@
 				   ,away_team_num AS anum
 				   ,a.team_name AS aname
 				   ,a.photo AS aphoto
-				   ,win_team_num AS hnum
-				   ,w.team_name AS name
-				   ,w.photo AS photo
+				   ,win_team_num AS wnum
+				   ,w.team_name AS wname
+				   ,w.photo AS wphoto
 				   ,m.loc_num AS locnum
 				   ,l.loc AS loc
 	FROM match m JOIN team h
@@ -130,9 +130,9 @@
 				   ,away_team_num AS anum
 				   ,a.team_name AS aname
 				   ,a.photo AS aphoto
-				   ,win_team_num AS hnum
-				   ,w.team_name AS name
-				   ,w.photo AS photo
+				   ,win_team_num AS wnum
+				   ,w.team_name AS wname
+				   ,w.photo AS wphoto
 				   ,m.loc_num AS locnum
 				   ,l.loc AS loc
 	FROM match m JOIN team h
@@ -144,7 +144,7 @@
 				JOIN loc l
 				ON  m.loc_num=l.loc_num
 	WHERE  TO_CHAR(m.match_time, 'yyyy/mm/dd')=#{matchtime}
-	ORDER BY match_num DESC
+	ORDER BY matchtime DESC
 </select>
 
 <select id="selectMatchCount" resultType="java.lang.Integer">

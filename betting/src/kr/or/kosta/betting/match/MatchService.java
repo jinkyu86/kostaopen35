@@ -452,6 +452,7 @@ public class MatchService implements ModelDriven
 	public String removeMatch() throws Exception {
 		/* default generated stub */;
 		MatchDAO.deleteMatch(matchno);
+		
 		SUCCESS = "경기 데이터를 삭제 하였습니다.";
 		return "success";
 //		String matchNum = request.getParameter("matchno");

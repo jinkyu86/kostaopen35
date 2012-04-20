@@ -1,6 +1,8 @@
 package kr.or.kosta.betting.member;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.List;
 import java.util.Map;
@@ -35,8 +37,16 @@ public class MemberService implements ModelDriven
 	private String PAGE_LINK_TAG;
 	private String id;
 	private List<Member> MEMBER_LIST;
-
+	private InputStream resultStream;
 	
+	public InputStream getResultStream() {
+		return resultStream;
+	}
+
+	public void setResultStream(InputStream resultStream) {
+		this.resultStream = resultStream;
+	}
+
 	public List<Member> getMEMBER_LIST() {
 		return MEMBER_LIST;
 	}
@@ -182,6 +192,7 @@ public class MemberService implements ModelDriven
 
 
 
+	
 	public String viewHome() throws Exception{
 		Member member = (Member)session.get("LOGIN_MEMBER");
 		if(member!=null){
@@ -300,8 +311,7 @@ public class MemberService implements ModelDriven
 //		rd.forward(request, response);
 	}
 
-	public void checkMemberID(HttpServletRequest request,
-			HttpServletResponse response) throws IOException {
+	public String checkMemberID() throws IOException {
 		/* default generated stub */;
 
 		/**
@@ -310,18 +320,27 @@ public class MemberService implements ModelDriven
 		 * @param request
 		 * @param response
 		 */
-
-		String userid = request.getParameter("id");
-		Member checkuserID = MemberDAO.selectMemberByID(userid);
-		response.setContentType("text/html;charset=utf-8");
-		PrintWriter out = response.getWriter();
+		Member checkuserID = MemberDAO.selectMemberByID(id);
+		String msg = null;
 		if (checkuserID == null) {
-			out.print(userid + "는 사용 가능한 아이디 입니다.");
+			msg = id + "는 사용 가능한 아이디 입니다.";
 		} else {
-			out.print(userid + "는 이미 사용중인 아이디 입니다.");
+			msg = id  + "는 이미 사용중인 아이디 입니다.";
 		}
-		out.flush();
-		out.close();
+		byte[] msgArray=msg.getBytes("UTF-8");
+		resultStream = new ByteArrayInputStream(msgArray);
+		return "success";
+//		String userid = request.getParameter("id");
+//		Member checkuserID = MemberDAO.selectMemberByID(userid);
+//		response.setContentType("text/html;charset=utf-8");
+//		PrintWriter out = response.getWriter();
+//		if (checkuserID == null) {
+//			out.print(userid + "는 사용 가능한 아이디 입니다.");
+//		} else {
+//			out.print(userid + "는 이미 사용중인 아이디 입니다.");
+//		}
+//		out.flush();
+//		out.close();
 
 	}
 

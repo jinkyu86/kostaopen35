@@ -16,6 +16,25 @@
 	
 	<package name="root" namespace="/" extends="struts-default">
 		
+		<action name="checkMemberID" 
+		  class="kr.or.kosta.betting.member.MemberService"
+		  method="checkMemberID">
+		  	<param name="aliases">
+		  		#{'id':'id'}
+			</param>
+		   	<!--type="stream":AJAX로 응답-->
+			<result type="stream">
+				<!--응답하려는 메시지의 타입-->
+				<param name="contentType">
+					text/html;charset=UTF-8
+				</param>
+				<!--AJAX로 응답하려는 메시지를 저장하고 있는 속성의 이름-->
+				<param name="inputName">
+					resultStream
+				</param>
+			</result>
+		</action>
+		
 		<action name="loginForm"
 			class="kr.or.kosta.betting.member.MemberService"
 		  method="loginForm">

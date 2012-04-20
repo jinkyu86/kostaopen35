@@ -82,7 +82,7 @@ public class MatchDAOTest {
 	}
 	@Test
 	public void testSelectMatch(){
-		Match match = MatchDAO.selectMatch("10000");
+		Match match = MatchDAO.selectMatch("10233");
 		System.out.println(match);
 	}
 	@Test

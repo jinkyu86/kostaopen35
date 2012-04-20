@@ -25,13 +25,14 @@
    	<parameter property="name"/>
    	<parameter property="pw"/>
 	<parameter property="email"/>
+	<parameter property="mineral"/>
 	<parameter property="id"/>
 </parameterMap>
 
 <update id="updateMember" 
      parameterMap="updateParameterMap">
      UPDATE  member 
-	 SET name=?, pw=?,email=?
+	 SET name=?, pw=?,email=?,mineral=?
 	 WHERE id=?
 </update>
 
