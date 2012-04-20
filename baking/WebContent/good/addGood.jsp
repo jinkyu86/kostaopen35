@@ -60,25 +60,41 @@ pageEncoding="utf-8"%>
 			 $('#uplodify').uploadify({
 			 	cancelImg: '/baking/uploadify/cancel.png',
         		uploader: '/baking/uploadify/uploadify.swf',
-        		script: '/baking/GoodUploadServlet',
+        		script: '/baking/addGood.action',
         		multi: false,
         		auto: false,
+        		fileDataName:'file',
 			 fileExt     : '*.jpg;*.jpeg;*.gif;*.png',
  			  fileDesc    : 'Web Image Files (.jpg, .gif, .png)',
 			  buttonText:'SELECT IMAGE',
 			  onComplete: function(event, queueID, fileObj,
 			             response, data){
-			  	alert(response+"를 서버에 저장 했습니다.");
-				//id가 img인 객체선택 $('img')
-				//value속성 수정  val(수정하고싶은값)
-				$('#img').val(response);
-				//my_form의 action설정된 서블렛으로 입력정보
-				//전송
-				$('#my_form').submit();
-			   }
+				  <%--전체 물건 리스트로 페이지 이동 --%>
+				  $(location).attr("href","/baking/viewGoodList.action");
+			  }
 		});
 			
-			    $('#addGood').click(function (event) {
+			 $('#addGood').click(function (event) {
+			    	<%--물건의 이름 입력값 리턴 --%>
+			    	var name=$("#name").val();
+			    	<%-- 물건의 설명 리턴--%>
+			    	var explantion=$("#explantion").val();
+			    	<%-- 물건의 옵션 리턴--%>
+			    	var option=$("#option").val();
+			    	<%-- 물건의 가격 리턴--%>
+			    	var goodPrice=$("#goodPrice").val();
+			    	<%-- 물건의 수량 리턴--%>
+			    	var qty=$("#qty").val();
+			    	<%-- 상품구분 리턴--%>
+			    	var division=$("#division").val(); 
+			    	<%-- 파일 전송시 이름,설명,가격 전송 설정--%>
+			    	$('#uplodify').uploadifySettings(
+			    		'scriptData',{
+			    			'name':name,'explantion':explantion,
+			    			'option':option,'goodPrice':goodPrice,
+			    			'qty':qty,'division':division
+			    		}		
+			    	);
 			       $('#uplodify').uploadifyUpload();
 			    	 event.preventDefault();
 			    });
@@ -125,37 +141,37 @@ pageEncoding="utf-8"%>
 	<a href="/baking/viewDivisionGoodList.action?division=3">- 초콜릿</a>
 
 	<ul class="column">
-	<form id="my_form" action="/baking/GoodService" method="post">
-	<input type="hidden" name="method" value="addGood">
-	<input type="hidden"  name="img" id="img" value=""/>
+	<form id="my_form" action="/baking/addGood.action" method="post">
+	<!-- <input type="hidden" name="method" value="addGood"> -->
+	<!-- <input type="hidden"  name="img" id="img" value=""/> -->
 		<table border="1" align="center">
 			<tr>
 				<td>상품명</td>
-				<td><input type="text" name="name"></td>
+				<td><input type="text" name="name" id="name"></td>
 			</tr>
 			<tr>	
 				<td>상품설명</td>
-				<td><textarea name="explantion" rows="10" cols="30" ></textarea>
+				<td><textarea name="explantion" rows="10" cols="30" id="explantion"></textarea>
 				</td>
 			</tr>
 			<tr>
 				<td>옵션</td>
-				<td><textarea name="option" rows="10" cols="30" ></textarea>
+				<td><textarea name="option" rows="10" cols="30" id="option"></textarea>
 				</td>
 			</tr>
 			<tr>
 				<td>가격</td>
-				<td><input type="text" name="goodPrice">
+				<td><input type="text" name="goodPrice" id="goodPrice">
 				</td>
 			</tr>
 				<tr>
 				<td>수량</td>
-				<td><input type="text" name="qty">
+				<td><input type="text" name="qty" id="qty">
 				</td>
 			</tr>
 			<tr>
 				<td>상품구분</td>
-				<td><select name="division">
+				<td><select name="division" id="division">
 						<c:forEach var="good_division" items="${DIVISION_LIST}">
 					<option value="${good_division.division}">
 							${good_division.gName}

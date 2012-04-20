@@ -10,9 +10,12 @@ pageEncoding="utf-8"%>
 function deleteGood(){
 	var flag=confirm("이 상품을 삭제하시겠습니까?");
 	if(flag==true){
-		location.href="/baking/GoodService?method=removeGood&goodNum="+${GOOD.goodNum};
+		location.href="/baking/removeGood.action?goodnum="+${GOOD.goodNum};
 		alert("상품이 삭제되었습니다");
 	}
+}
+function editGood(){
+	location.href="/baking/editGoodForm.action?goodnum="+${GOOD.goodNum};
 }
 </script>
 <link rel="stylesheet" href="/baking/styles.css" type="text/css" media="screen" />	
@@ -63,7 +66,8 @@ function deleteGood(){
 	<a href="/baking/viewDivisionGoodList.action?division=3">- 초콜릿</a>
 	<c:if test="${sessionScope.member.memberid=='ADMIN'}">
 		<center>
-		<a href="/baking/GoodService?method=editGoodForm&goodNum=${GOOD.goodNum }"><input type="button" value="상품수정"></a>
+		<%-- <a href="/baking/GoodService?method=editGoodForm&goodNum=${GOOD.goodNum }"><input type="button" value="상품수정"></a> --%>
+		<input type="button" value="상품수정" onclick="editGood()">
 		&nbsp&nbsp<input type="button" onclick="deleteGood()" value="상품삭제">				
 		</center>
 	</c:if>
