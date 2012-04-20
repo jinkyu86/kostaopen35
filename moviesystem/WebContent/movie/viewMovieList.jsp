@@ -136,11 +136,11 @@
 			
 			<!-- 영화 리스트 시작 -->
 			<table class="table_style" align="right">
-				<c:forEach var="movieList" items="${MovieList}" varStatus="n">
+				<c:forEach var="movieList" items="${MOVIE_LIST}" varStatus="n">
 				<tr>
 					<td class="movieList_img"><img src="/moviesystem/movieimg/${movieList.poster}" class="poster_style"></td>
 					<td>
-						<a href="/moviesystem/MovieService?method=viewMovie&gubun=${gubun}&mnum=${movieList.mnum}"><b>${movieList.mname}</b></a><br/>
+						<a href="/moviesystem/viewMovie.action?gubun=${gubun}&mnum=${movieList.mnum}"><b>${movieList.mname}</b></a><br/>
 						장르 : ${movieList.genre}&nbsp;&nbsp;&nbsp;<br/>
 						개봉일 : <fmt:formatDate value="${movieList.launchDate}" pattern="yyyy-MM-dd"/><br/>
 					</td>
@@ -162,7 +162,7 @@
 			<table align="center" style="width:100%">
 				<tr>
 					<td align="center">
-						${page_Link_Tag}
+						${PAGE_LINK_TAG}
 					</td>
 				</tr>
 			</table>
