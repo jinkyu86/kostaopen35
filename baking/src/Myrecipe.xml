@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"      
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    	
+<mapper namespace="Myrecipe">
+	
+<parameterMap id="insertParameterMap" type="kr.or.kosta.myrecipe.Myrecipe">
+	<parameter property="boardNum"/>
+	<parameter property="member.memberid"/>
+	<parameter property="title"/>
+	<parameter property="img"/>
+	<parameter property="content"/>
+</parameterMap>
+	
+<insert id="insertMyrecipe"	 parameterMap="insertParameterMap">
+		<selectKey keyProperty="boardNum"
+			resultType="java.lang.Integer" order="BEFORE">
+			select tb_myrecipe_seq.nextval from dual
+		</selectKey>
+	insert into tb_myrecipe(board_num,memberid,title,regdate,count,img,content)
+	values(?,?,?,sysdate,0,?,?)
+</insert>
+
+
+<resultMap id="resultMapMyrecipeList" type="kr.or.kosta.myrecipe.Myrecipe">
+	<result property="boardNum" column="board_num"/>
+	<result property="member.memberid" column="memberid"/>
+	<result property="title" column="title"/>
+	<result property="date" column="regdate"/>
+	<result property="count" column="count"/>
+	<result property="img" column="img"/>
+	<result property="content" column="content"/>
+</resultMap>
+
+<select id="selectMyrecipeList" resultMap="resultMapMyrecipeList">
+	select board_num,mr.memberid as memberid,title,to_char(regdate,'yyyy-mm-dd hh:mm:ss') as regdate,count,img,content
+	from tb_myrecipe mr,member m
+	where m.memberid=mr.memberid
+</select>
+
+<select id="selectMyrecipeCount" resultType="java.lang.Integer">
+	select count(*) from tb_myrecipe
+</select>
+
+</mapper>
