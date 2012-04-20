@@ -13,7 +13,7 @@ public class AuctionDAOTest {
 
 	@Test
 	public void selectAuctionTest() {
-		Auction auction = AuctionDAO.selectAuction("85");
+		Auction auction = AuctionDAO.selectAuction("86");
 		System.out.println(auction);
 	}
 	@Test

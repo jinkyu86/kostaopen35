@@ -16,7 +16,8 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import kr.or.kosta.auction.good.Good;
-import kr.or.kosta.auction.util.ConnectionUtil;
+
+//import kr.or.kosta.auction.util.ConnectionUtil;
 
 public class AuctionDAO {
 
@@ -43,16 +44,18 @@ public class AuctionDAO {
 			session.close();
 		}
 	}
-	public static void updateAuction(Auction auction){
+
+	public static void updateAuction(Auction auction) {
 		SqlSession session = null;
 		try {
 			session = sqlMapper.openSession(true);
 			session.update("Auction.updateAuction", auction);
 		} finally {
 			session.close();
-		}		
+		}
 	}
-	public static void deleteAuction(String aNum){
+
+	public static void deleteAuction(String aNum) {
 		SqlSession session = null;
 		try {
 			session = sqlMapper.openSession(true);
@@ -61,20 +64,23 @@ public class AuctionDAO {
 			session.close();
 		}
 	}
-	public static Auction selectAuction(String aNum){
+
+	public static Auction selectAuction(String aNum) {
 		SqlSession session = null;
 		Auction auction = null;
-		try{
+		try {
 			session = sqlMapper.openSession(true);
 			auction = session.selectOne("Auction.selectAuction", aNum);
 		} finally {
 			session.close();
-		}return auction;
+		}
+		return auction;
 	}
-	public static List<Auction> selectAuctionList(){
+
+	public static List<Auction> selectAuctionList() {
 		SqlSession session = null;
 		List<Auction> auctionList = null;
-		try{
+		try {
 			session = sqlMapper.openSession(true);
 			auctionList = session.selectList("Auction.selectAuctionList");
 		} finally {
@@ -82,21 +88,23 @@ public class AuctionDAO {
 		}
 		return auctionList;
 	}
-	public static List<Auction> selectAuctionSoldById(String userid){
+
+	public static List<Auction> selectAuctionSoldById(String userid) {
 		SqlSession session = null;
 		List<Auction> auction = null;
-		try{
+		try {
 			session = sqlMapper.openSession(true);
-			auction = session.selectList("selectAuctionSoldById",userid);
+			auction = session.selectList("selectAuctionSoldById", userid);
 		} finally {
 			session.close();
 		}
 		return auction;
 	}
-	public static List<Auction> selectAuctionSoldList(){
+
+	public static List<Auction> selectAuctionSoldList() {
 		SqlSession session = null;
 		List<Auction> auctionSoldList = null;
-		try{
+		try {
 			session = sqlMapper.openSession(true);
 			auctionSoldList = session.selectList("selectAuctionSoldList");
 		} finally {
@@ -104,7 +112,69 @@ public class AuctionDAO {
 		}
 		return auctionSoldList;
 	}
+/*
+	public static Auction selectAuction2(String aNum) {
+		Connection con = null;
+		PreparedStatement psmt = null; // 디비 쿼리로 넘기기위한 객체
+		Auction auction = null;
+		con = ConnectionUtil.getConnection();
+		try {
+			psmt = con.prepareStatement("SELECT a.g_num,a.s_price,a.im_price,to_char(a.s_time,'yyyy/mm/dd hh24:mi:ss'),to_char(a.e_time,'yyyy/mm/dd hh24:mi:ss'),a.sold,a.cu_price,a.userid,"
+					+ "g.gname,g.detail,g.img" + " FROM auction a,good g " + " WHERE a.g_num = g.g_num AND a.a_num=?");
+			psmt.setString(1, aNum);
+			ResultSet rs = psmt.executeQuery();
+			if (rs.next()) {
+				String gNum = rs.getString(1);
+				String sPrice = rs.getString(2);
+				String imPrice = rs.getString(3);
+				String sTime = rs.getString(4);
+				String eTime = rs.getString(5);
+				int sold = rs.getInt(6);
+				String cuPrice = rs.getString(7);
+				String userid = rs.getString(8);
+				String gName = rs.getString(9);
+				String detail = rs.getString(10);
+				String img = rs.getString(11);
+
+				Good good = new Good();
+
+				good.setDetail(detail);
+				good.setgName(gName);
+				good.setgNum(gNum);
+				good.setImg(img);
+				auction = new Auction();
+
+				auction.setaNum(aNum);
+				auction.setSold(sold);
+				auction.seteTime(eTime);
+				auction.setsTime(sTime);
+				auction.setCuPrice(cuPrice);
+				auction.setImPrice(imPrice);
+				auction.setsPrice(sPrice);
+				auction.setGood(good);
+				auction.setUserid(userid);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return auction;
+	}
+*/
+	/*
+	 * public static void insertAuction2(Auction auction) { Connection con =
+	 * null; PreparedStatement psmt = null; con =
+	 * ConnectionUtil.getConnection(); try { psmt =
+	 * con.prepareStatement("INSERT INTO AUCTION " + "(g_num," + "s_price," +
+	 * "im_price," + "a_num," + "s_time," + "e_time," + "sold," + "cu_price) " +
+	 * "VALUES(?,?,?,auc_seq.nextval,?,?,'0',?)"); psmt.setString(1,
+	 * auction.getGood().getgNum()); psmt.setString(2, auction.getsPrice());
+	 * psmt.setString(3, auction.getImPrice()); psmt.setString(4,
+	 * auction.getsTime()); psmt.setString(5, auction.geteTime());
+	 * psmt.setString(6,auction.getCuPrice()); psmt.executeUpdate(); } catch
+	 * (Exception e) { e.printStackTrace(); } }
+	 */
 }
+
 /*
  * @param auction
  * 

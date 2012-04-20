@@ -30,8 +30,10 @@ public class AuctionService implements ModelDriven  {
 	    private Auction AUCTION;
 	    private Good GOOD;
 	    private Bid BID;
+	    private String img;
 	    
-	    private Auction auction = new Auction();
+	   
+		private Auction auction = new Auction();
 	    private Good good = new Good();
 	    private List<Auction>AUCTION_LIST;
 	    private List<Auction>SOLD_LIST;
