@@ -46,8 +46,7 @@
         </c:choose>        
 		</td>		
 		<td>
-       		<form action="/bookchange/ChangeService" method="post">
-       		<input type="hidden" name="method" value="completeChange">
+       		<form action="/bookchange/completeChange.action" method="post">
        		<input type="hidden" name="ChangeNo" value="${change.demandBoard.boardNo}">
        		<input type="hidden" name="BoardNo" value="${change.agreeBoard.boardNo}">
        		<input type="hidden" name="conditionResult" value="${change.demandBoard.condition.conditionResult}">
