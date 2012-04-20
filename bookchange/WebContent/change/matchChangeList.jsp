@@ -28,7 +28,7 @@
 	   </tr>
 	  <c:forEach var="change" items="${MATCH_LIST}">
        <tr>
-        <td><img src="/bookchange/bookimg/${change.agreeBoard.boardPhoto}" height="100" width="100"></td>
+        <td><img src="/bookchange/bookimg/${change.demandBoard.boardPhoto}" height="100" width="100"></td>
         <td align="center">
         <a href="/bookchange/BoardService?method=viewMemberInfo&email=${change.agreeBoard.member.email}">${change.agreeBoard.member.email}</a></td>
         <td align="center">
@@ -37,7 +37,7 @@
 		<td align="center">${change.changeDate}</td>
 		<td align="center">
 		<c:choose>
-        <c:when test="${change.demandBoard.condition.conditionResult eq 2}">
+        <c:when test="${change.agreeBoard.condition.conditionResult eq 2}">
                 교환<br>완료<br><font color="red"><b>대기</b></font>
         </c:when>
         <c:otherwise>
