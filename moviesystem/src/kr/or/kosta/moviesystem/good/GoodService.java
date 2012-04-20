@@ -1,6 +1,9 @@
 package kr.or.kosta.moviesystem.good;
 
+import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -14,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.ServletResponseAware;
 import org.apache.struts2.interceptor.SessionAware;
@@ -26,6 +30,7 @@ import kr.or.kosta.moviesystem.buy.BuyDAO;
 import kr.or.kosta.moviesystem.good.Good;
 import kr.or.kosta.moviesystem.good.GoodDAO;
 import kr.or.kosta.moviesystem.member.Member;
+import kr.or.kosta.moviesystem.movie.FileRenamePolicy;
 import kr.or.kosta.moviesystem.util.PageUtil;
 
 public class GoodService implements ModelDriven, ServletContextAware, ServletRequestAware, ServletResponseAware, SessionAware{
@@ -35,6 +40,12 @@ public class GoodService implements ModelDriven, ServletContextAware, ServletReq
 	private HttpServletRequest request;
 	private HttpServletResponse response;
 	private Map session;
+	
+	
+	private File[] file;
+	private String[] fileFileName;
+	private String[] fileContentType;
+	private InputStream resultStream;
 	
 	private int page;
 	private List<Good>GOOD_LIST;
@@ -68,15 +79,51 @@ public class GoodService implements ModelDriven, ServletContextAware, ServletReq
 	}
 	@Override
 	public void setServletContext(ServletContext context) {
-		this.servletContext=context;
-		
+		this.servletContext=context;	
 	}
 
 	public GoodService() {
         super();
     }
 	
-    public String getKeyword() {
+	
+    public File[] getFile() {
+		return file;
+	}
+
+	public void setFile(File[] file) {
+		this.file = file;
+	}
+
+	public String[] getFileFileName() {
+		return fileFileName;
+	}
+
+	public void setFileFileName(String[] fileFileName) {
+		this.fileFileName = fileFileName;
+	}
+
+	public String[] getFileContentType() {
+		return fileContentType;
+	}
+
+	public void setFileContentType(String[] fileContentType) {
+		this.fileContentType = fileContentType;
+	}
+
+	public InputStream getResultStream() {
+		return resultStream;
+	}
+
+	public void setResultStream(InputStream resultStream) {
+		this.resultStream = resultStream;
+	}
+
+	public ServletContext getServletContext() {
+		return servletContext;
+	}
+
+	public String getKeyword() {
 		return keyword;
 	}
 	public void setKeyword(String keyword) {
@@ -303,7 +350,30 @@ public class GoodService implements ModelDriven, ServletContextAware, ServletReq
 		 * @param response
 		 */
 		public String addGood() throws Exception{
+			if(file!=null){
+				//임시파일의 경로와 파일명
+				String tempFileName=file[0].getAbsolutePath();
+				//임시파일의 정보를 가지고있는 파일 객체 생성
+				File tempFile=new File(tempFileName);
+				//gphoto폴더의 진짜 경로 리턴
+				String gphotoRealPath=servletContext.getRealPath("gphoto");
+				//저장하고자 하는 파일의 경로,이름
+				//gphoto진짜 경로+파일의 진짜이름
+				String saveFileName=gphotoRealPath+"/"+fileFileName[0];
+				//저장할 파일의 정보를 가지고있는 객체 생성
+				File saveFile=new File(saveFileName);
+				//저장하고자하는 파일과 같은 이름의 파일이 있으면
+				//번호를 붙여서 리턴
+				saveFile=FileRenamePolicy.rename(saveFile);
+				//tempFile을 saveFile으로 복사
+				FileUtils.copyFile(tempFile,saveFile);
+				//tempFile이 존재한다면 삭제
+				tempFile.deleteOnExit();
+				//good에 파일 명 설정
+				good.setPhoto(saveFile.getName());
+				}
 			gnum=GoodDAO.insertGood(good);
+			resultStream=new ByteArrayInputStream(	"등록완료".getBytes("UTF-8"));
 			return "success";
 		}
 		
