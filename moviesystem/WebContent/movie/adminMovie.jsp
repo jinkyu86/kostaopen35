@@ -21,6 +21,7 @@
 			$('#adminMovie').submit();
 		});
 		$('#edit').click(function(){
+			$('#adminMovie').attr('action','/moviesystem/editMovieForm.action');
 			$('#method').val('editMovieForm');
 			$('#mnum').val('${Movie.mnum}');
 			$('#adminMovie').submit();
@@ -104,24 +105,24 @@
 			<!-- 페이지 제목 끝 -->
 			<table class="table_style" align="right">
 				<tr>
-					<td rowspan="5" style="border-right:1px solid #9191C8;width:210px;" align="center"><img src="/moviesystem/movieimg/${Movie.poster}" class="poster_style2"></td>
-					<td>${Movie.mname}</td>
+					<td rowspan="5" style="border-right:1px solid #9191C8;width:210px;" align="center"><img src="/moviesystem/movieimg/${movie.poster}" class="poster_style2"></td>
+					<td>${movie.mname}</td>
 				</tr>
 				<tr>
-					<td>장르 : ${Movie.genre}</td>
+					<td>장르 : ${movie.genre}</td>
 				</tr>
 				<tr>
-					<td>개봉일 : ${Movie.launchDate}</td>
+					<td>개봉일 : ${movie.launchDate}</td>
 				</tr>
 				<tr>
-					<td>가격 : ${Movie.mprice}</td>
+					<td>가격 : ${movie.mprice}</td>
 				</tr>
 				<tr>
 					<td>
 						<c:choose>
 							<c:when test="${sessionScope.LOGIN_MEMBER eq null}"></c:when>
 							<c:otherwise>
-								<a href="/moviesystem/ScreenTimeService?method=viewScreenTimeListBymnum&mnum=${Movie.mnum}"><span id="reservation" class="button1">예매하기</span></a>
+								<a href="/moviesystem/ScreenTimeService?method=viewScreenTimeListBymnum&mnum=${movie.mnum}"><span id="reservation" class="button1">예매하기</span></a>
 							</c:otherwise>
 						</c:choose>
 					</td>
@@ -131,7 +132,7 @@
 				</tr>
 				<tr>
 					<td colspan="2">줄거리<br/><br/>
-						${Movie.content}	
+						${movie.content}	
 					</td>
 				</tr>
 			</table>
@@ -140,7 +141,7 @@
 	<tr>
 		<td clospan="2">
 			<p align="center">
-				<form action="/moviesystem/MovieService" id="adminMovie" method="post">
+				<form action="/moviesystem/adminMovieList.action" id="adminMovie" method="post">
 					<input type="hidden" name="method" id="method">
 					<input type="hidden" name="gubun" value="${gubun}">
 					<input type="hidden" name="mnum" id="mnum">
