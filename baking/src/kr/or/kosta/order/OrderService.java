@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,6 +13,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.struts2.interceptor.SessionAware;
+
+import com.opensymphony.xwork2.ModelDriven;
+
 import kr.or.kosta.good.Good;
 import kr.or.kosta.good.GoodDAO;
 import kr.or.kosta.member.Member;
@@ -19,69 +24,128 @@ import kr.or.kosta.member.MemberDAO;
 import kr.or.kosta.photo.Photo;
 import kr.or.kosta.photo.PhotoDAO;
 
-public class OrderService extends HttpServlet {
+public class OrderService implements ModelDriven, SessionAware{
+	private Order order;
+	private Map session;
+	private List<Order> ORDERLIST;
+	private String memberid;
+	private int orderNum;
+	private Good good;
+	private int goodNum;
+	private List<Order> cartList;
+	private int putedBuyIndex;
+	private Order putedBuy;
+	private int qty;
+	private Member member;
+	private int index;
 	
+	public int getIndex() {
+		return index;
+	}
+	public void setIndex(int index) {
+		this.index = index;
+	}
+	public Member getMember() {
+		return member;
+	}
+	public void setMember(Member member) {
+		this.member = member;
+	}
+	public int getQty() {
+		return qty;
+	}
+	public void setQty(int qty) {
+		this.qty = qty;
+	}
+	public Order getPutedBuy() {
+		return putedBuy;
+	}
+	public void setPutedBuy(Order putedBuy) {
+		this.putedBuy = putedBuy;
+	}
+	public int getPutedBuyIndex() {
+		return putedBuyIndex;
+	}
+	public void setPutedBuyIndex(int putedBuyIndex) {
+		this.putedBuyIndex = putedBuyIndex;
+	}
+	public List<Order> getCartList() {
+		return cartList;
+	}
+	public void setCartList(List<Order> cartList) {
+		this.cartList = cartList;
+	}
+	public int getGoodNum() {
+		return goodNum;
+	}
+	public void setGoodNum(int goodNum) {
+		this.goodNum = goodNum;
+	}
+	public Good getGood() {
+		return good;
+	}
+	public void setGood(Good good) {
+		this.good = good;
+	}
+	public int getOrderNum() {
+		return orderNum;
+	}
+	public void setOrderNum(int orderNum) {
+		this.orderNum = orderNum;
+	}
+	public String getMemberid() {
+		return memberid;
+	}
+	public void setMemberid(String memberid) {
+		this.memberid = memberid;
+	}
+	public List<Order> getORDERLIST() {
+		return ORDERLIST;
+	}
+	public void setORDERLIST(List<Order> oRDERLIST) {
+		ORDERLIST = oRDERLIST;
+	}
+	public Map getSession() {
+		return session;
+	}
+	public Order getOrder() {
+		return order;
+	}
+	public void setOrder(Order order) {
+		this.order = order;
+	}
+	@Override
+	public Object getModel() {
+		return order;
+	}
+	@Override
+	public void setSession(Map<String, Object> session) {
+		this.session=session;
+	}
 	public OrderService(){
 		super();
 	}
-	
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-		doPost(request, response);
-	}
-	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");
-		String method=request.getParameter("method");
-		
-		if(method==null){
-			method="viewOrderList";
-		}
-		if("viewOrderList".equals(method)){			//아이디를 이용한 주문리스트 조회
-			viewOrderList(request,response);
-		}else if("viewOrder".equals(method)){		//상세주문조회
-			viewOrder(request,response);
-		}else if("addOrder".equals(method)){		//주문하기
-			addOrder(request,response);
-		}else if("addOrderForm".equals(method)){	//주문하기
-			addOrderForm(request,response);
-		}else if("removeCart".equals(method)){		//장바구니 삭제
-			removeCart(request,response);
-		}else if("editCart".equals(method)){		//장바구니 수정
-			editCart(request,response);
-		}else if("viewCartList".equals(method)){	//장바구니
-			viewCartList(request,response);
-		}else if("CartList".equals(method)){		//장바구니
-			CartList(request,response);
-		}
+
+	public String CartList() throws Exception{
+		return "success";
 	}
 
-	private void CartList(HttpServletRequest request,
-			HttpServletResponse response) throws IOException,ServletException{
-		RequestDispatcher rd=request.getRequestDispatcher("/order/viewCartList.jsp");
-		rd.forward(request, response);
-	}
-
-	private void viewCartList(HttpServletRequest request,
-			HttpServletResponse response) throws IOException,ServletException{
-	
-		int goodnum=Integer.parseInt(request.getParameter("goodNum"));
-		int qty=Integer.parseInt(request.getParameter("qty"));
+	public String viewCartList() throws Exception{
+		good=GoodDAO.selectGood(3);
 		
-		Good good=GoodDAO.selectGood(goodnum);
-		
-		Order order=new Order();
+		order=new Order();
 		order.setGood(good);
-		order.setQty(qty);
-		HttpSession session=request.getSession();
-		ArrayList<Order>cartList=null;
-		int putedBuyIndex=-1;
-		if(session.getAttribute("CART_LIST")==null){
+		order.setQty(2);
+		cartList=null;
+		putedBuyIndex=-1;
+		
+		if(session.get("CART_LIST")==null){
 			cartList=new ArrayList<Order>();
 		}else{
-			cartList=(ArrayList)session.getAttribute("CART_LIST");
+			cartList=(List)session.get("CART_LIST");
 			for(int i=0; i<cartList.size(); i++){
-				Order putedBuy=cartList.get(i);
-				if(putedBuy.getGood().getGoodNum()==goodnum){
+				putedBuy=cartList.get(i);
+				if(putedBuy.getGood().getGoodNum()==3){
 					putedBuyIndex=i;
 					break;
 				}
@@ -91,108 +155,76 @@ public class OrderService extends HttpServlet {
 			cartList.add(order);
 		}else{
 			Order putedBuy=cartList.get(putedBuyIndex);
-			putedBuy.setQty(putedBuy.getQty()+qty);
+			putedBuy.setQty(putedBuy.getQty()+2);
 			cartList.set(putedBuyIndex, putedBuy);
 		}
-		session.setAttribute("CART_LIST",cartList);
-		RequestDispatcher rd=request.getRequestDispatcher("/order/viewCartList.jsp");
-		rd.forward(request, response);
+		session.put("CART_LIST",cartList);
+		return "success";
 	}
 
 	//아이디를 이용한 주문리스트 조회
-	public void viewOrderList(HttpServletRequest request,
-			HttpServletResponse response) throws IOException,ServletException{
-		HttpSession session=request.getSession();
-		Member member=(Member)session.getAttribute("LOGIN");
-		String memberid=member.getMemberid();
-		List<Order>orderList=OrderDAO.selectOrderList(memberid);
-		request.setAttribute("ORDER_LIST",orderList);
-		RequestDispatcher rd=request.getRequestDispatcher("/order/viewOrderList.jsp");
-		rd.forward(request, response);
+	public String viewOrderList() throws Exception{
+		memberid="rabin";
+		ORDERLIST=OrderDAO.selectOrderList(memberid);
+		session.put("ORDER_LIST",ORDERLIST);
+		return "success";
 	}
 
 	//주문확인
-	public void viewOrder(HttpServletRequest request,
-			HttpServletResponse response) throws IOException, ServletException{
-		int orderNum=Integer.parseInt(request.getParameter("orderNum"));
-		Order order=OrderDAO.selectOrder(orderNum);
-		request.setAttribute("ORDER",order);
-		RequestDispatcher rd=request.getRequestDispatcher("/order/viewOrder.jsp");
-		rd.forward(request, response);
+	public String viewOrder() throws Exception{
+		order=OrderDAO.selectOrder(orderNum);
+		return "success";
 	}
 
 	//주문하기
-	public void addOrder(HttpServletRequest request,
-			HttpServletResponse response) throws IOException, ServletException{
-		HttpSession session=request.getSession();
-		Member member=(Member)session.getAttribute("LOGIN");
-		
-		ArrayList<Order>cartList=(ArrayList)session.getAttribute("CART_LIST");
+	public String addOrder() throws Exception{
+		cartList=(List)session.get("CART_LIST");
 		for(int i=0; i<cartList.size(); i++){
-			Order order=cartList.get(i);
+			order=cartList.get(i);
 			order.setMember(member);
-			Good good=GoodDAO.selectGood(order.getGood().getGoodNum());
+			good=GoodDAO.selectGood(order.getGood().getGoodNum());
 			good.setQty(good.getQty()-order.getQty());
 			GoodDAO.updateGood(good);
 			OrderDAO.insertOrder(order);
 		}
-		session.removeAttribute("CART_LIST");
-		RequestDispatcher rd=request.getRequestDispatcher("/OrderService?method=viewOrderList");
-		rd.forward(request, response);
+		session.remove("CART_LIST");
+		return "success";
 	}
 
 	//주문하기
-	public void addOrderForm(HttpServletRequest request,
-			HttpServletResponse response) throws IOException, ServletException{
-		
-		HttpSession session=request.getSession();
-		Member member=(Member)session.getAttribute("LOGIN");
-		
-		if(member==null){
-			RequestDispatcher rd=request.getRequestDispatcher("/MemberService?method=loginForm");
-			rd.forward(request, response);
-			return;
-		}
-		
-		Member member1=MemberDAO.selsctMember(member.getMemberid());
-		request.setAttribute("MEMBER",member1);
-		RequestDispatcher rd=request.getRequestDispatcher("order/addOrder.jsp");
-		rd.forward(request, response);
+	public String addOrderForm() throws Exception{
+		member=(Member)session.get("member");
+//		if(member==null){
+//			return "/member/loginForm";
+//		}
+		member=new Member();
+		member=MemberDAO.selsctMember("rabin");
+		session.put("MEMBER", member);
+		return "success";
 	}
 
 	//장바구니 삭제
-	public void removeCart(HttpServletRequest request,
-			HttpServletResponse response) throws IOException,ServletException{
-		
-		int index=Integer.parseInt(request.getParameter("index"));
-		HttpSession session=request.getSession();
-		ArrayList<Order>orderList=(ArrayList)session.getAttribute("CART_LIST");
-		Order order=orderList.get(index);
+	public String removeCart() throws Exception{
+		ORDERLIST=(List)session.get("CART_LIST");
+		order=ORDERLIST.get(index);
 		if(order.getQty()==1){
-			orderList.remove(index);
+			ORDERLIST.remove(index);
 		}else{
-			int qty=order.getQty();
+			qty=order.getQty();
 			order.setQty(qty-1);
-			orderList.set(index,order);
+			ORDERLIST.set(index, order);
 		}
-		session.setAttribute("CART_LIST",orderList);
-		
-		RequestDispatcher rd=request.getRequestDispatcher("/order/viewCartList.jsp");
-		rd.forward(request, response);
+		session.put("CART_LIST", ORDERLIST);
+		return "success";
 	}
 	
 	//장바구니수정
-	public void editCart(HttpServletRequest request,
-			HttpServletResponse response) throws IOException,ServletException{
-		int index=Integer.parseInt(request.getParameter("index"));
-		int qty=Integer.parseInt(request.getParameter("qty"));
-		HttpSession session=request.getSession();
-		ArrayList<Order>cartList=(ArrayList)session.getAttribute("CART_LIST");
-		Order order=cartList.get(index);
+	public String editCart() throws Exception{
+		cartList=(List)session.get("CART_LIST");
+		order=cartList.get(index);
 		order.setQty(qty);
-		cartList.set(index, order);
-		session.setAttribute("CART_LIST",cartList);
-		RequestDispatcher rd=request.getRequestDispatcher("/order/viewCartList.jsp");
-		rd.forward(request, response);
+		cartList.set(index,order);
+		session.put("CART_LIST", cartList);
+		return "success";
 	}
 }
