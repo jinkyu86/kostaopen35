@@ -4,7 +4,7 @@ import kr.or.kosta.betting.loc.Loc;
 import kr.or.kosta.betting.team.Team;
 
 public class Match {
-
+  
 	/**
 	 * 경기 번호
 	 */

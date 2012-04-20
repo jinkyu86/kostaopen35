@@ -1,6 +1,6 @@
 package kr.or.kosta.betting.match;
 
-import java.io.IOException;
+import java.io.IOException;  
 import java.io.Reader;
 import java.util.List;
 
