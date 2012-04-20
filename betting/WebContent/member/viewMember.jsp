@@ -141,6 +141,11 @@
 				<td><input type="text" name="email" value="${MEMBER.email}" />
 				</td>
 			</tr>
+			<tr>
+				<th>Mineral</th>
+				<td><input type="text" name="mineral" value="${MEMBER.mineral}" />
+				</td>
+			</tr>
 		</table>
 		<table border="0" align="center">
 			<tr>

@@ -22,7 +22,7 @@
                     },
                     name: {
                         required: true,
-                        minlength:4
+                        minlength:2
                     },
 					email:{
 						required:true,
@@ -50,9 +50,8 @@
 			
 				var id=$("#id").val();
 				
-				$.ajax('/betting/MemberService', {
-					data:{"method":"checkMemberID"
-						,"id": id
+				$.ajax('/betting/checkMemberID.action', {
+					data:{"id": id
 					},
 					success : function(data) {
 						$('#idcheck').html(data);

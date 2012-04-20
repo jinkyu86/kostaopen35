@@ -122,7 +122,7 @@
 		</nav>
 		<!-- end of top nav -->
 		<section id="content">
-			홈화면
+			<img src="/betting/teamphoto/BASSBALL.JPG "/>
 		</section>
 		</li>
 	</ul>

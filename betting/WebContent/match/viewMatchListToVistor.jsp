@@ -131,7 +131,7 @@
 			<th>어웨이팀</th>
 			<th>경기장소</th>
 			<th>경기시작시간</th>
-			<th>경기결과</th>
+			<th>승리팀</th>
 			<th>스코어</th>
 		</tr>
 		<c:forEach var="match" items="${MATCH_LIST }">

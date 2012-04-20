@@ -153,6 +153,7 @@
 				</a></td>
 			</tr>
 		</table>
+		<input type="hidden" name="mineral" value="${MEMBER.mineral}" />
 	</form>
 		</section>
 		</li>
