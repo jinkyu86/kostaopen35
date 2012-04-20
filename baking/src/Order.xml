@@ -38,14 +38,18 @@
 	<result property="memberid" column="memberid"/>
 	<result property="qty" column="qty"/>
 	<result property="price" column="price"/>
+	<result property="good.good_division.division" column="division"/>
+	<result property="good.good_division.gName" column="dname"/>
 </resultMap>
 <select id="selectOrder"
 	resultMap="selectResultMap">
 		SELECT g.good_num as goodNum,g.name as gname,g.explantion as explantion,g.img as img,
 			   m.name as name,m.zipcode as zipcode,m.address as address,m.str_address as strAddress,m.phone_number as phoneNumber,m.tel_number as telNumber,
-			   o.order_num as orderNum,o.memberid as memberid,o.qty as qty,o.price as price
+			   o.order_num as orderNum,o.memberid as memberid,o.qty as qty,o.price as price,
+			   d.division as division,d.g_name as dname
 		FROM good g JOIN g_order o ON g.good_num=o.good_num
 		JOIN member m ON m.memberid=o.memberid
+		JOIN good_division d ON g.division=d.division
 		WHERE o.order_num=#{order_num}
 </select>
 
