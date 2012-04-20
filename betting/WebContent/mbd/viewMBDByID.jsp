@@ -415,7 +415,7 @@
 	<input type="hidden" name="matchtime" value="${BETTING_HOME.match.matchTime}"/>
 	</form>
 		</section>
-		</li>
+		</li>    
 	</ul>
 	
 </body>
