@@ -133,7 +133,7 @@ public class MemberService implements ModelDriven, SessionAware  {
 	public String login() throws Exception {
 
 		
-		 Member member1 = MemberDAO.selectMember(member.getUserid());
+		Member member1 = MemberDAO.selectMember(member.getUserid());
 		 
 		 String pw=member1.getPw();
 		// 4.3의 리턴값이 null이면
@@ -151,7 +151,7 @@ public class MemberService implements ModelDriven, SessionAware  {
 				// 6.5에서 비밀번호가 일치하면
 				// HttpSession리턴 속성명:LOGIN_MEMBER
 				// 값:3의 객체
-				session.put("MEMBER", member);
+				session.put("MEMBER", member1);
 				
 			}// end else
 		}// end if
