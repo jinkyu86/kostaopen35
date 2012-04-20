@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -24,260 +25,174 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.struts2.util.ServletContextAware;
+
+import com.opensymphony.xwork2.ModelDriven;
 
 import kr.or.kosta.moviesystem.screentime.ScreenTime;
 import kr.or.kosta.moviesystem.screentime.ScreenTimeDAO;
 import kr.or.kosta.moviesystem.util.PageUtil;
 
-public class MovieService extends HttpServlet{
-
+public class MovieService implements ModelDriven, ServletContextAware{
+	private Movie movie = new Movie();
+	private Movie MOVIE;
+	private List<Movie> MOVIE_LIST;
+	private List<Movie> SCREENMOVIE_LIST;
+	private List<Movie> SCHEDULEMOVIE_LIST;
+	private List<Movie> RANKINGMOVIE_LIST;
+	private int page;
+	private String gubun;
+	private String method;
+	private String PAGE_LINK_TAG;
+	private String mnum;
+	private String schCode;
+	private String schString;
+	
 	public MovieService() {
         super();
         // TODO Auto-generated constructor stub
-    }
-	
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doPost(request,response);
 	}
 	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("utf-8");
-		String method = request.getParameter("method");
-		if(method==null){
-			method="Main";
-			//method="viewMovieList";
-		}
-		System.out.println(method);
-		if("viewMovieList".equals(method)){
-			// 영화 리스트 출력 메서드 호출
-			viewMovieList(request, response);
-		}else if("viewMovie".equals(method)){
-			// 영화 내용 출력 메서드 호출
-			viewMovie(request, response);
-		}else if("searchMovieList".equals(method)){
-			// 검색 영화 출력 메서드 호출
-			searchMovieList(request, response);
-		}else if("removeMovie".equals(method)){
-			// 영화 데이터 삭제 메서드 호출
-			removeMovie(request, response);
-		}else if("editMovieForm".equals(method)){
-			editMovieForm(request, response);
-		}else if("editMovie".equals(method)){
-			editMovie(request, response);
-		}else if("addMovieForm".equals(method)){
-			addMovieForm(request, response);
-		}else if("addMovie".equals(method)){
-			addMovie(request, response);
-		}else if("rankingMovieList".equals(method)){
-			rankingMovieList(request, response);
-		}else if("MovieTimeListForm".equals(method)){
-			MovieTimeListForm(request, response);
-		}else if("MovieTimeList".equals(method)){
-			MovieTimeList(request, response);
-		}else if("Main".equals(method)){
-			Main(request, response);
-		}else if("adminMovieList".equals(method)){
-			adminMovieList(request, response);
-		}else if("adminMovieListSch".equals(method)){
-			adminMovieListSch(request, response);
-		}else if("adminRankingList".equals(method)){
-			adminRankingList(request, response);
-		}else if("adminMovie".equals(method)){
-			adminMovie(request, response);
-		}else if("MovieImgUpload".equals(method)){
-			MovieImgUpload(request, response);
-		}
-	}
-	private void MovieImgUpload(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		String tempRealPath = getServletContext().getRealPath("/temp");
-		System.out.println("tempRealPath : "+tempRealPath);
-		
-		// 임시폴더 temp의 정보를 알아내는 객체 생성
-		File tempDirectory = new File(tempRealPath);
-		// temp 폴더가 존재 않하는가?
-		if(!tempDirectory.exists()){
-			// 폴더 생성
-			tempDirectory.mkdir();
-		}
-		// 파일을 저장할 폴더의 절대경로 리턴
-		String uploadRealPath = getServletContext().getRealPath("/movieimg");
-		System.out.println("uploadRealPath : "+ uploadRealPath);
-		
-		//파일 저장 폴더의 정보를 알아냐는 객체 생성
-		File uploadDirectory = new File(uploadRealPath);
-		// 파일 저장 폴더가 존재하지 않는다면
-		if(!uploadDirectory.exists()){
-			// 폴더 생성
-			uploadDirectory.mkdir();
-		}
-		
-		// 임시폴더에 저장할 수 있는 파일 1개 
-		// 최대 사이즈 설정(단위 byte)
-		int fileMaxSize = 1024*1000*1000;//1G
-		// HttpServletRequest request의 파일의 내용을 꺼내서
-		// 임시폴더에 저장
-		// new DiskFileItemFactory(임시파일하나 최대사이즈, 임시파일 폴더)
-		DiskFileItemFactory factory = new DiskFileItemFactory(fileMaxSize, tempDirectory);
-		// 임시 파일로 저장된 정보 리턴 객체
-		ServletFileUpload upload = new ServletFileUpload(factory);
-		//임시 파일의 정보를 저장할 List선언
-		List<FileItem> fileList = null;
-		//임시 파일들의 정보를 리턴
-		try{
-			fileList = upload.parseRequest(request);
-		}catch(FileUploadException e){
-			e.printStackTrace();
-		}
-		
-		String realSaveFileName = null;
-		//임시파일을 복사항 폴더의 절대경로
-		for(int i=0; i<fileList.size(); i++){
-			// 임싶파일 하나의 정보 리턴
-			FileItem file = fileList.get(i);
-			// 파일의 원래 파일의 이름을 리턴
-			String originalFileName = file.getName();
-			System.out.printf("업로드 파일명 : %s\n", originalFileName);
-			if(originalFileName!=null){
-				// 이동할 파일의 경로, 파일명 정보 저장 객체 생성
-				File uploadFile = new File(uploadDirectory+"/"+originalFileName);
-				
-				// 같은 이름의 파일이 존재하면 파일명에 번호를 붙여서 리턴
-				uploadFile = FileRenamePolicy.rename(uploadFile);
-				// 파일 이동
-				try {
-					file.write(uploadFile);
-					// 진짜로 저장한 파일 이름 리턴
-					realSaveFileName = uploadFile.getName();
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		}
-		response.setContentType("text/html;charset=UTF-8");
-		PrintWriter out = response.getWriter();
-		out.println(realSaveFileName);
-		out.flush();
-		out.close();
-		
-	}
-	private void adminMovie(HttpServletRequest request,
-			HttpServletResponse response) throws IOException, ServletException{
-		String mnum = request.getParameter("mnum");
-		String gubun = "total";
-		String method = request.getParameter("method");
-		
-		if(request.getParameter("gubun")!=null){
-			gubun = request.getParameter("gubun");
-		}
-		
-		request.setAttribute("gubun", gubun);
-		request.setAttribute("method", method);
-		
-		Movie movie = MovieDAO.selectMovie(mnum);
-		//System.out.println(movie);
-		request.setAttribute("Movie", movie);
-		
-		RequestDispatcher rd = request.getRequestDispatcher("/movie/adminMovie.jsp");
-		rd.forward(request, response);
-		
-	}
-
-	private void adminRankingList(HttpServletRequest request,
-			HttpServletResponse response) throws IOException, ServletException{
-		List<Movie>movieList = MovieDAO.rankingMovieList();
-		String method = request.getParameter("method");		
-		String pageLinkTag=null;
-		
-		request.setAttribute("MovieList",movieList);
-		
-		request.setAttribute("method", method);
-		request.setAttribute("page_Link_Tag", pageLinkTag);
-		
-		RequestDispatcher rd = request.getRequestDispatcher("/movie/adminMovieList.jsp");
-		rd.forward(request, response);
-		
-	}
-
-	private void adminMovieListSch(HttpServletRequest request,
-			HttpServletResponse response) throws IOException, ServletException{
-		int page = 1;
+	public String adminMovieListSch() throws Exception{
 		int length = 5;
 		int movieCnt = 0;
-		String method = request.getParameter("method");
-		String schCode = request.getParameter("schCode");
-		String schString = request.getParameter("schString");
-		List<Movie>movieList = null;
 		String pageLink = null;
-		String pageLinkTag=null;
-		
-		if(request.getParameter("page")!=null){
-			page = Integer.parseInt(request.getParameter("page"));
+		if(page==0){
+			page = 1;
 		}
-		movieList = MovieDAO.selectMovieListSearch(page, length, schCode, schString);
+		if(method=="" || method == null){
+			method = "adminMovieList";
+		}
+		
+		MOVIE_LIST = MovieDAO.selectMovieListSearch(page, length, schCode, schString);
 		movieCnt = MovieDAO.selectMovieListSearchCnt(schCode, schString);
 		
 		
-		pageLink = "MovieService?method=adminMovieListSch&schCode="+schCode+"&schString="+schString;
-		pageLinkTag = PageUtil.generate(page, movieCnt, length, pageLink);
+		pageLink = "adminMovieListSch.action?schCode="+schCode+"&schString="+schString;
+		PAGE_LINK_TAG = PageUtil.generate(page, movieCnt, length, pageLink);
 		
-		request.setAttribute("schCode",schCode);
-		request.setAttribute("method", method);
-		request.setAttribute("schString",schString);
-		request.setAttribute("MovieList", movieList);
-		request.setAttribute("page_Link_Tag", pageLinkTag);
-		
-		RequestDispatcher rd = request.getRequestDispatcher("/movie/adminMovieList.jsp");
-		rd.forward(request, response);
-		
+		return "success";
 	}
-
-	private void adminMovieList(HttpServletRequest request,
-			HttpServletResponse response) throws IOException, ServletException{
-		int page = 1;
+	
+	public String searchMovieList() throws Exception{
+		/* default generated stub */;
 		int length = 5;
-		String gubun = "total";
-		String method = "adminMovieList";
+		if(page==0){
+			page = 1;
+		}
+		int movieCnt = 0;
 		
-		if(request.getParameter("page")!=null){
-			page = Integer.parseInt(request.getParameter("page"));
-		}
-		if(request.getParameter("gubun")!=null){
-			gubun = request.getParameter("gubun");
-		}
-		if(request.getParameter("method")!=null){
-			method = request.getParameter("method");
-		}
-		request.setAttribute("gubun",gubun);
-		request.setAttribute("method", method);
-		String pageLink = "MovieService?method=adminMovieList&gubun="+gubun;
+		String pageLink = null;
 		
-		List<Movie>movieList = MovieDAO.selectMovieList(page, length, gubun);
-		request.setAttribute("MovieList",movieList);
-
+		MOVIE_LIST = MovieDAO.selectMovieListSearch(page, length, schCode, schString);
+		movieCnt = MovieDAO.selectMovieListSearchCnt(schCode, schString);
+		
+		
+		pageLink = "searchMovieList.action?schCode="+schCode+"&schString="+schString;
+		PAGE_LINK_TAG = PageUtil.generate(page, movieCnt, length, pageLink);
+		
+		return "success";
+	}
+	
+	public String editMovieForm() throws Exception{
+		if(gubun==null || gubun==""){
+			gubun = "total";
+		}
+		
+		movie = MovieDAO.selectMovie(mnum);
+		
+		return "success";
+	}
+	
+	public String addMovieForm() throws Exception{
+		return "success";
+	}
+	
+	public String adminMovie() throws Exception{
+		if(gubun==null || gubun==""){
+			gubun = "total";
+		}
+		
+		movie = MovieDAO.selectMovie(mnum);
+		return "success";
+	}
+	
+	public String adminRankingList() throws Exception{
+		MOVIE_LIST = MovieDAO.rankingMovieList();
+		if(method==null || method==""){
+			method = "adminRankingList";
+		}	
+		String pageLinkTag=null;
+		return "success";
+	}
+	
+	public String adminMovieList() throws Exception{
+		int length = 5;
+		
+		if(page==0){
+			page = 1;
+		}
+		if(gubun=="" || gubun==null){
+			gubun = "total";
+		}
+		
+		if(method==null || method==""){
+			method = "adminMovieList";
+		}
+		
+		String pageLink = "adminMovieList.action?gubun="+gubun;
+		
+		MOVIE_LIST = MovieDAO.selectMovieList(page, length, gubun);
+		
 		int MovieCnt = MovieDAO.selectMovieCount(gubun);
 		
 		//System.out.println(pageLink);
-		String pageLinkTag = PageUtil.generate(page, MovieCnt, length, pageLink);
-		request.setAttribute("page_Link_Tag", pageLinkTag);
+		PAGE_LINK_TAG = PageUtil.generate(page, MovieCnt, length, pageLink);
 		
-		RequestDispatcher rd = request.getRequestDispatcher("/movie/adminMovieList.jsp");
-		rd.forward(request, response);
-		
+		return "success";
 	}
-
-	private void Main(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
-		List<Movie>screenMovieList = MovieDAO.selectMovieList(1, 3, "screen");
-		List<Movie>scheduleMovieList = MovieDAO.selectMovieList(1, 3, "schedule");
-		List<Movie>rankingMovieList = MovieDAO.rankingMovieList();
+	
+	public String viewMovie() throws Exception {
+		if(gubun==null || gubun==""){
+			gubun = "total";
+		}
 		
-		request.setAttribute("screenMovieList", screenMovieList);
-		request.setAttribute("scheduleMovieList", scheduleMovieList);
-		request.setAttribute("rankingMovieList", rankingMovieList);
+		MOVIE = MovieDAO.selectMovie(mnum);
+		return "success";
+	}
+	
+	public String rankingMovieList() throws Exception {
+		MOVIE_LIST = MovieDAO.rankingMovieList();
+		return "success";		
+	}
+	
+	public String viewMovieList() throws Exception {
+		int length = 5;
+		String pageLink = "viewMovieList.action?gubun="+gubun;
+		if(page==0){
+			page = 1;
+		}
+		if(gubun=="" || gubun==null){
+			gubun = "total";
+		}
+		if(method=="" || method==null){
+			method = "viewMovieList";
+		}
+		int MovieCnt = MovieDAO.selectMovieCount(gubun);
 		
-		RequestDispatcher rd = request.getRequestDispatcher("/main.jsp");
-		rd.forward(request,  response);
+		MOVIE_LIST = MovieDAO.selectMovieList(page, length, gubun);
+				
+		//System.out.println(pageLink);
+		PAGE_LINK_TAG = PageUtil.generate(page, MovieCnt, length, pageLink);
+		
+		return "success";
+	}
+	
+	public String main() throws Exception{
+		SCREENMOVIE_LIST = MovieDAO.selectMovieList(1, 3, "screen");
+		SCHEDULEMOVIE_LIST = MovieDAO.selectMovieList(1, 3, "schedule");
+		RANKINGMOVIE_LIST = MovieDAO.rankingMovieList();
+		return "success";
 	}
 
 	private void MovieTimeList(HttpServletRequest request,
@@ -308,20 +223,6 @@ public class MovieService extends HttpServlet{
 		
 	}
 
-	/**
-	 * 영화 순위
-	 * 
-	 * @param request
-	 * @param response
-	 */
-	public void rankingMovieList(HttpServletRequest request,
-			HttpServletResponse response) throws IOException, ServletException {
-		List<Movie>movieList = MovieDAO.rankingMovieList();
-		request.setAttribute("MovieList",movieList);
-		
-		RequestDispatcher rd = request.getRequestDispatcher("/movie/viewMovieRank.jsp");
-		rd.forward(request, response);		
-	}
 	/**
 	 * 영화 추가
 	 * 
@@ -359,20 +260,6 @@ public class MovieService extends HttpServlet{
 		
 		RequestDispatcher rd = request.getRequestDispatcher("/MovieService?method=adminMovieList");
 		rd.forward(request,  response);
-	}
-
-	/**
-	 * 영화를 추가할 수 있는 폼으로 감
-	 * 
-	 * @param request
-	 * @param response
-	 */
-	public void addMovieForm(HttpServletRequest request,
-			HttpServletResponse response) throws IOException, ServletException{
-		String method = request.getParameter("method");
-		request.setAttribute("method", method)
-;		RequestDispatcher rd = request.getRequestDispatcher("/movie/addMovie.jsp");
-		rd.forward(request, response);
 	}
 
 	/**
@@ -421,28 +308,6 @@ public class MovieService extends HttpServlet{
 	}
 
 	/**
-	 * 영화를 수정할 수 있는 폼으로 이동
-	 * 
-	 * @param request
-	 * @param response
-	 */
-	public void editMovieForm(HttpServletRequest request,
-			HttpServletResponse response) throws IOException, ServletException{
-		String mnum = request.getParameter("mnum");
-		String gubun = request.getParameter("gubun");
-		String method = request.getParameter("method");
-		Movie movie = MovieDAO.selectMovie(mnum);
-		
-		request.setAttribute("Movie", movie);
-		request.setAttribute("gubun", gubun);
-		request.setAttribute("mnum", mnum);
-		request.setAttribute("method", method);
-		
-		RequestDispatcher rd = request.getRequestDispatcher("/movie/addMovie.jsp");
-		rd.forward(request, response);
-	}
-
-	/**
 	 * 영화 삭제
 	 * 
 	 * @param request
@@ -460,108 +325,121 @@ public class MovieService extends HttpServlet{
 		rd.forward(request, response);
 	}
 
-	/**
-	 * 검색한 영화의 리스트를 보여주는 기능
-	 * 
-	 * @param request
-	 * @param response
-	 */
-	public void searchMovieList(HttpServletRequest request,
-			HttpServletResponse response) throws IOException, ServletException{
-		/* default generated stub */;
-		int page = 1;
-		int length = 5;
-		int movieCnt = 0;
-		String method = request.getParameter("method");
-		String schCode = request.getParameter("schCode");
-		String schString = request.getParameter("schString");
-		List<Movie>movieList = null;
-		String pageLink = null;
-		String pageLinkTag=null;
-		
-		if(request.getParameter("page")!=null){
-			page = Integer.parseInt(request.getParameter("page"));
-		}
-		movieList = MovieDAO.selectMovieListSearch(page, length, schCode, schString);
-		movieCnt = MovieDAO.selectMovieListSearchCnt(schCode, schString);
-		
-		
-		pageLink = "MovieService?method=searchMovieList&schCode="+schCode+"&schString="+schString;
-		pageLinkTag = PageUtil.generate(page, movieCnt, length, pageLink);
-		
-		request.setAttribute("schCode",schCode);
-		request.setAttribute("method", method);
-		request.setAttribute("schString",schString);
-		request.setAttribute("MovieList", movieList);
-		request.setAttribute("page_Link_Tag", pageLinkTag);
-		
-		RequestDispatcher rd = request.getRequestDispatcher("/movie/viewMovieList.jsp");
-		rd.forward(request, response);
+	/* getter/setter 시작 */
+	public Movie getMovie() {
+		return movie;
+	}
+	
+	public void setMovie(Movie movie) {
+		this.movie = movie;
+	}
+	
+	public List<Movie> getMOVIE_LIST() {
+		return MOVIE_LIST;
 	}
 
-	/**
-	 * 영화목록에서 선택한 영활를 보여주는 기능
-	 * 
-	 * @param request
-	 * @param response
-	 */
-	public void viewMovie(HttpServletRequest request,
-			HttpServletResponse response) throws IOException, ServletException {
-		String mnum = request.getParameter("mnum");
-		String gubun = "total";
-		String method = request.getParameter("method");
-		
-		if(request.getParameter("gubun")!=null){
-			gubun = request.getParameter("gubun");
-		}
-		
-		request.setAttribute("gubun", gubun);
-		request.setAttribute("method", method);
-		
-		Movie movie = MovieDAO.selectMovie(mnum);
-		//System.out.println(movie);
-		request.setAttribute("Movie", movie);
-		
-		RequestDispatcher rd = request.getRequestDispatcher("/movie/viewMovie.jsp");
-		rd.forward(request, response);
+	public void setMOVIE_LIST(List<Movie> mOVIE_LIST) {
+		MOVIE_LIST = mOVIE_LIST;
 	}
 
-	/**
-	 * 전체 영화리스트
-	 * 
-	 * @param request
-	 * @param response
-	 */
-	public void viewMovieList(HttpServletRequest request,
-			HttpServletResponse response) throws IOException, ServletException {
-		int page = 1;
-		int length = 5;
-		String gubun = "total";
-		String method = "viewMovieList";
-		
-		if(request.getParameter("page")!=null){
-			page = Integer.parseInt(request.getParameter("page"));
-		}
-		if(request.getParameter("gubun")!=null){
-			gubun = request.getParameter("gubun");
-		}
-		if(request.getParameter("method")!=null){
-			method = request.getParameter("method");
-		}
-		request.setAttribute("gubun",gubun);
-		request.setAttribute("method", method);
-		String pageLink = "MovieService?method=viewMovieList&gubun="+gubun;
-		
-		List<Movie>movieList = MovieDAO.selectMovieList(page, length, gubun);
-		request.setAttribute("MovieList",movieList);
-
-		int MovieCnt = MovieDAO.selectMovieCount(gubun);
-		
-		//System.out.println(pageLink);
-		String pageLinkTag = PageUtil.generate(page, MovieCnt, length, pageLink);
-		request.setAttribute("page_Link_Tag", pageLinkTag);
-		
-		RequestDispatcher rd = request.getRequestDispatcher("/movie/viewMovieList.jsp");
-		rd.forward(request, response);
+	public List<Movie> getSCREENMOVIE_LIST() {
+		return SCREENMOVIE_LIST;
 	}
+
+	public void setSCREENMOVIE_LIST(List<Movie> sCREENMOVIE_LIST) {
+		SCREENMOVIE_LIST = sCREENMOVIE_LIST;
+	}
+	
+	public List<Movie> getSCHEDULEMOVIE_LIST() {
+		return SCHEDULEMOVIE_LIST;
+	}
+	
+	public void setSCHEDULEMOVIE_LIST(List<Movie> sCHEDULEMOVIE_LIST) {
+		SCHEDULEMOVIE_LIST = sCHEDULEMOVIE_LIST;
+	}
+
+	public List<Movie> getRANKINGMOVIE_LIST() {
+		return RANKINGMOVIE_LIST;
+	}
+
+	public void setRANKINGMOVIE_LIST(List<Movie> rANKINGMOVIE_LIST) {
+		RANKINGMOVIE_LIST = rANKINGMOVIE_LIST;
+	}
+	
+	public int getPage() {
+		return page;
+	}
+
+	public void setPage(int page) {
+		this.page = page;
+	}
+
+	public String getGubun() {
+		return gubun;
+	}
+
+	public void setGubun(String gubun) {
+		this.gubun = gubun;
+	}
+
+	public String getMethod() {
+		return method;
+	}
+
+	public void setMethod(String method) {
+		this.method = method;
+	}
+
+	public String getPAGE_LINK_TAG() {
+		return PAGE_LINK_TAG;
+	}
+
+	public void setPAGE_LINK_TAG(String pAGE_LINK_TAG) {
+		PAGE_LINK_TAG = pAGE_LINK_TAG;
+	}
+	
+
+	public String getMnum() {
+		return mnum;
+	}
+
+	public void setMnum(String mnum) {
+		this.mnum = mnum;
+	}
+
+	public Movie getMOVIE() {
+		return MOVIE;
+	}
+
+	public void setMOVIE(Movie mOVIE) {
+		MOVIE = mOVIE;
+	}
+	
+	public String getSchCode() {
+		return schCode;
+	}
+
+	public void setSchCode(String schCode) {
+		this.schCode = schCode;
+	}
+
+	public String getSchString() {
+		return schString;
+	}
+
+	public void setSchString(String schString) {
+		this.schString = schString;
+	}
+
+	@Override
+	public Object getModel() {
+		// TODO Auto-generated method stub
+		return movie;
+	}
+
+	@Override
+	public void setServletContext(ServletContext arg0) {
+		// TODO Auto-generated method stub
+		
+	}	
 }
