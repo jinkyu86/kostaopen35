@@ -80,10 +80,9 @@
  });
 </script>
 </head>
-<body background="/auction/gphoto/kimth.jpg">
+<body>
 <h1 align="center">경매수정</h1>
-<form action="/auction/AuctionService" method="post" id="my_form">
-		<input type="hidden" name="method" value="editAuction" />
+<form action="/auction/editAuction.action" method="post" id="my_form">
 		<table align="center">
 		<tr>
 			<td>물품번호</td>

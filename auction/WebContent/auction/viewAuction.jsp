@@ -32,7 +32,7 @@
 	});
 </script>
 </head>
-<body background="/auction/gphoto/leemj.jpg"/>
+<body>
 <script type="text/javascript">
 <c:if test="${ERROR!=null}">
 	alert("${ERROR}");
@@ -43,7 +43,7 @@
 		<c:choose>
 			<c:when test="${sessionScope.MEMBER==null}">
 				<p align="right">
-					<a href="/auction/MemberService?method=loginForm">
+					<a href="/auction/loginForm.action">
 					<img src="/auction/menu/login.jpg"/>
 					</a>
 				</p>
@@ -51,7 +51,7 @@
 			<c:otherwise>
 				<p align="right">
 					${sessionScope.MEMBER.name }님<br/>
-					<a href="/auction/MemberService?method=logout">
+					<a href="/auction/logout.action">
 					<img src="/auction/menu/logout.jpg"/>
 					</a>
 				</p>
@@ -60,8 +60,7 @@
 	</li>
 </ui>
 	<table  align="center"  border="1">
-	<form action="/auction/BidService" method="post">
-	<input type="hidden" name="method" value="addBid"/>
+	<form action="/auction/addBid.action" method="post">
 	<input type="hidden" name="aNum" value="${AUCTION.aNum }"/>
 		<tr>
 			<th colspan="7"><h1>입찰 물품</h1></th>
@@ -69,7 +68,8 @@
 		<tr>
 		<td align="center">물품사진</td><td align="center">물품명</td><td align="center">즉시구매가격</td>
 		<td align="center">입찰가격</td><td align="center">경매시작시간</td>
-		<td align="center">경매마감시간</td><c:if test="${AUCTION.sold=='0'}"><td>입찰하기</td></c:if>
+		<td align="center">경매마감시간</td>
+		<c:if test="${AUCTION.sold=='0'}"><td>입찰하기</td></c:if>
 		</tr>
 		<tr>
 			<td align="center"><img src="/auction/gphoto/${AUCTION.good.img}" width="130" height="130"></td>
@@ -88,16 +88,16 @@
 	<li>
 		<p align="center">
 			<c:if test="${AUCTION.sold=='0'}">
-				<a href="/auction/BidService?method=buy&aNum=${AUCTION.aNum }" id="buy">
+				<a href="/auction/buy.action?aNum=${AUCTION.anum }" id="buy">
 					<img src="/auction/menu/immediately.jpg"></a>
 			</c:if>
 			<c:if test="${sessionScope.MEMBER.userid=='admin'}">
-				 <a href="/auction/AuctionService?method=editAuctionForm&aNum=${AUCTION.aNum}">
+				 <a href="/auction/editAuctionForm.action?aNum=${AUCTION.anum}">
 				 	<img src="/auction/menu/editAuction.jpg"></a>
-				 <a href="/auction/AuctionService?method=removeAuction&aNum=${AUCTION.aNum}" id="deleteauction">
+				 <a href="/auction/removeAuction.action?aNum=${AUCTION.anum}" id="deleteauction">
 				 	<img src="/auction/menu/deleteAuction.jpg"></a>
 			</c:if>
-			<a href="/auction/AuctionService?method=viewAuctionList">
+			<a href="/auction/viewAuctionList.action">
 				<img src="/auction/menu/viewAuctionList.jpg"></a>
 		</p>
 	</li>
