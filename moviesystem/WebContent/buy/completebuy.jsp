@@ -41,7 +41,7 @@
 					<td align="center"><h1 >결제가 완료되었습니다.</h1><br/></td>
 				</tr>
 				<tr >	
-					<td align="center"><a href="/moviesystem/BuyService?method=viewBuyList">구매내역 보기</a></td>
+					<td align="center"><a href="/moviesystem/viewBuyList.action">구매내역 보기</a></td>
 				</tr>
 			</table>
 		</td>

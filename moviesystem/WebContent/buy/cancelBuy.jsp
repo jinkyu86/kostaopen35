@@ -39,10 +39,10 @@
 		<!-- 좌측 메뉴 끝 -->
 		
 		<td align="center">
-		
-			<form action="/moviesystem/BuyService" method="post">
+		<h1 align="center">최근 구매 내역</h1>
+			<form action="/moviesystem/cancelBuy.action" method="post">
 			<table class="table_style" align="center">
-				<h1 align="center">최근 구매 내역</h1>
+				
 				<tr id="top_row">
 					<th width="100">구매 번호</th>
 					<th>물건이름</th>
@@ -53,7 +53,7 @@
 					<th>선택</th>
 				</tr>
 		
-				<c:forEach var="buy" items="${CANCELABLE_BUY_LIST}">
+				<c:forEach var="buy" items="${BUY_LIST}">
 				<tr>
 					<td>${buy.buynum}</td>
 					<td>${buy.good.gname}</td>
@@ -65,8 +65,6 @@
 				</tr>
 				</c:forEach>
 			</table>
-			
-			<input type="hidden" name="method" value="cancelBuy"/>
 			<input type="submit" name="delete" value="구매 취소"/>
 			</form>
 			

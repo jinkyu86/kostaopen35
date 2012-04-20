@@ -39,9 +39,9 @@
 		<!-- 좌측 메뉴 끝 -->
 		
 		<td align="center">
-		
+		<h1 align="center">취소 내역</h1>
 		<table class="table_style" align="center">
-	<h1 align="center">취소 내역</h1>
+	
 	<tr id="top_row">
 		<th width="100">구매 번호</th>
 		<th>물건이름</th>
@@ -51,7 +51,7 @@
 		<th>구매일</th>
 		<th>구매취소일</th>
 	</tr>
-	<c:forEach var="buy" items="${CANCELED_BUY_LIST}">
+	<c:forEach var="buy" items="${BUY_LIST}">
 	<tr>
 		<td>${buy.buynum}</td>
 		<td>${buy.good.gname}</td>

@@ -36,9 +36,9 @@
 		</td>
 		<!-- 좌측 메뉴 끝 -->
 		<td align="center">
-		
+		<h1 align="center">구매 내역</h1>
 		<table class="table_style"  align="center">
-	<h1 align="center">구매 내역</h1>
+	
 	<tr id="top_row">
 		<th width="100">구매 번호</th>
 		<th>물건이름</th>
