@@ -5,11 +5,7 @@
 	"http://struts.apache.org/dtds/struts-2.0.dtd">
 
 <struts>
-	<!--사용할 문자열-->
 	<constant name="struts.i18n.encoding" value="utf-8"/>
-	<!--어떤 URL이 입력되었을때 Action을 실행하나?
-	http://localhost/프로젝트명/XX.action
-	-->
 	<constant name="struts.action.extension" value="action"/>
 	<constant name="struts.enable.DynamicMethodInvocation" value="true"/>
 	<constant name="struts.devMode" value="true"/>
@@ -56,6 +52,44 @@
 				  'agreeBoardNo':'AGREE_BOARD_NO'}
 			</param>
 			<result name="success">/board/viewBoardWhenAgree.jsp</result>
+		</action>
+		<action name="acceptChangeList" class="kr.or.kosta.bookchange.change.ChangeService" 
+			method="acceptChangeList">
+			<result name="success">/change/acceptChangeList.jsp</result>
+		</action>
+		<action name="requestChangeList" class="kr.or.kosta.bookchange.change.ChangeService" 
+			method="requestChangeList">
+			<result name="success">/change/requestChangeList.jsp</result>
+		</action>
+		<action name="matchChangeList" class="kr.or.kosta.bookchange.change.ChangeService" 
+			method="matchChangeList">
+			<result name="success">/change/matchChangeList.jsp</result>
+		</action>
+		<action name="matchChangeResultList" class="kr.or.kosta.bookchange.change.ChangeService" 
+			method="matchChangeResultList">
+			<result name="success">/change/matchChangeResultList.jsp</result>
+		</action>
+		<action name="addChange" class="kr.or.kosta.bookchange.change.ChangeService" 
+			method="addChange">
+			<param name="aliases">
+			#{'demandBoardNo':'change.demandBoard.boardNo', 'agreeBoardNo':'change.agreeBoard.boardNo'}
+			</param>
+			<result name="success" type="chain">requestChangeList</result>
+		</action>
+		<action name="matchChange" class="kr.or.kosta.bookchange.change.ChangeService" 
+			method="matchChange">
+			<param name="aliases">
+			#{'demandBoardNo':'change.demandBoard.boardNo', 'agreeBoardNo':'change.agreeBoard.boardNo'}
+			</param>
+			<result name="success" type="chain">matchChangeList</result>
+			<result name="fail" type="chain">matchChangeList</result>
+		</action>
+		<action name="cancelChange" class="kr.or.kosta.bookchange.change.ChangeService" 
+			method="cancelChange">
+			<param name="aliases">
+			#{'demandBoardNo':'change.demandBoard.boardNo', 'agreeBoardNo':'change.agreeBoard.boardNo'}
+			</param>
+			<result name="success" type="chain">requestChangeList</result>
 		</action>
 	</package>
 </struts>
