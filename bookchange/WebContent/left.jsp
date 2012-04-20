@@ -113,8 +113,7 @@
 	   
 	   <tr>
 	   <td>
-	   <form action="/bookchange/ChangeService" method="post" target="main">
-	   <input type="hidden" name="method" value="requestChangeList">
+	   <form action="/bookchange/requestChangeList.action" method="post" target="main">
 	   <input type="submit" value="요청한 교환신청"></td>
 	   </form>	   
 	   </tr>
@@ -125,8 +124,7 @@
 	   
 	   <tr>
 	   <td>
-	   <form action="/bookchange/ChangeService" method="post" target="main">
-	   <input type="hidden" name="method" value="acceptChangeList">
+	   <form action="/bookchange/acceptChangeList.action" method="post" target="main">
 	   <input type="submit" value="들어온 교환신청"></td>
 	   </form>	   
 	   </tr>
@@ -148,8 +146,7 @@
 	   
 	   <tr>
 	   <td>
-	   <form action="/bookchange/ChangeService" method="post" target="main">
-	   <input type="hidden" name="method" value="matchChangeResultList">
+	   <form action="/bookchange/matchChangeResultList.action" method="post" target="main">
 	   <input type="submit" value="교환완료된 책 목록"></td>
 	   </form>	   
 	   </tr>
