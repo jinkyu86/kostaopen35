@@ -1,12 +1,15 @@
 package kr.or.kosta.recipe;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,6 +20,8 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.io.FileUtils;
+import org.apache.struts2.util.ServletContextAware;
 
 import com.opensymphony.xwork2.ModelDriven;
 
@@ -31,23 +36,128 @@ import kr.or.kosta.photo.PhotoDAO;
 
 
 
-public class RecipeService implements ModelDriven{
+public class RecipeService implements ModelDriven, ServletContextAware{
 	private List<Recipe> RECIPE_LIST;
 	private List<Recipe> RECIPE_DIVISION_LIST;
 	private List<Good> RECIPE_GOODLIST;
 	private List<Photo> RECIPE_PHOTO;
 	private List<Good_division> DIVISION_LIST;
+	
 	private Recipe RECIPE;
-	private Recipe recipe;
+	private Recipe recipe=new Recipe();
 	private int recipeNum;
 	private int division;
 	
+	private File[] file;
+    private String[] fileFileName;
+    private String[] fileContentType;
+    private ServletContext servletContext;
+    private InputStream resultStream;
+	
+	
+
+	// 전체레시피 리스트 
+	public String viewRecipeList() throws Exception{
+		System.out.println("RECIPE_LIST");
+		RECIPE_LIST= RecipeDAO.selectRecipeList();
+		return "success";
+	}
+	
+	// 레시피구분 리스트
+	public String recipeRelativeGoodList() throws Exception{
+		RECIPE_DIVISION_LIST= RecipeDAO.selectDivisionRecipeList(division);
+		return "success";
+	}
+	
+	//레시피정보
+	public String viewRecipe() throws Exception{
+		RECIPE=RecipeDAO.selectRecipe(recipeNum);
+//		레시피관련 상품정보 조회
+		RECIPE_GOODLIST=GoodDAO.selectRecipeList(recipeNum);
+//		레시피관련 이미지 조회
+		RECIPE_PHOTO=PhotoDAO.selectRecipePhotoList(recipeNum);
+		return "success";
+	}
+
+	//레시피추가(미구현)
+	public String addRecipe() throws Exception {
+
+		Good_division good_division = new Good_division();
+		good_division.setDivision(division);
+		recipe.setGood_division(good_division);
+		String forderName="";
+	
+		for (int i = 0; i < file.length; i++) {
+			System.out.println(i);
+			//임시파일의 파일명/경로
+			String tempFileName=file[i].getAbsolutePath();
+			File tempFile= new File(tempFileName);
+			//gphoto폴더의 진짜 경로 리턴
+			
+			if(division==1){
+				forderName="cookie";
+			}else if(division==2){
+				forderName="cake";
+			}else if(division==3){
+				forderName="chocolete";
+			}
+			
+			String gphotoRealPath="c://devlopement/workspace/baking/WebContent/img/recipe_"+forderName;
+			System.out.println(gphotoRealPath);
+			//저장하고하는 파일의 경로,이름
+			//gphoto진짜 경로+파일의 진짜이름
+			String saveFileName=gphotoRealPath+"/"+fileFileName[i];
+			File saveFile= new File(saveFileName);
+			//저장하고자하는 파일과 같은 이름의 파일이 있으면 번호를 붙여서 리턴 
+			saveFile=FileRenamePolicy.rename(saveFile);
+		
+			//tempFile을 saveFile로 복사
+			FileUtils.copyFile(tempFile,saveFile);
+			
+			//tempFile이 존재하면 삭제
+			tempFile.deleteOnExit();
+			
+		}
+		
+		resultStream=new ByteArrayInputStream("등록완료".getBytes("UTF-8"));
+		return "success";
+	}
+
+	//레시피추가폼
+	public String addRecipeForm() throws Exception {
+			DIVISION_LIST = GoodDivisionDAO.selectGooddivisionList();
+			return "success";	
+			
+	}
+	
+
+	//레시피수정(미구현)
+	public String editRecipe() throws Exception {			
+			RecipeDAO.updateRecipe(recipe);
+			return "success";
+	}
+
+	//레시피수정폼
+	public String editRecipeForm() throws Exception {
+		DIVISION_LIST = GoodDivisionDAO.selectGooddivisionList();
+		return "success";
+	}
+
+	//레시피삭제
+	public String removeRecipe() throws Exception {
+		RecipeDAO.deleteRecipe(recipeNum);
+		return "success";
+	}
 	
 	@Override
 	public Object getModel() {
 		return recipe;
 	}
 	
+	@Override
+	public void setServletContext(ServletContext context) {
+		this.servletContext=context;
+	}
 	
 	public List<Recipe> getRECIPE_LIST() {
 		return RECIPE_LIST;
@@ -121,59 +231,42 @@ public class RecipeService implements ModelDriven{
 		this.recipeNum = recipeNum;
 	}
 
-	// 전체레시피 리스트 
-	public String viewRecipeList() throws Exception{
-		System.out.println("RECIPE_LIST");
-		RECIPE_LIST= RecipeDAO.selectRecipeList();
-		return "success";
+	public File[] getFile() {
+		return file;
+	}
+
+	public void setFile(File[] file) {
+		this.file = file;
+	}
+
+	public String[] getFileFileName() {
+		return fileFileName;
+	}
+
+	public void setFileFileName(String[] fileFileName) {
+		this.fileFileName = fileFileName;
+	}
+
+	public String[] getFileContentType() {
+		return fileContentType;
+	}
+
+	public void setFileContentType(String[] fileContentType) {
+		this.fileContentType = fileContentType;
+	}
+
+	public InputStream getResultStream() {
+		return resultStream;
+	}
+
+	public void setResultStream(InputStream resultStream) {
+		this.resultStream = resultStream;
+	}
+
+	public ServletContext getServletContext() {
+		return servletContext;
 	}
 	
-	// 레시피구분 리스트
-	public String recipeRelativeGoodList() throws Exception{
-		RECIPE_DIVISION_LIST= RecipeDAO.selectDivisionRecipeList(division);
-		return "success";
-	}
 	
-	//레시피정보
-	public String viewRecipe() throws Exception{
-		RECIPE=RecipeDAO.selectRecipe(recipeNum);
-//		레시피관련 상품정보 조회
-		RECIPE_GOODLIST=GoodDAO.selectRecipeList(recipeNum);
-//		레시피관련 이미지 조회
-		RECIPE_PHOTO=PhotoDAO.selectRecipePhotoList(recipeNum);
-		return "success";
-	}
-
-	//레시피추가(미구현)
-	public String addRecipe() throws Exception {
-			RecipeDAO.insertRecipe(recipe);
-			return "success";	
-	}
-
-	//레시피추가폼
-	public String addRecipeForm() throws Exception {
-			DIVISION_LIST = GoodDivisionDAO.selectGooddivisionList();
-			return "success";	
-	}
-	
-
-	//레시피수정(미구현)
-	public String editRecipe() throws Exception {			
-			RecipeDAO.updateRecipe(recipe);
-			return "success";
-	}
-
-	//레시피수정폼
-	public String editRecipeForm() throws Exception {
-		DIVISION_LIST = GoodDivisionDAO.selectGooddivisionList();
-		return "success";
-	}
-
-	//레시피삭제
-	public String removeRecipe() throws Exception {
-		RecipeDAO.deleteRecipe(recipeNum);
-		return "success";
-	}
-
 	
 }
