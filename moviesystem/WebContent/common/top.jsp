@@ -34,7 +34,7 @@
 					<td class="reservation_menu"><a href="/moviesystem/ReservationService?method=addReservationForm">Reservation</a></td>
 				</tr>
 				<tr id="buy_sub" class="sub_menu_tr">
-					<td class="buy_menu" id="buymenu1"><a href="/moviesystem/GoodService?method=viewGoodList">Shopping</a></td>
-					<td class="buy_menu" id="buymenu2"><a href="/moviesystem/GoodService?method=viewCartList">CartList</a></td>
+					<td class="buy_menu" id="buymenu1"><a href="/moviesystem/viewGoodList.action">Shopping</a></td>
+					<td class="buy_menu" id="buymenu2"><a href="/moviesystem/viewCartList.action">CartList</a></td>
 				</tr>
 			</table>
