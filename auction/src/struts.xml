@@ -134,7 +134,7 @@
 			</param>
 		  	<result name="success" type="chain">
 			
-				auction/viewAuctionList.jsp
+				viewAuctionList
 			</result>
 		</action>
 		
