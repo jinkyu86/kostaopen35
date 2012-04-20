@@ -91,5 +91,12 @@
 			</param>
 			<result name="success" type="chain">requestChangeList</result>
 		</action>
+		<action name="completeChange" class="kr.or.kosta.bookchange.change.ChangeService" 
+			method="completeChange">
+			<param name="aliases">
+			#{'ChangeNo':'change.demandBoard.boardNo', 'BoardNo':'change.agreeBoard.boardNo'}
+			</param>
+			<result name="success" type="chain">matchChangeResultList</result>
+		</action>
 	</package>
 </struts>
