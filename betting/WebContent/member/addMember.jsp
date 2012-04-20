@@ -65,8 +65,7 @@
 </head>
 <body>
 	<h3 align="center">회원가입</h3>
-	<form  id="add_member" action="/betting/MemberService" method="post">
-		<input type="hidden" name="method" value="addMember" />
+	<form  id="add_member" action="addMember.action" method="post">
 		<table border="0" align="center">
 			<tr>
 				<th>ID</th>
