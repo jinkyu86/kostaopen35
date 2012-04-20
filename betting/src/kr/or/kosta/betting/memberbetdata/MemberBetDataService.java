@@ -351,6 +351,13 @@ public class MemberBetDataService implements ModelDriven
 			RANK = MemberDAO.selectMemberRanking(ID);
 			int check = now.hourCheck(matchtime);
 			
+			MemberBetData mbd1 = MemberBetDataDAO.selectMemberBetData(mbdnum);
+			
+			if(mbd1==null){
+				SUCCESS="이미 취소하였습니다.";
+				return "success";
+			}			
+			
 			if (check == 1) {
 				double homeBetRating = BettingDAO
 					.selectBettingRating(home);
@@ -402,6 +409,9 @@ public class MemberBetDataService implements ModelDriven
 					MemberDAO.updateMineralByID(member);
 
 					MemberBetDataDAO.deleteMemberbetData(mbdnum);
+				
+					SUCCESS = "베팅을 취소하였습니다.";
+					result="success";
 				} else {
 
 					awaySeleRating = awaySeleRating - 1;
