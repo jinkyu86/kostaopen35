@@ -45,7 +45,7 @@ public class MemberBetDataService implements ModelDriven
 	private String matchtime;
 	private String home;
 	private String away;
-	private long betmineral;
+	private long bmineral;
 	private String districtnum;
 	private long emineral;
 	
@@ -114,12 +114,14 @@ public class MemberBetDataService implements ModelDriven
 		this.away = away;
 	}
 
-	public long getBetmineral() {
-		return betmineral;
+	
+
+	public long getBmineral() {
+		return bmineral;
 	}
 
-	public void setBetmineral(long betmineral) {
-		this.betmineral = betmineral;
+	public void setBmineral(long bmineral) {
+		this.bmineral = bmineral;
 	}
 
 	public String getDistrictnum() {
@@ -285,7 +287,7 @@ public class MemberBetDataService implements ModelDriven
 			MemberDAO.updateMineralByID(member);
 			MemberBetDataDAO.updateMemberBetData(mbdnum);
 			
-			SUCCESS= "미네랄을 지급하였습니다.";
+			SUCCESS= "미네랄을 되돌려 드렸습니다.";
 			return "success";
 		} else {
 			SUCCESS= "로그인 해주세요";
@@ -365,13 +367,13 @@ public class MemberBetDataService implements ModelDriven
 								
 				if (districtnum.equals("1")) {
 					homeSeleRating = homeSeleRating - 1;
-					homeTotMineral = homeTotMineral - betmineral;
+					homeTotMineral = homeTotMineral - bmineral;
 
 					homeBetRating = ((double) homeTotMineral + awayTotMineral)
 							/ homeTotMineral;
 					awayBetRating = ((double) homeTotMineral + awayTotMineral)
 							/ awayTotMineral;
-					MINERAL = MINERAL + betmineral;
+					MINERAL = MINERAL + bmineral;
 					
 					if (homeTotMineral == 0) {
 						homeBetRating = 1;
@@ -403,12 +405,12 @@ public class MemberBetDataService implements ModelDriven
 				} else {
 
 					awaySeleRating = awaySeleRating - 1;
-					awayTotMineral = awayTotMineral - betmineral;
+					awayTotMineral = awayTotMineral - bmineral;
 					awayBetRating = ((double) homeTotMineral + awayTotMineral)
 							/ awayTotMineral;
 					homeBetRating = ((double) homeTotMineral + awayTotMineral)
 							/ homeTotMineral;
-					MINERAL = MINERAL + betmineral;
+					MINERAL = MINERAL + bmineral;
 
 					if (homeTotMineral == 0) {
 						homeBetRating = 1;
