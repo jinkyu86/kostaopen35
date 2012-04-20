@@ -122,5 +122,117 @@
 			<result name="success">/buy/viewCanceledBuyList.jsp</result>
 		</action>
 		
+		<action name="viewMemberList" class="kr.or.kosta.moviesystem.member.MemberService" 
+		method="viewMemberList">
+			<result name="success">/member/viewMemberList.jsp</result>
+		</action>
+		
+		<action name="addMemberForm" class="kr.or.kosta.moviesystem.member.MemberService" method="addMemberForm">
+			<param name="aliases">
+			#{'userNum':'userNum'}
+			 </param>
+			<result name="success">/member/addMember.jsp</result>
+		</action>
+		
+		<action name="editMemberForm" class="kr.or.kosta.moviesystem.member.MemberService" method="editMemberForm">
+			<param name="aliases">
+			#{'userNum':'userNum'}
+			 </param>
+			<result name="success">/member/editMember.jsp</result>
+		</action>
+		
+		<action name="editMember" class="kr.or.kosta.moviesystem.member.MemberService" method="editMember">
+			<param name="aliases">
+			#{
+			   'userNum':'member.userNum',
+			   'userNum':'userNum'			  
+			   }
+			 </param>
+			<result name="success">/member/editMember.jsp</result>
+		</action>
+		
+		<action name="dropMemberForm" class="kr.or.kosta.moviesystem.member.MemberService" method="dropMemberForm">
+			<param name="aliases">
+			#{'userNum':'userNum'}
+			 </param>
+			<result name="success">/member/dropMember.jsp</result>
+		</action>
+		
+		<action name="dropMember" class="kr.or.kosta.moviesystem.member.MemberService" method="dropMember">
+			<param name="aliases">
+			#{
+			 'userNum':'member.userNum',
+			   'userNum':'userNum'		  
+			   }
+			 </param>
+			<result name="success">/main.jsp</result>
+		</action>
+		
+		<action name="addMember" class="kr.or.kosta.moviesystem.member.MemberService" method="addMember">
+			<param name="aliases">
+			#{
+			   'userNum':'userNum',
+			   'userNum':'member.userNum'
+			   }
+			 </param>
+			<result name="success">/member/login.jsp</result>
+		</action>
+		
+		<action name="viewMember" class="kr.or.kosta.moviesystem.member.MemberService" method="viewMember">
+			<param name="aliases">
+			#{'userNum':'userNum'}
+			 </param>
+			<result name="success">/member/viewMember.jsp</result>
+		</action>
+		
+		<action name="loginForm" class="kr.or.kosta.moviesystem.member.MemberService" method="loginForm">
+			<param name="aliases">
+			#{'userid':'userid'}
+			 </param>
+			<result name="success">/member/login.jsp</result>
+		</action>
+		
+		<action name="login" class="kr.or.kosta.moviesystem.member.MemberService" method="login">
+			<result name="success">/main.jsp</result>
+			<result name="login">/member/login.jsp</result>
+		</action>
+		
+		<action name="findIdForm" class="kr.or.kosta.moviesystem.member.MemberService" method="findIdForm">
+			<param name="aliases">
+			#{'userid':'userid'}
+			 </param>
+			<result name="success">/member/findId.jsp</result>
+		</action>
+		
+		<action name="findId" class="kr.or.kosta.moviesystem.member.MemberService" method="findId">
+			<result name="success">/member/resultFindId.jsp</result>
+			<result name="findId">/member/findId.jsp</result>
+		</action>
+		
+		<action name="findPwForm" class="kr.or.kosta.moviesystem.member.MemberService" method="findPwForm">
+			<param name="aliases">
+			#{'userid':'userid'}
+			 </param>
+			<result name="success">/member/findPw.jsp</result>
+		</action>
+		
+		<action name="findPw" class="kr.or.kosta.moviesystem.member.MemberService" method="findPw">
+			<result name="success">/member/resultFindPw.jsp</result>
+			<result name="findPw">/member/findPw.jsp</result>
+		</action>
+		
+		<action name="mypage" class="kr.or.kosta.moviesystem.member.MemberService" method="mypage">
+			<result name="success">/member/mypage.jsp</result>
+			<result name="login">/member/login.jsp</result>
+		</action>
+		
+		
+		<action name="logoutMember" class="kr.or.kosta.moviesystem.member.MemberService" method="logoutMember">
+			<result name="success">/main.jsp</result>
+		</action>
+		
+		<action name="searchMemberList" class="kr.or.kosta.moviesystem.member.MemberService" method="searchMemberList">
+			<result name="success">/member/searchMemberList.jsp</result>
+		</action>
 	</package>
 </struts>
