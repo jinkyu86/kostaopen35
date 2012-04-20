@@ -98,7 +98,7 @@
 	<th>사진</th><th>상품명</th><th>가격</th><th>마감시간</th><th>상세보기</th>
 	<c:forEach var="sold" items="${SOLD_LIST}">
 	<form action="/auction/viewAuction.action" method="post">
-	<input type="hidden" name="aNum" value="${sold.aNum }"/>
+	<input type="hidden" name="anum" value="${sold.aNum }"/>
 	<tr>
 		<td align="center"><img src="/auction/gphoto/${sold.good.img}" width="130" height="130"></td>
 		<td align="center">${sold.good.gName}</td>

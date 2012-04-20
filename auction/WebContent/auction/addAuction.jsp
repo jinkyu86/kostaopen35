@@ -80,8 +80,7 @@
 </head>
 <body>
 	<h1 align="center">경매등록</h1>
-	<form action="/auction/AuctionService" method="post" id="my_form">
-		<input type="hidden" name="method" value="addAuction" />
+	<form action="/auction/addAuction.action" method="post" id="my_form">
 		<table>
 		<tr>
 		<td>물품번호</td>
