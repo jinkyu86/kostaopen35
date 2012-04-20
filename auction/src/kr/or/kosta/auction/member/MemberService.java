@@ -135,7 +135,7 @@ public class MemberService implements ModelDriven, SessionAware  {
 	public String login() throws Exception {
 
 		
-		Member member1 = MemberDAO.selectMember(member.getUserid());
+		Member member1 =MemberDAO.selectMember(member.getUserid());
 		 
 		 String pw=member1.getPw();
 		// 4.3의 리턴값이 null이면
