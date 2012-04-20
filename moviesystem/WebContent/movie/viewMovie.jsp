@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>${Movie.mname}</title>
+<title>${MOVIE.mname}</title>
 <link rel="stylesheet" href="/moviesystem/css/Layout.css">
 <script src="http://code.jquery.com/jquery-1.7.1.js"></script>
 <script src="/moviesystem/js/common.jsp"></script>
@@ -75,17 +75,17 @@
 			<div class="menu_title" >Movie</div>
 			<table class="table_style" align="right">
 				<tr>
-					<td rowspan="5" style="border-right:1px solid #9191C8;width:210px;" align="center"><img src="/moviesystem/movieimg/${Movie.poster}" class="poster_style2" alt="${Movie.poster}"></td>
-					<td>${Movie.mname}</td>
+					<td rowspan="5" style="border-right:1px solid #9191C8;width:210px;" align="center"><img src="/moviesystem/movieimg/${MOVIE.poster}" class="poster_style2" alt="${MOVIE.poster}"></td>
+					<td>${MOVIE.mname}</td>
 				</tr>
 				<tr>
-					<td>장르 : ${Movie.genre}</td>
+					<td>장르 : ${MOVIE.genre}</td>
 				</tr>
 				<tr>
-					<td>개봉일 : ${Movie.launchDate}</td>
+					<td>개봉일 : ${MOVIE.launchDate}</td>
 				</tr>
 				<tr>
-					<td>가격 : ${Movie.mprice}</td>
+					<td>가격 : ${MOVIE.mprice}</td>
 				</tr>
 				<tr>
 					<td>
@@ -102,7 +102,7 @@
 				</tr>
 				<tr>
 					<td colspan="2">줄거리<br/><br/>
-						${Movie.content}	
+						${MOVIE.content}	
 					</td>
 				</tr>
 			</table>
@@ -112,8 +112,7 @@
 	<tr>
 		<td clospan="2">
 			<p align="center">
-				<form action="/moviesystem/MovieService" id="viewMovie">
-					<input type="hidden" name="method" value="viewMovieList">
+				<form action="/moviesystem/viewMovieList.action" id="viewMovie">
 					<input type="hidden" name="gubun" value="${gubun}">
 					<span id="button">목록</span>
 				</form>
