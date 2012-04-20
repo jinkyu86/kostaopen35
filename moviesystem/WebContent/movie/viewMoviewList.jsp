@@ -94,7 +94,7 @@
 		</td>
 		<td>
 			<table style="border:1px solid 9191C8;width:80%" align="center">
-				<c:forEach var="movieList" items="${MovieList}">
+				<c:forEach var="movieList" items="${MOVIE_LIST}">
 				<tr>
 					<td rowspan="2">${movieList.poster}</td>
 					<td><a href="/moviesystem/MovieService?method=viewMovie&gubun=${gubun}&mnum=${movieList.mnum}"><b>${movieList.mname}</b></a></td>
