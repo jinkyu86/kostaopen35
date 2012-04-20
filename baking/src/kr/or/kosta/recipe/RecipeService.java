@@ -48,8 +48,18 @@ public class RecipeService implements ModelDriven, ServletContextAware{
 	private int recipeNum;
 	private int division;
 	
-	private File[] file;
-    private String[] fileFileName;
+	private static File[] file=new File[100];
+	private  String method;
+	public  String getMethod() {
+		return method;
+	}
+
+	public void setMethod(String method) {
+		this.method = method;
+	}
+
+	private static int index=0;
+    private static String[] fileFileName=new String[100];
     private String[] fileContentType;
     private ServletContext servletContext;
     private InputStream resultStream;
@@ -57,6 +67,14 @@ public class RecipeService implements ModelDriven, ServletContextAware{
 	
 
 	// 전체레시피 리스트 
+	public static int getIndex() {
+		return index;
+	}
+
+	public static void setIndex(int index) {
+		RecipeService.index = index;
+	}
+
 	public String viewRecipeList() throws Exception{
 		System.out.println("RECIPE_LIST");
 		RECIPE_LIST= RecipeDAO.selectRecipeList();
@@ -81,7 +99,9 @@ public class RecipeService implements ModelDriven, ServletContextAware{
 
 	//레시피추가(미구현)
 	public String addRecipe() throws Exception {
-
+		if(!"complete".equals(method)){
+			return "success";
+		}else{
 		Good_division good_division = new Good_division();
 		good_division.setDivision(division);
 		recipe.setGood_division(good_division);
@@ -120,6 +140,9 @@ public class RecipeService implements ModelDriven, ServletContextAware{
 		}
 		
 		resultStream=new ByteArrayInputStream("등록완료".getBytes("UTF-8"));
+		index=0;
+		this.file=new File[100];
+		}
 		return "success";
 	}
 
@@ -236,7 +259,8 @@ public class RecipeService implements ModelDriven, ServletContextAware{
 	}
 
 	public void setFile(File[] file) {
-		this.file = file;
+		this.file[index]= file[0];
+		index++;
 	}
 
 	public String[] getFileFileName() {
@@ -244,7 +268,7 @@ public class RecipeService implements ModelDriven, ServletContextAware{
 	}
 
 	public void setFileFileName(String[] fileFileName) {
-		this.fileFileName = fileFileName;
+		this.fileFileName[index] = fileFileName[0];
 	}
 
 	public String[] getFileContentType() {
