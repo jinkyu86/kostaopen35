@@ -44,6 +44,15 @@ public class MemberService implements ModelDriven, SessionAware  {
 
 		return member;
 	}
+	
+	
+	public String getERROR() {
+		return ERROR;
+	}
+
+	public void setERROR(String eRROR) {
+		ERROR = eRROR;
+	}
 
 	public List<Member> getMEMBER_LIST() {
 		return MEMBER_LIST;
@@ -133,11 +142,11 @@ public class MemberService implements ModelDriven, SessionAware  {
 	}
 
 	public String login() throws Exception {
-
+		 String id=member.getUserid();
+		 String pw=member.getPw();
 		
-		Member member1 =MemberDAO.selectMember(member.getUserid());
-		 
-		 String pw=member1.getPw();
+		Member member1 =MemberDAO.selectMember(id);
+		
 		// 4.3의 리턴값이 null이면
 		// request에 속성명:ERROR 값:존재하지 않는 아이디
 		// 저장
@@ -147,7 +156,7 @@ public class MemberService implements ModelDriven, SessionAware  {
 			// 5.3의 리턴값이 null이 아니면 3의 회원의 비번과
 			// 2의 입력한 비번 비교 다르면
 			// request 에 속성명:ERROR 값:비밀번호 오류 저장
-			if (!member.getPw().equals(pw)) {
+			if (!member1.getPw().equals(pw)) {
 				ERROR="비밀번호 오류";
 			} else {
 				// 6.5에서 비밀번호가 일치하면
