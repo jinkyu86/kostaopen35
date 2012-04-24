@@ -9,7 +9,8 @@
 	<constant name="struts.action.extension" value="action"/>
 	<constant name="struts.enable.DynamicMethodInvocation" value="true"/>
 	<constant name="struts.devMode" value="false"/>
-	
+		<!-- 필요한 객체가 있으면 스프링을 통해서 얻도록 설정 -->
+	<constant name="struts.objectFactory"	value="spring"/>
 	<package name="default" namespace="/" extends="struts-default">
 		
 		<action name="viewGoodList" class="kr.or.kosta.moviesystem.good.GoodService" method="viewGoodList">
