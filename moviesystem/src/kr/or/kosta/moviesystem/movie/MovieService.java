@@ -34,6 +34,7 @@ import kr.or.kosta.moviesystem.screentime.ScreenTimeDAO;
 import kr.or.kosta.moviesystem.util.PageUtil;
 
 public class MovieService implements ModelDriven, ServletContextAware{
+	private IMovieDAO movieDAO;
 	private Movie movie = new Movie();
 	private Movie MOVIE;
 	private List<Movie> MOVIE_LIST;
@@ -48,6 +49,12 @@ public class MovieService implements ModelDriven, ServletContextAware{
 	private String schCode;
 	private String schString;
 	
+	
+	public MovieService(IMovieDAO movieDAO) {
+		super();
+		this.movieDAO = movieDAO;
+	}
+
 	public MovieService() {
         super();
         // TODO Auto-generated constructor stub
@@ -64,8 +71,8 @@ public class MovieService implements ModelDriven, ServletContextAware{
 			method = "adminMovieList";
 		}
 		
-		MOVIE_LIST = MovieDAO.selectMovieListSearch(page, length, schCode, schString);
-		movieCnt = MovieDAO.selectMovieListSearchCnt(schCode, schString);
+		MOVIE_LIST = movieDAO.selectMovieListSearch(page, length, schCode, schString);
+		movieCnt = movieDAO.selectMovieListSearchCnt(schCode, schString);
 		
 		
 		pageLink = "adminMovieListSch.action?schCode="+schCode+"&schString="+schString;
@@ -84,8 +91,8 @@ public class MovieService implements ModelDriven, ServletContextAware{
 		
 		String pageLink = null;
 		
-		MOVIE_LIST = MovieDAO.selectMovieListSearch(page, length, schCode, schString);
-		movieCnt = MovieDAO.selectMovieListSearchCnt(schCode, schString);
+		MOVIE_LIST = movieDAO.selectMovieListSearch(page, length, schCode, schString);
+		movieCnt = movieDAO.selectMovieListSearchCnt(schCode, schString);
 		
 		
 		pageLink = "searchMovieList.action?schCode="+schCode+"&schString="+schString;
@@ -99,7 +106,7 @@ public class MovieService implements ModelDriven, ServletContextAware{
 			gubun = "total";
 		}
 		
-		movie = MovieDAO.selectMovie(mnum);
+		movie = movieDAO.selectMovie(mnum);
 		
 		return "success";
 	}
@@ -113,12 +120,12 @@ public class MovieService implements ModelDriven, ServletContextAware{
 			gubun = "total";
 		}
 		
-		movie = MovieDAO.selectMovie(mnum);
+		movie = movieDAO.selectMovie(mnum);
 		return "success";
 	}
 	
 	public String adminRankingList() throws Exception{
-		MOVIE_LIST = MovieDAO.rankingMovieList();
+		MOVIE_LIST = movieDAO.rankingMovieList();
 		if(method==null || method==""){
 			method = "adminRankingList";
 		}	
@@ -142,9 +149,9 @@ public class MovieService implements ModelDriven, ServletContextAware{
 		
 		String pageLink = "adminMovieList.action?gubun="+gubun;
 		
-		MOVIE_LIST = MovieDAO.selectMovieList(page, length, gubun);
+		MOVIE_LIST =movieDAO.selectMovieList(page, length, gubun);
 		
-		int MovieCnt = MovieDAO.selectMovieCount(gubun);
+		int MovieCnt = movieDAO.selectMovieCount(gubun);
 		
 		//System.out.println(pageLink);
 		PAGE_LINK_TAG = PageUtil.generate(page, MovieCnt, length, pageLink);
@@ -157,12 +164,12 @@ public class MovieService implements ModelDriven, ServletContextAware{
 			gubun = "total";
 		}
 		
-		MOVIE = MovieDAO.selectMovie(mnum);
+		MOVIE = movieDAO.selectMovie(mnum);
 		return "success";
 	}
 	
 	public String rankingMovieList() throws Exception {
-		MOVIE_LIST = MovieDAO.rankingMovieList();
+		MOVIE_LIST = movieDAO.rankingMovieList();
 		return "success";		
 	}
 	
@@ -178,9 +185,9 @@ public class MovieService implements ModelDriven, ServletContextAware{
 		if(method=="" || method==null){
 			method = "viewMovieList";
 		}
-		int MovieCnt = MovieDAO.selectMovieCount(gubun);
+		int MovieCnt = movieDAO.selectMovieCount(gubun);
 		
-		MOVIE_LIST = MovieDAO.selectMovieList(page, length, gubun);
+		MOVIE_LIST = movieDAO.selectMovieList(page, length, gubun);
 				
 		//System.out.println(pageLink);
 		PAGE_LINK_TAG = PageUtil.generate(page, MovieCnt, length, pageLink);
@@ -189,9 +196,9 @@ public class MovieService implements ModelDriven, ServletContextAware{
 	}
 	
 	public String main() throws Exception{
-		SCREENMOVIE_LIST = MovieDAO.selectMovieList(1, 3, "screen");
-		SCHEDULEMOVIE_LIST = MovieDAO.selectMovieList(1, 3, "schedule");
-		RANKINGMOVIE_LIST = MovieDAO.rankingMovieList();
+		SCREENMOVIE_LIST = movieDAO.selectMovieList(1, 3, "screen");
+		SCHEDULEMOVIE_LIST = movieDAO.selectMovieList(1, 3, "schedule");
+		RANKINGMOVIE_LIST = movieDAO.rankingMovieList();
 		return "success";
 	}
 
@@ -213,8 +220,8 @@ public class MovieService implements ModelDriven, ServletContextAware{
 	private void MovieTimeListForm(HttpServletRequest request,
 			HttpServletResponse response) throws IOException, ServletException{
 		
-		int Moviecnt = MovieDAO.selectMovieCount("");
-		List<Movie> movieList = MovieDAO.selectMovieList(1, Moviecnt, "");
+		int Moviecnt = movieDAO.selectMovieCount("");
+		List<Movie> movieList = movieDAO.selectMovieList(1, Moviecnt, "");
 		
 		request.setAttribute("MovieList", movieList);
 		
@@ -251,7 +258,7 @@ public class MovieService implements ModelDriven, ServletContextAware{
 			movie.setLaunchDate(Sdate);
 			movie.setEndDate(Edate);
 			
-			MovieDAO.addMovie(movie);
+			movieDAO.addMovie(movie);
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -294,7 +301,7 @@ public class MovieService implements ModelDriven, ServletContextAware{
 			movie.setEndDate(Edate);
 			movie.setContent(content);
 			
-			MovieDAO.editMovie(movie);
+			movieDAO.editMovie(movie);
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -317,7 +324,7 @@ public class MovieService implements ModelDriven, ServletContextAware{
 			HttpServletResponse response) throws IOException, ServletException {
 		String mnum = request.getParameter("mnum");
 		String gubun = request.getParameter("gubun");
-		MovieDAO.removeMovie(mnum);
+		movieDAO.removeMovie(mnum);
 		
 		request.setAttribute("gubun", gubun);
 		
