@@ -40,13 +40,13 @@
 		</tr>
 	</table>
 	 <p align="center">
-		 <a href="/auction/GoodService?method=editGoodForm&gNum=${GOOD.gNum}">
+		 <a href="/auction/editGoodForm.action?gNum=${GOOD.gNum}">
 		 	<img src="/auction/menu/editGood.jpg"/></a>
-		 <a id="deletegood" href="/auction/GoodService?method=removeGood&gNum=${GOOD.gNum}">
+		 <a id="deletegood" href="/auction/removeGood.action?gNum=${GOOD.gNum}">
 		 	<img src="/auction/menu/deleteGood.jpg"/></a>
-		 <a href="/auction/AuctionService?method=addAuctionForm&gNum=${GOOD.gNum}">
+		 <a href="/auction/addAuctionForm.action?gNum=${GOOD.gNum}">
 		 	<img src="/auction/menu/addAuction.jpg"/></a>
-		<a href="/auction/GoodService?method=viewGoodList">
+		<a href="/auction/viewGoodList.action">
 	    	<img src="/auction/menu/viewGoodList.jpg"/></a>
 </p>
 </body>

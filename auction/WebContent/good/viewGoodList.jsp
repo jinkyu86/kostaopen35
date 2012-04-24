@@ -19,7 +19,7 @@
 <tr>
 	<td>${GOOD.gNum}</td>
 	<td>
-		<a href="/auction/GoodService?method=viewGood&gNum=${GOOD.gNum}">
+		<a href="/auction/viewGood.action?gNum=${GOOD.gNum}">
 		${GOOD.gName}
 		</a>
 	</td>
@@ -30,10 +30,10 @@
 	${PAGE_LINK_TAG}
 </p>
 <p align="center">
-	<a href="/auction/GoodService?method=addGoodForm">
+	<a href="/auction/addGoodForm.action">
 		<img src="/auction/menu/addGood.jpg"/>
 	</a>
-   <a href="/auction/AuctionService?method=viewAuctionList">
+   <a href="/auction/viewAuctionList.action">
    		<img src="/auction/menu/viewAuctionList.jpg"/>
    	</a> 
 </p>

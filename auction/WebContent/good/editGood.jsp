@@ -42,16 +42,15 @@ $(document).ready(function(){
 </head>
 <body background="/auction/gphoto/seo.jpg">
 	<h1 align="center">물품 정보 수정</h1>
-	<form action="/auction/GoodService" method="post" id="my_form">
-		<input type="hidden" name="method" value="editGood"/>
+	<form action="/auction/editGood.action" method="post" id="my_form">
 				<table border="1" align="center">
 					<tr>
 						<td>물품 번호</td>
-						<td><input type="text" name="gNum" value="${GOOD.gNum}" readonly="readonly"/></td>
+						<td><input type="text" name="gnum" value="${GOOD.gNum}" readonly="readonly"/></td>
 					</tr>
 					<tr>
 						<td>물품명</td>
-						<td><input type="text" name="gName" value="${GOOD.gName}" /></td>
+						<td><input type="text" name="gname" value="${GOOD.gName}" /></td>
 					</tr>
 					<tr>
 						<td>상세설명</td>
@@ -68,7 +67,7 @@ $(document).ready(function(){
 		</center>
 	</form>
 <p align="center">
-	<a href="/auction/GoodService?method=viewGoodList">
+	<a href="/auction/viewGoodList.action">
 	    <img src="/auction/menu/viewGoodList.jpg"/>
 	</a>
 </p>
