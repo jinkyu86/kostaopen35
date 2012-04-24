@@ -39,7 +39,14 @@ public class BidService implements ModelDriven,SessionAware{
 	private Auction auction=new Auction();
 	private Member member=new Member();
 	
-   	public String getERROR() {
+   	public BidService(IBidDAO bidDAO, IAuctionDAO auctionDAO,
+			IMemberDAO memberDAO) {
+		super();
+		this.bidDAO = bidDAO;
+		this.auctionDAO = auctionDAO;
+		this.memberDAO = memberDAO;
+	}
+	public String getERROR() {
 		return ERROR;
 	}
 	public void setERROR(String eRROR) {
