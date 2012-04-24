@@ -7,12 +7,19 @@ import java.util.List;
 
 import kr.or.kosta.auction.good.Good;
 import kr.or.kosta.auction.good.GoodDAO;
+import kr.or.kosta.auction.member.IMemberDAO;
 import kr.or.kosta.auction.member.Member;
 import kr.or.kosta.auction.member.MemberDAO;
 
 import org.junit.Test;
 
 public class MemberDAOTest {
+	private IMemberDAO memberDAO;
+	
+	public MemberDAOTest(IMemberDAO memberDAO) {
+		super();
+		this.memberDAO = memberDAO;
+	}
 
 	@Test
 	public void testInsertMember() {
@@ -21,7 +28,7 @@ public class MemberDAOTest {
 		member.setPw("1234");
 		member.setEmail("jojo@naver.com");
 		member.setName("Á¶Á¶");
-		MemberDAO.insertMember(member);
+		memberDAO.insertMember(member);
 	}
 
 	@Test
@@ -33,30 +40,30 @@ public class MemberDAOTest {
 		member.setCoin("300");
 		member.setEmoney("2000");
 		member.setUserid("jojo1");
-		MemberDAO.updateMember(member);
+		memberDAO.updateMember(member);
 		
 	}
 
 	@Test
 	public void testDeleteMember() {
-		MemberDAO.deleteMember("jojo1");
+		memberDAO.deleteMember("jojo1");
 	}
 
 	@Test
 	public void testSelectMember() {
-		Member member=MemberDAO.selectMember("apple");
+		Member member=memberDAO.selectMember("apple");
 		System.out.println(member.toString());
 	}
 
 	@Test
 	public void testSelectMemberList() {
-		List<Member> memberList=MemberDAO.selectMemberList();
+		List<Member> memberList=memberDAO.selectMemberList();
 		System.out.println("MemberDAO:selectMember:member"+memberList);
 	}
 
 	@Test
 	public void testSelectMemberListIntInt() {
-		List<Member> memberList=MemberDAO.selectMemberList(1, 2);
+		List<Member> memberList=memberDAO.selectMemberList(1, 2);
 		System.out.println("memberList:"+memberList);
 	}
 
