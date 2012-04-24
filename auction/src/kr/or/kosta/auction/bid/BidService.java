@@ -17,10 +17,15 @@ import com.opensymphony.xwork2.ModelDriven;
 
 import kr.or.kosta.auction.auction.Auction;
 import kr.or.kosta.auction.auction.AuctionDAO;
+import kr.or.kosta.auction.auction.IAuctionDAO;
+import kr.or.kosta.auction.member.IMemberDAO;
 import kr.or.kosta.auction.member.Member;
 import kr.or.kosta.auction.member.MemberDAO;
 
 public class BidService implements ModelDriven,SessionAware{
+	private IBidDAO bidDAO;
+	private IAuctionDAO auctionDAO;
+	private IMemberDAO memberDAO;
 	private static final long serialVersionUID = 1L;
 	
 	private Map session;
@@ -88,10 +93,10 @@ public class BidService implements ModelDriven,SessionAware{
 
 	public String moneyBack() throws Exception {
 		//멤버정보 확인
-		Member member=MemberDAO.selectMember(userid);
+		Member member=memberDAO.selectMember(userid);
 		
 		//ID에 따른 유찰된 코인개수
-		int count=BidDAO.selectMoneybackByIdCount(userid);
+		int count=bidDAO.selectMoneybackByIdCount(userid);
 		int plusEmoney=count*500;
 		
 		//해당 ID의 emoney
@@ -104,10 +109,10 @@ public class BidService implements ModelDriven,SessionAware{
 		
 		//저장
 		member.setEmoney(emoney);
-		MemberDAO.updateMember(member);
+		memberDAO.updateMember(member);
 		
 		//해당 멤버의 moneyback 받음을 표시
-		BidDAO.updateMoneybackById(userid);
+		bidDAO.updateMoneybackById(userid);
 		
 		return "success";
 	}
@@ -127,7 +132,7 @@ public class BidService implements ModelDriven,SessionAware{
 		
 		String sysdate=year+"-"+month+"-"+day+" "+hour+":"+minute+":"+second;
 				
-		auction=AuctionDAO.selectAuction(anum);
+		auction=auctionDAO.selectAuction(anum);
 		
 		//즉시구매가 추출
 		String imPrice=auction.getImPrice();
@@ -157,14 +162,14 @@ public class BidService implements ModelDriven,SessionAware{
 		bid.setMember(member);
 		bid.setBidPrice(imPrice);
 		
-		MemberDAO.updateMember(member);
-		AuctionDAO.updateAuction(auction);
-		BidDAO.insertBid(bid);
+		memberDAO.updateMember(member);
+		auctionDAO.updateAuction(auction);
+		bidDAO.insertBid(bid);
 		
 		String userid=bid.getMember().getUserid();
 		
 		//해당 경매 낙찰자의 코인을 환불받은걸로 처리
-		BidDAO.updateMoneybackByIdInAuction(userid, anum);
+		bidDAO.updateMoneybackByIdInAuction(userid, anum);
 		
 		ERROR="구매하셨습니다";
 		
@@ -175,7 +180,7 @@ public class BidService implements ModelDriven,SessionAware{
 		Member member=(Member)session.get("MEMBER");
 		if(member==null) return "login";
 		
-		auction=AuctionDAO.selectAuction(anum);
+		auction=auctionDAO.selectAuction(anum);
 		
 		//최근 입찰자 입력
 		String userid=member.getUserid();
@@ -198,15 +203,15 @@ public class BidService implements ModelDriven,SessionAware{
 		bid.setMember(member);
 		
 		//입찰 목록 등록, 회원 코인수 차감, 경매 현재가 증가
-		BidDAO.insertBid(bid);
-		MemberDAO.updateMember(member);		
-		AuctionDAO.updateAuction(auction);
+		bidDAO.insertBid(bid);
+		memberDAO.updateMember(member);		
+		auctionDAO.updateAuction(auction);
 		
 		return "success";
 	}
 	
 	public String viewBidList() throws Exception {
-		BID_LIST=BidDAO.selectBidList();
+		BID_LIST=bidDAO.selectBidList();
 		return "success";		
 	}
 	@Override
