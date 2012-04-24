@@ -29,16 +29,16 @@
 			<div class="main_title" >인기 상영작</div>
 			<table class="table_style" align="center">
 				<tr>
-					<c:forEach var="rankingMovieList" items="${rankingMovieList}" varStatus="n">
+					<c:forEach var="rankingMovieList" items="${RANKINGMOVIE_LIST}" varStatus="n">
 						<td class="main_td">
 							<img src="/moviesystem/movieimg/${rankingMovieList.poster}" class="main_img" style="margin:5px 0 5px 0" alt="${rankingMovieList.poster}"><br/>
 							<span title="${rankingMovieList.mname}">
 								<c:choose>
 									<c:when test="${fn:length(rankingMovieList.mname)>9}">
-										<a href="/moviesystem/MovieService?method=viewMovie&gubun=&mnum=${rankingMovieList.mnum}">${fn:substring(rankingMovieList.mname, 0, 8)}</a>
+										<a href="/moviesystem/viewMovie.action?gubun=&mnum=${rankingMovieList.mnum}">${fn:substring(rankingMovieList.mname, 0, 8)}</a>
 									</c:when>
 									<c:otherwise>
-										<a href="/moviesystem/MovieService?method=viewMovie&gubun=&mnum=${rankingMovieList.mnum}">${rankingMovieList.mname}</a>
+										<a href="/moviesystem/viewMovie.action?gubun=&mnum=${rankingMovieList.mnum}">${rankingMovieList.mname}</a>
 									</c:otherwise>
 								</c:choose>
 							</span>
@@ -53,16 +53,16 @@
 			<div class="main_title" style="margin-top:10px;">상영작</div>
 			<table class="table_style" align="center">
 				<tr>
-					<c:forEach var="screenMovieList" items="${screenMovieList}" varStatus="n">
+					<c:forEach var="screenMovieList" items="${SCREENMOVIE_LIST}" varStatus="n">
 						<td class="main_td">
 							<img src="/moviesystem/movieimg/${screenMovieList.poster}"  class="main_img" style="margin:5px 0 5px 0" alt="${screenMovieList.poster}"><br/>
 							<span title="${screenMovieList.mname}">
 								<c:choose>
 									<c:when test="${fn:length(screenMovieList.mname)>9}">
-										<a href="/moviesystem/MovieService?method=viewMovie&gubun=screen&mnum=${screenMovieList.mnum}">${fn:substring(screenMovieList.mname, 0, 8)}</a>
+										<a href="/moviesystem/viewMovie.action?gubun=screen&mnum=${screenMovieList.mnum}">${fn:substring(screenMovieList.mname, 0, 8)}</a>
 									</c:when>
 									<c:otherwise>
-										<a href="/moviesystem/MovieService?method=viewMovie&gubun=screen&mnum=${screenMovieList.mnum}">${screenMovieList.mname}</a>
+										<a href="/moviesystem/viewMovie.action?gubun=screen&mnum=${screenMovieList.mnum}">${screenMovieList.mname}</a>
 									</c:otherwise>
 								</c:choose>
 							</span>
@@ -77,16 +77,16 @@
 			<div class="main_title" style="margin-top:10px;">상영 예정작</div>
 			<table class="table_style" align="center">
 				<tr>
-					<c:forEach var="scheduleMovieList" items="${scheduleMovieList}" varStatus="n">
+					<c:forEach var="scheduleMovieList" items="${SCHEDULEMOVIE_LIST}" varStatus="n">
 						<td class="main_td">
 							<img src="/moviesystem/movieimg/${scheduleMovieList.poster}" class="main_img" style="margin:5px 0 5px 0" alt="${scheduleMovieList.poster}"><br/>
 							<span title="${scheduleMovieList.mname}">
 							<c:choose>
 								<c:when test="${fn:length(scheduleMovieList.mname)>9}">
-									<a href="/moviesystem/MovieService?method=viewMovie&gubun=schedule&mnum=${scheduleMovieList.mnum}">${fn:substring(scheduleMovieList.mname, 0, 8)}</a>
+									<a href="/moviesystem/viewMovie.action?gubun=schedule&mnum=${scheduleMovieList.mnum}">${fn:substring(scheduleMovieList.mname, 0, 8)}</a>
 								</c:when>
 								<c:otherwise>
-									<a href="/moviesystem/MovieService?method=viewMovie&gubun=schedule&mnum=${scheduleMovieList.mnum}">${scheduleMovieList.mname}</a>
+									<a href="/moviesystem/viewMovie.action?gubun=schedule&mnum=${scheduleMovieList.mnum}">${scheduleMovieList.mname}</a>
 								</c:otherwise>
 							</c:choose>
 							</span>
