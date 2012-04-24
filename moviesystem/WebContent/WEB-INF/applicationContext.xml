@@ -9,4 +9,16 @@
 			<ref bean="movieDAO"/>
 		</constructor-arg>
 	</bean>
+	<bean id="goodDAO" class="kr.or.kosta.moviesystem.good.GoodDAO"/>
+	<bean id="goodService" class="kr.or.kosta.moviesystem.good.GoodService">
+	<constructor-arg>
+		<ref bean="goodDAO"/>
+	</constructor-arg>
+	</bean>
+		<bean id="buyDAO" class="kr.or.kosta.moviesystem.buy.BuyDAO"/>
+	<bean id="buyService" class="kr.or.kosta.moviesystem.buy.BuyService">
+	<constructor-arg>
+		<ref bean="buyDAO"/>
+	</constructor-arg>
+	</bean>
 </beans>
