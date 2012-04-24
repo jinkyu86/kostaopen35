@@ -235,6 +235,16 @@
 		<action name="searchMemberList" class="kr.or.kosta.moviesystem.member.MemberService" method="searchMemberList">
 			<result name="success">/member/searchMemberList.jsp</result>
 		</action>
+		<action name="checkMemberID" class="kr.or.kosta.moviesystem.member.MemberService" method="checkMemberID">
+				<result type="stream">
+				<param name="contentType">
+					text/html;charset=UTF-8
+				</param>
+				<param name="inputName">
+					resultStream
+				</param>
+			</result>		
+		</action>
 		<action name="main" class="kr.or.kosta.moviesystem.movie.MovieService" method="main">
 			<result name="success">main.jsp</result>
 		</action>
