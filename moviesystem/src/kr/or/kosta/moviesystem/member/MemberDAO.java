@@ -19,7 +19,7 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 
 
-public class MemberDAO {
+public class MemberDAO implements IMemberDAO{
 	
 	private static String resource="sqlmap-config.xml";
 	private static Reader sqlReader;
@@ -38,7 +38,9 @@ public class MemberDAO {
 	 * 
 	 * @param memberid
 	 */
-	public static Member selectMemberById(String userid) {
+	
+	@Override
+	public Member selectMemberById(String userid) {
 		SqlSession session = null;
 		Member member=null;
 		try{
@@ -51,7 +53,8 @@ public class MemberDAO {
 		return member;
 	}
 	
-	public static Member selectMember(String userNum) {
+	@Override
+	public Member selectMember(String userNum) {
 		SqlSession session = null;
 		Member member=null;
 		try{
@@ -69,7 +72,9 @@ public class MemberDAO {
 	 * 
 	 * @param member
 	 */
-	public static String insertMember(Member member) {
+	
+	@Override
+	public String insertMember(Member member) {
 		SqlSession session=null;
 		try{
 			session = sqlMapper.openSession(true);
@@ -88,7 +93,9 @@ public class MemberDAO {
 	 * @param memberid
 	 * @param pw
 	 */
-	public static void editMember(Member member) {
+	
+	@Override
+	public void editMember(Member member) {
 		SqlSession session = null;
 		try{
 			session=sqlMapper.openSession(true);
@@ -104,7 +111,9 @@ public class MemberDAO {
 	 * @param memberid
 	 * @param pw
 	 */
-	public static void dropMember(Member member) {
+	
+	@Override
+	public void dropMember(Member member) {
 		SqlSession session = null;
 		try{
 			session=sqlMapper.openSession(true);
@@ -120,7 +129,8 @@ public class MemberDAO {
 	 * @param length
 	 * @param page
 	 */
-	public static List<Member> selectMemberList(int length, int page) {
+	@Override
+	public List<Member> selectMemberList(int length, int page) {
 		SqlSession session = null;
 		List<Member> memberList=null;
 		try{
@@ -138,7 +148,9 @@ public class MemberDAO {
 	/**
 	 * 전체 회원의 수를 알 수 있는 메서드
 	 */
-	public static int selectMemberListCount() {
+	
+	@Override
+	public int selectMemberListCount() {
 		SqlSession session = null;
 		Integer count=null;
 		try{
@@ -158,7 +170,8 @@ public class MemberDAO {
 	 * @param page
 	 * @param name
 	 */
-	public static List<Member> searchMemberListByName(int length, int page, String name) {
+	@Override
+	public List<Member> searchMemberListByName(int length, int page, String name) {
 		SqlSession session = null;
 		List<Member> memberList=null;
 		try{
@@ -177,7 +190,8 @@ public class MemberDAO {
 	 * 
 	 * @param name
 	 */
-	public static int searchMemberListByNameCount(String name) {
+	@Override
+	public int searchMemberListByNameCount(String name) {
 		SqlSession session = null;
 		Integer count=null;
 		try{
@@ -197,7 +211,9 @@ public class MemberDAO {
 	 * @param page
 	 * @param phone
 	 */
-	public static List<Member> searchMemberListByPhone(int length, int page, String phone) {
+	
+	@Override
+	public List<Member> searchMemberListByPhone(int length, int page, String phone) {
 		SqlSession session = null;
 		List<Member> memberList=null;
 		try{
@@ -216,7 +232,9 @@ public class MemberDAO {
 	 * 
 	 * @param phone
 	 */
-	public static int searchMemberListByPhoneCount(String phone) {
+	
+	@Override
+	public int searchMemberListByPhoneCount(String phone) {
 		SqlSession session = null;
 		Integer count=null;
 		try{
@@ -236,7 +254,9 @@ public class MemberDAO {
 	 * @param page
 	 * @param email
 	 */
-	public static List<Member> searchMemberListByEmail(int length, int page, String email) {
+	
+	@Override
+	public List<Member> searchMemberListByEmail(int length, int page, String email) {
 		SqlSession session = null;
 		List<Member> memberList=null;
 		try{
@@ -255,7 +275,9 @@ public class MemberDAO {
 	 * 
 	 * @param email
 	 */
-	public static int searchMemberListByEmailCount(String email) {
+	
+	@Override
+	public int searchMemberListByEmailCount(String email) {
 		SqlSession session = null;
 		Integer count=null;
 		try{
@@ -275,7 +297,9 @@ public class MemberDAO {
 	 * @param page
 	 * @param addr
 	 */
-	public static List<Member> searchMemberListByAddr(int length, int page, String addr) {
+	
+	@Override
+	public List<Member> searchMemberListByAddr(int length, int page, String addr) {
 		SqlSession session = null;
 		List<Member> memberList=null;
 		try{
@@ -294,7 +318,9 @@ public class MemberDAO {
 	 * 
 	 * @param addr
 	 */
-	public static int searchMemberListByAddrCount(String addr) {
+	
+	@Override
+	public int searchMemberListByAddrCount(String addr) {
 		SqlSession session = null;
 		Integer count=null;
 		try{
@@ -313,7 +339,9 @@ public class MemberDAO {
 	 * @param email
 	 * @param name
 	 */
-	public static Member findMemberId(String email, String name) {
+	
+	@Override
+	public Member findMemberId(String email, String name) {
 		SqlSession session = null;
 		Member member=null;
 		try{
@@ -336,7 +364,9 @@ public class MemberDAO {
 	 * @param name
 	 * @param id
 	 */
-	public static Member findMemberPw(String email, String name, String userid) {
+	
+	@Override
+	public Member findMemberPw(String email, String name, String userid) {
 		SqlSession session = null;
 		Member member=null;
 		try{

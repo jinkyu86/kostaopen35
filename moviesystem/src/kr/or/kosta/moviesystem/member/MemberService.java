@@ -1,6 +1,8 @@
 package kr.or.kosta.moviesystem.member;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +26,8 @@ import kr.or.kosta.moviesystem.util.PageUtil;
 
 public class MemberService implements ModelDriven,ServletContextAware,ServletRequestAware,
 ServletResponseAware,SessionAware {
+	
+	private IMemberDAO memberDAO;
 	private static final long serialVersionUID = 1L;
 	private ServletContext servletContext;
 	private HttpServletRequest request;
@@ -39,9 +43,24 @@ ServletResponseAware,SessionAware {
 	private String PAGE_LINK_TAG;  
 	private String keyword;
 	private String column; 
+	private InputStream resultStream;
 		
 		
-	  @Override
+	  public InputStream getResultStream() {
+		return resultStream;
+	}
+
+	public void setResultStream(InputStream resultStream) {
+		this.resultStream = resultStream;
+	}
+
+	public MemberService(IMemberDAO memberDAO) {
+		super();
+		System.out.println("memberDAO객체생성");
+		this.memberDAO = memberDAO;
+	}
+
+	@Override
 	public void setSession(Map<String, Object> session) {
 		  this.session=session;		
 		}
@@ -235,7 +254,7 @@ ServletResponseAware,SessionAware {
 		String email=request.getParameter("email");
 		String userid=request.getParameter("userid");
 			
-		Member member=MemberDAO.findMemberPw(email, name, userid);
+		Member member=memberDAO.findMemberPw(email, name, userid);
 			
 			
 			if(member==null){
@@ -255,7 +274,7 @@ ServletResponseAware,SessionAware {
 		String name=request.getParameter("name");
 		String email=request.getParameter("email");
 		
-		Member member=MemberDAO.findMemberId(email, name);
+		Member member=memberDAO.findMemberId(email, name);
 		
 		
 		if(member==null){
@@ -272,8 +291,8 @@ ServletResponseAware,SessionAware {
 			page=1;
 		}
 		int length=5;
-		MEMBER_LIST=MemberDAO.selectMemberList(length, page);
-		int memberCount=MemberDAO.selectMemberListCount();
+		MEMBER_LIST=memberDAO.selectMemberList(length, page);
+		int memberCount=memberDAO.selectMemberListCount();
 		PAGE_LINK_TAG=
 				PageUtil.generate(page,memberCount,length,"/moviesystem/viewMemberList.action");
 		return "success";
@@ -281,12 +300,28 @@ ServletResponseAware,SessionAware {
 
 	public String viewMember() throws Exception{
 		
-		MEMBER=MemberDAO.selectMember(userNum);
+		MEMBER=memberDAO.selectMember(userNum);
 		return "success";		
 	}
 
-//	private void checkMemberID(HttpServletRequest request,
-//			HttpServletResponse response) throws ServletException, IOException {
+	public String checkMemberID() throws Exception {
+		MEMBER=memberDAO.selectMemberById(userid);
+		if(MEMBER==null){
+			String msg=userid+"는 사용가능한 아이디입니다.";
+			byte[]msgArray=msg.getBytes("UTF-8");
+			
+			resultStream=
+					new ByteArrayInputStream(msgArray);
+		}else{
+			String msg=userid+"는 이미 사용중인 아이디입니다.";
+			byte[]msgArray=msg.getBytes("UTF-8");
+			
+			resultStream=
+					new ByteArrayInputStream(msgArray);
+		}
+	
+		return "success";
+
 //		String userid=request.getParameter("userid");
 //		Member member=MemberDAO.selectMemberById(userid);
 //		response.setContentType("text/html;charset=utf-8");
@@ -298,8 +333,8 @@ ServletResponseAware,SessionAware {
 //		}
 //		out.flush();
 //		out.close();
-//
-//	}
+
+	}
 
 	/**
 	 * 회원가입 창으로 이동
@@ -315,7 +350,7 @@ ServletResponseAware,SessionAware {
 	}
 
 	public String addMember() throws Exception{
-		userNum=MemberDAO.insertMember(member);
+		userNum=memberDAO.insertMember(member);
 		return "success";
 		
 	}
@@ -328,7 +363,7 @@ ServletResponseAware,SessionAware {
 	 */
 	public String editMemberForm() throws Exception{
 		Member member1=(Member)session.get("LOGIN_MEMBER");		
-		Member member=MemberDAO.selectMember(member1.getUserNum());
+		Member member=memberDAO.selectMember(member1.getUserNum());
 		session.put("LOGIN_MEMBER", member);
 		return "success";
 	}
@@ -340,7 +375,7 @@ ServletResponseAware,SessionAware {
 	 * @param response
 	 */
 	public String editMember() throws Exception{
-		MemberDAO.editMember(member);
+		memberDAO.editMember(member);
 		//userNum=member.getUserNum();
 		//Member member1=MemberDAO.selectMember(member.getUserNum());
 		request.setAttribute("ERROR","개인정보가 수정되었습니다");
@@ -355,7 +390,7 @@ ServletResponseAware,SessionAware {
 	public String login() throws Exception {
 		String userid=request.getParameter("userid");
 		String pw=request.getParameter("pw");
-		Member member=MemberDAO.selectMemberById(userid);
+		Member member=memberDAO.selectMemberById(userid);
 		
 		if(member==null){
 			request.setAttribute("ERROR", "존재하지 않는 아이디");
@@ -418,7 +453,7 @@ ServletResponseAware,SessionAware {
 	 */
 	public String dropMemberForm() throws Exception{	
 		Member member1=(Member)session.get("LOGIN_MEMBER");		
-		Member member=MemberDAO.selectMember(member1.getUserNum());
+		Member member=memberDAO.selectMember(member1.getUserNum());
 		session.put("LOGIN_MEMBER", member);
 		return "success";
 		
@@ -434,7 +469,7 @@ ServletResponseAware,SessionAware {
 	 */
 	public String dropMember() throws Exception {
 			
-		MemberDAO.dropMember(member);
+		memberDAO.dropMember(member);
 		logoutMember();
 		return "success";
 		
@@ -483,25 +518,25 @@ ServletResponseAware,SessionAware {
 		//1.StudentDAO에서 페이지에 해당하는 학생조회 메서드를 호출
 		
 		if(keyword==null||keyword.equals("")){
-			MEMBER_LIST=MemberDAO.selectMemberList(length, page);
-			memberCount=MemberDAO.selectMemberListCount();
+			MEMBER_LIST=memberDAO.selectMemberList(length, page);
+			memberCount=memberDAO.selectMemberListCount();
 		}else{
 			if(column.equals("name")){
-				MEMBER_LIST=MemberDAO.searchMemberListByName
+				MEMBER_LIST=memberDAO.searchMemberListByName
 						(length, page, request.getParameter("keyword"));
-				memberCount=MemberDAO.searchMemberListByNameCount(keyword);
+				memberCount=memberDAO.searchMemberListByNameCount(keyword);
 			}else if(column.equals("email")){
-				MEMBER_LIST=MemberDAO.searchMemberListByEmail
+				MEMBER_LIST=memberDAO.searchMemberListByEmail
 						(length, page, request.getParameter("keyword"));
-				memberCount=MemberDAO.searchMemberListByEmailCount(keyword);
+				memberCount=memberDAO.searchMemberListByEmailCount(keyword);
 			}else if(column.equals("addr")){
-				MEMBER_LIST=MemberDAO.searchMemberListByAddr
+				MEMBER_LIST=memberDAO.searchMemberListByAddr
 						(length, page, request.getParameter("keyword"));
-				memberCount=MemberDAO.searchMemberListByAddrCount(keyword);
+				memberCount=memberDAO.searchMemberListByAddrCount(keyword);
 			}else if(column.equals("phone")){
-				MEMBER_LIST=MemberDAO.searchMemberListByPhone
+				MEMBER_LIST=memberDAO.searchMemberListByPhone
 						(length, page, request.getParameter("keyword"));
-				memberCount=MemberDAO.searchMemberListByPhoneCount(keyword);
+				memberCount=memberDAO.searchMemberListByPhoneCount(keyword);
 			}
 		}
 		
