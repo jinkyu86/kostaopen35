@@ -18,6 +18,7 @@ import com.opensymphony.xwork2.ModelDriven;
 
 
 public class MemberService implements ModelDriven, SessionAware{
+	private IMemberDAO memberDAO;
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -26,40 +27,14 @@ public class MemberService implements ModelDriven, SessionAware{
 	private Member member;
 	private String memberid;
 	
-	@Override
-	public Object getModel() {
-		return member;
-	}
 	
-	@Override
-	public void setSession(Map<String, Object> session) {
-		this.session=session;
-	}
 	
-	public Member getMEMBER() {
-		return MEMBER;
-	}
-
-	public void setMEMBER(Member mEMBER) {
-		MEMBER = mEMBER;
-	}
-
-	public Member getMember() {
-		return member;
-	}
-
-	public void setMember(Member member) {
-		this.member = member;
-	}
-
-	public String getMemberid() {
-		return memberid;
-	}
-
-	public void setMemberid(String memberid) {
-		this.memberid = memberid;
-	}
 	
+	public MemberService(IMemberDAO memberDAO) {
+		super();
+		this.memberDAO = memberDAO;
+	}
+
 	//회원정보
 	public String viewMember() throws Exception {
 		return "success";
@@ -67,8 +42,8 @@ public class MemberService implements ModelDriven, SessionAware{
 
 	//회원정보 수정
 	public String editMember() throws Exception {
-		MemberDAO.updateMember(member);
-		session.put("member", MemberDAO.login(member));
+		memberDAO.updateMember(member);
+		session.put("member", memberDAO.login(member));
 		return "success";
 	}
 
@@ -79,15 +54,15 @@ public class MemberService implements ModelDriven, SessionAware{
 
 	//회원탈퇴
 	public String removeMember() throws Exception {
-		MemberDAO.deleteMember(memberid);
+		memberDAO.deleteMember(memberid);
 		session.remove("member");
 		return "success";
 	}
 
 	//회원가입
 	public String addMember() throws Exception {
-		MemberDAO.insertMember(member);
-		session.put("member", MemberDAO.login(member));
+		memberDAO.insertMember(member);
+		session.put("member", memberDAO.login(member));
 		return "success";
 	}
 
@@ -98,7 +73,7 @@ public class MemberService implements ModelDriven, SessionAware{
 
 	//로그인
 	public String login() throws Exception {
-		Member loginMember = MemberDAO.login(member);
+		Member loginMember = memberDAO.login(member);
 		if(loginMember!=null){
 			// member이름의 세션 생성 Index페이지 이동
 			session.put("member", loginMember);
@@ -139,7 +114,7 @@ public class MemberService implements ModelDriven, SessionAware{
 
 	//회원아이디 찾기
 	public String searchMemberID() throws Exception{
-		MEMBER=MemberDAO.selectMemberByid(member);
+		MEMBER=memberDAO.selectMemberByid(member);
 		return "success";
 	}
 
@@ -150,7 +125,7 @@ public class MemberService implements ModelDriven, SessionAware{
 
 	//회원 비밀번호찾기
 	public String searchMemberPW() throws Exception{
-		MEMBER=MemberDAO.selectMemberBypw(member);
+		MEMBER=memberDAO.selectMemberBypw(member);
 		return "success";
 	}
 
@@ -161,7 +136,7 @@ public class MemberService implements ModelDriven, SessionAware{
 
 	//회원 비밀번호변경
 	public String changeMemberPW() throws Exception{
-		MemberDAO.updateMember(member);
+		memberDAO.updateMember(member);
 		return "success";
 	}
 
@@ -169,8 +144,40 @@ public class MemberService implements ModelDriven, SessionAware{
 	public String changeMemberPWForm() throws Exception{
 		return "success";
 	}
+	
+	@Override
+	public Object getModel() {
+		return member;
+	}
+	
+	@Override
+	public void setSession(Map<String, Object> session) {
+		this.session=session;
+	}
+	
+	public Member getMEMBER() {
+		return MEMBER;
+	}
 
+	public void setMEMBER(Member mEMBER) {
+		MEMBER = mEMBER;
+	}
 
+	public Member getMember() {
+		return member;
+	}
+
+	public void setMember(Member member) {
+		this.member = member;
+	}
+
+	public String getMemberid() {
+		return memberid;
+	}
+
+	public void setMemberid(String memberid) {
+		this.memberid = memberid;
+	}
 	
 
 

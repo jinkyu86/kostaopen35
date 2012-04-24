@@ -40,7 +40,7 @@ public class MemberDAOTest {
 		member.setTelNumber("01000000000");
 		member.setPhoneNumber("031000000");
 		
-		MemberDAO.updateMember(member);
+//		MemberDAO.updateMember(member);
 		
 	}
 	

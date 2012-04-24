@@ -15,7 +15,7 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import kr.or.kosta.util.ConnectionUtil;
 
-public class MemberDAO {
+public class MemberDAO implements IMemberDAO{
 	
 	private static String resource="sqlmap-config.xml";
 	private static Reader sqlReader;
@@ -30,7 +30,8 @@ public class MemberDAO {
 			new SqlSessionFactoryBuilder().build(sqlReader);
 	
 	//회원가입
-	public static void insertMember(Member member) {
+	@Override
+	public  void insertMember(Member member) {
 		SqlSession session=null;
 		try{
 		session = sqlMapper.openSession(true);
@@ -41,7 +42,8 @@ public class MemberDAO {
 	}
 	
 	//회원정보수정
-	public static void updateMember(Member member) {
+	@Override
+	public  void updateMember(Member member) {
 		SqlSession session=null;
 		try{
 		session = sqlMapper.openSession(true);
@@ -52,7 +54,8 @@ public class MemberDAO {
 	}
 	
 	//회원삭제
-	public static void deleteMember(String memberId) {
+	@Override
+	public  void deleteMember(String memberId) {
 			SqlSession session=null;
 			try{
 			session = sqlMapper.openSession(true);
@@ -62,7 +65,8 @@ public class MemberDAO {
 			}	
 		}
 	//아이디찾기 회원이름,주민등록번호가 일치하는 아이디찾기
-	public static Member selectMemberByid(Member member) {
+	@Override
+	public  Member selectMemberByid(Member member) {
 			SqlSession session=null;
 			Member member2= null;
 			try{
@@ -75,7 +79,8 @@ public class MemberDAO {
 	}
 
 	//패스워드 찾기
-	public static Member selectMemberBypw(Member member) {
+	@Override
+	public  Member selectMemberBypw(Member member) {
 		SqlSession session=null;
 		Member member2= null;
 		try{
@@ -87,7 +92,8 @@ public class MemberDAO {
 		return member2;
 	}
 	
-	public static Member login(Member member){
+	@Override
+	public  Member login(Member member){
 		SqlSession session=null;
 		Member member2= null;
 		try{
@@ -99,7 +105,8 @@ public class MemberDAO {
 		return member2;
 	}
 	
-	public static Member selsctMember(String memberid){
+	@Override
+	public  Member selsctMember(String memberid){
 		SqlSession session=null;
 		Member member2= null;
 		try{
