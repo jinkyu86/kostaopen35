@@ -19,7 +19,7 @@ import kr.or.kosta.gooddivision.GoodDivisionDAO;
 import kr.or.kosta.gooddivision.Good_division;
 import kr.or.kosta.util.ConnectionUtil;
 
-public class RecipeDAO {
+public class RecipeDAO implements IRecipeDAO{
 	
 
 	private static String resource="sqlmap-config.xml";
@@ -34,8 +34,8 @@ public class RecipeDAO {
 	private static SqlSessionFactory sqlMapper =
 			new SqlSessionFactoryBuilder().build(sqlReader);
 	
-
-	public static int maxRecipeNumber(){
+	@Override
+	public int maxRecipeNumber(){
 		SqlSession session=null;
 		Integer maxNumber=null;
 		try{
@@ -48,7 +48,8 @@ public class RecipeDAO {
 	}
 	
 	//레시피추가
-	public static void insertRecipe(Recipe recipe) {
+	@Override
+	public void insertRecipe(Recipe recipe) {
 		SqlSession session=null;
 		try{
 		session = sqlMapper.openSession(true);
@@ -59,7 +60,8 @@ public class RecipeDAO {
 	}
 	
 	//레시피수정
-	public static void updateRecipe(Recipe recipe) {
+	@Override
+	public void updateRecipe(Recipe recipe) {
 		SqlSession session=null;
 		try{
 		session = sqlMapper.openSession(true);
@@ -70,7 +72,8 @@ public class RecipeDAO {
 	}
 	
 	//레시피글삭제
-	public static void deleteRecipe(int recipenum) {
+	@Override
+	public void deleteRecipe(int recipenum) {
 		SqlSession session=null;
 		try{
 		session = sqlMapper.openSession(true);
@@ -81,7 +84,8 @@ public class RecipeDAO {
 	}
 	
 	//레시피리스트
-	public static List<Recipe> selectRecipeList() {
+	@Override
+	public List<Recipe> selectRecipeList() {
 		SqlSession session=null;
 		List<Recipe> recipeList=null;
 		try{
@@ -95,7 +99,8 @@ public class RecipeDAO {
 	}
 	
 	//레시피구분리스트
-	public static List<Recipe> selectDivisionRecipeList(int divisionNum) {
+	@Override
+	public List<Recipe> selectDivisionRecipeList(int divisionNum) {
 		SqlSession session=null;
 		List<Recipe> recipeList=null;
 		try{
@@ -109,7 +114,8 @@ public class RecipeDAO {
 	
 
 	//레시피정보
-	public static Recipe selectRecipe(int recipe_num) {
+	@Override
+	public Recipe selectRecipe(int recipe_num) {
 		SqlSession session=null;
 		Recipe recipe=null;
 		try{
@@ -122,7 +128,8 @@ public class RecipeDAO {
 	}
 	
 	//상품관련 레시피조회
-	public static List<Recipe>selectGoodRelationRecipeList(int goodNum){
+	@Override
+	public List<Recipe>selectGoodRelationRecipeList(int goodNum){
 		SqlSession session=null;
 		List<Recipe> recipeList=null;
 		try{

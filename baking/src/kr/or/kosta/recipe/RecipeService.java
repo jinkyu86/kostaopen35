@@ -28,15 +28,23 @@ import com.opensymphony.xwork2.ModelDriven;
 import kr.or.kosta.file.receive.FileRenamePolicy;
 import kr.or.kosta.good.Good;
 import kr.or.kosta.good.GoodDAO;
+import kr.or.kosta.good.IGoodDAO;
 import kr.or.kosta.gooddivision.GoodDivisionDAO;
 import kr.or.kosta.gooddivision.Good_division;
+import kr.or.kosta.gooddivision.IGoodDivisionDAO;
 import kr.or.kosta.member.Member;
+import kr.or.kosta.photo.IPhotoDAO;
 import kr.or.kosta.photo.Photo;
 import kr.or.kosta.photo.PhotoDAO;
 
 
 
 public class RecipeService implements ModelDriven, ServletContextAware{
+	private IRecipeDAO recipeDAO;
+	private IGoodDAO goodDAO;
+	private IPhotoDAO photoDAO;
+	private IGoodDivisionDAO goodDivisionDAO;
+	
 	private List<Recipe> RECIPE_LIST;
 	private List<Recipe> RECIPE_DIVISION_LIST;
 	private List<Good> RECIPE_GOODLIST;
@@ -50,13 +58,7 @@ public class RecipeService implements ModelDriven, ServletContextAware{
 	
 	private static File[] file=new File[100];
 	private  String method;
-	public  String getMethod() {
-		return method;
-	}
-
-	public void setMethod(String method) {
-		this.method = method;
-	}
+	
 
 	private static int index=0;
     private static String[] fileFileName=new String[100];
@@ -64,36 +66,35 @@ public class RecipeService implements ModelDriven, ServletContextAware{
     private ServletContext servletContext;
     private InputStream resultStream;
 	
-	
 
-	// 전체레시피 리스트 
-	public static int getIndex() {
-		return index;
-	}
-
-	public static void setIndex(int index) {
-		RecipeService.index = index;
+	public RecipeService(IRecipeDAO recipeDAO, IGoodDAO goodDAO,
+			IPhotoDAO photoDAO, IGoodDivisionDAO goodDivisionDAO) {
+		super();
+		this.recipeDAO = recipeDAO;
+		this.goodDAO = goodDAO;
+		this.photoDAO = photoDAO;
+		this.goodDivisionDAO = goodDivisionDAO;
 	}
 
 	public String viewRecipeList() throws Exception{
 		System.out.println("RECIPE_LIST");
-		RECIPE_LIST= RecipeDAO.selectRecipeList();
+		RECIPE_LIST= recipeDAO.selectRecipeList();
 		return "success";
 	}
 	
 	// 레시피구분 리스트
 	public String recipeRelativeGoodList() throws Exception{
-		RECIPE_DIVISION_LIST= RecipeDAO.selectDivisionRecipeList(division);
+		RECIPE_DIVISION_LIST= recipeDAO.selectDivisionRecipeList(division);
 		return "success";
 	}
 	
 	//레시피정보
 	public String viewRecipe() throws Exception{
-		RECIPE=RecipeDAO.selectRecipe(recipeNum);
+		RECIPE=recipeDAO.selectRecipe(recipeNum);
 //		레시피관련 상품정보 조회
-		RECIPE_GOODLIST=GoodDAO.selectRecipeList(recipeNum);
+		RECIPE_GOODLIST=goodDAO.selectRecipeList(recipeNum);
 //		레시피관련 이미지 조회
-		RECIPE_PHOTO=PhotoDAO.selectRecipePhotoList(recipeNum);
+		RECIPE_PHOTO=photoDAO.selectRecipePhotoList(recipeNum);
 		return "success";
 	}
 
@@ -148,7 +149,7 @@ public class RecipeService implements ModelDriven, ServletContextAware{
 
 	//레시피추가폼
 	public String addRecipeForm() throws Exception {
-			DIVISION_LIST = GoodDivisionDAO.selectGooddivisionList();
+			DIVISION_LIST = goodDivisionDAO.selectGooddivisionList();
 			return "success";	
 			
 	}
@@ -156,19 +157,19 @@ public class RecipeService implements ModelDriven, ServletContextAware{
 
 	//레시피수정(미구현)
 	public String editRecipe() throws Exception {			
-			RecipeDAO.updateRecipe(recipe);
+			recipeDAO.updateRecipe(recipe);
 			return "success";
 	}
 
 	//레시피수정폼
 	public String editRecipeForm() throws Exception {
-		DIVISION_LIST = GoodDivisionDAO.selectGooddivisionList();
+		DIVISION_LIST = goodDivisionDAO.selectGooddivisionList();
 		return "success";
 	}
 
 	//레시피삭제
 	public String removeRecipe() throws Exception {
-		RecipeDAO.deleteRecipe(recipeNum);
+		recipeDAO.deleteRecipe(recipeNum);
 		return "success";
 	}
 	
@@ -291,6 +292,21 @@ public class RecipeService implements ModelDriven, ServletContextAware{
 		return servletContext;
 	}
 	
+	public  String getMethod() {
+		return method;
+	}
+
+	public void setMethod(String method) {
+		this.method = method;
+	}
 	
+	// 전체레시피 리스트 
+		public static int getIndex() {
+			return index;
+		}
+
+		public static void setIndex(int index) {
+			RecipeService.index = index;
+		}
 	
 }
