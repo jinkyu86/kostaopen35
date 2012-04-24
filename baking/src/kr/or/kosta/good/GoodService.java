@@ -14,14 +14,22 @@ import org.apache.struts2.util.ServletContextAware;
 import kr.or.kosta.file.receive.FileRenamePolicy;
 import kr.or.kosta.gooddivision.GoodDivisionDAO;
 import kr.or.kosta.gooddivision.Good_division;
+import kr.or.kosta.gooddivision.IGoodDivisionDAO;
+import kr.or.kosta.photo.IPhotoDAO;
 import kr.or.kosta.photo.Photo;
 import kr.or.kosta.photo.PhotoDAO;
+import kr.or.kosta.recipe.IRecipeDAO;
 import kr.or.kosta.recipe.Recipe;
 import kr.or.kosta.recipe.RecipeDAO;
 
 import com.opensymphony.xwork2.ModelDriven;
 
 public class GoodService implements ModelDriven,ServletContextAware{
+	private IGoodDAO goodDAO;
+	private IRecipeDAO recipeDAO;
+	private IGoodDivisionDAO goodDivisionDAO;
+	private IPhotoDAO	photoDAO;
+	
 	private static final long serialVersionUID = 1L;
     private int goodNum;
     private List<Good> GOOD_LIST;
@@ -38,6 +46,18 @@ public class GoodService implements ModelDriven,ServletContextAware{
 	private ServletContext servletContext;
 	private InputStream resultStream;
 	
+	
+	
+	public GoodService(IGoodDAO goodDAO, IRecipeDAO recipeDAO,
+			IGoodDivisionDAO goodDivisionDAO, IPhotoDAO photoDAO) {
+		super();
+		this.goodDAO = goodDAO;
+		this.recipeDAO = recipeDAO;
+		this.goodDivisionDAO = goodDivisionDAO;
+		this.photoDAO = photoDAO;
+	}
+
+
 	@Override
 	public void setServletContext(ServletContext context) {
 		this.servletContext = context;
@@ -188,7 +208,7 @@ public class GoodService implements ModelDriven,ServletContextAware{
 	 * 홈화면.viewGoodList와 동일한 기능. jsp만 다름
 	 */
 	public String viewIndex() throws Exception {
-		GOOD_LIST= GoodDAO.selectGoodList();
+		GOOD_LIST= goodDAO.selectGoodList();
 		return "success";
 	}
 
@@ -196,7 +216,7 @@ public class GoodService implements ModelDriven,ServletContextAware{
 	 * 상품리스트보기
 	 */
 	public String viewGoodList() throws Exception {
-		GOOD_LIST = GoodDAO.selectGoodList();
+		GOOD_LIST = goodDAO.selectGoodList();
 		return "success";
 	}
 
@@ -205,10 +225,10 @@ public class GoodService implements ModelDriven,ServletContextAware{
 	 */
 	public String viewGood() throws Exception {
 		//데이터 베이스에서 상품정보 조회
-		GOOD = GoodDAO.selectGood(goodNum);
+		GOOD = goodDAO.selectGood(goodNum);
 		//상품 관련 레시피 조회
-		GOOD_RECIPELIST = RecipeDAO.selectGoodRelationRecipeList(goodNum);
-		PHOTO_LIST = PhotoDAO.selectGoodPhotoList(goodNum);
+		GOOD_RECIPELIST = recipeDAO.selectGoodRelationRecipeList(goodNum);
+		PHOTO_LIST = photoDAO.selectGoodPhotoList(goodNum);
 		System.out.println("GOOD:"+GOOD);
 		System.out.println("GOOD_RECIPELIST:"+GOOD_RECIPELIST);
 		System.out.println("PHOTO_LIST:"+PHOTO_LIST);
@@ -251,7 +271,7 @@ public class GoodService implements ModelDriven,ServletContextAware{
 			//good에 파일명 설정
 			good.setImg(saveFile.getName());
 		}
-		GoodDAO.insertGood(good);
+		goodDAO.insertGood(good);
 		resultStream=new ByteArrayInputStream("등록완료".getBytes("UTF-8"));
 		return "success";
 	}
@@ -260,7 +280,7 @@ public class GoodService implements ModelDriven,ServletContextAware{
 	 * 상품추가폼
 	 */
 	public String addGoodForm() throws Exception {
-		DIVISION_LIST = GoodDivisionDAO.selectGooddivisionList();
+		DIVISION_LIST = goodDivisionDAO.selectGooddivisionList();
 		return "success";
 	}
 
@@ -269,7 +289,7 @@ public class GoodService implements ModelDriven,ServletContextAware{
 	 */
 	public String editGood() throws Exception {
 		//3.DB에 저장
-		GoodDAO.updateGood(good);
+		goodDAO.updateGood(good);
 		//4. 전체 학생리스트 이동객체 생성
 		return "success";
 	}
@@ -278,8 +298,8 @@ public class GoodService implements ModelDriven,ServletContextAware{
 	 * 상품수정폼
 	 */
 	public String editGoodForm() throws Exception {
-		DIVISION_LIST = GoodDivisionDAO.selectGooddivisionList();
-		GOOD= GoodDAO.selectGood(goodNum);
+		DIVISION_LIST = goodDivisionDAO.selectGooddivisionList();
+		GOOD= goodDAO.selectGood(goodNum);
 		return "success";
 	}
 
@@ -287,7 +307,7 @@ public class GoodService implements ModelDriven,ServletContextAware{
 	 * 상품삭제
 	 */
 	public String removeGood() throws Exception {
-		GoodDAO.deleteGood(goodNum);
+		goodDAO.deleteGood(goodNum);
 		return "success";
 	}
 	
@@ -295,7 +315,7 @@ public class GoodService implements ModelDriven,ServletContextAware{
 	 * 상품구분별 상품리스트 조회
 	 */
 	public String viewDivisionGoodList() throws Exception {
-		GOOD_LIST = GoodDAO.viewDivisionGoodList(division);
+		GOOD_LIST = goodDAO.viewDivisionGoodList(division);
 		return "success";
 	}
 
