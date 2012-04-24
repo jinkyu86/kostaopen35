@@ -35,7 +35,7 @@ import kr.or.kosta.moviesystem.util.PageUtil;
 
 public class GoodService implements ModelDriven, ServletContextAware, ServletRequestAware, ServletResponseAware, SessionAware{
 	private static final long serialVersionUID = 1L;
-	
+	private IGoodDAO goodDAO;
 	private ServletContext servletContext;
 	private HttpServletRequest request;
 	private HttpServletResponse response;
@@ -59,6 +59,13 @@ public class GoodService implements ModelDriven, ServletContextAware, ServletReq
 	
 	private Good good=new Good();
 	
+	
+	public GoodService(IGoodDAO goodDAO) {
+		super();
+		System.out.println("GoodService(GoodDAO)")	;
+		this.goodDAO = goodDAO;
+	}
+
 	@Override
 	public Object getModel() {
 		return good;
@@ -205,8 +212,8 @@ public class GoodService implements ModelDriven, ServletContextAware, ServletReq
 		}
 		int length=8;
 		
-		GOOD_LIST=GoodDAO.selectGoodList(length,page);
-		int goodCount=GoodDAO.selectGoodListCount();	
+		GOOD_LIST=goodDAO.selectGoodList(length,page);
+		int goodCount=goodDAO.selectGoodListCount();	
 		PAGE_LINK_TAG=PageUtil.generate(page, goodCount, length,
 				"/moviesystem/viewGoodList.action");
 		return "success";
@@ -221,7 +228,7 @@ public class GoodService implements ModelDriven, ServletContextAware, ServletReq
 	 * @throws ServletException 
 	 */
 	public String viewGood() throws Exception {
-		GOOD=GoodDAO.selectGood(gnum);
+		GOOD=goodDAO.selectGood(gnum);
 		return "success";
 	}
 	
@@ -231,7 +238,7 @@ public class GoodService implements ModelDriven, ServletContextAware, ServletReq
 	
 	public String addCartList() throws Exception{
 
-		GOOD=GoodDAO.selectGood(gnum);
+		GOOD=goodDAO.selectGood(gnum);
 
 		Buy buy=new Buy();
 		buy.setGood(GOOD);
@@ -302,12 +309,12 @@ public class GoodService implements ModelDriven, ServletContextAware, ServletReq
 		int goodCount=0;
 	
 		if(keyword==null||keyword.equals("")){
-			GOOD_LIST=GoodDAO.selectGoodList(length, page);
-			goodCount=GoodDAO.selectGoodListCount();
+			GOOD_LIST=goodDAO.selectGoodList(length, page);
+			goodCount=goodDAO.selectGoodListCount();
 		}
 		else{
-			GOOD_LIST=GoodDAO.selectGoodListByName(length, page, keyword);
-			goodCount=GoodDAO.selectGoodListByNameCount(keyword);
+			GOOD_LIST=goodDAO.selectGoodListByName(length, page, keyword);
+			goodCount=goodDAO.selectGoodListByNameCount(keyword);
 		}
 
 		PAGE_LINK_TAG=PageUtil.generate(page, goodCount, length, 
@@ -322,8 +329,8 @@ public class GoodService implements ModelDriven, ServletContextAware, ServletReq
 		}
 		int length=8;
 		
-		GOOD_LIST=GoodDAO.selectGoodList(length,page);
-		int goodCount=GoodDAO.selectGoodListCount();
+		GOOD_LIST=goodDAO.selectGoodList(length,page);
+		int goodCount=goodDAO.selectGoodListCount();
 		
 		PAGE_LINK_TAG=PageUtil.generate(page, goodCount, length, 
 				"/moviesystem/viewManageGoodList.action");
@@ -372,25 +379,25 @@ public class GoodService implements ModelDriven, ServletContextAware, ServletReq
 				//good에 파일 명 설정
 				good.setPhoto(saveFile.getName());
 				}
-			gnum=GoodDAO.insertGood(good);
+			gnum=goodDAO.insertGood(good);
 			resultStream=new ByteArrayInputStream(	"등록완료".getBytes("UTF-8"));
 			return "success";
 		}
 		
 		public String deleteGood()throws Exception{
 			
-			GoodDAO.deleteGood(gnum);
+			goodDAO.deleteGood(gnum);
 			return "success";
 		}
 		
 		public String editGoodForm()throws Exception {
 			
-			GOOD=GoodDAO.selectGood(gnum);
+			GOOD=goodDAO.selectGood(gnum);
 			return "success";	
 		}
 
 	public String editGood()throws Exception  {
-		GoodDAO.editGood(good);
+		goodDAO.editGood(good);
 		return "success";	
 	}
 

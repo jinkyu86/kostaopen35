@@ -11,7 +11,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 
-public class GoodDAO {
+public class GoodDAO implements IGoodDAO{
 	
 	private static String resource="sqlmap-config.xml";
 	private static Reader sqlReader;
@@ -24,7 +24,8 @@ public class GoodDAO {
 		}
 	private static SqlSessionFactory sqlMapper =new SqlSessionFactoryBuilder().build(sqlReader);
 
-	public static String insertGood(Good good) {
+	@Override
+	public String insertGood(Good good) {
 		
 		SqlSession session=null;
 		try{
@@ -35,8 +36,8 @@ public class GoodDAO {
 		}
 		return good.getGnum();
 	}
-	
-	public static void editGood(Good good) {
+	@Override
+	public void editGood(Good good) {
 		SqlSession session=null;
 		try{
 		session = sqlMapper.openSession(true);
@@ -45,7 +46,8 @@ public class GoodDAO {
 			session.close();
 		}
 	}
-	public static void deleteGood(String gnum) {
+	@Override
+	public void deleteGood(String gnum) {
 		SqlSession session=null;
 		try{
 		session = sqlMapper.openSession(true);
@@ -54,7 +56,8 @@ public class GoodDAO {
 			session.close();
 		}
 	}
-	public static Good selectGood(String gnum) {
+	@Override
+	public Good selectGood(String gnum) {
 		SqlSession session=null;
 		Good good=null;
 		try{
@@ -66,8 +69,8 @@ public class GoodDAO {
 		}
 		return good;
 	}
-	
-	public static List<Good> selectGoodList(int length,int page) {
+	@Override
+	public List<Good> selectGoodList(int length,int page) {
 		SqlSession session=null;
 		List<Good> goodList=null;
 		try{
@@ -80,8 +83,8 @@ public class GoodDAO {
 		}
 		return goodList;
 	}
-
-	public static int selectGoodListCount() {
+	@Override
+	public int selectGoodListCount() {
 		SqlSession session=null;
 		Integer count=null;
 		try{
@@ -93,8 +96,8 @@ public class GoodDAO {
 		}
 		return count;
 	}
-	
-	public static List<Good> selectGoodListByName(int length, int page, String gname) {
+	@Override
+	public List<Good> selectGoodListByName(int length, int page, String gname) {
 		SqlSession session=null;
 		List<Good> goodList=null;
 		try{
@@ -107,8 +110,8 @@ public class GoodDAO {
 		}
 		return goodList;
 	}
-	
-	public static int selectGoodListByNameCount(String gname) {
+	@Override
+	public int selectGoodListByNameCount(String gname) {
 		SqlSession session=null;
 		Integer count=null;
 		try{

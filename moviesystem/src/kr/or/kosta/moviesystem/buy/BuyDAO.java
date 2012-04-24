@@ -12,7 +12,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
-public class BuyDAO {
+public class BuyDAO implements IBuyDAO{
 	private static String resource="sqlmap-config.xml";
 	private static Reader sqlReader;
 	static{
@@ -24,7 +24,8 @@ public class BuyDAO {
 		}
 	private static SqlSessionFactory sqlMapper =new SqlSessionFactoryBuilder().build(sqlReader);
 	
-	public static void insertBuy(Buy buy) {
+	@Override
+	public void insertBuy(Buy buy) {
 		SqlSession session=null;
 		try{
 			session=sqlMapper.openSession(true);
@@ -33,8 +34,8 @@ public class BuyDAO {
 			session.close();
 		}
 	}
-	
-	public static List<Buy> selectBuyList(String userid,int length,int page) {
+	@Override
+	public List<Buy> selectBuyList(String userid,int length,int page) {
 		SqlSession session=null;
 		List<Buy> buyList=null;
 		try{
@@ -47,8 +48,8 @@ public class BuyDAO {
 		}
 		return buyList;
 	}
-	
-	public static int selectBuyCountByUerid(String userid) {
+	@Override
+	public int selectBuyCountByUerid(String userid) {
 		SqlSession session=null;
 		Integer count=null;
 		try{
@@ -60,8 +61,8 @@ public class BuyDAO {
 		}
 		return count;
 	}
-
-	public static List<Buy> selectCancelableBuyList(String userid, int length, int page) {
+	@Override
+	public List<Buy> selectCancelableBuyList(String userid, int length, int page) {
 		SqlSession session=null;
 		List<Buy> buyList=null;
 		try{
@@ -74,8 +75,8 @@ public class BuyDAO {
 		}
 		return buyList;
 	}
-	
-	public static int selectCancelableBuyListCount(String userid) {
+	@Override
+	public int selectCancelableBuyListCount(String userid) {
 		SqlSession session=null;
 		Integer count=null;
 		try{
@@ -87,8 +88,8 @@ public class BuyDAO {
 		}
 		return count;
 	}
-
-	public static List<Buy> selectCanceledBuyList(String userid, int length, int page) {
+	@Override
+	public List<Buy> selectCanceledBuyList(String userid, int length, int page) {
 		SqlSession session=null;
 		List<Buy> buyList=null;
 		try{
@@ -102,8 +103,8 @@ public class BuyDAO {
 		return buyList;
 		
 	}
-	
-	public static int selectCanceledBuyListCount(String userid) {
+	@Override
+	public int selectCanceledBuyListCount(String userid) {
 		SqlSession session=null;
 		Integer count=null;
 		try{
@@ -117,7 +118,8 @@ public class BuyDAO {
 	}
 	
 	//구매취소하기 (buy table의 pay_state를 1로 set, cancel_date를 취소날짜로 set)
-	public static void cancelBuy(String buynum){
+	@Override
+	public void cancelBuy(String buynum){
 		SqlSession session=null;
 		try{
 		session = sqlMapper.openSession(true);

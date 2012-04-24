@@ -31,6 +31,7 @@ import kr.or.kosta.moviesystem.util.PageUtil;
 
 public class BuyService implements ModelDriven, ServletContextAware, ServletRequestAware, ServletResponseAware, SessionAware{
 	private static final long serialVersionUID = 1L;
+	private IBuyDAO buyDAO;
 	private ServletContext servletContext;
 	private HttpServletRequest request;
 	private HttpServletResponse response;
@@ -53,6 +54,12 @@ public class BuyService implements ModelDriven, ServletContextAware, ServletRequ
 		return buy;
 	}
 	
+public BuyService(IBuyDAO buyDAO) {
+	super();
+	System.out.println("BuyService(BuyDAO)");
+	this.buyDAO = buyDAO;
+}
+
 	@Override
 	public void setSession(Map<String, Object> session) {
 		this.session=session;		
@@ -148,7 +155,7 @@ public class BuyService implements ModelDriven, ServletContextAware, ServletRequ
 			Buy buy=cartList.get(i);
 			buy.setMember(member);
 			buy.setTotalPrice(buy.getQty()*buy.getGood().getGprice());
-			BuyDAO.insertBuy(buy);
+			buyDAO.insertBuy(buy);
 		}
 		session.remove("CART_LIST");
 		return "success";
@@ -170,8 +177,8 @@ public class BuyService implements ModelDriven, ServletContextAware, ServletRequ
 		Member member=(Member)session.get("LOGIN_MEMBER");
 		String userid=member.getUserid();
 		
-		BUY_LIST=BuyDAO.selectBuyList(userid,length, page);
-		int buyCount=BuyDAO.selectBuyCountByUerid(userid);
+		BUY_LIST=buyDAO.selectBuyList(userid,length, page);
+		int buyCount=buyDAO.selectBuyCountByUerid(userid);
 	
 		PAGE_LINK_TAG=PageUtil.generate(page, buyCount, length, 
 				"/moviesystem/viewBuyList.action?userid="+userid);
@@ -190,8 +197,8 @@ public class BuyService implements ModelDriven, ServletContextAware, ServletRequ
 		Member member=(Member)session.get("LOGIN_MEMBER");
 		String userid=member.getUserid();
 		
-		BUY_LIST=BuyDAO.selectCancelableBuyList(userid,length, page);
-		int buyCount=BuyDAO.selectCancelableBuyListCount(userid);
+		BUY_LIST=buyDAO.selectCancelableBuyList(userid,length, page);
+		int buyCount=buyDAO.selectCancelableBuyListCount(userid);
 		
 		PAGE_LINK_TAG=PageUtil.generate(page, buyCount, length, 
 				"/moviesystem/cancelBuyListForm.action?userid="+userid);
@@ -202,7 +209,7 @@ public class BuyService implements ModelDriven, ServletContextAware, ServletRequ
 	public String cancelBuy()throws Exception {
 		if(chkbox!=null){
 			for(int i=0;i<chkbox.length;i++){
-				BuyDAO.cancelBuy(chkbox[i]);
+				buyDAO.cancelBuy(chkbox[i]);
 			}
 		}
 		return "success";
@@ -218,8 +225,8 @@ public class BuyService implements ModelDriven, ServletContextAware, ServletRequ
 		Member member=(Member)session.get("LOGIN_MEMBER");
 		String userid=member.getUserid();
 		
-		BUY_LIST=BuyDAO.selectCanceledBuyList(userid,length, page);
-		int buyCount=BuyDAO.selectCanceledBuyListCount(userid);
+		BUY_LIST=buyDAO.selectCanceledBuyList(userid,length, page);
+		int buyCount=buyDAO.selectCanceledBuyListCount(userid);
 		
 		PAGE_LINK_TAG=PageUtil.generate(page, buyCount, length, 
 				"/moviesystem/viewCanceledBuyList.action?userid="+userid);
