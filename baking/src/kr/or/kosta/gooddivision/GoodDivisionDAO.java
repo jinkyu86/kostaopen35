@@ -17,7 +17,7 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import kr.or.kosta.member.Member;
 import kr.or.kosta.util.ConnectionUtil;
 
-public class GoodDivisionDAO {
+public class GoodDivisionDAO implements IGoodDivisionDAO{
 	
 	private static String resource="sqlmap-config.xml";
 	private static Reader sqlReader;
@@ -35,7 +35,8 @@ public class GoodDivisionDAO {
 	/**
 	 * 상품리스트 조회
 	 */
-	public static List<Good_division> selectGooddivisionList() {
+	@Override
+	public  List<Good_division> selectGooddivisionList() {
 		SqlSession session=null;
 		List<Good_division> good_divisionList = null;
 		try{

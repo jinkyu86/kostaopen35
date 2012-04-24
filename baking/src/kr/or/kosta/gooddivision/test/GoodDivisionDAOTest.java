@@ -10,13 +10,13 @@ import org.junit.Test;
 
 public class GoodDivisionDAOTest {
 
-	@Test
-	public void testSelectGooddivisionList() {
-		ArrayList<Good_division> divisions = (ArrayList<Good_division>) GoodDivisionDAO.selectGooddivisionList();
-		
-		for (int i = 0; i < divisions.size(); i++) {
-			Good_division division = divisions.get(i);
-			System.out.println( division);
-		}
-	}
+//	@Test
+//	public void testSelectGooddivisionList() {
+//		ArrayList<Good_division> divisions = (ArrayList<Good_division>) GoodDivisionDAO.selectGooddivisionList();
+//		
+//		for (int i = 0; i < divisions.size(); i++) {
+//			Good_division division = divisions.get(i);
+//			System.out.println( division);
+//		}
+//	}
 }
