@@ -48,10 +48,12 @@ public class MovieService implements ModelDriven, ServletContextAware{
 	private String mnum;
 	private String schCode;
 	private String schString;
-	
+	private String movie_sdate;
+	private String movie_edate;
 	
 	public MovieService(IMovieDAO movieDAO) {
 		super();
+		System.out.println("movieDAO»Æ¿Œ");
 		this.movieDAO = movieDAO;
 	}
 
@@ -236,25 +238,16 @@ public class MovieService implements ModelDriven, ServletContextAware{
 	 * @param request
 	 * @param response
 	 */
-	public void addMovie(HttpServletRequest request,
-			HttpServletResponse response) throws IOException, ServletException{
-		String mname = request.getParameter("movie_name");
-		String genre = request.getParameter("movie_genre");
-		String poster = request.getParameter("poster_name");
-		String content = request.getParameter("movie_content");
+	public String addMovie() throws Exception{
 		try {
 			DateFormat formatter ; 
 	        Date Sdate ;
 	        Date Edate ;
 	        formatter = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss");	
-	        Sdate = (Date)formatter.parse(request.getParameter("movie_sdate")+"T00:00:00");
-	        Edate = (Date)formatter.parse(request.getParameter("movie_edate")+"T00:00:00");
+	        Sdate = (Date)formatter.parse(movie_sdate+"T00:00:00");
+	        Edate = (Date)formatter.parse(movie_edate+"T00:00:00");
 	        
 	        Movie movie = new Movie();
-			movie.setMname(mname);
-			movie.setGenre(genre);
-			movie.setPoster(poster);
-			movie.setContent(content);
 			movie.setLaunchDate(Sdate);
 			movie.setEndDate(Edate);
 			
@@ -263,10 +256,7 @@ public class MovieService implements ModelDriven, ServletContextAware{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
-		RequestDispatcher rd = request.getRequestDispatcher("/MovieService?method=adminMovieList");
-		rd.forward(request,  response);
+		return "success";
 	}
 
 	/**
@@ -275,43 +265,23 @@ public class MovieService implements ModelDriven, ServletContextAware{
 	 * @param request
 	 * @param response
 	 */
-	public void editMovie(HttpServletRequest request,
-			HttpServletResponse response) throws IOException, ServletException{
-		String mnum = request.getParameter("mnum");
-		String mname = request.getParameter("movie_name");
-		String genre = request.getParameter("movie_genre");
-		String poster = request.getParameter("poster_name");
-		String content = request.getParameter("movie_content");
-		String gubun = request.getParameter("gubun");
-		
+	public String editMovie() throws Exception{		
 		try {
 			DateFormat formatter ; 
 	        Date Sdate ;
 	        Date Edate ;
 	        formatter = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss");	
-	        Sdate = (Date)formatter.parse(request.getParameter("movie_sdate")+"T00:00:00");
-	        Edate = (Date)formatter.parse(request.getParameter("movie_edate")+"T00:00:00");
+	        Sdate = (Date)formatter.parse(movie_sdate+"T00:00:00");
+	        Edate = (Date)formatter.parse(movie_edate+"T00:00:00");
 	        
-	        Movie movie = new Movie();
-	        movie.setMnum(mnum);
-			movie.setMname(mname);
 			movie.setLaunchDate(Sdate);
-			movie.setGenre(genre);
-			movie.setPoster(poster);
 			movie.setEndDate(Edate);
-			movie.setContent(content);
-			
-			movieDAO.editMovie(movie);
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		request.setAttribute("gubun", gubun);
-		request.setAttribute("mnum", mnum);
-		RequestDispatcher rd = request.getRequestDispatcher("/MovieService?method=adminMovie");
-		rd.forward(request,  response);
-		
+		movieDAO.editMovie(movie);
+		return "success";		
 	}
 
 	/**
@@ -436,6 +406,22 @@ public class MovieService implements ModelDriven, ServletContextAware{
 
 	public void setSchString(String schString) {
 		this.schString = schString;
+	}
+	
+	public String getMovie_sdate() {
+		return movie_sdate;
+	}
+
+	public void setMovie_sdate(String movie_sdate) {
+		this.movie_sdate = movie_sdate;
+	}
+
+	public String getMovie_edate() {
+		return movie_edate;
+	}
+
+	public void setMovie_edate(String movie_edate) {
+		this.movie_edate = movie_edate;
 	}
 
 	@Override
