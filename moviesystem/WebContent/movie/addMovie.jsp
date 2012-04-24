@@ -13,6 +13,22 @@
 <script src="/moviesystem/js/common.jsp"></script>
 <script src="/moviesystem/uploadify/jquery.uploadify.v2.1.4.js"></script>
 <script src="/moviesystem/uploadify/swfobject.js"></script>
+<c:choose>
+	<c:when test="${method eq 'addMovieForm'}">
+		<script>
+			$(function(){
+				$('#movie_form').attr('action','/moviesystem/addMovie.action');
+			});
+		</script>
+	</c:when>
+	<c:otherwise>
+		<script>
+			$(function(){
+				$('#movie_form').attr('action','/moviesystem/editMovie.action');
+			});
+		</script>
+	</c:otherwise>
+</c:choose>
 <script>
 	$(function(){
 		memcheck('${LOGIN_MEMBER.userid}');
@@ -106,15 +122,7 @@
 		
 		<!-- 본문 내용 시작 -->
 		<td>
-			<form name="movie_form" id="movie_form" method="post" action="/moviesystem/MovieService">
-			<c:choose>
-				<c:when test="${method eq 'addMovieForm'}">
-					<input type="hidden" name="method" id="method" value="addMovie">
-				</c:when>
-				<c:otherwise>
-					<input type="hidden" name="method" id="method" value="editMovie">
-				</c:otherwise>
-			</c:choose>
+			<form name="movie_form" id="movie_form" method="post">
 			<input type="hidden" name="mnum" value="${Movie.mnum}">
 			<input type="hidden" name="poster_name" id="poster_name">
 			<table class="table_style" align="right" border="1px" cellspacing="0" bgcolor="#ffffff">
