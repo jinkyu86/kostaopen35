@@ -52,14 +52,16 @@ public class BettingService implements ModelDriven
 	private Betting BETTING_AWAY;
 	
 	
-	public BettingService(IBetting bettingDAO, IMember memberDAO,
+	public BettingService( IMember memberDAO,IBetting bettingDAO,
 			IMatch matchDAO, IMemberBetData memberBetDataDAO) {
 		super();
-		this.bettingDAO = bettingDAO;
+		
 		this.memberDAO = memberDAO;
+		this.bettingDAO = bettingDAO;
 		this.matchDAO = matchDAO;
 		this.memberBetDataDAO = memberBetDataDAO;
 	}
+
 
 	public String getMatchtime() {
 		return matchtime;

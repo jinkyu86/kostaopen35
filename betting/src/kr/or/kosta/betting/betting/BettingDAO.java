@@ -648,7 +648,6 @@ public class BettingDAO implements IBetting{
 //		return bettingCount;
 	}
 	
-
 }
 
 

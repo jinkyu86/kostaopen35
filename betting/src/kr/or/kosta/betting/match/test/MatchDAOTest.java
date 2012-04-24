@@ -3,6 +3,7 @@ package kr.or.kosta.betting.match.test;
 import java.util.List;
 
 import kr.or.kosta.betting.loc.Loc;
+import kr.or.kosta.betting.match.IMatch;
 import kr.or.kosta.betting.match.Match;
 import kr.or.kosta.betting.match.MatchDAO;
 import kr.or.kosta.betting.team.Team;
@@ -11,7 +12,9 @@ import kr.or.kosta.betting.team.Team;
 import org.junit.Test;
 
 public class MatchDAOTest {
-
+	
+	
+	
 	@Test
 	public void testSelectMatchList() {
 		List<Match> page1List = MatchDAO.selectMatchList(1, 5);

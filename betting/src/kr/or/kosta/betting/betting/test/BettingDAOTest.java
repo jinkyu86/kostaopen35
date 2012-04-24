@@ -6,25 +6,32 @@ import org.junit.Test;
 
 import kr.or.kosta.betting.betting.Betting;
 import kr.or.kosta.betting.betting.BettingDAO;
+import kr.or.kosta.betting.betting.IBetting;
 
 public class BettingDAOTest extends BettingDAO {
+	
+	private IBetting bettingDAO;
+	
 
-
+	public BettingDAOTest(IBetting bettingDAO) {
+		super();
+		this.bettingDAO = bettingDAO;
+	}
 	@Test
 	public void testInsertHomeBetting(){
 
-		BettingDAO.insertHomeBetting("10298");
+		bettingDAO.insertHomeBetting("10298");
 	}
 	@Test
 	public void testInsertAwayBetting() {
 
-		BettingDAO.insertAwayBetting("10298");
+		bettingDAO.insertAwayBetting("10298");
 	}
 	@Test
 	public void testSelectBettingList() {
-		List<Betting> page1List = BettingDAO.selectBettingList(1, 5);
+		List<Betting> page1List = bettingDAO.selectBettingList(1, 5);
 		System.out.println("page1List:" + page1List);
-		List<Betting> page2List = BettingDAO.selectBettingList(2, 5);
+		List<Betting> page2List = bettingDAO.selectBettingList(2, 5);
 		System.out.println("page2List:" + page2List);
 	}
 //	@Test
@@ -38,17 +45,17 @@ public class BettingDAOTest extends BettingDAO {
 //	}
 	@Test
 	public void testSelectBettingRating(){
-		double bettingRating = BettingDAO.selectBettingRating("5");
+		double bettingRating = bettingDAO.selectBettingRating("5");
 		System.out.println(bettingRating);
 	}
 	@Test
 	public void testSelectBettingSeleRating(){
-		long bettingSeleRating = BettingDAO.selectBettingSeleRating("5");
+		long bettingSeleRating = bettingDAO.selectBettingSeleRating("5");
 		System.out.println(bettingSeleRating);
 	}
 	@Test
 	public void testSelectBettingTotMineral(){
-		long bettingTotMineral = BettingDAO.selectBettingTotMineral("5");
+		long bettingTotMineral = bettingDAO.selectBettingTotMineral("5");
 		System.out.println(bettingTotMineral);
 	}
 	@Test
@@ -59,24 +66,24 @@ public class BettingDAOTest extends BettingDAO {
 		betting.setTotMineral(200);
 		betting.setBatRating(1.8);
 		
-		BettingDAO.updateBetting(betting);
+		bettingDAO.updateBetting(betting);
 	}
 	@Test
 	public void testSelectBettingByHome(){
-		Betting bettingHome = BettingDAO.selectBettingByHome("10001");
+		Betting bettingHome = bettingDAO.selectBettingByHome("10245");
 		System.out.println(bettingHome);
 		
 	}
 	@Test
 	public void testSelectBettingByAway(){
-		Betting betting = BettingDAO.selectBettingByAway("10001");
+		Betting betting = bettingDAO.selectBettingByAway("10001");
 		System.out.println(betting);
 		
 	}
 	
 	@Test
 	public void testSelectBettingCount(){
-		int count = BettingDAO.selectBettingCount();
+		int count = bettingDAO.selectBettingCount();
 		System.out.println(count);
 	}
 }
