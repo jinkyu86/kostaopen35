@@ -17,160 +17,81 @@ import kr.or.kosta.auction.util.PageUtil;
 
 public class BoardService extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public BoardService() {
+	private List<Board>BOARD_LIST;
+	private Board BOARD;
+	private String bNum;
+	private Board board = new Board();
+
+	
+    public List<Board> getBOARD_LIST() {
+		return BOARD_LIST;
+	}
+
+	public void setBOARD_LIST(List<Board> bOARD_LIST) {
+		BOARD_LIST = bOARD_LIST;
+	}
+
+	public Board getBOARD() {
+		return BOARD;
+	}
+
+	public void setBOARD(Board bOARD) {
+		BOARD = bOARD;
+	}
+
+	public String getbNum() {
+		return bNum;
+	}
+
+	public void setbNum(String bNum) {
+		this.bNum = bNum;
+	}
+
+	public Board getBoard() {
+		return board;
+	}
+
+	public void setBoard(Board board) {
+		this.board = board;
+	}
+
+	public BoardService() {
         super();
         // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doPost(request,response);
-	}
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("utf-8");
-		String  method=request.getParameter("method");
-		if(method==null){
-			method="viewBoardList";
-		}if("addBoard".equals(method)){
-			addBoard(request, response);
-		}else if("addBoardForm".equals(method)){
-			addBoardForm(request, response);
-		}else if("editBoard".equals(method)){
-			editBoard(request, response);
-		}else if("editBoardForm".equals(method)){
-			editBoardForm(request, response);
-		}else if("viewBoard".equals(method)){
-			viewBoard(request, response);
-		}else if("viewBoardList".equals(method)){
-			viewBoardList(request, response);
-		}else if("removeBoard".equals(method)){
-			removeBoard(request, response);
-		}else if("searchBoardList".equals(method)){
-			searchBoardList(request, response);
-		}
-		
-	}//end method doPost
-
-	private void addBoard(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		String userid=
-				request.getParameter("userid");
-		String title=
-				request.getParameter("title");
-		String content=
-				request.getParameter("content");
-		Board board=new Board();
-		board.setTitle(title);
-		board.setContent(content);
-		Member member = new Member();
-		member.setUserid(userid);
-		board.setMember(member);
-		
-		BoardDAO.insertBoard(board);
-		
-		RequestDispatcher rd=
-				request.getRequestDispatcher(
-						"/BoardService?method=viewBoardList");
-		rd.forward(request, response);
+	public String addBoard() throws Exception {
+		bNum = BoardDAO.insertBoard(board);
+		return "success";
 	}
 
-	private void addBoardForm(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher rd=
-				request.getRequestDispatcher(
-						"/board/addBoard.jsp");
-		rd.forward(request, response);
+	public String addBoardForm() throws Exception {
+		return "success";
 	}
 
-	private void editBoard(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		String bNum=request.getParameter("bNum");
-		String title=request.getParameter("title");
-		String content=request.getParameter("content");
-		String userid=request.getParameter("userid");
-		
-		Member member=new Member();
-		member.setUserid(userid);
-		
-		Board board=new Board();
-		board.setTitle(title);
-		board.setContent(content);
-		board.setbNum(bNum);
-		board.setMember(member);
-		
+	public String editBoard() throws Exception {
 		BoardDAO.updateBoard(board);
-		
-		RequestDispatcher rd=
-				request.getRequestDispatcher(
-						"/BoardService?method=viewBoard&" +
-						"bNum="+bNum);
-		
-		rd.forward(request, response);
+		return "success";
 	}
 
-	private void editBoardForm(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		String bNum=request.getParameter("bNum");
-		Board board=BoardDAO.selectBoard(bNum);
-		request.setAttribute("BOARD",board);
-		RequestDispatcher rd=
-				request.getRequestDispatcher("/board/editBoard.jsp");
-		rd.forward(request, response);
+	public String editBoardForm() throws Exception {
+		BOARD = BoardDAO.selectBoard(bNum);
+		return "success";
 	}
 
-	private void viewBoard(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		String bNum=request.getParameter("bNum");
-		Board  board=BoardDAO.selectBoard(bNum);
-		request.setAttribute("BOARD",board);
-		RequestDispatcher rd=
-				request.getRequestDispatcher(
-						"/board/viewBoard.jsp");
-		rd.forward(request, response);
+	public String viewBoard() throws Exception {
+		BOARD = BoardDAO.selectBoard(bNum);
+		return "success";
 	}
 
-	private void viewBoardList(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		//기본 페이지1
-		int page=1;
-		//페이지 파라메터가 존재
-		if(request.getParameter("page")!=null){
-			//파라메터 리턴
-			page=Integer.parseInt(request.getParameter("page"));
-		}
-		//한페이지당 보여줄 게시물수
-		int length=10;
-			
-		List<Board> boardList=	BoardDAO.selectBoardList(page, length);
-		//2.request에 1의페이지 학생 정보 저장
-		request.setAttribute("BOARD_LIST", boardList);
-		//전체 학생의 수 조회
-		int boardCount=BoardDAO.selectBoardCount();
-		//다른 페이지로 이동하는 링크태그 만듬
-		//PageUtil.generate(현페이지,전체건수,한페이지당 보여줄row수,주소)
-		String pageLinkTag=PageUtil.generate(page, boardCount, length, "/auction/BoardService?method=viewBoardList");
-		request.setAttribute("PAGE_LINK_TAG",pageLinkTag);
-		
-		RequestDispatcher rd=
-				request.getRequestDispatcher(
-						"/board/viewBoardList.jsp");
-		rd.forward(request, response);
+	public String viewBoardList() throws Exception {
+		BOARD_LIST = BoardDAO.selectBoardList();
+		return "success";
 	}
 
-	private void removeBoard(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		String num=request.getParameter("bNum");
-		BoardDAO.deleteBoard(num);
-		RequestDispatcher rd=
-				request.getRequestDispatcher(
-						"/BoardService?method=viewBoardList");
-		rd.forward(request, response);
+	public String removeBoard() throws Exception {
+		BoardDAO.deleteBoard(bNum);
+		return "success";
 	}
 
 	private void searchBoardList(HttpServletRequest request,

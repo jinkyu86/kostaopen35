@@ -27,16 +27,10 @@ public class BoardDAO {
 	private static SqlSessionFactory sqlMapper =
 			new SqlSessionFactoryBuilder().build(sqlReader);
 	
-	public static void insertBoard(
-			 Board board){
-		SqlSession session = null;
-		try{
-		session = sqlMapper.openSession(true);
+	public static String insertBoard(Board board){
+		SqlSession session = sqlMapper.openSession(true);
 		session.insert("Board.insertBoard",board);
-		}
-		finally{
-			session.close();
-		}
+		return board.getbNum();
 	}
 	public static void updateBoard(
 			 Board board){
