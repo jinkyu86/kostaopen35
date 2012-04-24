@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean id="goodDAO" class="kr.or.kosta.good.GoodDAO"/>	
+	<bean id="goodDivisionDAO" class="kr.or.kosta.gooddivision.GoodDivisionDAO"/>	
+	<bean id="memberDAO" class="kr.or.kosta.member.MemberDAO"/>
+	<bean id="myrecipeDAO" class="kr.or.kosta.myrecipe.MyrecipeDAO"/>
+	<bean id="orderDAO" class="kr.or.kosta.order.OrderDAO"/>
+	<bean id="photoDAO" class="kr.or.kosta.photo.PhotoDAO"/>
+	<bean id="recipeDAO" class="kr.or.kosta.recipe.RecipeDAO"/>
+		
+	<bean id="recipeService" class="kr.or.kosta.recipe.RecipeService">
+		<constructor-arg>
+			<ref bean="recipeDAO"/>
+		</constructor-arg>
+		<constructor-arg>
+			<ref bean="goodDAO"/>
+		</constructor-arg>
+		<constructor-arg>
+			<ref bean="photoDAO"/>
+		</constructor-arg>
+		<constructor-arg>
+			<ref bean="goodDivisionDAO"/>
+		</constructor-arg>
+	</bean>
+	
+	<bean id="memberService" class="kr.or.kosta.member.MemberService">
+		<constructor-arg>
+			<ref bean="memberDAO"/>
+		</constructor-arg>
+	</bean>
+	
+	<bean id="orderService" class="kr.or.kosta.order.OrderService">
+		<constructor-arg>
+			<ref bean="orderDAO"/>
+		</constructor-arg>
+		<constructor-arg>
+			<ref bean="memberDAO"/>
+		</constructor-arg>
+		<constructor-arg>
+			<ref bean="goodDAO"/>
+		</constructor-arg>
+	</bean>
+	
+	<bean id="goodDivisionService" class="kr.or.kosta.gooddivision.GoodDivisionService">
+		<constructor-arg>
+			<ref bean="goodDivisionDAO"/>
+		</constructor-arg>
+	</bean>
+	
+	<bean id="myrecipeService" class="kr.or.kosta.myrecipe.MyrecipeService">
+		<constructor-arg>
+			<ref bean="myrecipeDAO"/>
+		</constructor-arg>
+		<constructor-arg>
+			<ref bean="memberDAO"/>
+		</constructor-arg>
+	</bean>
+	
+	<bean id="goodService" class="kr.or.kosta.good.GoodService">
+		<constructor-arg>
+			<ref bean="goodDAO"/>
+		</constructor-arg>
+		<constructor-arg>
+			<ref bean="recipeDAO"/>
+		</constructor-arg>
+		<constructor-arg>
+			<ref bean="goodDivisionDAO"/>
+		</constructor-arg>
+		<constructor-arg>
+			<ref bean="photoDAO"/>
+		</constructor-arg>
+	</bean>
+	
+	
+	
+</beans>
