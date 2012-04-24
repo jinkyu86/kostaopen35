@@ -21,7 +21,7 @@ import kr.or.kosta.auction.good.Good;
 import kr.or.kosta.auction.member.Member;
 import kr.or.kosta.auction.util.ConnectionUtil;
 
-public class BidDAO {
+public class BidDAO implements IBidDAO{
 	private static String resource="sqlmap-config.xml";
 	private static Reader sqlReader;
 	static{
