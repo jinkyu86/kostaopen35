@@ -12,6 +12,9 @@ import kr.or.kosta.auction.good.GoodDAO;
 
 public class AuctionService implements ModelDriven  {
 	private static final long serialVersionUID = 1L;
+	private IAuctionDAO auctionDAO;
+	//private IBidDAO bidDAO;
+	//private IGoodDAO goodDAO;
 	
 	@Override
 	public Object getModel() {
@@ -43,7 +46,10 @@ public class AuctionService implements ModelDriven  {
 	    private List<Good>GOOD_LIST;
 	    private List<Bid>BID_LIST;
 	    
-	     
+	public AuctionService(IAuctionDAO auctionDAO) {
+			super();
+			this.auctionDAO = auctionDAO;
+		}
 
 	public List<Auction> getSOLD_LIST() {
 			return SOLD_LIST;
@@ -156,7 +162,7 @@ public class AuctionService implements ModelDriven  {
 		}
 
 	public String addAuction() throws Exception {
-		AuctionDAO.insertAuction(auction);
+		auctionDAO.insertAuction(auction);
 		return "success";
 	}
 	
@@ -172,7 +178,7 @@ public class AuctionService implements ModelDriven  {
 	 * @param response
 	 */
 	public String editAuction() throws Exception{
-		AuctionDAO.updateAuction(auction);
+		auctionDAO.updateAuction(auction);
 		return "success";
 	}
 
@@ -182,7 +188,7 @@ public class AuctionService implements ModelDriven  {
 	 */
 	public String editAuctionForm() throws Exception{
 		//1.수정할 경매의 경매 번호 리턴
-		AUCTION = AuctionDAO.selectAuction(aNum);
+		AUCTION = auctionDAO.selectAuction(aNum);
 				//3.전체 물품 리스트 조회
 		GOOD_LIST = GoodDAO.selectGoodList();
 		return "success";
@@ -196,7 +202,7 @@ public class AuctionService implements ModelDriven  {
 				//1.a_num 파라메터 리턴받아서 변수에 저장
 				//2.DB에서 경매번호가 일치하는 경매 조회
 				int size=5;
-				AUCTION = AuctionDAO.selectAuction(aNum);
+				AUCTION = auctionDAO.selectAuction(aNum);
 				BID_LIST = BidDAO.selectBidListByAuctionNum(aNum, size);
 				//3.request에 2에서 조회한 경매의 정보 저장
 				//   이름-STUDENT
@@ -207,13 +213,13 @@ public class AuctionService implements ModelDriven  {
 
 	public String viewAuctionList() throws Exception{
 		//1.AuctionDAO에서 전체 경매조회 메서드 호출
-		AUCTION_LIST=AuctionDAO.selectAuctionList();
-		SOLD_LIST=AuctionDAO.selectAuctionSoldList();
+		AUCTION_LIST=auctionDAO.selectAuctionList();
+		SOLD_LIST=auctionDAO.selectAuctionSoldList();
 		return "success";   
 	}
 
 	public String removeAuction() throws Exception{
-		AuctionDAO.deleteAuction(aNum);
+		auctionDAO.deleteAuction(aNum);
 		return "success";
 ///AuctionService?method=viewAuctionList
 	}

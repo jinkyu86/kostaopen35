@@ -19,7 +19,7 @@ import kr.or.kosta.auction.good.Good;
 
 //import kr.or.kosta.auction.util.ConnectionUtil;
 
-public class AuctionDAO {
+public class AuctionDAO implements IAuctionDAO{
 
 	private static String resource = "sqlmap-config.xml";
 	private static Reader sqlReader;
@@ -35,7 +35,8 @@ public class AuctionDAO {
 	/**
 	 * @param good
 	 */
-	public static void insertAuction(Auction auction) {
+	@Override
+	public void insertAuction(Auction auction) {
 		SqlSession session = null;
 		try {
 			session = sqlMapper.openSession(true);
@@ -44,8 +45,8 @@ public class AuctionDAO {
 			session.close();
 		}
 	}
-
-	public static void updateAuction(Auction auction) {
+	@Override
+	public void updateAuction(Auction auction) {
 		SqlSession session = null;
 		try {
 			session = sqlMapper.openSession(true);
@@ -54,8 +55,8 @@ public class AuctionDAO {
 			session.close();
 		}
 	}
-
-	public static void deleteAuction(String aNum) {
+	@Override
+	public void deleteAuction(String aNum) {
 		SqlSession session = null;
 		try {
 			session = sqlMapper.openSession(true);
@@ -64,8 +65,8 @@ public class AuctionDAO {
 			session.close();
 		}
 	}
-
-	public static Auction selectAuction(String aNum) {
+	@Override
+	public Auction selectAuction(String aNum) {
 		SqlSession session = null;
 		Auction auction = null;
 		try {
@@ -76,8 +77,8 @@ public class AuctionDAO {
 		}
 		return auction;
 	}
-
-	public static List<Auction> selectAuctionList() {
+	@Override
+	public List<Auction> selectAuctionList() {
 		SqlSession session = null;
 		List<Auction> auctionList = null;
 		try {
@@ -88,8 +89,8 @@ public class AuctionDAO {
 		}
 		return auctionList;
 	}
-
-	public static List<Auction> selectAuctionSoldById(String userid) {
+	@Override
+	public List<Auction> selectAuctionSoldById(String userid) {
 		SqlSession session = null;
 		List<Auction> auction = null;
 		try {
@@ -100,8 +101,8 @@ public class AuctionDAO {
 		}
 		return auction;
 	}
-
-	public static List<Auction> selectAuctionSoldList() {
+	@Override
+	public List<Auction> selectAuctionSoldList() {
 		SqlSession session = null;
 		List<Auction> auctionSoldList = null;
 		try {
