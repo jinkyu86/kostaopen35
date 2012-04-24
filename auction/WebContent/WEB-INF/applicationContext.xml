@@ -1,6 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    
+    <bean id="bidDAO" class="kr.or.kosta.auction.bid.BidDAO"/>
+    <bean id="auctionDAO" class="kr.or.kosta.auction.auction.AuctionDAO"/>
+    <bean id="memberDAO" class="kr.or.kosta.auction.member.MemberDAO"/>
+	<bean id="goodDAO" class="kr.or.kosta.auction.good.GoodDAO"/>
 	
+    <bean id="bidService" class="kr.or.kosta.auction.bid.BidService">
+        <constructor-arg>
+            <ref bean="bidDAO"/>
+        </constructor-arg>
+        <constructor-arg>
+            <ref bean="auctionDAO"/>
+        </constructor-arg>
+        <constructor-arg>
+            <ref bean="memberDAO"/>
+        </constructor-arg>
+    </bean>
+	
+    <bean id="memberService" class="kr.or.kosta.auction.member.MemberService">
+        <constructor-arg>
+            <ref bean="memberDAO"/>
+        </constructor-arg>
+    </bean>
+    
+    <bean id="goodService" class="kr.or.kosta.auction.good.GoodService">
+        <constructor-arg>
+            <ref bean="goodDAO"/>
+        </constructor-arg>
+    </bean>
+    
+    <bean id="auctionService" class="kr.or.kosta.auction.auction.AuctionService">
+        <constructor-arg>
+            <ref bean="auctionDAO"/>
+        </constructor-arg>
+        <constructor-arg>
+            <ref bean="goodDAO"/>
+        </constructor-arg>
+        <constructor-arg>
+            <ref bean="bidDAO"/>
+        </constructor-arg>
+    </bean>
 </beans>
