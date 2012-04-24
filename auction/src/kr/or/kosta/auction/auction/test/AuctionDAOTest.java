@@ -4,16 +4,23 @@ import java.util.List;
 
 import kr.or.kosta.auction.auction.Auction;
 import kr.or.kosta.auction.auction.AuctionDAO;
+import kr.or.kosta.auction.auction.IAuctionDAO;
 import kr.or.kosta.auction.good.Good;
 
 
 import org.junit.Test;
 
 public class AuctionDAOTest {
-
+	private IAuctionDAO auctionDAO;
+	
+	
+	public AuctionDAOTest(IAuctionDAO auctionDAO) {
+		super();
+		this.auctionDAO = auctionDAO;
+	}
 	@Test
 	public void selectAuctionTest() {
-		Auction auction = AuctionDAO.selectAuction("86");
+		Auction auction = auctionDAO.selectAuction("86");
 		System.out.println(auction);
 	}
 	@Test
@@ -31,18 +38,18 @@ public class AuctionDAOTest {
 		auction.setGood(good);
 		
 		
-		AuctionDAO.insertAuction(auction);
+		auctionDAO.insertAuction(auction);
 	}
 	@Test
 	public void testDeleteAuction(){
 		
-		AuctionDAO.deleteAuction("172");
+		auctionDAO.deleteAuction("172");
 			
 	}
 	
 	@Test
 	public void TestselectAuctionList() {
-		List<Auction> auctionList = AuctionDAO.selectAuctionList();
+		List<Auction> auctionList = auctionDAO.selectAuctionList();
 		System.out.println("AuctionDAO:selectAuctionList:"+auctionList);
 		//for(int i =0; i<auctionList.size();i++){
 			//Auction auction = auctionList.get(i);
@@ -51,12 +58,12 @@ public class AuctionDAOTest {
 		}
 	@Test
 	public void TestselectAuctionSoldById(){
-		List<Auction> auction = AuctionDAO.selectAuctionSoldById("admin");
+		List<Auction> auction = auctionDAO.selectAuctionSoldById("admin");
 		System.out.println(auction);
 	}
 	@Test
 	public void TestselectAuctionSoldList(){
-		List<Auction> selectAuctionSoldList = AuctionDAO.selectAuctionSoldList();
+		List<Auction> selectAuctionSoldList = auctionDAO.selectAuctionSoldList();
 		System.out.println("AuctionDAO:selectAuctionSoldList:"+selectAuctionSoldList);
 	}
 	/* 
@@ -100,7 +107,7 @@ public class AuctionDAOTest {
 		auction.setUserid("lee");
 		
 		auction.setGood(good);
-		AuctionDAO.updateAuction(auction);
+		auctionDAO.updateAuction(auction);
 	}
 	
 }

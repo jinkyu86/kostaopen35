@@ -7,12 +7,16 @@ import com.opensymphony.xwork2.ModelDriven;
 
 import kr.or.kosta.auction.bid.Bid;
 import kr.or.kosta.auction.bid.BidDAO;
+import kr.or.kosta.auction.bid.IBidDAO;
 import kr.or.kosta.auction.good.Good;
 import kr.or.kosta.auction.good.GoodDAO;
+import kr.or.kosta.auction.good.IGoodDAO;
 
 public class AuctionService implements ModelDriven  {
 	private static final long serialVersionUID = 1L;
 	private IAuctionDAO auctionDAO;
+	private IBidDAO bidDAO;
+	private IGoodDAO goodDAO;
 	//private IBidDAO bidDAO;
 	//private IGoodDAO goodDAO;
 	
@@ -20,6 +24,12 @@ public class AuctionService implements ModelDriven  {
 	public Object getModel() {
 		// TODO Auto-generated method stub
 		return auction;
+	}
+
+	public AuctionService(IAuctionDAO auctionDAO, IBidDAO bidDAO) {
+		super();
+		this.auctionDAO = auctionDAO;
+		this.bidDAO = bidDAO;
 	}
 
 	/**
@@ -168,8 +178,8 @@ public class AuctionService implements ModelDriven  {
 	
 	public String addAuctionForm() throws Exception{
 		// 1.전체 물품 리스트 조회
-		GOOD_LIST= GoodDAO.selectGoodList();
-		GOOD = GoodDAO.selectGood(gNum);
+		GOOD_LIST= goodDAO.selectGoodList();
+		GOOD = goodDAO.selectGood(gNum);
 		return "success";
 	}
 
@@ -190,7 +200,7 @@ public class AuctionService implements ModelDriven  {
 		//1.수정할 경매의 경매 번호 리턴
 		AUCTION = auctionDAO.selectAuction(aNum);
 				//3.전체 물품 리스트 조회
-		GOOD_LIST = GoodDAO.selectGoodList();
+		GOOD_LIST = goodDAO.selectGoodList();
 		return "success";
 	}
 
@@ -203,7 +213,7 @@ public class AuctionService implements ModelDriven  {
 				//2.DB에서 경매번호가 일치하는 경매 조회
 				int size=5;
 				AUCTION = auctionDAO.selectAuction(aNum);
-				BID_LIST = BidDAO.selectBidListByAuctionNum(aNum, size);
+				BID_LIST = bidDAO.selectBidListByAuctionNum(aNum, size);
 				//3.request에 2에서 조회한 경매의 정보 저장
 				//   이름-STUDENT
 				//4./auction/viewAuction.jsp로 이동 객체 생성
