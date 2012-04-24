@@ -9,7 +9,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
-public class TeamDAO {
+public class TeamDAO implements ITeam{
 	private static String resource="sqlmap-config.xml";
 	private static Reader sqlReader;
 	static{
@@ -26,7 +26,8 @@ public class TeamDAO {
 	/**
 	 * 팀의 모든 정보 리스트를 열람하는 메서드
 	 */
-	public static List<Team> selectTeamList() {
+	@Override
+	public List<Team> selectTeamList() {
 		SqlSession session = null;
 		List<Team> teamList= null;
 		try{
@@ -76,7 +77,8 @@ public class TeamDAO {
 	 * 
 	 * @param num
 	 */
-	public static Team selectTeam(String teamNum) {
+	@Override
+	public Team selectTeam(String teamNum) {
 		/* default generated stub */;
 		SqlSession session = null;
 		Team team= null;
