@@ -199,13 +199,13 @@
 		</action>
 		
 		<action name="findIdForm" class="kr.or.kosta.moviesystem.member.MemberService" method="findIdForm">
-			<param name="aliases">
-			#{'userid':'userid'}
-			 </param>
 			<result name="success">/member/findId.jsp</result>
 		</action>
 		
 		<action name="findId" class="kr.or.kosta.moviesystem.member.MemberService" method="findId">
+			<param name="aliases">
+			#{'name':'name','email':'email'}
+			 </param>
 			<result name="success">/member/resultFindId.jsp</result>
 			<result name="findId">/member/findId.jsp</result>
 		</action>
@@ -218,6 +218,9 @@
 		</action>
 		
 		<action name="findPw" class="kr.or.kosta.moviesystem.member.MemberService" method="findPw">
+			<param name="aliases">
+			#{'name':'name','email':'email','userid':'userid'}
+			 </param>
 			<result name="success">/member/resultFindPw.jsp</result>
 			<result name="findPw">/member/findPw.jsp</result>
 		</action>
@@ -233,10 +236,14 @@
 		</action>
 		
 		<action name="searchMemberList" class="kr.or.kosta.moviesystem.member.MemberService" method="searchMemberList">
+			<param name="aliases">
+			#{'keyword':'keyword',
+				'column':'column'}
+			 </param>
 			<result name="success">/member/searchMemberList.jsp</result>
 		</action>
 		<action name="checkMemberID" class="kr.or.kosta.moviesystem.member.MemberService" method="checkMemberID">
-				<param name="aliases">
+			<param name="aliases">
 			#{'userid':'userid'}
 			 </param>
 				<result type="stream">
