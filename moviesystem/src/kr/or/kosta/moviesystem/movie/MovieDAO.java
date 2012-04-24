@@ -11,7 +11,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 
-public class MovieDAO {
+public class MovieDAO implements IMovieDAO {
 	private static String resource="sqlmap-config.xml";
 	private static Reader sqlReader;
 	static{
@@ -24,8 +24,8 @@ public class MovieDAO {
 	private static SqlSessionFactory sqlMapper =
 			new SqlSessionFactoryBuilder().build(sqlReader);
 	
-	
-	public static List selectMovieList(){
+	@Override
+	public List selectMovieList(){
 		SqlSession session = null;
 		List<Movie>movieList=null;
 		try{
@@ -37,8 +37,8 @@ public class MovieDAO {
 		}
 		return movieList;
 	}
-	
-	public static List<Movie> selectMovieList(int page, int length, String gubun){
+	@Override
+	public List<Movie> selectMovieList(int page, int length, String gubun){
 		SqlSession session = null;
 		List<Movie> movieList = null;
 		
@@ -59,7 +59,8 @@ public class MovieDAO {
 		}
 		return movieList;
 	}
-	public static int selectMovieCount(String gubun){
+	@Override
+	public int selectMovieCount(String gubun){
 		SqlSession session = null;
 		Integer mcount = 0;
 		try{
@@ -78,8 +79,8 @@ public class MovieDAO {
 		}
 		return mcount;
 	}	
-	
-	public static List<Movie> rankingMovieList(){
+	@Override
+	public List<Movie> rankingMovieList(){
 		SqlSession session = null;
 		List<Movie> movieList = null;
 		try{
@@ -91,8 +92,8 @@ public class MovieDAO {
 		}
 		return movieList;
 	}
-	
-	public static Movie selectMovie(String mnum){
+	@Override
+	public Movie selectMovie(String mnum){
 		SqlSession session = null;
 		Movie movie = null;
 		try{
@@ -103,8 +104,8 @@ public class MovieDAO {
 		}
 		return movie;
 	}
-	
-	public static List<Movie> selectMovieListSearch(int page, int length, String schCode, String schString){
+	@Override
+	public List<Movie> selectMovieListSearch(int page, int length, String schCode, String schString){
 		SqlSession session = null;
 		List<Movie> movieList = null;
 		String exeQuery = null;
@@ -124,8 +125,8 @@ public class MovieDAO {
 		}
 		return movieList;
 	}
-	
-	public static int selectMovieListSearchCnt(String schCode, String schString){
+	@Override
+	public int selectMovieListSearchCnt(String schCode, String schString){
 		SqlSession session = null;
 		Integer mcnt = 0;
 		String schQuery = null;
@@ -144,7 +145,8 @@ public class MovieDAO {
 		}
 		return mcnt;
 	}
-	public static void addMovie(Movie movie){
+	@Override
+	public void addMovie(Movie movie){
 		SqlSession session = null;
 		try{
 			session = sqlMapper.openSession(true);
@@ -153,7 +155,8 @@ public class MovieDAO {
 			session.close();
 		}
 	}
-	public static void editMovie(Movie movie){
+	@Override
+	public void editMovie(Movie movie){
 		SqlSession session = null;
 		try{
 			session = sqlMapper.openSession(true);
@@ -162,7 +165,8 @@ public class MovieDAO {
 			session.close();
 		}
 	}
-	public static void removeMovie(String mnum){
+	@Override
+	public void removeMovie(String mnum){
 		SqlSession session = null;
 		try{
 			session = sqlMapper.openSession(true);
@@ -171,7 +175,8 @@ public class MovieDAO {
 			session.close();
 		}
 	}
-	public static Movie selectMovieNum(String Mname){
+	@Override
+	public Movie selectMovieNum(String Mname){
 		SqlSession session = null;
 		Movie movie = null;
 		try{
