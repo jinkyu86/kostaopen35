@@ -10,7 +10,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
-public class ChangeDAO {
+public class ChangeDAO implements IChangeDAO{
 	private static String resource="sqlmap-config.xml";
 	private static Reader sqlReader;
 	static{
@@ -23,10 +23,8 @@ public class ChangeDAO {
 	private static SqlSessionFactory sqlMapper =
 			new SqlSessionFactoryBuilder().build(sqlReader);
 	
-	/**교환 요청(교환신청 클릭시)
-	 *  TB_BOARD의 condition_result값을 1(교환요청)으로 변경
-	 * condition_result의 값이 1일때 교환 요청할수 없음**/
-	public static void insertChange(Change change) {
+	@Override
+	public void insertChange(Change change) {
 		SqlSession session=null;
 		try{
 		session = sqlMapper.openSession(true);
@@ -36,9 +34,8 @@ public class ChangeDAO {
 		finally{session.close();}
 	}
 		
-	/**교환 요청 수락(교환요청 수락버튼 클릭시) 
-	 * TB_BOARD의 condition_result값을 2(교환중)으로 변경**/
-	public static void matchChange(Change change) {
+	@Override
+	public void matchChange(Change change) {
 		SqlSession session=null;
 		try{
 			session = sqlMapper.openSession(true);
@@ -49,11 +46,8 @@ public class ChangeDAO {
 		finally{session.close();}
 	}
 
-	/**교환 취소(교환취소 클릭시) 
-	 * TB_BOARD의 condition_result값을 0(교환가능)으로 변경, TB_CHANGE 에서 삭제
-	 * condition_result의 값이 1(교환요청)일때만 실행
-	 * 상대방이 교환요청 수락하였을 경우 취소 불가.... **/
-	public static void cancelChange(int demandBoardNo) {
+	@Override
+	public void cancelChange(int demandBoardNo) {
 		SqlSession session=null;
 		try{
 			session = sqlMapper.openSession(true);
@@ -63,10 +57,8 @@ public class ChangeDAO {
 		finally{session.close();}
 	}
 	
-	/** 교환 완료(교환완료 클릭시)
-	 * condition_result의 값이 2(교환중)일때만 실행
-	 * tb_change, tb_board의 condition_result의 값을 3(교환완료)으로 변경,**/
-	public static void completeChange(int ChangeNo, int BoardNo){
+	@Override
+	public void completeChange(int ChangeNo, int BoardNo){
 		SqlSession session=null;
 		try{
 			session = sqlMapper.openSession(true);
@@ -76,8 +68,8 @@ public class ChangeDAO {
 		finally{session.close();}
 	}
 	
-	/**내가 교환을 신청한 사람 조회(자신의 email로 조회)**/
-	public static List<Change> selectChangeRequestList(int length, int page, String email) {
+	@Override
+	public List<Change> selectChangeRequestList(int length, int page, String email) {
 		SqlSession session=null;
 		List<Change> changeList=null;
 		try{
@@ -88,8 +80,9 @@ public class ChangeDAO {
 		finally{session.close();}
 		return changeList;
 	}
-	/**내가 교환을 신청한 사람의 수 리턴**/
-	public static int selectChangeRequestCount(String email) {
+	
+	@Override
+	public int selectChangeRequestCount(String email) {
 		SqlSession session=null;
 		Integer count=null;
 		try{
@@ -100,8 +93,8 @@ public class ChangeDAO {
 		return count;
 	}
 	
-	/**내 게시물번호로 교환리스트 검색(나에게 교환을 요청한 사람들 검색)**/
- 	public static List<Change> selectChangeMyboardList(int length, int page, String email) {
+	@Override
+ 	public List<Change> selectChangeMyboardList(int length, int page, String email) {
  		SqlSession session=null;
 		List<Change> changeList=null;
 		try{
@@ -113,8 +106,8 @@ public class ChangeDAO {
 		return changeList;
 	}
 	
-	/**내 게시물 번호로 검색한 게시물 수 리턴**/
-	public static int selectChangeMyboardCount(String email) {
+	@Override
+	public int selectChangeMyboardCount(String email) {
 		SqlSession session=null;
 		Integer count=null;
 		try{
@@ -125,8 +118,8 @@ public class ChangeDAO {
 		return count;
 	}
 	
-	/**나와 교환중인 사람 리스트 보기**/
-	public static List<Change> selectMatchList(int length, int page, String email) {
+	@Override
+	public List<Change> selectMatchList(int length, int page, String email) {
 		SqlSession session=null;
 		List<Change> changeList=null;
 		try{
@@ -138,7 +131,8 @@ public class ChangeDAO {
 		return changeList;
 	}
 	
-	public static int selectMatchListCount(String email) {
+	@Override
+	public int selectMatchListCount(String email) {
 		SqlSession session=null;
 		Integer count=null;
 		try{
@@ -149,10 +143,8 @@ public class ChangeDAO {
 		return count;
 	}
 	
-	/**
-	 * 회원 탈퇴시 교환정보 모두 삭제
-	 */
-	public static void deleteChange(int boardNo){
+	@Override
+	public void deleteChange(int boardNo){
 		SqlSession session=null;
 		try{
 			session = sqlMapper.openSession(true);
@@ -161,8 +153,8 @@ public class ChangeDAO {
 		finally{session.close();}
 	}
 	
-	/**나와 교환완료된 사람 리스트 보기 교환완료 눌렀을때 **/
-	public static List<Change> selectMatchResultList(int length, int page, String email) {
+	@Override
+	public List<Change> selectMatchResultList(int length, int page, String email) {
 		SqlSession session=null;
 		List<Change> changeList=null;
 		try{
@@ -174,7 +166,8 @@ public class ChangeDAO {
 		return changeList;
 	}
 	
-	public static int selectMatchResultListCount(String email) {
+	@Override
+	public int selectMatchResultListCount(String email) {
 		SqlSession session=null;
 		Integer count=null;
 		try{
@@ -314,27 +307,5 @@ public class ChangeDAO {
 //		}
 //		return changeCount;
 //	}
-//
-//	
-//
-//	
-//	
-//	
-//	
 
-//	
-
-//	
-
-//	
-
-//
-
-//	
-
-
-//
-
-//
-//	
 }
