@@ -17,26 +17,23 @@ public class AuctionService implements ModelDriven  {
 	private IAuctionDAO auctionDAO;
 	private IBidDAO bidDAO;
 	private IGoodDAO goodDAO;
-	//private IBidDAO bidDAO;
-	//private IGoodDAO goodDAO;
+
 	
+	public AuctionService(IAuctionDAO auctionDAO, IBidDAO bidDAO,
+			IGoodDAO goodDAO) {
+		super();
+		this.auctionDAO = auctionDAO;
+		this.bidDAO = bidDAO;
+		this.goodDAO = goodDAO;
+	}
+
 	@Override
 	public Object getModel() {
 		// TODO Auto-generated method stub
 		return auction;
 	}
 
-	public AuctionService(IAuctionDAO auctionDAO, IBidDAO bidDAO) {
-		super();
-		this.auctionDAO = auctionDAO;
-		this.bidDAO = bidDAO;
-	}
-
-	/**
-	 * @param request
-	 * @param response
-	 */
-	 private int page;
+		private int page;
 	    
 	    private String aNum;
 	    private String gNum;
@@ -56,11 +53,6 @@ public class AuctionService implements ModelDriven  {
 	    private List<Good>GOOD_LIST;
 	    private List<Bid>BID_LIST;
 	    
-	public AuctionService(IAuctionDAO auctionDAO) {
-			super();
-			this.auctionDAO = auctionDAO;
-		}
-
 	public List<Auction> getSOLD_LIST() {
 			return SOLD_LIST;
 		}
