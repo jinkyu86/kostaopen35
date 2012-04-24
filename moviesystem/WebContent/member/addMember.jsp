@@ -23,9 +23,8 @@
 		$("#userid").change(function(){
 		//userid에 입력한 갓을 리턴
 		var userid=$("#userid").val();
-	$.ajax('/moviesystem/MemberService',{
-		data:{"method":"checkMemberID",
-			"userid":userid},
+	$.ajax('/moviesystem/checkMemberID.action',{
+		data:{"userid":userid},
 		success:function(data){
 			$('#idcheck').html(data);
 		}
