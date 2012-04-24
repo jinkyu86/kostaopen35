@@ -235,5 +235,59 @@
 		<action name="searchMemberList" class="kr.or.kosta.moviesystem.member.MemberService" method="searchMemberList">
 			<result name="success">/member/searchMemberList.jsp</result>
 		</action>
+		<action name="main" class="kr.or.kosta.moviesystem.movie.MovieService" method="main">
+			<result name="success">main.jsp</result>
+		</action>
+		<action name="viewMovieList" class="kr.or.kosta.moviesystem.movie.MovieService" method="viewMovieList">
+			<result name="success">/movie/viewMovieList.jsp</result>
+		</action>
+		<action name="rankingMovieList" class="kr.or.kosta.moviesystem.movie.MovieService" method="rankingMovieList">
+			<result name="success">/movie/viewMovieRank.jsp</result>
+		</action>
+		<action name="viewMovie" class="kr.or.kosta.moviesystem.movie.MovieService" method="viewMovie">
+			<param name="aliases">
+				#{'mnum':'mnum','gubun':'gubun'}
+			</param>
+			<result name="success">/movie/viewMovie.jsp</result>
+		</action>
+		<action name="editMemberForm" class="kr.or.kosta.moviesystem.member.MemberService" method="editMemberForm">
+			<result name="success">/member/editMember.jsp</result>
+		</action>
+		<action name="adminMovieList" class="kr.or.kosta.moviesystem.movie.MovieService" method="adminMovieList">
+			<param name="aliases">
+				#{'gubun':'gubun','method':'method'}
+			</param>
+			<result name="success">/movie/adminMovieList.jsp</result>
+		</action>
+		<action name="adminRankingList" class="kr.or.kosta.moviesystem.movie.MovieService" method="adminRankingList">
+			<result name="success">/movie/adminMovieList.jsp</result>
+		</action>
+		<action name="adminMovie" class="kr.or.kosta.moviesystem.movie.MovieService" method="adminMovie">
+			<param name="aliases">
+				#{'gubun':'gubun','mnum':'mnum'}
+			</param>
+			<result name="success">/movie/adminMovie.jsp</result>
+		</action>
+		<action name="addMovieForm" class="kr.or.kosta.moviesystem.movie.MovieService" method="addMovieForm">
+			<result name="success">/movie/addMovie.jsp</result>
+		</action>
+		<action name="editMovieForm" class="kr.or.kosta.moviesystem.movie.MovieService" method="editMovieForm">
+			<param name="aliases">
+				#{'gubun':'gufun','mnum':'mnum'}
+			</param>
+			<result name="success">/movie/addMovie.jsp</result>
+		</action>
+		<action name="searchMovieList" class="kr.or.kosta.moviesystem.movie.MovieService" method="searchMovieList">
+			<param name="aliases">
+				#{'schCode':'schCode','schString':'schString'}
+			</param>
+			<result name="success">/movie/viewMovieList.jsp</result>
+		</action>
+		<action name="adminMovieListSch" class="kr.or.kosta.moviesystem.movie.MovieService" method="adminMovieListSch">
+			<param name="aliases">
+				#{'gubun':'gubun','schCode':'schCode','schString':'schString'}
+			</param>
+			<result name="success">/movie/adminMovieList.jsp</result>
+		</action>
 	</package>
 </struts>
