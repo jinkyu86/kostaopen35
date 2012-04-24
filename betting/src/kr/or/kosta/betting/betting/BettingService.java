@@ -15,10 +15,13 @@ import org.apache.struts2.interceptor.SessionAware;
 
 import com.opensymphony.xwork2.ModelDriven;
 
+import kr.or.kosta.betting.match.IMatch;
 import kr.or.kosta.betting.match.Match;
 import kr.or.kosta.betting.match.MatchDAO;
+import kr.or.kosta.betting.member.IMember;
 import kr.or.kosta.betting.member.Member;
 import kr.or.kosta.betting.member.MemberDAO;
+import kr.or.kosta.betting.memberbetdata.IMemberBetData;
 import kr.or.kosta.betting.memberbetdata.MemberBetData;
 import kr.or.kosta.betting.memberbetdata.MemberBetDataDAO;
 import kr.or.kosta.betting.util.now;
@@ -28,6 +31,10 @@ import kr.or.kosta.betting.util.now;
  */
 public class BettingService implements ModelDriven
 	,SessionAware{
+	private IBetting bettingDAO;
+	private IMember memberDAO;
+	private IMatch matchDAO;
+	private IMemberBetData memberBetDataDAO;
 	private Map session;
 	private Betting betting = new Betting();
 	private String SUCCESS;
@@ -45,6 +52,15 @@ public class BettingService implements ModelDriven
 	private Betting BETTING_AWAY;
 	
 	
+	public BettingService(IBetting bettingDAO, IMember memberDAO,
+			IMatch matchDAO, IMemberBetData memberBetDataDAO) {
+		super();
+		this.bettingDAO = bettingDAO;
+		this.memberDAO = memberDAO;
+		this.matchDAO = matchDAO;
+		this.memberBetDataDAO = memberBetDataDAO;
+	}
+
 	public String getMatchtime() {
 		return matchtime;
 	}
@@ -209,8 +225,8 @@ public class BettingService implements ModelDriven
 	//베팅 테이블 삽입 메서드
 	public String insertBetting() throws Exception {
 
-		BettingDAO.insertHomeBetting(matchno);
-		BettingDAO.insertAwayBetting(matchno);
+		bettingDAO.insertHomeBetting(matchno);
+		bettingDAO.insertAwayBetting(matchno);
 		SUCCESS = "경기정보가 베팅 테이블에 삽입 되었습니다.";
 		return "success";
 //		String matchNum = request.getParameter("matchno");
@@ -231,11 +247,11 @@ public class BettingService implements ModelDriven
 		if(member!=null){
 			String ID = member.getId();
 			
-			MINERAL = MemberDAO.selectMineralByID(ID);
-			RANK = MemberDAO.selectMemberRanking(ID);
+			MINERAL = memberDAO.selectMineralByID(ID);
+			RANK = memberDAO.selectMemberRanking(ID);
 		}
 		String date = now.Date();
-		TODAY_MATCH = MatchDAO.selectMatchByDate(date);
+		TODAY_MATCH = matchDAO.selectMatchByDate(date);
 		return "success";
 //		HttpSession session = request.getSession();
 //		Member member1 = (Member) session.getAttribute("LOGIN_MEMBER");
@@ -273,25 +289,25 @@ public class BettingService implements ModelDriven
 		if(member!=null){
 			ID = member.getId();
 			
-			MINERAL = MemberDAO.selectMineralByID(ID);
-			RANK = MemberDAO.selectMemberRanking(ID);
+			MINERAL = memberDAO.selectMineralByID(ID);
+			RANK = memberDAO.selectMemberRanking(ID);
 		
 			int check = now.hourCheck(matchtime);
 		
 			if (check == 1) {
-				double homeBetRating = BettingDAO
+				double homeBetRating = bettingDAO
 					.selectBettingRating(home);
-				double awayBetRating = BettingDAO
+				double awayBetRating = bettingDAO
 					.selectBettingRating(away);
-				long homeSeleRating = BettingDAO
+				long homeSeleRating = bettingDAO
 					.selectBettingSeleRating(home);
-				long awaySeleRating = BettingDAO
+				long awaySeleRating = bettingDAO
 					.selectBettingSeleRating(away);
-				long homeTotMineral = BettingDAO
+				long homeTotMineral = bettingDAO
 					.selectBettingTotMineral(home);
-				long awayTotMineral = BettingDAO
+				long awayTotMineral = bettingDAO
 					.selectBettingTotMineral(away);
-				long mineral = MemberDAO.selectMineralByID(ID);
+				long mineral = memberDAO.selectMineralByID(ID);
 				
 				if (districtnum.equals("1")) {
 					homeSeleRating = homeSeleRating + 1;
@@ -319,7 +335,7 @@ public class BettingService implements ModelDriven
 					hBetting.setTotMineral(homeTotMineral);
 					hBetting.setNum(home);
 
-					BettingDAO.updateBetting(hBetting);
+					bettingDAO.updateBetting(hBetting);
 
 					Betting aBetting = new Betting();
 					aBetting.setBatRating(awayBetRating);
@@ -327,7 +343,7 @@ public class BettingService implements ModelDriven
 					aBetting.setTotMineral(awayTotMineral);
 					aBetting.setNum(away);
 
-					BettingDAO.updateBetting(aBetting);
+					bettingDAO.updateBetting(aBetting);
 
 					MemberBetData mbd = new MemberBetData();
 					mbd.setBetMineral(betmineral);
@@ -337,9 +353,9 @@ public class BettingService implements ModelDriven
 					mbd.setBetting(hBetting);
 					mbd.setMember(member);
 
-					MemberBetDataDAO.insultMemberBetData(mbd);
+					memberBetDataDAO.insultMemberBetData(mbd);
 					
-					MemberDAO.updateMineralByID(member);
+					memberDAO.updateMineralByID(member);
 					
 					SUCCESS="베팅에 참여하셨습니다";
 					return "success";
@@ -369,7 +385,7 @@ public class BettingService implements ModelDriven
 					aBetting.setTotMineral(awayTotMineral);
 					aBetting.setNum(away);
 
-					BettingDAO.updateBetting(aBetting);
+					bettingDAO.updateBetting(aBetting);
 
 					Betting hBetting = new Betting();
 					hBetting.setBatRating(homeBetRating);
@@ -377,7 +393,7 @@ public class BettingService implements ModelDriven
 					hBetting.setTotMineral(homeTotMineral);
 					hBetting.setNum(home);
 
-					BettingDAO.updateBetting(hBetting);
+					bettingDAO.updateBetting(hBetting);
 
 					MemberBetData mbd = new MemberBetData();
 					mbd.setBetMineral(betmineral);
@@ -387,8 +403,8 @@ public class BettingService implements ModelDriven
 					mbd.setBetting(aBetting);
 					mbd.setMember(member);
 
-					MemberBetDataDAO.insultMemberBetData(mbd);
-					MemberDAO.updateMineralByID(member);
+					memberBetDataDAO.insultMemberBetData(mbd);
+					memberDAO.updateMineralByID(member);
 					SUCCESS="베팅에 참여하셨습니다.";
 					return "success";
 				}
@@ -603,13 +619,13 @@ public class BettingService implements ModelDriven
 		if(member!=null){
 			String ID = member.getId();
 			
-			MINERAL = MemberDAO.selectMineralByID(ID);
-			RANK = MemberDAO.selectMemberRanking(ID);
+			MINERAL = memberDAO.selectMineralByID(ID);
+			RANK = memberDAO.selectMemberRanking(ID);
 		}
-		String matchTime = MatchDAO.selectMatchTime(matchno);
+		String matchTime = matchDAO.selectMatchTime(matchno);
 		CHECK = now.hourCheck(matchTime);
-		BETTING_HOME = BettingDAO.selectBettingByHome(matchno);
-		BETTING_AWAY = BettingDAO.selectBettingByAway(matchno);
+		BETTING_HOME = bettingDAO.selectBettingByHome(matchno);
+		BETTING_AWAY = bettingDAO.selectBettingByAway(matchno);
 		return "success";
 //		HttpSession session = request.getSession();
 //		Member member1 = (Member) session.getAttribute("LOGIN_MEMBER");

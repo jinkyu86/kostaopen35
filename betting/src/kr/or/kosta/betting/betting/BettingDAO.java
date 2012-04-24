@@ -10,7 +10,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
-public class BettingDAO {
+public class BettingDAO implements IBetting{
 	private static String resource="sqlmap-config.xml";
 	private static Reader sqlReader;
 	static{
@@ -23,7 +23,8 @@ public class BettingDAO {
 	private static SqlSessionFactory sqlMapper =
 			new SqlSessionFactoryBuilder().build(sqlReader);
 
-	public static List<Betting> selectBettingList(int page, int length) {
+	@Override
+	public List<Betting> selectBettingList(int page, int length) {
 	 
 		/**
 		 * 베팅 데이터의 모든 데이터 조회 하는 메서드
@@ -143,8 +144,8 @@ public class BettingDAO {
 //		return bettingList;
 	}
 
-	
-	public static Betting selectBettingByHome(String matchNum) {
+	@Override
+	public Betting selectBettingByHome(String matchNum) {
 		
 		/**
 		 * 매치번호로 홈경기만 조회하는 메서드
@@ -257,8 +258,8 @@ public class BettingDAO {
 //		}
 //		return betting;
 	}
-	
-	public static Betting selectBettingByAway(String matchNum) {
+	@Override
+	public Betting selectBettingByAway(String matchNum) {
 		
 		/**
 		 * 매치넘버를 통해 어웨이경기 데이터만 조회하는 메서드
@@ -372,7 +373,8 @@ public class BettingDAO {
 //		}
 //		return betting;
 	}
-	public static void updateBetting(Betting betting){
+	@Override
+	public void updateBetting(Betting betting){
 
 		/**
 		 * 베팅번호로 선택된 데이터의 업데이트
@@ -416,7 +418,8 @@ public class BettingDAO {
 	 * 
 	 * @param num
 	 */
-	public static double selectBettingRating(String bettingNum) {
+	@Override
+	public double selectBettingRating(String bettingNum) {
 		/* default generated stub */;
 		SqlSession session = null;
 		double bettingRating= 0;
@@ -458,7 +461,8 @@ public class BettingDAO {
 	 * 
 	 * @param num
 	 */
-	public static long selectBettingSeleRating(String bettingNum) {
+	@Override
+	public long selectBettingSeleRating(String bettingNum) {
 		/* default generated stub */
 		SqlSession session = null;
 		long seleRating= 0;
@@ -500,7 +504,8 @@ public class BettingDAO {
 	 * 
 	 * @param num
 	 */
-	public static long selectBettingTotMineral(String bettingNum) {
+	@Override
+	public long selectBettingTotMineral(String bettingNum) {
 		/* default generated stub */;
 		SqlSession session = null;
 		long totMineral= 0;
@@ -537,7 +542,8 @@ public class BettingDAO {
 //		
 	}
 	//베팅 테이블중 홈팀 컬럼 삽입 메서드
-	public static void insertHomeBetting(String matchNum){
+	@Override
+	public void insertHomeBetting(String matchNum){
 		/* default generated stub */;
 		SqlSession session = null;
 		try{
@@ -569,7 +575,8 @@ public class BettingDAO {
 	}
 	
 	//베팅 테이블중 어웨이팀 컬럼 삽입 메서드
-	public static void insertAwayBetting(String matchNum){
+	@Override
+	public void insertAwayBetting(String matchNum){
 		/* default generated stub */;
 		SqlSession session = null;
 		try{
@@ -600,7 +607,8 @@ public class BettingDAO {
 //		}
 	}
 	//베팅리스트 카운터를 위한 메서드
-	public static int selectBettingCount(){
+	@Override
+	public int selectBettingCount(){
 		SqlSession session = null;
 		int count=0;
 		try{
@@ -640,36 +648,7 @@ public class BettingDAO {
 //		return bettingCount;
 	}
 	
-//	//베팅리스트에 하나에 경기번호로 생긴 베팅 컬럼 카운터를 위한 메서드
-//		public static int selectBettingMatchCount(String num){
-//			Connection con = null;
-//			PreparedStatement psmt = null;
-//			String sql = null;
-//			ResultSet rs =null;
-//			int matchCount=0;
-//					
-//			try {
-//			con=ConnectionUtil.getConnection();
-//			sql = "SELECT COUNT(m.match_num)"+
-//					" FROM betting b,match m,team h,team a,team w,loc l"+
-//					 " WHERE m.home_team_num=h.team_num"+
-//					 " AND m.away_team_num=a.team_num"+
-//					 " AND m.win_team_num=w.team_num(+)"+
-//					 " AND m.loc_num=l.loc_num"+
-//					 " AND m.match_num=b.match_num" +
-//					 " AND m.match_num=?";
-//				
-//				psmt=con.prepareStatement(sql);
-//				psmt.setString(1, num);
-//				rs=psmt.executeQuery();
-//				if(rs.next()){
-//					matchCount=rs.getInt(1);
-//				}
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//			}
-//			return matchCount;
-//		}
+
 }
 
 
