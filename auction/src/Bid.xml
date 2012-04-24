@@ -16,7 +16,7 @@
      parameterMap="insertParameterMap">
 	INSERT INTO BID
 				(bidnum,a_num,userid,bid_time,bid_price,moneyback)
-	VALUES (BID_SEQ.NEXTVAL,?,?,sysdate,?,0)
+	VALUES (bid_seq.nextval,?,?,sysdate,?,0)
 </insert>
 
 <parameterMap
