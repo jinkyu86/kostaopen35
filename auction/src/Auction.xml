@@ -105,6 +105,7 @@
  	g.detail	   as detail,
  	g.img   	   as img
  	FROM auction a JOIN good g ON a.g_num = g.g_num
+ 	WHERE a.e_time&gt;sysdate AND a.sold='0'
 </select>
 <select id="selectAuctionSoldById" resultMap="selectResultMap">
 	SELECT 
