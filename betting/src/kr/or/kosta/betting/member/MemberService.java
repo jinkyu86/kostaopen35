@@ -27,6 +27,7 @@ import kr.or.kosta.betting.util.PageUtil;
  */
 public class MemberService implements ModelDriven
 	,SessionAware{
+	private IMember memberDAO;
 	private Map session;
 	private Member member = new Member();
 	private int page;
@@ -39,6 +40,12 @@ public class MemberService implements ModelDriven
 	private List<Member> MEMBER_LIST;
 	private InputStream resultStream;
 	
+	
+	public MemberService(IMember memberDAO) {
+		super();
+		this.memberDAO = memberDAO;
+	}
+
 	public InputStream getResultStream() {
 		return resultStream;
 	}
@@ -197,9 +204,9 @@ public class MemberService implements ModelDriven
 		Member member = (Member)session.get("LOGIN_MEMBER");
 		if(member!=null){
 			String ID = member.getId();
-			MEMBER = MemberDAO.selectMemberByID(ID);
-			MINERAL = MemberDAO.selectMineralByID(ID);
-			RANK = MemberDAO.selectMemberRanking(ID);
+			MEMBER = memberDAO.selectMemberByID(ID);
+			MINERAL = memberDAO.selectMineralByID(ID);
+			RANK = memberDAO.selectMemberRanking(ID);
 		}
 		return "success";
 //		HttpSession session = request.getSession();
@@ -224,11 +231,11 @@ public class MemberService implements ModelDriven
 		Member member = (Member)session.get("LOGIN_MEMBER");
 		if(member!=null){
 			String ID = member.getId();
-			MEMBER = MemberDAO.selectMemberByID(ID);
-			MINERAL = MemberDAO.selectMineralByID(ID);
-			RANK = MemberDAO.selectMemberRanking(ID);
+			MEMBER = memberDAO.selectMemberByID(ID);
+			MINERAL = memberDAO.selectMineralByID(ID);
+			RANK = memberDAO.selectMemberRanking(ID);
 		}
-		MEMBER =MemberDAO.selectMemberByID(id);
+		MEMBER =memberDAO.selectMemberByID(id);
 		return "success";
 		
 //		HttpSession session = request.getSession();
@@ -266,7 +273,7 @@ public class MemberService implements ModelDriven
 		 */
 		
 		
-		MemberDAO.insultMember(member);
+		memberDAO.insultMember(member);
 		SUCCESS = member.getId()
 					+"님 가입을 축하합니다. 5000미네랄이 지급됩니다.";
 		return "success";
@@ -320,7 +327,7 @@ public class MemberService implements ModelDriven
 		 * @param request
 		 * @param response
 		 */
-		Member checkuserID = MemberDAO.selectMemberByID(id);
+		Member checkuserID = memberDAO.selectMemberByID(id);
 		String msg = null;
 		if (checkuserID == null) {
 			msg = id + "는 사용 가능한 아이디 입니다.";
@@ -353,7 +360,7 @@ public class MemberService implements ModelDriven
 		 * @param request
 		 * @param response
 		 */
-		MemberDAO.updateMember(member);
+		memberDAO.updateMember(member);
 		Member member = (Member)session.get("LOGIN_MEMBER");
 		String ID = member.getId();
 		if(ID.equals("kosta100")){
@@ -394,9 +401,9 @@ public class MemberService implements ModelDriven
 		 */
 		Member member = (Member)session.get("LOGIN_MEMBER");
 		String ID = member.getId();
-		MEMBER = MemberDAO.selectMemberByID(ID);
-		MINERAL = MemberDAO.selectMineralByID(ID);
-		RANK = MemberDAO.selectMemberRanking(ID);
+		MEMBER = memberDAO.selectMemberByID(ID);
+		MINERAL = memberDAO.selectMineralByID(ID);
+		RANK = memberDAO.selectMemberRanking(ID);
 		return "success";
 //		HttpSession session=request.getSession();
 //			
@@ -430,7 +437,7 @@ public class MemberService implements ModelDriven
 		 */
 		String id = member.getId();
 		String pw = member.getPw();
-		Member member1 = MemberDAO.selectMemberByID(id);
+		Member member1 = memberDAO.selectMemberByID(id);
 		if (member1 == null) {
 			SUCCESS = "존재하지 않는 아이디 입니다.";
 		} else {
@@ -512,7 +519,7 @@ public class MemberService implements ModelDriven
 		 * @param request
 		 * @param response
 		 */
-		MemberDAO.deleteMember(id);
+		memberDAO.deleteMember(id);
 		Member member = (Member)session.get("LOGIN_MEMBER");
 		String ID = member.getId();
 		if(ID.equals("kosta100")){
@@ -547,12 +554,12 @@ public class MemberService implements ModelDriven
 		Member member = (Member)session.get("LOGIN_MEMBER");
 		if(member!=null){
 			String ID = member.getId();
-			MEMBER = MemberDAO.selectMemberByID(ID);
-			MINERAL = MemberDAO.selectMineralByID(ID);
-			RANK = MemberDAO.selectMemberRanking(ID);
+			MEMBER = memberDAO.selectMemberByID(ID);
+			MINERAL = memberDAO.selectMineralByID(ID);
+			RANK = memberDAO.selectMemberRanking(ID);
 		}
-		MEMBER_LIST = MemberDAO.selectMemberList(length, page);
-		int MemberCount = MemberDAO.selectMemberCount();
+		MEMBER_LIST = memberDAO.selectMemberList(length, page);
+		int MemberCount = memberDAO.selectMemberCount();
 		PAGE_LINK_TAG = PageUtil.generate(page, MemberCount, length,
 				"/betting/viewMemberList.action");
 		return "success";
@@ -604,16 +611,16 @@ public class MemberService implements ModelDriven
 		Member member = (Member)session.get("LOGIN_MEMBER");
 		if(member!=null){
 			String ID = member.getId();
-			MEMBER = MemberDAO.selectMemberByID(ID);
-			MINERAL = MemberDAO.selectMineralByID(ID);
-			RANK = MemberDAO.selectMemberRanking(ID);
+			MEMBER = memberDAO.selectMemberByID(ID);
+			MINERAL = memberDAO.selectMineralByID(ID);
+			RANK = memberDAO.selectMemberRanking(ID);
 		}
 		int length=10;
 		if(page==0){
 			page=1;
 		}
-		MEMBER_LIST = MemberDAO.selectMemberRankingList(length, page);
-		int MemberCount = MemberDAO.selectMemberCount();
+		MEMBER_LIST = memberDAO.selectMemberRankingList(length, page);
+		int MemberCount = memberDAO.selectMemberCount();
 		PAGE_LINK_TAG = PageUtil.generate(page, MemberCount, length,
 				"/betting/viewMemberRankingListForm.action");
 		return "success";

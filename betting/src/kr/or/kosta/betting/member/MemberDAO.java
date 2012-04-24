@@ -11,7 +11,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
-public class MemberDAO {
+public class MemberDAO implements IMember{
 	private static String resource="sqlmap-config.xml";
 	private static Reader sqlReader;
 	static{
@@ -23,8 +23,9 @@ public class MemberDAO {
 	}
 	private static SqlSessionFactory sqlMapper =
 			new SqlSessionFactoryBuilder().build(sqlReader);
-
-	public static List<Member> selectMemberList(int length, int page) {
+	
+	@Override
+	public List<Member> selectMemberList(int length, int page) {
 
 		/**
 		 * 멤버의 모든 정보리스트를 조회하는 메서드
@@ -84,8 +85,9 @@ public class MemberDAO {
 //		}
 //		return MemberList;
 	}
-
-	public static void insultMember(Member member) {
+	
+	@Override
+	public void insultMember(Member member) {
 
 		/**
 		 * 멤버 데이터 삽입
@@ -115,8 +117,9 @@ public class MemberDAO {
 //			e.printStackTrace();
 //		}
 	}
-
-	public static Member selectMemberByID(String id) {
+	
+	@Override
+	public Member selectMemberByID(String id) {
 
 		/**
 		 * 아이디를 통해 선택된 멤버데이터 조회
@@ -167,7 +170,8 @@ public class MemberDAO {
 //		return member;
 	}
 
-	public static void deleteMember(String id) {
+	@Override
+	public void deleteMember(String id) {
 
 		/**
 		 * 아이디로 선택된 데이터 삭제
@@ -195,8 +199,8 @@ public class MemberDAO {
 //			e.printStackTrace();
 //		}
 	}
-
-	public static List<Member> selectMemberRankingList(int length, int page) {
+	@Override
+	public List<Member> selectMemberRankingList(int length, int page) {
 
 		/**
 		 * 미네랄 순으로 오름차순 정열된 멤버리스트
@@ -257,7 +261,8 @@ public class MemberDAO {
 
 	}
 
-	public static void updateMember(Member member) {
+	@Override
+	public void updateMember(Member member) {
 
 		/**
 		 * 선택된 아이디의 정보를 업데이트 함
@@ -294,7 +299,8 @@ public class MemberDAO {
 
 	}
 
-	public static int selectMemberCount() {
+	@Override
+	public int selectMemberCount() {
 		SqlSession session = null;
 		int count = 0;
 		try{
@@ -325,8 +331,9 @@ public class MemberDAO {
 //		}
 //		return memberCount;
 	}
-
-	public static long selectMineralByID(String id) {
+	
+	@Override
+	public long selectMineralByID(String id) {
 
 		/**
 		 * 아이디를 통해 선택된 미네랄 조회
@@ -366,7 +373,8 @@ public class MemberDAO {
 //		return mineral;
 	}
 
-	public static void updateMineralByID(Member member) {
+	@Override
+	public void updateMineralByID(Member member) {
 
 		/**
 		 * 미네랄 데이터 삽입
@@ -398,7 +406,8 @@ public class MemberDAO {
 //		}
 	}
 	
-	public static long selectMemberRanking(String id) {
+	@Override
+	public long selectMemberRanking(String id) {
 
 		/**
 		 * 선택된 아이디 랭크 조회
