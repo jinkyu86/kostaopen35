@@ -67,4 +67,11 @@
 		</constructor-arg>
 	</bean>
 	
+	<bean id="memberService"
+	class="kr.or.kosta.betting.member.MemberService">
+		<constructor-arg>
+			<ref bean="memberDAO"/>
+		</constructor-arg>
+	</bean>
+	
 </beans>

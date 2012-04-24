@@ -237,7 +237,7 @@
 		<c:otherwise>
 			<tr>
 				<th>
-					<a href="/betting/BettingService?method=insertBetting&matchno=${MATCH.num }">
+					<a href="/betting/insertBetting.action?matchno=${MATCH.num }">
 					 	베팅테이블 데이터 입력
 					</a>
 				</th>
