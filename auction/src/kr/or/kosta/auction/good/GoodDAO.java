@@ -17,7 +17,7 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import kr.or.kosta.auction.util.ConnectionUtil;
 
-public class GoodDAO {
+public class GoodDAO implements IGoodDAO {
 
 	private static String resource = "sqlmap-config.xml";
 	private static Reader sqlReader;
@@ -35,7 +35,8 @@ public class GoodDAO {
 	 * @param good
 	 */
 
-	public static String insertGood(Good good) {
+	@Override
+	public String insertGood(Good good) {
 		SqlSession session = null;
 		try {
 			session = sqlMapper.openSession(true);
@@ -66,7 +67,8 @@ public class GoodDAO {
 	 * @param good
 	 */
 
-	public static void updateGood(Good good) {
+	@Override
+	public void updateGood(Good good) {
 		SqlSession session = null;
 		try {
 			session = sqlMapper.openSession(true);
@@ -102,7 +104,8 @@ public class GoodDAO {
 	 * @param gNum
 	 */
 
-	public static void deleteGood(String gNum) {
+	@Override
+	public void deleteGood(String gNum) {
 		SqlSession session = null;
 		try {
 			session = sqlMapper.openSession(true);
@@ -131,7 +134,8 @@ public class GoodDAO {
 	 * @param gNum
 	 */
 
-	public static Good selectGood(String gNum) {
+	@Override
+	public Good selectGood(String gNum) {
 		SqlSession session = null;
 		Good good = null;
 		try {
@@ -177,7 +181,8 @@ public class GoodDAO {
 		// return good;
 	}
 
-	public static List<Good> selectGoodList() {
+	@Override
+	public List<Good> selectGoodList() {
 		SqlSession session = null;
 		List<Good> goodList = null;
 		try {
@@ -226,7 +231,8 @@ public class GoodDAO {
 	 * @param page
 	 */
 
-	public static List<Good> selectGoodList(int length, int page) {
+	@Override
+	public List<Good> selectGoodList(int length, int page) {
 		SqlSession session = null;
 		List<Good> goodList = null;
 		RowBounds rowBounds = null;

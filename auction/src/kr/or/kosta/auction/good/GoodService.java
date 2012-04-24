@@ -14,11 +14,19 @@ import com.opensymphony.xwork2.ModelDriven;
  * Servlet implementation class GoodService
  */
 public class GoodService implements ModelDriven {
+	
+	private IGoodDAO goodDAO;
 	private static final long serialVersionUID = 1L;
 	private Good good = new Good();
 	private List<Good> GOOD_LIST;
 	private String gNum;
 	private Good GOOD;
+
+	
+	public GoodService(IGoodDAO goodDAO) {
+		super();
+		this.goodDAO = goodDAO;
+	}
 
 	public Good getGood() {
 		return good;
@@ -70,7 +78,7 @@ public class GoodService implements ModelDriven {
 	}
 
 	public String addGood() throws Exception {
-		gNum = GoodDAO.insertGood(good);
+		gNum = goodDAO.insertGood(good);
 		return "success";
 	}
 
@@ -80,30 +88,30 @@ public class GoodService implements ModelDriven {
 
 	public String editGood() throws Exception {
 
-		GoodDAO.updateGood(good);
+		goodDAO.updateGood(good);
 		return "success";
 
 	}
 
 	public String editGoodForm() throws Exception {
 
-		GOOD = GoodDAO.selectGood(gNum);
+		GOOD = goodDAO.selectGood(gNum);
 		return "success";
 
 	}
 
 	public String viewGood() throws Exception {
-		GOOD = GoodDAO.selectGood(gNum);
+		GOOD = goodDAO.selectGood(gNum);
 		return "success";
 	}
 
 	public String viewGoodList() throws Exception {
-		GOOD_LIST = GoodDAO.selectGoodList();
+		GOOD_LIST = goodDAO.selectGoodList();
 		return "success";
 	}
 
 	public String removeGood() throws Exception {
-		GoodDAO.deleteGood(gNum);
+		goodDAO.deleteGood(gNum);
 		return "success";
 
 	}
