@@ -32,7 +32,14 @@ public class MemberService implements ModelDriven, SessionAware  {
 	private Member member = new Member();
     private String ERROR;
     private Map session;
+    private IMemberDAO memberDAO;
     
+    
+	public MemberService(IMemberDAO memberDAO) {
+		super();
+		this.memberDAO = memberDAO;
+	}
+
 	@Override
 	public void setSession(Map<String, Object> session) {
 		this.session=session;
@@ -99,14 +106,14 @@ public class MemberService implements ModelDriven, SessionAware  {
 
 	public String removeMember() throws Exception {
 			
-		MemberDAO.deleteMember(userid);
+		memberDAO.deleteMember(userid);
 		session.remove("MEMBER");
 		return "success";
 	}
 
 	public String editMember() throws Exception {
 
-		MemberDAO.updateMember(member);
+		memberDAO.updateMember(member);
 
 		return "success";
 
@@ -114,14 +121,14 @@ public class MemberService implements ModelDriven, SessionAware  {
 
 	public String editMemberForm() throws Exception {
 
-		MEMBER = MemberDAO.selectMember(userid);
+		MEMBER = memberDAO.selectMember(userid);
 		return "success";
 
 	}
 
 	public String viewMember() throws Exception {
 		Member member=(Member)session.get("MEMBER");
-		MEMBER = MemberDAO.selectMember(member.getUserid());
+		MEMBER = memberDAO.selectMember(member.getUserid());
 		return "success";
 
 	}
@@ -131,13 +138,13 @@ public class MemberService implements ModelDriven, SessionAware  {
 		 * 속성에 대입하면 num 파라메터로 viewBoard()메서드로 전달 -getNum(),setNum()호출해서전달하므로
 		 * setter/getter 반드시 있어야함
 		 */
-		MemberDAO.insertMember(member);
+		memberDAO.insertMember(member);
 		return "success";
 	}
 
 	public String viewMemberList() throws Exception {
 		// 전체 게시물 리스트 리턴
-		MEMBER_LIST = MemberDAO.selectMemberList();
+		MEMBER_LIST = memberDAO.selectMemberList();
 		return "success";
 	}
 
@@ -145,7 +152,7 @@ public class MemberService implements ModelDriven, SessionAware  {
 		 String id=member.getUserid();
 		 String pw=member.getPw();
 		
-		Member member1 =MemberDAO.selectMember(id);
+		Member member1 =memberDAO.selectMember(id);
 		
 		// 4.3의 리턴값이 null이면
 		// request에 속성명:ERROR 값:존재하지 않는 아이디
@@ -190,7 +197,7 @@ public class MemberService implements ModelDriven, SessionAware  {
 	 public String editMemberByadmin() throws Exception {
 	
 	 //3.회원정보를 수정하는 메서드 호출
-	 MemberDAO.updateMember(member);
+	memberDAO.updateMember(member);
 	 return "success";
 	
 	

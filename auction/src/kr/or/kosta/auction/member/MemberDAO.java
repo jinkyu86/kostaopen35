@@ -18,7 +18,7 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import kr.or.kosta.auction.good.Good;
 import kr.or.kosta.auction.util.ConnectionUtil;
 
-public class MemberDAO {
+public class MemberDAO implements IMemberDAO{
 
 	/**
 	 * @param member
@@ -35,8 +35,8 @@ public class MemberDAO {
 	private static SqlSessionFactory sqlMapper =
 			new SqlSessionFactoryBuilder().build(sqlReader);
 	
-	
-	public static String insertMember(Member member) {
+	@Override
+	public  String insertMember(Member member) {
 		SqlSession session=null;
 		try{
 			session=sqlMapper.openSession(true);
@@ -64,8 +64,8 @@ public class MemberDAO {
 //			e.printStackTrace();
 //		}
 //	}
-
-	public static void updateMember(Member member) {
+	@Override
+	public  void updateMember(Member member) {
 		SqlSession session=null;
 		try{
 			session=sqlMapper.openSession(true);
@@ -100,10 +100,8 @@ public class MemberDAO {
 //		}
 //	}
 
-	/**
-	 * @param userid
-	 */
-	public static void deleteMember(String userid) {
+	@Override
+	public  void deleteMember(String userid) {
 		SqlSession session=null;
 		try{
 			session=sqlMapper.openSession(true);
@@ -132,7 +130,8 @@ public class MemberDAO {
 	 * @param userid
 	 * @return
 	 */
-	public static Member selectMember(String userid) {
+	@Override
+	public  Member selectMember(String userid) {
 		SqlSession session=null;
 		Member member=null;
 		try{
@@ -179,7 +178,8 @@ public class MemberDAO {
 //		}
 //		return member;
 //	}
-	public static List<Member> selectMemberList() {
+	@Override
+	public List<Member> selectMemberList() {
 		SqlSession session=null;
 		List<Member> memberList=null;
 		try{
@@ -225,7 +225,8 @@ public class MemberDAO {
 //		}
 //		return memberList;
 //	}
-	public static List<Member> selectMemberList(int page,int length) {
+	@Override
+	public  List<Member> selectMemberList(int page,int length) {
 		SqlSession session = sqlMapper.openSession(true);
 		RowBounds rowBounds= new RowBounds((page-1)*length,length);
 		List<Member> member=
