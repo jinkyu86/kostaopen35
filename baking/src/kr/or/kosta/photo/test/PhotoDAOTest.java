@@ -36,7 +36,7 @@ public class PhotoDAOTest {
 		good_division.setDivision(1);
 		photo.setGood_division(good_division);
 		photo.setRecipe_num(30);
-		PhotoDAO.insertPhoto(photo);
+//		PhotoDAO.insertPhoto(photo);
 		
 	}
 

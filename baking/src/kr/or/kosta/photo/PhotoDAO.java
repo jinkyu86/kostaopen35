@@ -19,7 +19,7 @@ import kr.or.kosta.gooddivision.Good_division;
 import kr.or.kosta.recipe.Recipe;
 import kr.or.kosta.util.ConnectionUtil;
 
-public class PhotoDAO {
+public class PhotoDAO implements IPhotoDAO{
 
 	private static String resource="sqlmap-config.xml";
 	private static Reader sqlReader;
@@ -34,7 +34,8 @@ public class PhotoDAO {
 			new SqlSessionFactoryBuilder().build(sqlReader);
 	
 	//상품관련 이미지조회
-	public static List<Photo> selectGoodPhotoList(int goodNum){
+	@Override
+	public  List<Photo> selectGoodPhotoList(int goodNum){
 		SqlSession session=null;
 		List<Photo> photoList=null;
 		try{
@@ -48,7 +49,8 @@ public class PhotoDAO {
 	}
 	
 	//레시피관련 이미지조회
-	public static List<Photo> selectRecipePhotoList(int recipeNum){
+	@Override
+	public  List<Photo> selectRecipePhotoList(int recipeNum){
 		SqlSession session=null;
 		List<Photo> photoList=null;
 		try{
@@ -63,7 +65,8 @@ public class PhotoDAO {
 
 	
 	//이미지추가
-	public static void insertPhoto(Photo photo){
+	@Override
+	public  void insertPhoto(Photo photo){
 		SqlSession session=null;
 		try{
 		session = sqlMapper.openSession(true);
