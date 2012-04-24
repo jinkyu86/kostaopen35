@@ -20,7 +20,7 @@ import kr.or.kosta.gooddivision.Good_division;
 import kr.or.kosta.member.Member;
 import kr.or.kosta.util.ConnectionUtil;
 
-public class OrderDAO {
+public class OrderDAO implements IOrderDAO{
 	
 	private static String resource="sqlmap-config.xml";
 	private static Reader sqlReader;
@@ -34,7 +34,8 @@ public class OrderDAO {
 	private static SqlSessionFactory sqlMapper =
 			new SqlSessionFactoryBuilder().build(sqlReader);
 //주문하기
-	public static void insertOrder(Order order) {
+	@Override
+	public  void insertOrder(Order order) {
 		SqlSession session=null;
 		try{
 			session=sqlMapper.openSession(true);
@@ -45,7 +46,8 @@ public class OrderDAO {
 		}
 	}
 	
-	public static Order selectOrder(int ordernum){
+	@Override
+	public Order selectOrder(int ordernum){
 		SqlSession session=null;
 		Order order=null;
 		try{
@@ -117,7 +119,8 @@ public class OrderDAO {
 //		return order;
 //	}
 
-	public static List<Order> selectOrderList(String memberid){
+	@Override
+	public List<Order> selectOrderList(String memberid){
 		SqlSession session=null;
 		List<Order> orderList=null;
 		try{
