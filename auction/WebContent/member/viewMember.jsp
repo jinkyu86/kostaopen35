@@ -88,7 +88,7 @@
 	</c:forEach>
 </table>
 	  <p align="center">
-	    <a href="/auction/moneyBack.action?userid=${MEMBER.userid}">
+	    <a href="/auction/moneyback.action?userid=${MEMBER.userid}">
 	    유찰된 코인 emoney로 돌려받기
 	    </a>
 	  </p>
