@@ -18,7 +18,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
-public class GoodDAO {
+public class GoodDAO implements IGoodDAO{
 	private static String resource="sqlmap-config.xml";
 	private static Reader sqlReader;
 	static{
@@ -36,7 +36,8 @@ public class GoodDAO {
 	 * 상품추가 
 	 * @return 
 	 */
-	public static int insertGood(Good good){
+	@Override
+	public  int insertGood(Good good){
 		SqlSession session=null;
 		try{
 			session = sqlMapper.openSession(true); //sql맵에 있는 쿼리 실행.
@@ -70,7 +71,8 @@ public class GoodDAO {
 	/**
 	 * 상품리스트 보기
 	 */
-	public static List<Good> selectGoodList() {
+	@Override
+	public  List<Good> selectGoodList() {
 		SqlSession session = null;
 		List<Good> goodList =null;
 		try{
@@ -189,7 +191,8 @@ public class GoodDAO {
 	/**
 	 * 상품상세보기
 	 */
-	public static Good selectGood(int goodNum) {
+	@Override
+	public Good selectGood(int goodNum) {
 		SqlSession session = null;
 		Good good=null;
 		try{
@@ -246,7 +249,8 @@ public class GoodDAO {
 	/**
 	 * 상품삭제
 	 */
-	public static void deleteGood(int goodnum) {
+	@Override
+	public void deleteGood(int goodnum) {
 		SqlSession session=null;
 		try{
 			session = sqlMapper.openSession(true); //sql맵에 있는 쿼리 실행.
@@ -273,7 +277,8 @@ public class GoodDAO {
 	/**
 	 * 상품수정
 	 */
-	public static void updateGood(Good good) {
+	@Override
+	public  void updateGood(Good good) {
 		SqlSession session=null;
 		try{
 			session = sqlMapper.openSession(true); //sql맵에 있는 쿼리 실행.
@@ -307,63 +312,21 @@ public class GoodDAO {
 	}*/
 	
 	//레시피관련 상품조회
-	public static ArrayList<Good>selectRecipeList(int recipeNum){
-		Connection con =null;
-		PreparedStatement psmt=null;
-		con=ConnectionUtil.getConnection();
-		ResultSet rs= null;
-		ArrayList<Good> arrayList = new ArrayList<Good>();
-		String sql="";
-
-		try {
-			sql=" select r.good_num, r.recipe_num, " +
-				 " g.name, g.division, g.good_price, g.qty, g.explantion, g.img, g.g_option, " +
-				 " d.g_name "+
-				 " from good_recipe_relation r, good g, good_division d " +
-				 " where r.good_num=g.good_num " +
-				 " and g.division=d.division " +
-				 " and r.recipe_num=? " +
-				 " order by r.good_num ";
-			psmt=con.prepareStatement(sql);
-			psmt.setInt(1, recipeNum);
-			rs=psmt.executeQuery();
-			
-			while(rs.next()){
-				Good good = new Good();
-				Recipe recipe = new Recipe();
-				Good_division good_division= new Good_division();
-				int good_num =rs.getInt(1);
-				int recipe_num =rs.getInt(2);
-				String name =rs.getString(3);
-				int division =rs.getInt(4);
-				int price =rs.getInt(5);
-				int qty =rs.getInt(6);
-				String explantion =rs.getString(7);
-				String img =rs.getString(8);
-				String gOption =rs.getString(9);
-				String gName=rs.getString(10);
-				
-				good.setGoodNum(good_num);
-				recipe.setRecipeNum(recipe_num);
-				good.setName(name);
-				good_division.setDivision(division);
-				good.setGoodPrice(price);
-				good.setQty(qty);
-				good.setExplantion(explantion);
-				good.setImg(img);
-				good.setOption(gOption);
-				good_division.setgName(gName);
-				
-				good.setGood_division(good_division);
-				good.setRecipe(recipe);
-
-				arrayList.add(good);
-			}
-		} catch (SQLException e) {e.printStackTrace();}
-		return arrayList;
+	@Override
+	public  List<Good>selectRecipeList(int recipeNum){
+		SqlSession session=null;
+		List<Good> goodList=null;
+		try{
+		session = sqlMapper.openSession(true);
+		goodList=session.selectList("Good.selectRecipeRelationGoodList",recipeNum);
+		}finally{
+			session.close();
+		}
+		return goodList;
 	}
 	
-	public static List<Good> viewDivisionGoodList(int division){
+	@Override
+	public List<Good> viewDivisionGoodList(int division){
 		SqlSession session = null;
 		List<Good> divisionGoodList = null;
 		try{
