@@ -10,7 +10,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
-public class MatchDAO {
+public class MatchDAO implements IMatch{
 	private static String resource="sqlmap-config.xml";
 	private static Reader sqlReader;
 	static{
@@ -29,7 +29,8 @@ public class MatchDAO {
 	 * @param page
 	 * @param length
 	 */
-	public static List<Match> selectMatchList(int page,int length) {
+	@Override
+	public List<Match> selectMatchList(int page,int length) {
 		/* default generated stub */;
 		SqlSession session = null;
 		List<Match> matchList= null;
@@ -137,7 +138,8 @@ public class MatchDAO {
 	 * 
 	 * @param Date
 	 */
-	public static List<Match> selectMatchByDate(String date) {
+	@Override
+	public List<Match> selectMatchByDate(String date) {
 		/* default generated stub */;
 		SqlSession session = null;
 		List<Match> matchList= null;
@@ -239,7 +241,8 @@ public class MatchDAO {
 	 * @param score
 	 * @param winNum
 	 */
-	public static Match selectMatch(String num) {
+	@Override
+	public Match selectMatch(String num) {
 		/* default generated stub */;
 		SqlSession session = null;
 		Match match= null;
@@ -332,7 +335,8 @@ public class MatchDAO {
 	}
 	
 	//매치 업데이트
-	public static void updateMatch(Match match) {
+	@Override
+	public void updateMatch(Match match) {
 		/* default generated stub */;
 		SqlSession session = null; 
 		try{
@@ -377,7 +381,8 @@ public class MatchDAO {
 	 * 
 	 * @param match
 	 */
-	public static void insertMatch(Match match) {
+	@Override
+	public void insertMatch(Match match) {
 		/* default generated stub */;
 		SqlSession session = null;
 		try{
@@ -411,39 +416,9 @@ public class MatchDAO {
 	}
 
 
-	/**
-	 * 선택된 경기번호의 이긴팀 번호를 조회하는 메서드
-	 * 
-	 * @param matchnum
-	 */
-//	public static String selectWinTeam1(String matchNum) {
-//		/* default generated stub */;
-//		Connection con = null;
-//		PreparedStatement ps = null;
-//		String sql = null;
-//		ResultSet rs =null;
-//		sql="SELECT win_team_num"+
-//				" FROM match"+
-//				" WHERE match_num=?";
-//		String winTeam = null;
-//		con=ConnectionUtil.getConnection();
-//		try {
-//			ps=con.prepareStatement(sql);
-//			ps.setString(1, matchNum);
-//			rs=ps.executeQuery();
-//			
-//			if(rs.next()){
-//				winTeam=rs.getString(1);
-//			}
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-//		return winTeam;
-//	
-//	
-//	}
 	//match 카운트 메서드
-	public static int selectMatchCount(){
+	@Override
+	public int selectMatchCount(){
 		
 		SqlSession session = null;
 		int count=0;
@@ -483,7 +458,9 @@ public class MatchDAO {
 //		return matchCount;
 	}
 	//경기데이터 삭제 메서드
-	public static void deleteMatch (String matchNum) {
+	
+	@Override
+	public void deleteMatch (String matchNum) {
 		// TODO Auto-generated method stub
 		SqlSession session = null;
 		try{
@@ -506,7 +483,8 @@ public class MatchDAO {
 //		}		
 	}
 	
-	public static String selectMatchTime(String matchNum){
+	@Override
+	public String selectMatchTime(String matchNum){
 		
 		SqlSession session = null;
 		String matchTime= null;

@@ -17,10 +17,13 @@ import com.opensymphony.xwork2.ModelDriven;
 
 import kr.or.kosta.betting.betting.Betting;
 import kr.or.kosta.betting.betting.BettingDAO;
+import kr.or.kosta.betting.loc.ILoc;
 import kr.or.kosta.betting.loc.Loc;
 import kr.or.kosta.betting.loc.LocDAO;
+import kr.or.kosta.betting.member.IMember;
 import kr.or.kosta.betting.member.Member;
 import kr.or.kosta.betting.member.MemberDAO;
+import kr.or.kosta.betting.team.ITeam;
 import kr.or.kosta.betting.team.Team;
 import kr.or.kosta.betting.team.TeamDAO;
 import kr.or.kosta.betting.util.PageUtil;
@@ -30,6 +33,10 @@ import kr.or.kosta.betting.util.PageUtil;
  */
 public class MatchService implements ModelDriven
 	,SessionAware{
+	private IMatch matchDAO;
+	private IMember memberDAO;
+	private ITeam teamDAO;
+	private ILoc locDAO;
 	private Map session;
 	private Match match = new Match();
 	private int page;
@@ -43,8 +50,36 @@ public class MatchService implements ModelDriven
 	private String BETTING;
 	private Match MATCH;
     private List<Match> MATCH_LIST;
+    private int checkbox;
 	
     
+    
+	
+
+	public MatchService(ITeam teamDAO, ILoc locDAO) {
+		super();
+		this.teamDAO = teamDAO;
+		this.locDAO = locDAO;
+	}
+
+	public MatchService(IMember memberDAO) {
+		super();
+		this.memberDAO = memberDAO;
+	}
+
+	public MatchService(IMatch matchDAO) {
+		super();
+		this.matchDAO = matchDAO;
+	}
+
+	public int getCheckbox() {
+		return checkbox;
+	}
+
+	public void setCheckbox(int checkbox) {
+		this.checkbox = checkbox;
+	}
+
 	public List<Match> getMATCH_LIST() {
 		return MATCH_LIST;
 	}
@@ -202,15 +237,15 @@ public class MatchService implements ModelDriven
 		if(member!=null){
 			String ID = member.getId();
 			
-			MINERAL = MemberDAO.selectMineralByID(ID);
-			RANK = MemberDAO.selectMemberRanking(ID);
+			MINERAL = memberDAO.selectMineralByID(ID);
+			RANK = memberDAO.selectMemberRanking(ID);
 		}
 		int length=10;
 		if(page==0){
 			page=1;
 		}
-		MATCH_LIST = MatchDAO.selectMatchList(page,length);
-		int matchCount = MatchDAO.selectMatchCount();
+		MATCH_LIST = matchDAO.selectMatchList(page,length);
+		int matchCount = matchDAO.selectMatchCount();
 		PAGE_LINK_TAG = PageUtil.generate(page, matchCount, length,
 			"viewMatchListToVistor.action");
 		return "success";
@@ -255,7 +290,7 @@ public class MatchService implements ModelDriven
 	 */
 	public String addMatch() throws Exception{
 		/* default generated stub */;
-		MatchDAO.insertMatch(match);
+		matchDAO.insertMatch(match);
 		SUCCESS="경기 데이터를 삽입하였습니다.";
 		return "success";
 //		String homeTeamNo = request.getParameter("hometeamno");
@@ -301,11 +336,11 @@ public class MatchService implements ModelDriven
 		if(member!=null){
 			String ID = member.getId();
 			
-			MINERAL = MemberDAO.selectMineralByID(ID);
-			RANK = MemberDAO.selectMemberRanking(ID);
+			MINERAL = memberDAO.selectMineralByID(ID);
+			RANK = memberDAO.selectMemberRanking(ID);
 		}
-		TEAM_LIST = TeamDAO.selectTeamList();
-		LOC_LIST= LocDAO.selectLocList();
+		TEAM_LIST = teamDAO.selectTeamList();
+		LOC_LIST= locDAO.selectLocList();
 		return "success";
 //		HttpSession session = request.getSession();
 //		Member member1 = (Member) session.getAttribute("LOGIN_MEMBER");
@@ -342,12 +377,12 @@ public class MatchService implements ModelDriven
 		if(member!=null){
 			String ID = member.getId();
 			
-			MINERAL = MemberDAO.selectMineralByID(ID);
-			RANK = MemberDAO.selectMemberRanking(ID);
+			MINERAL = memberDAO.selectMineralByID(ID);
+			RANK = memberDAO.selectMemberRanking(ID);
 		}
-		MATCH = MatchDAO.selectMatch(matchno);
-		TEAM_LIST = TeamDAO.selectTeamList();
-		LOC_LIST= LocDAO.selectLocList();
+		MATCH = matchDAO.selectMatch(matchno);
+		TEAM_LIST = teamDAO.selectTeamList();
+		LOC_LIST= locDAO.selectLocList();
 		Betting betting1 = BettingDAO.selectBettingByHome(matchno);
 		BETTING = "0";
 		if(betting1==null){
@@ -400,7 +435,15 @@ public class MatchService implements ModelDriven
 	 */
 	public String editMatch() throws Exception{
 		/* default generated stub */
-		MatchDAO.updateMatch(match);
+		if(checkbox==1){
+			matchDAO.updateMatch(match);
+		}else{
+			Team WinTeam = new Team();
+			WinTeam.setNum("");
+			match.setWinTeam(WinTeam);
+			match.setScore("");
+			matchDAO.updateMatch(match);
+		}
 		SUCCESS="경기 데이터를 수정하였습니다.";
 		return "success";
 //		String matchNo = request.getParameter("matchno");
@@ -451,7 +494,7 @@ public class MatchService implements ModelDriven
 	 */
 	public String removeMatch() throws Exception {
 		/* default generated stub */;
-		MatchDAO.deleteMatch(matchno);
+		matchDAO.deleteMatch(matchno);
 		
 		SUCCESS = "경기 데이터를 삭제 하였습니다.";
 		return "success";
@@ -476,15 +519,15 @@ public class MatchService implements ModelDriven
 		if(member!=null){
 			String ID = member.getId();
 			
-			MINERAL = MemberDAO.selectMineralByID(ID);
-			RANK = MemberDAO.selectMemberRanking(ID);
+			MINERAL = memberDAO.selectMineralByID(ID);
+			RANK = memberDAO.selectMemberRanking(ID);
 		}
 		int length=10;
 		if(page==0){
 			page=1;
 		}
-		MATCH_LIST = MatchDAO.selectMatchList(page,length);
-		int matchCount = MatchDAO.selectMatchCount();
+		MATCH_LIST = matchDAO.selectMatchList(page,length);
+		int matchCount = matchDAO.selectMatchCount();
 		PAGE_LINK_TAG = PageUtil.generate(page, matchCount, length,
 			"viewMatchList.action");
 		return "success";
@@ -517,17 +560,6 @@ public class MatchService implements ModelDriven
 
 	}
 
-//	/**
-//	 * 선택한 번호의 메치데이
-//	 * 
-//	 * @param request
-//	 * @param response
-//	 */
-//
-//	public void veiwMatch(HttpServletRequest request,
-//			HttpServletResponse response) {
-//		/* default generated stub */;
-//
-//	}
+
 
 }

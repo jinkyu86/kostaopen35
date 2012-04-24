@@ -57,9 +57,9 @@ public class MatchDAOTest {
 	@Test
 	public void testUpdateMatch(){
 		Match match = new Match();
-		match.setNum("10032");
-		match.setMatchTime("2012/03/27");
-		match.setScore("4:6");
+		match.setNum("10112");
+		match.setMatchTime("2012/04/02 18:00:00");
+		match.setScore("");
 		
 		Team hTeam = new Team();
 		hTeam.setNum("3");
@@ -68,7 +68,7 @@ public class MatchDAOTest {
 		aTeam.setNum("6");
 		
 		Team wTeam = new Team();
-		wTeam.setNum("6");
+		wTeam.setNum("");
 		
 		Loc loc = new Loc();
 		loc.setNum("11");
