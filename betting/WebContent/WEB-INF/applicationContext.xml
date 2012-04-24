@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<bean id="teamDAO"
+	class="kr.or.kosta.betting.team.TeamDAO"/>
+	<bean id="locDAO"
+	class="kr.or.kosta.betting.loc.LocDAO"/>
+	<bean id="matchDAO"
+	class="kr.or.kosta.betting.match.MatchDAO"/>
+	<bean id="bettingDAO"
+	class="kr.or.kosta.betting.betting.BettingDAO"/>
+	<bean id="memberDAO"
+	class="kr.or.kosta.betting.member.MemberDAO"/>
+	<bean id="memberBetDataDAO"
+	class="kr.or.kosta.betting.memberbetdata.MemberBetDataDAO"/>
+	
+	<bean id="matchService"
+	class="kr.or.kosta.betting.match.MatchService">
+		<constructor-arg>
+			<ref bean="matchDAO"/>
+		</constructor-arg>
+		<constructor-arg>
+			<ref bean="memberDAO"/>
+		</constructor-arg>
+		<constructor-arg>
+			<ref bean="teamDAO"/>
+		</constructor-arg>
+		<constructor-arg>
+			<ref bean="locDAO"/>
+		</constructor-arg>
+		<constructor-arg>
+			<ref bean="bettingDAO"/>
+		</constructor-arg>
+	</bean>
+	
+	<bean id="bettingService"
+	class="kr.or.kosta.betting.betting.BettingService">
+		<constructor-arg>
+			<ref bean="matchDAO"/>
+		</constructor-arg>
+		<constructor-arg>
+			<ref bean="memberDAO"/>
+		</constructor-arg>
+		<constructor-arg>
+			<ref bean="memberBetDataDAO"/>
+		</constructor-arg>
+		<constructor-arg>
+			<ref bean="bettingDAO"/>
+		</constructor-arg>
+	</bean>
+	
+	<bean id="memberBetDataService"
+	class="kr.or.kosta.betting.memberbetdata.MemberBetDataService">
+		<constructor-arg>
+			<ref bean="matchDAO"/>
+		</constructor-arg>
+		<constructor-arg>
+			<ref bean="memberDAO"/>
+		</constructor-arg>
+		<constructor-arg>
+			<ref bean="memberBetDataDAO"/>
+		</constructor-arg>
+		<constructor-arg>
+			<ref bean="bettingDAO"/>
+		</constructor-arg>
+	</bean>
+	
+</beans>

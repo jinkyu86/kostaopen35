@@ -185,7 +185,7 @@
 					value="${MATCH.matchTime}" /></td>
 		</tr>
 		<tr>
-			<th>경기결과</th>
+			<th>승리팀</th>
 			<td>
 				<select name="winteamno">
 						<c:forEach var="team" items="${TEAM_LIST }" >
@@ -198,6 +198,7 @@
 							</option>
 						</c:forEach>
 				 </select>
+				 <input type="checkbox" name="checkbox" value="1"/>결과수정시 체크
 			</td>
 		</tr>
 		<tr>
