@@ -3,19 +3,12 @@ package kr.or.kosta.moviesystem.member;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.PrintWriter;
 import java.util.List;
 import java.util.Map;
-
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.ServletResponseAware;
 import org.apache.struts2.interceptor.SessionAware;
@@ -44,9 +37,27 @@ ServletResponseAware,SessionAware {
 	private String keyword;
 	private String column; 
 	private InputStream resultStream;
-		
-		
-	  public InputStream getResultStream() {
+	private String name;
+	private String email;
+	
+	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public InputStream getResultStream() {
 		return resultStream;
 	}
 
@@ -252,14 +263,11 @@ ServletResponseAware,SessionAware {
 	}
 
 	public String findPw() throws Exception {
-		String name=request.getParameter("name");
-		String email=request.getParameter("email");
-		String userid=request.getParameter("userid");
 			
-		Member member=memberDAO.findMemberPw(email, name, userid);
+		MEMBER=memberDAO.findMemberPw(email, name, userid);
 			
 			
-			if(member==null){
+			if(MEMBER==null){
 				request.setAttribute("ERROR", "입력하신 정보와 일치하는 비밀번호가 없습니다");
 				return "findPw";
 			}else	{
@@ -273,13 +281,13 @@ ServletResponseAware,SessionAware {
 	}
 
 	public String findId() throws Exception { 
-		String name=request.getParameter("name");
-		String email=request.getParameter("email");
+//		String name=request.getParameter("name");
+//		String email=request.getParameter("email");
 		
-		Member member=memberDAO.findMemberId(email, name);
+		MEMBER=memberDAO.findMemberId(email, name);
 		
 		
-		if(member==null){
+		if(MEMBER==null){
 			request.setAttribute("ERROR", "입력하신 정보와 일치하는 아이디가 없습니다");
 			return "findId";
 		}else	{
@@ -307,21 +315,22 @@ ServletResponseAware,SessionAware {
 	}
 
 	public String checkMemberID() throws Exception {
+		
+		//String userid=request.getParameter("userid");
 		MEMBER=memberDAO.selectMemberById(userid);
+		String msg=null;
 		if(MEMBER==null){
-			String msg=userid+"는 사용가능한 아이디입니다.";
-			byte[]msgArray=msg.getBytes("UTF-8");
-			
-			resultStream=
-					new ByteArrayInputStream(msgArray);
+			msg=userid+"는 사용가능한 아이디입니다.";
+			System.out.println(userid);
 		}else{
-			String msg=userid+"는 이미 사용중인 아이디입니다.";
-			byte[]msgArray=msg.getBytes("UTF-8");
-			
-			resultStream=
-					new ByteArrayInputStream(msgArray);
+			msg=userid+"는 이미 사용중인 아이디입니다.";
+			System.out.println(userid);
 		}
-	
+		System.out.println(userid);
+		byte[]msgArray=msg.getBytes("UTF-8");
+		
+		resultStream=
+				new ByteArrayInputStream(msgArray);
 		return "success";
 
 //		String userid=request.getParameter("userid");
@@ -509,14 +518,14 @@ ServletResponseAware,SessionAware {
 		}
 		int length=5;
 		int memberCount=0;
-		keyword="";
-		if (keyword!=null){
-			keyword = request.getParameter("keyword");;
-		}
-		column = "";
-		if(column!=null){
-			column = request.getParameter("column");
-		}
+//		keyword="";
+//		if (keyword!=null){
+//			keyword = request.getParameter("keyword");;
+//		}
+//		column = "";
+//		if(column!=null){
+//			column = request.getParameter("column");
+//		}
 		//1.StudentDAO에서 페이지에 해당하는 학생조회 메서드를 호출
 		
 		if(keyword==null||keyword.equals("")){
