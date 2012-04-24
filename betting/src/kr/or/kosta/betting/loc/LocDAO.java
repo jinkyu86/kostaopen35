@@ -9,7 +9,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
-public class LocDAO {
+public class LocDAO implements ILoc{
 	private static String resource="sqlmap-config.xml";
 	private static Reader sqlReader;
 	static{
@@ -25,7 +25,8 @@ public class LocDAO {
 	/**
 	 * 연고지 모든 정보 리스트 조회 메서드
 	 */
-	public static List<Loc> selectLocList() {
+	@Override
+	public List<Loc> selectLocList() {
 		/* default generated stub */;
 		SqlSession session = null;
 		List<Loc> locList= null;
@@ -74,7 +75,8 @@ public class LocDAO {
 	 * 
 	 * @param num
 	 */
-	public static Loc selectLoc(String locNum) {
+	@Override
+	public Loc selectLoc(String locNum) {
 		/* default generated stub */;
 		SqlSession session = null;
 		Loc loc= null;
