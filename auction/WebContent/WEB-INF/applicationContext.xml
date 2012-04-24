@@ -3,41 +3,4 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 	
-	<bean id="studentDAO"
-	class="kr.or.kosta.student.StudentDAO"/>
-	<bean id="departmentDAO"
-	class="kr.or.kosta.department.DepartmentDAO"/>
-	
-	<bean id="studentService"
-	class="kr.or.kosta.student.StudentService">
-		<constructor-arg>
-			<ref bean="studentDAO"/>
-		</constructor-arg>
-		<constructor-arg>
-			<ref bean="departmentDAO"/>
-		</constructor-arg>
-	</bean>
-	
-	<bean id="professorDAO"
-				class="kr.or.kosta.professor.ProfessorDAO"/>
-				
-	<bean id="professorService"
-				class="kr.or.kosta.professor.ProfessorService">
-		<constructor-arg>
-			<ref bean="professorDAO"/>
-		</constructor-arg>
-		<constructor-arg>
-			<ref bean="departmentDAO"/>
-		</constructor-arg>
-	</bean>
-	
-	<bean id="boardDAO"
-				class="kr.or.kosta.board.BoardDAO"/>
-	
-	<bean id="boardService"
-				class="kr.or.kosta.board.BoardService">
-		<constructor-arg>
-			<ref bean="boardDAO"/>
-		</constructor-arg>
-	</bean>
 </beans>
