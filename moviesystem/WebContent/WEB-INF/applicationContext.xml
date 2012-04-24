@@ -21,4 +21,11 @@
 		<ref bean="buyDAO"/>
 	</constructor-arg>
 	</bean>
+	<bean id="memberDAO" class="kr.or.kosta.moviesystem.member.MemberDAO"/>	
+	<bean id="memberService" class="kr.or.kosta.moviesystem.member.MemberService">
+		<constructor-arg>
+			<ref  bean="memberDAO"/>
+		</constructor-arg>
+	</bean>
+	
 </beans>
