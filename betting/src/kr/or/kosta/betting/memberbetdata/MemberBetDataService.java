@@ -17,7 +17,10 @@ import com.opensymphony.xwork2.ModelDriven;
 
 import kr.or.kosta.betting.betting.Betting;
 import kr.or.kosta.betting.betting.BettingDAO;
+import kr.or.kosta.betting.betting.IBetting;
+import kr.or.kosta.betting.match.IMatch;
 import kr.or.kosta.betting.match.MatchDAO;
+import kr.or.kosta.betting.member.IMember;
 import kr.or.kosta.betting.member.Member;
 import kr.or.kosta.betting.member.MemberDAO;
 import kr.or.kosta.betting.util.PageUtil;
@@ -28,6 +31,10 @@ import kr.or.kosta.betting.util.now;
  */
 public class MemberBetDataService implements ModelDriven
 	,SessionAware{
+	private IMemberBetData memberBetDataDAO;
+	private IBetting bettingDAO;
+	private IMember memberDAO;
+	private IMatch matchDAO;
 	private String method;
 	private Map session;
 	private int page;
@@ -49,7 +56,16 @@ public class MemberBetDataService implements ModelDriven
 	private String districtnum;
 	private long emineral;
 	
-		
+	
+	public MemberBetDataService(IMemberBetData memberBetDataDAO,
+			IBetting bettingDAO, IMember memberDAO, IMatch matchDAO) {
+		super();
+		this.memberBetDataDAO = memberBetDataDAO;
+		this.bettingDAO = bettingDAO;
+		this.memberDAO = memberDAO;
+		this.matchDAO = matchDAO;
+	}
+
 	public String getMethod() {
 		return method;
 	}
@@ -272,10 +288,10 @@ public class MemberBetDataService implements ModelDriven
 		if(member!=null){
 			String ID = member.getId();
 			
-			MINERAL = MemberDAO.selectMineralByID(ID);
-			RANK = MemberDAO.selectMemberRanking(ID);
+			MINERAL = memberDAO.selectMineralByID(ID);
+			RANK = memberDAO.selectMemberRanking(ID);
 			
-			int confirm = MemberBetDataDAO.selectMineralConfirm(mbdnum);
+			int confirm = memberBetDataDAO.selectMineralConfirm(mbdnum);
 			
 			if(confirm==1){
 				SUCCESS="이미 지급하였습니다.";
@@ -284,8 +300,8 @@ public class MemberBetDataService implements ModelDriven
 			MINERAL = MINERAL + emineral;
 			
 			member.setMineral(MINERAL);
-			MemberDAO.updateMineralByID(member);
-			MemberBetDataDAO.updateMemberBetData(mbdnum);
+			memberDAO.updateMineralByID(member);
+			memberBetDataDAO.updateMemberBetData(mbdnum);
 			
 			SUCCESS= "미네랄을 되돌려 드렸습니다.";
 			return "success";
@@ -347,11 +363,11 @@ public class MemberBetDataService implements ModelDriven
 		if(member!=null){
 			String ID = member.getId();
 			    
-			MINERAL = MemberDAO.selectMineralByID(ID);
-			RANK = MemberDAO.selectMemberRanking(ID);
+			MINERAL = memberDAO.selectMineralByID(ID);
+			RANK = memberDAO.selectMemberRanking(ID);
 			int check = now.hourCheck(matchtime);
 			
-			MemberBetData mbd1 = MemberBetDataDAO.selectMemberBetData(mbdnum);
+			MemberBetData mbd1 = memberBetDataDAO.selectMemberBetData(mbdnum);
 			
 			if(mbd1==null){
 				SUCCESS="이미 취소하였습니다.";
@@ -359,17 +375,17 @@ public class MemberBetDataService implements ModelDriven
 			}			
 			
 			if (check == 1) {
-				double homeBetRating = BettingDAO
+				double homeBetRating = bettingDAO
 					.selectBettingRating(home);
-				double awayBetRating = BettingDAO
+				double awayBetRating = bettingDAO
 					.selectBettingRating(away);
-				long homeSeleRating = BettingDAO
+				long homeSeleRating = bettingDAO
 					.selectBettingSeleRating(home);
-				long awaySeleRating = BettingDAO
+				long awaySeleRating = bettingDAO
 					.selectBettingSeleRating(away);
-				long homeTotMineral = BettingDAO
+				long homeTotMineral = bettingDAO
 					.selectBettingTotMineral(home);
-				long awayTotMineral = BettingDAO
+				long awayTotMineral = bettingDAO
 					.selectBettingTotMineral(away);
 								
 				if (districtnum.equals("1")) {
@@ -395,7 +411,7 @@ public class MemberBetDataService implements ModelDriven
 					hBetting.setTotMineral(homeTotMineral);
 					hBetting.setNum(home);
 
-					BettingDAO.updateBetting(hBetting);
+					bettingDAO.updateBetting(hBetting);
 
 					Betting aBetting = new Betting();
 					aBetting.setBatRating(awayBetRating);
@@ -403,12 +419,12 @@ public class MemberBetDataService implements ModelDriven
 					aBetting.setTotMineral(awayTotMineral);
 					aBetting.setNum(away);
 
-					BettingDAO.updateBetting(aBetting);
+					bettingDAO.updateBetting(aBetting);
 
 					member.setMineral(MINERAL);
-					MemberDAO.updateMineralByID(member);
+					memberDAO.updateMineralByID(member);
 
-					MemberBetDataDAO.deleteMemberbetData(mbdnum);
+					memberBetDataDAO.deleteMemberbetData(mbdnum);
 				
 					SUCCESS = "베팅을 취소하였습니다.";
 					result="success";
@@ -435,7 +451,7 @@ public class MemberBetDataService implements ModelDriven
 					aBetting.setTotMineral(awayTotMineral);
 					aBetting.setNum(away);
 
-					BettingDAO.updateBetting(aBetting);
+					bettingDAO.updateBetting(aBetting);
 
 					Betting hBetting = new Betting();
 					hBetting.setBatRating(homeBetRating);
@@ -443,12 +459,12 @@ public class MemberBetDataService implements ModelDriven
 					hBetting.setTotMineral(homeTotMineral);
 					hBetting.setNum(home);
 
-					BettingDAO.updateBetting(hBetting);
+					bettingDAO.updateBetting(hBetting);
 
 					member.setMineral(MINERAL);
-					MemberDAO.updateMineralByID(member);
+					memberDAO.updateMineralByID(member);
 
-					MemberBetDataDAO.deleteMemberbetData(mbdnum);
+					memberBetDataDAO.deleteMemberbetData(mbdnum);
 					SUCCESS = "베팅을 취소하였습니다.";
 					result="success";
 				}
@@ -601,10 +617,10 @@ public class MemberBetDataService implements ModelDriven
 		if(member!=null){
 			String ID = member.getId();
 			
-			MINERAL = MemberDAO.selectMineralByID(ID);
-			RANK = MemberDAO.selectMemberRanking(ID);
+			MINERAL = memberDAO.selectMineralByID(ID);
+			RANK = memberDAO.selectMemberRanking(ID);
 			
-			int confirm = MemberBetDataDAO.selectMineralConfirm(mbdnum);
+			int confirm = memberBetDataDAO.selectMineralConfirm(mbdnum);
 			
 			if(confirm==1){
 				SUCCESS="이미 지급하였습니다.";
@@ -613,8 +629,8 @@ public class MemberBetDataService implements ModelDriven
 			MINERAL = MINERAL + emineral;
 			
 			member.setMineral(MINERAL);
-			MemberDAO.updateMineralByID(member);
-			MemberBetDataDAO.updateMemberBetData(mbdnum);
+			memberDAO.updateMineralByID(member);
+			memberBetDataDAO.updateMemberBetData(mbdnum);
 			
 			SUCCESS= "미네랄을 지급하였습니다.";
 			result= "success";
@@ -676,16 +692,16 @@ public class MemberBetDataService implements ModelDriven
 		if(member!=null){
 			String ID = member.getId();
 			
-			MINERAL = MemberDAO.selectMineralByID(ID);
-			RANK = MemberDAO.selectMemberRanking(ID);
+			MINERAL = memberDAO.selectMineralByID(ID);
+			RANK = memberDAO.selectMemberRanking(ID);
 		
 		int length=10;
 		if(page==0){
 			page=1;
 		}
-		MBD_LIST = MemberBetDataDAO
+		MBD_LIST = memberBetDataDAO
 				.selectMemberBetDataListByID(page, length, ID);
-		int mbdCount = MemberBetDataDAO.selectMemberBetDataByIDCount(ID);
+		int mbdCount = memberBetDataDAO.selectMemberBetDataByIDCount(ID);
 		PAGE_LINK_TAG = PageUtil.generate(page, mbdCount, length,
 				"viewMemberBetDataByIDList.action");
 		return "success";
@@ -744,15 +760,15 @@ public class MemberBetDataService implements ModelDriven
 		if(member!=null){
 			String ID = member.getId();
 			
-			MINERAL = MemberDAO.selectMineralByID(ID);
-			RANK = MemberDAO.selectMemberRanking(ID);
+			MINERAL = memberDAO.selectMineralByID(ID);
+			RANK = memberDAO.selectMemberRanking(ID);
 			
-			String matchNum = MemberBetDataDAO.selectMatchNum(mbdnum);
-			String matchTime = MatchDAO.selectMatchTime(matchNum);
+			String matchNum = memberBetDataDAO.selectMatchNum(mbdnum);
+			String matchTime = matchDAO.selectMatchTime(matchNum);
 			CHECK = now.hourCheck(matchTime);
-			BETTING_HOME = BettingDAO.selectBettingByHome(matchNum);
-			BETTING_AWAY = BettingDAO.selectBettingByAway(matchNum);
-			MBD = MemberBetDataDAO.selectMemberBetData(mbdnum);
+			BETTING_HOME = bettingDAO.selectBettingByHome(matchNum);
+			BETTING_AWAY = bettingDAO.selectBettingByAway(matchNum);
+			MBD = memberBetDataDAO.selectMemberBetData(mbdnum);
 			return "success";
 
 		} else {

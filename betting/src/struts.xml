@@ -187,7 +187,8 @@
 					'awayteamno':'match.awayTeam.num',
 					'winteamno':'match.winTeam.num',
 					'locno':'match.loc.num',
-					'matchtime':'match.matchTime'}
+					'matchtime':'match.matchTime',
+					'checkbox':'checkbox'}
 			</param>
 			<result name="success" type="chain">
 				editMatchForm

@@ -10,7 +10,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
-public class MemberBetDataDAO {
+public class MemberBetDataDAO implements IMemberBetData{
 	private static String resource="sqlmap-config.xml";
 	private static Reader sqlReader;
 	static{
@@ -160,8 +160,9 @@ public class MemberBetDataDAO {
 //		}
 //		return mbdList;
 //	}
-
-	public static List<MemberBetData> selectMemberBetDataListByID(
+	
+	@Override
+	public List<MemberBetData> selectMemberBetDataListByID(
 			int page, int length, String id) {
 
 		/**
@@ -310,8 +311,9 @@ public class MemberBetDataDAO {
 //		}
 //		return mbdList;
 	}
-
-	public static void insultMemberBetData(MemberBetData mbd) {
+	
+	@Override
+	public void insultMemberBetData(MemberBetData mbd) {
 
 		/**
 		 * 멤버데이터 삽입 메서드
@@ -343,8 +345,9 @@ public class MemberBetDataDAO {
 //			e.printStackTrace();
 //		}
 	}
-
-	public static void deleteMemberbetData(String mbdNum) {
+	
+	@Override
+	public void deleteMemberbetData(String mbdNum) {
 
 		/**
 		 * 멤버데이터 삭제 메서드
@@ -376,7 +379,8 @@ public class MemberBetDataDAO {
 	}
 
 	// id로 검색된 데이터 카운트 메서드
-	public static int selectMemberBetDataByIDCount(String id) {
+	@Override
+	public int selectMemberBetDataByIDCount(String id) {
 		SqlSession session = null;
 		int count = 0;
 		try{
@@ -411,8 +415,9 @@ public class MemberBetDataDAO {
 //		}
 //		return BatCount;
 	}
-
-	public static void updateMemberBetData(String mbdNum) {
+	
+	@Override
+	public void updateMemberBetData(String mbdNum) {
 
 		/**
 		 * 멤버데이터 give_mineral_confirm 수정 메서드
@@ -443,7 +448,8 @@ public class MemberBetDataDAO {
 	}
 
 	// 매치 넘버를 조회하는 메서드
-	public static String selectMatchNum(String mbdNum) {
+	@Override
+	public String selectMatchNum(String mbdNum) {
 		SqlSession session = null;
 		String matchNum = null;
 		try{
@@ -487,8 +493,9 @@ public class MemberBetDataDAO {
 //		return matchNum;
 
 	}
-
-	public static MemberBetData selectMemberBetData(String mbdNum) {
+	
+	@Override
+	public MemberBetData selectMemberBetData(String mbdNum) {
 
 		/**
 		 * 번호로 맴버데이터 조회 메서드
@@ -628,7 +635,8 @@ public class MemberBetDataDAO {
 //		}
 //		return mbd;
 	}
-	public static int selectMineralConfirm(String mbdNum){
+	@Override
+	public int selectMineralConfirm(String mbdNum){
 		SqlSession session = null;
 		int confirm = 0;
 		try{

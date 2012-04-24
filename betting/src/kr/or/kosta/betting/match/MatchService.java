@@ -17,6 +17,7 @@ import com.opensymphony.xwork2.ModelDriven;
 
 import kr.or.kosta.betting.betting.Betting;
 import kr.or.kosta.betting.betting.BettingDAO;
+import kr.or.kosta.betting.betting.IBetting;
 import kr.or.kosta.betting.loc.ILoc;
 import kr.or.kosta.betting.loc.Loc;
 import kr.or.kosta.betting.loc.LocDAO;
@@ -37,6 +38,7 @@ public class MatchService implements ModelDriven
 	private IMember memberDAO;
 	private ITeam teamDAO;
 	private ILoc locDAO;
+	private IBetting bettingDAO;
 	private Map session;
 	private Match match = new Match();
 	private int page;
@@ -53,23 +55,14 @@ public class MatchService implements ModelDriven
     private int checkbox;
 	
     
-    
-	
-
-	public MatchService(ITeam teamDAO, ILoc locDAO) {
-		super();
-		this.teamDAO = teamDAO;
-		this.locDAO = locDAO;
-	}
-
-	public MatchService(IMember memberDAO) {
-		super();
-		this.memberDAO = memberDAO;
-	}
-
-	public MatchService(IMatch matchDAO) {
+	public MatchService(IMatch matchDAO, IMember memberDAO, ITeam teamDAO,
+			ILoc locDAO, IBetting bettingDAO) {
 		super();
 		this.matchDAO = matchDAO;
+		this.memberDAO = memberDAO;
+		this.teamDAO = teamDAO;
+		this.locDAO = locDAO;
+		this.bettingDAO = bettingDAO;
 	}
 
 	public int getCheckbox() {
@@ -383,7 +376,7 @@ public class MatchService implements ModelDriven
 		MATCH = matchDAO.selectMatch(matchno);
 		TEAM_LIST = teamDAO.selectTeamList();
 		LOC_LIST= locDAO.selectLocList();
-		Betting betting1 = BettingDAO.selectBettingByHome(matchno);
+		Betting betting1 = bettingDAO.selectBettingByHome(matchno);
 		BETTING = "0";
 		if(betting1==null){
 		
