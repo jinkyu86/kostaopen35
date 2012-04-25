@@ -4,17 +4,40 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 	
 	<bean id="teamDAO"
-	class="kr.or.kosta.betting.team.TeamDAO"/>
+	class="kr.or.kosta.betting.team.TeamDAO">
+		<property name="sqlSessionTemplate"
+				ref ="sqlSessionTemplate"/>		
+	</bean>
+	
 	<bean id="locDAO"
-	class="kr.or.kosta.betting.loc.LocDAO"/>
+	class="kr.or.kosta.betting.loc.LocDAO">
+		<property name="sqlSessionTemplate"
+				ref ="sqlSessionTemplate"/>	
+	</bean>
+	
 	<bean id="matchDAO"
-	class="kr.or.kosta.betting.match.MatchDAO"/>
+	class="kr.or.kosta.betting.match.MatchDAO">
+		<property name="sqlSessionTemplate"
+				ref ="sqlSessionTemplate"/>	
+	</bean>
+	
 	<bean id="bettingDAO"
-	class="kr.or.kosta.betting.betting.BettingDAO"/>
+	class="kr.or.kosta.betting.betting.BettingDAO">
+		<property name="sqlSessionTemplate"
+				ref ="sqlSessionTemplate"/>	
+	</bean>
+	
 	<bean id="memberDAO"
-	class="kr.or.kosta.betting.member.MemberDAO"/>
+	class="kr.or.kosta.betting.member.MemberDAO">
+		<property name="sqlSessionTemplate"
+				ref ="sqlSessionTemplate"/>	
+	</bean>
+	
 	<bean id="memberBetDataDAO"
-	class="kr.or.kosta.betting.memberbetdata.MemberBetDataDAO"/>
+	class="kr.or.kosta.betting.memberbetdata.MemberBetDataDAO">
+		<property name="sqlSessionTemplate"
+				ref ="sqlSessionTemplate"/>	
+	</bean>
 	
 	<bean id="matchService"
 	class="kr.or.kosta.betting.match.MatchService">
@@ -72,6 +95,29 @@
 		<constructor-arg>
 			<ref bean="memberDAO"/>
 		</constructor-arg>
+	</bean>
+	
+	<bean id="dataSource"
+	class=
+	"org.springframework.jdbc.datasource.SimpleDriverDataSource">
+		<property name="driverClass" 
+			value="oracle.jdbc.driver.OracleDriver"/>
+		<property name="url"
+			value="jdbc:oracle:thin:@127.0.0.1:1521:XE"/>
+		<property name="username" value="scott"/>
+		<property name="password" value="tiger"/>
+	</bean>
+	
+	<bean id="sqlSessionFactory"
+		class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"/>
+		<property name="configLocation" 
+			value="/WEB-INF/classes/sqlmap-config.xml"/>	
+	</bean>
+	
+	<bean id="sqlSessionTemplate"
+		class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg ref="sqlSessionFactory"/>
 	</bean>
 	
 </beans>

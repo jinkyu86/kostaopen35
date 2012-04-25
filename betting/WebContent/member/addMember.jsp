@@ -65,7 +65,7 @@
 <body>
 	<h3 align="center">회원가입</h3>
 	<form  id="add_member" action="addMember.action" method="post">
-		<table border="0" align="center">
+		<table border="0" align="center" >
 			<tr>
 				<th>ID</th>
 				<td><input type="text" name="id" id="id"  /></td>
