@@ -9,19 +9,22 @@ import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.mybatis.spring.support.SqlSessionDaoSupport;
 
-public class BettingDAO implements IBetting{
-	private static String resource="sqlmap-config.xml";
-	private static Reader sqlReader;
-	static{
-			try {
-				sqlReader=Resources.getResourceAsReader(resource);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-	}
-	private static SqlSessionFactory sqlMapper =
-			new SqlSessionFactoryBuilder().build(sqlReader);
+public class BettingDAO extends SqlSessionDaoSupport 
+				implements IBetting{
+	
+//	private static String resource="sqlmap-config.xml";
+//	private static Reader sqlReader;
+//	static{
+//			try {
+//				sqlReader=Resources.getResourceAsReader(resource);
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			}
+//	}
+//	private static SqlSessionFactory sqlMapper =
+//			new SqlSessionFactoryBuilder().build(sqlReader);
 
 	@Override
 	public List<Betting> selectBettingList(int page, int length) {
@@ -34,16 +37,10 @@ public class BettingDAO implements IBetting{
 		 */
 		SqlSession session = null;
 		List<Betting> bettingList= null;
-		try{
-		session = sqlMapper.openSession(true);
+		session = getSqlSession();
 		RowBounds rowBounds = new RowBounds((page-1)*length,length);
 		bettingList = 
 				session.selectList("selectBettingList",null,rowBounds);
-		
-		}
-		finally{
-			session.close();
-		}
 		return bettingList;
 //		Connection con = null;
 //		PreparedStatement psmt = null;
@@ -154,14 +151,8 @@ public class BettingDAO implements IBetting{
 		 */
 		SqlSession session = null;
 		Betting betting= null;
-		try{
-		session = sqlMapper.openSession(true);
+		session = getSqlSession();
 		betting = session.selectOne("selectBettingByHome",matchNum);
-		
-		}
-		finally{
-			session.close();
-		}
 		return betting;
 //		Connection con = null;
 //		PreparedStatement psmt = null;
@@ -268,14 +259,8 @@ public class BettingDAO implements IBetting{
 		 */
 		SqlSession session = null;
 		Betting betting= null;
-		try{
-		session = sqlMapper.openSession(true);
+		session = getSqlSession();
 		betting = session.selectOne("selectBettingByAway",matchNum);
-		
-		}
-		finally{
-			session.close();
-		}
 		return betting;
 //		Connection con = null;
 //		PreparedStatement psmt = null;
@@ -385,13 +370,8 @@ public class BettingDAO implements IBetting{
 		 * @param totMineral
 		 */
 		SqlSession session = null; 
-		try{
-		session = sqlMapper.openSession(true);
+		session = getSqlSession();
 		session.update("Betting.updateBetting",betting);
-		}
-		finally{
-			session.close();
-		}
 //		Connection con = null;
 //		PreparedStatement psmt = null;
 //		con = ConnectionUtil.getConnection();
@@ -423,14 +403,8 @@ public class BettingDAO implements IBetting{
 		/* default generated stub */;
 		SqlSession session = null;
 		double bettingRating= 0;
-		try{
-		session = sqlMapper.openSession(true);
+		session = getSqlSession();
 		bettingRating= session.selectOne("selectBettingRating",bettingNum);
-		
-		}
-		finally{
-			session.close();
-		}
 		return bettingRating;
 //		Connection con = null;
 //		PreparedStatement ps = null;
@@ -466,14 +440,8 @@ public class BettingDAO implements IBetting{
 		/* default generated stub */
 		SqlSession session = null;
 		long seleRating= 0;
-		try{
-		session = sqlMapper.openSession(true);
+		session = getSqlSession();
 		seleRating= session.selectOne("selectBettingSeleRating",bettingNum);
-		
-		}
-		finally{
-			session.close();
-		}
 		return seleRating;
 //		Connection con = null;
 //		PreparedStatement ps = null;
@@ -509,14 +477,8 @@ public class BettingDAO implements IBetting{
 		/* default generated stub */;
 		SqlSession session = null;
 		long totMineral= 0;
-		try{
-		session = sqlMapper.openSession(true);
+		session = getSqlSession();
 		totMineral= session.selectOne("selectBettingTotMineral",bettingNum);
-		
-		}
-		finally{
-			session.close();
-		}
 		return totMineral;
 //		Connection con = null;
 //		PreparedStatement ps = null;
@@ -546,13 +508,9 @@ public class BettingDAO implements IBetting{
 	public void insertHomeBetting(String matchNum){
 		/* default generated stub */;
 		SqlSession session = null;
-		try{
-		session = sqlMapper.openSession(true);
+		session = getSqlSession();
 		session.insert("Betting.insertHomeBetting",matchNum);
-		}
-		finally{
-				session.close();
-		}
+
 //		Connection con = null;
 //		PreparedStatement ps = null;
 //		String sql = null;
@@ -579,13 +537,8 @@ public class BettingDAO implements IBetting{
 	public void insertAwayBetting(String matchNum){
 		/* default generated stub */;
 		SqlSession session = null;
-		try{
-		session = sqlMapper.openSession(true);
+		session = getSqlSession();
 		session.insert("Betting.insertAwayBetting",matchNum);
-		}
-		finally{
-				session.close();
-		}
 //		Connection con = null;
 //		PreparedStatement ps = null;
 //		String sql = null;
@@ -611,14 +564,9 @@ public class BettingDAO implements IBetting{
 	public int selectBettingCount(){
 		SqlSession session = null;
 		int count=0;
-		try{
-		session = sqlMapper.openSession(true);
+		session = getSqlSession();
 		count = session.selectOne("selectBettingCount");
 		
-		}
-		finally{
-			session.close();
-		}
 		return count;
 		
 //		Connection con = null;

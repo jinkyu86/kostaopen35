@@ -10,19 +10,21 @@ import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.mybatis.spring.support.SqlSessionDaoSupport;
 
-public class MemberDAO implements IMember{
-	private static String resource="sqlmap-config.xml";
-	private static Reader sqlReader;
-	static{
-			try {
-				sqlReader=Resources.getResourceAsReader(resource);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-	}
-	private static SqlSessionFactory sqlMapper =
-			new SqlSessionFactoryBuilder().build(sqlReader);
+public class MemberDAO extends SqlSessionDaoSupport
+			implements IMember{
+//	private static String resource="sqlmap-config.xml";
+//	private static Reader sqlReader;
+//	static{
+//			try {
+//				sqlReader=Resources.getResourceAsReader(resource);
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			}
+//	}
+//	private static SqlSessionFactory sqlMapper =
+//			new SqlSessionFactoryBuilder().build(sqlReader);
 	
 	@Override
 	public List<Member> selectMemberList(int length, int page) {
@@ -35,16 +37,10 @@ public class MemberDAO implements IMember{
 		 */
 		SqlSession session = null;
 		List<Member> memberList= null;
-		try{
-		session = sqlMapper.openSession(true);
+		session = getSqlSession();
 		RowBounds rowBounds = new RowBounds((page-1)*length,length);
 		memberList = 
 				session.selectList("selectMemberList",null,rowBounds);
-		
-		}
-		finally{
-			session.close();
-		}
 		return memberList;
 //		Connection con = null;
 //		PreparedStatement psmt = null;
@@ -95,13 +91,8 @@ public class MemberDAO implements IMember{
 		 * @param member
 		 */
 		SqlSession session = null;
-		try{
-			session = sqlMapper.openSession(true);
+			session = getSqlSession();
 			session.insert("Member.insertMember", member);
-		}
-		finally{
-			session.close();
-		}
 //		Connection con = null;
 //		PreparedStatement psmt = null;
 //		con = ConnectionUtil.getConnection();
@@ -128,13 +119,8 @@ public class MemberDAO implements IMember{
 		 */
 		SqlSession session = null;
 		Member member = null;
-		try{
-			session = sqlMapper.openSession(true);
+			session = getSqlSession();
 			member = session.selectOne("Member.selectMember",id);
-		}
-		finally{
-			session.close();
-		}
 		return member;
 				
 //		Connection con = null;
@@ -179,13 +165,8 @@ public class MemberDAO implements IMember{
 		 * @param ID
 		 */
 		SqlSession session = null;
-		try{
-			session = sqlMapper.openSession(true);
+			session = getSqlSession();
 			session.delete("Member.deleteMember", id);
-		}
-		finally{
-			session.close();
-		}
 //		Connection con = null;
 //		PreparedStatement psmt = null;
 //		con = ConnectionUtil.getConnection();
@@ -210,16 +191,10 @@ public class MemberDAO implements IMember{
 		 */
 		SqlSession session = null;
 		List<Member> memberList= null;
-		try{
-		session = sqlMapper.openSession(true);
+		session = getSqlSession();
 		RowBounds rowBounds = new RowBounds((page-1)*length,length);
 		memberList = 
 				session.selectList("selectMemberRankingList",null,rowBounds);
-		
-		}
-		finally{
-			session.close();
-		}
 		return memberList;
 //		Connection con = null;
 //		PreparedStatement psmt = null;
@@ -273,13 +248,8 @@ public class MemberDAO implements IMember{
 		 * @param mineral
 		 */
 		SqlSession session = null;
-		try{
-			session = sqlMapper.openSession(true);
+			session = getSqlSession();
 			session.insert("Member.updateMember", member);
-		}
-		finally{
-			session.close();
-		}
 //		Connection con = null;
 //		PreparedStatement psmt = null;
 //		con = ConnectionUtil.getConnection();
@@ -303,13 +273,8 @@ public class MemberDAO implements IMember{
 	public int selectMemberCount() {
 		SqlSession session = null;
 		int count = 0;
-		try{
-			session = sqlMapper.openSession(true);
+			session = getSqlSession();
 			count = session.selectOne("Member.selectMemberCount");
-		}
-		finally{
-			session.close();
-		}
 		return count;
 //		Connection con = null;
 //		PreparedStatement psmt = null;
@@ -342,13 +307,8 @@ public class MemberDAO implements IMember{
 		 */
 		SqlSession session = null;
 		long mineral = 0;
-		try{
-			session = sqlMapper.openSession(true);
+			session = getSqlSession();
 			mineral = session.selectOne("Member.selectMineralByID", id);
-		}
-		finally{
-			session.close();
-		}
 		return mineral;
 //		Connection con = null;
 //		PreparedStatement psmt = null;
@@ -382,14 +342,9 @@ public class MemberDAO implements IMember{
 		 * @param member
 		 */
 		SqlSession session = null;
-		try{
-			session = sqlMapper.openSession(true);
+			session = getSqlSession();
 			session.update("Member.updateMineralByID",member );
 
-		}
-		finally{
-			session.close();
-		}
 //		Connection con = null;
 //		PreparedStatement psmt = null;
 //		con = ConnectionUtil.getConnection();
@@ -417,13 +372,8 @@ public class MemberDAO implements IMember{
 		 */
 		SqlSession session = null;
 		long rank = 0;
-		try{
-			session = sqlMapper.openSession(true);
+			session = getSqlSession();
 			rank = session.selectOne("Member.selectMemberRanking",id );
-		}
-		finally{
-			session.close();
-		}
 //		Connection con = null;
 //		PreparedStatement psmt = null;
 //		String sql = null;

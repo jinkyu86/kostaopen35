@@ -9,19 +9,21 @@ import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.mybatis.spring.support.SqlSessionDaoSupport;
 
-public class MemberBetDataDAO implements IMemberBetData{
-	private static String resource="sqlmap-config.xml";
-	private static Reader sqlReader;
-	static{
-			try {
-				sqlReader=Resources.getResourceAsReader(resource);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}   
-	}
-	private static SqlSessionFactory sqlMapper =
-			new SqlSessionFactoryBuilder().build(sqlReader);
+public class MemberBetDataDAO extends SqlSessionDaoSupport 
+			implements IMemberBetData{
+//	private static String resource="sqlmap-config.xml";
+//	private static Reader sqlReader;
+//	static{
+//			try {
+//				sqlReader=Resources.getResourceAsReader(resource);
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			}   
+//	}
+//	private static SqlSessionFactory sqlMapper =
+//			new SqlSessionFactoryBuilder().build(sqlReader);
 
 //	public static ArrayList<MemberBetData> selectMemberBetDataList(int page,
 //			int length) {
@@ -172,16 +174,10 @@ public class MemberBetDataDAO implements IMemberBetData{
 		 */
 		SqlSession session = null;
 		List<MemberBetData> mbdList= null;
-		try{
-		session = sqlMapper.openSession(true);
+		session = getSqlSession();
 		RowBounds rowBounds = new RowBounds((page-1)*length,length);
 		mbdList = 
 				session.selectList("selectMBDListByID",id,rowBounds);
-		
-		}
-		finally{
-			session.close();
-		}
 		return mbdList;
 //		Connection con = null;
 //		PreparedStatement psmt = null;
@@ -321,13 +317,8 @@ public class MemberBetDataDAO implements IMemberBetData{
 		 * @param memberBatData
 		 */
 		SqlSession session = null;
-		try{
-		session = sqlMapper.openSession(true);
+		session = getSqlSession();
 		session.insert("MBD.insertMBD",mbd);
-		}
-		finally{
-				session.close();
-		}
 //		Connection con = null;
 //		PreparedStatement psmt = null;
 //		con = ConnectionUtil.getConnection();
@@ -355,13 +346,8 @@ public class MemberBetDataDAO implements IMemberBetData{
 		 * @param num
 		 */
 		SqlSession session = null;
-		try{
-		session = sqlMapper.openSession(true);
+		session = getSqlSession();
 		session.delete("MBD.deleteMBD",mbdNum);
-		}
-		finally{
-			session.close();
-		}
 //		Connection con = null;
 //		PreparedStatement psmt = null;
 //		con = ConnectionUtil.getConnection();
@@ -383,13 +369,8 @@ public class MemberBetDataDAO implements IMemberBetData{
 	public int selectMemberBetDataByIDCount(String id) {
 		SqlSession session = null;
 		int count = 0;
-		try{
-			session = sqlMapper.openSession(true);
+			session = getSqlSession();
 			count = session.selectOne("selectMBDListByIDCount", id);
-		}
-		finally{
-			session.close();
-		}
 		return count;
 //		Connection con = null;
 //		PreparedStatement psmt = null;
@@ -425,13 +406,8 @@ public class MemberBetDataDAO implements IMemberBetData{
 		 * @param memberBatData
 		 */
 		SqlSession session = null;
-		try{
-			session = sqlMapper.openSession(true);
+			session = getSqlSession();
 			session.update("MBD.updateMBD",mbdNum);
-		}
-		finally{
-			session.close();
-		}
 //		Connection con = null;
 //		PreparedStatement psmt = null;
 //		con = ConnectionUtil.getConnection();
@@ -452,13 +428,8 @@ public class MemberBetDataDAO implements IMemberBetData{
 	public String selectMatchNum(String mbdNum) {
 		SqlSession session = null;
 		String matchNum = null;
-		try{
-			session = sqlMapper.openSession(true);
+			session = getSqlSession();
 			matchNum = session.selectOne("MBD.selectMatchNum", mbdNum);
-		}
-		finally{
-			session.close();
-		}
 		return matchNum;
 //		Connection con = null;
 //		PreparedStatement psmt = null;
@@ -504,14 +475,8 @@ public class MemberBetDataDAO implements IMemberBetData{
 		 */
 		SqlSession session = null;
 		MemberBetData mbd = null;
-		
-		try{
-			session = sqlMapper.openSession(true);
-			mbd = session.selectOne("MBD.selectMBD",mbdNum);
-		}
-		finally{
-			session.close();
-		}
+		session = getSqlSession();
+		mbd = session.selectOne("MBD.selectMBD",mbdNum);
 		return mbd;
 //		Connection con = null;
 //		PreparedStatement psmt = null;
@@ -639,13 +604,8 @@ public class MemberBetDataDAO implements IMemberBetData{
 	public int selectMineralConfirm(String mbdNum){
 		SqlSession session = null;
 		int confirm = 0;
-		try{
-		session = sqlMapper.openSession(true);
+		session = getSqlSession();
 		confirm = session.selectOne("selectMineralConfirm", mbdNum);
-		}
-		finally{
-			session.close();
-		}
 		return confirm;
 	}
 	

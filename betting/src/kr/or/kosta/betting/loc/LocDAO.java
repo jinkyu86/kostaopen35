@@ -8,19 +8,22 @@ import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.mybatis.spring.support.SqlSessionDaoSupport;
 
-public class LocDAO implements ILoc{
-	private static String resource="sqlmap-config.xml";
-	private static Reader sqlReader;
-	static{
-			try {
-				sqlReader=Resources.getResourceAsReader(resource);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-	}
-	private static SqlSessionFactory sqlMapper =
-			new SqlSessionFactoryBuilder().build(sqlReader);
+public class LocDAO extends SqlSessionDaoSupport 
+				implements ILoc{
+	
+//	private static String resource="sqlmap-config.xml";
+//	private static Reader sqlReader;
+//	static{
+//			try {
+//				sqlReader=Resources.getResourceAsReader(resource);
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			}
+//	}
+//	private static SqlSessionFactory sqlMapper =
+//			new SqlSessionFactoryBuilder().build(sqlReader);
 
 	/**
 	 * 연고지 모든 정보 리스트 조회 메서드
@@ -30,15 +33,9 @@ public class LocDAO implements ILoc{
 		/* default generated stub */;
 		SqlSession session = null;
 		List<Loc> locList= null;
-		try{
-		session = sqlMapper.openSession(true);
+		session = getSqlSession();
 		locList = 
 				session.selectList("Loc.selectLocList");
-		
-		}
-		finally{
-			session.close();
-		}
 		return locList;
 //		Connection con = null;
 //		PreparedStatement ps = null;
@@ -80,14 +77,8 @@ public class LocDAO implements ILoc{
 		/* default generated stub */;
 		SqlSession session = null;
 		Loc loc= null;
-		try{
-		session = sqlMapper.openSession(true);
+		session = getSqlSession();
 		loc = session.selectOne("selectLoc",locNum);
-		
-		}
-		finally{
-			session.close();
-		}
 		return loc;
 //		Connection con = null;
 //		PreparedStatement ps = null;

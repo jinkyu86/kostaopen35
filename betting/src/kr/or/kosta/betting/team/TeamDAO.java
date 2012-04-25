@@ -8,19 +8,21 @@ import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.mybatis.spring.support.SqlSessionDaoSupport;
 
-public class TeamDAO implements ITeam{
-	private static String resource="sqlmap-config.xml";
-	private static Reader sqlReader;
-	static{
-			try {
-				sqlReader=Resources.getResourceAsReader(resource);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-	}
-	private static SqlSessionFactory sqlMapper =
-			new SqlSessionFactoryBuilder().build(sqlReader);
+public class TeamDAO extends SqlSessionDaoSupport
+				implements ITeam{
+//	private static String resource="sqlmap-config.xml";
+//	private static Reader sqlReader;
+//	static{
+//			try {
+//				sqlReader=Resources.getResourceAsReader(resource);
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			}
+//	}
+//	private static SqlSessionFactory sqlMapper =
+//			new SqlSessionFactoryBuilder().build(sqlReader);
 
 
 	/**
@@ -30,15 +32,9 @@ public class TeamDAO implements ITeam{
 	public List<Team> selectTeamList() {
 		SqlSession session = null;
 		List<Team> teamList= null;
-		try{
-		session = sqlMapper.openSession(true);
+		session = getSqlSession();;
 		teamList = 
 				session.selectList("Team.selectTeamList");
-		
-		}
-		finally{
-			session.close();
-		}
 		return teamList;
 		/* default generated stub */
 //		Connection con = null;
@@ -82,14 +78,8 @@ public class TeamDAO implements ITeam{
 		/* default generated stub */;
 		SqlSession session = null;
 		Team team= null;
-		try{
-		session = sqlMapper.openSession(true);
+		session = getSqlSession();
 		team = session.selectOne("selectTeam",teamNum);
-		
-		}
-		finally{
-			session.close();
-		}
 		return team;
 //		Connection con = null;
 //		PreparedStatement ps = null;

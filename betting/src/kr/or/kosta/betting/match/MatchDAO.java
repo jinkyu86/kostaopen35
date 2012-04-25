@@ -9,19 +9,21 @@ import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.mybatis.spring.support.SqlSessionDaoSupport;
 
-public class MatchDAO implements IMatch{
-	private static String resource="sqlmap-config.xml";
-	private static Reader sqlReader;
-	static{
-			try {
-				sqlReader=Resources.getResourceAsReader(resource);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-	}
-	private static SqlSessionFactory sqlMapper =
-			new SqlSessionFactoryBuilder().build(sqlReader);
+public class MatchDAO extends SqlSessionDaoSupport 
+		implements IMatch{
+//	private static String resource="sqlmap-config.xml";
+//	private static Reader sqlReader;
+//	static{
+//			try {
+//				sqlReader=Resources.getResourceAsReader(resource);
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			}
+//	}
+//	private static SqlSessionFactory sqlMapper =
+//			new SqlSessionFactoryBuilder().build(sqlReader);
 
 	/**
 	 * 매치의 모든 데이터 리스트 조회 메서드
@@ -34,16 +36,10 @@ public class MatchDAO implements IMatch{
 		/* default generated stub */;
 		SqlSession session = null;
 		List<Match> matchList= null;
-		try{
-		session = sqlMapper.openSession(true);
+		session = getSqlSession();
 		RowBounds rowBounds = new RowBounds((page-1)*length,length);
 		matchList = 
 				session.selectList("selectMatchList",null,rowBounds);
-		
-		}
-		finally{
-			session.close();
-		}
 		return matchList;
 //		Connection con = null;
 //		PreparedStatement ps = null;
@@ -143,15 +139,9 @@ public class MatchDAO implements IMatch{
 		/* default generated stub */;
 		SqlSession session = null;
 		List<Match> matchList= null;
-		try{
-		session = sqlMapper.openSession(true);
+		session = getSqlSession();
 		matchList = 
 				session.selectList("selectMatchByDate",date);
-		
-		}
-		finally{
-			session.close();
-		}
 		return matchList;
 //		Connection con = null;
 //		PreparedStatement ps = null;
@@ -246,14 +236,8 @@ public class MatchDAO implements IMatch{
 		/* default generated stub */;
 		SqlSession session = null;
 		Match match= null;
-		try{
-		session = sqlMapper.openSession(true);
+		session = getSqlSession();
 		match = session.selectOne("selectMatch",num);
-		
-		}
-		finally{
-			session.close();
-		}
 		return match;
 //		Connection con = null;
 //		PreparedStatement ps = null;
@@ -339,13 +323,9 @@ public class MatchDAO implements IMatch{
 	public void updateMatch(Match match) {
 		/* default generated stub */;
 		SqlSession session = null; 
-		try{
-		session = sqlMapper.openSession(true);
+		session = getSqlSession();
 		session.update("Match.updateMatch",match);
-		}
-		finally{
-			session.close();
-		}
+		
 //		Connection con = null;
 //		PreparedStatement ps = null;
 //		String sql = null;
@@ -385,13 +365,8 @@ public class MatchDAO implements IMatch{
 	public void insertMatch(Match match) {
 		/* default generated stub */;
 		SqlSession session = null;
-		try{
-		session = sqlMapper.openSession(true);
+		session = getSqlSession();
 		session.insert("Match.insertMatch",match);
-		}
-		finally{
-				session.close();
-		}
 //		Connection con = null;
 //		PreparedStatement ps = null;
 //		String sql = null;
@@ -422,14 +397,8 @@ public class MatchDAO implements IMatch{
 		
 		SqlSession session = null;
 		int count=0;
-		try{
-		session = sqlMapper.openSession(true);
+		session = getSqlSession();
 		count = session.selectOne("selectMatchCount");
-		
-		}
-		finally{
-			session.close();
-		}
 		return count;
 		
 //		Connection con = null;
@@ -463,13 +432,8 @@ public class MatchDAO implements IMatch{
 	public void deleteMatch (String matchNum) {
 		// TODO Auto-generated method stub
 		SqlSession session = null;
-		try{
-		session = sqlMapper.openSession(true);
+		session = getSqlSession();
 		session.delete("deleteMatch",matchNum);
-		}
-		finally{
-			session.close();
-		}
 //		Connection con = null;
 //		PreparedStatement psmt = null;
 //		con = ConnectionUtil.getConnection();
@@ -488,14 +452,8 @@ public class MatchDAO implements IMatch{
 		
 		SqlSession session = null;
 		String matchTime= null;
-		try{
-		session = sqlMapper.openSession(true);
+		session = getSqlSession();
 		matchTime= session.selectOne("selectMatchTime",matchNum);
-		
-		}
-		finally{
-			session.close();
-		}
 		return matchTime;
 //		Connection con = null;
 //		PreparedStatement psmt = null;
