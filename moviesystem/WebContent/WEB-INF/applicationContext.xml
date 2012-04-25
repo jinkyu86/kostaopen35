@@ -3,29 +3,69 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-	<bean id="movieDAO" class="kr.or.kosta.moviesystem.movie.MovieDAO"/>
+	<bean id="movieDAO" class="kr.or.kosta.moviesystem.movie.MovieDAO">
+		<property name="sqlSessionTemplate">
+			<ref bean="sqlSessionTemplate"/>
+		</property>
+	</bean>
+	
 	<bean id="movieService" class="kr.or.kosta.moviesystem.movie.MovieService">
 		<constructor-arg>
 			<ref bean="movieDAO"/>
 		</constructor-arg>
 	</bean>
-	<bean id="goodDAO" class="kr.or.kosta.moviesystem.good.GoodDAO"/>
+	
+	<bean id="goodDAO" class="kr.or.kosta.moviesystem.good.GoodDAO">
+		<property name="sqlSessionTemplate">
+			<ref bean="sqlSessionTemplate"/>
+		</property>
+	</bean>
+	
 	<bean id="goodService" class="kr.or.kosta.moviesystem.good.GoodService">
-	<constructor-arg>
-		<ref bean="goodDAO"/>
-	</constructor-arg>
+		<constructor-arg>
+			<ref bean="goodDAO"/>
+		</constructor-arg>
 	</bean>
-		<bean id="buyDAO" class="kr.or.kosta.moviesystem.buy.BuyDAO"/>
+	
+	<bean id="buyDAO" class="kr.or.kosta.moviesystem.buy.BuyDAO">
+		<property name="sqlSessionTemplate">
+			<ref bean="sqlSessionTemplate"/>
+		</property>
+	</bean>
+	
 	<bean id="buyService" class="kr.or.kosta.moviesystem.buy.BuyService">
-	<constructor-arg>
-		<ref bean="buyDAO"/>
-	</constructor-arg>
+		<constructor-arg>
+			<ref bean="buyDAO"/>
+		</constructor-arg>
 	</bean>
-	<bean id="memberDAO" class="kr.or.kosta.moviesystem.member.MemberDAO"/>	
+	
+	<bean id="memberDAO" class="kr.or.kosta.moviesystem.member.MemberDAO">
+		<property name="sqlSessionTemplate">
+			<ref bean="sqlSessionTemplate"/>
+		</property>
+	</bean>
+	
 	<bean id="memberService" class="kr.or.kosta.moviesystem.member.MemberService">
 		<constructor-arg>
 			<ref  bean="memberDAO"/>
 		</constructor-arg>
+	</bean>
+	
+		<!-- spring과 ibatis를 연동시키기 위한 설정 -->
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
+		<property name="driverClass" value="oracle.jdbc.driver.OracleDriver"/>
+		<property name="url" value="jdbc:oracle:thin:@192.168.0.28:1521:XE"/>
+		<property name="username" value="scott"/>
+		<property name="password" value="tiger"/>
+	</bean>
+	
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"/>
+		<property name="configLocation" value="/WEB-INF/classes/sqlmap-config.xml"/>
+	</bean>
+	
+	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg ref="sqlSessionFactory"/>
 	</bean>
 	
 </beans>
