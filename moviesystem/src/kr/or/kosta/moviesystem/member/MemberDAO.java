@@ -16,22 +16,12 @@ import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.mybatis.spring.support.SqlSessionDaoSupport;
 
 
 
-public class MemberDAO implements IMemberDAO{
+public class MemberDAO extends SqlSessionDaoSupport implements IMemberDAO{
 	
-	private static String resource="sqlmap-config.xml";
-	private static Reader sqlReader;
-	static{
-			try {
-				sqlReader=Resources.getResourceAsReader(resource);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-	}
-	private static SqlSessionFactory sqlMapper =
-			new SqlSessionFactoryBuilder().build(sqlReader);
 	
 	/**
 	 * ID로 회원을 찾을 수 있는 메서드
@@ -43,13 +33,10 @@ public class MemberDAO implements IMemberDAO{
 	public Member selectMemberById(String userid) {
 		SqlSession session = null;
 		Member member=null;
-		try{
-			session= sqlMapper.openSession(true);
+		
+			session=getSqlSession();
 			member=session.selectOne("Member.selectMemberById",userid);
-			
-		}finally{
-			session.close();
-		}
+	
 		return member;
 	}
 	
@@ -57,13 +44,10 @@ public class MemberDAO implements IMemberDAO{
 	public Member selectMember(String userNum) {
 		SqlSession session = null;
 		Member member=null;
-		try{
-			session= sqlMapper.openSession(true);
+		
+			session=getSqlSession();
 			member=session.selectOne("Member.selectMember",userNum);
-			
-		}finally{
-			session.close();
-		}
+
 		return member;
 	}
 
@@ -76,14 +60,11 @@ public class MemberDAO implements IMemberDAO{
 	@Override
 	public String insertMember(Member member) {
 		SqlSession session=null;
-		try{
-			session = sqlMapper.openSession(true);
+
+			session=getSqlSession();
 			session.insert("Member.insertMember",member);
-		}//Exxeption여부와 상관업이 반드시 실행
-		finally{
-			//Connection을 ConnectionPoll에 반납
-			session.close();
-		}
+
+	
 		return member.getUserid();
 	}
 
@@ -97,12 +78,10 @@ public class MemberDAO implements IMemberDAO{
 	@Override
 	public void editMember(Member member) {
 		SqlSession session = null;
-		try{
-			session=sqlMapper.openSession(true);
+
+			session=getSqlSession();
 			session.update("Member.editMember",member);
-		}finally{
-			session.close();
-		}
+
 	}
 
 	/**
@@ -115,12 +94,10 @@ public class MemberDAO implements IMemberDAO{
 	@Override
 	public void dropMember(Member member) {
 		SqlSession session = null;
-		try{
-			session=sqlMapper.openSession(true);
+
+			session=getSqlSession();
 			session.update("Member.dropMember",member);
-		}finally{
-			session.close();
-		}		
+	
 	}
 
 	/**
@@ -133,14 +110,11 @@ public class MemberDAO implements IMemberDAO{
 	public List<Member> selectMemberList(int length, int page) {
 		SqlSession session = null;
 		List<Member> memberList=null;
-		try{
-			session=sqlMapper.openSession(true);
+
+			session=getSqlSession();
 			RowBounds rowBounds=new RowBounds((page-1)*length,length);
 			memberList=session.selectList("Member.selectMemberList",null,rowBounds);
 			
-		}finally{
-			session.close();
-		}
 		return memberList;
 	 }
 
@@ -153,13 +127,11 @@ public class MemberDAO implements IMemberDAO{
 	public int selectMemberListCount() {
 		SqlSession session = null;
 		Integer count=null;
-		try{
-			session=sqlMapper.openSession(true);
+
+			session=getSqlSession();
 			count=session.selectOne("Member.selectMemberListCount");
 			
-		}finally{
-			session.close();
-		}
+
 		return count;
 	}
 
@@ -174,14 +146,12 @@ public class MemberDAO implements IMemberDAO{
 	public List<Member> searchMemberListByName(int length, int page, String name) {
 		SqlSession session = null;
 		List<Member> memberList=null;
-		try{
-			session= sqlMapper.openSession(true);
+
+			session=getSqlSession();
 			RowBounds rowBounds=new RowBounds((page-1)*length,length);
 			memberList=session.selectList("Member.searchMemberListByName","%"+name+"%",rowBounds);
 			
-		}finally{
-			session.close();
-		}
+
 		return memberList;
 	}
 
@@ -194,13 +164,11 @@ public class MemberDAO implements IMemberDAO{
 	public int searchMemberListByNameCount(String name) {
 		SqlSession session = null;
 		Integer count=null;
-		try{
-			session=sqlMapper.openSession(true);
+
+			session=getSqlSession();
 			count=session.selectOne("Member.searchMemberListByNameCount","%"+name+"%");
 			
-		}finally{
-			session.close();
-		}
+
 		return count;
 	}
 
@@ -216,14 +184,11 @@ public class MemberDAO implements IMemberDAO{
 	public List<Member> searchMemberListByPhone(int length, int page, String phone) {
 		SqlSession session = null;
 		List<Member> memberList=null;
-		try{
-			session= sqlMapper.openSession(true);
+
+			session=getSqlSession();
 			RowBounds rowBounds=new RowBounds((page-1)*length,length);
 			memberList=session.selectList("Member.searchMemberListByPhone","%"+phone+"%",rowBounds);
-			
-		}finally{
-			session.close();
-		}
+	
 		return memberList;
 	}
 
@@ -237,13 +202,11 @@ public class MemberDAO implements IMemberDAO{
 	public int searchMemberListByPhoneCount(String phone) {
 		SqlSession session = null;
 		Integer count=null;
-		try{
-			session=sqlMapper.openSession(true);
+
+			session=getSqlSession();
 			count=session.selectOne("Member.searchMemberListByPhoneCount","%"+phone+"%");
 			
-		}finally{
-			session.close();
-		}
+
 		return count;
 	}
 
@@ -259,14 +222,11 @@ public class MemberDAO implements IMemberDAO{
 	public List<Member> searchMemberListByEmail(int length, int page, String email) {
 		SqlSession session = null;
 		List<Member> memberList=null;
-		try{
-			session= sqlMapper.openSession(true);
+
+			session=getSqlSession();
 			RowBounds rowBounds=new RowBounds((page-1)*length,length);
 			memberList=session.selectList("Member.searchMemberListByEmail","%"+email+"%",rowBounds);
 			
-		}finally{
-			session.close();
-		}
 		return memberList;
 	}
 
@@ -280,13 +240,11 @@ public class MemberDAO implements IMemberDAO{
 	public int searchMemberListByEmailCount(String email) {
 		SqlSession session = null;
 		Integer count=null;
-		try{
-			session=sqlMapper.openSession(true);
+
+			session=getSqlSession();
 			count=session.selectOne("Member.searchMemberListByEmailCount","%"+email+"%");
 			
-		}finally{
-			session.close();
-		}
+
 		return count;
 	}
 
@@ -302,14 +260,11 @@ public class MemberDAO implements IMemberDAO{
 	public List<Member> searchMemberListByAddr(int length, int page, String addr) {
 		SqlSession session = null;
 		List<Member> memberList=null;
-		try{
-			session= sqlMapper.openSession(true);
+
+			session=getSqlSession();
 			RowBounds rowBounds=new RowBounds((page-1)*length,length);
 			memberList=session.selectList("Member.searchMemberListByAddr","%"+addr+"%",rowBounds);
 			
-		}finally{
-			session.close();
-		}
 		return memberList;
 	}
 
@@ -323,13 +278,11 @@ public class MemberDAO implements IMemberDAO{
 	public int searchMemberListByAddrCount(String addr) {
 		SqlSession session = null;
 		Integer count=null;
-		try{
-			session=sqlMapper.openSession(true);
+
+			session=getSqlSession();
 			count=session.selectOne("Member.searchMemberListByAddrCount","%"+addr+"%");
 			
-		}finally{
-			session.close();
-		}
+
 		return count;
 	}
 
@@ -344,16 +297,14 @@ public class MemberDAO implements IMemberDAO{
 	public Member findMemberId(String email, String name) {
 		SqlSession session = null;
 		Member member=null;
-		try{
-			session= sqlMapper.openSession(true);
+
+			session=getSqlSession();
 			HashMap<String,String> parameter=new HashMap<String,String>();
 			parameter.put("email",email);
 			parameter.put("name",name);
 			member=session.selectOne("Member.findIdMember",parameter);
 			
-		}finally{
-			session.close();
-		}
+
 		return member;
 	}
 
@@ -369,17 +320,14 @@ public class MemberDAO implements IMemberDAO{
 	public Member findMemberPw(String email, String name, String userid) {
 		SqlSession session = null;
 		Member member=null;
-		try{
-			session= sqlMapper.openSession(true);
+
+			session=getSqlSession();
 			HashMap<String,String> parameter=new HashMap<String,String>();
 			parameter.put("email",email);
 			parameter.put("name",name);
 			parameter.put("userid",userid);
 			member=session.selectOne("Member.findIdMember",parameter);
 			
-		}finally{
-			session.close();
-		}
 		return member;
 	}
 
