@@ -19,17 +19,17 @@
 	 <td width="550" height="600" valign="top">
 	 
 	 <table align="center" border="0">
-<tr><td align="left"><a href="/bookchange/BoardService?method=searchBoardList&categoryNo=&column=title&keyword="><small>전체보기</small></a></td>
-		<td align="left"><a href="/bookchange/BoardService?method=searchBoardList&categoryNo=0&column=title&keyword="><small>만화/잡지</small></a></td>
-		<td align="left"><a href="/bookchange/BoardService?method=searchBoardList&categoryNo=1&column=title&keyword="><small>학습/참고서</small></a></td>
-		<td align="left"><a href="/bookchange/BoardService?method=searchBoardList&categoryNo=2&column=title&keyword="><small>취업/수험서</small></a></td>
-		<td align="left"><a href="/bookchange/BoardService?method=searchBoardList&categoryNo=3&column=title&keyword="><small>컴퓨터/IT</small></a></td>
-		<td align="left"><a href="/bookchange/BoardService?method=searchBoardList&categoryNo=4&column=title&keyword="><small>소설/시/에세이</small></a></td></tr>
-		<tr><td align="left"><a href="/bookchange/BoardService?method=searchBoardList&categoryNo=5&column=title&keyword="><small>가정/생활/요리</small></a></td>
-		<td align="left"><a href="/bookchange/BoardService?method=searchBoardList&categoryNo=6&column=title&keyword="><small>여행/취미/레저</small></a></td>
-		<td align="left"><a href="/bookchange/BoardService?method=searchBoardList&categoryNo=7&column=title&keyword="><small>종교/해외도서</small></a></td>
-		<td align="left"><a href="/bookchange/BoardService?method=searchBoardList&categoryNo=8&column=title&keyword="><small>기타도서</small></a></td>
-		<td align="left"><a href="/bookchange/BoardService?method=searchBoardList&categoryNo=9&column=title&keyword="><small>유아/아동</small></a></td></tr>
+<tr><td align="left"><a href="/bookchange/searchBoardList.action?categoryNo=&column=title&keyword="><small>전체보기</small></a></td>
+		<td align="left"><a href="/bookchange/searchBoardList.action?categoryNo=0&column=title&keyword="><small>만화/잡지</small></a></td>
+		<td align="left"><a href="/bookchange/searchBoardList.action?categoryNo=1&column=title&keyword="><small>학습/참고서</small></a></td>
+		<td align="left"><a href="/bookchange/searchBoardList.action?categoryNo=2&column=title&keyword="><small>취업/수험서</small></a></td>
+		<td align="left"><a href="/bookchange/searchBoardList.action?categoryNo=3&column=title&keyword="><small>컴퓨터/IT</small></a></td>
+		<td align="left"><a href="/bookchange/searchBoardList.action?categoryNo=4&column=title&keyword="><small>소설/시/에세이</small></a></td></tr>
+		<tr><td align="left"><a href="/bookchange/searchBoardList.action?categoryNo=5&column=title&keyword="><small>가정/생활/요리</small></a></td>
+		<td align="left"><a href="/bookchange/searchBoardList.action?categoryNo=6&column=title&keyword="><small>여행/취미/레저</small></a></td>
+		<td align="left"><a href="/bookchange/searchBoardList.action?categoryNo=7&column=title&keyword="><small>종교/해외도서</small></a></td>
+		<td align="left"><a href="/bookchange/searchBoardList.action?categoryNo=8&column=title&keyword="><small>기타도서</small></a></td>
+		<td align="left"><a href="/bookchange/searchBoardList.action?categoryNo=9&column=title&keyword="><small>유아/아동</small></a></td></tr>
  </table>
 	 
 	 	 <table bordercolor="#FFA500" border="1" align="center">
@@ -52,8 +52,7 @@
 	 </table>
 	 
 	 <table align="center">
-	 <form action="/bookchange/BoardService" method="post">
-	  <input type="hidden" name="method" value="searchBoardList">
+	 <form action="/bookchange/searchBoardList.action" method="post">
 	  <select name="categoryNo">
 	   <option value="">전체</option>
 	    <c:forEach var="category" items="${CATEGORY_LIST}">

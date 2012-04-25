@@ -29,7 +29,7 @@
 	 </tr>	 
 	 </table>
 	 <center><br>
-	 <a href="/bookchange/ChangeService?method=matchChangeList">
+	 <a href="/bookchange/matchChangeList.action">
 	 <img src="/bookchange/webimg/return.gif" border="0"></a>
 	 </center>
    </td>

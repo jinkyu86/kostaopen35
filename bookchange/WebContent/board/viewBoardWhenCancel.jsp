@@ -88,16 +88,14 @@
  			<c:choose>
  			<c:when test="${sessionScope.LOGIN_EMAIL.email eq qa.member.email}">
  			 <td colspan="2"><small>${qa.qaContent}</small></td>
-	 		 <form action="/bookchange/QaService" method="post">
-	 		 <input type="hidden" name="method" value="editQaForm">
+	 		 <form action="/bookchange/editQaForm.action" method="post">
 	 		 <input type="hidden" name="qaNo" value="${qa.qaNo}">
 	 		 <input type="hidden" name="qaContent" value="${qa.qaContent}">
 	 		 <input type="hidden" name="email" value="${qa.member.email}">
 	 		 <input type="hidden" name="boardNo" value="${qa.board.boardNo}"> 
  		 	 <td><input type="submit" value="수정"></td>
 	 		 </form>
-	 		 <form action="/bookchange/QaService" method="post">
-	 		 <input type="hidden" name="method" value="removeQa">
+	 		 <form action="/bookchange/removeQa.action" method="post">
 	 		 <input type="hidden" name="qaNo" value="${qa.qaNo}">
 	 		 <input type="hidden" name="boardNo" value="${BOARD.boardNo}">
 	 		 <td><input type="submit" value="삭제"/></td>		    

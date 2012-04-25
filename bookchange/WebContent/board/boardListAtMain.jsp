@@ -21,7 +21,7 @@
 <em><b>새로 올라온 책들</b></em>
 </td>
 <td align="right">
-<a href="/bookchange/BoardService?method=viewBoardList"><b><i>more..</i></b></a>
+<a href="/bookchange/viewBoardList.action" target="main"><b><i>more..</i></b></a>
 </td>
 </tr>
 </table>

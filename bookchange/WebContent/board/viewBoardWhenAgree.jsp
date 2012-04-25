@@ -12,48 +12,16 @@
 <body topmargin="0" leftmargin="0" bgcolor="#FFFFFF">
 <table>
 	 <td width="550" height="600" valign="top">
-<c:choose>
-  <c:when test="${sessionScope.LOGIN_EMAIL==null}">
+	 <c:if test="${WhenAgree eq a}">
 	 <table align="center">
-   	 <tr><td><a href="/bookchange/MemberService?method=loginForm">로그인</a></td>
-  </c:when> 
-  <c:when test="${sessionScope.LOGIN_EMAIL!=null}">
-  <table align="center">
-  <td></td>
-   	<c:choose>
-   	<c:when test="${sessionScope.LOGIN_EMAIL.email==BOARD.member.email}">
-   	 <form action="/bookchange/BoardService" method="post">
-	  <input type="hidden" name="method" value="editBoardForm">
-	  <input type="hidden" name="boardNo" value="${BOARD.boardNo}">
-	  <input type="submit" value="수정">
-	 </form>	 
-	  <form action="/bookchange/BoardService" method="post">
-	  <input type="hidden" name="method" value="removeBoard"/>
-	  <input type="hidden" name="boardNo" value="${BOARD.boardNo}"/>
-	  <input type="hidden" name="conditionResult" value="${BOARD.condition.conditionResult}"/>
-	  <input type="submit" value="삭제">
-	 </form>
-	</c:when>
-	
-	<c:otherwise>  
-   	<%--  <form action="/bookchange/BoardService" method="post">
-	  <input type="hidden" name="method" value="searchBoardListWhenAdd">
-	   <input type="hidden" name="boardNo" value="${BOARD.boardNo}">
-	  <input type="hidden" name="keyword" value="${sessionScope.LOGIN_EMAIL.email}">
-	  <input type="submit" value="교환신청">
-	  </form> --%>
-	  
+	 <tr><td>
 	  <form action="/bookchange/matchChange.action" method="post">
 	   <input type="hidden" name="demandBoardNo" value="${BOARD.boardNo}">
 	   <input type="hidden" name="conditionResult" value="${BOARD.condition.conditionResult}">
 	   <input type="hidden" name="agreeBoardNo" value="${AGREE_BOARD_NO}">
 	<td>  <input type="submit" value="교환신청수락"></td></tr></table>
-	  </form>
-	</c:otherwise>	
-	</c:choose>	 	
-   	</c:when>
-  <%--  </c:otherwise> --%>
- </c:choose> 
+	  </form>	
+	  </c:if>
 
  	<table bordercolor="#FFA500" align="center" border="1">
  		<tr align="center">
@@ -86,16 +54,14 @@
  			<c:choose>
  			<c:when test="${sessionScope.LOGIN_EMAIL.email eq qa.member.email}">
  			 <td colspan="2"><small>${qa.qaContent}</small></td>
-	 		 <form action="/bookchange/QaService" method="post">
-	 		 <input type="hidden" name="method" value="editQaForm">
+	 		 <form action="/bookchange/editQaForm.action" method="post">
 	 		 <input type="hidden" name="qaNo" value="${qa.qaNo}">
 	 		 <input type="hidden" name="qaContent" value="${qa.qaContent}">
 	 		 <input type="hidden" name="email" value="${qa.member.email}">
 	 		 <input type="hidden" name="boardNo" value="${qa.board.boardNo}"> 
  		 	 <td><input type="submit" value="수정"></td>
 	 		 </form>
-	 		 <form action="/bookchange/QaService" method="post">
-	 		 <input type="hidden" name="method" value="removeQa">
+	 		 <form action="/bookchange/removeQa.action" method="post">
 	 		 <input type="hidden" name="qaNo" value="${qa.qaNo}">
 	 		 <input type="hidden" name="boardNo" value="${BOARD.boardNo}">
 	 		 <td><input type="submit" value="삭제"/></td>		    

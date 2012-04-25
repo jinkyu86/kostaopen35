@@ -30,9 +30,9 @@
        <tr>
         <td><img src="/bookchange/bookimg/${change.demandBoard.boardPhoto}" height="100" width="100"></td>
         <td align="center">
-        <a href="/bookchange/BoardService?method=viewMemberInfo&email=${change.agreeBoard.member.email}">${change.agreeBoard.member.email}</a></td>
+        <a href="/bookchange/viewMemberInfo.action?email=${change.agreeBoard.member.email}">${change.agreeBoard.member.email}</a></td>
         <td align="center">
-		<a href="/bookchange/viewBoardWhenAgree.action?boardNo=${change.agreeBoard.boardNo}&agreeBoardNo=${change.demandBoard.boardNo}">
+		<a href="/bookchange/viewBoardWhenAgree.action?boardNo=${change.agreeBoard.boardNo}&agreeBoardNo=${change.demandBoard.boardNo}&WhenAgree=a">
 		<img src="/bookchange/bookimg/${change.agreeBoard.boardPhoto}"height="100" width="100"></a></td>
 		<td align="center">${change.changeDate}</td>
 		<td align="center">

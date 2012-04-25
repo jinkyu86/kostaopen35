@@ -57,7 +57,7 @@
 	   <c:otherwise>
 	    <fieldset>
 	 	<table cellpadding="0" cellspacing="0" border="0">
-	    <form action="/bookchange/MemberService" method="post" target="/index.jsp">
+	    <form action="/bookchange/MemberService" method="post" target="index.jsp">
 		<input type="hidden"name="method" value="logout">
 		<tr>
 		 <td>${sessionScope.LOGIN_EMAIL.email}님이 로그인하였습니다.</td>
@@ -98,8 +98,7 @@
 	   
    <tr>
 	   <td>
-	   <form action="/bookchange/BoardService" method="post" target="main">
-	   <input type="hidden" name="method" value="searchBoardList">
+	   <form action="/bookchange/searchBoardList.action" method="post" target="main">
 	   <input type="hidden" name="categoryNo">
 	   <input type="hidden" name="column" value="email">
 	   <input type="hidden" name="keyword" value="${sessionScope.LOGIN_EMAIL.email}">

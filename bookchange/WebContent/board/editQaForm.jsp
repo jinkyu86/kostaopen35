@@ -27,16 +27,14 @@
 <body>
 <table>
 <tr>		
-		<td><form id="edit_qa" action="/bookchange/QaService" method="post">
-		  <input type="hidden" name="method" value="editQa">
+		<td><form id="edit_qa" action="/bookchange/editQa.action" method="post">
 		  <input type="hidden" name="qaNo" value="${EDITQA.qaNo}">
 		  <input type="hidden" name="email" value="${EDITQA.member.email}">
 		  <input type="hidden" name="boardNo" value="${EDITQA.board.boardNo}">
 		  <textarea name="qaContent" cols="30" rows="3">${EDITQA.qaContent}</textarea></td> 
 	    <td><input type="submit" value="댓글수정"/></form></td>
 	    <td>
-		 <form action="/bookchange/BoardService" method="post">
-		 <input type="hidden" name="method" value="viewBoard">
+		 <form action="/bookchange/viewBoard.action" method="post">
 		 <input type="hidden" name="boardNo" value="${EDITQA.board.boardNo}">
 		 <input type="submit" value="취소"/>
 		 </form></td>		 

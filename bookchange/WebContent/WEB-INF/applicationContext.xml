@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean id="dealDAO" class="kr.or.kosta.bookchange.board.DealDAO"/>
+	<bean id="categoryDAO" class="kr.or.kosta.bookchange.board.CategoryDAO"/>
+	<bean id="boardDAO" class="kr.or.kosta.bookchange.board.BoardDAO"/>
+	<bean id="BoardService" class="kr.or.kosta.bookchange.board.BoardService">
+	 <constructor-arg>
+	  <ref bean="boardDAO"/>
+	 </constructor-arg>
+	 <constructor-arg>
+	  <ref bean="categoryDAO"/>
+	 </constructor-arg>
+	 <constructor-arg>
+	  <ref bean="dealDAO"/>
+	 </constructor-arg>
+	 <constructor-arg>
+	  <ref bean="qaDAO"/>
+	 </constructor-arg>
+	</bean>	
+	<bean id="qaDAO" class="kr.or.kosta.bookchange.board.QaDAO"/>
+	<bean id="QaService" class="kr.or.kosta.bookchange.board.QaService">
+	 <constructor-arg>
+	  <ref bean="qaDAO"/>
+	 </constructor-arg>
+	</bean>
+	<bean id="changeDAO" class="kr.or.kosta.bookchange.change.ChangeDAO"/>
+	<bean id="ChangeService" class="kr.or.kosta.bookchange.change.ChangeService">
+	 <constructor-arg>
+	  <ref bean="changeDAO"/>
+	 </constructor-arg>
+	</bean>
+</beans>

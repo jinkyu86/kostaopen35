@@ -24,8 +24,7 @@
 </script>
 </head>
 <body> 
- <form id="add_qa" action="/bookchange/QaService" method="post">
- <input type="hidden" name="method" value="addQa"/>
+ <form id="add_qa" action="/bookchange/addQa.action" method="post" target="main">
  <input type="hidden" name="email" value="${sessionScope.LOGIN_EMAIL.email}"/>
  <input type="hidden" name="boardNo" value="${BOARD.boardNo}"/>
   <p align="center">

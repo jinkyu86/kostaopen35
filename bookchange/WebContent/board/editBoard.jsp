@@ -49,22 +49,33 @@
 		$("#uploadify").uploadify({
 			cancelImg:"/bookchange/uploadify/cancel.png",
 			uploader:"/bookchange/uploadify/uploadify.swf",
-			script:"/bookchange/UploadServlet",			
+			script:"/bookchange/editBoard.action",			
 			multi:false,
 			auto:false,
+			fileDataName:'file',
 			fileExt:"*.jpg;*.jpeg;*.png;*.gif",
 			fileDesc:"WebImageFiles(.jpg,.gif,.png)",
 			buttonText:"Select Photo",
 			onComplete:function(event,queueID,fileObj,response,data){
-				/* alert(response+"를 서버에 저장했습니다."); */
-				//id가 photo인 객체선택 $("#photo")
-				//value 속성 수정 val(수정하고싶은값)
-				$("#photo").val(response);
-				//my_form의 action설정된 서블렛으로 입력정보 전송
-				$("#edit_board").submit();
+			$(location).attr("href","/bookchange/viewBoardList.action");
 			}
 		});
 		$("#addPhoto").click(function (event){
+			var boardNo=$("#boardNo").val();
+			var email=$("#email").val();
+			var categoryNo=$("#categoryNo").val();
+			var dealNo=$("#dealNo").val();
+			var boardTitle=$("#boardTitle").val();
+			var boardWant=$("#boardWant").val();
+			var boardContent=$("#boardContent").val();
+			var conditionResult=$("#conditionResult").val();
+			$('#uploadify').uploadifySettings(
+				'scriptData',{
+					'email':email,'categoryNo':categoryNo,'dealNo':dealNo,
+					'boardTitle':boardTitle,'boardWant':boardWant,'boardContent':boardContent,
+					'conditionResult':conditionResult,'boardNo':boardNo
+				});
+			
 			$("#uploadify").uploadifyUpload();
 			event.preventDefault();
 		});
@@ -76,34 +87,33 @@
 	 <td width="550" height="600" valign="top">
 	 
 	 <h3 align="center">게시물 수정</h3>
-	<form id="edit_board" action="/bookchange/BoardService" method="post">
-		<input type="hidden" name="method" value="editBoard"/>
+	<form id="edit_board" action="/bookchange/editBoard.action" method="post">
 		<input id="photo" type="hidden" name="boardPhoto" value=""/>
-			<input type="hidden" name="conditionResult" value="${BOARD.condition.conditionResult}"/>
+		<input id="conditionResult" type="hidden" name="conditionResult" value="${BOARD.condition.conditionResult}"/>
 		<table bordercolor="#FFA500" border="1" align="center">
 	    <tr>
-		<td>작성자<input type="text" name="email" value="${sessionScope.LOGIN_EMAIL.email}" readonly="readonly"/><td/>
+		<td>작성자<input type="text" id="email" name="email" value="${sessionScope.LOGIN_EMAIL.email}" readonly="readonly"/><td/>
 		<td>게시물번호<input type="text" name="boardNo" value="${BOARD.boardNo}" readonly="readonly"/><td/>
 		</tr>
 		<tr>
-		<td>카테고리<select name="categoryNo">
+		<td>카테고리<select id="categoryNo" name="categoryNo">
 		 <c:forEach var="category" items="${CATEGORY_LIST}">
 		     <option value="${category.categoryNo}">${category.categoryName}</option>
 		 </c:forEach>
 		</select><td/>
-		<td>거래방법<select name="dealNo">
+		<td>거래방법<select id="dealNo" name="dealNo">
 		 <c:forEach var="deal" items="${DEAL_LIST}">
 		     <option value="${deal.dealNo}">${deal.dealWay}</option>
 		 </c:forEach>
 		</select><td/>
 		</tr>
 		<tr>		
-		<td>제목<input type="text" name="boardTitle" value="${BOARD.boardTitle}"/><td/>
-		<td>원하는 물건<input type="text" name="boardWant" value="${BOARD.boardWant}"/><td/>
+		<td>제목<input type="text" id="boardTitle" name="boardTitle" value="${BOARD.boardTitle}"/><td/>
+		<td>원하는 물건<input type="text" id="boardWant" name="boardWant" value="${BOARD.boardWant}"/><td/>
 		</tr>
 		<tr>
 		<td colspan="3">
-		내용<br><textarea name="boardContent" cols="60" rows="10">${BOARD.boardContent}</textarea><td/>
+		내용<br><textarea id="boardContent" name="boardContent" cols="60" rows="10">${BOARD.boardContent}</textarea><td/>
 		</tr>
 		</table>
 </form>
@@ -111,20 +121,11 @@
 <tr><td><input type="file" name="file" id="uploadify"/></td>
 	<td><input type="button" id="addPhoto" value="수정" /></td>	
 	<td><form action="/bookchange/viewBoard.action" method="post">
-		<input type="hidden" name="boardNo" value="${BOARD.boardNo}"></td>
+		<input type="hidden" id="boardNo" name="boardNo" value="${BOARD.boardNo}"></td>
 	<td><input type="submit" value="취소"/></td>
 		</form></tr>
 </table>
 	 	</td> 	
 	 	</table>
-	 </td>
-	</table>
-   </td>
-  </tr>
- </table>
- </td>
- </tr>
- 
-
 </body>
 </html>

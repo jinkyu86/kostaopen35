@@ -49,22 +49,30 @@ $(document).ready(function(){
 	$("#uploadify").uploadify({
 		cancelImg:"/bookchange/uploadify/cancel.png",
 		uploader:"/bookchange/uploadify/uploadify.swf",
-		script:"/bookchange/UploadServlet",			
+		script:"/bookchange/addBoard.action",			
 		multi:false,
 		auto:false,
+		fileDataName:'file',
 		fileExt:"*.jpg;*.jpeg;*.png;*.gif",
 		fileDesc:"WebImageFiles(.jpg,.gif,.png)",
 		buttonText:"Select Photo",
 		onComplete:function(event,queueID,fileObj,response,data){
-			/* alert("글이 등록됐습니다."); */
-			//id가 photo인 객체선택 $("#photo")
-			//value 속성 수정 val(수정하고싶은값)
-			$("#photo").val(response);
-			//my_form의 action설정된 서블렛으로 입력정보 전송
-			$("#add_board").submit();
+		$(location).attr("href","/bookchange/viewBoardList.action");
 		}
 	});
 	$("#addPhoto").click(function (event){
+		var email=$("#email").val();
+		var categoryNo=$("#categoryNo").val();
+		var dealNo=$("#dealNo").val();
+		var boardTitle=$("#boardTitle").val();
+		var boardWant=$("#boardWant").val();
+		var boardContent=$("#boardContent").val();
+		$('#uploadify').uploadifySettings(
+			'scriptData',{
+				'email':email,'categoryNo':categoryNo,'dealNo':dealNo,
+				'boardTitle':boardTitle,'boardWant':boardWant,'boardContent':boardContent
+			});
+		
 		$("#uploadify").uploadifyUpload();
 		event.preventDefault();
 	});
@@ -77,9 +85,8 @@ $(document).ready(function(){
 	 <td width="550" height="600" valign="top">
 	
 <h3 align="center">물품등록</h3>
-<form id="add_board" action="/bookchange/BoardService" method="post">
-<input type="hidden" name="method" value="addBoard"/>
-<input type="hidden" name="email" value="${sessionScope.LOGIN_EMAIL.email}"/>
+<form id="add_board" action="/bookchange/addBoard.action" method="post">
+<input type="hidden" id="email" name="email" value="${sessionScope.LOGIN_EMAIL.email}"/>
 <input id="photo" type="hidden" name="boardPhoto" value=""/>
 		<table bordercolor="#FFA500" border="1">				
 		<tr align="center">
@@ -87,14 +94,14 @@ $(document).ready(function(){
 		<label>작성자</label> ${sessionScope.LOGIN_EMAIL.email}<br/>
 		</td>
 		<td>
-		카테고리 <select name="categoryNo">
+		카테고리 <select id="categoryNo" name="categoryNo">
 		 <c:forEach var="category" items="${CATEGORY_LIST}">
 		     <option value="${category.categoryNo}">${category.categoryName}</option>
 		 </c:forEach>
 		</select><br/>
 		</td>
 		<td>
-		거래방법 <select name="dealNo">
+		거래방법 <select id="dealNo" name="dealNo">
 		 <c:forEach var="deal" items="${DEAL_LIST}">
 		     <option value="${deal.dealNo}">${deal.dealWay}</option>
 		 </c:forEach>
@@ -103,15 +110,15 @@ $(document).ready(function(){
 		</tr>
 		<tr>
 		<td colspan="2">
-		<label>제목 </label><input type="text" size="50" name="boardTitle"/><br/>
+		<label>제목 </label><input type="text" size="50" id="boardTitle" name="boardTitle"/><br/>
 		</td>
 		<td>
-		<label>원하는 물건 </label><input type="text" size="20" name="boardWant"/><br/>
+		<label>원하는 물건 </label><input type="text" size="20" id="boardWant" name="boardWant"/><br/>
 		</td>		
 		</tr>
 		<tr>
 		<td colspan="3">
-		<label>내용</label><br><textarea cols="60" rows="10" name="boardContent"></textarea><br/>
+		<label>내용</label><br><textarea cols="60" rows="10" id="boardContent" name="boardContent"></textarea><br/>
 		</td>
 		</tr>
 		<tr align="center">	
@@ -121,8 +128,7 @@ $(document).ready(function(){
 <tr><td><input type="file" name="file" id="uploadify"/></td>
 	<td><input type="button" id="addPhoto" value="등록" /></td>
 
-	<td><form action="/bookchange/BoardService" method="post">
-		<input type="hidden" name="method" value="viewBoardList"/></td>
+	<td><form action="/bookchange/viewBoardList.action" method="post">
 	<td><input type="submit" value="취소"></td> 
 		</form></td></tr>
 </table>
