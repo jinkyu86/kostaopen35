@@ -20,7 +20,7 @@ import kr.or.kosta.bookchange.change.Condition;
 import kr.or.kosta.bookchange.member.Member;
 import kr.or.kosta.util.ConnectionUtil;
 
-public class BoardDAO {
+public class BoardDAO implements IBoardDAO {
 	
 	private static String resource="sqlmap-config.xml";
 	private static Reader sqlReader;
@@ -31,10 +31,12 @@ public class BoardDAO {
 			e.printStackTrace();
 		}
 	}
+	
 	private static SqlSessionFactory sqlMapper=new SqlSessionFactoryBuilder().build(sqlReader);
-
+	@Override
 	/**	 * 게시물리스트 조회 */
-	public static List<Board> selectBoardList(int length, int page) {
+	
+	public List<Board> selectBoardList(int length, int page) {
 		SqlSession session=null;
 		List<Board> boardList=null;
 		try{
@@ -112,9 +114,9 @@ public class BoardDAO {
 		return boardList;
 		*/
 	}
-
+	@Override
 	/**	 * 전체게시물 수 리턴 */
-	public static int selectBoardCount() {
+	public int selectBoardCount() {
 		SqlSession session=null;
 		int count;
 		try{
@@ -151,9 +153,9 @@ public class BoardDAO {
 		}
 		return boardCount;*/
 	}
-
+	@Override
 	/**	 * 카테고리별 게시물 조회 */
-	public static List<Board> selectBoardListbyCategory(int length, int page, String categoryNo) {
+	public List<Board> selectBoardListbyCategory(int length, int page, String categoryNo) {
 		SqlSession session=null;
 		List<Board> boardList=null;
 		try{
@@ -223,10 +225,10 @@ public class BoardDAO {
 		}		
 		return boardList;*/
 	}
-
+	@Override
 	/**
 	 * 카테고리별 게시물 수 리턴	 */
-	public static int selectBoardCategoryCount(String categoryNo) {
+	public int selectBoardCategoryCount(String categoryNo) {
 		SqlSession session=null;
 		int count;
 		try{
@@ -265,10 +267,10 @@ public class BoardDAO {
 		}		
 		return boardCount;*/
 	}
-
+	@Override
 	/**
 	 * 제목으로 검색한 게시물 조회	 */
-	public static List<Board> selectBoardListbyTitle(int length, int page, String title) {
+	public List<Board> selectBoardListbyTitle(int length, int page, String title) {
 		SqlSession session=null;
 		List<Board> boardList=null;
 		try{
@@ -339,10 +341,10 @@ public class BoardDAO {
 		}		
 		return boardList;*/
 	}
-
+	@Override
 	/**
 	 * 제목으로 검색한  게시물 수 리턴	 */
-	public static int selectBoardTitleCount(String title) {
+	public int selectBoardTitleCount(String title) {
 		SqlSession session=null;
 		int count;
 		try{
@@ -379,10 +381,10 @@ public class BoardDAO {
 		}		
 		return boardCount;*/
 	}
-
+	@Override
 	/**
 	 * 게시물 보기	 */
-	public static Board selectBoard(String boardNo) {
+	public Board selectBoard(String boardNo) {
 		SqlSession session=null;
 		Board board=null;
 		try{
@@ -479,10 +481,10 @@ public class BoardDAO {
 
 		return board;	*/
 	}
-
+	@Override
 	/**
 	 * 게시물 추가(물품 등록)	 */
-	public static void insertBoard(Board board) {
+	public void insertBoard(Board board) {
 		SqlSession session=null;
 		try{
 			session=sqlMapper.openSession(true);
@@ -513,10 +515,10 @@ public class BoardDAO {
 		}*/
 
 	}
-
+	@Override
 	/**
 	 * 게시물 수정	 */
-	public static void updateBoard(Board board) {
+	public void updateBoard(Board board) {
 		SqlSession session=null;
 		try{
 			session=sqlMapper.openSession(true);
@@ -550,10 +552,10 @@ public class BoardDAO {
 			e.printStackTrace();
 		}*/
 	}
-
+	@Override
 	/**
 	 * 게시물 삭제	 */
-	public static void deleteBoard(String boardNo) {
+	public void deleteBoard(String boardNo) {
 		SqlSession session=null;
 		try{
 			session=sqlMapper.openSession(true);
@@ -578,9 +580,9 @@ public class BoardDAO {
 		
 		
 	}
-
+	@Override
 	/**	 * 자기가 올린 게시물 조회 */
-	public static List<Board> selectBoardListbyEmail(int length, int page, String email) {
+	public List<Board> selectBoardListbyEmail(int length, int page, String email) {
 		SqlSession session=null;
 		List<Board> boardList=null;
 		try{
@@ -652,10 +654,10 @@ public class BoardDAO {
 		}		
 		return boardList;*/
 	}
-
+	@Override
 	/**
 	 * 자기가 올린 게시물 수 리턴	 */
-	public static int selectBoardEmailCount(String email) {
+	public int selectBoardEmailCount(String email) {
 		SqlSession session=null;
 		int count;
 		try{
@@ -692,9 +694,9 @@ public class BoardDAO {
 		}		
 		return boardCount;*/
 	}
-
+	@Override
 	/**	 * 카테고리&제목 게시물 조회 */
-	public static List<Board> selectBoardListbyCategoryandTitle(int length, int page, String categoryNo, String title) {
+	public List<Board> selectBoardListbyCategoryandTitle(int length, int page, String categoryNo, String title) {
 		SqlSession session=null;
 		List<Board> boardList=null;
 		try{
@@ -770,10 +772,10 @@ public class BoardDAO {
 		}		
 		return boardList;*/
 	}
-
+	@Override
 	/**
 	 * 카테고리&제목 게시물 수 리턴	 */
-	public static int selectBoardCategoryandTitleCount(String categoryNo, String title) {
+	public int selectBoardCategoryandTitleCount(String categoryNo, String title) {
 		SqlSession session=null;
 		int count;
 		try{
@@ -817,9 +819,9 @@ public class BoardDAO {
 		}		
 		return boardCount;*/
 	}
-
+	@Override
 	/**	 * 카테고리&이메일 검색 게시물 조회 */
-	public static List<Board> selectBoardListbyCategoryandEmail(int length, int page, String categoryNo, String email) {
+	public List<Board> selectBoardListbyCategoryandEmail(int length, int page, String categoryNo, String email) {
 		SqlSession session=null;
 		List<Board> boardList=null;
 		try{
@@ -895,10 +897,10 @@ public class BoardDAO {
 		}		
 		return boardList;*/
 	}
-
+	@Override
 	/**
 	 * 카테고리&이메일 검색 게시물 수 리턴	 */
-	public static int selectBoardCategoryandEmailCount(String categoryNo, String email) {
+	public int selectBoardCategoryandEmailCount(String categoryNo, String email) {
 		SqlSession session=null;
 		int count;
 		try{
@@ -941,9 +943,9 @@ public class BoardDAO {
 		}		
 		return boardCount;*/
 	}
-
+	@Override
 	/**	 * 자기가 올린 게시물 조회 교환가능한것만!*/
-	public static List<Board> selectBoardListbyEmailWhenAdd(int length, int page, String email) {
+	public List<Board> selectBoardListbyEmailWhenAdd(int length, int page, String email) {
 		SqlSession session=null;
 		List<Board> boardList=null;
 		try{
@@ -1015,10 +1017,10 @@ public class BoardDAO {
 		}		
 		return boardList;*/
 	}
-
+	@Override
 	/**
 	 * 자기가 올린 게시물 수 리턴	 */
-	public static int selectBoardEmailWhenAddCount(String email) {
+	public int selectBoardEmailWhenAddCount(String email) {
 		SqlSession session=null;
 		int count;
 		try{
@@ -1056,9 +1058,9 @@ public class BoardDAO {
 		}		
 		return boardCount;*/
 	}
-	
+	@Override
 	/*멤버 정보 오픈*/
-	public static Member viewMemberInfo(String email){
+	public Member viewMemberInfo(String email){
 		SqlSession session=null;
 		Member member=null;
 		try{
@@ -1096,10 +1098,10 @@ public class BoardDAO {
 		return member;
 		*/
 	}
-
+	@Override
 	/**
 	 * 게시물 삭제 탈퇴했을때! 테스트 안해봤음.	 */
-	public static void deleteBoardbyEmail(String email) {
+	public void deleteBoardbyEmail(String email) {
 		SqlSession session=null;
 		try{
 		session = sqlMapper.openSession(true);
@@ -1124,9 +1126,9 @@ public class BoardDAO {
 		*/
 		
 	}
-
+	@Override
 	/**	 * 자기가 올린 게시물 조회 (지울때? 언제 쓰는지 모르겠네 일단 테스트 안 해봤음)*/
-	public static List<Board> selectBoardListbyEmailWhenDelete(String email) {
+	public List<Board> selectBoardListbyEmailWhenDelete(String email) {
 		SqlSession session=null;
 		List<Board> boardList=null;
 		try{

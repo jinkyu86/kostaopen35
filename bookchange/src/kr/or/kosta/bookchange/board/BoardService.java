@@ -1,6 +1,9 @@
 package kr.or.kosta.bookchange.board;
 
+import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.ServletResponseAware;
 import org.apache.struts2.interceptor.SessionAware;
@@ -23,12 +27,18 @@ import com.opensymphony.xwork2.ModelDriven;
 import kr.or.kosta.bookchange.change.Condition;
 import kr.or.kosta.bookchange.member.Member;
 import kr.or.kosta.bookchange.member.MemberDAO;
+import kr.or.kosta.file.receive.FileRenamePolicy;
 import kr.or.kosta.util.PageUtil;
 
 public class BoardService implements ModelDriven, ServletContextAware, ServletRequestAware, ServletResponseAware, SessionAware { 
+	private IBoardDAO boardDAO;
+	private ICategoryDAO categoryDAO;
+	private IDealDAO dealDAO;
+	private IQaDAO qaDAO;
 	private static final long serialVersionUID = 1L;
 	private Board board=new Board();
 	private Member LOGIN_EMAIL;
+	private Member MEMBER;
 	private Board BOARD;
 	private int page;
 	private int qapage;
@@ -46,9 +56,138 @@ public class BoardService implements ModelDriven, ServletContextAware, ServletRe
 	private Map session;	
 	private String keyword;
 	private String AGREE_BOARD_NO;
+	private String CATEGORY;
+	private String column;
+	private String title;
+	private String email;
+	private String conditionResult;
+	private File[] file;
+	private String[] fileFileName;
+	private String[] fileContentType;
+	private InputStream resultStream;
+	private String WhenAgree;
 	
 	
+	public String getWhenAgree() {
+		return WhenAgree;
+	}
+
+
+
+	public void setWhenAgree(String whenAgree) {
+		WhenAgree = whenAgree;
+	}
+
+
+
+	public BoardService(){
+		super();
+	}
 	
+	
+
+	public BoardService(IBoardDAO boardDAO, ICategoryDAO categoryDAO,
+			IDealDAO dealDAO, IQaDAO qaDAO) {
+		super();
+		System.out.println("BoardService(IBoardDAO boardDAO, ICategoryDAO categoryDAO," +
+				"IDealDAO dealDAO, IQaDAO qaDAO)");
+		System.out.println("boardDAO:"+boardDAO);
+		System.out.println("categoryDAO:"+categoryDAO);
+		System.out.println("dealDAO:"+dealDAO);
+		System.out.println("qaDAO:"+qaDAO);
+		
+		this.boardDAO = boardDAO;
+		this.categoryDAO = categoryDAO;
+		this.dealDAO = dealDAO;
+		this.qaDAO = qaDAO;
+	}
+
+
+
+	public File[] getFile() {
+		return file;
+	}
+
+	public void setFile(File[] file) {
+		this.file = file;
+	}
+
+	public String[] getFileFileName() {
+		return fileFileName;
+	}
+
+	public void setFileFileName(String[] fileFileName) {
+		this.fileFileName = fileFileName;
+	}
+
+	public String[] getFileContentType() {
+		return fileContentType;
+	}
+
+	public void setFileContentType(String[] fileContentType) {
+		this.fileContentType = fileContentType;
+	}
+
+	public InputStream getResultStream() {
+		return resultStream;
+	}
+
+	public void setResultStream(InputStream resultStream) {
+		this.resultStream = resultStream;
+	}
+
+	public ServletContext getServletContext() {
+		return servletContext;
+	}
+
+	public String getConditionResult() {
+		return conditionResult;
+	}
+
+	public void setConditionResult(String conditionResult) {
+		this.conditionResult = conditionResult;
+	}
+
+	public Member getMEMBER() {
+		return MEMBER;
+	}
+
+	public void setMEMBER(Member mEMBER) {
+		MEMBER = mEMBER;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getColumn() {
+		return column;
+	}
+
+	public void setColumn(String column) {
+		this.column = column;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getCATEGORY() {
+		return CATEGORY;
+	}
+
+	public void setCATEGORY(String cATEGORY) {
+		CATEGORY = cATEGORY;
+	}
+
 	public String getAGREE_BOARD_NO() {
 		return AGREE_BOARD_NO;
 	}
@@ -200,19 +339,10 @@ public class BoardService implements ModelDriven, ServletContextAware, ServletRe
 		this.page = page;
 	}
 
-	private void viewMemberInfo(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		String email=request.getParameter("email");
-		
-		Member member=BoardDAO.viewMemberInfo(email);
-		
-		request.setAttribute("MEMBER",member);
-		
-		RequestDispatcher rd=request.getRequestDispatcher("/board/viewMemberInfo.jsp");
-		rd.forward(request, response);
-		
-		
-		
+	public String viewMemberInfo() throws Exception {
+		MEMBER=boardDAO.viewMemberInfo(email);
+		return "success";
+				
 	}
 
 	public String boardListAtMain() throws Exception {
@@ -220,9 +350,9 @@ public class BoardService implements ModelDriven, ServletContextAware, ServletRe
 		
 		int length=8;
 		
-		BOARD_LIST=BoardDAO.selectBoardList(length, page);
+		BOARD_LIST=boardDAO.selectBoardList(length, page);
 				
-		int boardCount=BoardDAO.selectBoardCount();
+		int boardCount=boardDAO.selectBoardCount();
 		
 		PAGE_LINK_TAG=PageUtil.generate(page, boardCount, length, "/bookchange/viewBoardList.action");
 		
@@ -232,43 +362,31 @@ public class BoardService implements ModelDriven, ServletContextAware, ServletRe
 	/**
 	 * 게시물 추가 */
 	public String addBoard() throws Exception {
-		String boardTitle=request.getParameter("boardTitle");
-		String boardWant=request.getParameter("boardWant");
-		String boardPhoto=request.getParameter("boardPhoto");
-		String boardContent=request.getParameter("boardContent");
-		String email=request.getParameter("email");
-		String categoryNo=request.getParameter("categoryNo");
-		String dealNo=request.getParameter("dealNo");
-		//String conditionResult=request.getParameter("conditionResult");
-		
-		Board board=new Board();
-		board.setBoardTitle(boardTitle);
-		board.setBoardWant(boardWant);
-		board.setBoardPhoto(boardPhoto);
-		board.setBoardContent(boardContent);
-		
-		Member member=new Member();
-		member.setEmail(email);
-		board.setMember(member);
-		
-		Category category=new Category();
-		category.setCategoryNo(Integer.parseInt(categoryNo));
-		board.setCategory(category);
-		
-		Deal deal=new Deal();
-		deal.setDealNo(Integer.parseInt(dealNo));
-		board.setDeal(deal);
-		
-		/*Condition condition=new Condition();
-		condition.setConditionResult(Integer.parseInt(conditionResult));
-		board.setCondition(condition);처음 등록시 자동으로 0으로 추가, 필요 없음*/
-		
-		BoardDAO.insertBoard(board);
-		
-		request.setAttribute("ERROR","등록되었습니다.");
-		RequestDispatcher rd=request.getRequestDispatcher("/BoardService?method=viewBoardList");
-		rd.forward(request, response);
-		
+		if(file!=null){
+        	//임시파일의 경로와 파일명
+        	String tempFileName=file[0].getAbsolutePath();
+        	//임시파일의 정보를 가지고 있는 파일 객체 생성
+        	File tempFile=new File(tempFileName);
+        	//gphoto 폴더의 진짜 경로 리턴
+        	String gphotoRealPath=servletContext.getRealPath("bookimg");
+        	//저장하고자 하는 파일의 경로, 이름
+        	//gphoto의 진짜 경로+파일의 진짜이름
+        	String saveFileName=gphotoRealPath+"/"+fileFileName[0];
+        	//저장할 파일의 정보를 가지고 있는 객체 생성
+        	File saveFile=new File(saveFileName);
+        	//저장하고자하는 파일과 같은 이름의 파일이 있으면 번호를 붙여서 리턴!
+        	saveFile=FileRenamePolicy.rename(saveFile);
+        	//tempFile을 saveFile로 복사.
+        	FileUtils.copyFile(tempFile,saveFile);
+        	//tempFile이 존재한다면 삭제 두둥.
+        	tempFile.deleteOnExit();
+        	//good에 파일명 설정 
+        	board.setBoardPhoto(saveFile.getName());
+        }
+		boardDAO.insertBoard(board);
+		resultStream=new ByteArrayInputStream("등록완료".getBytes("UTF-8"));
+		ERROR="물품이 등록되었습니다.";
+		return "success";		
 	}
 
 	/**
@@ -282,94 +400,74 @@ public class BoardService implements ModelDriven, ServletContextAware, ServletRe
 			return "fail";
 		}else{
 					
-		CATEGORY_LIST=CategoryDAO.selectCategory();//카테고리 정보 조회
-		DEAL_LIST=DealDAO.selectDeal();//거래방법 조회
+		CATEGORY_LIST=categoryDAO.selectCategory();//카테고리 정보 조회
+		DEAL_LIST=dealDAO.selectDeal();//거래방법 조회
 
 		return "success";
 		}
 	}
 
 	/**	 * 게시물 수정	 */
-	public void editBoard(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
-		String boardTitle=request.getParameter("boardTitle");
-		String boardWant=request.getParameter("boardWant");
-		String boardPhoto=request.getParameter("boardPhoto");
-		String boardContent=request.getParameter("boardContent");
-		String email=request.getParameter("email");
-		String categoryNo=request.getParameter("categoryNo");
-		String dealNo=request.getParameter("dealNo");
-		String conditionResult=request.getParameter("conditionResult");
-		String boardNo=request.getParameter("boardNo");
+	public String editBoard() throws Exception {
+		if(file!=null){
+        	//임시파일의 경로와 파일명
+        	String tempFileName=file[0].getAbsolutePath();
+        	//임시파일의 정보를 가지고 있는 파일 객체 생성
+        	File tempFile=new File(tempFileName);
+        	//gphoto 폴더의 진짜 경로 리턴
+        	String gphotoRealPath=servletContext.getRealPath("bookimg");
+        	//저장하고자 하는 파일의 경로, 이름
+        	//gphoto의 진짜 경로+파일의 진짜이름
+        	String saveFileName=gphotoRealPath+"/"+fileFileName[0];
+        	//저장할 파일의 정보를 가지고 있는 객체 생성
+        	File saveFile=new File(saveFileName);
+        	//저장하고자하는 파일과 같은 이름의 파일이 있으면 번호를 붙여서 리턴!
+        	saveFile=FileRenamePolicy.rename(saveFile);
+        	//tempFile을 saveFile로 복사.
+        	FileUtils.copyFile(tempFile,saveFile);
+        	//tempFile이 존재한다면 삭제 두둥.
+        	tempFile.deleteOnExit();
+        	//good에 파일명 설정 
+        	board.setBoardPhoto(saveFile.getName());
+        }
 		
-		Board board=new Board();
-		board.setBoardNo(Integer.parseInt(boardNo));
-		board.setBoardTitle(boardTitle);
-		board.setBoardWant(boardWant);
-		board.setBoardPhoto(boardPhoto);
-		board.setBoardContent(boardContent);
-		
-		Member member=new Member();
-		member.setEmail(email);
-		board.setMember(member);
-		
-		Category category=new Category();
-		category.setCategoryNo(Integer.parseInt(categoryNo));
-		board.setCategory(category);
-		
-		Deal deal=new Deal();
-		deal.setDealNo(Integer.parseInt(dealNo));
-		board.setDeal(deal);
-		
-		Condition condition=new Condition();
-		condition.setConditionResult(Integer.parseInt(conditionResult));
-		board.setCondition(condition);
-		
-		BoardDAO.updateBoard(board);		
-		String error="수정되었습니다.";
-		request.setAttribute("ERROR",error);
-		RequestDispatcher rd=request.getRequestDispatcher("/BoardService?method=viewBoard&boardNo="+boardNo);
-		rd.forward(request, response);
+		boardDAO.updateBoard(board);		
+		ERROR="수정되었습니다.";
+		resultStream=new ByteArrayInputStream("등록완료".getBytes("UTF-8"));
+		return "success";
 	}
 
 	/**
 	 * 게시물 수정 창 */
 	public String editBoardForm() throws Exception {
 		
-		BOARD=BoardDAO.selectBoard(boardNo);//수정할 게시물 정보 조회
+		BOARD=boardDAO.selectBoard(boardNo);//수정할 게시물 정보 조회
 			
-		CATEGORY_LIST=CategoryDAO.selectCategory();//카테고리 정보 조회
-		DEAL_LIST=DealDAO.selectDeal();//거래방법 조회
+		CATEGORY_LIST=categoryDAO.selectCategory();//카테고리 정보 조회
+		DEAL_LIST=dealDAO.selectDeal();//거래방법 조회
 		
 		return "success";
 	}
 
 	/**
 	 * 게시물 삭제	 */
-	public void removeBoard(HttpServletRequest request,	HttpServletResponse response) throws ServletException, IOException {
-		String boardNo=request.getParameter("boardNo");
-		String conditionResult=request.getParameter("conditionResult");
+	public String removeBoard() throws Exception {
 		
 		if(conditionResult.equals("0")||conditionResult.equals("3")){
-			BoardDAO.deleteBoard(boardNo);
-			String complete="삭제되었습니다.";
-			request.setAttribute("ERROR",complete);
+			boardDAO.deleteBoard(boardNo);
+			ERROR="삭제되었습니다.";
 		}else{
-			request.setCharacterEncoding("utf-8");
-			String delete="교환진행중이므로 삭제할 수 없습니다.";
-			request.setAttribute("ERROR",delete);
-			//System.out.println("교환중이므로 삭제할 수 없습니다.");
+			ERROR="교환진행중이므로 삭제할 수 없습니다.";
 		}
-		
-		RequestDispatcher rd=request.getRequestDispatcher("/BoardService?method=viewBoardList");
-		rd.forward(request, response);
+		return "success";
 	}
 
 	/**
 	 * 게시물 보기	 */
 	public String viewBoard() throws Exception {
-		BOARD=BoardDAO.selectBoard(boardNo);
+		BOARD=boardDAO.selectBoard(boardNo);
 		
-		QA_COUNT=QaDAO.selectQaCount(boardNo);
+		QA_COUNT=qaDAO.selectQaCount(boardNo);
 		int length=10;
 		//여기부턴 댓글 리스트
 		
@@ -383,7 +481,7 @@ public class BoardService implements ModelDriven, ServletContextAware, ServletRe
 			qapage=page;
 		}
 				
-		QA_LIST=QaDAO.selectQaList(length, qapage, boardNo);
+		QA_LIST=qaDAO.selectQaList(length, qapage, boardNo);
 		
 		PAGE_LINK_TAG=PageUtil.generate(qapage, QA_COUNT, length, "/bookchange/viewBoard.action?boardNo="+boardNo);
 		//댓글 리스트 조회 완료
@@ -398,82 +496,71 @@ public class BoardService implements ModelDriven, ServletContextAware, ServletRe
 			page=1;
 		}
 		
-		BOARD_LIST=BoardDAO.selectBoardList(length, page);				
-		CATEGORY_LIST=CategoryDAO.selectCategory();//카테고리 정보 조회
+		BOARD_LIST=boardDAO.selectBoardList(length, page);		
 		
-		int boardCount=BoardDAO.selectBoardCount();		
+		CATEGORY_LIST=categoryDAO.selectCategory();//카테고리 정보 조회
+		
+		int boardCount=boardDAO.selectBoardCount();		
 		PAGE_LINK_TAG=PageUtil.generate(page, boardCount, length, "/bookchange/viewBoardList.action");
 		
 		return "success";
 	}
 
 	/**	 * 게시물 검색	 */
-	public void searchBoardList(HttpServletRequest request,	HttpServletResponse response) throws ServletException, IOException {
-		int page=1;
-		
-		if(request.getParameter("page")!=null){
-			page=Integer.parseInt(request.getParameter("page"));
+	public String searchBoardList() throws Exception {
+				
+		if(page==0){
+			page=1;
 		}
 		
 		int length=10;
 		
-		List<Board> boardList=null;
 		int boardCount=0;	
 		
-		if(!request.getParameter("categoryNo").equals("")){
-			if(request.getParameter("column").equals("title")){
-				if(request.getParameter("keyword")==null||request.getParameter("keyword").equals("")){
-					boardList=BoardDAO.selectBoardListbyCategory(length, page, request.getParameter("categoryNo"));
-					boardCount=BoardDAO.selectBoardCategoryCount(request.getParameter("categoryNo"));
+		if(!CATEGORY.equals("")){
+			if(column.equals("title")){
+				if(keyword==null||keyword.equals("")){
+					BOARD_LIST=boardDAO.selectBoardListbyCategory(length, page, CATEGORY);
+					boardCount=boardDAO.selectBoardCategoryCount(CATEGORY);
 					}else{
-					boardList=BoardDAO.selectBoardListbyCategoryandTitle(length, page, request.getParameter("categoryNo"), request.getParameter("keyword"));
-					boardCount=BoardDAO.selectBoardCategoryandTitleCount(request.getParameter("categoryNo"), request.getParameter("keyword"));
+					BOARD_LIST=boardDAO.selectBoardListbyCategoryandTitle(length, page, CATEGORY, keyword);
+					boardCount=boardDAO.selectBoardCategoryandTitleCount(CATEGORY, keyword);
 					}
-						}else if(request.getParameter("keyword")==null||request.getParameter("keyword").equals("")){
-							boardList=BoardDAO.selectBoardListbyCategory(length, page, request.getParameter("categoryNo"));
-							boardCount=BoardDAO.selectBoardCategoryCount(request.getParameter("categoryNo"));
+						}else if(keyword==null||keyword.equals("")){
+							BOARD_LIST=boardDAO.selectBoardListbyCategory(length, page, CATEGORY);
+							boardCount=boardDAO.selectBoardCategoryCount(CATEGORY);
 							} 
 						else {
-						boardList=BoardDAO.selectBoardListbyCategoryandEmail(length, page,request.getParameter("categoryNo"), request.getParameter("keyword"));
-						boardCount=BoardDAO.selectBoardCategoryandEmailCount(request.getParameter("categoryNo"), request.getParameter("keyword"));
+						BOARD_LIST=boardDAO.selectBoardListbyCategoryandEmail(length, page,CATEGORY, keyword);
+						boardCount=boardDAO.selectBoardCategoryandEmailCount(CATEGORY, keyword);
 					}
 		}
 		
-		if(request.getParameter("categoryNo").equals("")){
-			if(request.getParameter("column").equals("title")){
-				if(request.getParameter("keyword")==null||request.getParameter("keyword").equals("")){
-					boardList=BoardDAO.selectBoardList(length, page);
-					boardCount=BoardDAO.selectBoardCount();
+		if(CATEGORY.equals("")){
+			if(column.equals("title")){
+				if(keyword==null||keyword.equals("")){
+					BOARD_LIST=boardDAO.selectBoardList(length, page);
+					boardCount=boardDAO.selectBoardCount();
 					}else{
-					boardList=BoardDAO.selectBoardListbyTitle(length, page, request.getParameter("keyword"));
-					boardCount=BoardDAO.selectBoardTitleCount(request.getParameter("keyword"));
+					BOARD_LIST=boardDAO.selectBoardListbyTitle(length, page, keyword);
+					boardCount=boardDAO.selectBoardTitleCount(keyword);
 					}
-						}else if(request.getParameter("keyword")==null||request.getParameter("keyword").equals("")){
-								boardList=BoardDAO.selectBoardList(length, page);
-								boardCount=BoardDAO.selectBoardCount();
+						}else if(keyword==null||keyword.equals("")){
+								BOARD_LIST=boardDAO.selectBoardList(length, page);
+								boardCount=boardDAO.selectBoardCount();
 								}
 						else{
-							boardList=BoardDAO.selectBoardListbyEmail(length, page, request.getParameter("keyword"));
-							boardCount=BoardDAO.selectBoardEmailCount(request.getParameter("keyword"));
+							BOARD_LIST=boardDAO.selectBoardListbyEmail(length, page, keyword);
+							boardCount=boardDAO.selectBoardEmailCount(keyword);
 						}
 		}
 		
-		request.setCharacterEncoding("utf-8");
-		request.setAttribute("BOARD_LIST", boardList);
-		//카테고리 넘버 보내줘서 검색할때 selected되게 사용
-		String categoryNo=request.getParameter("categoryNo");
-		request.setAttribute("CATEGORY",categoryNo);
+		CATEGORY_LIST=categoryDAO.selectCategory();//카테고리 정보 조회
+		PAGE_LINK_TAG=PageUtil.generate(page, boardCount, length,
+				"/bookchange/searchBoardList.action?categoryNo="+CATEGORY+
+				"&column="+column+"&keyword="+keyword);
 		
-		List<Category> categoryList=CategoryDAO.selectCategory();//카테고리 정보 조회
-		request.setAttribute("CATEGORY_LIST",categoryList);
-		
-		String pageLinkTag=PageUtil.generate(page, boardCount, length,
-				"/bookchange/BoardService?method=searchBoardList&categoryNo="+request.getParameter("categoryNo")+
-				"&column="+request.getParameter("column")+"&keyword="+request.getParameter("keyword"));
-		request.setAttribute("PAGE_LINK_TAG",pageLinkTag);
-		
-		RequestDispatcher rd=request.getRequestDispatcher("/board/viewBoardList.jsp");
-		rd.forward(request,response);
+		return "success";
 	}
 
 	/**	 * 게시물 검색(교환신청할때 자기 목록 뜨게하기)	 */
@@ -481,25 +568,23 @@ public class BoardService implements ModelDriven, ServletContextAware, ServletRe
 		
 		//내가 원하는 물건 리턴
 		
-		BOARD=BoardDAO.selectBoard(boardNo);
+		BOARD=boardDAO.selectBoard(boardNo);
 		if(BOARD.getCondition().getConditionResult()==2||BOARD.getCondition().getConditionResult()==3){
 			ERROR="선택한 책은 이미 교환중이므로 신청할 수 없습니다 :)";
 			return "fail";
 		}else{
 	
 		//내 물건 목록 리턴
-		int page=1;
-		
-		if(request.getParameter("page")!=null){
-			page=Integer.parseInt(request.getParameter("page"));
+		if(page==0){
+			page=1;
 		}
 		
 		int length=10;
 		
 		int boardCount=0;
 		
-		BOARD_LIST=BoardDAO.selectBoardListbyEmailWhenAdd(length, page, keyword);
-		boardCount=BoardDAO.selectBoardEmailWhenAddCount(keyword);
+		BOARD_LIST=boardDAO.selectBoardListbyEmailWhenAdd(length, page, keyword);
+		boardCount=boardDAO.selectBoardEmailWhenAddCount(keyword);
 				
 		PAGE_LINK_TAG=PageUtil.generate(page, boardCount, length,
 				"/bookchange/searchBoardListWhenAdd.action?keyword="+keyword);
@@ -512,9 +597,9 @@ public class BoardService implements ModelDriven, ServletContextAware, ServletRe
 	 * 게시물 보기 요청 수락할때 ㅋ */
 	public String viewBoardWhenAgree() throws Exception {
 		
-		BOARD=BoardDAO.selectBoard(boardNo);
+		BOARD=boardDAO.selectBoard(boardNo);
 		
-		QA_COUNT=QaDAO.selectQaCount(boardNo);
+		QA_COUNT=qaDAO.selectQaCount(boardNo);
 		int length=10;
 		//여기부턴 댓글 리스트
 		
@@ -528,7 +613,7 @@ public class BoardService implements ModelDriven, ServletContextAware, ServletRe
 			qapage=page;
 		}
 				
-		QA_LIST=QaDAO.selectQaList(length, qapage, boardNo);
+		QA_LIST=qaDAO.selectQaList(length, qapage, boardNo);
 		
 		PAGE_LINK_TAG=PageUtil.generate(qapage, QA_COUNT, length, "/bookchange/viewBoard.action?boardNo="+boardNo);
 		//댓글 리스트 조회 완료
@@ -540,9 +625,9 @@ public class BoardService implements ModelDriven, ServletContextAware, ServletRe
 	 * 게시물 보기 취소할때	 */
 	public String viewBoardWhenCancel() throws Exception {
 		
-		BOARD=BoardDAO.selectBoard(boardNo);
+		BOARD=boardDAO.selectBoard(boardNo);
 		
-		QA_COUNT=QaDAO.selectQaCount(boardNo);
+		QA_COUNT=qaDAO.selectQaCount(boardNo);
 		int length=10;
 		//여기부턴 댓글 리스트
 		
@@ -556,7 +641,7 @@ public class BoardService implements ModelDriven, ServletContextAware, ServletRe
 			qapage=page;
 		}
 				
-		QA_LIST=QaDAO.selectQaList(length, qapage, boardNo);
+		QA_LIST=qaDAO.selectQaList(length, qapage, boardNo);
 		
 		PAGE_LINK_TAG=PageUtil.generate(qapage, QA_COUNT, length, "/bookchange/viewBoard.action?boardNo="+boardNo);
 		//댓글 리스트 조회 완료

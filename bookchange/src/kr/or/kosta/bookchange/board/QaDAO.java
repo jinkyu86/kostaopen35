@@ -18,7 +18,7 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import kr.or.kosta.bookchange.member.Member;
 import kr.or.kosta.util.ConnectionUtil;
 
-public class QaDAO {
+public class QaDAO implements IQaDAO {
 	
 	private static String resource="sqlmap-config.xml";
 	private static Reader sqlReader;
@@ -30,10 +30,10 @@ public class QaDAO {
 		}
 	}
 	private static SqlSessionFactory sqlMapper=new SqlSessionFactoryBuilder().build(sqlReader);
-
+	@Override
 	/**
 	 * 상품문의 내용 보기	 */
-	public static List<Qa> selectQaList(int length, int page, String boardNo) {
+	public List<Qa> selectQaList(int length, int page, String boardNo) {
 		SqlSession session=null;
 		List<Qa> qaList=null;
 		try{
@@ -93,10 +93,10 @@ public class QaDAO {
 		}
 		return qaList;*/
 	}
-
+	@Override
 	/**
 	 * 상품문의 추가	 */
-	public static void insertQa(Qa qa) {
+	public void insertQa(Qa qa) {
 		SqlSession session=null;
 		try{
 			session=sqlMapper.openSession(true);
@@ -124,9 +124,9 @@ public class QaDAO {
 			e.printStackTrace();
 		}*/
 	}
-
+	@Override
 	/**	 * 상품문의 수정 */
-	public static void updateQa(Qa qa) {
+	public void updateQa(Qa qa) {
 		SqlSession session=null;
 		try{
 			session=sqlMapper.openSession(true);
@@ -152,9 +152,9 @@ public class QaDAO {
 		
 		*/
 	}
-
+	@Override
 	/**	 * 상품문의 삭제(직접 삭제했을때)	 */
-	public static void deleteQabyQaNo(String qaNo) {
+	public void deleteQabyQaNo(String qaNo) {
 		SqlSession session=null;
 		try{
 			session=sqlMapper.openSession(true);
@@ -179,9 +179,9 @@ public class QaDAO {
 		
 				
 	}
-	
+	@Override
 	/**	 * 상품문의 삭제(관련 게시물이 삭제됐을때)	 */
-	public static void deleteQabyBoardNo(String boardNo) {
+	public void deleteQabyBoardNo(String boardNo) {
 		SqlSession session=null;
 		try{
 			session=sqlMapper.openSession(true);
@@ -206,10 +206,10 @@ public class QaDAO {
 		*/
 				
 	}
-
+	@Override
 	/**
 	 * 상품문의 카운트 수	 */
-	public static int selectQaCount(String boardNo) {
+	public int selectQaCount(String boardNo) {
 		SqlSession session=null;
 		int count;
 		try{

@@ -17,7 +17,7 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import kr.or.kosta.util.ConnectionUtil;
 
-public class CategoryDAO {
+public class CategoryDAO implements ICategoryDAO {
 	
 	private static String resource="sqlmap-config.xml";
 	private static Reader sqlReader;
@@ -29,8 +29,8 @@ public class CategoryDAO {
 		}
 	}
 	private static SqlSessionFactory sqlMapper=new SqlSessionFactoryBuilder().build(sqlReader);
-	
-	public static List<Category> selectCategory(){
+	@Override
+	public List<Category> selectCategory(){
 		SqlSession session=null;
 		List<Category> categoryList=null;
 		try{

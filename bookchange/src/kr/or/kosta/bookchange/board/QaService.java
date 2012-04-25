@@ -8,121 +8,97 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.opensymphony.xwork2.ModelDriven;
+
 import kr.or.kosta.bookchange.member.Member;
 
-public class QaService extends HttpServlet {
+public class QaService implements ModelDriven {
+	private IQaDAO qaDAO;
 	private static final long serialVersionUID = 1L;
+	private Qa qa=new Qa();	
+	private Qa EDITQA;
+	private String boardNo;
+	private String qaNo;
 	
-	public QaService() {
-	        super();
-	       
-	    }
-
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doPost(request,response);
+	public QaService(){
+		super();
+	}	
+	
+	public QaService(IQaDAO qaDAO) {
+		super();
+		System.out.println("QaService(IQaDAO qaDAO)");
+		System.out.println("qaDAO:"+qaDAO);
+		this.qaDAO = qaDAO;
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("utf-8");
-		String method=request.getParameter("method");
-		
-		if("addQa".equals(method)){
-			addQa(request,response);
-		}else if("editQa".equals(method)){
-			editQa(request,response);
-		}else if("removeQa".equals(method)){
-			removeQa(request,response);
-		}else if("editQaForm".equals(method)){
-			editQaForm(request,response);
-		}
+
+	public Qa getEDITQA() {
+		return EDITQA;
+	}
+
+	public void setEDITQA(Qa eDITQA) {
+		EDITQA = eDITQA;
+	}
+
+	public String getQaNo() {
+		return qaNo;
+	}
+
+	public void setQaNo(String qaNo) {
+		this.qaNo = qaNo;
+	}
+
+	public String getBoardNo() {
+		return boardNo;
+	}
+
+	public void setBoardNo(String boardNo) {
+		this.boardNo = boardNo;
+	}
+
+	public Qa getQa() {
+		return qa;
+	}
+
+	public void setQa(Qa qa) {
+		this.qa = qa;
 	}
 
 	/**	 * 상품문의 글 추가 */
-	public void addQa(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//String qaNo=request.getParameter("qaNo");
-		String qaContent=request.getParameter("qaContent");
-		String email=request.getParameter("email");
-		String boardNo=request.getParameter("boardNo");
+	public String addQa() throws Exception {
 		
-		Qa qa=new Qa();
-		//qa.setQaNo(Integer.parseInt(qaNo));
-		qa.setQaContent(qaContent);
-		
-		Member member=new Member();
-		member.setEmail(email);	
-		qa.setMember(member);
-		
-		Board board=new Board();
-		board.setBoardNo(Integer.parseInt(boardNo));
-		qa.setBoard(board);
-		
-		QaDAO.insertQa(qa);
-		
-		RequestDispatcher rd=request.getRequestDispatcher("/BoardService?method=viewBoard&boardNo="+boardNo);
-		rd.forward(request, response);
+		qaDAO.insertQa(qa);
+
+		return "success";
 		
 	}
 
 	/**	 * 상품문의 수정  */
-	public void editQa(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-				String qaNo=request.getParameter("qaNo");//수정불가
-				String qaContent=request.getParameter("qaContent");
-				String email=request.getParameter("email");//수정불가
-				String boardNo=request.getParameter("boardNo");//수정불가
+	public String editQa() throws Exception {
 				
-				Qa qa=new Qa();
-				qa.setQaNo(Integer.parseInt(qaNo));
-				qa.setQaContent(qaContent);
+		qaDAO.updateQa(qa);		
 				
-				Member member=new Member();
-				member.setEmail(email);	
-				qa.setMember(member);
-				
-				Board board=new Board();
-				board.setBoardNo(Integer.parseInt(boardNo));
-				qa.setBoard(board);
-				
-				QaDAO.updateQa(qa);		
-				
-				RequestDispatcher rd=request.getRequestDispatcher("/BoardService?method=viewBoard&boardNo="+boardNo);
-				rd.forward(request, response);
+		return "success";
 	}
 
 	/**	 * 상품문의 삭제  */
-	public void removeQa(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String qaNo=request.getParameter("qaNo");
-		QaDAO.deleteQabyQaNo(qaNo);	
+	public String removeQa() throws Exception {
 		
-		String boardNo=request.getParameter("boardNo");
+		qaDAO.deleteQabyQaNo(qaNo);	
 		
-		RequestDispatcher rd=request.getRequestDispatcher("/BoardService?method=viewBoard&boardNo="+boardNo);
-		rd.forward(request, response);
+		return "success";
 	}
 
 	/**	 * 상품문의 수정 창  */
-	public void editQaForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-				String qaNo=request.getParameter("qaNo");//수정불가
-				String qaContent=request.getParameter("qaContent");
-				String email=request.getParameter("email");//수정불가
-				String boardNo=request.getParameter("boardNo");//수정불가
-				
-				Qa qa=new Qa();
-				qa.setQaNo(Integer.parseInt(qaNo));
-				qa.setQaContent(qaContent);
-				
-				Member member=new Member();
-				member.setEmail(email);	
-				qa.setMember(member);
-				
-				Board board=new Board();
-				board.setBoardNo(Integer.parseInt(boardNo));
-				qa.setBoard(board);
-				
-				request.setCharacterEncoding("utf-8");
-				request.setAttribute("EDITQA",qa);	
-				
-				RequestDispatcher rd=request.getRequestDispatcher("/BoardService?method=viewBoard&boardNo="+boardNo);
-				rd.forward(request, response);
+	public String editQaForm() throws Exception {
+		
+		EDITQA=qa;
+		return "success";
+	}
+
+	@Override
+	public Object getModel() {
+		return qa;
 	}
 
 	/**	 * 상품문의 보기	 */

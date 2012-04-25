@@ -16,7 +16,7 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import kr.or.kosta.util.ConnectionUtil;
 
-public class DealDAO {
+public class DealDAO implements IDealDAO {
 	private static String resource="sqlmap-config.xml";
 	private static Reader sqlReader;
 	static{
@@ -28,7 +28,8 @@ public class DealDAO {
 	}
 	private static SqlSessionFactory sqlMapper=new SqlSessionFactoryBuilder().build(sqlReader);
 	
-	public static List<Deal> selectDeal(){
+	@Override
+	public List<Deal> selectDeal(){
 		SqlSession session=null;
 		List<Deal> dealList=null;
 		try{
