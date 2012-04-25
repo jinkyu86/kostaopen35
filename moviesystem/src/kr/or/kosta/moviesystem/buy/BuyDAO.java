@@ -11,95 +11,57 @@ import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.mybatis.spring.support.SqlSessionDaoSupport;
 
-public class BuyDAO implements IBuyDAO{
-	private static String resource="sqlmap-config.xml";
-	private static Reader sqlReader;
-	static{
-		try {
-			sqlReader=Resources.getResourceAsReader(resource);
-		} catch (IOException e) {
-			e.printStackTrace();
-			}
-		}
-	private static SqlSessionFactory sqlMapper =new SqlSessionFactoryBuilder().build(sqlReader);
-	
+public class BuyDAO extends SqlSessionDaoSupport implements IBuyDAO{
+
 	@Override
 	public void insertBuy(Buy buy) {
 		SqlSession session=null;
-		try{
-			session=sqlMapper.openSession(true);
+			session=getSqlSession();
 			session.insert("Buy.insertBuy",buy);
-		}finally{
-			session.close();
-		}
 	}
 	@Override
 	public List<Buy> selectBuyList(String userid,int length,int page) {
 		SqlSession session=null;
 		List<Buy> buyList=null;
-		try{
-		session = sqlMapper.openSession(true);
+		session = getSqlSession();
 		RowBounds rowBounds=new RowBounds((page-1)*length,length);
 		buyList=session.selectList("Buy.selectBuyList", userid ,rowBounds);
-		
-		}finally{
-			session.close();
-		}
 		return buyList;
 	}
 	@Override
 	public int selectBuyCountByUerid(String userid) {
 		SqlSession session=null;
 		Integer count=null;
-		try{
-		session = sqlMapper.openSession(true);
+		session = getSqlSession();
 		count=session.selectOne("Buy.selectBuyCountByUerid", userid);
-		
-		}finally{
-			session.close();
-		}
 		return count;
 	}
 	@Override
 	public List<Buy> selectCancelableBuyList(String userid, int length, int page) {
 		SqlSession session=null;
 		List<Buy> buyList=null;
-		try{
-		session = sqlMapper.openSession(true);
+		session = getSqlSession();
 		RowBounds rowBounds=new RowBounds((page-1)*length,length);
 		buyList=session.selectList("Buy.selectCancelableBuyList", userid ,rowBounds);
-		
-		}finally{
-			session.close();
-		}
 		return buyList;
 	}
 	@Override
 	public int selectCancelableBuyListCount(String userid) {
 		SqlSession session=null;
 		Integer count=null;
-		try{
-		session = sqlMapper.openSession(true);
+		session = getSqlSession();
 		count=session.selectOne("Buy.selectCancelableBuyListCount", userid);
-		
-		}finally{
-			session.close();
-		}
 		return count;
 	}
 	@Override
 	public List<Buy> selectCanceledBuyList(String userid, int length, int page) {
 		SqlSession session=null;
 		List<Buy> buyList=null;
-		try{
-		session = sqlMapper.openSession(true);
+		session = getSqlSession();
 		RowBounds rowBounds=new RowBounds((page-1)*length,length);
 		buyList=session.selectList("Buy.selectCanceledBuyList", userid ,rowBounds);
-		
-		}finally{
-			session.close();
-		}
 		return buyList;
 		
 	}
@@ -107,13 +69,8 @@ public class BuyDAO implements IBuyDAO{
 	public int selectCanceledBuyListCount(String userid) {
 		SqlSession session=null;
 		Integer count=null;
-		try{
-		session = sqlMapper.openSession(true);
+		session = getSqlSession();
 		count=session.selectOne("Buy.selectCanceledBuyListCount", userid);
-		
-		}finally{
-			session.close();
-		}
 		return count;
 	}
 	
@@ -121,12 +78,8 @@ public class BuyDAO implements IBuyDAO{
 	@Override
 	public void cancelBuy(String buynum){
 		SqlSession session=null;
-		try{
-		session = sqlMapper.openSession(true);
+		session = getSqlSession();
 		session.update("Buy.cancelBuy", buynum);
-		}finally{
-			session.close();
-		}
 	}
 		
 	
