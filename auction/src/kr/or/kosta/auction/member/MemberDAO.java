@@ -14,32 +14,22 @@ import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.mybatis.spring.support.SqlSessionDaoSupport;
 
 import kr.or.kosta.auction.good.Good;
 import kr.or.kosta.auction.util.ConnectionUtil;
 
-public class MemberDAO implements IMemberDAO{
+public class MemberDAO extends SqlSessionDaoSupport implements IMemberDAO{
 
 	/**
 	 * @param member
 	 */
-	private static String resource="sqlmap-config.xml";
-	private static Reader sqlReader;
-	static{
-			try {
-				sqlReader=Resources.getResourceAsReader(resource);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-	}
-	private static SqlSessionFactory sqlMapper =
-			new SqlSessionFactoryBuilder().build(sqlReader);
-	
+
 	@Override
 	public  String insertMember(Member member) {
 		SqlSession session=null;
 		try{
-			session=sqlMapper.openSession(true);
+			session=getSqlSession();
 			session.insert("Member.insertMember", member);
 		}
 		finally{
@@ -68,7 +58,7 @@ public class MemberDAO implements IMemberDAO{
 	public  void updateMember(Member member) {
 		SqlSession session=null;
 		try{
-			session=sqlMapper.openSession(true);
+			session=getSqlSession();
 			session.update("Member.updateMember", member);
 		}
 		finally{
@@ -104,7 +94,7 @@ public class MemberDAO implements IMemberDAO{
 	public  void deleteMember(String userid) {
 		SqlSession session=null;
 		try{
-			session=sqlMapper.openSession(true);
+			session=getSqlSession();
 			session.delete("Member.deleteMember", userid);
 		}
 		finally{
@@ -135,7 +125,7 @@ public class MemberDAO implements IMemberDAO{
 		SqlSession session=null;
 		Member member=null;
 		try{
-			session=sqlMapper.openSession(true);
+			session=getSqlSession();
 			member=session.selectOne("selectMember", userid);
 		}
 		finally{
@@ -183,7 +173,7 @@ public class MemberDAO implements IMemberDAO{
 		SqlSession session=null;
 		List<Member> memberList=null;
 		try{
-			session=sqlMapper.openSession(true);
+			session=getSqlSession();
 			memberList=session.selectList("Member.selectMemberList");
 		}
 		finally{
@@ -227,7 +217,7 @@ public class MemberDAO implements IMemberDAO{
 //	}
 	@Override
 	public  List<Member> selectMemberList(int page,int length) {
-		SqlSession session = sqlMapper.openSession(true);
+		SqlSession session = getSqlSession();
 		RowBounds rowBounds= new RowBounds((page-1)*length,length);
 		List<Member> member=
 		session.selectList("Member.selectMemberList",null,rowBounds);
