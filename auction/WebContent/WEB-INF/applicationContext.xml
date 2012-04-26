@@ -3,44 +3,85 @@
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
     
-    <bean id="bidDAO" class="kr.or.kosta.auction.bid.BidDAO"/>
-    <bean id="auctionDAO" class="kr.or.kosta.auction.auction.AuctionDAO"/>
-    <bean id="memberDAO" class="kr.or.kosta.auction.member.MemberDAO"/>
-	<bean id="goodDAO" class="kr.or.kosta.auction.good.GoodDAO"/>
-	
+    <bean id="bidDAO" class="kr.or.kosta.auction.bid.BidDAO">
+        <property name="sqlSessionTemplate">
+            <ref bean="sqlSessionTemplate"/>
+        </property>
+    </bean>
+    <bean id="auctionDAO" class="kr.or.kosta.auction.auction.AuctionDAO">
+        <property name="sqlSessionTemplate">
+            <ref bean="sqlSessionTemplate"/>
+        </property>
+    </bean>
+    <bean id="memberDAO" class="kr.or.kosta.auction.member.MemberDAO">
+        <property name="sqlSessionTemplate">
+            <ref bean="sqlSessionTemplate"/>
+        </property>
+    </bean>
+	<bean id="goodDAO" class="kr.or.kosta.auction.good.GoodDAO">
+        <property name="sqlSessionTemplate">
+            <ref bean="sqlSessionTemplate"/>
+        </property>
+    </bean>
+	<bean id="boardDAO" class="kr.or.kosta.auction.board.BoardDAO">
+        <property name="sqlSessionTemplate">
+            <ref bean="sqlSessionTemplate"/>
+        </property>
+    </bean>
+    
     <bean id="bidService" class="kr.or.kosta.auction.bid.BidService">
-        <constructor-arg>
+    	<constructor-arg>
             <ref bean="bidDAO"/>
-        </constructor-arg>
-        <constructor-arg>
-            <ref bean="auctionDAO"/>
         </constructor-arg>
         <constructor-arg>
             <ref bean="memberDAO"/>
         </constructor-arg>
-    </bean>
-	
-    <bean id="memberService" class="kr.or.kosta.auction.member.MemberService">
-        <constructor-arg>
-            <ref bean="memberDAO"/>
-        </constructor-arg>
-    </bean>
-    
-    <bean id="goodService" class="kr.or.kosta.auction.good.GoodService">
-        <constructor-arg>
-            <ref bean="goodDAO"/>
-        </constructor-arg>
-    </bean>
-    
-    <bean id="auctionService" class="kr.or.kosta.auction.auction.AuctionService">
         <constructor-arg>
             <ref bean="auctionDAO"/>
         </constructor-arg>
-        <constructor-arg>
-            <ref bean="goodDAO"/>
+    </bean>
+	<bean id="auctionService" class="kr.or.kosta.auction.auction.AuctionService">
+		<constructor-arg>
+            <ref bean="auctionDAO"/>
         </constructor-arg>
         <constructor-arg>
             <ref bean="bidDAO"/>
         </constructor-arg>
+        <constructor-arg>
+            <ref bean="goodDAO"/>
+        </constructor-arg>
     </bean>
+	<bean id="goodService" class="kr.or.kosta.auction.good.GoodService">
+        <constructor-arg>
+            <ref bean="goodDAO"/>
+        </constructor-arg>
+	</bean>
+	<bean id="memberService" class="kr.or.kosta.auction.member.MemberService">
+        <constructor-arg>
+            <ref bean="memberDAO"/>
+        </constructor-arg>
+    </bean>
+	<bean id="boardService" class="kr.or.kosta.auction.board.BoardService">
+        <constructor-arg>
+            <ref bean="boardDAO"/>
+        </constructor-arg>
+    </bean>
+    
+    <bean id="dataSource"
+     class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
+        <property name="driverClass" value="oracle.jdbc.driver.OracleDriver"/>
+        <property name="url" value="jdbc:oracle:thin:@127.0.0.1:1521:ORCL"/>
+        <property name="username" value="test"/>
+        <property name="password" value="test"/>
+    </bean>
+    
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="configLocation" value="/WEB-INF/classes/sqlmap-config.xml"/>
+    </bean>
+    
+    <bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+        <constructor-arg ref="sqlSessionFactory"/>
+    </bean>
+    
 </beans>
