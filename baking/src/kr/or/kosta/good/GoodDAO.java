@@ -17,21 +17,10 @@ import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.mybatis.spring.support.SqlSessionDaoSupport;
 
-public class GoodDAO implements IGoodDAO{
-	private static String resource="sqlmap-config.xml";
-	private static Reader sqlReader;
-	static{
-		try {
-			sqlReader=Resources.getResourceAsReader(resource);//sqlmap-config.xml을 읽어들임.
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} 
-	}
-	private static SqlSessionFactory sqlMapper=
-	new SqlSessionFactoryBuilder().build(sqlReader); //sql쿼리를 읽어서 map(key:insertDepartment,value:insert into.... 가 들어감)에 저장(SqlSessionFactory)
-
+public class GoodDAO extends SqlSessionDaoSupport implements IGoodDAO{
+	
 	/**
 	 * 상품추가 
 	 * @return 
@@ -39,12 +28,10 @@ public class GoodDAO implements IGoodDAO{
 	@Override
 	public  int insertGood(Good good){
 		SqlSession session=null;
-		try{
-			session = sqlMapper.openSession(true); //sql맵에 있는 쿼리 실행.
-			session.insert("Good.insertGood",good);
-		}finally{
+		session = getSqlSession();
+		session.insert("Good.insertGood",good);
 			session.close();
-		}
+		
 		return good.getGoodNum();
 	}
 	/*public static void insertGood(Good good) {
@@ -75,12 +62,9 @@ public class GoodDAO implements IGoodDAO{
 	public  List<Good> selectGoodList() {
 		SqlSession session = null;
 		List<Good> goodList =null;
-		try{
-			session = sqlMapper.openSession(true); //sql맵에 있는 쿼리 실행.
-			goodList = session.selectList("Good.selectGoodList");
-		}finally{
-			session.close();
-		}
+		session = getSqlSession();
+		goodList = session.selectList("Good.selectGoodList");
+		
 		return goodList;
 	}
 	/*public static ArrayList<Good> selectGoodList() {
@@ -195,12 +179,9 @@ public class GoodDAO implements IGoodDAO{
 	public Good selectGood(int goodNum) {
 		SqlSession session = null;
 		Good good=null;
-		try{
-		     session = sqlMapper.openSession(true); //sql맵에 있는 쿼리 실행.
-		     good = session.selectOne("Good.selectGood",goodNum);
-		}finally{
-			session.close();
-		}
+		session = getSqlSession();
+		good = session.selectOne("Good.selectGood",goodNum);
+
 		return good;
 	}
 	/*public static Good selectGood(int goodnum) {
@@ -252,12 +233,9 @@ public class GoodDAO implements IGoodDAO{
 	@Override
 	public void deleteGood(int goodnum) {
 		SqlSession session=null;
-		try{
-			session = sqlMapper.openSession(true); //sql맵에 있는 쿼리 실행.
-			session.delete("Good.deleteGood",goodnum);
-		}finally{
-			session.close();
-		}
+		session = getSqlSession();
+		session.delete("Good.deleteGood",goodnum);
+		
 	}
 	/*public static void deleteGood(int goodnum) {
 		Connection con =null;
@@ -280,12 +258,9 @@ public class GoodDAO implements IGoodDAO{
 	@Override
 	public  void updateGood(Good good) {
 		SqlSession session=null;
-		try{
-			session = sqlMapper.openSession(true); //sql맵에 있는 쿼리 실행.
-			session.update("Good.updateGood",good);
-		}finally{
-			session.close();
-		}
+		session = getSqlSession();
+		session.update("Good.updateGood",good);
+		
 	}
 	/*public static void updateGood(Good good) {
 		Connection con=null;
@@ -316,12 +291,9 @@ public class GoodDAO implements IGoodDAO{
 	public  List<Good>selectRecipeList(int recipeNum){
 		SqlSession session=null;
 		List<Good> goodList=null;
-		try{
-		session = sqlMapper.openSession(true);
+		session = getSqlSession();
 		goodList=session.selectList("Good.selectRecipeRelationGoodList",recipeNum);
-		}finally{
-			session.close();
-		}
+		
 		return goodList;
 	}
 	
@@ -329,12 +301,9 @@ public class GoodDAO implements IGoodDAO{
 	public List<Good> viewDivisionGoodList(int division){
 		SqlSession session = null;
 		List<Good> divisionGoodList = null;
-		try{
-			session = sqlMapper.openSession();
-			divisionGoodList = session.selectList("Good.viewDivisionGoodList",division);
-		}finally{
-			session.close();
-		}
+		session = getSqlSession();
+		divisionGoodList = session.selectList("Good.viewDivisionGoodList",division);
+		
 		return divisionGoodList;
 	}
 	/*public static ArrayList<Good> viewDivisionGoodList(int division){
