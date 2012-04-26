@@ -11,6 +11,7 @@
 	
 	<constant name="struts.enable.DynamicMethodInvocation" value="true"/>
 	<constant name="struts.devMode" value="true"/>
+	<constant name="struts.objectFactory" value="spring"/>
 
 	<package name="root" namespace="/" extends="struts-default">
 		
@@ -25,7 +26,7 @@
 		
 		<action name="viewRecipe" class="kr.or.kosta.recipe.RecipeService" method="viewRecipe">
 			<param name="aliases">
-				#{'recipeNum':'recipeNum'}
+				#{'recipenum':'recipe.recipeNum','recipenum':'recipeNum'}
 			</param>
 			<result name="success">/recipe/viewRecipe.jsp</result>
 		</action>
@@ -46,7 +47,8 @@
 			<param name="aliases">
 			#{'division':'recipe.good_division.division',
 			  'division':'division',
-			  'content1':'recipe.content'
+			  'content1':'recipe.content',
+			  'title':'recipe.title'
 			  }
 			</param>
 			<result type="stream">
@@ -76,8 +78,8 @@
 		
 		<action name="login" class="kr.or.kosta.member.MemberService" method="login">			
 			<param name="aliases">
-				#{ 'memberid':'member.memberid',
-				   'password':'member.password'
+				#{  'memberid':'member.memberid',
+			  		'password':'member.password'
 				  }
 			</param>	
 			<result name="success" type="chain">viewRecipeList</result>
@@ -265,16 +267,7 @@
 			method="viewIndex">
 		<result name="success">index.jsp</result>
 		</action>
-		<action name="login" class="kr.or.kosta.member.MemberService" 
-			method="login">
-				<param name="aliases">
-						#{'userid':'userid',
-						'password':'password'}
-				</param>
-		<result name="success" type="chain">viewIndex</result>
-		<result name="loginFail">/member/loginFail.jsp</result>
-		</action>
-	
+		
 	
 		<action name="viewMyrecipe" class="kr.or.kosta.myrecipe.MyrecipeService" 
 			method="viewMyrecipe">
