@@ -23,8 +23,8 @@
 	    <c:when test="${sessionScope.LOGIN_EMAIL==null}">
 	     <fieldset>
 	     <table align="left" cellpadding="0" cellspacing="0" border="0">
-	     <form action="/bookchange/MemberService" method="post">
-		 <input type="hidden"name="method" value="login">
+	     <form action="/bookchange/login.action" method="post">
+
 		 <tr>
 		 <td>Email</td>
 		 <td><input type="text" name="email"></td>
@@ -41,13 +41,12 @@
 		 </form>
 		 <tr>
 		 <td><div align="left">
-		 <form action="/bookchange/MemberService" method="post" target="main">
-	  	 <input type="hidden" name="method" value="addMemberForm">
+		 <form action="/bookchange/addMemberForm.action" method="post" target="main">
 	  	  <input type="submit" value="회원가입"/>
 	  	 </form></div></td>
 		 <td><div align="left">
-		 <form action="/bookchange/MemberService" method="post" target="main">
-	  	 <input type="hidden" name="method" value="viewMemberPwAndEmail">
+		 <form action="/bookchange/viewMemberPwAndEmail.action" method="post" target="main">
+	  	
 	  	   <input type="submit" value="Email/Pw찾기"/>
 	  	 </form></div></td>
 		 </tr>
@@ -57,8 +56,7 @@
 	   <c:otherwise>
 	    <fieldset>
 	 	<table cellpadding="0" cellspacing="0" border="0">
-	    <form action="/bookchange/MemberService" method="post" target="index.jsp">
-		<input type="hidden"name="method" value="logout">
+	    <form action="/bookchange/logout.action" method="post" target="index.jsp">
 		<tr>
 		 <td>${sessionScope.LOGIN_EMAIL.email}님이 로그인하였습니다.</td>
 		</tr>
@@ -70,13 +68,12 @@
 		</form>
 		<tr>
 		 <td><div align="right">
-		 <form action="/bookchange/MemberService" method="post" target="main">
-	  	 <input type="hidden" name="method" value="removeMemberForm">
+		 <form action="/bookchange/removeMemberForm.action" method="post" target="main">
+	  	
 	  	  <input type="submit" value="회원탈퇴"/>
 	  	 </form></div></td>
 		 <td><div align="right">
-		 <form action="/bookchange/MemberService" method="post" target="main">
-	  	 <input type="hidden" name="method" value="editMemberForm">	  	 
+		 <form action="/bookchange/editMemberForm.action" method="post" target="main">	  	 
 	  	   <input type="submit" value="정보수정"/>
 	  	 </form>
 		 </div></td>
