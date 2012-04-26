@@ -138,6 +138,7 @@ public class RecipeService implements ModelDriven, ServletContextAware{
 		resultStream=new ByteArrayInputStream("등록완료".getBytes("UTF-8"));
 		index=0;
 		this.file=new File[100];
+		this.fileFileName=new String[100];
 		}
 		return "success";
 	}
