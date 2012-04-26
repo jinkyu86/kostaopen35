@@ -28,13 +28,10 @@ public class MemberDAO extends SqlSessionDaoSupport implements IMemberDAO{
 	@Override
 	public  String insertMember(Member member) {
 		SqlSession session=null;
-		try{
+		
 			session=getSqlSession();
 			session.insert("Member.insertMember", member);
-		}
-		finally{
-			session.close();
-		}
+		
 		return member.getUserid();
 	}
 //	public static void insertMember(Member member) {
@@ -57,13 +54,10 @@ public class MemberDAO extends SqlSessionDaoSupport implements IMemberDAO{
 	@Override
 	public  void updateMember(Member member) {
 		SqlSession session=null;
-		try{
+		
 			session=getSqlSession();
 			session.update("Member.updateMember", member);
-		}
-		finally{
-			session.close();
-		}
+		
 	}
 
 //	public static void updateMember(Member member) {
@@ -93,13 +87,10 @@ public class MemberDAO extends SqlSessionDaoSupport implements IMemberDAO{
 	@Override
 	public  void deleteMember(String userid) {
 		SqlSession session=null;
-		try{
+		
 			session=getSqlSession();
 			session.delete("Member.deleteMember", userid);
-		}
-		finally{
-			session.close();
-		}
+		
 	}
 //	public static void deleteMember(String userid) {
 //		Connection con = null;
@@ -124,13 +115,10 @@ public class MemberDAO extends SqlSessionDaoSupport implements IMemberDAO{
 	public  Member selectMember(String userid) {
 		SqlSession session=null;
 		Member member=null;
-		try{
+		
 			session=getSqlSession();
 			member=session.selectOne("selectMember", userid);
-		}
-		finally{
-			session.close();
-		}
+		
 		return member;
 	}
 //	public static Member selectMember(String userid) {
@@ -172,13 +160,10 @@ public class MemberDAO extends SqlSessionDaoSupport implements IMemberDAO{
 	public List<Member> selectMemberList() {
 		SqlSession session=null;
 		List<Member> memberList=null;
-		try{
+		
 			session=getSqlSession();
 			memberList=session.selectList("Member.selectMemberList");
-		}
-		finally{
-			session.close();
-		}
+		
 		return memberList;
 	}
 
