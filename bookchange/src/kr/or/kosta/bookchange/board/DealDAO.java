@@ -13,31 +13,20 @@ import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.mybatis.spring.support.SqlSessionDaoSupport;
 
 import kr.or.kosta.util.ConnectionUtil;
 
-public class DealDAO implements IDealDAO {
-	private static String resource="sqlmap-config.xml";
-	private static Reader sqlReader;
-	static{
-		try{
-			sqlReader=Resources.getResourceAsReader(resource);
-		}catch(IOException e){
-			e.printStackTrace();
-		}
-	}
-	private static SqlSessionFactory sqlMapper=new SqlSessionFactoryBuilder().build(sqlReader);
+public class DealDAO extends SqlSessionDaoSupport implements IDealDAO {
 	
 	@Override
 	public List<Deal> selectDeal(){
 		SqlSession session=null;
 		List<Deal> dealList=null;
-		try{
-			session=sqlMapper.openSession(true);
+		
+			session=getSqlSession();
 			dealList=session.selectList("Deal.selectDealList");
-		}finally{
-			session.close();
-		}
+		
 		return dealList;
 		
 		/*Connection con=null;

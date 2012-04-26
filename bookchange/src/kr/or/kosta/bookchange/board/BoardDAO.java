@@ -15,37 +15,25 @@ import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.mybatis.spring.support.SqlSessionDaoSupport;
 
 import kr.or.kosta.bookchange.change.Condition;
 import kr.or.kosta.bookchange.member.Member;
 import kr.or.kosta.util.ConnectionUtil;
 
-public class BoardDAO implements IBoardDAO {
+public class BoardDAO extends SqlSessionDaoSupport implements IBoardDAO {
 	
-	private static String resource="sqlmap-config.xml";
-	private static Reader sqlReader;
-	static{
-		try{
-			sqlReader=Resources.getResourceAsReader(resource);
-		}catch(IOException e){
-			e.printStackTrace();
-		}
-	}
-	
-	private static SqlSessionFactory sqlMapper=new SqlSessionFactoryBuilder().build(sqlReader);
 	@Override
 	/**	 * 게시물리스트 조회 */
 	
 	public List<Board> selectBoardList(int length, int page) {
 		SqlSession session=null;
 		List<Board> boardList=null;
-		try{
-			session=sqlMapper.openSession(true);
+		
+			session= getSqlSession();
 			RowBounds rowBounds=new RowBounds((page-1)*length,length);
 			boardList=session.selectList("Board.selectBoardList",null,rowBounds);
-		}finally{
-			session.close();
-		}
+		
 		return boardList;
 		
 		/*Connection con=null;
@@ -119,12 +107,10 @@ public class BoardDAO implements IBoardDAO {
 	public int selectBoardCount() {
 		SqlSession session=null;
 		int count;
-		try{
-		session = sqlMapper.openSession(true);
+		
+		session = getSqlSession();
 		count=session.selectOne("selectBoardCount");
-		}finally{
-			session.close();
-		}
+		
 		return count;
 		
 		/*Connection con=null;
@@ -158,13 +144,11 @@ public class BoardDAO implements IBoardDAO {
 	public List<Board> selectBoardListbyCategory(int length, int page, String categoryNo) {
 		SqlSession session=null;
 		List<Board> boardList=null;
-		try{
-		session = sqlMapper.openSession(true);
+		
+		session = getSqlSession();
 		RowBounds rowBounds=new RowBounds((page-1)*length,length);
 		boardList=session.selectList("Board.selectBoardListByCategory",categoryNo,rowBounds);
-		}finally{
-			session.close();
-		}
+		
 		return boardList;
 		
 		/*Connection con=null;
@@ -231,12 +215,10 @@ public class BoardDAO implements IBoardDAO {
 	public int selectBoardCategoryCount(String categoryNo) {
 		SqlSession session=null;
 		int count;
-		try{
-		session = sqlMapper.openSession(true);
+		
+		session = getSqlSession();
 		count=session.selectOne("selectBoardListByCategoryCount",categoryNo);
-		}finally{
-			session.close();
-		}
+		
 		return count;
 	
 		/*Connection con=null;
@@ -273,13 +255,11 @@ public class BoardDAO implements IBoardDAO {
 	public List<Board> selectBoardListbyTitle(int length, int page, String title) {
 		SqlSession session=null;
 		List<Board> boardList=null;
-		try{
-		session = sqlMapper.openSession(true);
+	
+		session = getSqlSession();
 		RowBounds rowBounds=new RowBounds((page-1)*length,length);
 		boardList=session.selectList("Board.selectBoardListByTitle","%"+title+"%",rowBounds);
-		}finally{
-			session.close();
-		}
+		
 		return boardList;
 		
 	/*	Connection con=null;
@@ -347,12 +327,10 @@ public class BoardDAO implements IBoardDAO {
 	public int selectBoardTitleCount(String title) {
 		SqlSession session=null;
 		int count;
-		try{
-		session = sqlMapper.openSession(true);
+		
+		session = getSqlSession();
 		count=session.selectOne("selectBoardListByTitleCount","%"+title+"%");
-		}finally{
-			session.close();
-		}
+	
 		return count;
 		/*Connection con=null;
 		PreparedStatement ps=null;
@@ -387,12 +365,10 @@ public class BoardDAO implements IBoardDAO {
 	public Board selectBoard(String boardNo) {
 		SqlSession session=null;
 		Board board=null;
-		try{
-			session=sqlMapper.openSession(true);
+		
+			session=getSqlSession();
 			board=session.selectOne("Board.selectBoard",boardNo);
-		}finally{
-			session.close();
-		}
+		
 		return board;
 		
 		/*Connection con=null;
@@ -486,12 +462,10 @@ public class BoardDAO implements IBoardDAO {
 	 * 게시물 추가(물품 등록)	 */
 	public void insertBoard(Board board) {
 		SqlSession session=null;
-		try{
-			session=sqlMapper.openSession(true);
+		
+			session=getSqlSession();
 			session.insert("Board.insertBoard",board);
-		}finally{
-			session.close();
-		}
+	
 		
 		/*Connection con=null;
 		PreparedStatement ps=null;
@@ -520,12 +494,9 @@ public class BoardDAO implements IBoardDAO {
 	 * 게시물 수정	 */
 	public void updateBoard(Board board) {
 		SqlSession session=null;
-		try{
-			session=sqlMapper.openSession(true);
+		
+			session=getSqlSession();
 			session.update("Board.updateBoard",board);
-		}finally{
-			session.close();
-		}
 		
 		
 		/*Connection con=null;
@@ -557,12 +528,9 @@ public class BoardDAO implements IBoardDAO {
 	 * 게시물 삭제	 */
 	public void deleteBoard(String boardNo) {
 		SqlSession session=null;
-		try{
-			session=sqlMapper.openSession(true);
+		
+			session=getSqlSession();
 			session.delete("Board.deleteBoard",boardNo);
-		}finally{
-			session.close();
-		}
 		
 		/*Connection con=null;
 		PreparedStatement ps=null;
@@ -585,13 +553,11 @@ public class BoardDAO implements IBoardDAO {
 	public List<Board> selectBoardListbyEmail(int length, int page, String email) {
 		SqlSession session=null;
 		List<Board> boardList=null;
-		try{
-		session = sqlMapper.openSession(true);
+		
+		session = getSqlSession();
 		RowBounds rowBounds=new RowBounds((page-1)*length,length);
 		boardList=session.selectList("Board.selectBoardListByEmail","%"+email+"%",rowBounds);
-		}finally{
-			session.close();
-		}
+		
 		return boardList;
 		
 		
@@ -660,12 +626,10 @@ public class BoardDAO implements IBoardDAO {
 	public int selectBoardEmailCount(String email) {
 		SqlSession session=null;
 		int count;
-		try{
-		session = sqlMapper.openSession(true);
+		
+		session = getSqlSession();
 		count=session.selectOne("selectBoardListByEmailCount","%"+email+"%");
-		}finally{
-			session.close();
-		}
+		
 		return count;
 		/*Connection con=null;
 		PreparedStatement ps=null;
@@ -699,16 +663,14 @@ public class BoardDAO implements IBoardDAO {
 	public List<Board> selectBoardListbyCategoryandTitle(int length, int page, String categoryNo, String title) {
 		SqlSession session=null;
 		List<Board> boardList=null;
-		try{
-		session = sqlMapper.openSession(true);
+		
+		session = getSqlSession();
 		RowBounds rowBounds=new RowBounds((page-1)*length,length);
 		HashMap<String,String> parameters=new HashMap<String,String>();
 		parameters.put("categoryNo", categoryNo);
 		parameters.put("title", "%"+title+"%");//들어가는 값이 두개 이상일때 요렇게 한다.
 		boardList=session.selectList("Board.selectBoardListByCategoryAndTitle",parameters,rowBounds);
-		}finally{
-			session.close();
-		}
+		
 		return boardList;
 		
 		/*	Connection con=null;
@@ -778,15 +740,13 @@ public class BoardDAO implements IBoardDAO {
 	public int selectBoardCategoryandTitleCount(String categoryNo, String title) {
 		SqlSession session=null;
 		int count;
-		try{
-		session = sqlMapper.openSession(true);
+		
+		session = getSqlSession();
 		HashMap<String,String>parameters=new HashMap<String,String>();
 		parameters.put("categoryNo", categoryNo);
 		parameters.put("title", "%"+title+"%");//들어가는 값이 두개 이상일때 요렇게 한다.
 		count=session.selectOne("selectBoardListByCategoryAndTitleCount",parameters);
-		}finally{
-			session.close();
-		}
+		
 		return count;
 		
 		/*Connection con=null;
@@ -824,16 +784,14 @@ public class BoardDAO implements IBoardDAO {
 	public List<Board> selectBoardListbyCategoryandEmail(int length, int page, String categoryNo, String email) {
 		SqlSession session=null;
 		List<Board> boardList=null;
-		try{
-		session = sqlMapper.openSession(true);
+		
+		session = getSqlSession();
 		RowBounds rowBounds=new RowBounds((page-1)*length,length);
 		HashMap<String,String>parameters=new HashMap<String,String>();
 		parameters.put("categoryNo", categoryNo);
 		parameters.put("email", "%"+email+"%");//들어가는 값이 두개 이상일때 요렇게 한다.
 		boardList=session.selectList("Board.selectBoardListByCategoryAndEmail",parameters,rowBounds);
-		}finally{
-			session.close();
-		}
+		
 		return boardList;
 		
 		/*Connection con=null;
@@ -903,15 +861,13 @@ public class BoardDAO implements IBoardDAO {
 	public int selectBoardCategoryandEmailCount(String categoryNo, String email) {
 		SqlSession session=null;
 		int count;
-		try{
-		session = sqlMapper.openSession(true);
+		
+		session = getSqlSession();
 		HashMap<String,String>parameters=new HashMap<String,String>();
 		parameters.put("categoryNo", categoryNo);
 		parameters.put("email", "%"+email+"%");//들어가는 값이 두개 이상일때 요렇게 한다.
 		count=session.selectOne("selectBoardListByCategoryAndEmailCount",parameters);
-		}finally{
-			session.close();
-		}
+		
 		return count;
 		/*Connection con=null;
 		PreparedStatement ps=null;
@@ -948,13 +904,11 @@ public class BoardDAO implements IBoardDAO {
 	public List<Board> selectBoardListbyEmailWhenAdd(int length, int page, String email) {
 		SqlSession session=null;
 		List<Board> boardList=null;
-		try{
-		session = sqlMapper.openSession(true);
+		
+		session = getSqlSession();
 		RowBounds rowBounds=new RowBounds((page-1)*length,length);
 		boardList=session.selectList("Board.selectBoardListByEmailWhenAdd","%"+email+"%",rowBounds);
-		}finally{
-			session.close();
-		}
+		
 		return boardList;
 		
 		/*Connection con=null;
@@ -1023,12 +977,10 @@ public class BoardDAO implements IBoardDAO {
 	public int selectBoardEmailWhenAddCount(String email) {
 		SqlSession session=null;
 		int count;
-		try{
-		session = sqlMapper.openSession(true);
+		
+		session = getSqlSession();
 		count=session.selectOne("Board.selectBoardListByEmailWhenAddCount","%"+email+"%");
-		}finally{
-			session.close();
-		}
+		
 		return count;
 		/*Connection con=null;
 		PreparedStatement ps=null;
@@ -1063,12 +1015,10 @@ public class BoardDAO implements IBoardDAO {
 	public Member viewMemberInfo(String email){
 		SqlSession session=null;
 		Member member=null;
-		try{
-		session = sqlMapper.openSession(true);
+		
+		session = getSqlSession();
 		member=session.selectOne("Board.viewMemberInfo",email);
-		}finally{
-			session.close();
-		}
+		
 		return member;
 		
 		/*Connection con=null;
@@ -1103,12 +1053,10 @@ public class BoardDAO implements IBoardDAO {
 	 * 게시물 삭제 탈퇴했을때! 테스트 안해봤음.	 */
 	public void deleteBoardbyEmail(String email) {
 		SqlSession session=null;
-		try{
-		session = sqlMapper.openSession(true);
+		
+		session = getSqlSession();
 		session.delete("Board.deleteBoardByEmail",email);
-		}finally{
-			session.close();
-		}
+		
 		
 		/*Connection con=null;
 		PreparedStatement ps=null;
@@ -1131,12 +1079,10 @@ public class BoardDAO implements IBoardDAO {
 	public List<Board> selectBoardListbyEmailWhenDelete(String email) {
 		SqlSession session=null;
 		List<Board> boardList=null;
-		try{
-		session = sqlMapper.openSession(true);
+		
+		session = getSqlSession();
 		boardList=session.selectList("Board.selectBoardListByEmail",email);
-		}finally{
-			session.close();
-		}
+		
 		return boardList;
 		
 		/*Connection con=null;

@@ -14,31 +14,20 @@ import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.mybatis.spring.support.SqlSessionDaoSupport;
 
 import kr.or.kosta.util.ConnectionUtil;
 
-public class CategoryDAO implements ICategoryDAO {
+public class CategoryDAO extends SqlSessionDaoSupport implements ICategoryDAO {
 	
-	private static String resource="sqlmap-config.xml";
-	private static Reader sqlReader;
-	static{
-		try{
-			sqlReader=Resources.getResourceAsReader(resource);
-		}catch(IOException e){
-			e.printStackTrace();
-		}
-	}
-	private static SqlSessionFactory sqlMapper=new SqlSessionFactoryBuilder().build(sqlReader);
 	@Override
 	public List<Category> selectCategory(){
 		SqlSession session=null;
 		List<Category> categoryList=null;
-		try{
-			session=sqlMapper.openSession(true);
+		
+			session=getSqlSession();
 			categoryList=session.selectList("Category.selectCategoryList");
-		}finally{
-			session.close();
-		}
+		
 		return categoryList;
 		
 		/*Connection con=null;

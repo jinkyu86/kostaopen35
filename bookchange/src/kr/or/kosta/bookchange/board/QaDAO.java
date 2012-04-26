@@ -14,35 +14,24 @@ import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.mybatis.spring.support.SqlSessionDaoSupport;
 
 import kr.or.kosta.bookchange.member.Member;
 import kr.or.kosta.util.ConnectionUtil;
 
-public class QaDAO implements IQaDAO {
+public class QaDAO extends SqlSessionDaoSupport implements IQaDAO {
 	
-	private static String resource="sqlmap-config.xml";
-	private static Reader sqlReader;
-	static{
-		try{
-			sqlReader=Resources.getResourceAsReader(resource);
-		}catch(IOException e){
-			e.printStackTrace();
-		}
-	}
-	private static SqlSessionFactory sqlMapper=new SqlSessionFactoryBuilder().build(sqlReader);
 	@Override
 	/**
 	 * 상품문의 내용 보기	 */
 	public List<Qa> selectQaList(int length, int page, String boardNo) {
 		SqlSession session=null;
 		List<Qa> qaList=null;
-		try{
-			session=sqlMapper.openSession(true);
+		
+			session=getSqlSession();
 			RowBounds rowBounds=new RowBounds((page-1)*length,length);
 			qaList=session.selectList("Qa.selectQaList",boardNo,rowBounds);
-		}finally{
-			session.close();
-		}
+		
 		return qaList;
 		/*Connection con=null;
 		PreparedStatement ps=null;
@@ -98,12 +87,10 @@ public class QaDAO implements IQaDAO {
 	 * 상품문의 추가	 */
 	public void insertQa(Qa qa) {
 		SqlSession session=null;
-		try{
-			session=sqlMapper.openSession(true);
+		
+			session=getSqlSession();
 			session.insert("insertQa",qa);
-		}finally{
-			session.close();
-		}
+		
 		
 		/*Connection con=null;
 		PreparedStatement ps=null;
@@ -128,12 +115,10 @@ public class QaDAO implements IQaDAO {
 	/**	 * 상품문의 수정 */
 	public void updateQa(Qa qa) {
 		SqlSession session=null;
-		try{
-			session=sqlMapper.openSession(true);
+		
+			session=getSqlSession();
 			session.update("updateQa",qa);
-		}finally{
-			session.close();
-		}
+		
 		/*Connection con=null;
 		PreparedStatement ps=null;
 		
@@ -156,12 +141,10 @@ public class QaDAO implements IQaDAO {
 	/**	 * 상품문의 삭제(직접 삭제했을때)	 */
 	public void deleteQabyQaNo(String qaNo) {
 		SqlSession session=null;
-		try{
-			session=sqlMapper.openSession(true);
+		
+			session=getSqlSession();
 			session.delete("deleteQa",qaNo);
-		}finally{
-			session.close();
-		}
+		
 		
 		/*Connection con=null;
 		PreparedStatement ps=null;
@@ -183,12 +166,10 @@ public class QaDAO implements IQaDAO {
 	/**	 * 상품문의 삭제(관련 게시물이 삭제됐을때)	 */
 	public void deleteQabyBoardNo(String boardNo) {
 		SqlSession session=null;
-		try{
-			session=sqlMapper.openSession(true);
+		
+			session=getSqlSession();
 			session.delete("deleteQaByBoardNo",boardNo);
-		}finally{
-			session.close();
-		}
+		
 		
 		/*	Connection con=null;
 		PreparedStatement ps=null;
@@ -212,12 +193,10 @@ public class QaDAO implements IQaDAO {
 	public int selectQaCount(String boardNo) {
 		SqlSession session=null;
 		int count;
-		try{
-			session=sqlMapper.openSession(true);
+		
+			session=getSqlSession();
 			count=session.selectOne("selectQaCount",boardNo);
-		}finally{
-			session.close();
-		}
+		
 		return count;
 	}
 	
