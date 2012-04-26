@@ -14,103 +14,64 @@ import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.mybatis.spring.support.SqlSessionDaoSupport;
 
 import kr.or.kosta.auction.good.Good;
 
 //import kr.or.kosta.auction.util.ConnectionUtil;
 
-public class AuctionDAO implements IAuctionDAO{
+public class AuctionDAO extends SqlSessionDaoSupport implements IAuctionDAO{
 
-	private static String resource = "sqlmap-config.xml";
-	private static Reader sqlReader;
-	static {
-		try {
-			sqlReader = Resources.getResourceAsReader(resource);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-	private static SqlSessionFactory sqlMapper = new SqlSessionFactoryBuilder().build(sqlReader);
-
-	/**
-	 * @param good
-	 */
+	
 	@Override
 	public void insertAuction(Auction auction) {
 		SqlSession session = null;
-		try {
-			session = sqlMapper.openSession(true);
+			session = getSqlSession();
 			session.insert("Auction.insertAuction", auction);
-		} finally {
-			session.close();
-		}
 	}
 	@Override
 	public void updateAuction(Auction auction) {
 		SqlSession session = null;
-		try {
-			session = sqlMapper.openSession(true);
+		
+			session = getSqlSession();
 			session.update("Auction.updateAuction", auction);
-		} finally {
-			session.close();
-		}
 	}
 	@Override
 	public void deleteAuction(String aNum) {
 		SqlSession session = null;
-		try {
-			session = sqlMapper.openSession(true);
+			session = getSqlSession();
 			session.delete("Auction.deleteAuction", aNum);
-		} finally {
-			session.close();
-		}
 	}
 	@Override
 	public Auction selectAuction(String aNum) {
 		SqlSession session = null;
 		Auction auction = null;
-		try {
-			session = sqlMapper.openSession(true);
+			session = getSqlSession();
 			auction = session.selectOne("Auction.selectAuction", aNum);
-		} finally {
-			session.close();
-		}
 		return auction;
 	}
 	@Override
 	public List<Auction> selectAuctionList() {
 		SqlSession session = null;
 		List<Auction> auctionList = null;
-		try {
-			session = sqlMapper.openSession(true);
+			session = getSqlSession();
 			auctionList = session.selectList("Auction.selectAuctionList");
-		} finally {
-			session.close();
-		}
 		return auctionList;
 	}
 	@Override
 	public List<Auction> selectAuctionSoldById(String userid) {
 		SqlSession session = null;
 		List<Auction> auction = null;
-		try {
-			session = sqlMapper.openSession(true);
+			session = getSqlSession();
 			auction = session.selectList("selectAuctionSoldById", userid);
-		} finally {
-			session.close();
-		}
 		return auction;
 	}
 	@Override
 	public List<Auction> selectAuctionSoldList() {
 		SqlSession session = null;
 		List<Auction> auctionSoldList = null;
-		try {
-			session = sqlMapper.openSession(true);
+			session = getSqlSession();
 			auctionSoldList = session.selectList("selectAuctionSoldList");
-		} finally {
-			session.close();
-		}
 		return auctionSoldList;
 	}
 /*
