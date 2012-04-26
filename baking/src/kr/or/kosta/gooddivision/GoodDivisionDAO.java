@@ -13,23 +13,12 @@ import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.mybatis.spring.support.SqlSessionDaoSupport;
 
 import kr.or.kosta.member.Member;
 import kr.or.kosta.util.ConnectionUtil;
 
-public class GoodDivisionDAO implements IGoodDivisionDAO{
-	
-	private static String resource="sqlmap-config.xml";
-	private static Reader sqlReader;
-	static{
-			try {
-				sqlReader=Resources.getResourceAsReader(resource);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-	}
-	private static SqlSessionFactory sqlMapper =
-			new SqlSessionFactoryBuilder().build(sqlReader);
+public class GoodDivisionDAO extends SqlSessionDaoSupport implements IGoodDivisionDAO{
 	
 	
 	/**
@@ -39,12 +28,10 @@ public class GoodDivisionDAO implements IGoodDivisionDAO{
 	public  List<Good_division> selectGooddivisionList() {
 		SqlSession session=null;
 		List<Good_division> good_divisionList = null;
-		try{
-		session = sqlMapper.openSession(true);
+		
+		session = getSqlSession();
 		good_divisionList=session.selectList("Good_division.selectGoodDivision");
-		}finally{
-			session.close();
-		}
+
 		return good_divisionList;
 	}
 
