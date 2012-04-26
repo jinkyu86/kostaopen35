@@ -14,22 +14,11 @@ import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.mybatis.spring.support.SqlSessionDaoSupport;
 
 import kr.or.kosta.auction.util.ConnectionUtil;
 
-public class GoodDAO implements IGoodDAO {
-
-	private static String resource = "sqlmap-config.xml";
-	private static Reader sqlReader;
-	static {
-		try {
-			sqlReader = Resources.getResourceAsReader(resource);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-	private static SqlSessionFactory sqlMapper = new SqlSessionFactoryBuilder()
-			.build(sqlReader);
+public class GoodDAO extends SqlSessionDaoSupport implements IGoodDAO {
 
 	/**
 	 * @param good
@@ -38,29 +27,12 @@ public class GoodDAO implements IGoodDAO {
 	@Override
 	public String insertGood(Good good) {
 		SqlSession session = null;
-		try {
-			session = sqlMapper.openSession(true);
-			session.insert("Good.insertGood", good);
-		} finally {
-			session.close();
-		}
+
+		session = getSqlSession();
+		session.insert("Good.insertGood", good);
 
 		return good.getgNum();
-		// Connection con=null;
-		// PreparedStatement psmt=null;
-		// con=ConnectionUtil.getConnection();
-		// try {
-		// psmt=con.prepareStatement(
-		// "INSERT INTO good "+
-		// "(g_num, gname, detail, img) "+
-		// "VALUES (GOOD_SEQ.nextval, ?, ?, ?)");
-		// psmt.setString(1, good.getgName());
-		// psmt.setString(2, good.getDetail());
-		// psmt.setString(3, good.getImg());
-		// psmt.executeQuery();
-		// } catch (SQLException e) {
-		// e.printStackTrace();
-		// }
+
 	}
 
 	/**
@@ -70,34 +42,10 @@ public class GoodDAO implements IGoodDAO {
 	@Override
 	public void updateGood(Good good) {
 		SqlSession session = null;
-		try {
-			session = sqlMapper.openSession(true);
-			session.update("Good.updateGood", good);
-		} finally {
-			session.close();
-		}
 
-		// Connection con=null;
-		// PreparedStatement psmt=null;
-		//
-		// con=ConnectionUtil.getConnection();
-		// try {
-		// psmt=con.prepareStatement(
-		// "UPDATE good "+
-		// "SET gname=?," +
-		// "detail=?," +
-		// "img=?" +
-		// "WHERE g_num=? ");
-		//
-		// psmt.setString(1, good.getgName());
-		// psmt.setString(2, good.getDetail());
-		// psmt.setString(3, good.getImg());
-		// psmt.setString(4, good.getgNum());
-		// psmt.executeQuery();
-		//
-		// } catch (SQLException e) {
-		// e.printStackTrace();
-		// }
+		session = getSqlSession();
+		session.update("Good.updateGood", good);
+
 	}
 
 	/**
@@ -107,27 +55,11 @@ public class GoodDAO implements IGoodDAO {
 	@Override
 	public void deleteGood(String gNum) {
 		SqlSession session = null;
-		try {
-			session = sqlMapper.openSession(true);
+
+			session = getSqlSession();
 			session.delete("Good.deleteGood", gNum);
-		} finally {
-			session.close();
-		}
-		// Connection con=null;
-		// PreparedStatement psmt=null;
-		// con=ConnectionUtil.getConnection();
-		//
-		// try {
-		// psmt=con.prepareStatement(
-		// "DELETE FROM good "+
-		// "WHERE g_num=? ");
-		//
-		// psmt.setString(1, gNum);
-		// psmt.executeQuery();
-		//
-		// } catch (SQLException e) {
-		// e.printStackTrace();
-		// }
+
+
 	}
 
 	/**
@@ -138,92 +70,24 @@ public class GoodDAO implements IGoodDAO {
 	public Good selectGood(String gNum) {
 		SqlSession session = null;
 		Good good = null;
-		try {
-			session = sqlMapper.openSession(true);
-			good = session.selectOne("Good.selectGood", gNum);
-		} finally {
-			session.close();
-		}
+
+		session = getSqlSession();
+		good = session.selectOne("Good.selectGood", gNum);
+
 		return good;
-		// Connection con=null;
-		// PreparedStatement psmt=null;
-		// String sql=null;
-		// ResultSet rs=null;
-		// Good good=null;
-		// con=ConnectionUtil.getConnection();
-		// try {
-		// sql="SELECT g_num, gname, detail, img "+
-		// "FROM good "+
-		// "WHERE g_num=?";
-		//
-		// psmt=con.prepareStatement(sql);
-		// psmt.setString(1, gNum);
-		// rs=psmt.executeQuery();
-		//
-		// while(rs.next()){
-		// gNum=rs.getString(1);
-		// String gName=rs.getString(2);
-		// String detail=rs.getString(3);
-		// String img=rs.getString(4);
-		//
-		// good=new Good();
-		//
-		// good.setgNum(gNum);
-		// good.setgName(gName);
-		// good.setDetail(detail);
-		// good.setImg(img);
-		// }
-		// } catch (SQLException e) {
-		// // TODO Auto-generated catch block
-		// e.printStackTrace();
-		// }
-		//
-		// return good;
+
 	}
 
 	@Override
 	public List<Good> selectGoodList() {
 		SqlSession session = null;
 		List<Good> goodList = null;
-		try {
-			session = sqlMapper.openSession(true);
-			goodList = session.selectList("Good.selectGoodList");
-		} finally {
-			session.close();
-		}
+
+		session = getSqlSession();
+		goodList = session.selectList("Good.selectGoodList");
+
 		return goodList;
-		// Connection con=null;
-		// PreparedStatement psmt=null;
-		// String sql=null;
-		// ResultSet rs=null;
-		// Good good=null;
-		// ArrayList<Good>goodList=new ArrayList<Good>();
-		// con=ConnectionUtil.getConnection();
-		// try {
-		// sql="SELECT g_num, gname, detail, img "+
-		// "FROM good ";
-		// psmt=con.prepareStatement(sql);
-		// rs=psmt.executeQuery();
-		//
-		// while(rs.next()){
-		// String gNum=rs.getString(1);
-		// String gName=rs.getString(2);
-		// String detail=rs.getString(3);
-		// String img=rs.getString(4);
-		//
-		// good=new Good();
-		//
-		// good.setgNum(gNum);
-		// good.setgName(gName);
-		// good.setDetail(detail);
-		// good.setImg(img);
-		//
-		// goodList.add(good);
-		// }
-		// } catch (SQLException e) {
-		// e.printStackTrace();
-		// }
-		// return goodList;
+
 	}
 
 	/**
@@ -236,51 +100,12 @@ public class GoodDAO implements IGoodDAO {
 		SqlSession session = null;
 		List<Good> goodList = null;
 		RowBounds rowBounds = null;
-		try {
-			session = sqlMapper.openSession(true);
-			rowBounds = new RowBounds((page - 1) * length, length);
-			goodList = session.selectList("Good.selectGoodList", null,
-					rowBounds);
-		} finally {
-			session.close();
-		}
+
+		session = getSqlSession();
+		rowBounds = new RowBounds((page - 1) * length, length);
+		goodList = session.selectList("Good.selectGoodList", null, rowBounds);
+
 		return goodList;
-		// Connection con=null;
-		// PreparedStatement psmt=null;
-		// String sql=null;
-		// ResultSet rs=null;
-		// Good good=null;
-		// ArrayList<Good>goodList=new ArrayList<Good>();
-		// con=ConnectionUtil.getConnection();
-		// try {
-		// sql="SELECT g_num, gname, detail, img "+
-		// "FROM good";
-		// psmt=con.prepareStatement(sql,
-		// ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-		// rs=psmt.executeQuery();
-		// if(page>1){
-		// rs.absolute((page-1)*length);
-		// }
-		// int getRecordCount=0;
-		// while(rs.next()&&getRecordCount<length){
-		// getRecordCount++;
-		// String gNum=rs.getString(1);
-		// String gName=rs.getString(2);
-		// String detail=rs.getString(3);
-		// String img=rs.getString(4);
-		//
-		// good=new Good();
-		//
-		// good.setgNum(gNum);
-		// good.setgName(gName);
-		// good.setDetail(detail);
-		// good.setImg(img);
-		//
-		// goodList.add(good);
-		// }
-		// } catch (SQLException e) {
-		// e.printStackTrace();
-		// }
-		// return goodList;
+
 	}
 }
