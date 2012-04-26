@@ -1,83 +1,52 @@
 package kr.or.kosta.bookchange.change;
 
-import java.io.IOException;
-import java.io.Reader;
 import java.util.List;
 
-import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.mybatis.spring.support.SqlSessionDaoSupport;
 
-public class ChangeDAO implements IChangeDAO{
-	private static String resource="sqlmap-config.xml";
-	private static Reader sqlReader;
-	static{
-			try {
-				sqlReader=Resources.getResourceAsReader(resource);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-	}
-	private static SqlSessionFactory sqlMapper =
-			new SqlSessionFactoryBuilder().build(sqlReader);
+public class ChangeDAO extends SqlSessionDaoSupport implements IChangeDAO{
 	
 	@Override
 	public void insertChange(Change change) {
 		SqlSession session=null;
-		try{
-		session = sqlMapper.openSession(true);
+		session = getSqlSession();
 		session.insert("Change.insertChange",change);
-		session.update("Change.insertUpdateBoard",change);
-		}
-		finally{session.close();}
+		session.update("insertUpdateBoard",change);
 	}
-		
 	@Override
 	public void matchChange(Change change) {
 		SqlSession session=null;
-		try{
-			session = sqlMapper.openSession(true);
-			session.insert("Change.insertMatch",change);
-			session.update("Change.matchUpdateChange",change);
-			session.update("Change.matchUpdateBoard",change);
-		}
-		finally{session.close();}
+		session = getSqlSession();
+		session.insert("Change.insertMatch",change);
+		session.update("Change.matchUpdateChange",change);
+		session.update("Change.matchUpdateBoard",change);
 	}
 
 	@Override
 	public void cancelChange(int demandBoardNo) {
 		SqlSession session=null;
-		try{
-			session = sqlMapper.openSession(true);
-			session.delete("Change.cancelChange",demandBoardNo);
-			session.update("Change.cancelUpdateBoard",demandBoardNo);
-		}
-		finally{session.close();}
+		session = getSqlSession();
+		session.delete("Change.cancelChange",demandBoardNo);
+		session.update("Change.cancelUpdateBoard",demandBoardNo);
 	}
 	
 	@Override
 	public void completeChange(int ChangeNo, int BoardNo){
 		SqlSession session=null;
-		try{
-			session = sqlMapper.openSession(true);
-			session.update("Change.completeChangeUpdate",ChangeNo);
-			session.update("Change.completeBoardUpdate",BoardNo);
-		}
-		finally{session.close();}
+		session = getSqlSession();
+		session.update("Change.completeChangeUpdate",ChangeNo);
+		session.update("Change.completeBoardUpdate",BoardNo);
 	}
 	
 	@Override
 	public List<Change> selectChangeRequestList(int length, int page, String email) {
 		SqlSession session=null;
 		List<Change> changeList=null;
-		try{
-			session = sqlMapper.openSession(true);
-			RowBounds rowBounds=new RowBounds((page-1)*length, length);
-			changeList=session.selectList("Change.selectChangeRequestList",email,rowBounds);
-		}
-		finally{session.close();}
+		session = getSqlSession();
+		RowBounds rowBounds=new RowBounds((page-1)*length, length);
+		changeList=session.selectList("Change.selectChangeRequestList",email,rowBounds);
 		return changeList;
 	}
 	
@@ -85,11 +54,8 @@ public class ChangeDAO implements IChangeDAO{
 	public int selectChangeRequestCount(String email) {
 		SqlSession session=null;
 		Integer count=null;
-		try{
-		session = sqlMapper.openSession(true);
+		session = getSqlSession();
 		count=session.selectOne("Change.selectChangeRequestListCount",email);
-		}
-		finally{session.close();}
 		return count;
 	}
 	
@@ -97,12 +63,9 @@ public class ChangeDAO implements IChangeDAO{
  	public List<Change> selectChangeMyboardList(int length, int page, String email) {
  		SqlSession session=null;
 		List<Change> changeList=null;
-		try{
-			session = sqlMapper.openSession(true);
-			RowBounds rowBounds=new RowBounds((page-1)*length, length);
-			changeList=session.selectList("Change.selectChangeMyboardList",email,rowBounds);
-		}
-		finally{session.close();}
+		session = getSqlSession();
+		RowBounds rowBounds=new RowBounds((page-1)*length, length);
+		changeList=session.selectList("Change.selectChangeMyboardList",email,rowBounds);
 		return changeList;
 	}
 	
@@ -110,11 +73,8 @@ public class ChangeDAO implements IChangeDAO{
 	public int selectChangeMyboardCount(String email) {
 		SqlSession session=null;
 		Integer count=null;
-		try{
-		session = sqlMapper.openSession(true);
+		session = getSqlSession();
 		count=session.selectOne("Change.selectChangeMyboardListCount",email);
-		}
-		finally{session.close();}
 		return count;
 	}
 	
@@ -122,12 +82,9 @@ public class ChangeDAO implements IChangeDAO{
 	public List<Change> selectMatchList(int length, int page, String email) {
 		SqlSession session=null;
 		List<Change> changeList=null;
-		try{
-			session = sqlMapper.openSession(true);
-			RowBounds rowBounds=new RowBounds((page-1)*length, length);
-			changeList=session.selectList("Change.selectMatchList",email,rowBounds);
-		}
-		finally{session.close();}
+		session = getSqlSession();
+		RowBounds rowBounds=new RowBounds((page-1)*length, length);
+		changeList=session.selectList("Change.selectMatchList",email,rowBounds);
 		return changeList;
 	}
 	
@@ -135,34 +92,25 @@ public class ChangeDAO implements IChangeDAO{
 	public int selectMatchListCount(String email) {
 		SqlSession session=null;
 		Integer count=null;
-		try{
-		session = sqlMapper.openSession(true);
+		session = getSqlSession();
 		count=session.selectOne("Change.selectMatchListCount",email);
-		}
-		finally{session.close();}
 		return count;
 	}
 	
 	@Override
 	public void deleteChange(int boardNo){
 		SqlSession session=null;
-		try{
-			session = sqlMapper.openSession(true);
-			session.delete("Change.deleteChange",boardNo);
-		}
-		finally{session.close();}
+		session = getSqlSession();
+		session.delete("Change.deleteChange",boardNo);
 	}
 	
 	@Override
 	public List<Change> selectMatchResultList(int length, int page, String email) {
 		SqlSession session=null;
 		List<Change> changeList=null;
-		try{
-			session = sqlMapper.openSession(true);
-			RowBounds rowBounds=new RowBounds((page-1)*length, length);
-			changeList=session.selectList("Change.selectMatchResultList",email,rowBounds);
-		}
-		finally{session.close();}
+		session = getSqlSession();
+		RowBounds rowBounds=new RowBounds((page-1)*length, length);
+		changeList=session.selectList("Change.selectMatchResultList",email,rowBounds);
 		return changeList;
 	}
 	
@@ -170,13 +118,12 @@ public class ChangeDAO implements IChangeDAO{
 	public int selectMatchResultListCount(String email) {
 		SqlSession session=null;
 		Integer count=null;
-		try{
-		session = sqlMapper.openSession(true);
+		session = getSqlSession();
 		count=session.selectOne("Change.selectMatchResultListCount",email);
-		}
-		finally{session.close();}
 		return count;
 	}
+
+	
 	
 //	/**교환리스트 보기(관리자만사용)**/
 //	public static ArrayList<Change> selectChangeList(int length, int page) {
