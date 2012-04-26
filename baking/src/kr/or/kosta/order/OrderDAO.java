@@ -14,49 +14,32 @@ import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.mybatis.spring.support.SqlSessionDaoSupport;
 
 import kr.or.kosta.good.Good;
 import kr.or.kosta.gooddivision.Good_division;
 import kr.or.kosta.member.Member;
 import kr.or.kosta.util.ConnectionUtil;
 
-public class OrderDAO implements IOrderDAO{
+public class OrderDAO extends SqlSessionDaoSupport implements IOrderDAO{
 	
-	private static String resource="sqlmap-config.xml";
-	private static Reader sqlReader;
-	static{
-			try {
-				sqlReader=Resources.getResourceAsReader(resource);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-	}
-	private static SqlSessionFactory sqlMapper =
-			new SqlSessionFactoryBuilder().build(sqlReader);
-//주문하기
+	//주문하기
 	@Override
 	public  void insertOrder(Order order) {
 		SqlSession session=null;
-		try{
-			session=sqlMapper.openSession(true);
-			session.insert("Order.insertOrder",order);
-			}
-		finally{
-			session.close();
-		}
+		session=getSqlSession();
+		session.insert("Order.insertOrder",order);
+		
 	}
 	
 	@Override
 	public Order selectOrder(int ordernum){
 		SqlSession session=null;
 		Order order=null;
-		try{
-		session=sqlMapper.openSession(true);
+		
+		session=getSqlSession();
 		order=session.selectOne("selectOrder",ordernum);
-		}
-		finally{
-			session.close();
-		}
+		
 		return order;
 	}
 
@@ -123,13 +106,10 @@ public class OrderDAO implements IOrderDAO{
 	public List<Order> selectOrderList(String memberid){
 		SqlSession session=null;
 		List<Order> orderList=null;
-		try{
-		session=sqlMapper.openSession(true);
+		
+		session=getSqlSession();
 		orderList=session.selectList("Order.selectOrderList","%"+memberid+"%");
-		}
-		finally{
-			session.close();
-		}
+		
 		return orderList;
 	}
 //	//추가 아이디가 일치하는 구매목록 조회
