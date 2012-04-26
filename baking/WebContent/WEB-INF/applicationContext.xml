@@ -3,13 +3,29 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 
 	http://www.springframework.org/schema/beans/spring-beans.xsd">
-	<bean id="goodDAO" class="kr.or.kosta.good.GoodDAO"/>	
-	<bean id="goodDivisionDAO" class="kr.or.kosta.gooddivision.GoodDivisionDAO"/>	
-	<bean id="memberDAO" class="kr.or.kosta.member.MemberDAO"/>
-	<bean id="myrecipeDAO" class="kr.or.kosta.myrecipe.MyrecipeDAO"/>
-	<bean id="orderDAO" class="kr.or.kosta.order.OrderDAO"/>
-	<bean id="photoDAO" class="kr.or.kosta.photo.PhotoDAO"/>
-	<bean id="recipeDAO" class="kr.or.kosta.recipe.RecipeDAO"/>
+	
+	<bean id="goodDAO" class="kr.or.kosta.good.GoodDAO">
+		<property name="sqlSessionTemplate" ref="sqlSessionTemplate"/>
+	</bean>	
+	<bean id="goodDivisionDAO" class="kr.or.kosta.gooddivision.GoodDivisionDAO">
+		<property name="sqlSessionTemplate" ref="sqlSessionTemplate"/>
+	</bean>	
+	<bean id="memberDAO" class="kr.or.kosta.member.MemberDAO">
+		<property name="sqlSessionTemplate" ref="sqlSessionTemplate"/>
+	</bean>
+	<bean id="myrecipeDAO" class="kr.or.kosta.myrecipe.MyrecipeDAO">
+		<property name="sqlSessionTemplate" ref="sqlSessionTemplate"/>
+	</bean>
+	<bean id="orderDAO" class="kr.or.kosta.order.OrderDAO">
+		<property name="sqlSessionTemplate" ref="sqlSessionTemplate"/>
+	</bean>
+	<bean id="photoDAO" class="kr.or.kosta.photo.PhotoDAO">
+		<property name="sqlSessionTemplate" ref="sqlSessionTemplate"/>
+	</bean>
+	<bean id="recipeDAO" class="kr.or.kosta.recipe.RecipeDAO">
+		<property name="sqlSessionTemplate" ref="sqlSessionTemplate"/>
+	</bean>
+	
 		
 	<bean id="recipeService" class="kr.or.kosta.recipe.RecipeService">
 		<constructor-arg>
@@ -74,6 +90,21 @@
 		</constructor-arg>
 	</bean>
 	
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
+		<property name="driverClass" value="oracle.jdbc.driver.OracleDriver"/>
+		<property name="url" 		 value="jdbc:oracle:thin:@192.168.0.85:1521:XE"/>
+		<property name="username" 	 value="scott"/>
+		<property name="password" 	 value="tiger"/>
+	</bean>
+	
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"/>
+		<property name="configLocation" value="/WEB-INF/classes/sqlmap-config.xml"/>
+	</bean>
+		
+	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg ref="sqlSessionFactory"/>
+	</bean>
 	
 	
 </beans>
