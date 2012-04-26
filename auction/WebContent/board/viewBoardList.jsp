@@ -11,7 +11,7 @@
 <c:choose>
 	<c:when test="${sessionScope.MEMBER==null}">
 		<p align="right">
-			<a href="/auction/MemberService?method=loginForm">
+			<a href="/auction/loginForm.action">
 			로그인
 			</a>
 		</p>
@@ -19,7 +19,7 @@
 	<c:otherwise>
 		<p align="right">
 			${sessionScope.MEMBER.name }님<br/>
-			<a href="/auction/MemberService?method=logout">
+			<a href="/auction/logout.action">
 			<img src="/auction/menu/logout.jpg"/>
 			</a><br/>
 		</p>
@@ -36,7 +36,7 @@
 		<tr>
 		<td>${board.bNum}</a></td>		
 		<td>${board.member.userid}</td>
-		<td><a href="/auction/BoardService?method=viewBoard&bNum=${board.bNum}">
+		<td><a href="/auction/viewBoard.action?bnum=${board.bNum}">
 		    ${board.title}</td>
 	</tr>
 	</c:forEach>
@@ -45,8 +45,7 @@
  ${PAGE_LINK_TAG}
  </p>
  <table align="center">
-  <form action="/auction/BoardService" method="post">
-   <input type="hidden" name="method" value="searchBoardList">
+  <form action="/auction/searchBoardList.action" method="post">
     <Select name="column" align="center">
       <option value="title">글제목</option>
       <option value="userid">아이디</option>
@@ -57,13 +56,13 @@
 </table>
  <c:if test="${sessionScope.MEMBER.userid!=null}">
 <p align="center">
-	<a href="/auction/BoardService?method=addBoardForm">
+	<a href="/auction/addBoardForm.action">
 	<img src="/auction/menu/insertBoard.jpg"/>
 	</a>
 </p>
 </c:if>
 <p align="center">
-	<a href="/auction/AuctionService?method=viewAuctionList">
+	<a href="/auction/viewAuctionList.action">
 	<img src="/auction/menu/viewAuctionList.jpg"/>
 	</a>
 </p>

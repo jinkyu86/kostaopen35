@@ -39,18 +39,18 @@
 	  </table>
 <c:if test="${sessionScope.MEMBER.userid==BOARD.member.userid||sessionScope.MEMBER.userid=='admin'}">
 	  <p align="center">
-	    <a href="/auction/BoardService?method=editBoardForm&bNum=${BOARD.bNum }">
+	    <a href="/auction/editBoardForm.action?bnum=${BOARD.bNum }">
 		<img src="/auction/menu/editBoard.jpg"/>
 	    </a>
 	  </p>
 	  <p align="center">
-	    <a href="/auction/BoardService?method=removeBoard&bNum=${BOARD.bNum }" id="deleteboard">
+	    <a href="/auction/removeBoard.action?bnum=${BOARD.bNum }" id="deleteboard">
 		<img src="/auction/menu/deleteBoard.jpg"/>
 	    </a>
 	  </p>
 </c:if>
 <p align="center">
-	<a href="/auction/BoardService?method=viewBoardList">
+	<a href="/auction/viewBoardList.action">
 	<img src="/auction/menu/viewBoardList.jpg"/>
 	</a>
 </p>

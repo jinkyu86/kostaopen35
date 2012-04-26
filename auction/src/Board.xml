@@ -1,115 +1,118 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper
-	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-		
-<mapper namespace="Board">		
-<parameterMap
-   type="kr.or.kosta.auction.board.Board"
-   id="insertParameterMap">
-   	<parameter property="bNum"/>
-	<parameter property="member.userid"/>
-	<parameter property="title"/>
-	<parameter property="content"/>
-</parameterMap>
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<insert id="insertBoard" 
+<mapper namespace="Board">
+    <parameterMap
+     type="kr.or.kosta.auction.board.Board"
+     id="insertParameterMap">
+        <parameter property="bNum"/>
+        <parameter property="member.userid"/>
+        <parameter property="title"/>
+        <parameter property="content"/>
+    </parameterMap>
+    
+    <insert id="insertBoard"
      parameterMap="insertParameterMap">
-     INSERT INTO board
-	                   (num,userid,title,content)
-     VALUES (board_seq.nextval,?,?,?)
-</insert>
-
-<parameterMap
-   type="kr.or.kosta.auction.board.Board"
-   id="updateParameterMap">
-	<parameter property="title"/>
-	<parameter property="content"/>
-	<parameter property="bNum"/>
-</parameterMap>
-
-<update id="updateBoard" 
+        <selectKey keyProperty="bNum" resultType="java.lang.String" order="BEFORE">
+            SELECT board_seq.nextval FROM dual
+        </selectKey>
+        INSERT INTO board
+        (b_num,userid,title,content)
+        VALUES (?,?,?,?)
+    </insert>
+    
+    <parameterMap
+     type="kr.or.kosta.auction.board.Board"
+     id="updateParameterMap">
+        <parameter property="title"/>
+        <parameter property="content"/>
+        <parameter property="bNum"/>
+    </parameterMap>
+    
+    <update id="updateBoard"
      parameterMap="updateParameterMap">
-     UPDATE board
-	 SET title=?,content=?
-     WHERE b_num=?
-</update>
-
-<delete id="deleteBoard">
-     DELETE FROM board
-	 WHERE b_num=#{boardno}
-</delete>
-
-<resultMap id="selectResultMap" type="kr.or.kosta.auction.board.Board">
-	<result property="bNum" column="b_num"/>
-	<result property="member.userid" column="userid"/>
-	<result property="title" column="title"/>
-	<result property="content" column="content"/>
-</resultMap>
-	
-<select id="selectBoard" 
+        UPDATE board
+        SET title=?,content=?
+        WHERE b_num=?
+    </update>
+    
+    <delete id="deleteBoard">
+        DELETE FROM board
+        WHERE b_num=#{bNum}
+    </delete>
+    
+    <resultMap id="selectResultMap" type="kr.or.kosta.auction.board.Board">
+        <result property="bNum" column="b_num"/>
+        <result property="member.userid" column="userid"/>
+        <result property="title" column="title"/>
+        <result property="content" column="content"/>
+    </resultMap>
+    
+    <select id="selectBoard"
      resultMap="selectResultMap">
-     SELECT b.b_num AS b_num,
-     				m.userid AS userid,
-					b.title AS title,
-					b.content AS content
-	FROM board b JOIN member m
-				ON b.userid = m.userid
-     WHERE b_num=#{bNum}
-</select>
-
-<select id="selectBoardList" 
+        SELECT b.b_num AS b_num,
+        m.userid AS userid,
+        b.title AS title,
+        b.content AS content
+        FROM board b JOIN member m
+        ON b.userid = m.userid
+        WHERE b_num=#{bNum}
+    </select>
+    
+    <select id="selectBoardList"
      resultMap="selectResultMap">
-     SELECT b.b_num AS b_num,
-     				m.userid AS userid,
-					b.title AS title,
-					b.content AS content
-	FROM board b JOIN member m
-				ON b.userid = m.userid
-	ORDER BY b.b_num DESC
-</select>
-
-<select id="selectBoardCount"
-	resultType="java.lang.Integer">
-	SELECT count(b_num)
-	FROM board
-</select>
-
-<select id="selectBoardListByTitle" 
-     resultMap="selectResultMap">
-     SELECT b_num AS num,
-					title AS title,
-					content AS content,
-     				userid AS userid
-	FROM board
-     WHERE title like #{title}
-</select>
-
-<select id="selectBoardListByTitleCount" 
+        SELECT b.b_num AS b_num,
+        m.userid AS userid,
+        b.title AS title,
+        b.content AS content
+        FROM board b JOIN member m
+        ON b.userid = m.userid
+        ORDER BY b.b_num DESC
+    </select>
+    
+    <select id="selectBoardCount"
      resultType="java.lang.Integer">
-    SELECT COUNT(b_num)
-	FROM board
-     WHERE title like #{title}
-</select>
-
-<select id="selectBoardListByUserid" 
+        SELECT count(b_num)
+        FROM board
+    </select>
+    
+    <select id="selectBoardListByTitle"
      resultMap="selectResultMap">
-     SELECT b.b_num AS num,
-					b.title AS title,
-					b.content AS content,
-     				m.userid AS userid
-	FROM board b JOIN member m
-				ON b.userid = m.userid
-     WHERE b.userid like #{userid}
-</select>
-
-<select id="selectBoardListByUseridCount" 
+        SELECT b_num AS b_num,
+        title AS title,
+        content AS content,
+        userid AS userid
+        FROM board
+        WHERE title like #{title}
+    </select>
+    
+    <select id="selectBoardListByTitleCount"
      resultType="java.lang.Integer">
-    SELECT COUNT(b_num)
-	FROM board b JOIN member m
-				ON b.userid = m.userid
-     WHERE b.userid like #{userid}
-</select>
-
+        SELECT COUNT(b_num)
+        FROM board
+        WHERE title like #{title}
+    </select>
+    
+    <select id="selectBoardListByUserid"
+     resultMap="selectResultMap">
+        SELECT b.b_num AS b_num,
+        b.title AS title,
+        b.content AS content,
+        m.userid AS userid
+        FROM board b JOIN member m
+        ON b.userid = m.userid
+        WHERE b.userid like #{userid}
+    </select>
+    
+    <select id="selectBoardListByUseridCount"
+     resultType="java.lang.Integer">
+        SELECT COUNT(b_num)
+        FROM board b JOIN member m
+        ON b.userid = m.userid
+        WHERE b.userid like #{userid}
+    </select>
+    
 </mapper>
 

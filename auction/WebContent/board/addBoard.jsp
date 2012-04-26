@@ -36,9 +36,8 @@ $(document).ready(function(){
 <body>
 <hr noshade>
 <h1 align="center">게시물 작성</h1>
-<form name="login_form" action="/auction/BoardService" method="post" id="my_form">
+<form name="login_form" action="/auction/addBoard.action" method="post" id="my_form">
 <table  align="center"  border="1" bgcolor="pink">
-<input type="hidden" name="method" value="addBoard" />
 	<tr>
 		<td>작성자 ID: </td>
 		<td><input type="text" size=30 name="userid" value="${sessionScope.MEMBER.userid }" readOnly="readonly"></td>
@@ -51,7 +50,7 @@ $(document).ready(function(){
 		<td>내용:</td>
 		<td><textarea name="content" cols=50 rows=10 wrap="hard"></textarea></td>
 	</tr>
-<hr noshade>
+<hr noshade>	
 </table>
 <center>
 	<input type="submit" value="게시물추가">
@@ -59,7 +58,7 @@ $(document).ready(function(){
 </center>
 </form>
 <p align="center">
-	<a href="/auction/BoardService?method=viewBoardList">
+	<a href="/auction/viewBoardList.action">
 	<img src="/auction/menu/viewBoardList.jpg"/>
 	</a>
 </p>

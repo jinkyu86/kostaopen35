@@ -9,7 +9,7 @@
     <constant name="struts.action.extension" value="action"/>
     <constant name="struts.enable.DynamicMethodInvocation" value="true"/>
     <constant name="struts.devMode" value="true"/>
-	<constant name="struts.objectFactory" value="spring"/>
+    <constant name="struts.objectFactory" value="spring"/>
     
     <package name="root" namespace="/" extends="struts-default">
         
@@ -186,7 +186,7 @@
         
         <action name="addBid" class="kr.or.kosta.auction.bid.BidService"
          method="addBid">
-         	 <param name="aliases">
+            <param name="aliases">
                 #{ 'aNum':'anum'}
             </param>
             <result name="success" type="chain">
@@ -196,10 +196,10 @@
                 member/login.jsp
             </result>
         </action>
-		
-		<action name="buy" class="kr.or.kosta.auction.bid.BidService"
+        
+        <action name="buy" class="kr.or.kosta.auction.bid.BidService"
          method="buy">
-         	 <param name="aliases">
+            <param name="aliases">
                 #{ 'aNum':'anum'}
             </param>
             <result name="success" type="chain">
@@ -209,15 +209,15 @@
                 member/login.jsp
             </result>
         </action>
-		
-		<action name="moneyBack" class="kr.or.kosta.auction.bid.BidService"
+        
+        <action name="moneyBack" class="kr.or.kosta.auction.bid.BidService"
          method="moneyBack">
             <result name="success" type="chain">
                 viewMember
             </result>
         </action>
         
-		<action name="viewGoodList"
+        <action name="viewGoodList"
          class="kr.or.kosta.auction.good.GoodService"
          method="viewGoodList">
             <result name="success">
@@ -291,6 +291,83 @@
                 viewGood
             </result>
         </action>
+        
+        <action name="viewBoardList" class="kr.or.kosta.auction.board.BoardService"
+         method="viewBoardList">
+            <result name="success">
+                board/viewBoardList.jsp
+            </result>
+        </action>
+		
+		<action name="viewBoard" class="kr.or.kosta.auction.board.BoardService"
+         method="viewBoard">
+         	<param name="aliases">
+         		#{'bnum':'bnum'}
+			</param>
+            <result name="success">
+                board/viewBoard.jsp
+            </result>
+        </action>
+		
+		<action name="searchBoardList" class="kr.or.kosta.auction.board.BoardService"
+         method="searchBoardList">
+         	<param name="aliases">
+         		#{'bnum':'bnum'}
+			</param>
+            <result name="success">
+                board/viewBoardList.jsp
+            </result>
+        </action>
+		
+		<action name="addBoardForm" class="kr.or.kosta.auction.board.BoardService"
+         method="addBoardForm">
+            <result name="success">
+                board/addBoard.jsp
+            </result>
+        </action>
+		
+		<action name="addBoard" class="kr.or.kosta.auction.board.BoardService"
+         method="addBoard">
+         	<param name="aliases">
+         		#{'userid':'board.member.userid'}
+			</param>
+            <result name="success" type="chain">
+                viewBoard
+            </result>
+        </action>
+		
+		<action name="editBoardForm" class="kr.or.kosta.auction.board.BoardService"
+		method="editBoardForm">
+			<param name="aliases">
+                #{'bnum':'bnum'}
+            </param>
+			<result name="success">
+				board/editBoard.jsp
+			</result>
+		</action>
+		
+		<action name="editBoard" class="kr.or.kosta.auction.board.BoardService"
+		method="editBoard">
+			<param name="aliases">
+                #{'bnum':'board.bnum',
+					'bnum':'bnum',
+					'userid':'board.member.userid'}
+            </param>
+			<result name="success" type="chain">
+				viewBoard
+			</result>
+		</action>
+		
+		<action name="removeBoard" class="kr.or.kosta.auction.board.BoardService"
+		method="removeBoard">
+			<param name="aliases">
+                #{'bnum':'bnum'}
+            </param>
+			<result name="success" type="chain">
+				viewBoardList
+			</result>
+		</action>
+		
     </package>
     
 </struts>
