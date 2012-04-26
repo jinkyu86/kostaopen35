@@ -9,164 +9,119 @@ import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
-
-
+import org.mybatis.spring.support.SqlSessionDaoSupport;
 
 //import kr.or.kosta.util.ConnectionUtil;
 
-public class BoardDAO {
-	private static String resource="sqlmap-config.xml";
-	private static Reader sqlReader;
-	static{
-			try {
-				sqlReader=Resources.getResourceAsReader(resource);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-	}
-	private static SqlSessionFactory sqlMapper =
-			new SqlSessionFactoryBuilder().build(sqlReader);
-	
-	public static String insertBoard(Board board){
-		SqlSession session = sqlMapper.openSession(true);
-		session.insert("Board.insertBoard",board);
+public class BoardDAO extends SqlSessionDaoSupport implements IBoardDAO {
+	@Override
+	public String insertBoard(Board board) {
+		SqlSession session = null;
+		session = getSqlSession();
+		session.insert("Board.insertBoard", board);
 		return board.getbNum();
 	}
-	public static void updateBoard(
-			 Board board){
+
+	@Override
+	public void updateBoard(Board board) {
 		SqlSession session = null;
-		try{
-		session = sqlMapper.openSession(true);
-		session.insert("Board.updateBoard",board);
-		}
-		finally{
-			session.close();
-		}
-		
+		session = getSqlSession();
+		session.insert("Board.updateBoard", board);
+
 	}
-	public static void deleteBoard(String boardno){
+
+	@Override
+	public void deleteBoard(String boardno) {
 		SqlSession session = null;
-		try{
-		session = sqlMapper.openSession(true);
-		session.delete("Board.updateBoard",boardno);
-		}
-		finally{
-			session.close();
-		}
+		session = getSqlSession();
+		session.delete("Board.deleteBoard", boardno);
 	}
-	public static Board selectBoard(String boardno){
+
+	@Override
+	public Board selectBoard(String boardno) {
 		SqlSession session = null;
 		Board board = null;
-		try{
-		session = sqlMapper.openSession(true);
-		board = session.selectOne("selectBoard",boardno);
-		
-		}
-		finally{
-			session.close();
-		}
+		session = getSqlSession();
+		board = session.selectOne("selectBoard", boardno);
+
 		return board;
 	}
-	public static List<Board> selectBoardList(){
+
+	@Override
+	public List<Board> selectBoardList() {
 		SqlSession session = null;
 		List<Board> boardList = null;
-		try{
-		session = sqlMapper.openSession(true);
+		session = getSqlSession();
 		boardList = session.selectList("selectBoardList");
-		
-		}
-		finally{
-			session.close();
-		}
-		return boardList;
-	}
-	public static List<Board> selectBoardList(int page,int length){
-		SqlSession session = null;
-		List<Board> boardList = null;
-		try{
-		session = sqlMapper.openSession(true);
-		RowBounds rowBounds = new RowBounds((page-1)*length,length);
-		boardList = 
-				session.selectList("selectBoardList",null,rowBounds);
-		
-		}
-		finally{
-			session.close();
-		}
+
 		return boardList;
 	}
 
-	public static int selectBoardCount(){
-		SqlSession session= null;
-		int count = 0;
-		try{
-		session = sqlMapper.openSession(true);
-		count = 
-				session.selectOne("selectBoardCount");
-		
-		}
-		finally{
-			session.close();
-		}
-		return count;
-	}
-	
-	public static int selectBoardListByTitleCount(String title){
-		SqlSession session= null;
-		int count = 0;
-		try{
-		session = sqlMapper.openSession(true);
-		count = 
-				session.selectOne("selectBoardListByTitleCount","%"+title+"%");
-		
-		}
-		finally{
-			session.close();
-		}
-		return count;
-	}
-	
-	public static int selectBoardListByUseridCount(String userid){
-		SqlSession session = null;
-		int count = 0;
-		try{
-		session = sqlMapper.openSession(true);
-		count = 
-				session.selectOne("selectBoardListByUseridCount","%"+userid+"%");
-		}
-		finally{
-			session.close();
-		}
-		return count;
-	}
-	
-	public static List<Board> selectBoardListByTitle(int page,int length,String title){
+	@Override
+	public List<Board> selectBoardList(int page, int length) {
 		SqlSession session = null;
 		List<Board> boardList = null;
-		try{		
-		session = sqlMapper.openSession(true);
-		RowBounds rowBounds = new RowBounds((page-1)*length,length);
-		boardList = 
-				session.selectList("selectBoardListByTitle","%"+title+"%",rowBounds);
-		
-		}
-		finally{
-			session.close();
-		}
+		session = getSqlSession();
+		RowBounds rowBounds = new RowBounds((page - 1) * length, length);
+		boardList = session.selectList("selectBoardList", null, rowBounds);
+
 		return boardList;
 	}
-	public static List<Board> selectBoardListByUserid(int page,int length,String userid){
+
+	@Override
+	public int selectBoardCount() {
+		SqlSession session = null;
+		int count = 0;
+		session = getSqlSession();
+		count = session.selectOne("selectBoardCount");
+
+		return count;
+	}
+
+	@Override
+	public int selectBoardListByTitleCount(String title) {
+		SqlSession session = null;
+		int count = 0;
+		session = getSqlSession();
+		count = session.selectOne("selectBoardListByTitleCount", "%" + title
+				+ "%");
+
+		return count;
+	}
+
+	@Override
+	public int selectBoardListByUseridCount(String userid) {
+		SqlSession session = null;
+		int count = 0;
+		session = getSqlSession();
+		count = session.selectOne("selectBoardListByUseridCount", "%" + userid
+				+ "%");
+
+		return count;
+	}
+
+	@Override
+	public List<Board> selectBoardListByTitle(int page, int length, String title) {
 		SqlSession session = null;
 		List<Board> boardList = null;
-		try{
-		session = sqlMapper.openSession(true);
-		RowBounds rowBounds = new RowBounds((page-1)*length,length);
-		boardList = 
-				session.selectList("selectBoardListByUserid","%"+userid+"%",rowBounds);
-		}
-		finally{
-			session.close();
-		}
+		session = getSqlSession();
+		RowBounds rowBounds = new RowBounds((page - 1) * length, length);
+		boardList = session.selectList("selectBoardListByTitle", "%" + title
+				+ "%", rowBounds);
+
+		return boardList;
+	}
+
+	@Override
+	public List<Board> selectBoardListByUserid(int page, int length,
+			String userid) {
+		SqlSession session = null;
+		List<Board> boardList = null;
+		session = getSqlSession();
+		RowBounds rowBounds = new RowBounds((page - 1) * length, length);
+		boardList = session.selectList("selectBoardListByUserid", "%" + userid
+				+ "%", rowBounds);
+
 		return boardList;
 	}
 }

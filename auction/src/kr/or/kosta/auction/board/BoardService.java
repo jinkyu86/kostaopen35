@@ -11,19 +11,64 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import kr.or.kosta.auction.member.Member;
-import kr.or.kosta.auction.member.MemberDAO;
+import com.opensymphony.xwork2.ModelDriven;
+
+import kr.or.kosta.auction.member.IMemberDAO;
 import kr.or.kosta.auction.util.PageUtil;
 
-public class BoardService extends HttpServlet {
+public class BoardService extends HttpServlet implements ModelDriven {
+	IBoardDAO boardDAO;
+	IMemberDAO memberDAO;
 	private static final long serialVersionUID = 1L;
-	private List<Board>BOARD_LIST;
+	private List<Board> BOARD_LIST;
 	private Board BOARD;
+	
 	private String bNum;
 	private Board board = new Board();
+	private String keyword;
+	private String column;
+	private int page;
+	private String PAGE_LINK_TAG;
 
-	
-    public List<Board> getBOARD_LIST() {
+	public BoardService(IBoardDAO boardDAO,IMemberDAO memberDAO) {
+		super();
+		this.boardDAO = boardDAO;
+		this.memberDAO = memberDAO;
+	}
+
+	public String getKeyword() {
+		return keyword;
+	}
+
+	public void setKeyword(String keyword) {
+		this.keyword = keyword;
+	}
+
+	public String getColumn() {
+		return column;
+	}
+
+	public void setColumn(String column) {
+		this.column = column;
+	}
+
+	public int getPage() {
+		return page;
+	}
+
+	public void setPage(int page) {
+		this.page = page;
+	}
+
+	public String getPAGE_LINK_TAG() {
+		return PAGE_LINK_TAG;
+	}
+
+	public void setPAGE_LINK_TAG(String pAGE_LINK_TAG) {
+		PAGE_LINK_TAG = pAGE_LINK_TAG;
+	}
+
+	public List<Board> getBOARD_LIST() {
 		return BOARD_LIST;
 	}
 
@@ -47,6 +92,14 @@ public class BoardService extends HttpServlet {
 		this.bNum = bNum;
 	}
 
+	public String getBnum() {
+		return bNum;
+	}
+
+	public void setBnum(String bNum) {
+		this.bNum = bNum;
+	}
+
 	public Board getBoard() {
 		return board;
 	}
@@ -56,12 +109,12 @@ public class BoardService extends HttpServlet {
 	}
 
 	public BoardService() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
 	public String addBoard() throws Exception {
-		bNum = BoardDAO.insertBoard(board);
+		bNum = boardDAO.insertBoard(board);
 		return "success";
 	}
 
@@ -70,61 +123,81 @@ public class BoardService extends HttpServlet {
 	}
 
 	public String editBoard() throws Exception {
-		BoardDAO.updateBoard(board);
+		boardDAO.updateBoard(board);
 		return "success";
 	}
 
 	public String editBoardForm() throws Exception {
-		BOARD = BoardDAO.selectBoard(bNum);
+		BOARD = boardDAO.selectBoard(bNum);
 		return "success";
 	}
 
 	public String viewBoard() throws Exception {
-		BOARD = BoardDAO.selectBoard(bNum);
+		BOARD = boardDAO.selectBoard(bNum);
 		return "success";
 	}
 
 	public String viewBoardList() throws Exception {
-		BOARD_LIST = BoardDAO.selectBoardList();
+		int length = 10;
+		if (page == 0) {
+			page = 1;
+		}
+
+		List<Board> boardList = null;
+		int boardCount = 0;
+		
+		boardList = boardDAO.selectBoardList(page, length);
+		boardCount = boardDAO.selectBoardCount();
+		
+		BOARD_LIST = boardList;
+
+		String pageLinkTag = PageUtil.generate(page, boardCount, length,
+				"/auction/viewBoardList.action");
+		PAGE_LINK_TAG = pageLinkTag;
+		
 		return "success";
 	}
 
 	public String removeBoard() throws Exception {
-		BoardDAO.deleteBoard(bNum);
+		boardDAO.deleteBoard(bNum);
 		return "success";
 	}
 
-	private void searchBoardList(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		int page=1;
-		if(request.getParameter("page")!=null){
-			page=Integer.parseInt(request.getParameter("page"));
+	public String searchBoardList() throws Exception {
+		int length = 10;
+		if (page == 0) {
+			page = 1;
 		}
-		int length=10;
-		
-		List<Board> boardList=null;
+
+		List<Board> boardList = null;
 		int boardCount = 0;
-		if(request.getParameter("keyword")==null||request.getParameter("keyword").equals("")){
-			boardList = BoardDAO.selectBoardList(length, page);
-			boardCount = BoardDAO.selectBoardCount();
-		}else{
-			if(request.getParameter("column").equals("title")){
-				boardList = BoardDAO.selectBoardListByTitle(length, page, request.getParameter("keyword"));
-				boardCount = BoardDAO.selectBoardListByTitleCount(request.getParameter("keyword"));
-			}else{
-				boardList = BoardDAO.selectBoardListByUserid(length, page, request.getParameter("keyword"));
-				boardCount = BoardDAO.selectBoardListByUseridCount(request.getParameter("keyword"));
+		if (keyword == null || keyword.equals("")) {
+			boardList = boardDAO.selectBoardList(page, length);
+			boardCount = boardDAO.selectBoardCount();
+		} else {
+			if (column.equals("title")) {
+				boardList = boardDAO.selectBoardListByTitle(page, length,
+						keyword);
+				boardCount = boardDAO.selectBoardListByTitleCount(keyword);
+			} else {
+					boardList = boardDAO.selectBoardListByUserid(page, length,
+							keyword);
+				boardCount = boardDAO.selectBoardListByUseridCount(keyword);
 			}
 		}
 
-		request.setAttribute("BOARD_LIST", boardList);
+		BOARD_LIST = boardList;
 
-		String pageLinkTag=PageUtil.generate(page, boardCount, length, 
-				"/auction/BoardService?method=searchBoardList&column=" +
-				request.getParameter("column") + "&keyword=" + request.getParameter("keyword"));
-		request.setAttribute("PAGE_LINK_TAG", pageLinkTag);
-		RequestDispatcher rd=request.getRequestDispatcher("/board/viewBoardList.jsp");
+		String pageLinkTag = PageUtil.generate(page, boardCount, length,
+				"/auction/searchBoardList.action?column=" + column + "&keyword="
+						+ keyword);
+		PAGE_LINK_TAG = pageLinkTag;
 
-		rd.forward(request, response);
+		return "success";
+	}
+
+	@Override
+	public Object getModel() {
+		return board;
 	}
 }

@@ -36,7 +36,14 @@ public class Board {
 	public void setbNum(String bNum) {
 		this.bNum = bNum;
 	}
+	
+	public String getBnum() {
+		return bNum;
+	}
 
+	public void setBnum(String bNum) {
+		this.bNum = bNum;
+	}
 	public String getTitle() {
 		return title;
 	}
