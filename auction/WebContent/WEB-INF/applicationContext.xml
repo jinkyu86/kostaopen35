@@ -18,20 +18,20 @@
             <ref bean="sqlSessionTemplate"/>
         </property>
     </bean>
-	<bean id="goodDAO" class="kr.or.kosta.auction.good.GoodDAO">
+    <bean id="goodDAO" class="kr.or.kosta.auction.good.GoodDAO">
         <property name="sqlSessionTemplate">
             <ref bean="sqlSessionTemplate"/>
         </property>
     </bean>
-	<bean id="boardDAO" class="kr.or.kosta.auction.board.BoardDAO">
+    <bean id="boardDAO" class="kr.or.kosta.auction.board.BoardDAO">
         <property name="sqlSessionTemplate">
             <ref bean="sqlSessionTemplate"/>
         </property>
     </bean>
     
-	
+    
     <bean id="bidService" class="kr.or.kosta.auction.bid.BidService">
-    	<constructor-arg>
+        <constructor-arg>
             <ref bean="bidDAO"/>
         </constructor-arg>
         <constructor-arg>
@@ -41,8 +41,8 @@
             <ref bean="auctionDAO"/>
         </constructor-arg>
     </bean>
-	<bean id="auctionService" class="kr.or.kosta.auction.auction.AuctionService">
-		<constructor-arg>
+    <bean id="auctionService" class="kr.or.kosta.auction.auction.AuctionService">
+        <constructor-arg>
             <ref bean="auctionDAO"/>
         </constructor-arg>
         <constructor-arg>
@@ -52,19 +52,22 @@
             <ref bean="goodDAO"/>
         </constructor-arg>
     </bean>
-	<bean id="goodService" class="kr.or.kosta.auction.good.GoodService">
+    <bean id="goodService" class="kr.or.kosta.auction.good.GoodService">
         <constructor-arg>
             <ref bean="goodDAO"/>
         </constructor-arg>
-	</bean>
-	<bean id="memberService" class="kr.or.kosta.auction.member.MemberService">
+    </bean>
+    <bean id="memberService" class="kr.or.kosta.auction.member.MemberService">
         <constructor-arg>
             <ref bean="memberDAO"/>
         </constructor-arg>
     </bean>
-	<bean id="boardService" class="kr.or.kosta.auction.board.BoardService">
+    <bean id="boardService" class="kr.or.kosta.auction.board.BoardService">
         <constructor-arg>
             <ref bean="boardDAO"/>
+        </constructor-arg>
+		<constructor-arg>
+            <ref bean="memberDAO"/>
         </constructor-arg>
     </bean>
     
