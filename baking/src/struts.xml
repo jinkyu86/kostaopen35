@@ -33,7 +33,7 @@
 		
 		<action name="viewGood" class="kr.or.kosta.recipe.RecipeService" method="viewGood">
 			<param name="aliases">	
-			#{'goodNum':'goodNum'}
+			#{'goodnum':'goodNum'}
 			</param>
 			<result name="success" type="chain">viewGood</result>
 		</action>
