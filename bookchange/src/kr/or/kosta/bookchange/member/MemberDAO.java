@@ -22,7 +22,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
-public class MemberDAO {
+public class MemberDAO implements IMemberDAO{
 
 	private static String resource="sqlmap-config.xml";
 	private static Reader sqlReader;
@@ -42,7 +42,8 @@ public class MemberDAO {
 	 * 
 	 * @param member
 	 */
-	public static void insertMember(Member member) {
+	@Override
+	public void insertMember(Member member) {
 		SqlSession session =null;
 		try{
 		session=sqlMapper.openSession(true);
@@ -76,7 +77,8 @@ public class MemberDAO {
 	 * 
 	 * @param email
 	 */
-	public static void updateMember(
+	@Override
+	public void updateMember(
 			 Member member){
 		SqlSession session =null;
 		try{
@@ -115,8 +117,8 @@ public class MemberDAO {
 	 * 
 	 * @param email
 	 */
-
-	public static void deleteMember(
+	@Override
+	public void deleteMember(
 			 String email){
 		SqlSession session =null;
 		try{
@@ -150,8 +152,8 @@ public class MemberDAO {
 	/**
 	 * 전체 회원수 리턴
 	 */
-	
-	public static int selectMemberCount(){
+	@Override
+	public  int selectMemberCount(){
 		SqlSession session =null;
 		Integer count=null;
 		try{
@@ -193,7 +195,8 @@ public class MemberDAO {
 	 * @param length
 	 * @param page
 	 */
-	public static List <Member> selectMemberList(
+	@Override
+	public List <Member> selectMemberList(
 			 int page,int length){
 		SqlSession session =null;
 		 
@@ -254,7 +257,8 @@ public class MemberDAO {
 	/**
 	 * 전체 회원 수 보기(이메일)
 	 */
-	public static int selectMemberCountemail(String email){
+	@Override
+	public int selectMemberCountemail(String email){
 		SqlSession session =null;
 		Integer count=null;
 		try{
@@ -302,8 +306,8 @@ public class MemberDAO {
 	 * 
 	 * @param email
 	 */
-
-	public static Member selectMemberemail(String email){
+	@Override
+	public Member selectMemberemail(String email){
 		SqlSession session=null;
 		Member member=null;
 		try{
@@ -355,7 +359,9 @@ public class MemberDAO {
 	 * @param length
 	 * @param page
 	 */
-	public static List <Member> selectMemberListByEmail(
+	
+	@Override
+	public List <Member> selectMemberListByEmail(
 			 int page,int length,String email){
 		SqlSession session =null;
 		 
@@ -414,7 +420,8 @@ public class MemberDAO {
 	/**
 	 * 회원 비밀번호 리턴(전화번호와 이메일로 검색)
 	 */
-	public static Member selectMemberListByPw(String email,String tel){
+	@Override
+	public  Member selectMemberListByPw(String email,String tel){
 		SqlSession session=null;
 		Member member=null;
 		try{
@@ -471,7 +478,8 @@ public class MemberDAO {
 	 * @throws IOException
 	 * @throws ServletException
 	 */
-	public static Member selectMemberemailTel(String tel){
+	@Override
+	public  Member selectMemberemailTel(String tel){
 		SqlSession session=null;
 		Member member=null;
 		try{
