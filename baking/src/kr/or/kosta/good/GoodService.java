@@ -225,13 +225,11 @@ public class GoodService implements ModelDriven,ServletContextAware{
 	 */
 	public String viewGood() throws Exception {
 		//데이터 베이스에서 상품정보 조회
+		System.out.println(goodNum);
 		GOOD = goodDAO.selectGood(goodNum);
 		//상품 관련 레시피 조회
 		GOOD_RECIPELIST = recipeDAO.selectGoodRelationRecipeList(goodNum);
 		PHOTO_LIST = photoDAO.selectGoodPhotoList(goodNum);
-		System.out.println("GOOD:"+GOOD);
-		System.out.println("GOOD_RECIPELIST:"+GOOD_RECIPELIST);
-		System.out.println("PHOTO_LIST:"+PHOTO_LIST);
 		return "success";
 	}
 
