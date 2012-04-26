@@ -13,37 +13,25 @@ import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.mybatis.spring.support.SqlSessionDaoSupport;
 
 import kr.or.kosta.good.Good;
 import kr.or.kosta.gooddivision.GoodDivisionDAO;
 import kr.or.kosta.gooddivision.Good_division;
 import kr.or.kosta.util.ConnectionUtil;
 
-public class RecipeDAO implements IRecipeDAO{
+public class RecipeDAO extends SqlSessionDaoSupport implements IRecipeDAO{
 	
 
-	private static String resource="sqlmap-config.xml";
-	private static Reader sqlReader;
-	static{
-			try {
-				sqlReader=Resources.getResourceAsReader(resource);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-	}
-	private static SqlSessionFactory sqlMapper =
-			new SqlSessionFactoryBuilder().build(sqlReader);
 	
 	@Override
 	public int maxRecipeNumber(){
 		SqlSession session=null;
 		Integer maxNumber=null;
-		try{
-		session = sqlMapper.openSession(true);
+		
+		session = getSqlSession();
 		maxNumber= session.selectOne("maxRecipeNumber");
-		}finally{
-			session.close();
-		}
+		
 		return maxNumber;
 	}
 	
@@ -51,36 +39,30 @@ public class RecipeDAO implements IRecipeDAO{
 	@Override
 	public void insertRecipe(Recipe recipe) {
 		SqlSession session=null;
-		try{
-		session = sqlMapper.openSession(true);
+		
+		session = getSqlSession();
 		session.insert("Recipe.insertRecipe",recipe);
-		}finally{
-			session.close();
-		}
+		
 	}
 	
 	//레시피수정
 	@Override
 	public void updateRecipe(Recipe recipe) {
 		SqlSession session=null;
-		try{
-		session = sqlMapper.openSession(true);
+		
+		session = getSqlSession();
 		session.update("Recipe.updateRecipe",recipe);
-		}finally{
-			session.close();
-		}	
+			
 	}
 	
 	//레시피글삭제
 	@Override
 	public void deleteRecipe(int recipenum) {
 		SqlSession session=null;
-		try{
-		session = sqlMapper.openSession(true);
+		
+		session = getSqlSession();
 		session.delete("Recipe.deleteRecipe",recipenum);
-		}finally{
-			session.close();
-		}	
+			
 	}
 	
 	//레시피리스트
@@ -88,12 +70,10 @@ public class RecipeDAO implements IRecipeDAO{
 	public List<Recipe> selectRecipeList() {
 		SqlSession session=null;
 		List<Recipe> recipeList=null;
-		try{
-		session = sqlMapper.openSession(true);
+		
+		session = getSqlSession();
 		recipeList=session.selectList("Recipe.selectRecipeList");
-		}finally{
-			session.close();
-		}
+		
 		return recipeList;
 		
 	}
@@ -103,12 +83,10 @@ public class RecipeDAO implements IRecipeDAO{
 	public List<Recipe> selectDivisionRecipeList(int divisionNum) {
 		SqlSession session=null;
 		List<Recipe> recipeList=null;
-		try{
-		session = sqlMapper.openSession(true);
+		
+		session = getSqlSession();
 		recipeList=session.selectList("Recipe.selectDivisionRecipeList",divisionNum);
-		}finally{
-			session.close();
-		}
+		
 		return recipeList;
 	}
 	
@@ -118,12 +96,9 @@ public class RecipeDAO implements IRecipeDAO{
 	public Recipe selectRecipe(int recipe_num) {
 		SqlSession session=null;
 		Recipe recipe=null;
-		try{
-		session = sqlMapper.openSession(true);
+		session = getSqlSession();
 		recipe=session.selectOne("Recipe.selectRecipe",recipe_num);
-		}finally{
-			session.close();
-		}
+		
 		return recipe;
 	}
 	
@@ -132,12 +107,9 @@ public class RecipeDAO implements IRecipeDAO{
 	public List<Recipe>selectGoodRelationRecipeList(int goodNum){
 		SqlSession session=null;
 		List<Recipe> recipeList=null;
-		try{
-		session = sqlMapper.openSession(true);
+		session = getSqlSession();
 		recipeList=session.selectList("Recipe.selectGoodRelationRecipeList",goodNum);
-		}finally{
-			session.close();
-		}
+		
 		return recipeList;
 	}
 }
