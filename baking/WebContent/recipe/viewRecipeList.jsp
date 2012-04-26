@@ -69,7 +69,7 @@
 	<c:forEach var="recipe" items="${RECIPE_LIST}">
 		<li>        
 		<section class="block">							
-			<a href="/baking/viewRecipe.action?recipeNum=${recipe.recipeNum }">
+			<a href="/baking/viewRecipe.action?recipenum=${recipe.recipeNum }">
 			<img src="/baking/img/recipe_${recipe.good_division.gName}/${recipe.img}" border=0  /></a> 	
 			<br/>									
 			<h5><center>${recipe.title}</center></h5>																	        
