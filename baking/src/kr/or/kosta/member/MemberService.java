@@ -24,12 +24,11 @@ public class MemberService implements ModelDriven, SessionAware{
 	
 	private Map session;
 	private Member MEMBER;
-	private Member member;
+	private Member member = new Member();
 	private String memberid;
 	
 	
-	
-	
+
 	public MemberService(IMemberDAO memberDAO) {
 		super();
 		this.memberDAO = memberDAO;
@@ -79,7 +78,6 @@ public class MemberService implements ModelDriven, SessionAware{
 			session.put("member", loginMember);
 			return "success";
 		}else{ 
-			System.out.println("a");
 			//로그아웃 페이지이동
 			return "fail";
 		}
