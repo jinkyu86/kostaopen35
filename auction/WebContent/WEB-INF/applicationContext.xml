@@ -29,6 +29,7 @@
         </property>
     </bean>
     
+	
     <bean id="bidService" class="kr.or.kosta.auction.bid.BidService">
     	<constructor-arg>
             <ref bean="bidDAO"/>
