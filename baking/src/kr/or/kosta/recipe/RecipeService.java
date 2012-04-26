@@ -256,7 +256,7 @@ public class RecipeService implements ModelDriven, ServletContextAware{
 
 	public void setFile(File[] file) {
 		this.file[index]= file[0];
-		index++;
+		
 	}
 
 	public String[] getFileFileName() {
@@ -265,6 +265,7 @@ public class RecipeService implements ModelDriven, ServletContextAware{
 
 	public void setFileFileName(String[] fileFileName) {
 		this.fileFileName[index] = fileFileName[0];
+		index++;
 	}
 
 	public String[] getFileContentType() {
