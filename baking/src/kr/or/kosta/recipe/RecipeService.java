@@ -8,13 +8,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
@@ -77,7 +71,6 @@ public class RecipeService implements ModelDriven, ServletContextAware{
 	}
 
 	public String viewRecipeList() throws Exception{
-		System.out.println("RECIPE_LIST");
 		RECIPE_LIST= recipeDAO.selectRecipeList();
 		return "success";
 	}
@@ -91,7 +84,7 @@ public class RecipeService implements ModelDriven, ServletContextAware{
 	//레시피정보
 	public String viewRecipe() throws Exception{
 		RECIPE=recipeDAO.selectRecipe(recipeNum);
-//		레시피관련 상품정보 조회
+//		레시피관련 상품정x보 조회
 		RECIPE_GOODLIST=goodDAO.selectRecipeList(recipeNum);
 //		레시피관련 이미지 조회
 		RECIPE_PHOTO=photoDAO.selectRecipePhotoList(recipeNum);
@@ -100,14 +93,16 @@ public class RecipeService implements ModelDriven, ServletContextAware{
 
 	//레시피추가(미구현)
 	public String addRecipe() throws Exception {
+		
 		if(!"complete".equals(method)){
 			return "success";
 		}else{
+		
 		Good_division good_division = new Good_division();
 		good_division.setDivision(division);
 		recipe.setGood_division(good_division);
 		String forderName="";
-	
+		System.out.println(recipe);
 		for (int i = 0; i < file.length; i++) {
 			System.out.println(i);
 			//임시파일의 파일명/경로
@@ -124,7 +119,7 @@ public class RecipeService implements ModelDriven, ServletContextAware{
 			}
 			
 			String gphotoRealPath="c://devlopement/workspace/baking/WebContent/img/recipe_"+forderName;
-			System.out.println(gphotoRealPath);
+			
 			//저장하고하는 파일의 경로,이름
 			//gphoto진짜 경로+파일의 진짜이름
 			String saveFileName=gphotoRealPath+"/"+fileFileName[i];
@@ -301,12 +296,12 @@ public class RecipeService implements ModelDriven, ServletContextAware{
 	}
 	
 	// 전체레시피 리스트 
-		public static int getIndex() {
-			return index;
-		}
+	public static int getIndex() {
+		return index;
+	}
 
-		public static void setIndex(int index) {
-			RecipeService.index = index;
-		}
+	public static void setIndex(int index) {
+		RecipeService.index = index;
+	}
 	
 }
