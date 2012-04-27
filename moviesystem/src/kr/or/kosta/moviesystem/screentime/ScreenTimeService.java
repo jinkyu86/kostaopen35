@@ -10,54 +10,64 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.opensymphony.xwork2.ModelDriven;
+
 /**
  * Servlet implementation class ScreenTimeService
  */
-public class ScreenTimeService extends HttpServlet {
+public class ScreenTimeService implements ModelDriven {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public ScreenTimeService() {
+	private List<ScreenTime> SCREENTIME_LIST ;
+	private String mnum;
+	
+	@Override
+	public Object getModel() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+  
+	
+	
+    public List<ScreenTime> getSCREENTIME_LIST() {
+		return SCREENTIME_LIST;
+	}
+
+
+
+	public void setSCREENTIME_LIST(List<ScreenTime> sCREENTIME_LIST) {
+		SCREENTIME_LIST = sCREENTIME_LIST;
+	}
+
+
+
+	public String getMnum() {
+		return mnum;
+	}
+
+
+
+	public void setMnum(String mnum) {
+		this.mnum = mnum;
+	}
+
+
+
+	public ScreenTimeService() {
         super();
         // TODO Auto-generated constructor stub
     }
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doPost(request,response);
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("utf-8");//우리는 utf-8로 사용한다.
-		
-		String method=request.getParameter("method");
-		System.out.println(method);
-		if("viewScreenTimeListBymnum".equals(method)){
-			viewScreenTimeListBymnum(request,response);
-		}
-	}
 	
-	private void viewScreenTimeListBymnum(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		String mnum = request.getParameter("mnum");
-		System.out.println("mnum= "+mnum);
-		List<ScreenTime>screenTimeList=ScreenTimeDAO.selectScreen(mnum);
-		request.setAttribute("SCREENTIME_LIST",screenTimeList);
-		System.out.println("screenTimeList = "+screenTimeList);
-		
-		RequestDispatcher rd=request.getRequestDispatcher(
-		"/reservation/viewScreenTimeListBymnum.jsp");
-		//4.JSP로 페이지 이동
-		rd.forward(request, response);
-		
-		
+    public String viewScreenTimeListBymnum() throws Exception {
+    	System.out.println("viewScreenTimeListBymnum실행 ");
+    	System.out.println("영화를 선택해서 해당 영화의 시간을 보여주기 위한 곳");
+		System.out.println("mnum==== "+mnum+"==");
+		SCREENTIME_LIST=ScreenTimeDAO.selectScreen(mnum);
+		System.out.println("SCREENTIME_LIST= "+SCREENTIME_LIST);
+		System.out.println("viewScreenTimeListBymnum종료 ");
+		return "success";
+
 	}
+
+
 
 }
