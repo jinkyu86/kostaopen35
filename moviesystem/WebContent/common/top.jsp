@@ -31,7 +31,7 @@
 					<td class="movie_menu" id="moviemenu2"><A HREF="/moviesystem/MovieService?method=rankingMovieList">Movie Ranking</A></td>
 				</tr>
 				<tr id="reservation_sub" class="sub_menu_tr">
-					<td class="reservation_menu"><a href="/moviesystem/ReservationService?method=addReservationForm">Reservation</a></td>
+					<td class="reservation_menu"><a href="/moviesystem/addReservationForm.action">Reservation</a></td>
 				</tr>
 				<tr id="buy_sub" class="sub_menu_tr">
 					<td class="buy_menu" id="buymenu1"><a href="/moviesystem/viewGoodList.action">Shopping</a></td>
