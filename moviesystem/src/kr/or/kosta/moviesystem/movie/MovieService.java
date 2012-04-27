@@ -51,257 +51,6 @@ public class MovieService implements ModelDriven, ServletContextAware{
 	private String movie_sdate;
 	private String movie_edate;
 	
-	public MovieService(IMovieDAO movieDAO) {
-		super();
-		System.out.println("movieDAO확인");
-		this.movieDAO = movieDAO;
-	}
-
-	public MovieService() {
-        super();
-        // TODO Auto-generated constructor stub
-	}
-	
-	public String adminMovieListSch() throws Exception{
-		int length = 5;
-		int movieCnt = 0;
-		String pageLink = null;
-		if(page==0){
-			page = 1;
-		}
-		if(method=="" || method == null){
-			method = "adminMovieList";
-		}
-		
-		MOVIE_LIST = movieDAO.selectMovieListSearch(page, length, schCode, schString);
-		movieCnt = movieDAO.selectMovieListSearchCnt(schCode, schString);
-		
-		
-		pageLink = "adminMovieListSch.action?schCode="+schCode+"&schString="+schString;
-		PAGE_LINK_TAG = PageUtil.generate(page, movieCnt, length, pageLink);
-		
-		return "success";
-	}
-	
-	public String searchMovieList() throws Exception{
-		/* default generated stub */;
-		int length = 5;
-		if(page==0){
-			page = 1;
-		}
-		int movieCnt = 0;
-		
-		String pageLink = null;
-		
-		MOVIE_LIST = movieDAO.selectMovieListSearch(page, length, schCode, schString);
-		movieCnt = movieDAO.selectMovieListSearchCnt(schCode, schString);
-		
-		
-		pageLink = "searchMovieList.action?schCode="+schCode+"&schString="+schString;
-		PAGE_LINK_TAG = PageUtil.generate(page, movieCnt, length, pageLink);
-		
-		return "success";
-	}
-	
-	public String editMovieForm() throws Exception{
-		if(gubun==null || gubun==""){
-			gubun = "total";
-		}
-		
-		movie = movieDAO.selectMovie(mnum);
-		
-		return "success";
-	}
-	
-	public String addMovieForm() throws Exception{
-		return "success";
-	}
-	
-	public String adminMovie() throws Exception{
-		if(gubun==null || gubun==""){
-			gubun = "total";
-		}
-		
-		movie = movieDAO.selectMovie(mnum);
-		return "success";
-	}
-	
-	public String adminRankingList() throws Exception{
-		MOVIE_LIST = movieDAO.rankingMovieList();
-		if(method==null || method==""){
-			method = "adminRankingList";
-		}	
-		String pageLinkTag=null;
-		return "success";
-	}
-	
-	public String adminMovieList() throws Exception{
-		int length = 5;
-		
-		if(page==0){
-			page = 1;
-		}
-		if(gubun=="" || gubun==null){
-			gubun = "total";
-		}
-		
-		if(method==null || method==""){
-			method = "adminMovieList";
-		}
-		
-		String pageLink = "adminMovieList.action?gubun="+gubun;
-		
-		MOVIE_LIST =movieDAO.selectMovieList(page, length, gubun);
-		
-		int MovieCnt = movieDAO.selectMovieCount(gubun);
-		
-		//System.out.println(pageLink);
-		PAGE_LINK_TAG = PageUtil.generate(page, MovieCnt, length, pageLink);
-		
-		return "success";
-	}
-	
-	public String viewMovie() throws Exception {
-		if(gubun==null || gubun==""){
-			gubun = "total";
-		}
-		
-		MOVIE = movieDAO.selectMovie(mnum);
-		return "success";
-	}
-	
-	public String rankingMovieList() throws Exception {
-		MOVIE_LIST = movieDAO.rankingMovieList();
-		return "success";		
-	}
-	
-	public String viewMovieList() throws Exception {
-		int length = 5;
-		String pageLink = "viewMovieList.action?gubun="+gubun;
-		if(page==0){
-			page = 1;
-		}
-		if(gubun=="" || gubun==null){
-			gubun = "total";
-		}
-		if(method=="" || method==null){
-			method = "viewMovieList";
-		}
-		int MovieCnt = movieDAO.selectMovieCount(gubun);
-		
-		MOVIE_LIST = movieDAO.selectMovieList(page, length, gubun);
-				
-		//System.out.println(pageLink);
-		PAGE_LINK_TAG = PageUtil.generate(page, MovieCnt, length, pageLink);
-		
-		return "success";
-	}
-	
-	public String main() throws Exception{
-		SCREENMOVIE_LIST = movieDAO.selectMovieList(1, 3, "screen");
-		SCHEDULEMOVIE_LIST = movieDAO.selectMovieList(1, 3, "schedule");
-		RANKINGMOVIE_LIST = movieDAO.rankingMovieList();
-		return "success";
-	}
-
-	private void MovieTimeList(HttpServletRequest request,
-			HttpServletResponse response) throws IOException, ServletException{
-		String mnum = request.getParameter("mnum");
-		
-		List<ScreenTime> screenTimeList = ScreenTimeDAO.selectScreen(mnum);
-
-		JSONArray jsonArray = JSONArray.fromObject(screenTimeList);
-
-		response.setContentType("text/html;charset=utf-8");
-		PrintWriter out = response.getWriter();
-		out.println(jsonArray.toString());
-		out.flush();
-		out.close();
-	}
-
-	private void MovieTimeListForm(HttpServletRequest request,
-			HttpServletResponse response) throws IOException, ServletException{
-		
-		int Moviecnt = movieDAO.selectMovieCount("");
-		List<Movie> movieList = movieDAO.selectMovieList(1, Moviecnt, "");
-		
-		request.setAttribute("MovieList", movieList);
-		
-		RequestDispatcher rd = request.getRequestDispatcher("/movie/test1.jsp");
-		rd.forward(request, response);
-		
-	}
-
-	/**
-	 * 영화 추가
-	 * 
-	 * @param request
-	 * @param response
-	 */
-	public String addMovie() throws Exception{
-		try {
-			DateFormat formatter ; 
-	        Date Sdate ;
-	        Date Edate ;
-	        formatter = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss");	
-	        Sdate = (Date)formatter.parse(movie_sdate+"T00:00:00");
-	        Edate = (Date)formatter.parse(movie_edate+"T00:00:00");
-	        
-	        Movie movie = new Movie();
-			movie.setLaunchDate(Sdate);
-			movie.setEndDate(Edate);
-			
-			movieDAO.addMovie(movie);
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return "success";
-	}
-
-	/**
-	 * 영화를 수정
-	 * 
-	 * @param request
-	 * @param response
-	 */
-	public String editMovie() throws Exception{		
-		try {
-			DateFormat formatter ; 
-	        Date Sdate ;
-	        Date Edate ;
-	        formatter = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss");	
-	        Sdate = (Date)formatter.parse(movie_sdate+"T00:00:00");
-	        Edate = (Date)formatter.parse(movie_edate+"T00:00:00");
-	        
-			movie.setLaunchDate(Sdate);
-			movie.setEndDate(Edate);
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		movieDAO.editMovie(movie);
-		return "success";		
-	}
-
-	/**
-	 * 영화 삭제
-	 * 
-	 * @param request
-	 * @param response
-	 */
-	public void removeMovie(HttpServletRequest request,
-			HttpServletResponse response) throws IOException, ServletException {
-		String mnum = request.getParameter("mnum");
-		String gubun = request.getParameter("gubun");
-		movieDAO.removeMovie(mnum);
-		
-		request.setAttribute("gubun", gubun);
-		
-		RequestDispatcher rd = request.getRequestDispatcher("/MovieService?method=adminMovieList");
-		rd.forward(request, response);
-	}
-
 	/* getter/setter 시작 */
 	public Movie getMovie() {
 		return movie;
@@ -434,5 +183,255 @@ public class MovieService implements ModelDriven, ServletContextAware{
 	public void setServletContext(ServletContext arg0) {
 		// TODO Auto-generated method stub
 		
-	}	
+	}
+	
+	public MovieService(IMovieDAO movieDAO) {
+		super();
+		System.out.println("movieDAO확인");
+		this.movieDAO = movieDAO;
+	}
+
+	public MovieService() {
+        super();
+        // TODO Auto-generated constructor stub
+	}
+	
+	public String adminMovieListSch() throws Exception{
+		int length = 5;
+		int movieCnt = 0;
+		String pageLink = null;
+		if(page==0){
+			page = 1;
+		}
+		if(method=="" || method == null){
+			method = "adminMovieList";
+		}
+		
+		MOVIE_LIST = movieDAO.selectMovieListSearch(page, length, schCode, schString);
+		movieCnt = movieDAO.selectMovieListSearchCnt(schCode, schString);
+		
+		
+		pageLink = "adminMovieListSch.action?schCode="+schCode+"&schString="+schString;
+		PAGE_LINK_TAG = PageUtil.generate(page, movieCnt, length, pageLink);
+		
+		return "success";
+	}
+	
+	public String searchMovieList() throws Exception{
+		/* default generated stub */;
+		int length = 5;
+		if(page==0){
+			page = 1;
+		}
+		int movieCnt = 0;
+		
+		String pageLink = null;
+		
+		MOVIE_LIST = movieDAO.selectMovieListSearch(page, length, schCode, schString);
+		movieCnt = movieDAO.selectMovieListSearchCnt(schCode, schString);
+		
+		
+		pageLink = "searchMovieList.action?schCode="+schCode+"&schString="+schString;
+		PAGE_LINK_TAG = PageUtil.generate(page, movieCnt, length, pageLink);
+		
+		return "success";
+	}
+	
+	public String editMovieForm() throws Exception{
+		if(gubun==null || gubun==""){
+			gubun = "total";
+		}
+		
+		movie = movieDAO.selectMovie(mnum);
+		
+		return "success";
+	}
+	
+	public String addMovieForm() throws Exception{
+		return "success";
+	}
+	
+	public String adminMovie() throws Exception{
+		if(gubun==null || gubun==""){
+			gubun = "total";
+		}
+		
+		movie = movieDAO.selectMovie(mnum);
+		return "success";
+	}
+	
+	public String adminRankingList() throws Exception{
+		MOVIE_LIST = movieDAO.rankingMovieList();
+		if(method==null || method==""){
+			method = "adminRankingList";
+		}	
+		String pageLinkTag=null;
+		return "success";
+	}
+	
+	public String adminMovieList() throws Exception{
+		int length = 5;
+		
+		if(page==0){
+			page = 1;
+		}
+		if(gubun=="" || gubun==null){
+			gubun = "total";
+		}
+		
+		if(method==null || method==""){
+			method = "adminMovieList";
+		}
+		
+		String pageLink = "adminMovieList.action?gubun="+gubun;
+		
+		MOVIE_LIST =movieDAO.selectMovieList(page, length, gubun);
+		
+		int MovieCnt = movieDAO.selectMovieCount(gubun);
+		
+		//System.out.println(pageLink);
+		PAGE_LINK_TAG = PageUtil.generate(page, MovieCnt, length, pageLink);
+		
+		return "success";
+	}
+	
+	public String viewMovie() throws Exception {
+		if(gubun==null || gubun==""){
+			gubun = "total";
+		}
+		System.out.println(mnum);
+		MOVIE = movieDAO.selectMovie(mnum);
+		return "success";
+	}
+	
+	public String rankingMovieList() throws Exception {
+		MOVIE_LIST = movieDAO.rankingMovieList();
+		return "success";		
+	}
+	
+	public String viewMovieList() throws Exception {
+		int length = 5;
+		String pageLink = "viewMovieList.action?gubun="+gubun;
+		if(page==0){
+			page = 1;
+		}
+		if(gubun=="" || gubun==null){
+			gubun = "total";
+		}
+		if(method=="" || method==null){
+			method = "viewMovieList";
+		}
+		int MovieCnt = movieDAO.selectMovieCount(gubun);
+		
+		MOVIE_LIST = movieDAO.selectMovieList(page, length, gubun);
+				
+		//System.out.println(pageLink);
+		PAGE_LINK_TAG = PageUtil.generate(page, MovieCnt, length, pageLink);
+		
+		return "success";
+	}
+	
+	public String main() throws Exception{
+		SCREENMOVIE_LIST = movieDAO.selectMovieList(1, 3, "screen");
+		SCHEDULEMOVIE_LIST = movieDAO.selectMovieList(1, 3, "schedule");
+		RANKINGMOVIE_LIST = movieDAO.rankingMovieList();
+		return "success";
+	}
+
+	private void MovieTimeList() throws Exception{
+		/*
+		SCREENMOVIE_LIST = ScreenTimeDAO.selectScreen(mnum);
+
+		JSONArray jsonArray = JSONArray.fromObject(SCREENMOVIE_LIST);
+
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter out = response.getWriter();
+		out.println(jsonArray.toString());
+		out.flush();
+		out.close();
+		*/
+	}
+
+	private void MovieTimeListForm(HttpServletRequest request,
+			HttpServletResponse response) throws IOException, ServletException{
+		
+		int Moviecnt = movieDAO.selectMovieCount("");
+		List<Movie> movieList = movieDAO.selectMovieList(1, Moviecnt, "");
+		
+		request.setAttribute("MovieList", movieList);
+		
+		RequestDispatcher rd = request.getRequestDispatcher("/movie/test1.jsp");
+		rd.forward(request, response);
+		
+	}
+
+	/**
+	 * 영화 추가
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	public String addMovie() throws Exception{
+		try {
+			DateFormat formatter ; 
+	        Date Sdate ;
+	        Date Edate ;
+	        formatter = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss");	
+	        Sdate = (Date)formatter.parse(movie_sdate+"T00:00:00");
+	        Edate = (Date)formatter.parse(movie_edate+"T00:00:00");
+	        
+	        Movie movie = new Movie();
+			movie.setLaunchDate(Sdate);
+			movie.setEndDate(Edate);
+			
+			movieDAO.addMovie(movie);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "success";
+	}
+
+	/**
+	 * 영화를 수정
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	public String editMovie() throws Exception{		
+		try {
+			DateFormat formatter ; 
+	        Date Sdate ;
+	        Date Edate ;
+	        formatter = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss");	
+	        Sdate = (Date)formatter.parse(movie_sdate+"T00:00:00");
+	        Edate = (Date)formatter.parse(movie_edate+"T00:00:00");
+	        
+			movie.setLaunchDate(Sdate);
+			movie.setEndDate(Edate);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		movieDAO.editMovie(movie);
+		return "success";		
+	}
+
+	/**
+	 * 영화 삭제
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	public void removeMovie(HttpServletRequest request,
+			HttpServletResponse response) throws IOException, ServletException {
+		String mnum = request.getParameter("mnum");
+		String gubun = request.getParameter("gubun");
+		movieDAO.removeMovie(mnum);
+		
+		request.setAttribute("gubun", gubun);
+		
+		RequestDispatcher rd = request.getRequestDispatcher("/MovieService?method=adminMovieList");
+		rd.forward(request, response);
+	}
 }
