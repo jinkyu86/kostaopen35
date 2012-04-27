@@ -19,13 +19,14 @@ import org.apache.struts2.interceptor.SessionAware;
 
 import com.opensymphony.xwork2.ModelDriven;
 
+import kr.or.kosta.betting.aop.IService;
 import kr.or.kosta.betting.util.PageUtil;
 
 
 /**
  * Servlet implementation class MemberService
  */
-public class MemberService implements ModelDriven
+public class MemberService implements ModelDriven,IService
 	,SessionAware{
 	private IMember memberDAO;
 	private Map session;
@@ -41,6 +42,10 @@ public class MemberService implements ModelDriven
 	private InputStream resultStream;
 	
 	
+	public MemberService() {
+		super();
+	}
+
 	public MemberService(IMember memberDAO) {
 		super();
 		this.memberDAO = memberDAO;
@@ -116,6 +121,11 @@ public class MemberService implements ModelDriven
 
 	public void setSUCCESS(String sUCCESS) {
 		SUCCESS = sUCCESS;
+	}
+	
+	@Override
+	public Map getSession() {
+		return session;
 	}
 
 	@Override

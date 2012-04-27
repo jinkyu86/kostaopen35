@@ -15,6 +15,7 @@ import org.apache.struts2.interceptor.SessionAware;
 
 import com.opensymphony.xwork2.ModelDriven;
 
+import kr.or.kosta.betting.aop.IService;
 import kr.or.kosta.betting.betting.Betting;
 import kr.or.kosta.betting.betting.BettingDAO;
 import kr.or.kosta.betting.betting.IBetting;
@@ -32,7 +33,7 @@ import kr.or.kosta.betting.util.PageUtil;
 /**
  * Servlet implementation class MatchService
  */
-public class MatchService implements ModelDriven
+public class MatchService implements ModelDriven,IService
 	,SessionAware{
 	private IMatch matchDAO;
 	private IMember memberDAO;
@@ -55,6 +56,11 @@ public class MatchService implements ModelDriven
     private int checkbox;
 	
     
+	public MatchService() {
+		super();
+		
+	}
+
 	public MatchService(IMatch matchDAO, IMember memberDAO, ITeam teamDAO,
 			ILoc locDAO, IBetting bettingDAO) {
 		super();
@@ -167,6 +173,13 @@ public class MatchService implements ModelDriven
 
 	public void setMatch(Match match) {
 		this.match = match;
+	}
+	
+	
+	@Override
+	public Map getSession() {
+		
+		return session;
 	}
 
 	@Override

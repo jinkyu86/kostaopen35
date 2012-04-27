@@ -15,6 +15,7 @@ import org.apache.struts2.interceptor.SessionAware;
 
 import com.opensymphony.xwork2.ModelDriven;
 
+import kr.or.kosta.betting.aop.IService;
 import kr.or.kosta.betting.match.IMatch;
 import kr.or.kosta.betting.match.Match;
 import kr.or.kosta.betting.match.MatchDAO;
@@ -29,7 +30,7 @@ import kr.or.kosta.betting.util.now;
 /**
  * Servlet implementation class BettingService
  */
-public class BettingService implements ModelDriven
+public class BettingService implements ModelDriven,IService
 	,SessionAware{
 	private IBetting bettingDAO;
 	private IMember memberDAO;
@@ -52,10 +53,14 @@ public class BettingService implements ModelDriven
 	private Betting BETTING_AWAY;
 	
 	
+	public BettingService() {
+		super();
+	}
+
+
 	public BettingService( IMember memberDAO,IBetting bettingDAO,
 			IMatch matchDAO, IMemberBetData memberBetDataDAO) {
 		super();
-		
 		this.memberDAO = memberDAO;
 		this.bettingDAO = bettingDAO;
 		this.matchDAO = matchDAO;
@@ -176,8 +181,16 @@ public class BettingService implements ModelDriven
 	public void setRANK(long rANK) {
 		RANK = rANK;
 	}
+	
+	
+	@Override
+	public Map getSession() {
+		// TODO Auto-generated method stub
+		return session;
+	}
 
-@Override
+
+	@Override
 	public void setSession(Map<String, Object> session) {
 		this.session = session;
 		
@@ -309,7 +322,7 @@ public class BettingService implements ModelDriven
 					.selectBettingTotMineral(home);
 				long awayTotMineral = bettingDAO
 					.selectBettingTotMineral(away);
-				long mineral = memberDAO.selectMineralByID(ID);
+				
 				
 				if (districtnum.equals("1")) {
 					homeSeleRating = homeSeleRating + 1;
@@ -319,9 +332,9 @@ public class BettingService implements ModelDriven
 							/ homeTotMineral;
 					awayBetRating = ((double) homeTotMineral + awayTotMineral)
 							/ awayTotMineral;
-					mineral = mineral - betmineral;
+					MINERAL = MINERAL - betmineral;
 					
-					if(mineral<0){
+					if(MINERAL<0){
 						SUCCESS ="미네랄이 부족합니다.";
 						return "success";
 					}
@@ -350,7 +363,7 @@ public class BettingService implements ModelDriven
 					MemberBetData mbd = new MemberBetData();
 					mbd.setBetMineral(betmineral);
 
-					member.setMineral(mineral);
+					member.setMineral(MINERAL);
 
 					mbd.setBetting(hBetting);
 					mbd.setMember(member);
@@ -368,9 +381,9 @@ public class BettingService implements ModelDriven
 							/ awayTotMineral;
 					homeBetRating = ((double) homeTotMineral + awayTotMineral)
 							/ homeTotMineral;
-					mineral = mineral - betmineral;
+					MINERAL = MINERAL - betmineral;
 					
-					if(mineral<0){
+					if(MINERAL<0){
 						SUCCESS ="미네랄이 부족합니다.";
 						return "success";
 					}
@@ -400,7 +413,7 @@ public class BettingService implements ModelDriven
 					MemberBetData mbd = new MemberBetData();
 					mbd.setBetMineral(betmineral);
 
-					member.setMineral(mineral);
+					member.setMineral(MINERAL);
 
 					mbd.setBetting(aBetting);
 					mbd.setMember(member);

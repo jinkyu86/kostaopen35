@@ -16,6 +16,13 @@
 	
 	<package name="root" namespace="/" extends="struts-default">
 		
+		<global-results><!--모든 Action에 설정-->
+		<!--error리턴시 /error/error.jsp로 이동-->
+			<result name="error">/error/error.jsp</result>
+		<!--loginForm리턴시 /login/login.jsp로 이동-->
+			<result name="loginForm">/member/login.jsp</result>
+		</global-results>
+		
 		<action name="checkMemberID" 
 		  class="kr.or.kosta.betting.member.MemberService"
 		  method="checkMemberID">
@@ -34,7 +41,7 @@
 				</param>
 			</result>
 		</action>
-		
+				
 		<action name="loginForm"
 			class="kr.or.kosta.betting.member.MemberService"
 		  method="loginForm">
@@ -275,9 +282,9 @@
 		  	<result name="success">
 				/mbd/viewMBDByIDList.jsp
 			</result>
-			<result name="login" type="chain">
+			<!--<result name="login" type="chain">
 				loginForm
-			</result>
+			</result>-->
 		</action>
 		
 		<action name="viewMBDByIDForm" 

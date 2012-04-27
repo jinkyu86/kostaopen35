@@ -15,6 +15,7 @@ import org.apache.struts2.interceptor.SessionAware;
 
 import com.opensymphony.xwork2.ModelDriven;
 
+import kr.or.kosta.betting.aop.IService;
 import kr.or.kosta.betting.betting.Betting;
 import kr.or.kosta.betting.betting.BettingDAO;
 import kr.or.kosta.betting.betting.IBetting;
@@ -29,7 +30,7 @@ import kr.or.kosta.betting.util.now;
 /**
  * Servlet implementation class MemberBetDataService
  */
-public class MemberBetDataService implements ModelDriven
+public class MemberBetDataService implements ModelDriven,IService
 	,SessionAware{
 	private IMemberBetData memberBetDataDAO;
 	private IBetting bettingDAO;
@@ -57,6 +58,10 @@ public class MemberBetDataService implements ModelDriven
 	private long emineral;
 	
 	
+	public MemberBetDataService() {
+		super();
+	}
+
 	public MemberBetDataService(IMemberBetData memberBetDataDAO,
 			IBetting bettingDAO, IMember memberDAO, IMatch matchDAO) {
 		super();
@@ -218,6 +223,12 @@ public class MemberBetDataService implements ModelDriven
 
 	public void setMbd(MemberBetData mbd) {
 		this.mbd = mbd;
+	}
+	
+@Override
+	public Map getSession() {
+		
+		return session;
 	}
 
 @Override
@@ -689,7 +700,7 @@ public class MemberBetDataService implements ModelDriven
 	public String viewMemberBetDataByIDList() throws Exception{
 		/* default generated stub */;
 		Member member = (Member)session.get("LOGIN_MEMBER");
-		if(member!=null){
+		//if(member!=null){
 			String ID = member.getId();
 			
 			MINERAL = memberDAO.selectMineralByID(ID);
@@ -705,12 +716,13 @@ public class MemberBetDataService implements ModelDriven
 		PAGE_LINK_TAG = PageUtil.generate(page, mbdCount, length,
 				"viewMemberBetDataByIDList.action");
 		return "success";
-		
-	} else {
-		SUCCESS= "로그인 해주세요";
-		return "login";
-		
 	}
+		
+//	} else {
+//		SUCCESS= "로그인 해주세요";
+//		return "login";
+		
+	
 //		HttpSession session = request.getSession();
 //		Member member1 = (Member) session.getAttribute("LOGIN_MEMBER");
 //		if (member1 != null) {
@@ -744,7 +756,8 @@ public class MemberBetDataService implements ModelDriven
 //					.getRequestDispatcher("/MemberService?method=loginForm");
 //			rd.forward(request, response);
 //		}
-	}
+	
+
 
 	/**
 	 * 선택된 아이디의 멤버 베팅 테이터 조회폼 구현을 위한 메서드
