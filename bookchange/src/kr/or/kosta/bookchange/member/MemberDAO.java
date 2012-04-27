@@ -1,29 +1,16 @@
 package kr.or.kosta.bookchange.member;
 
 import java.io.IOException;
-import java.io.Reader;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-
 import javax.servlet.ServletException;
-
-
-
-import kr.or.kosta.util.ConnectionUtil;
-
-import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 
 public class MemberDAO extends SqlSessionDaoSupport implements IMemberDAO{
+
 	
 	/**
 	 * 회원가입시 DB에 추가
@@ -33,12 +20,8 @@ public class MemberDAO extends SqlSessionDaoSupport implements IMemberDAO{
 	@Override
 	public void insertMember(Member member) {
 		SqlSession session =null;
-		try{
-		session=sqlMapper.openSession(true);
+		session=getSqlSession();
 		session.insert("Member.insertMember",member);
-		}finally{
-			session.close();
-		}
 	}
 
 //	public static void insertMember(Member member) {
@@ -68,14 +51,11 @@ public class MemberDAO extends SqlSessionDaoSupport implements IMemberDAO{
 	@Override
 	public void updateMember(
 			 Member member){
-		SqlSession session =null;
-		try{
-		session=sqlMapper.openSession(true);
+		
+		SqlSession session=getSqlSession();
+
 		session.update("Member.updateMember",member);
-		}finally{
-			session.close();
-		}
-	 
+
 	}
 	
 	
@@ -109,12 +89,8 @@ public class MemberDAO extends SqlSessionDaoSupport implements IMemberDAO{
 	public void deleteMember(
 			 String email){
 		SqlSession session =null;
-		try{
-		session=sqlMapper.openSession(true);
+		session=getSqlSession();
 		session.delete("Member.deleteMember",email);
-		}finally{
-			session.close();
-		}
 	 
 	}
 	
@@ -142,18 +118,15 @@ public class MemberDAO extends SqlSessionDaoSupport implements IMemberDAO{
 	 */
 	@Override
 	public  int selectMemberCount(){
-		SqlSession session =null;
+
 		Integer count=null;
-		try{
-		session=sqlMapper.openSession(true);
+		SqlSession session =null;
+		session=getSqlSession();
 		count=session.selectOne("Member.selectMemberCount");
 		//조회 결과가 1건또는 0건일때
 		//selectOne(쿼리ID,파라미터 변수)
 		//select쿼리를 실행하고 Vo객체 생성 조회 결과 속성에 담아서 리턴
 		//-조회결과가 2건 이상이면 실행에러
-		}finally{
-			session.close();
-		}
 		return count;
 	}
 //	public static int selectMemberCount() {
@@ -186,18 +159,12 @@ public class MemberDAO extends SqlSessionDaoSupport implements IMemberDAO{
 	@Override
 	public List <Member> selectMemberList(
 			 int page,int length){
-		SqlSession session =null;
-		 
+		SqlSession session=getSqlSession();
 		List<Member> memberList;
-		try {
-			session=sqlMapper.openSession(true);
-			RowBounds rowBounds=new RowBounds((page-1)*length,length);
-			memberList=session.selectList("selectMember",null,rowBounds);
+			
+		RowBounds rowBounds=new RowBounds((page-1)*length,length);
+		memberList=session.selectList("selectMember",null,rowBounds);
 				
-		} finally {
-			// TODO: handle exception
-			session.close();
-		}
 		return memberList;
 	}
 
@@ -247,18 +214,15 @@ public class MemberDAO extends SqlSessionDaoSupport implements IMemberDAO{
 	 */
 	@Override
 	public int selectMemberCountemail(String email){
-		SqlSession session =null;
 		Integer count=null;
-		try{
-		session=sqlMapper.openSession(true);
+		SqlSession session =null;
+		session=getSqlSession();
+
 		count=session.selectOne("Member.selectMemberCountemail",email);
 		//조회 결과가 1건또는 0건일때
 		//selectOne(쿼리ID,파라미터 변수)
 		//select쿼리를 실행하고 Vo객체 생성 조회 결과 속성에 담아서 리턴
 		//-조회결과가 2건 이상이면 실행에러
-		}finally{
-			session.close();
-		}
 		return count;
 	}
 
@@ -296,14 +260,11 @@ public class MemberDAO extends SqlSessionDaoSupport implements IMemberDAO{
 	 */
 	@Override
 	public Member selectMemberemail(String email){
-		SqlSession session=null;
 		Member member=null;
-		try{
-			session=sqlMapper.openSession(true);
-			member=session.selectOne("selectMemberemail",email);
-		}finally{
-			session.close();
-		}
+		SqlSession session =null;
+		session=getSqlSession();
+
+		member=session.selectOne("selectMemberemail",email);
 		return member;
 	}
 	
@@ -351,18 +312,13 @@ public class MemberDAO extends SqlSessionDaoSupport implements IMemberDAO{
 	@Override
 	public List <Member> selectMemberListByEmail(
 			 int page,int length,String email){
-		SqlSession session =null;
 		 
 		List<Member> memberList;
-		try {
-			session=sqlMapper.openSession(true);
+		SqlSession session=getSqlSession();
+	
 			RowBounds rowBounds=new RowBounds((page-1)*length,length);
 			memberList=session.selectList("Member.selectMemberListByEmail","%"+email+"%",rowBounds);
 				
-		} finally {
-			// TODO: handle exception
-			session.close();
-		}
 		return memberList;
 	}
 //	public static ArrayList<Member> selectMemberListByEmail(int length, int page, String email) {
@@ -410,17 +366,15 @@ public class MemberDAO extends SqlSessionDaoSupport implements IMemberDAO{
 	 */
 	@Override
 	public  Member selectMemberListByPw(String email,String tel){
-		SqlSession session=null;
+	
 		Member member=null;
-		try{
-			session=sqlMapper.openSession(true);
-			HashMap<String, String> parameters=new HashMap<String, String>();
-			parameters.put("email", email);
-			parameters.put("tel", tel);
-			member=session.selectOne("Member.selectMemberListByPw",parameters);
-		}finally{
-			session.close();
-		}
+		SqlSession session =getSqlSession();
+		
+		
+		HashMap<String, String> parameters=new HashMap<String, String>();
+		parameters.put("email", email);
+		parameters.put("tel", tel);
+		member=session.selectOne("Member.selectMemberListByPw",parameters);
 		return member;
 	}
 	
@@ -468,14 +422,11 @@ public class MemberDAO extends SqlSessionDaoSupport implements IMemberDAO{
 	 */
 	@Override
 	public  Member selectMemberemailTel(String tel){
-		SqlSession session=null;
 		Member member=null;
-		try{
-			session=sqlMapper.openSession(true);
-			member=session.selectOne("selectMemberListByTel",tel);
-		}finally{
-			session.close();
-		}
+		SqlSession session =null;
+		session=getSqlSession();
+	
+		member=session.selectOne("selectMemberListByTel",tel);
 		return member;
 	}
 	
