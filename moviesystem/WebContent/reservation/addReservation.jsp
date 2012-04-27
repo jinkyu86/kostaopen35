@@ -17,7 +17,7 @@
 
 	$(document).ready(function(){
 		var mnum = $("select[name:mnum] option:selected").val();
-		$.getJSON("/moviesystem/ReservationService?method=MovieTimeList",
+		$.getJSON("/moviesystem/MovieTimeList.action",
 				{"mnum" : mnum},
 				function(data){
 					$("#scrnum").empty();
@@ -41,7 +41,7 @@
 			var mnum = $("#mnum").val();
 			//alert(mnum);
 			//var servlet_url = "";
-			$.getJSON("/moviesystem/ReservationService?method=MovieTimeList",
+			$.getJSON("/moviesystem/MovieTimeList.action",
 				{"mnum" : mnum},
 				function(data){
 					//이이디가 model인 객체의 내용 삭제
@@ -89,7 +89,7 @@
 
 
 
-	<form id="my_form" action="/moviesystem/ReservationService" method="post">
+	<form action="/moviesystem/viewSeatListByScrnum.action" method="post">
 	<input type="hidden" name="method" value ="viewSeatListByScrnum"/>
 		<table border="1" align="center">
 
@@ -98,7 +98,7 @@
 				<td>아이디</td>
 				<td>
 				
-				<input type="text"name="userid"value="${userid}"
+				<input type="text"name="userid"value="${LOGIN_MEMBER.userid}"
 					readOnly="readOnly"/> 
 				
 				
