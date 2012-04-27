@@ -14,7 +14,14 @@
 	<constant name="struts.objectFactory" value="spring"/>
 
 	<package name="root" namespace="/" extends="struts-default">
-		
+
+<!--global-->
+
+	<global-results>
+		<result name="error">/error/error.jsp </result>
+		<result name="loginForm">/member/loginForm.jsp</result>
+	</global-results>	
+
 <!--Recipe-->		
 		<action name="viewRecipeList" class="kr.or.kosta.recipe.RecipeService" method="viewRecipeList">
 			<result name="success">/recipe/viewRecipeList.jsp</result>
@@ -82,14 +89,18 @@
 			  		'password':'member.password'
 				  }
 			</param>	
+			
 			<result name="success" type="chain">viewRecipeList</result>
+			
 			<result name="fail">/member/loginFail.jsp</result>			
 		</action>
 		
+		
+<!--		
 		<action name="loginForm" class="kr.or.kosta.member.MemberService" method="loginForm">
 			<result name="success">/member/loginForm.jsp</result>
 		</action>
-		
+-->		
 		<action name="logout" class="kr.or.kosta.member.MemberService" method="logout">
 			<result name="success">/member/loginForm.jsp</result>
 		</action>
