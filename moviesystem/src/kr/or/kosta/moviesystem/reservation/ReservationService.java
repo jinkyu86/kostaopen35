@@ -4,13 +4,22 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import org.apache.struts2.interceptor.ServletRequestAware;
+import org.apache.struts2.interceptor.ServletResponseAware;
+import org.apache.struts2.interceptor.SessionAware;
+import org.apache.struts2.util.ServletContextAware;
+
+import com.opensymphony.xwork2.ModelDriven;
 
 import net.sf.json.JSONArray;
 
@@ -27,10 +36,231 @@ import kr.or.kosta.moviesystem.util.PageUtil;
 /**
  * Servlet implementation class StudentService
  */
-public class ReservationService extends HttpServlet {
+public class ReservationService implements ModelDriven, 
+ServletContextAware, ServletRequestAware, ServletResponseAware, SessionAware {
 	private static final long serialVersionUID = 1L;
-       
-    /**
+	private  ServletContext servletContext;
+	private HttpServletRequest request;
+	private HttpServletResponse response;
+	private Map session; 
+	private Member member=new Member();
+	private Reservation reservation=new Reservation();
+	private String seatString;
+//	private String seat;
+	private String time;
+	private String scrnum;
+	private String mnum;
+	private String mname;
+	private long resQty;
+	private long totalPrice;
+	private Movie movie =new Movie();
+	private Movie MOVIE;
+	private Reservation RESERVATION=new Reservation();
+	private MovieDAO movieDAO;
+	private int page;
+	private String PAGE_LINK_TAG;
+	private String userid;
+	private String resnum;
+//	int reservationCount;
+	ScreenTime screenTime = new ScreenTime();
+	ScreenTime SCREENTIME;
+	List<Integer>TotalSeatList=new ArrayList<Integer>();
+	ArrayList<Integer>SeatNumList=new ArrayList<Integer>();
+	List<Reservation>RESERVATION_LIST;
+	
+	
+	
+//	public String getSeat() {
+//		return seat;
+//	}
+//
+//
+//	public void setSeat(String seat) {
+//		this.seat = seat;
+//	}
+	
+	
+	@Override
+	public void setSession(Map<String, Object> session) {
+		this.session=session;
+		
+	}
+
+
+//	public int getReservationCount() {
+//		return reservationCount;
+//	}
+//
+//
+//	public void setReservationCount(int reservationCount) {
+//		this.reservationCount = reservationCount;
+//	}
+
+
+	public String getResnum() {
+		return resnum;
+	}
+
+
+	public void setResnum(String resnum) {
+		this.resnum = resnum;
+	}
+
+
+	public List<Reservation> getRESERVATION_LIST() {
+		return RESERVATION_LIST;
+	}
+
+
+	public void setRESERVATION_LIST(List<Reservation> rESERVATION_LIST) {
+		RESERVATION_LIST = rESERVATION_LIST;
+	}
+
+
+	public String getUserid() {
+		return userid;
+	}
+
+
+	public void setUserid(String userid) {
+		this.userid = userid;
+	}
+
+
+	public String getPAGE_LINK_TAG() {
+		return PAGE_LINK_TAG;
+	}
+
+
+	public void setPAGE_LINK_TAG(String pAGE_LINK_TAG) {
+		PAGE_LINK_TAG = pAGE_LINK_TAG;
+	}
+
+
+	public int getPage() {
+		return page;
+	}
+
+
+	public void setPage(int page) {
+		this.page = page;
+	}
+
+
+	public String getSeatString() {
+		return seatString;
+	}
+
+
+	public Reservation getRESERVATION() {
+		return RESERVATION;
+	}
+
+
+	public void setRESERVATION(Reservation rESERVATION) {
+		RESERVATION = rESERVATION;
+	}
+
+
+	public void setSeatString(String seatString) {
+		this.seatString = seatString;
+	}
+
+
+	public MovieDAO getMovieDAO() {
+		return movieDAO;
+	}
+
+
+	public void setMovieDAO(MovieDAO movieDAO) {
+		this.movieDAO = movieDAO;
+	}
+
+
+
+	
+    public long getTotalPrice() {
+		return totalPrice;
+	}
+
+
+	public void setTotalPrice(long totalPrice) {
+		this.totalPrice = totalPrice;
+	}
+
+
+	public Movie getMOVIE() {
+		return MOVIE;
+	}
+
+
+	public void setMOVIE(Movie mOVIE) {
+		MOVIE = mOVIE;
+	}
+
+
+	public ScreenTime getSCREENTIME() {
+		return SCREENTIME;
+	}
+
+
+	public void setSCREENTIME(ScreenTime sCREENTIME) {
+		SCREENTIME = sCREENTIME;
+	}
+
+
+	public List<Integer> getTotalSeatList() {
+		return TotalSeatList;
+	}
+
+
+	public void setTotalSeatList(List<Integer> totalSeatList) {
+		TotalSeatList = totalSeatList;
+	}
+
+
+	public ArrayList<Integer> getSeatNumList() {
+		return SeatNumList;
+	}
+
+
+	public void setSeatNumList(ArrayList<Integer> seatNumList) {
+		SeatNumList = seatNumList;
+	}
+
+
+	public Movie getMovie() {
+		return movie;
+	}
+
+
+	public void setMovie(Movie movie) {
+		this.movie = movie;
+	}
+
+
+	public ScreenTime getScreenTime() {
+		return screenTime;
+	}
+
+
+	public void setScreenTime(ScreenTime screenTime) {
+		this.screenTime = screenTime;
+	}
+
+
+	public long getResQty() {
+		return resQty;
+	}
+
+
+	public void setResQty(long resQty) {
+		this.resQty = resQty;
+		this.totalPrice=this.resQty*8000;
+	}
+
+
+	/**
      * @see HttpServlet#HttpServlet()
      */
     public ReservationService() {
@@ -38,92 +268,142 @@ public class ReservationService extends HttpServlet {
         // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doPost(request,response);
+
+	//SessionAware메서드-세션에 저장된 속성들을 넘겨줌/추가할 속성이 있으면 맵에 추가
+	//삭제/수정할 속성이 있으면 삭제 수정
+
+	public Member getMember() {
+		return member;
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("utf-8");//우리는 utf-8로 사용한다.
-				
-		String method=request.getParameter("method");
-		if(method==null){
-			method="test";
-		}
-		System.out.println(method);
-		if("test".equals(method)){
-			test(request,response);
-		}else if("viewReservationListById".equals(method)){
-			viewReservationListById(request,response);
-		}else if("addReservation".equals(method)){
-			addReservation(request,response);
-		}else if("addReservationForm".equals(method)){
-			addReservationForm(request,response);
-		}else if("MovieTimeList".equals(method)){
-			MovieTimeList(request, response);
-		}else if("viewReservationByResNum".equals(method)){
-			viewReservationByResNum(request,response);
-		}else if("viewReservationByResNumForm".equals(method)){
-			viewReservationByResNumForm(request,response);
-		}else if("viewCancelByResNum".equals(method)){
-			viewCancelByResNum(request,response);
-		}else if("addReservationByTimeForm".equals(method)){
-			addReservationByTimeForm(request,response);
-		}else if("viewSeatListByScrnum".equals(method)){
-			viewSeatListByScrnum(request,response);
-		}else if("SelectSeat".equals(method)){
-			SelectSeat(request,response);
-		}else if("InsertReservation".equals(method)){
-			InsertReservation(request,response);
-		}else if("viewReservationTimeForm".equals(method)){
-			viewReservationTimeForm(request,response);
-		}else if("viewReservationSeat".equals(method)){
-			viewReservationSeat(request,response);
-		}
+
+	public void setMember(Member member) {
+		this.member = member;
+	}
+
+
+	public Reservation getReservation() {
+		return reservation;
+	}
+
+
+	public void setReservation(Reservation reservation) {
+		this.reservation = reservation;
+	}
+
+
+	public String getTime() {
+		return time;
+	}
+
+
+	public void setTime(String time) {
+		this.time = time;
+	}
+
+
+	public String getScrnum() {
+		return scrnum;
+	}
+
+
+	public void setScrnum(String scrnum) {
+		this.scrnum = scrnum;
+	}
+
+
+	public String getMnum() {
+		return mnum;
+	}
+
+
+	public void setMnum(String mnum) {
+		this.mnum = mnum;
+	}
+
+
+	public String getMname() {
+		return mname;
+	}
+
+
+	public void setMname(String mname) {
+		this.mname = mname;
+	}
+
+
+	//ServletResponseAware메서드-ServletResponse를 넘겨줌
+	@Override
+	public void setServletResponse(HttpServletResponse response) {
+		this.response=response;
+	}
+
+	//ServletRequestAware메서드-HttpServletRequest를 넘겨줌
+	@Override
+	public void setServletRequest(HttpServletRequest request) {
+		this.request=request;		
+	}
+
+
+	@Override
+	public Object getModel() {
+		return member;
+	}
+
+    
+    
+	
+public ServletContext getServletContext() {
+		return servletContext;
+	}
+
+	public void setServletContext(ServletContext servletContext) {
+		this.servletContext = servletContext;
+	}
+
+	public HttpServletRequest getRequest() {
+		return request;
+	}
+
+	public void setRequest(HttpServletRequest request) {
+		this.request = request;
+	}
+
+	public HttpServletResponse getResponse() {
+		return response;
+	}
+
+	public void setResponse(HttpServletResponse response) {
+		this.response = response;
+	}
+
+	public Map getSession() {
+		return session;
+	}
+
+
+
+
+
+
+
+
+public String viewReservationSeat() throws Exception {
 		
-		
-		//		else if("viewScreenTimeListBymnum".equals(method)){
-//			viewScreenTimeListBymnum(request,response);
-//		}
-
-	}//end method doPost
-
-
-
-
-
-
-
-
-private void viewReservationSeat(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		String time=request.getParameter("time");
-		ScreenTime screenTime = new ScreenTime();
-		screenTime=ScreenTimeDAO.selectScreenTimeScrNum(time);
-		String scrnum=screenTime.getScrnum();
+	    System.out.println("---viewReservationSeat실행---");
+		SCREENTIME=ScreenTimeDAO.selectScreenTimeScrNum(time);
+	
+		scrnum=SCREENTIME.getScrnum();
 		System.out.println("scrnum= "+scrnum);
-		//Reservation reservation=new Reservation();
-		
-		HttpSession session=request.getSession();
-		Member member=(Member)session.getAttribute("LOGIN_MEMBER");
-		String userid=member.getUserid();
-		//id와 scrnum을 조회해서 좌석을 알아낸다.		
-		List<Reservation> reservationList=ReservationDAO.selectSeatNumByScrnumAndUserid(scrnum,userid);
-		
-		request.setAttribute("reservationList",reservationList);
-		System.out.println("reservationList = "+reservationList);
 
-		RequestDispatcher rd=request.getRequestDispatcher(
-				"/reservation/viewSeatList.jsp");
-				//4.JSP로 페이지 이동
-				rd.forward(request, response);
-		
-		
+		member=(Member)session.get("LOGIN_MEMBER");
+		userid=member.getUserid();
+		//id와 scrnum을 조회해서 좌석을 알아낸다.		
+		RESERVATION_LIST=ReservationDAO.selectSeatNumByScrnumAndUserid(scrnum,userid);
+
+		System.out.println("reservationList = "+RESERVATION_LIST);
+		System.out.println("---viewReservationSeat종료---");
+		return "success";
 		
 	}
 
@@ -168,201 +448,269 @@ private void viewReservationSeat(HttpServletRequest request,
 //		
 //		
 //	}
+
+
+
+
+
+
+
+public String InsertReservation() throws Exception {
+	System.out.println("---InsertReservation 시작---");
+//	HttpSession session=request.getSession();
+//	Member member=(Member)session.getAttribute("LOGIN_MEMBER");
+	member=(Member)session.get("LOGIN_MEMBER");
 	
-	private void SelectSeat(HttpServletRequest request,
-	HttpServletResponse response) throws ServletException, IOException {
+	reservation=(Reservation)session.get("reservation");
+	reservation.setMember(member);
+	SeatNumList=(ArrayList<Integer>)session.get("SeatNumList");
+	System.out.println("SeatNumList"+SeatNumList);
+	System.out.println("SeatNumList.size() "+SeatNumList.size());
+	for(int i=0;i<SeatNumList.size();i++){
+		reservation.setSeatnum(SeatNumList.get(i));
+		System.out.println("for문의 i값"+i);
+		ReservationDAO.insertReservation(reservation);
 		
-		String seatString=request.getParameter("seat");
-		HttpSession session=request.getSession();
-		String countString=(String)session.getAttribute("COUNT");
-		int count=Integer.parseInt(countString);
+	}
+	System.out.println("---InsertReservation 성공--");
+	
+	return "success";
+	
+
+	
+//	System.out.println("member="+member+"reservaiton="+reservaiton);
+//	System.out.println("SeatNumList="+SeatNumList.size());
+//	
+//    System.out.println("SeatNumList"+SeatNumList.get(0));
+    
+	
+	
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	public String SelectSeat() throws Exception {
+		
+		System.out.println("===============SelectSeat()실행==================");
+		System.out.println("seatString"+seatString);
+		member=(Member)session.get("LOGIN_MEMBER");
+		SeatNumList=(ArrayList<Integer>) session.get("SeatNumList");
+		reservation=(Reservation)session.get("RESERVATION");
+		System.out.println("member"+member);
+		System.out.println("reservation"+reservation);
+		System.out.println("seatString"+seatString);
+		System.out.println("SeatNumList======"+SeatNumList);
+		long count=(Long) session.get("COUNT");;
 		int seat=Integer.parseInt(seatString);
-		Reservation reservation=(Reservation)session.getAttribute("RESERVATION");
-		ArrayList<Integer> SeatNumList=(ArrayList<Integer>)session.getAttribute("SeatNumList");
 		String scrnum=reservation.getScreenTime().getScrnum();
-		
 		
 		
 		System.out.println("seat="+seat+"count="+count+"scrnum="+scrnum);
 		
-		List<Integer>TotalSeatList=new ArrayList<Integer>();
 		SeatNumList.add(seat);
 		
+		System.out.print("SeatNumList의 값을 찍어보자 = "+SeatNumList);
 		if(count>1){
 			TotalSeatList=ReservationDAO.selectTotalList(scrnum);	
 			
 			for(int i=0;i<SeatNumList.size();i++){
-//				TotalSeatList.set(seat-1, 1);
 				TotalSeatList.set(SeatNumList.get(i)-1, 1);
 			}
+
+			count=count-1;
+			System.out.println("세션으로 받은거reservation="+reservation);
+			session.put("reservation",reservation);
+			session.put("SeatNumList",SeatNumList);
+			session.put("COUNT", count);
+			System.out.println("=====한번더======");
 			
-			
-			request.setAttribute("TotalSeatList",TotalSeatList);
-			
-			session=request.getSession();
-			session.setAttribute("COUNT",count-1+"");
-			session.setAttribute("SeatNumList", SeatNumList);
-//			session.setAttribute("seatnum"+count, seat+"");
-			
-			
-			RequestDispatcher rd=request.getRequestDispatcher(
-					"/reservation/viewSeatListByScrnum.jsp");
-					//4.JSP로 페이지 이동
-					rd.forward(request, response);
+			return "resuccess";
 		}else{
-			System.out.println("성공");
+			System.out.println("-성공-");
 			System.out.println("seat="+seat+"count="+count+"scrnum="+scrnum);
 			System.out.println("reservation"+reservation);
-			//session.setAttribute("SeatNumList", SeatNumList);
-			session.setAttribute("reservation",reservation);
-			RequestDispatcher rd=request.getRequestDispatcher(
-					"/reservation/pay.jsp");
-					//4.JSP로 페이지 이동
-					rd.forward(request, response);
+			session.put("reservation",reservation);
+			System.out.println("=====성공======");
+			return "success";
 					
 		}
 
 
 
 }
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
-	private void viewSeatListByScrnum(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	public String viewSeatListByScrnum() throws Exception {
+		System.out.println("viewSeatListByScrnum실행");
+		System.out.println("해당 예약정보를 저장");
+		MOVIE=movieDAO.selectMovie(mnum);
+		System.out.println("MOVIE= "+MOVIE);
+		System.out.println("mnum= "+mnum);
+		SCREENTIME=ScreenTimeDAO.selectScreenTimeBySrcNum(scrnum);
+		
+		System.out.println("=====viewSeatListByScrnum======");
+		RESERVATION.setMovie(MOVIE);
+		RESERVATION.setScreenTime(SCREENTIME);
+		RESERVATION.setResQty(resQty);
+		RESERVATION.setTotalPrice(resQty*8000);
 
-		Reservation reservation=new Reservation();
-		Movie movie=new Movie();
-		ScreenTime screenTime = new ScreenTime();
-		String mnum = request.getParameter("mnum");
-		String scrnum= request.getParameter("scrnum");
-		String resQty=request.getParameter("resQty");
-		movie=MovieDAO.selectMovie(mnum);
-		screenTime=ScreenTimeDAO.selectScreenTimeBySrcNum(scrnum);
+		session.put("RESERVATION",RESERVATION);
+		session.put("COUNT", resQty);
+		session.put("SeatNumList",SeatNumList);
+	
+		System.out.println("MOVIE======"+MOVIE);
+		System.out.println("SCREENTIME==========="+SCREENTIME);
+		System.out.println("RESERVATION========"+RESERVATION);
 		
-		System.out.println("mnum="+mnum+"scrnum="+scrnum+"resQty="+resQty);
-
-
-		
-		screenTime.setScrnum(scrnum);
-		reservation.setMovie(movie);
-		reservation.setScreenTime(screenTime);
-		reservation.setResQty(Integer.parseInt(resQty));
-		reservation.setTotalPrice(Integer.parseInt(resQty)*8000);
-		
-		List<Integer>TotalSeatList=new ArrayList<Integer>();
-		ArrayList<Integer>SeatNumList=new ArrayList<Integer>();
+//		List<Integer>TotalSeatList=new ArrayList<Integer>();
+//		ArrayList<Integer>SeatNumList=new ArrayList<Integer>();
 		
 		
-		HttpSession session=request.getSession();
-		session.setAttribute("RESERVATION",reservation);
-		session.setAttribute("COUNT",resQty);
-		session.setAttribute("SeatNumList", SeatNumList);
-
-		System.out.println("reservation="+reservation);
-		System.out.println("SeatNumList="+SeatNumList);
 		TotalSeatList=ReservationDAO.selectTotalList(scrnum);
 
-		request.setAttribute("TotalSeatList",TotalSeatList);
-
-		RequestDispatcher rd=request.getRequestDispatcher(
-				"/reservation/viewSeatListByScrnum.jsp");
-				//4.JSP로 페이지 이동
-				rd.forward(request, response);
+		System.out.println("======TotalSeatList======"+TotalSeatList);
+		System.out.println("viewSeatListByScrnum종료");
+		return "success";
 		
 	}
+	
+//	private void viewSeatListByScrnum(HttpServletRequest request,
+//			HttpServletResponse response) throws ServletException, IOException {
+//
+//		Reservation reservation=new Reservation();
+//		Movie movie=new Movie();
+//		ScreenTime screenTime = new ScreenTime();
+//		String mnum = request.getParameter("mnum");
+//		String scrnum= request.getParameter("scrnum");
+//		String resQty=request.getParameter("resQty");
+//		movie=MovieDAO.selectMovie(mnum);
+//		screenTime=ScreenTimeDAO.selectScreenTimeBySrcNum(scrnum);
+//		
+//		System.out.println("mnum="+mnum+"scrnum="+scrnum+"resQty="+resQty);
+//
+//
+//		
+//		screenTime.setScrnum(scrnum);
+//		reservation.setMovie(movie);
+//		reservation.setScreenTime(screenTime);
+//		reservation.setResQty(Integer.parseInt(resQty));
+//		reservation.setTotalPrice(Integer.parseInt(resQty)*8000);
+//		
+//		List<Integer>TotalSeatList=new ArrayList<Integer>();
+//		ArrayList<Integer>SeatNumList=new ArrayList<Integer>();
+//		
+//		
+//		HttpSession session=request.getSession();
+//		session.setAttribute("RESERVATION",reservation);
+//		session.setAttribute("COUNT",resQty);
+//		session.setAttribute("SeatNumList", SeatNumList);
+//
+//		System.out.println("reservation="+reservation);
+//		System.out.println("SeatNumList="+SeatNumList);
+//		TotalSeatList=ReservationDAO.selectTotalList(scrnum);
+//
+//		request.setAttribute("TotalSeatList",TotalSeatList);
+//
+//		RequestDispatcher rd=request.getRequestDispatcher(
+//				"/reservation/viewSeatListByScrnum.jsp");
+//				//4.JSP로 페이지 이동
+//				rd.forward(request, response);
+//		
+//	}
 
-	private void viewCancelByResNum(HttpServletRequest request,
-			HttpServletResponse response) throws IOException, ServletException{
-		String resnum = request.getParameter("resnum");	
-		Reservation reservation= new Reservation();
+	public String viewCancelByResNum() throws IOException, ServletException{
+		
 		ReservationDAO.cancelReservation(resnum);
-		RequestDispatcher rd=
-				request.getRequestDispatcher(
-						"/ReservationService?method=viewReservationListById");
-		rd.forward(request, response);
+		
+		return "success";
 
 		
 	}
 
-	private void viewReservationByResNumForm(HttpServletRequest request,
-			HttpServletResponse response) throws IOException, ServletException {
-		String resnum = request.getParameter("resnum");
-		String select = request.getParameter("select");
-	    Reservation reservation= new Reservation();
-	   
-	    reservation = ReservationDAO.selectReservation(resnum);
+	public String viewReservationByResNumForm() throws Exception {
+		resnum = request.getParameter("resnum");
+	    RESERVATION = ReservationDAO.selectReservation(resnum);
 //		Reservation reservation= new Reservation();
 //		reservation.setResnum(resnum);
-		request.setAttribute("select", select);
-		request.setAttribute("resnum",resnum);
 		 System.out.println("resnum"+resnum);
-		System.out.println("reservation"+reservation);
-		request.setAttribute("reservation",reservation);
+		System.out.println("reservation"+RESERVATION);
 		
-		long finalSeatNum=reservation.getSeatnum()+(reservation.getResQty()-1);
+		long finalSeatNum=RESERVATION.getSeatnum()+(RESERVATION.getResQty()-1);
 		
 		String finalSeat = null;
 		
-//		if(reservation.getResQty()==1){
-//			finalSeat="";
-//		}else {
-//			finalSeat="~"+finalSeatNum;
-//		}
+		if(RESERVATION.getResQty()==1){
+			finalSeat="";
+		}else {
+			finalSeat="~"+finalSeatNum;
+		}
 		
 		request.setAttribute("finalSeatNum",finalSeat);
-		if(select.equals("1")){
-			RequestDispatcher rd=request.getRequestDispatcher(
-					"/reservation/payment.jsp");
-					//4.JSP로 페이지 이동
-					rd.forward(request, response);
-		}else	if(select.equals("2")){
-			RequestDispatcher rd=request.getRequestDispatcher(
-					"/reservation/cancel.jsp");
-					//4.JSP로 페이지 이동
-					rd.forward(request, response);
-		}else{
-			RequestDispatcher rd=request.getRequestDispatcher(
-					"/reservation/viewReservationByResnum.jsp");
-					//4.JSP로 페이지 이동
-					rd.forward(request, response);
-		}
+		
+		return "success";
 
 	}
 	
-	private void viewReservationTimeForm(HttpServletRequest request,
-			HttpServletResponse response) throws IOException, ServletException {
-		String mname = request.getParameter("mname");
-		HttpSession session=request.getSession();
-		Member member=(Member)session.getAttribute("LOGIN_MEMBER");
-		String userid=member.getUserid();
-	    Movie movie= new Movie();
-	    Reservation reservation= new Reservation();
-	    movie = MovieDAO.selectMovieNum(mname);
-	    String mnum=movie.getMnum();
+	public String viewReservationTimeForm() throws Exception {
+//		String mname = request.getParameter("mname");
+//		HttpSession session=request.getSession();
+//		Member member=(Member)session.getAttribute("LOGIN_MEMBER");
+		System.out.println("------viewReservationTimeForm실행-----");
+		member=(Member)session.get("LOGIN_MEMBER");
+		
+		userid=member.getUserid();
+		
+	    MOVIE = movieDAO.selectMovieNum(mname);
+	    mnum=MOVIE.getMnum();
 //		request.setAttribute("mname",mname);
 	    //userid와 mnom으로 group by time 으로 된 정보의 time sum(total_price) count(res_qty)
-	    List<Reservation>reservationList = ReservationDAO.selectReservationTime(userid,mnum);
-		request.setAttribute("reservationList",reservationList);
-		RequestDispatcher rd=request.getRequestDispatcher(
-					"/reservation/viewReservationTime.jsp");
-					//4.JSP로 페이지 이동
-					rd.forward(request, response);
+	    RESERVATION_LIST = ReservationDAO.selectReservationTime(userid,mnum);
+//		request.setAttribute("reservationList",reservationList);
+//		RequestDispatcher rd=request.getRequestDispatcher(
+//					"/reservation/viewReservationTime.jsp");
+//					//4.JSP로 페이지 이동
+//					rd.forward(request, response);
+	    System.out.println("------viewReservationTimeForm종료-----");
+		return "success";
 	}
 
-	private static void viewReservationByResNum(HttpServletRequest request,
-			HttpServletResponse response) throws IOException, ServletException {
-		String resnum = request.getParameter("resnum");	
-		Reservation reservation= new Reservation();
-		ReservationDAO.removeReservation(resnum);
+	public String viewReservationByResNum() throws Exception {
+		resnum = request.getParameter("resnum");	
 		
-		RequestDispatcher rd=
-				request.getRequestDispatcher(
-						"/ReservationService?method=viewReservationListById");
-		rd.forward(request, response);
+		ReservationDAO.cancelReservation(resnum);
 		
-//		RequestDispatcher rd=request.getRequestDispatcher(
-//				"/reservation/test.jsp");
-//				//4.JSP로 페이지 이동
-//				rd.forward(request, response);
+		return "success";
 		
 	}
 
@@ -382,31 +730,40 @@ private void viewReservationSeat(HttpServletRequest request,
 		out.close();
 	}
 	
-	private void addReservationByTimeForm(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-			HttpSession session=request.getSession();
-			Member member=(Member)session.getAttribute("LOGIN_MEMBER");
-			String userid=member.getUserid();
-			String time=request.getParameter("time");
-			String scrnum=request.getParameter("scrnum");
-			String mnum=request.getParameter("mnum");
-			String mname=request.getParameter("mname");
-			System.out.println("(member) = "+member);
-			System.out.println("(mnum) = "+mnum);
-			System.out.println("(scrnum) = "+scrnum);
-			System.out.println("(mname) = "+mname);
-			request.setAttribute("time",time);
-			request.setAttribute("mname", mname);
-			request.setAttribute("userid",userid);
-			request.setAttribute("scrnum",scrnum);
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	public String addReservationByTimeForm() throws Exception {
+		System.out.println("addReservationByTimeForm실행 ");
+		System.out.println("로그인 정보와,영화시간,영화이름,영화번호,상영번호를 얻어옴");
+			//session.put("LOGIN_MEMBER", member);
+		    member=(Member)session.get("LOGIN_MEMBER");
+			System.out.println("member = "+member);
+			System.out.println("time"+time);
+			System.out.println("mname"+mname);
 			System.out.println("mnum"+mnum);
-			request.setAttribute("mnum",mnum);
-			RequestDispatcher rd=request.getRequestDispatcher(
-					"/reservation/addReservationByTime.jsp");
-			//페이지 이동
-			rd.forward(request, response);
-			
+			System.out.println("scrnum"+scrnum);
+			System.out.println("addReservationByTimeForm종료 ");
+			return "success";
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	private void addReservationForm(HttpServletRequest request,
@@ -433,10 +790,10 @@ private void viewReservationSeat(HttpServletRequest request,
 					rd.forward(request, response);
 				}else{
 					request.setAttribute("userid",userid);
-					int MovieTotalCnt = MovieDAO.selectMovieCount("");
+					int MovieTotalCnt = movieDAO.selectMovieCount("");
 					//1.전체영화 리스트 조회
 					//ArrayList<Movie>movieList=MovieDAO.selectMovieList(1,MovieTotalCnt, "reservation");
-					List<Movie>movieList=MovieDAO.selectMovieList();
+					List<Movie>movieList=movieDAO.selectMovieList();
 					//2.request에 저장
 					request.setAttribute("MOVIE_LIST",movieList);
 					//3.학생추가 페이지 이동 객체 생성
@@ -450,41 +807,6 @@ private void viewReservationSeat(HttpServletRequest request,
 	}
 	
 
-private void InsertReservation(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-	HttpSession session=request.getSession();
-	Member member=(Member)session.getAttribute("LOGIN_MEMBER");
-	Reservation reservation=(Reservation)session.getAttribute("RESERVATION");
-	reservation.setMember(member);
-	List<Integer> SeatNumList=(List<Integer>)session.getAttribute("SeatNumList");
-	
-	for(int i=0;i<SeatNumList.size();i++){
-		reservation.setSeatnum(SeatNumList.get(i));
-		ReservationDAO.insertReservation(reservation);
-	}
-	
-	
-	
-	RequestDispatcher rd=
-			request.getRequestDispatcher(
-					"/ReservationService?method=viewReservationListById");
-	rd.forward(request, response);
-	
-	
-	
-	
-	
-	
-	
-	
-//	System.out.println("member="+member+"reservaiton="+reservaiton);
-//	System.out.println("SeatNumList="+SeatNumList.size());
-//	
-//    System.out.println("SeatNumList"+SeatNumList.get(0));
-    
-	
-	
-	}
 
 	private void addReservation(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
@@ -592,44 +914,49 @@ private void InsertReservation(HttpServletRequest request,
 //		
 //	}
 	
-	private void viewReservationListById(HttpServletRequest request,
-			HttpServletResponse response) throws IOException,ServletException{
+	public String viewReservationListById() throws Exception{
 		//기본 페이지1
-		int page=1;
-		//페이지 파라메터가 존재
-		if(request.getParameter("page")!=null){
-			//파라메터 리턴
-			page=Integer.parseInt(request.getParameter("page"));
+		System.out.println("====viewReservationListById실행===");
+		int length = 5;
+		if(page==0){
+			page=1;
 		}
 //		한페이지당 보여줄 학생수
-		int length=5;
 		//String userid=request.getParameter("userid");
 		//System.out.println(userid);
-		HttpSession session=request.getSession();
-		Member member=(Member)session.getAttribute("LOGIN_MEMBER");
-		String userid=member.getUserid();
+		member=(Member)session.get("LOGIN_MEMBER");
 		//1.StudentDAO에서 페이지에 해당하는 학생조회 메서들 호출
-		List<Reservation>reservationList=ReservationDAO.selectReservationList(length,page,userid);
+		System.out.println("member 세션 출력"+member);
+		
+		RESERVATION_LIST=ReservationDAO.selectReservationList(length,page,member.getUserid());
 		//2.request에 1의 page에 해당하는 학생 정보 저장
-		request.setAttribute("RESERVATION_LIST",reservationList);
-		System.out.println("성공"+reservationList);
+		System.out.println("성공"+RESERVATION_LIST);
+		
+		session.put("RESERVATION_LIST",RESERVATION_LIST);
+		
+		System.out.println("성공"+RESERVATION_LIST);
 		
 		//페이지에 해당하는 학생수 조회
-		int reservationCount=ReservationDAO.selectReservationCount(userid);
+		int reservationCount=ReservationDAO.selectReservationCount(member.getUserid());
 		System.out.println("reservationCount"+reservationCount);
 		//다른페이지로 이동하는 링크테그 만듬
 //		PageUtil.generate(현제페이지,전체건수,한페이지당보여줄row수,주소)
+		
+		PAGE_LINK_TAG=PageUtil.generate(page, reservationCount, length,
+						  "/moviesystem/viewReservationListById.action");
+		
+		
+		
 		String pageLinkTag=PageUtil.generate(page, reservationCount, length, "ReservationService?method=viewReservationListById");
 		request.setAttribute("PAGE_LINK_TAG",pageLinkTag);
 		
-		//3./student/viewStudentList.jsp로 페이지 이동 객체 생성
-		RequestDispatcher rd=request.getRequestDispatcher(
-		"/reservation/viewReservationListByid.jsp");
-		//4.JSP로 페이지 이동
-		rd.forward(request, response);
+		System.out.println("---viewReservationListById종료---");
+		return "success";
 		
 	}
 
+
+	
 	
 
 }

@@ -44,7 +44,23 @@ public class ReservationDAO {
 	
 	/**
 	 * 영화를 선택해 예약목록에 등록하는 기능
-	 
+	 <parameterMap
+   type="kr.or.kosta.moviesystem.reservation.Reservation"
+   id="insertParameterMap">
+	<parameter property="movie.mnum"/>
+	<parameter property="member.userid"/>
+	<parameter property="screenTime.scrnum"/>
+	<parameter property="resQty"/>
+	<parameter property="totalPrice"/>
+	<parameter property="seatnum"/>
+</parameterMap>
+
+<insert id="insertReservation" 
+     parameterMap="insertParameterMap">
+     INSERT  INTO   reservation
+	                   (res_num,   m_num,userid, res_date,   scr_num,res_qty,total_price,pay_state,seat_num)
+    VALUES (res_seq.nextval,?,           ?,      sysdate,         ?,           ?,               ?             ,'결제완료',        ?)
+</insert>
 	 */
 	public static void insertReservation(Reservation reservation) {
 		
@@ -57,6 +73,7 @@ public class ReservationDAO {
 		finally{
 			//Connection을 ConnectionPool에 반납해야지 안끊긴다. 
 			//그리고 이건 무조건 반납해야지 멈추지 않으니 finally에 써주어야한다.
+			System.out.println("돌아간다. 야호~~");
 			session.close();
 		}
 		
@@ -476,23 +493,17 @@ public class ReservationDAO {
 	}
 	
 	/**
-	 * SCR_NUM으로 예약한 좌석 번호를 찾기
-	 * 		SqlSession session=null;
-		List<Student> studentList=null;
-		try{
-			session = sqlMapper.openSession(true);
-			studentList=
-				session.selectList("Student.selectStudentList");
-		
-
-		}
-		
-		finally{
-			//Connection을 ConnectionPool에 반납해야지 안끊긴다. 
-			//그리고 이건 무조건 반납해야지 멈추지 않으니 finally에 써주어야한다.
-			session.close();
-		}
-		return studentList;
+	 		SELECT res_num   as resnum,
+						m_num    as mnum,
+						userid   as userid,
+						res_date       as resDate,
+						scr_num  as scrnum,
+						res_qty   as resQty,
+						total_price     as totalPrice,
+						pay_state as payState,
+						seat_num as seatnum	
+		FROM reservation
+		WHERE scr_num = #{scrnum}
 	 */
 	public static List selectSeatNumByScrnum(String scrnum) {
 		System.out.println("selectSeatNumByScrnum:scrnum="+scrnum);
@@ -503,7 +514,7 @@ public class ReservationDAO {
 			reservationList=
 				session.selectList("Reservation.selectSeatNumByScrnum",scrnum);
 		
-
+			System.out.println("reservationList=예약된좌석정보==="+reservationList);
 		}
 		
 		finally{
