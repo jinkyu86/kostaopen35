@@ -18,9 +18,6 @@
 		<result name="error">
 			/error/error.jsp
 			</result>
-		<result name="loginForm">
-			/login/login.jsp
-			</result>
 		</global-results>
         
         <action name="viewAuction" class="kr.or.kosta.auction.auction.AuctionService"

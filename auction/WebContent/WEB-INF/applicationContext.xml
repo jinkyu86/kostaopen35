@@ -103,20 +103,20 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
 	<aop:config proxy-target-class="true">
 		<aop:aspect id="loggingAspect1" ref="errorlog">
 			<aop:pointcut id="publicmethod1"
-			expression="execution(* kr.or.kosta.*.*Service.*(..))"/>
+			expression="execution(* kr.or.kosta.*.*.*Service.*(..))"/>
 			<aop:around
 			pointcut-ref="publicmethod1"
 			method="arroundException"/>
 		</aop:aspect>
 	</aop:config>
-	
+<!--	
 	<bean id="loginlog" class="kr.or.kosta.aop.LoginAdvice"/>
 	
 	<aop:config proxy-target-class="true">
 		<aop:aspect id="loggingAspect1" ref="loginlog">
-			<aop:pointcut id="publicmethod1" expression="execution(* kr.or.kosta.*.*Service.*Form(..))"/>
+			<aop:pointcut id="publicmethod1" expression="execution(* kr.or.kosta.*.*.*Service.*Form(..))"/>
 		
-			<aop:pointcut id="publicmethod2" expression="execution(* kr.or.kosta.*.*Service.remove*(..))"/>
+			<aop:pointcut id="publicmethod2" expression="execution(* kr.or.kosta.*.*.*Service.remove*(..))"/>
 
 			<aop:around
 			pointcut-ref="publicmethod1"
@@ -126,6 +126,6 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
 			method="arroundLogin"/>
 		</aop:aspect>
 	</aop:config>
-	
+	-->
 
 </beans>
