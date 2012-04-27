@@ -39,16 +39,14 @@ type="kr.or.kosta.moviesystem.reservation.Reservation">
 	<parameter property="movie.mnum"/>
 	<parameter property="member.userid"/>
 	<parameter property="screenTime.scrnum"/>
-	<parameter property="resQty"/>
-	<parameter property="totalPrice"/>
 	<parameter property="seatnum"/>
 </parameterMap>
 
 <insert id="insertReservation" 
      parameterMap="insertParameterMap">
      INSERT  INTO   reservation
-	                   (res_num,   m_num,userid, res_date,   scr_num,res_qty,total_price,pay_state,seat_num)
-    VALUES (res_seq.nextval,?,           ?,      sysdate,         ?,           ?,               ?             ,'결제완료',        ?)
+	                   (res_num,   m_num,userid, res_date,   scr_num,res_qty,total_price,pay_state,     seat_num)
+    VALUES (res_seq.nextval,?,           ?,      sysdate,         ?,           1,               8000             ,'결제완료',        ?)
 </insert>
 
 <resultMap id="selectResultMname"
