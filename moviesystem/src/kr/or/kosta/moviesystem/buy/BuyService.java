@@ -23,13 +23,14 @@ import kr.or.kosta.moviesystem.good.Good;
 import kr.or.kosta.moviesystem.good.GoodDAO;
 import kr.or.kosta.moviesystem.member.Member;
 import kr.or.kosta.moviesystem.member.MemberDAO;
+import kr.or.kosta.moviesystem.aop.IService;
 import kr.or.kosta.moviesystem.buy.Buy;
 import kr.or.kosta.moviesystem.buy.BuyDAO;
 import kr.or.kosta.moviesystem.util.PageUtil;
 
 
 
-public class BuyService implements ModelDriven, ServletContextAware, ServletRequestAware, ServletResponseAware, SessionAware{
+public class BuyService implements ModelDriven, ServletContextAware, ServletRequestAware, ServletResponseAware, SessionAware, IService{
 	private static final long serialVersionUID = 1L;
 	private IBuyDAO buyDAO;
 	private ServletContext servletContext;
@@ -48,18 +49,19 @@ public class BuyService implements ModelDriven, ServletContextAware, ServletRequ
     public BuyService() {
         super();
     }
+	
+    public BuyService(IBuyDAO buyDAO) {
+    	super();
+    	System.out.println("BuyService(BuyDAO)");
+    	this.buyDAO = buyDAO;
+    }
+
 
 	@Override
 	public Object getModel() {
 		return buy;
 	}
 	
-public BuyService(IBuyDAO buyDAO) {
-	super();
-	System.out.println("BuyService(BuyDAO)");
-	this.buyDAO = buyDAO;
-}
-
 	@Override
 	public void setSession(Map<String, Object> session) {
 		this.session=session;		
@@ -76,6 +78,11 @@ public BuyService(IBuyDAO buyDAO) {
 	@Override
 	public void setServletContext(ServletContext context) {
 		this.servletContext=context;	
+	}
+
+	@Override
+	public Map getSession() {
+		return session;
 	}
 	
 	public int getPage() {
@@ -145,10 +152,10 @@ public BuyService(IBuyDAO buyDAO) {
 	public String addBuy() throws Exception {
 
 		Member member=(Member)session.get("LOGIN_MEMBER");
-		
-		if(member==null){
-			return "login";
-		}
+//		
+//		if(member==null){
+//			return "login";
+//		}
 		List<Buy>cartList=(List)session.get("CART_LIST");
 				
 		for(int i=0;i<cartList.size();i++){
@@ -243,5 +250,7 @@ public BuyService(IBuyDAO buyDAO) {
 	public String completeBuy()throws Exception {
 		return "success";	
 	}
+
+
 	
 }
