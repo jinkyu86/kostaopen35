@@ -70,6 +70,10 @@ public class RecipeService implements ModelDriven, ServletContextAware{
 		this.goodDivisionDAO = goodDivisionDAO;
 	}
 
+	public RecipeService(){
+		
+	}
+	
 	public String viewRecipeList() throws Exception{
 		RECIPE_LIST= recipeDAO.selectRecipeList();
 		return "success";
@@ -95,6 +99,7 @@ public class RecipeService implements ModelDriven, ServletContextAware{
 	public String addRecipe() throws Exception {
 		
 		if(!"complete".equals(method)){
+			int i=0;
 			return "success";
 		}else{
 		
@@ -104,8 +109,8 @@ public class RecipeService implements ModelDriven, ServletContextAware{
 		String forderName="";
 		System.out.println(recipe);
 		for (int i = 0; i < file.length; i++) {
-			System.out.println(i);
 			//임시파일의 파일명/경로
+			
 			String tempFileName=file[i].getAbsolutePath();
 			File tempFile= new File(tempFileName);
 			//gphoto폴더의 진짜 경로 리턴
@@ -123,6 +128,7 @@ public class RecipeService implements ModelDriven, ServletContextAware{
 			//저장하고하는 파일의 경로,이름
 			//gphoto진짜 경로+파일의 진짜이름
 			String saveFileName=gphotoRealPath+"/"+fileFileName[i];
+			System.out.println(fileFileName[i]);
 			File saveFile= new File(saveFileName);
 			//저장하고자하는 파일과 같은 이름의 파일이 있으면 번호를 붙여서 리턴 
 			saveFile=FileRenamePolicy.rename(saveFile);
