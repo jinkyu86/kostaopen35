@@ -2,9 +2,13 @@
 package kr.or.kosta.auction.auction;
 
 import java.util.List;
+import java.util.Map;
+
+import org.apache.struts2.interceptor.SessionAware;
 
 import com.opensymphony.xwork2.ModelDriven;
 
+import kr.or.kosta.aop.IService;
 import kr.or.kosta.auction.bid.Bid;
 import kr.or.kosta.auction.bid.BidDAO;
 import kr.or.kosta.auction.bid.IBidDAO;
@@ -12,12 +16,16 @@ import kr.or.kosta.auction.good.Good;
 import kr.or.kosta.auction.good.GoodDAO;
 import kr.or.kosta.auction.good.IGoodDAO;
 
-public class AuctionService implements ModelDriven  {
+public class AuctionService implements ModelDriven,IService,SessionAware  {
 	private static final long serialVersionUID = 1L;
+	private Map session;
 	private IAuctionDAO auctionDAO;
 	private IBidDAO bidDAO;
 	private IGoodDAO goodDAO;
-
+	
+	public AuctionService(){
+		super();
+	}
 	
 	public AuctionService(IAuctionDAO auctionDAO, IBidDAO bidDAO,
 			IGoodDAO goodDAO) {
@@ -225,6 +233,17 @@ public class AuctionService implements ModelDriven  {
 		return "success";
 ///AuctionService?method=viewAuctionList
 	}
+
+	@Override
+	public void setSession(Map<String, Object> session) {
+		this.session=session;		
+	}
+	@Override
+	public Map getSession() {		
+		return session;
+	}
+	
+	
 }
 
 /*
