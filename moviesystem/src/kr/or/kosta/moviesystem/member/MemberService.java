@@ -15,10 +15,12 @@ import org.apache.struts2.interceptor.SessionAware;
 import org.apache.struts2.util.ServletContextAware;
 
 import com.opensymphony.xwork2.ModelDriven;
+
+import kr.or.kosta.moviesystem.aop.IService;
 import kr.or.kosta.moviesystem.util.PageUtil;
 
 public class MemberService implements ModelDriven,ServletContextAware,ServletRequestAware,
-ServletResponseAware,SessionAware {
+ServletResponseAware,SessionAware,IService {
 	
 	private IMemberDAO memberDAO;
 	private static final long serialVersionUID = 1L;
@@ -41,6 +43,13 @@ ServletResponseAware,SessionAware {
 	private String email;
 	
 	
+	
+	@Override
+	public Map getSession() {
+		// TODO Auto-generated method stub
+		return session;
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -297,6 +306,14 @@ ServletResponseAware,SessionAware {
 		}		
 	
 	public String viewMemberList() throws Exception{
+		
+		MEMBER=(Member)session.get("LOGIN_MEMBER");		
+		
+		if(!MEMBER.getUserid().equals("mmanager")){
+			request.setAttribute("ERROR","관리자만 접근가능한 페이지입니다.");
+			return "login";
+		}
+		else{
 		if(page==0){
 			page=1;
 		}
@@ -306,6 +323,7 @@ ServletResponseAware,SessionAware {
 		PAGE_LINK_TAG=
 				PageUtil.generate(page,memberCount,length,"/moviesystem/viewMemberList.action");
 		return "success";
+		}
 	}
 
 	public String viewMember() throws Exception{
@@ -487,32 +505,41 @@ ServletResponseAware,SessionAware {
 	}
 	
 	public String mypage() throws Exception{
-		Member member=(Member)session.get("LOGIN_MEMBER");	 
-		if(member==null){
-			 request.setAttribute("ERROR","로그인 후 사용가능한 서비스입니다.");
-			 return "login";
-			 // 주소 저장할 객체 생성
-			 //String url = null;
-		  
-			 // 생성된 로그인 세션 정보의 값 확인
-		 
-			 // 로그인 세션의 정보가 null일 경우 에러 메시지 request로 넘긴 후
-			 // login 페이지로 이동하도록 url선언
-			 //url = "/member/login.jsp";
-		   
-		  }else{
-			  session.put("LOGIN_MEMBER",member);
-			  return "success";
-		   // 로그인 세션 정보가 null이 아닐 경우
-		   // mypage.jsp로 이동 하도록 url선언
-		   //url = "/member/mypage.jsp";
-		  }
-		  
+//		MEMBER=(Member)session.get("LOGIN_MEMBER");	 
+//		if(MEMBER==null){
+//			 request.setAttribute("ERROR","로그인 후 사용가능한 서비스입니다.");
+//			 return "login";
+//			 // 주소 저장할 객체 생성
+//			 //String url = null;
+//		  
+//			 // 생성된 로그인 세션 정보의 값 확인
+//		 
+//			 // 로그인 세션의 정보가 null일 경우 에러 메시지 request로 넘긴 후
+//			 // login 페이지로 이동하도록 url선언
+//			 //url = "/member/login.jsp";
+//		   
+//		  }else{
+//			  session.put("LOGIN_MEMBER",member);
+//			  return "success";
+//		   // 로그인 세션 정보가 null이 아닐 경우
+//		   // mypage.jsp로 이동 하도록 url선언
+//		   //url = "/member/mypage.jsp";
+//		  }
+		 return "success";
 		 }
 
 
 
 	public String searchMemberList() throws Exception{
+		
+		MEMBER=(Member)session.get("LOGIN_MEMBER");		
+		
+		if(!MEMBER.getUserid().equals("mmanager")){
+			request.setAttribute("ERROR","관리자만 접근가능한 페이지입니다.");
+			return "login";
+		}
+		else{
+		
 		if(page==0){
 			page=1;
 		}
@@ -555,9 +582,7 @@ ServletResponseAware,SessionAware {
 				(page, memberCount, length, "/moviesystem/searchMemberList.action?column=" +column+"&keyword="+keyword);
 		
 		return "success";
-		
+		}
 	}
-
-
 
 }
