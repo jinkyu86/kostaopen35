@@ -10,6 +10,9 @@
 <link rel="stylesheet" href="/moviesystem/css/Layout.css">
 <script src="http://code.jquery.com/jquery-1.7.1.js"></script>
 <script src="/moviesystem/js/common.jsp"></script>
+<script>
+
+</script>
 </head>
 <body>
 <table width="90%" align="center">
@@ -25,13 +28,15 @@
 		<!-- 본문 내용 시작 -->
 <td>
 
-
-
-
-
-<form action="/moviesystem/ReservationService" method="post">
+<!-- 
+<form name="method"
+  action="/moviesystem/viewSeatListByScrnum.action?mnum=${mnum}?scrnum=${scrnum}"
+   method="post">
+ -->
+ 
+<form action="/moviesystem/viewSeatListByScrnum.action" method="post">
 	<input type="hidden" name="method" value ="viewSeatListByScrnum"/>
-	<input type="hidden"name="mnum"value="${mnum}"readOnly="readOnly"/>
+	<input type="hidden"name="mnum"value="${mnum}"/>
 	<input type="hidden"name="scrnum"value="${scrnum}"readOnly="readOnly"/> 
 
 		<table border="1" align="center">

@@ -61,7 +61,7 @@
 <table border="0" align="center">
 	<tr>
 		<td>결제하기</td>
-		<td><a href="/moviesystem/ReservationService?method=InsertReservation">
+		<td><a href="/moviesystem/InsertReservation.action">
 		<input type="button" value="확인"/>
 		</a></td>
 	</tr>

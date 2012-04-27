@@ -65,7 +65,7 @@
  	    <c:choose>
 			<c:when test="${reservation==0 }">		
  				<td>
-				<a href="/moviesystem/ReservationService?method=SelectSeat&seat=${i.count}">
+				<a href="/moviesystem/SelectSeat.action?seatString=${i.count}">
 				${i.count }
 				</a>
 				</td>

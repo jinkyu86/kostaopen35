@@ -41,7 +41,7 @@
 		<td>${screenTime.movie.mname}</td>
 		<td>
 
-		<a href="/moviesystem/ReservationService?method=addReservationByTimeForm&scrnum=${screenTime.scrnum}&time=${screenTime.time}&mnum=${screenTime.movie.mnum}&mname=${screenTime.movie.mname}">
+		<a href="/moviesystem/addReservationByTimeForm.action?scrnum=${screenTime.scrnum}&time=${screenTime.time}&mnum=${screenTime.movie.mnum}&mname=${screenTime.movie.mname}">
 		${screenTime.time}
 		</a>
 		</td>

@@ -47,12 +47,12 @@
 		<td>
 			<c:choose>
 									<c:when test="${fn:length(reservation.movie.mname)>9}">
-										<a href="/moviesystem/ReservationService?method=viewReservationTimeForm&mname=${reservation.movie.mname}">
+										<a href="/moviesystem/viewReservationTimeForm.action?mname=${reservation.movie.mname}">
 										${fn:substring(reservation.movie.mname, 0, 8)}
 										</a>
 									</c:when>
 									<c:otherwise>
-										<a href="/moviesystem/ReservationService?method=viewReservationTimeForm&mname=${reservation.movie.mname}">
+										<a href="/moviesystem/viewReservationTimeForm.action?mname=${reservation.movie.mname}">
 										${reservation.movie.mname}
 										</a>
 									</c:otherwise>

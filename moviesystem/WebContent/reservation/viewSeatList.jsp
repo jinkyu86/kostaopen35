@@ -54,7 +54,7 @@
 	</tr>
 
 
-<c:forEach var="reservation" items="${reservationList}" >
+<c:forEach var="reservation" items="${RESERVATION_LIST}" >
  	
  	<tr>
  		<td>${reservation.seatnum}</td>
@@ -62,7 +62,7 @@
 
  		<c:choose>
 			<c:when test="${reservation.payState=='결제완료' }">
-				<td><a href="/moviesystem/ReservationService?method=viewReservationByResNumForm&resnum=${reservation.resnum}&select=${2}">
+				<td><a href="/moviesystem/viewCancelByResNum.action?resnum=${reservation.resnum}">
 				<input type="button" value="취소"/>
 				</a></td>
 			</c:when>

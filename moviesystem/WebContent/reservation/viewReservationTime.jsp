@@ -42,11 +42,11 @@
 		<th>가격</th>
 	</tr>
 
-<c:forEach var="reservation" items="${reservationList}">
+<c:forEach var="reservation" items="${RESERVATION_LIST}">
  		
 		<tr>
 		<td>
-			<a href="/moviesystem/ReservationService?method=viewReservationSeat&time=${reservation.screenTime.time}">
+			<a href="/moviesystem/viewReservationSeat.action?time=${reservation.screenTime.time}">
 			${reservation.screenTime.time}
 			</a>
 		</td>
