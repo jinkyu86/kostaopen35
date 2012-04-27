@@ -7,9 +7,11 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletContext;
 
+import org.apache.catalina.Session;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
@@ -19,6 +21,7 @@ import org.apache.struts2.util.ServletContextAware;
 
 import com.opensymphony.xwork2.ModelDriven;
 
+import kr.or.kosta.aop.IService;
 import kr.or.kosta.file.receive.FileRenamePolicy;
 import kr.or.kosta.good.Good;
 import kr.or.kosta.good.GoodDAO;
@@ -33,7 +36,7 @@ import kr.or.kosta.photo.PhotoDAO;
 
 
 
-public class RecipeService implements ModelDriven, ServletContextAware{
+public class RecipeService implements ModelDriven, ServletContextAware, IService{
 	private IRecipeDAO recipeDAO;
 	private IGoodDAO goodDAO;
 	private IPhotoDAO photoDAO;
@@ -314,6 +317,12 @@ public class RecipeService implements ModelDriven, ServletContextAware{
 
 	public static void setIndex(int index) {
 		RecipeService.index = index;
+	}
+
+	@Override
+	public Map getSession() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }
