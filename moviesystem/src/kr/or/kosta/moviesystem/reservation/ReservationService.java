@@ -67,6 +67,8 @@ ServletContextAware, ServletRequestAware, ServletResponseAware, SessionAware {
 	List<Integer>TotalSeatList=new ArrayList<Integer>();
 	ArrayList<Integer>SeatNumList=new ArrayList<Integer>();
 	List<Reservation>RESERVATION_LIST;
+	List<Movie>MOVIE_LIST;
+	List<ScreenTime>SCREENTIME_LIST;
 	
 	
 	
@@ -80,6 +82,26 @@ ServletContextAware, ServletRequestAware, ServletResponseAware, SessionAware {
 //	}
 	
 	
+	public List<Movie> getMOVIE_LIST() {
+		return MOVIE_LIST;
+	}
+
+
+	public List<ScreenTime> getSCREENTIME_LIST() {
+		return SCREENTIME_LIST;
+	}
+
+
+	public void setSCREENTIME_LIST(List<ScreenTime> sCREENTIME_LIST) {
+		SCREENTIME_LIST = sCREENTIME_LIST;
+	}
+
+
+	public void setMOVIE_LIST(List<Movie> mOVIE_LIST) {
+		MOVIE_LIST = mOVIE_LIST;
+	}
+
+
 	@Override
 	public void setSession(Map<String, Object> session) {
 		this.session=session;
@@ -714,20 +736,21 @@ public String InsertReservation() throws Exception {
 		
 	}
 
-	private void MovieTimeList(HttpServletRequest request,
-			HttpServletResponse response) throws IOException, ServletException{
-		String mnum = request.getParameter("mnum");
-		System.out.println(mnum);
+	public String MovieTimeList() throws Exception{
 		
-		List<ScreenTime> screenTimeList = ScreenTimeDAO.selectScreen(mnum);
-		System.out.println(screenTimeList);
-		JSONArray jsonArray = JSONArray.fromObject(screenTimeList);
+		System.out.println(mnum);
+		SCREENTIME_LIST = ScreenTimeDAO.selectScreen(mnum);
+		System.out.println(SCREENTIME_LIST);
+		JSONArray jsonArray = JSONArray.fromObject(SCREENTIME_LIST);
 		System.out.println("jsonArray : "+jsonArray);
+		
 		response.setContentType("text/html;charset=utf-8");
 		PrintWriter out = response.getWriter();
 		out.println(jsonArray.toString());
 		out.flush();
 		out.close();
+		
+		return "success";
 	}
 	
 	
@@ -766,45 +789,34 @@ public String InsertReservation() throws Exception {
 	
 	
 	
-	private void addReservationForm(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-//				Member member=new Member();
-//				member.setUserid("jun123");
-//				String userid=request.getParameter("userid");
-				HttpSession session=request.getSession();
-				Member member=(Member)session.getAttribute("LOGIN_MEMBER");
-				String userid="";
-				
-				//userid 가 null이면 Exception발생하니 그걸 방지
-				try{
-					userid=member.getUserid();
-				}catch(NullPointerException e){
-					//userid="";
-				}
-				
-				
-				if(userid.equals("")){
-					RequestDispatcher rd=
-							request.getRequestDispatcher(
-									"/MemberService?method=loginForm");
-					rd.forward(request, response);
-				}else{
-					request.setAttribute("userid",userid);
-					int MovieTotalCnt = movieDAO.selectMovieCount("");
-					//1.전체영화 리스트 조회
-					//ArrayList<Movie>movieList=MovieDAO.selectMovieList(1,MovieTotalCnt, "reservation");
-					List<Movie>movieList=movieDAO.selectMovieList();
-					//2.request에 저장
-					request.setAttribute("MOVIE_LIST",movieList);
-					//3.학생추가 페이지 이동 객체 생성
-					RequestDispatcher rd=request.getRequestDispatcher(
-							"/reservation/addReservation.jsp");
-					//페이지 이동
-					rd.forward(request, response);
-				}
-				
+	public String addReservationForm() throws Exception {
+		System.out.println("addReservationForm실행");
+		member=(Member)session.get("LOGIN_MEMBER");
+		userid="";
 		
-	}
+		//userid 가 null이면 Exception발생하니 그걸 방지
+		try{
+			userid=member.getUserid();
+		}catch(NullPointerException e){
+			//userid="";
+		}
+		
+		
+		if(userid.equals("")){
+			System.out.println("로그인 페이지로 이동");
+			return "loginForm";
+		}else{
+			
+			int MovieTotalCnt = movieDAO.selectMovieCount("");
+			//1.전체영화 리스트 조회
+			//ArrayList<Movie>movieList=MovieDAO.selectMovieList(1,MovieTotalCnt, "reservation");
+			MOVIE_LIST=movieDAO.selectMovieList();
+			System.out.println("addReservationForm종료");
+			return "success";
+		}
+		
+
+}
 	
 
 
