@@ -13,6 +13,13 @@
 	<constant name="struts.objectFactory"	value="spring"/>
 	<package name="default" namespace="/" extends="struts-default">
 		
+		<!--error리턴시 error.jsp로 이동 모든 Action에 다 설정-->
+		<global-results><!--모든 Action에 설정-->
+		<result name="error">/error/error.jsp</result>
+		<!--loginForm리턴시 /login/login.jsp로 이동 -->
+		<result name="loginForm">/member/login.jsp</result>
+		</global-results>
+		
 		<action name="viewGoodList" class="kr.or.kosta.moviesystem.good.GoodService" method="viewGoodList">
 			<result name="success">/good/viewGoodList.jsp</result>
 		</action>
