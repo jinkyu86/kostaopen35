@@ -13,6 +13,16 @@
     
     <package name="root" namespace="/" extends="struts-default">
         
+        <global-results> <!--모든 Action에 설정-->
+			<!-- error리턴시 /error/error.jsp로 이동-->
+		<result name="error">
+			/error/error.jsp
+			</result>
+		<result name="loginForm">
+			/login/login.jsp
+			</result>
+		</global-results>
+        
         <action name="viewAuction" class="kr.or.kosta.auction.auction.AuctionService"
          method="viewAuction">
             <param name="aliases">
