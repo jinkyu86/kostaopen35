@@ -22,10 +22,11 @@ import org.apache.struts2.util.ServletContextAware;
 
 import com.opensymphony.xwork2.ModelDriven;
 
+import kr.or.kosta.aop.IService;
 import kr.or.kosta.util.PageUtil;
 
 
-public class MemberService implements ModelDriven,ServletContextAware,ServletRequestAware,ServletResponseAware,SessionAware {
+public class MemberService implements IService,ModelDriven,ServletContextAware,ServletRequestAware,ServletResponseAware,SessionAware {
 	private IMemberDAO memberDAO;
 
 	private static final long serialVersionUID = 1L;
@@ -392,7 +393,7 @@ public class MemberService implements ModelDriven,ServletContextAware,ServletReq
 		LOGIN_EMAIL=(Member) session.get("LOGIN_EMAIL");
 		if(LOGIN_EMAIL==null){
 			ERROR="로그인하시기 바랍니다.";
-			
+			return "loginForm";
 		}else{
 			email=LOGIN_EMAIL.getEmail();
 			MEMBER=memberDAO.selectMemberemail(email);
