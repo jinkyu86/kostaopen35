@@ -44,6 +44,8 @@ public class OrderService implements ModelDriven, SessionAware{
 		this.memberDAO = memberDAO;
 		this.goodDAO = goodDAO;
 	}
+	
+
 
 	public String CartList() throws Exception{
 		return "success";
