@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--aop연동 추가-->
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd">
 
 	<bean id="movieDAO" class="kr.or.kosta.moviesystem.movie.MovieDAO">
 		<property name="sqlSessionTemplate">
@@ -68,4 +72,27 @@
 		<constructor-arg ref="sqlSessionFactory"/>
 	</bean>
 	
+	<!--aop연동 추가 참고-->
+	<bean id="errorlog" class="kr.or.kosta.aop.ExceptionAdvice"/>
+	<!--AOP설정에 의해서 스트럿츠가 메서드 호출시 ExceptionAdvice의 aroundException이 대신호출
+	실행시 에러 발생-스트럿츠가 메서드 실행전에 해당메서드가 진짜 존재하는지 체크하고 실행
+	ExceptionAdvice에는 스트럿츠가 호출한 메서드(viewStudentList())
+	스트럿츠에서 메서드 존재 여부 체크 못하게 설정-->
+	<aop:config proxy-target-class="true">
+		<aop:aspect id="logginAspect1" ref="errorlog">
+			<aop:pointcut id="publicmethod1" expression="execution(* kr.or.kosta.*.*Service.*(..))"/>
+			<aop:around pointcut-ref="publicmethod1" method="aroundException"/>
+		</aop:aspect>
+	</aop:config>
+	
+	<bean id="loginlog" class="kr.or.kosta.aop.LoginAdvice"/>
+	<aop:config proxy-target-class="true">
+		<aop:aspect id="logginAspect1" ref="loginlog">
+			<aop:pointcut id="publicmethod1" expression="execution(* kr.or.kosta.*.*Service.*Form(..))"/>
+			<aop:pointcut id="publicmethod2" expression="execution(* kr.or.kosta.*.*Service.remove*(..))"/>
+			<aop:around pointcut-ref="publicmethod1" method="aroundLogin"/>
+			<aop:around pointcut-ref="publicmethod2" method="aroundLogin"/>
+		</aop:aspect>
+	</aop:config>
+	<!--aop연동 추가 참고-->
 </beans>
