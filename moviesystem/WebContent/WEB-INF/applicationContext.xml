@@ -73,7 +73,7 @@
 	</bean>
 	
 	<!--aop연동 추가 참고-->
-	<bean id="errorlog" class="kr.or.kosta.aop.ExceptionAdvice"/>
+	<bean id="errorlog" class="kr.or.kosta.moviesystem.aop.ExceptionAdvice"/>
 	<!--AOP설정에 의해서 스트럿츠가 메서드 호출시 ExceptionAdvice의 aroundException이 대신호출
 	실행시 에러 발생-스트럿츠가 메서드 실행전에 해당메서드가 진짜 존재하는지 체크하고 실행
 	ExceptionAdvice에는 스트럿츠가 호출한 메서드(viewStudentList())
@@ -85,13 +85,22 @@
 		</aop:aspect>
 	</aop:config>
 	
-	<bean id="loginlog" class="kr.or.kosta.aop.LoginAdvice"/>
+	<bean id="loginlog" class="kr.or.kosta.moviesystem.aop.LoginAdvice"/>
 	<aop:config proxy-target-class="true">
 		<aop:aspect id="logginAspect1" ref="loginlog">
-			<aop:pointcut id="publicmethod1" expression="execution(* kr.or.kosta.*.*Service.*Form(..))"/>
-			<aop:pointcut id="publicmethod2" expression="execution(* kr.or.kosta.*.*Service.remove*(..))"/>
+			<aop:pointcut id="publicmethod1" expression="execution(* kr.or.kosta.moviesystem.member.MemberService.mypage(..))"/>
+			<aop:pointcut id="publicmethod2" expression="execution(* kr.or.kosta.moviesystem.member.MemberService.dropMemberForm(..))"/>
+			<aop:pointcut id="publicmethod3" expression="execution(* kr.or.kosta.moviesystem.member.MemberService.editMemberForm(..))"/>
+			<aop:pointcut id="publicmethod4" expression="execution(* kr.or.kosta.moviesystem.member.MemberService.*List(..))"/>
+			
+			
 			<aop:around pointcut-ref="publicmethod1" method="aroundLogin"/>
 			<aop:around pointcut-ref="publicmethod2" method="aroundLogin"/>
+			<aop:around pointcut-ref="publicmethod3" method="aroundLogin"/>
+			<aop:around pointcut-ref="publicmethod4" method="aroundLogin"/>
+		
+			
+			
 		</aop:aspect>
 	</aop:config>
 	<!--aop연동 추가 참고-->
