@@ -12,12 +12,14 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.xml.ws.Response;
 
+import kr.or.kosta.aop.IService;
+
 import org.apache.struts2.interceptor.SessionAware;
 
 import com.opensymphony.xwork2.ModelDriven;
 
 
-public class MemberService implements ModelDriven, SessionAware{
+public class MemberService implements IService, ModelDriven, SessionAware{
 	private IMemberDAO memberDAO;
 	
 	private static final long serialVersionUID = 1L;
@@ -27,12 +29,19 @@ public class MemberService implements ModelDriven, SessionAware{
 	private Member member = new Member();
 	private String memberid;
 	
-	
+	@Override
+	public Map getSession() {
+		return session;
+	}
 
 	public MemberService(IMemberDAO memberDAO) {
 		super();
 		this.memberDAO = memberDAO;
 	}
+	
+	public MemberService() {
+	}
+	
 
 	//회원정보
 	public String viewMember() throws Exception {
@@ -73,14 +82,9 @@ public class MemberService implements ModelDriven, SessionAware{
 	//로그인
 	public String login() throws Exception {
 		Member loginMember = memberDAO.login(member);
-		if(loginMember!=null){
-			// member이름의 세션 생성 Index페이지 이동
-			session.put("member", loginMember);
-			return "success";
-		}else{ 
-			//로그아웃 페이지이동
-			return "fail";
-		}
+		session.put("member", loginMember);
+		return "success";
+		
 	}
 
 	//로그인폼
@@ -176,6 +180,8 @@ public class MemberService implements ModelDriven, SessionAware{
 	public void setMemberid(String memberid) {
 		this.memberid = memberid;
 	}
+
+
 	
 
 
