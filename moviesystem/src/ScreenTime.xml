@@ -36,6 +36,18 @@ type="kr.or.kosta.moviesystem.screentime.ScreenTime">
 		WHERE m.m_num=#{mnum} AND s.time>sysdate
 </select>
 
+<resultMap id="selectMap" type="kr.or.kosta.moviesystem.screentime.ScreenTime">
+		<result property="scrnum" column="scr_num"/>
+	</resultMap>
+
+
+<select id="selectScreenTimeScrNum" resultMap="selectMap">
+SELECT scr_num
+		FROM SCREENING_TIME
+		WHERE time=to_date(#{time},'yyyy-mm-dd hh24:mi:ss')
+</select>
+
+
 </mapper>
 
 
