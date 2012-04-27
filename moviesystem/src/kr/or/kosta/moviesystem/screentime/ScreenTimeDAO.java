@@ -53,40 +53,55 @@ public class ScreenTimeDAO {
 	 * @param time
 	 */
 	public static ScreenTime selectScreenTimeScrNum(String time) {
-		Connection con=null;
-		PreparedStatement psmt=null;
-		String sql=null;
-		ResultSet rs=null;
-		ScreenTime screentime=new ScreenTime();
-		ArrayList<ScreenTime>screentimeList=new ArrayList<ScreenTime>();
-		System.out.println("time= "+time);
+		SqlSession session=null;
+		ScreenTime screentime=null;
+		
 		String timesubstring=time.substring(0,19);
 		System.out.println("timesubstring= "+timesubstring);
 		
-		
-		try {
-			con=ConnectionUtil.getConnection();
-			sql="SELECT scr_num" +
-					"  FROM SCREENING_TIME" +
-					"  WHERE  time=to_date(?,'yyyy-mm-dd hh24:mi:ss')" ;
-
-				psmt=con.prepareStatement(sql);
-				psmt.setString(1,timesubstring);
-				rs=psmt.executeQuery();
-				if(rs.next()){
-					
-					String scrnum=rs.getString(1);
-					System.out.println("scrnum = "+scrnum);
-					screentime.setScrnum(scrnum);
-					
-				
-					System.out.println("screentime = "+screentime);
-				}//end while
-		} catch (SQLException e) {
-			e.printStackTrace();
+		try{
+			session=sqlMapper.openSession(true);
+			screentime=session.selectOne("ScreenTime.selectScreenTimeScrNum", timesubstring);
+		}finally{
+			session.close();
 		}
 		return screentime;
 	}
+//	public static ScreenTime selectScreenTimeScrNum(String time) {
+//		Connection con=null;
+//		PreparedStatement psmt=null;
+//		String sql=null;
+//		ResultSet rs=null;
+//		ScreenTime screentime=new ScreenTime();
+//		ArrayList<ScreenTime>screentimeList=new ArrayList<ScreenTime>();
+//		System.out.println("time= "+time);
+//		String timesubstring=time.substring(0,19);
+//		System.out.println("timesubstring= "+timesubstring);
+//		
+//		
+//		try {
+//			con=ConnectionUtil.getConnection();
+//			sql="SELECT scr_num" +
+//					"  FROM SCREENING_TIME" +
+//					"  WHERE  time=to_date(?,'yyyy-mm-dd hh24:mi:ss')" ;
+//
+//				psmt=con.prepareStatement(sql);
+//				psmt.setString(1,timesubstring);
+//				rs=psmt.executeQuery();
+//				if(rs.next()){
+//					
+//					String scrnum=rs.getString(1);
+//					System.out.println("scrnum = "+scrnum);
+//					screentime.setScrnum(scrnum);
+//					
+//				
+//					System.out.println("screentime = "+screentime);
+//				}//end while
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//		return screentime;
+//	}
 	
 	
 	/**
