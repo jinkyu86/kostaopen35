@@ -23,8 +23,7 @@
 	    <c:when test="${sessionScope.LOGIN_EMAIL==null}">
 	     <fieldset>
 	     <table align="left" cellpadding="0" cellspacing="0" border="0">
-	     <form action="/bookchange/login.action" method="post">
-
+	     <form action="/bookchange/login.action" method="post" target="index.jsp">
 		 <tr>
 		 <td>Email</td>
 		 <td><input type="text" name="email"></td>
@@ -46,7 +45,6 @@
 	  	 </form></div></td>
 		 <td><div align="left">
 		 <form action="/bookchange/viewMemberPwAndEmail.action" method="post" target="main">
-	  	
 	  	   <input type="submit" value="Email/Pw찾기"/>
 	  	 </form></div></td>
 		 </tr>
@@ -69,7 +67,6 @@
 		<tr>
 		 <td><div align="right">
 		 <form action="/bookchange/removeMemberForm.action" method="post" target="main">
-	  	
 	  	  <input type="submit" value="회원탈퇴"/>
 	  	 </form></div></td>
 		 <td><div align="right">
