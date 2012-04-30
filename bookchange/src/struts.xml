@@ -11,6 +11,14 @@
 	<constant name="struts.devMode" value="true"/>
 	<constant name="struts.objectFactory" value="spring"/>
 	<package name="default" namespace="/" extends="struts-default">
+		
+		<!--error 리턴시 error.jsp로 이동 모든 Action에 다 설정-->
+		<global-results> <!-- 모든 Action에 설정-->
+		  <result name="error">/error/error.jsp</result>
+		  <!--loginForm 리턴시 login.jsp로 이동-->
+		  <result name="loginForm">/member/login.jsp</result>
+		</global-results>
+		
 		<action name="viewBoardList" class="kr.or.kosta.bookchange.board.BoardService" method="viewBoardList">
 			<result name="success">/board/viewBoardList.jsp</result>
 		</action>
@@ -24,7 +32,6 @@
 			<result name="success">/board/boardListAtMain.jsp</result>
 		</action>
 		<action name="addBoardForm" class="kr.or.kosta.bookchange.board.BoardService" method="addBoardForm">
-			<result name="fail" type="chain">boardListAtMain</result>
 			<result name="success">/board/addBoard.jsp</result>
 		</action>
 		<action name="addBoard" class="kr.or.kosta.bookchange.board.BoardService" method="addBoard">
@@ -190,9 +197,6 @@
 			<result name="success" type="chain">matchChangeResultList</result>
 		</action>
 		
-		
-		
-		
 		<action name="viewMemberPwAndEmail"
 		 	 class="kr.or.kosta.bookchange.member.MemberService" 
 		 	 method="viewMemberPwAndEmail">
@@ -309,7 +313,7 @@
 				</param>	
 
 				<result name="success">
-				 	 /left.jsp
+				 	 /index.jsp
 		  		</result>
 				
 				
@@ -337,9 +341,7 @@
 
 				<result name="success">
 				 	 /member/myInfo.jsp
-		  		</result>
-				
-				
+		  		</result>				
 		</action>		
 	</package>
 </struts>
