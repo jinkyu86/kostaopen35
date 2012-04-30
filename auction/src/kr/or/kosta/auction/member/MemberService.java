@@ -17,6 +17,7 @@ import org.apache.struts2.interceptor.SessionAware;
 
 import com.opensymphony.xwork2.ModelDriven;
 
+import kr.or.kosta.aop.IService;
 import kr.or.kosta.auction.auction.Auction;
 import kr.or.kosta.auction.auction.AuctionDAO;
 import kr.or.kosta.auction.bid.Bid;
@@ -24,17 +25,16 @@ import kr.or.kosta.auction.bid.BidDAO;
 import kr.or.kosta.auction.good.Good;
 import kr.or.kosta.auction.good.GoodDAO;
 
-public class MemberService implements ModelDriven, SessionAware  {
+public class MemberService implements ModelDriven, SessionAware, IService {
 	private static final long serialVersionUID = 1L;
 	private List<Member> MEMBER_LIST;
 	private Member MEMBER;
 	private String userid;
 	private Member member = new Member();
-    private String ERROR;
-    private Map session;
-    private IMemberDAO memberDAO;
-    
-    
+	private String ERROR;
+	private Map session;
+	private IMemberDAO memberDAO;
+
 	public MemberService(IMemberDAO memberDAO) {
 		super();
 		this.memberDAO = memberDAO;
@@ -42,8 +42,8 @@ public class MemberService implements ModelDriven, SessionAware  {
 
 	@Override
 	public void setSession(Map<String, Object> session) {
-		this.session=session;
-		
+		this.session = session;
+
 	}
 
 	@Override
@@ -51,8 +51,7 @@ public class MemberService implements ModelDriven, SessionAware  {
 
 		return member;
 	}
-	
-	
+
 	public String getERROR() {
 		return ERROR;
 	}
@@ -105,7 +104,7 @@ public class MemberService implements ModelDriven, SessionAware  {
 	}
 
 	public String removeMember() throws Exception {
-			
+
 		memberDAO.deleteMember(userid);
 		session.remove("MEMBER");
 		return "success";
@@ -127,7 +126,7 @@ public class MemberService implements ModelDriven, SessionAware  {
 	}
 
 	public String viewMember() throws Exception {
-		Member member=(Member)session.get("MEMBER");
+		Member member = (Member) session.get("MEMBER");
 		MEMBER = memberDAO.selectMember(member.getUserid());
 		return "success";
 
@@ -149,28 +148,28 @@ public class MemberService implements ModelDriven, SessionAware  {
 	}
 
 	public String login() throws Exception {
-		 String id=member.getUserid();
-		 String pw=member.getPw();
-		
-		Member member1 =memberDAO.selectMember(id);
-		
+		String id = member.getUserid();
+		String pw = member.getPw();
+
+		Member member1 = memberDAO.selectMember(id);
+
 		// 4.3의 리턴값이 null이면
 		// request에 속성명:ERROR 값:존재하지 않는 아이디
 		// 저장
-		if (member1==null) {
-			ERROR="존재하지 않는 아이디";
+		if (member1 == null) {
+			ERROR = "존재하지 않는 아이디";
 		} else {
 			// 5.3의 리턴값이 null이 아니면 3의 회원의 비번과
 			// 2의 입력한 비번 비교 다르면
 			// request 에 속성명:ERROR 값:비밀번호 오류 저장
 			if (!member1.getPw().equals(pw)) {
-				ERROR="비밀번호 오류";
+				ERROR = "비밀번호 오류";
 			} else {
 				// 6.5에서 비밀번호가 일치하면
 				// HttpSession리턴 속성명:LOGIN_MEMBER
 				// 값:3의 객체
 				session.put("MEMBER", member1);
-				
+
 			}// end else
 		}// end if
 		return "success";
@@ -190,21 +189,25 @@ public class MemberService implements ModelDriven, SessionAware  {
 	 * @param request
 	 * @param response
 	 */
-	public String loginForm() throws Exception {		
+	public String loginForm() throws Exception {
 		return "success";
 	}
-	
-	 public String editMemberByadmin() throws Exception {
-	
-	 //3.회원정보를 수정하는 메서드 호출
-	memberDAO.updateMember(member);
-	 return "success";
-	
-	
-	 }
 
+	public String editMemberByadmin() throws Exception {
 
-}     
+		// 3.회원정보를 수정하는 메서드 호출
+		memberDAO.updateMember(member);
+		return "success";
+
+	}
+
+	@Override
+	public Map getSession() {
+		// TODO Auto-generated method stub
+		return session;
+	}
+	
+}
 // public class MemberService extends HttpServlet {
 // private static final long serialVersionUID = 1L;
 //

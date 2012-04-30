@@ -3,6 +3,7 @@ package kr.or.kosta.auction.board;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,17 +12,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.struts2.interceptor.SessionAware;
+
 import com.opensymphony.xwork2.ModelDriven;
 
+import kr.or.kosta.aop.IService;
 import kr.or.kosta.auction.member.IMemberDAO;
 import kr.or.kosta.auction.util.PageUtil;
 
-public class BoardService extends HttpServlet implements ModelDriven {
+public class BoardService extends HttpServlet implements ModelDriven,SessionAware,IService {
 	IBoardDAO boardDAO;
 	IMemberDAO memberDAO;
 	private static final long serialVersionUID = 1L;
 	private List<Board> BOARD_LIST;
 	private Board BOARD;
+	private Map session;
 	
 	private String bNum;
 	private Board board = new Board();
@@ -200,4 +205,18 @@ public class BoardService extends HttpServlet implements ModelDriven {
 	public Object getModel() {
 		return board;
 	}
+
+	@Override
+	public Map getSession() {
+		// TODO Auto-generated method stub
+		return session;
+	}
+
+	@Override
+	public void setSession(Map<String, Object> session) {
+		this.session=session;
+		
+	}
+	
+	
 }

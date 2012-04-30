@@ -2,18 +2,23 @@ package kr.or.kosta.auction.good;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import kr.or.kosta.aop.IService;
+
+import org.apache.struts2.interceptor.SessionAware;
+
 import com.opensymphony.xwork2.ModelDriven;
 
 /**
  * Servlet implementation class GoodService
  */
-public class GoodService implements ModelDriven {
+public class GoodService implements ModelDriven,SessionAware,IService {
 	
 	private IGoodDAO goodDAO;
 	private static final long serialVersionUID = 1L;
@@ -21,7 +26,7 @@ public class GoodService implements ModelDriven {
 	private List<Good> GOOD_LIST;
 	private String gNum;
 	private Good GOOD;
-
+	private Map session;
 	
 	public GoodService(IGoodDAO goodDAO) {
 		super();
@@ -113,7 +118,19 @@ public class GoodService implements ModelDriven {
 	public String removeGood() throws Exception {
 		goodDAO.deleteGood(gNum);
 		return "success";
-
 	}
+
+	@Override
+	public Map getSession() {
+		// TODO Auto-generated method stub
+		return session;
+	}
+
+	@Override
+	public void setSession(Map<String, Object> session) {
+		this.session=session;
+		
+	}
+	
 
 }
