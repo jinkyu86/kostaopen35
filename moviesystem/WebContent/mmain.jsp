@@ -36,11 +36,9 @@
 			</div>
 			<div data-role="content" style="height:100%">
 				<ul data-role="listview">
-					<li><a href="#"><img src="movieimg/hearo.jpg" style="width:180px;height:220px;"/> 제목 : 해로1<br/> 장르 : 드라마<br/>개봉일 : 2012.05.31</a></li>
-					<li><a href="#"><img src="movieimg/hearo.jpg" style="width:180px;height:220px;"/> 제목 : 해로2<br/> 장르 : 드라마<br/>개봉일 : 2012.05.31</a></li>
-					<li><a href="#"><img src="movieimg/hearo.jpg" style="width:180px;height:220px;"/> 제목 : 해로3<br/> 장르 : 드라마<br/>개봉일 : 2012.05.31</a></li>
-					<li><a href="#"><img src="movieimg/hearo.jpg" style="width:180px;height:220px;"/> 제목 : 해로4<br/> 장르 : 드라마<br/>개봉일 : 2012.05.31</a></li>
-					<li><a href="#"><img src="movieimg/hearo.jpg" style="width:180px;height:220px;"/> 제목 : 해로5<br/> 장르 : 드라마<br/>개봉일 : 2012.05.31</a></li>
+					<c:forEach var="movieList" items="${MOVIE_LIST}">
+						<li><a href="#"><img src="movieimg/${movieList.poster}" style="width:180px;height:220px;"/> 제목 : ${movieList.mname}<br/> 장르 : ${movieList.genre}<br/>개봉일 : <fmt:formatDate value="${movieList.launchDate}" pattern="yyyy-MM-dd"/></a></li>
+					</c:forEach>
 				</ul>
 			</div>
 			
