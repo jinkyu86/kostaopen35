@@ -11,13 +11,22 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.struts2.interceptor.ServletRequestAware;
+import org.apache.struts2.interceptor.ServletResponseAware;
+import org.apache.struts2.interceptor.SessionAware;
+import org.apache.struts2.util.ServletContextAware;
+
+import org.apache.struts2.interceptor.ServletRequestAware;
+import org.apache.struts2.interceptor.ServletResponseAware;
+import org.apache.struts2.interceptor.SessionAware;
+import org.apache.struts2.util.ServletContextAware;
 
 import net.sf.json.JSONArray;
 
@@ -25,15 +34,27 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.io.FileUtils;
+import org.apache.struts2.interceptor.ServletRequestAware;
+import org.apache.struts2.interceptor.ServletResponseAware;
+import org.apache.struts2.interceptor.SessionAware;
 import org.apache.struts2.util.ServletContextAware;
 
 import com.opensymphony.xwork2.ModelDriven;
 
+import kr.or.kosta.moviesystem.aop.IService;
+import kr.or.kosta.moviesystem.member.Member;
 import kr.or.kosta.moviesystem.screentime.ScreenTime;
 import kr.or.kosta.moviesystem.screentime.ScreenTimeDAO;
 import kr.or.kosta.moviesystem.util.PageUtil;
 
-public class MovieService implements ModelDriven, ServletContextAware{
+public class MovieService implements ModelDriven,ServletContextAware,ServletRequestAware,
+ServletResponseAware,SessionAware,IService{
+	private static final long serialVersionUID = 1L;
+	private ServletContext servletContext;
+	private HttpServletRequest request;
+	private HttpServletResponse response;
+	private Map session;
 	private IMovieDAO movieDAO;
 	private Movie movie = new Movie();
 	private Movie MOVIE;
@@ -51,11 +72,55 @@ public class MovieService implements ModelDriven, ServletContextAware{
 	private String movie_sdate;
 	private String movie_edate;
 	
+	
+	
 	/* getter/setter Ω√¿€ */
+	@Override
+	public Map getSession() {
+		// TODO Auto-generated method stub
+		return session;
+	}
+	@Override
+	public void setSession(Map<String, Object> session) {
+		 this.session=session;		
+		
+	}
+
+	@Override
+	public void setServletResponse(HttpServletResponse response) {
+		this.response = response;
+	}
+
+	@Override
+	public void setServletRequest(HttpServletRequest request) {
+		this.request = request;
+	}
+	
+	public HttpServletRequest getRequest() {
+		return request;
+	}
+
+	public ServletContext getServletContext() {
+		return servletContext;
+	}
+
+	public void setRequest(HttpServletRequest request) {
+		this.request = request;
+	}
+
+	public HttpServletResponse getResponse() {
+		return response;
+	}
+
+	public void setResponse(HttpServletResponse response) {
+		this.response = response;
+	}
+
 	public Movie getMovie() {
 		return movie;
 	}
 	
+
 	public void setMovie(Movie movie) {
 		this.movie = movie;
 	}
@@ -172,17 +237,15 @@ public class MovieService implements ModelDriven, ServletContextAware{
 	public void setMovie_edate(String movie_edate) {
 		this.movie_edate = movie_edate;
 	}
-
+	
+	@Override
+	public void setServletContext(ServletContext context) {
+		this.servletContext=context;			
+	}
 	@Override
 	public Object getModel() {
 		// TODO Auto-generated method stub
 		return movie;
-	}
-
-	@Override
-	public void setServletContext(ServletContext arg0) {
-		// TODO Auto-generated method stub
-		
 	}
 	
 	public MovieService(IMovieDAO movieDAO) {
@@ -271,6 +334,11 @@ public class MovieService implements ModelDriven, ServletContextAware{
 	
 	public String adminMovieList() throws Exception{
 		int length = 5;
+		//HttpSession session=request.getSession();
+		//Member member=(Member)session.getAttribute("LOGIN_MEMBER");
+		Member member=(Member)session.get("LOGIN_MEMBER");
+		//session.put("LOGIN_MEMBER", member);
+		//System.out.println("MEMBER:"+member);
 		
 		if(page==0){
 			page = 1;
@@ -282,7 +350,7 @@ public class MovieService implements ModelDriven, ServletContextAware{
 		if(method==null || method==""){
 			method = "adminMovieList";
 		}
-		
+		//System.out.println("Session : "+(Member)session.get("LOGIN_MEMBER"));
 		String pageLink = "adminMovieList.action?gubun="+gubun;
 		
 		MOVIE_LIST =movieDAO.selectMovieList(page, length, gubun);
@@ -321,6 +389,7 @@ public class MovieService implements ModelDriven, ServletContextAware{
 		if(method=="" || method==null){
 			method = "viewMovieList";
 		}
+		
 		int MovieCnt = movieDAO.selectMovieCount(gubun);
 		
 		MOVIE_LIST = movieDAO.selectMovieList(page, length, gubun);
@@ -373,6 +442,7 @@ public class MovieService implements ModelDriven, ServletContextAware{
 	 */
 	public String addMovie() throws Exception{
 		try {
+			
 			DateFormat formatter ; 
 	        Date Sdate ;
 	        Date Edate ;
@@ -413,6 +483,8 @@ public class MovieService implements ModelDriven, ServletContextAware{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		//movie.setPoster("");
+		System.out.println("movie : "+movie);
 		movieDAO.editMovie(movie);
 		return "success";		
 	}
@@ -433,5 +505,5 @@ public class MovieService implements ModelDriven, ServletContextAware{
 		
 		RequestDispatcher rd = request.getRequestDispatcher("/MovieService?method=adminMovieList");
 		rd.forward(request, response);
-	}
+	}	
 }
