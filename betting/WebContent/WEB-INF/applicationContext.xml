@@ -3,8 +3,10 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:aop="http://www.springframework.org/schema/aop"
 	xmlns:p="http://www.springframework.org/schema/p"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd">
+	
+
 	
 	<bean id="teamDAO"
 	class="kr.or.kosta.betting.team.TeamDAO">
@@ -122,18 +124,21 @@
 		class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg ref="sqlSessionFactory"/>
 	</bean>
-	
+	 
 	<bean id="errorlog"
 		class="kr.or.kosta.betting.aop.ExceptionAdvice"/>
 
-	<aop:config proxy-target-class="true">
-		<aop:aspect id="loggingAspect1" ref="errorlog">
-			<aop:pointcut id="publicmethod1"
-				expression="execution( * kr.or.kosta.betting.*.*Service.*(..))"/>
-			<aop:around pointcut-ref="publicmethod1"
-				method="aroundException"/>	
-		</aop:aspect>
+	<aop:config  proxy-target-class="true">
+		<aop:aspect id="loggingAspect1"  ref="errorlog">
+			<aop:pointcut id="publicmethod1"  
+			expression="execution( *  kr.or.kosta.betting.*.*Service.*(..))"/>
+			  <aop:around 
+			     pointcut-ref="publicmethod1"
+				 method="aroundException"/>
+		</aop:aspect>	
 	</aop:config>
+	
+	
 	
 	<bean id="loginlog" 
 		class="kr.or.kosta.betting.aop.LoginAdvice"/>
@@ -147,8 +152,12 @@
 			<aop:pointcut id="publicmethod3"
 				expression="execution( * kr.or.kosta.betting.match.*Service.*Form(..))"/>
 			<aop:pointcut id="publicmethod4"
-				expression="execution( * kr.or.kosta.betting.member.*Service.*Form(..))"/>
+				expression="execution( * kr.or.kosta.betting.member.*Service.editForm(..))"/>
 			<aop:pointcut id="publicmethod5"
+				expression="execution( * kr.or.kosta.betting.member.*Service.viewMember(..))"/>
+			<aop:pointcut id="publicmethod6"
+				expression="execution( * kr.or.kosta.betting.member.*Service.viewMemberList(..))"/>
+			<aop:pointcut id="publicmethod7"
 				expression="execution( * kr.or.kosta.betting.*.*Service.remove*(..))"/>
 			
 			<aop:around pointcut-ref="publicmethod1"
@@ -160,7 +169,11 @@
 			<aop:around pointcut-ref="publicmethod4"
 				method="aroundLogin"/>	
 			<aop:around pointcut-ref="publicmethod5"
-				method="aroundLogin"/>	
+				method="aroundLogin"/>
+			<aop:around pointcut-ref="publicmethod6"
+				method="aroundLogin"/>
+			<aop:around pointcut-ref="publicmethod7"
+				method="aroundLogin"/>		
 		</aop:aspect>
 	</aop:config>
 </beans>
