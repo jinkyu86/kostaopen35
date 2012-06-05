@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<html>
+<html >
 <html lang="en">
-<head>
+<head >
 <title>BETTING</title>
 <link rel="stylesheet" href="styles.css" type="text/css" media="screen" />
 <link rel="stylesheet" type="text/css" href="print.css" media="print" />
@@ -14,9 +14,8 @@
 </c:if>
 </script>
 </head>
-<body>
-	<ul>
-		
+<body style="text-align:center">
+	<ul id="center1" style="text-align:center">
 		<!--
 		<c:choose>
 			<c:when test="${sessionScope.LOGIN_MEMBER==null}">
@@ -32,61 +31,66 @@
 		</c:choose>
 		-->
 	
-		<header>
-			<p>
-				<font color="black" style="font-size: 27px">2012 프로야구 베팅</font>
-			</p>
-
+		<header >
+			<!--<p>
+				<font color="black" style="font-size: 35px">2012 프로야구 베팅</font>
+			</p>-->
+			<div id="subject">
+				<h1>2012 프로야구 베팅</h1>
+			</div>
+			
+			<div id="login">
 			<c:choose>
 				<c:when test="${sessionScope.LOGIN_MEMBER==null}">
-					<table border="0" align="right">
+					<br/>
+					<br/>
+					<br/>
+					<table align="right" style="margin-left:auto">
 						<tr>
 							<td align="right">
-								<a href="/betting/loginForm.action" ><font color=black>로그인</font></a>
+								<a href="/betting/loginForm.action" ><font color=white size="2pt">로그인</font></a>
 							</td>
 						</tr>
 						<tr>
 							<td align="right">		
 								<a href="/betting/addMemberForm.action" ><font
-									color=black>회원가입</font></a>
+									color=white size="2pt">회원가입</font></a>
 							</td>
 						</tr>
 					</table>
 				</c:when>
 				<c:otherwise>
-					<p>
-					<table border="0" align="right">
+					<table align="right" style="margin-left:auto">
 						<tr>
-							<td colspan="2" align="right"><font color="black">${sessionScope.LOGIN_MEMBER.id }
+							<td colspan="2" align="right"><font color="white" size="2pt">${sessionScope.LOGIN_MEMBER.id }
 									님 환영합니다</font></td>
 						</tr>
 						<tr>
-							<td align="center"><font color="black">순위 : ${RANK }
+							<td align="center"><font color="white" size="2pt">순위 : ${RANK }
 									위|</font></td>
-							<td align="center"><font color="black">미네랄 : ${MINERAL}
+							<td align="center"><font color="white" size="2pt">미네랄 : ${MINERAL}
 									</font></td>
 						</tr>
 						<tr>
 							<td colspan="2" align="right"><a
-								href="/betting/logout.action"> <font
-									color="black">로그아웃</font>
+								href="/betting/logout.action"> <font color="white" size="2pt">로그아웃</font>
 							</a></td>
 						</tr>
 						<tr>
-							<td colspan="2" align="right"><a
-								href="/betting/editMemberForm.action"><font
-									color="black"> 정보수정</font></a></td>
+							<td colspan="2" align="right">
+							<a href="/betting/editMemberForm.action"><font
+									color="white" size="2pt"> 정보수정</font></a></td>
 						</tr>
 						<tr>
 							<td colspan="2" align="right"><a
 								href="/betting/viewMemberBetDataByIDList.action">
-									<font color="black">나의 배팅 정보</font>
+									<font color="white" size="2pt">나의 배팅 정보</font>
 							</a></td>
 						</tr>
 					</table>
-					</p>
 				</c:otherwise>
 			</c:choose>
+			</div>
 		</header>
 		<nav>
 			<!-- top nav -->
@@ -125,7 +129,7 @@
 			<h2 align="center">경기 일정</h2>
 	<form action="/betting/MarchService" method="post">
 	<input type="hidden" name="method" value="addMatch">
-	<table border="1" align="center">
+	<table border="1" align="center" style="margin:auto">
 		<tr>
 			<th>홈팀</th>
 			<th>어웨이팀</th>

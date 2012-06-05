@@ -7,6 +7,10 @@
 <title>ERROR</title>
 </head>
 <body>
+
+<p style="margin:auto" align="center" >
+	<h3>죄송합니다. 페이지에 오류가 있습니다.</h3>
 	<img src="/betting/teamphoto/ERROR.JPG "/>
+</p>
 </body>
 </html>
