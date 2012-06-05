@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <!DOCTYPE struts PUBLIC
 	"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
 	"http://struts.apache.org/dtds/struts-2.0.dtd">
-
+		
+		
 <struts>
 	<constant name="struts.i18n.encoding" value="utf-8"/>
 	<constant name="struts.action.extension" value="action"/>
@@ -16,7 +16,7 @@
 		<global-results> <!-- 모든 Action에 설정-->
 		  <result name="error">/error/error.jsp</result>
 		  <!--loginForm 리턴시 login.jsp로 이동-->
-		  <result name="loginForm">/member/login.jsp</result>
+		  <result name="loginForm">/error/login.jsp</result>
 		</global-results>
 		
 		<action name="viewBoardList" class="kr.or.kosta.bookchange.board.BoardService" method="viewBoardList">
@@ -192,7 +192,7 @@
 		<action name="completeChange" class="kr.or.kosta.bookchange.change.ChangeService" 
 			method="completeChange">
 			<param name="aliases">
-			#{'ChangeNo':'change.demandBoard.boardNo', 'BoardNo':'change.agreeBoard.boardNo'}
+			#{'ChangeNo':'ChangeNo', 'BoardNo':'BoardNo'}
 			</param>
 			<result name="success" type="chain">matchChangeResultList</result>
 		</action>
