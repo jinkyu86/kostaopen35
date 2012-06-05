@@ -24,10 +24,12 @@ public class AuctionDAO extends SqlSessionDaoSupport implements IAuctionDAO{
 
 	
 	@Override
-	public void insertAuction(Auction auction) {
+	public String insertAuction(Auction auction) {
 		SqlSession session = null;
 			session = getSqlSession();
 			session.insert("Auction.insertAuction", auction);
+			
+			return auction.getaNum();
 	}
 	@Override
 	public void updateAuction(Auction auction) {

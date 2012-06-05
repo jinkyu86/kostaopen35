@@ -135,13 +135,13 @@
 	<li>
 		<p align="center">
 			<c:if test="${AUCTION.sold=='0'}">
-				<a href="/auction/buy.action?aNum=${AUCTION.anum }" id="buy">
+				<a href="/auction/buy.action?anum=${AUCTION.aNum }" id="buy">
 					<img src="/auction/menu/immediately.jpg"></a>
 			</c:if>
 			<c:if test="${sessionScope.MEMBER.userid=='admin'}">
-				 <a href="/auction/editAuctionForm.action?aNum=${AUCTION.anum}">
+				 <a href="/auction/editAuctionForm.action?anum=${AUCTION.aNum}">
 				 	<img src="/auction/menu/editAuction.jpg"></a>
-				 <a href="/auction/removeAuction.action?aNum=${AUCTION.anum}" id="deleteauction">
+				 <a href="/auction/removeAuction.action?anum=${AUCTION.aNum}">
 				 	<img src="/auction/menu/deleteAuction.jpg"></a>
 			</c:if>
 			<a href="/auction/viewAuctionList.action">

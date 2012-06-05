@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface IAuctionDAO {
 
-	void insertAuction(Auction auction);
+	String insertAuction(Auction auction);
 
 	void updateAuction(Auction auction);
 

@@ -10,6 +10,7 @@
 			<parameter property="good.gNum"/>
 			<parameter property="sPrice"/>
 			<parameter property="imPrice"/>
+			<parameter property="aNum"/>
 			<parameter property="sTime"/>
 			<parameter property="eTime"/>
 			<parameter property="cuPrice"/>
@@ -17,9 +18,12 @@
 	
 	<insert id="insertAuction"
 		parameterMap="insertParameterMap">
+		<selectKey keyProperty="aNum" resultType="java.lang.String" order="BEFORE">
+            SELECT auc_seq.nextval FROM dual
+        </selectKey>
 		INSERT INTO auction
 		(g_num,s_price,im_price,a_num,s_time,e_time,sold,cu_price)
-		VALUES(?,?,?,auc_seq.nextval,?,?,'0',?)
+		VALUES(?,?,?,?,?,?,'0',?)
 	</insert>
 	
 	<parameterMap type="kr.or.kosta.auction.auction.Auction"

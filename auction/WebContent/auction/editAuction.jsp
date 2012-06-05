@@ -131,7 +131,7 @@
 			<td>현재입찰자</td>
 			<td><input type="text" name="userid" value="${AUCTION.userid }" readOnly="readOnly"/></td>
 		<tr>
-			<td><input type="submit" value="경매수정" id="editAuction"/></td>
+			<td><input type="submit" value="경매수정" /></td>
 			<td><input type="reset" value="입력취소" /></td>
 		</tr>
 	</table>
