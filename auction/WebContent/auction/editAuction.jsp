@@ -86,35 +86,35 @@
 		<table align="center">
 		<tr>
 			<td>물품번호</td>
-			<td><input type="text" name="gNum"
+			<td><input type="text" name="gnum"
 				value="${AUCTION.good.gNum}"
 				 readOnly="readOnly" /></td>
 		</tr>
 
 		<tr>
 			<td>시작가</td>
-			<td><input type="text" name="sPrice"
+			<td><input type="text" name="sprice"
 				value="${AUCTION.sPrice}" /></td>
 		</tr>
 		<tr>
 			<td>즉구가</td>
-			<td><input type="text" name="imPrice"
+			<td><input type="text" name="imprice"
 				value="${AUCTION.imPrice}" /></td>
 		</tr>
 		<tr>
 			<td>경매번호</td>
-			<td><input type="text" name="aNum"
+			<td><input type="text" name="anum"
 				value="${AUCTION.aNum}"
 				readOnly="readOnly" /></td>
 		</tr>
 		<tr>
 			<td>경매시작시간</td>
-			<td><input type="text" name="sTime"
+			<td><input type="text" name="stime"
 				value="${AUCTION.sTime}" /></td>
 		</tr>
 		<tr>
 			<td>경매마감시간</td>
-			<td><input type="text" name="eTime"
+			<td><input type="text" name="etime"
 				value="${AUCTION.eTime}" /></td>
 		</tr>
 		<tr>
@@ -124,7 +124,7 @@
 		</tr>
 		<tr>
 			<td>현재가격</td>
-			<td><input type="text" name="cuPrice"
+			<td><input type="text" name="cuprice"
 				value="${AUCTION.cuPrice}" /></td>
 		</tr>
 		<tr>

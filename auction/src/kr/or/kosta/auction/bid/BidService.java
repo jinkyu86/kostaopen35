@@ -15,6 +15,7 @@ import org.apache.struts2.interceptor.SessionAware;
 
 import com.opensymphony.xwork2.ModelDriven;
 
+import kr.or.kosta.aop.IService;
 import kr.or.kosta.auction.auction.Auction;
 import kr.or.kosta.auction.auction.AuctionDAO;
 import kr.or.kosta.auction.auction.IAuctionDAO;
@@ -22,7 +23,7 @@ import kr.or.kosta.auction.member.IMemberDAO;
 import kr.or.kosta.auction.member.Member;
 import kr.or.kosta.auction.member.MemberDAO;
 
-public class BidService implements ModelDriven,SessionAware{
+public class BidService implements ModelDriven,SessionAware,IService{
 	private IBidDAO bidDAO;
 	private IAuctionDAO auctionDAO;
 	private IMemberDAO memberDAO;
@@ -224,6 +225,11 @@ public class BidService implements ModelDriven,SessionAware{
 	@Override
 	public void setSession(Map<String, Object> session) {
 		this.session=session;		
+	}
+	@Override
+	public Map getSession() {
+		
+		return session;
 	}
 	
 

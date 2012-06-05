@@ -84,12 +84,12 @@
 		<table>
 		<tr>
 		<td>물품번호</td>
-		<td><input type ="text" name="gNum"value="${GOOD.gNum}"
+		<td><input type ="text" name="gnum" value="${GOOD.gNum}"
 				 readOnly="readOnly" /></td>
 		</tr>
 		<tr>
 		<td>물품명</td>
-		<td><input type="text" name="gName" value="${GOOD.gName}" /></td>
+		<td><input type="text" name="gname" value="${GOOD.gName}" /></td>
 		</tr>
 		<tr>
 		<td>상세설명</td>
@@ -97,32 +97,32 @@
 		</tr>
 		<tr>
 		<td>이미지</td>
-		<td><img src="/auction/gphoto/${GOOD.img }" height="100" width="100"></td>
+		<td><img name="img" src="/auction/gphoto/${GOOD.img }" height="100" width="100"></td>
 		</tr>
 		
 		<tr>
 		<td>시작가</td>
-		<td><input type ="text" name="sPrice" value="10" readOnly="readOnly"></td>
+		<td><input type ="text" name="sprice" value="10" readOnly="readOnly"></td>
 		</tr>
 		
 		<tr>
 		<td>현재가격</td>
-		<td><input type ="text" name="cuPrice" value="10" readOnly="readOnly"></td>
+		<td><input type ="text" name="cuprice" value="10" readOnly="readOnly"></td>
 		</tr>
 		
 		<tr>
 		<td>즉구가</td>
-		<td><input type ="text" name="imPrice"></td>
+		<td><input type ="text" name="imprice"></td>
 		</tr>
 			
 		<tr>
 		<td>경매시작시간</td>
-		<td><input type ="text" name="sTime"></td>
+		<td><input type ="text" name="stime"></td>
 		</tr>
 		
 		<tr>
 		<td>경매마감시간</td>
-		<td><input type ="text" name="eTime"></td>
+		<td><input type ="text" name="etime"></td>
 		</tr>
 		
 		<tr>

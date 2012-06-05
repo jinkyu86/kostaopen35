@@ -11,6 +11,14 @@
 <script src="http://code.jquery.com/jquery-1.7.js"></script>
 <script src="jquery.validate.password.js"></script>
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.js"></script>
+<link rel="stylesheet" href="styles.css" type="text/css" media="screen" />
+<link rel="stylesheet" type="text/css" href="print.css" media="print" />
+<!--[if IE]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+<script type="text/javascript">
+ <c:if test="${SUCCESS!=null}">
+ alert("${SUCCESS}");
+</c:if>
+</script>
 <style>
 	#password_row label.error {dispaly:none !important;}
 </style>
@@ -80,11 +88,33 @@
 </script>
 
 </head>
-<body background="/auction/gphoto/seo.jpg">
-	<h1 align="center">회원가입</h1>
-	<form  action="/auction/addMember.action" 
+<body>
+
+	<ul>
+		<header>
+			<p>
+				<font color="black" style="font-size: 27px">경매사이트</font>
+			</p>
+		</header>
+	</ul>
+	<nav>
+		<!-- top nav -->
+		<div class="menu">
+			<ul>
+				<li><a href="/auction/home.jsp">홈</a></li>
+						<li><a href="/auction/viewBoardList.action"> <font color=white>게시물
+								목록 보기</font>
+						</a></li>
+					
+				
+			</ul>
+		</div>
+	</nav>
+	<!-- end of top nav -->
+	<p align="center">
+	<section id="content">
+		<form  action="/auction/addMember.action" 
 		method="post" id="my_form">
-		
 		<table align="center">
 			<tr>
 				<td>아이디</td>
@@ -115,7 +145,9 @@
 					</td>
 			</tr>
 		</table>
-	
 	</form>
+		
+	</section>
+	</p>
 </body>
 </html>

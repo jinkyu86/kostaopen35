@@ -79,6 +79,13 @@ public class Auction {
 	public void setsPrice(String sPrice) {
 		this.sPrice = sPrice;
 	}
+	public String getSprice() {
+		return sPrice;
+	}
+
+	public void setSprice(String sPrice) {
+		this.sPrice = sPrice;
+	}
 
 	public String getImPrice() {
 		return imPrice;
@@ -112,12 +119,26 @@ public class Auction {
 	public void setsTime(String sTime) {
 		this.sTime = sTime;
 	}
+	public String getStime() {
+		return sTime;
+	}
+
+	public void setStime(String sTime) {
+		this.sTime = sTime;
+	}
 
 	public String geteTime() {
 		return eTime;
 	}
 
 	public void seteTime(String eTime) {
+		this.eTime = eTime;
+	}
+	public String getEtime() {
+		return eTime;
+	}
+
+	public void setEtime(String eTime) {
 		this.eTime = eTime;
 	}
 

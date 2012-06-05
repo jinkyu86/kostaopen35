@@ -80,66 +80,8 @@
 
 	<section id="content">
 		<p align="center">
-		<h1 align="center">회원수정</h1>
-	<table align="center">
-		<form action="/auction/editMember.action" method="post">
-			
-			<tr>
-				<td>아이디</td>
-				<td><input type="text" name="userid"
-					value="${MEMBER.userid}" readOnly="readOnly" /></td>
-			</tr>
-			<tr>
-				<td>비밀번호</td>
-				<td><input type="password" name="pw"
-					value="${MEMBER.pw}" /></td>
-			</tr>
-			<tr>
-				<td>이메일</td>
-				<td><input type="text" name="email"
-					value="${MEMBER.email}"></td>
-			</tr>
-			<tr>
-				<td>이름</td>
-				<td><input type="text" name="name"
-					value="${MEMBER.name}"/></td>
-			</tr>
-			<c:choose>
-				<c:when test="${sessionScope.MEMBER.userid=='admin'}">
-					<tr>
-						<td>코인</td>
-						<td><input type="text" name="coin"
-							value="${MEMBER.coin}" /></td>
-							
-					</tr>
-					<tr>
-						<td>E머니</td>
-						<td><input type="text" name="emoney"
-							value="${MEMBER.emoney}" /></td>
-					</tr>
-				</c:when>
-				<c:otherwise>
-					<tr>
-						<td>코인</td>
-						<td><input type="text" name="coin"
-							value="${MEMBER.coin}" readOnly="readOnly"/></td>
-							
-					</tr>
-					<tr>
-						<td>E머니</td>
-						<td><input type="text" name="emoney"
-							value="${MEMBER.emoney}" readOnly="readOnly"/></td>
-					</tr>
-				</c:otherwise>
-			</c:choose>
-			<tr>
-				<td><input type="submit" value="회원수정" /></td>
-				<td><input type="reset" value="입력취소" /></td>
-			</tr>
-		</form>
-	</table>
+		<img src="/auction/gphoto/s20.jpg "/>
 		</p>
 	</section>			
 </body>
 </html>
-
