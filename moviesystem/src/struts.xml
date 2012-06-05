@@ -12,7 +12,7 @@
 		<!-- 필요한 객체가 있으면 스프링을 통해서 얻도록 설정 -->
 	<constant name="struts.objectFactory"	value="spring"/>
 	<package name="default" namespace="/" extends="struts-default">
-		
+	
 		<!--error리턴시 error.jsp로 이동 모든 Action에 다 설정-->
 		<global-results><!--모든 Action에 설정-->
 		<result name="error">/error/error.jsp</result>
@@ -20,6 +20,60 @@
 		<result name="loginForm">/member/login.jsp</result>
 		</global-results>
 		
+		<!-- mobile web -->
+		<action name="mViewBuyList" class="kr.or.kosta.moviesystem.buy.BuyService" method="viewBuyList">
+			<result name="success">/mbuy/viewBuyList.jsp</result>
+		</action>
+		
+		<action name="mCompleteBuy" class="kr.or.kosta.moviesystem.buy.BuyService" method="completeBuy">
+			<result name="success">/mbuy/completebuy.jsp</result>
+		</action>
+		
+		<action name="mAddBuy" class="kr.or.kosta.moviesystem.buy.BuyService" method="addBuy">
+			<!--<result name="login">/member/login.jsp</result>-->
+			<result name="success" type="chain">mCompleteBuy</result>
+		</action>
+		
+		<action name="mRemoveCartList" class="kr.or.kosta.moviesystem.good.GoodService" method="removeCartList">
+			<param name="aliases">
+				#{'index':'index'}
+			</param>
+			<result name="success" type="chain">mViewCartList</result>
+		</action>
+		
+		<action name="mEditCartList" class="kr.or.kosta.moviesystem.good.GoodService" method="editCartList">
+			<param name="aliases">
+				#{'index':'index'}
+			</param>
+			<result name="success" type="chain">mViewCartList</result>
+		</action>
+		
+		<action name="mViewGoodList" class="kr.or.kosta.moviesystem.good.GoodService" method="viewGoodList">
+			<result name="success">/mgood/viewGoodList.jsp</result>
+		</action>
+		
+		<action name="mViewGood" class="kr.or.kosta.moviesystem.good.GoodService" method="viewGood">
+			<param name="aliases">
+				#{'gnum':'gnum'}
+			</param>
+			<result name="success">/mgood/viewGood.jsp</result>
+		</action>
+		
+		<action name="mAddCartList" class="kr.or.kosta.moviesystem.good.GoodService" method="addCartList">
+			<param name="aliases">
+				#{'gnum':'gnum',
+				'qty':'qty'}
+			</param>
+			<result name="success" type="chain">mViewCartList</result>
+		</action>
+		
+		<action name="mViewCartList" class="kr.or.kosta.moviesystem.good.GoodService" method="viewCartList">
+			<result name="success">/mgood/viewCartList.jsp</result>
+		</action>
+		
+		
+		
+		<!-- web -->
 		<action name="viewGoodList" class="kr.or.kosta.moviesystem.good.GoodService" method="viewGoodList">
 			<result name="success">/good/viewGoodList.jsp</result>
 		</action>
@@ -107,7 +161,7 @@
 		</action>
 		
 		<action name="addBuy" class="kr.or.kosta.moviesystem.buy.BuyService" method="addBuy">
-			<result name="login">/member/login.jsp</result>
+			<!--<result name="login">/member/login.jsp</result>-->
 			<result name="success" type="chain">completeBuy</result>
 		</action>
 		
@@ -204,7 +258,8 @@
 		</action>
 		
 		<action name="login" class="kr.or.kosta.moviesystem.member.MemberService" method="login">
-			<result name="success" type="chain">main</result>
+			<!--<result name="success" type="chain">main</result>-->
+			<result name="success" type="chain">mViewCartList</result><!--임의로..선희 0605-->
 			<result name="login">/member/login.jsp</result>
 		</action>
 		
@@ -320,5 +375,8 @@
 			</param>
 			<result name="success">/movie/adminMovieList.jsp</result>
 		</action>
+		
+
+		
 	</package>
 </struts>
