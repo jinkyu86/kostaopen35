@@ -3,6 +3,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<style type="text/css">
+a{text-decoration:none;}
+</style>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>도서물물 교환</title>
 <script src="http://code.jquery.com/jquery-1.7.js"></script>
@@ -15,9 +18,9 @@
 </head>
 <body topmargin="0" leftmargin="0" bgcolor="#FFFFFF">
 	<table>
-	 <td width="550" height="600" valign="top">
+	 <td width="650" height="600" valign="top">
 	 <h5 align="center">교환진행중인 책 목록</h5>
-	  <table bordercolor="#FFA500" border="1" align="center">
+	  <table bordercolor="#E6E6FA" border="1" align="center">
 	   <tr align="center">
 	   	<th>My Book</th>
 	    <th>신청한사람</th>
@@ -38,7 +41,7 @@
 		<td align="center">
 		<c:choose>
         <c:when test="${change.agreeBoard.condition.conditionResult eq 2}">
-                교환<br>완료<br><font color="red"><b>대기</b></font>
+                교환<br>완료<br><font color="red"><b>대기</font>
         </c:when>
         <c:otherwise>
         		교환완료<br><font color="red"><b>완료</b></font>
@@ -47,9 +50,9 @@
 		</td>		
 		<td>
        		<form action="/bookchange/completeChange.action" method="post">
-       		<input type="hidden" name="ChangeNo" value="${change.demandBoard.boardNo}">
-       		<input type="hidden" name="BoardNo" value="${change.agreeBoard.boardNo}">
-       		<input type="hidden" name="conditionResult" value="${change.demandBoard.condition.conditionResult}">
+       		<input type="hidden" name="ChangeNo" value="${change.agreeBoard.boardNo}">
+       		<input type="hidden" name="BoardNo" value="${change.demandBoard.boardNo}">
+       		<input type="hidden" name="conditionResult" value="${change.agreeBoard.condition.conditionResult}">
        		<input type="submit" value="완료확정">
        		</form>
        	</td>

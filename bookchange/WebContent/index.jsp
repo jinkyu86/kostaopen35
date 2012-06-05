@@ -14,10 +14,10 @@
 	</c:if>
 </script>
 </head>
-	<frameset rows="50,*" border="0">
+	<frameset rows="100,*" border="0">
 		<frame src="top.jsp" name="top">	
 	
-	<frameset cols="200,*" border="0">
+	<frameset cols="280,*" border="0">
 		<frame src="left.jsp" name="left">
 	
 		<frame src="/bookchange/boardListAtMain.action" name="main">

@@ -19,7 +19,7 @@
 	 <td width="550" height="600" valign="top" bgcolor="#FFFFFF">
 	 	<fieldset>
 	 	<div class="txt01"><h4 align="center">신고하기</h4></div>
-	 	 <form action="/bookchange/BlockService" method="post">
+	 	 <form action="/bookchange/BlockService" method="post" target="main">
 		  <input type="hidden" name="method" value="addBlock">
 		  <input type="hidden" name="registeremail" value="${sessionScope.LOGIN_EMAIL.email}">
 		  <ul><li><div> Email</div>  ${LOGIN_EMAIL.email}</li></ul>

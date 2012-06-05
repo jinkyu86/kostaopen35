@@ -4,6 +4,11 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+
+<style type="text/css">
+a{text-decoration:none;}
+</style>
+
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>물건 조회</title>
 <script src="http//code.jquery.com/jquery-1.7.js"></script>
@@ -11,7 +16,7 @@
 </head>
 <body topmargin="0" leftmargin="0" bgcolor="#FFFFFF">
 <table>
-	 <td width="550" height="600" valign="top">
+	 <td width="580" height="600" valign="top">
 	 <c:if test="${WhenAgree eq a}">
 	 <table align="center">
 	 <tr><td>
@@ -23,22 +28,35 @@
 	  </form>	
 	  </c:if>
 
- 	<table bordercolor="#FFA500" align="center" border="1">
- 		<tr align="center">
+ 	<table bordercolor="#E6E6FA" align="center" border="1">
+ 		 		<tr align="center">
  			<td><b><small>게시물번호</small></b><br>${BOARD.boardNo}</td> 			
  			<td><b>올린사람</b><br>${BOARD.member.email}</td> 			
- 			<td colspan="2"><b>카테고리</b><br>${BOARD.category.categoryName}</td>	
- 	 		<td colspan="3"><b>거래방법</b><br>${BOARD.deal.dealWay}</td> 	 		
+ 			<td><b>카테고리</b><br>${BOARD.category.categoryName}</td>	
+ 	 		<td><b>거래방법</b><br>${BOARD.deal.dealWay}</td>
+ 	 		<td align="center"><b>교환상태</b><br>
+ 	 		<c:choose>
+ 	 		<c:when test="${BOARD.condition.conditionIng eq '교환중' || BOARD.condition.conditionIng eq '교환완료' }">
+ 	 		<font color="red"><b>${BOARD.condition.conditionIng}</b></font>
+ 	 		</c:when>
+ 	 		<c:otherwise>
+ 	 		${BOARD.condition.conditionIng}
+ 	 		</c:otherwise>
+ 	 		</c:choose>
+ 	 		</td> 	 		
  		</tr>
  		<tr>
- 			<td colspan="2"><b>제목</b><br>${BOARD.boardTitle}</td>
- 			<td align="center" colspan="2"><b>원하는물건</b><br>${BOARD.boardWant}</td>
+ 			<td colspan="2" align="center">${BOARD.boardTitle}</td>
+ 			<td align="center" colspan="3"><b>원하는물건</b><br>${BOARD.boardWant}</td>
  			
- 			<td align="center" colspan="4"><b>교환상태</b><br>${BOARD.condition.conditionIng}</td>
+ 			
  		</tr>
  		<tr>
- 			<td align="center" colspan="2"><img src="/bookchange/bookimg/${BOARD.boardPhoto}" height="300" width="300"></td> 			
- 	 		<td colspan="6">${BOARD.boardContent}</td> 	 		
+ 			<td align="center" colspan="5"><img src="/bookchange/bookimg/${BOARD.boardPhoto}" height="300" width="300"></td> 			 	 		
+ 		</tr>
+ 		
+ 		<tr>
+ 		<td colspan="5">${BOARD.boardContent}</td>
  		</tr>
  		
  		<tr>

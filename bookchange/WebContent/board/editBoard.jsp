@@ -90,7 +90,7 @@
 	<form id="edit_board" action="/bookchange/editBoard.action" method="post">
 		<input id="photo" type="hidden" name="boardPhoto" value=""/>
 		<input id="conditionResult" type="hidden" name="conditionResult" value="${BOARD.condition.conditionResult}"/>
-		<table bordercolor="#FFA500" border="1" align="center">
+		<table bordercolor="#E6E6FA" border="1" align="center">
 	    <tr>
 		<td>작성자<input type="text" id="email" name="email" value="${sessionScope.LOGIN_EMAIL.email}" readonly="readonly"/><td/>
 		<td>게시물번호<input type="text" name="boardNo" value="${BOARD.boardNo}" readonly="readonly"/><td/>

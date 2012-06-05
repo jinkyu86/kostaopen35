@@ -4,6 +4,11 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+
+<style type="text/css">
+a{text-decoration:none;}
+</style>
+
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>교환을 원하는 물건을 선택해주세요</title>
 <script src="http//code.jquery.com/jquery-1.7.js"></script>
@@ -12,14 +17,19 @@
 <c:if test="${ERROR!=null}">
 	alert("${ERROR}");
 </c:if>
+
+function change(){
+	
+	
+}
 </script>
 </head>
 <body topmargin="0" leftmargin="0" bgcolor="#FFFFFF">
 	 <table>
-	 <td width="550" height="600" valign="top">	 	 
+	 <td width="580" height="600" valign="top">	 	 
  
 <h4 align="center">교환 신청 대상</h4>
-	<table bordercolor="#FFA500" border="1" align="center">
+	<table bordercolor="#E6E6FA" border="1" align="center">
 		 <tr>
 		  <th>번호</th>
 		  <th>사진</th>
@@ -39,7 +49,7 @@
  
 <h4 align="center">현재 교환가능한 책 목록</h4>	
 	
-	 <table bordercolor="#FFA500" border="1" align="center">
+	 <table bordercolor="#E6E6FA" border="1" align="center">
 	 <tr>
 	  <th>번호</th>
 	  <th>올린사람</th>
@@ -56,10 +66,10 @@
        <td><a href="/bookchange/viewBoard.action?boardNo=${good.boardNo}"><small>${good.boardTitle}</small></a></td>
        <td align="center"><small>${good.condition.conditionIng}</small></td>
        <td>
-       	<form action="/bookchange/addChange.action" method="post" target="main">
+       	<form action="/bookchange/addChange.action" method="post" target="main" >
        	<input type="hidden" name="demandBoardNo" value="${good.boardNo}">
        	<input type="hidden" name="agreeBoardNo" value="${BOARD.boardNo}">
-       	<input type="submit" value="교환신청">
+       	<input type="button"   value="교환신청">
        	</form>
        	</td>
       </tr>

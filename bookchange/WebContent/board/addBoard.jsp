@@ -88,7 +88,7 @@ $(document).ready(function(){
 <form id="add_board" action="/bookchange/addBoard.action" method="post">
 <input type="hidden" id="email" name="email" value="${sessionScope.LOGIN_EMAIL.email}"/>
 <input id="photo" type="hidden" name="boardPhoto" value=""/>
-		<table bordercolor="#FFA500" border="1">				
+		<table bordercolor="#E6E6FA" border="1">				
 		<tr align="center">
 		<td>
 		<label>작성자</label> ${sessionScope.LOGIN_EMAIL.email}<br/>
@@ -118,7 +118,7 @@ $(document).ready(function(){
 		</tr>
 		<tr>
 		<td colspan="3">
-		<label>내용</label><br><textarea cols="60" rows="10" id="boardContent" name="boardContent"></textarea><br/>
+		<label>내용</label><br><textarea cols="70" rows="10" id="boardContent" name="boardContent"></textarea><br/>
 		</td>
 		</tr>
 		<tr align="center">	

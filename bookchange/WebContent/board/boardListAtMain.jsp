@@ -26,13 +26,22 @@
 </tr>
 </table>
  <c:forEach var="board" items="${BOARD_LIST}">
- <table border="1" width="530" height="70">
+ <table border="1" width="530" height="70" bordercolor="#E6E6FA">
  <tr>
   <td height="70" width="70" rowspan="4"><a href="/bookchange/viewBoard.action?boardNo=${board.boardNo}"><img src="/bookchange/bookimg/${board.boardPhoto}" height="70" width="70" border="0"></a></td>
  </tr>
  <tr>
   <td><b>제목</b>:${board.boardTitle}</td>
-  <td align="center" height="70" width="70" rowspan="4"><b>${board.condition.conditionIng}</b></td>
+  <td align="center" height="70" width="70" rowspan="4">
+  <c:choose>
+ 	 		<c:when test="${board.condition.conditionIng eq '교환중' || board.condition.conditionIng eq '교환완료' }">
+ 	 		<font color="red"><b>${board.condition.conditionIng}</b></font>
+ 	 		</c:when>
+ 	 		<c:otherwise>
+ 	 		${board.condition.conditionIng}
+ 	 		</c:otherwise>
+ 	 		</c:choose>
+  </td>
  </tr>
  <tr>
   <td><b>올린사람</b>:${board.member.email}</td>

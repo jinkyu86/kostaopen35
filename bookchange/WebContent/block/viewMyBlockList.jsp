@@ -3,6 +3,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<style type="text/css">
+a{text-decoration:none;}
+</style>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>도서물물 교환</title>
 <script src="http://code.jquery.com/jquery-1.7.js"></script>
@@ -19,7 +22,7 @@
 	 
 	 <h5 align="center">신고내역보기</h5>
 	 
-	  <table bordercolor="#FFA500" border="1" align="center">
+	  <table bordercolor="#E6E6FA" border="1" align="center">
 	   <tr align="center">
 	   	<th>Email</th>
 	    <th>신고대상</th>
@@ -35,9 +38,11 @@
       </table>
      
 	  <p align="center">
-		${PAGE_LINK_TAG}
-	  </p>
-	  </td>
+		${PAGE_LINK_TAG} <br/><br/>
+		<a href="/bookchange/BlockService?method=addBlockForm" target="main"><b>신고하기</b><img src="webimg/black.gif" width="30" height="30" border="0"></a>
+	  </p>  
+	  </td>	  
 	  </table>
+	  
 </body>
 </html>

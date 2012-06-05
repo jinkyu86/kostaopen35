@@ -3,6 +3,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<style type="text/css">
+a{text-decoration:none;}
+</style>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>도서물물 교환</title>
 <script src="http://code.jquery.com/jquery-1.7.js"></script>
@@ -15,9 +18,9 @@
 </head>
 <body topmargin="0" leftmargin="0" bgcolor="#FFFFFF">
 	<table>
-	 <td width="550" height="600" valign="top">
+	 <td width="670" height="600" valign="top">
 	 <h5 align="center">교환완료 목록</h5>
-	  <table bordercolor="#FFA500" border="1" align="center">
+	  <table bordercolor="#E6E6FA" border="1" align="center">
 	   <tr align="center">
 	   	<th>My Book</th>
 	    <th>신청한사람</th>
@@ -29,10 +32,10 @@
        <tr>
         <td><img src="/bookchange/bookimg/${change.demandBoard.boardPhoto}" height="100" width="100"></td>
         <td align="center">
-        <a href="/bookchange/BoardService?method=viewMemberInfo&email=${change.agreeBoard.member.email}">${change.agreeBoard.member.email}</a></td>
+        <a href="/bookchange/viewMemberInfo.action?email=${change.agreeBoard.member.email}">${change.agreeBoard.member.email}</a></td>
         <td align="center">
         <c:choose>
-        <c:when test="${change.demandBoard.condition.conditionResult eq 2}">
+        <c:when test="${change.agreeBoard.condition.conditionResult eq 2}">
                 교환완료<br><font color="red"><b>대기</b></font>
         </c:when>
         <c:otherwise>
@@ -41,7 +44,7 @@
         </c:choose>        
         </td>
         <td align="center">
-		<a href="/bookchange/BoardService?method=viewBoardWhenAgree&boardNo=${change.agreeBoard.boardNo}&agreeBoardNo=${change.demandBoard.boardNo}">
+		<a href="/bookchange/viewBoard.action?boardNo=${change.agreeBoard.boardNo}">
 		<img src="/bookchange/bookimg/${change.agreeBoard.boardPhoto}"height="100" width="100"></a></td>
 		<td align="center">${change.changeDate}</td>
        </tr>

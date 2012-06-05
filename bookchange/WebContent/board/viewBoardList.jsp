@@ -14,9 +14,14 @@
 </c:if>
 
 </script>
+
+<style type="text/css">
+a{text-decoration:none;}
+</style>
+
 </head>
 <table>
-	 <td width="550" height="600" valign="top">
+	 <td width="580" height="600" valign="top">
 	 
 	 <table align="center" border="0">
 <tr><td align="left"><a href="/bookchange/searchBoardList.action?categoryNo=&column=title&keyword="><small>전체보기</small></a></td>
@@ -32,7 +37,7 @@
 		<td align="left"><a href="/bookchange/searchBoardList.action?categoryNo=9&column=title&keyword="><small>유아/아동</small></a></td></tr>
  </table>
 	 
-	 	 <table bordercolor="#FFA500" border="1" align="center">
+	 	 <table bordercolor="#E6E6FA" border="1" align="center">
 	 <tr align="center">
 	  <th>번호</th>
 	  <th>사진</th>
@@ -46,12 +51,22 @@
        <td><img src="/bookchange/bookimg/${good.boardPhoto}" height="80" width="80"></td>
        <td align="center"><small>${good.member.email}</small></td>
        <td align="left"><a href="/bookchange/viewBoard.action?boardNo=${good.boardNo}">${good.boardTitle}</a></td>
-       <td align="center"><small>${good.condition.conditionIng}</small></td>
+       <td align="center"><small>
+       <c:choose>
+ 	 		<c:when test="${good.condition.conditionIng eq '교환중' || good.condition.conditionIng eq '교환완료' }">
+ 	 		<font color="red"><b>${good.condition.conditionIng}</b></font>
+ 	 		</c:when>
+ 	 		<c:otherwise>
+ 	 		${good.condition.conditionIng}
+ 	 		</c:otherwise>
+ 	 		</c:choose>
+       </small></td>
       </tr>
      </c:forEach>
 	 </table>
 	 
 	 <table align="center">
+	 <tr><td>
 	 <form action="/bookchange/searchBoardList.action" method="post">
 	  <select name="categoryNo">
 	   <option value="">전체</option>
@@ -73,6 +88,7 @@
 	  <input type="text" name="keyword">
 	  <input type="submit" value="검색"/>
 	 </form>
+	 </td></tr>
 	</table>
 	
 	 <p align="center">  ${PAGE_LINK_TAG} </p>

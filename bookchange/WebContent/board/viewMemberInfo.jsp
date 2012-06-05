@@ -3,6 +3,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<style type="text/css">
+a{text-decoration:none;}
+</style>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>도서물물 교환</title>
 <script src="http//code.jquery.com/jquery-1.7.js"></script>
@@ -28,10 +31,6 @@
 	 <td>전화번호</td><td>${MEMBER.tel}</td>
 	 </tr>	 
 	 </table>
-	 <center><br>
-	 <a href="/bookchange/matchChangeList.action">
-	 <img src="/bookchange/webimg/return.gif" border="0"></a>
-	 </center>
    </td>
   </tr>
  </table>

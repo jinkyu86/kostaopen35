@@ -3,6 +3,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<style type="text/css">
+a{text-decoration:none;}
+</style>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>도서물물 교환</title>
 <script src="http://code.jquery.com/jquery-1.7.js"></script>
@@ -17,7 +20,7 @@
 	<table>
 	 <td width="550" height="600" valign="top">
 	 <h5 align="center">나에게 들어온 교환신청</h5>
-	  <table bordercolor="#FFA500" border="1" align="center">
+	  <table bordercolor="#E6E6FA" border="1" align="center">
 	   <tr align="center">
 	   	<th>My Book</th>
 	    <th>신청한사람</th>
