@@ -67,7 +67,7 @@
 	UPDATE tb_change set condition_result=3 where agree_board_no=#{agreeBoard.boardNo}
 </update>
 <update id="completeBoardUpdate">
-	UPDATE tb_board set condition_result=3 where board_no=#{agreeBoard.boardNo}
+	UPDATE tb_board set condition_result=3 where board_no=#{demandBoard.boardNo}
 </update>
 
 
@@ -130,7 +130,7 @@
 <select id="selectChangeMyboardList" resultMap="selectResultMap">
     Select c.change_no as changeNo, c.change_date as changeDate, d.condition_result as conditionResult, d.condition_ing conditionIng,
 	a.board_no as demandBoardNo, a.board_title as demandBoardTitle, a.board_want as demandBoardWant, a.board_photo as demandBoardPhoto,
-	a.board_content as demandBoardContent, a.email as demandBoardMemberEmail, a.deal_no as demandBoardDealNo, a.condition_result as demandBoardContionResult,
+	a.board_content as demandBoardContent, a.email as demandBoardMemberEmail, a.deal_no as demandBoardDealNo, a.condition_result as demandBoardConditionResult,
 	a.category_no as demandBoardCategoryNo, b.board_no as agreeBoardNo, b.board_title as agreeBoardTitle, b.board_want as agreeBoardWant,
 	b.board_photo as agreeBoardPhoto, b.board_content as agreeBoardContent, b.email as agreeBoardMemberEmail, b.deal_no as agreeBoardDealNo, 
 	b.condition_result as agreeBoardConditionResult, b.category_no as agreeBoardCategoryNo, ca.category_no as categoryNo, 

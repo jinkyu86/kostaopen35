@@ -99,7 +99,7 @@ public class BlockService extends HttpServlet {
 		
 		BlockDAO.insertBlock(block);
 		
-		RequestDispatcher rd=request.getRequestDispatcher("/BoardService?method=boardListAtMain");
+		RequestDispatcher rd=request.getRequestDispatcher("/BlockService?method=selectMyBlockList");
 		rd.forward(request, response);
 	}
 

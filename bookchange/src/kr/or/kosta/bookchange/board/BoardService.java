@@ -397,7 +397,7 @@ public class BoardService implements ModelDriven, ServletContextAware, ServletRe
 		if(LOGIN_EMAIL==null){
 			ERROR="로그인하시기 바랍니다.";
 			
-			return "fail";
+			return "loginForm";
 		}else{
 					
 		CATEGORY_LIST=categoryDAO.selectCategory();//카테고리 정보 조회
@@ -570,7 +570,7 @@ public class BoardService implements ModelDriven, ServletContextAware, ServletRe
 		
 		BOARD=boardDAO.selectBoard(boardNo);
 		if(BOARD.getCondition().getConditionResult()==2||BOARD.getCondition().getConditionResult()==3){
-			ERROR="선택한 책은 이미 교환중이므로 신청할 수 없습니다 :)";
+			ERROR="선택한 책은 이미 교환중이거나 교환이 완료되어 신청할 수 없습니다 :)";
 			return "fail";
 		}else{
 	

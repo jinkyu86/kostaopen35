@@ -1,25 +1,13 @@
 package kr.or.kosta.bookchange.board;
 
-import java.io.IOException;
-import java.io.Reader;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 
-import kr.or.kosta.bookchange.change.Condition;
 import kr.or.kosta.bookchange.member.Member;
-import kr.or.kosta.util.ConnectionUtil;
 
 public class BoardDAO extends SqlSessionDaoSupport implements IBoardDAO {
 	
