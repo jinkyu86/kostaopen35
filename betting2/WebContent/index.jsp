@@ -127,7 +127,9 @@
 		</nav>
 		<!-- end of top nav -->
 		<section id="content">
+			<p align="center">
 			<img src="/betting/teamphoto/BASSBALL.JPG "/>
+			</p>
 		</section>
 		</li>
 	</ul>
