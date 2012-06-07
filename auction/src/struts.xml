@@ -166,14 +166,18 @@
                 
             </param>
             <result name="success" type="redirectAction">
-                viewAuctionList
+            	<param name="actionName">
+                   	     viewAuctionList
+			 	</param>               
             </result>
         </action>
         
         <action name="logout" class="kr.or.kosta.auction.member.MemberService"
          method="logout">
             <result name="success" type="redirectAction">
-                viewAuctionList
+                <param name="actionName">
+                   	     viewAuctionList
+			 	</param>     
             </result>
         </action>
         
