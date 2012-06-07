@@ -9,9 +9,10 @@ header, footer, section, aside, nav, article {
 /* standard body */
 body {
 	margin: 0 auto;
-	width: 960px;	
-font: 14px/20px "Trebuchet MS", Verdana, Helvetica, Arial, sans-serif;
-background: #FFFFFF;/*#000*/
+	width: 960px;
+	text-align: left;	
+	font: 14px/20px "Trebuchet MS", Verdana, Helvetica, Arial, sans-serif;
+	background: #FFFFFF;/*#000*/
 	}
 /* standard alignments */
 .alignleft {
@@ -45,9 +46,8 @@ img.alignright {
 /* Hx tags */
 h1 {
 	font-size: 48px;
-	padding: 20px 0;
 	text-shadow: 2px 2px 2px #000;
-color: #fff;
+	color: #fff;
 	}
 h2 {
 	font-size: 24px;
@@ -58,32 +58,32 @@ h3 {
 	padding: 10px 0;
 	}
 p {
-	padding-bottom: 20px;
+	padding-bottom: 5px;
 	}
 /* header */
 header {
 	position: relative;
-	margin-top: 5px;
-	margin-bottom: 5px;
-	padding: 40px;
-	width: 960px;	
+	padding: 25px;
+	width: 910px;
+	height: 100px;	
 	background: #0da4dd;
-	background-color: #d3d3d3;
+	background-color: #008c8c;
 	
 	/* curved border radius */
 	-moz-border-radius: 10px;
 	-webkit-border-radius: 10px;
 }
 header h1, header p {
-position: relative;
-z-index: 9999;
-width: 900px;
+position:relative
 }
 header h1 {
 padding: 20px 0 20px 20px;
-color: #0B610B;
+width: 500px;
+color: #ffffff;
+
 }
 header p {
+
 padding-left: 20px;
 }
 /* nav */
@@ -93,6 +93,10 @@ margin: 0 auto;
 width: 960px;
 display: block;
 float: left;
+
+	/* curved border radius */
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
 }
 nav .menu {
 font-size: 18px;
@@ -131,7 +135,7 @@ right: 40px;
 	float: left; 
 	width: 960px; 
 	margin:10px 5px 10px 0; 
-	padding:5px 15px 5px 15px;
+	padding:5px 15px 5px 0;
 	background-color: #fff;
 /* curved border radius */
 	-moz-border-radius: 10px;
@@ -277,3 +281,30 @@ aside section ul li a:hover {
 	text-decoration: underline;
 	color: #000;
 	}
+#login{
+	width:180px;
+	height:100px;
+	top : 15px;
+	background: #ffffff;
+	margin-left:730px;
+	position:relative;
+	background-color: #008c8c;
+	
+}
+#subject {
+	top : 10px;
+	width:450px;
+	height:60px;
+	background: #ffffff;
+	margin-left:25px;
+	position:relative;
+	float: left;
+	background-color: #008c8c;
+}
+
+#center1{
+	width:960px;
+	text-align:left;
+	position:relative;
+	
+}
