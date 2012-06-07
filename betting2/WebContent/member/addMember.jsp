@@ -210,7 +210,6 @@
 			<tr>
 				<th>비밀번호 확인</th>
 				<td><input type="password" name="pass_check"/></td>
-				<td></td>
 			</tr>
 			<tr>
 				<th>Email</th>
