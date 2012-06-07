@@ -165,14 +165,14 @@
                 }
                 
             </param>
-            <result name="success" type="chain">
+            <result name="success" type="redirectAction">
                 viewAuctionList
             </result>
         </action>
         
         <action name="logout" class="kr.or.kosta.auction.member.MemberService"
          method="logout">
-            <result name="success" type="chain">
+            <result name="success" type="redirectAction">
                 viewAuctionList
             </result>
         </action>
@@ -230,6 +230,19 @@
             <result name="success">
                 /good/viewGoodList.jsp
             </result>
+        </action>
+		
+		<action name="mviewGoodList"
+         class="kr.or.kosta.auction.good.AndroidGoodService"
+         method="viewGoodList">
+            <result name="success"  type="stream">
+		  		   <param name="contentType">
+		  		   	  text/html;charset=UTF-8
+					 </param>	
+					<param name="inputName">
+    					inputStream
+					</param>
+			</result>
         </action>
         
         <action name="viewGood"
