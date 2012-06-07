@@ -90,9 +90,7 @@
 
 	<ul>
 		<header>
-		<p>
-			<font color="black" style="font-size: 27px">경매사이트</font>
-		</p>
+		<h1>경매사이트</h1>
 
 		<ui>
 		<li><c:choose>

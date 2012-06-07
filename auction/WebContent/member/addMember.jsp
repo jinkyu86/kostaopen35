@@ -1,16 +1,16 @@
-<%@ page language="java" 
-          contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>회원가입</title>
-<link rel ="Stylesheet" href="jquery.validate.password.css"/>
+<link rel="Stylesheet" href="jquery.validate.password.css" />
 
 <script src="http://code.jquery.com/jquery-1.7.js"></script>
 <script src="jquery.validate.password.js"></script>
-<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.js"></script>
+<script
+	src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.js"></script>
 <link rel="stylesheet" href="styles.css" type="text/css" media="screen" />
 <link rel="stylesheet" type="text/css" href="print.css" media="print" />
 <!--[if IE]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
@@ -20,7 +20,9 @@
 </c:if>
 </script>
 <style>
-	#password_row label.error {dispaly:none !important;}
+#password_row label.error {
+	dispaly: none !important;
+}
 </style>
 <script type="text/javascript">
 	$(document).ready(function(){
@@ -92,62 +94,65 @@
 
 	<ul>
 		<header>
-			<p>
-				<font color="black" style="font-size: 27px">경매사이트</font>
-			</p>
-		</header>
+		<h1>경매사이트</h1>
+		<ui>
+		<li><c:choose>
+				<c:when test="${sessionScope.MEMBER==null}">
+					<p align="right">
+						<a href="/auction/loginForm.action"> <font color=black>로그인</font>
+						</a> <br /> <a href="/auction/addMemberForm.action"> <font
+							color=black>회원가입</font>
+						</a>
+					</p>
+				</c:when>
+			</c:choose></li>
+		</ui> </header>
 	</ul>
-	<nav>
-		<!-- top nav -->
-		<div class="menu">
-			<ul>
-				<li><a href="/auction/home.jsp">홈</a></li>
-						<li><a href="/auction/viewBoardList.action"> <font color=white>게시물
-								목록 보기</font>
-						</a></li>
-					
-				
-			</ul>
-		</div>
+	<nav> <!-- top nav -->
+	<div class="menu">
+		<ul>
+			<li><a href="/auction/home.jsp">홈</a></li>
+			<li><a href="/auction/viewBoardList.action"> <font
+					color=white>게시물 목록 보기</font>
+			</a></li>
+
+
+		</ul>
+	</div>
 	</nav>
 	<!-- end of top nav -->
 	<p align="center">
-	<section id="content">
-		<form  action="/auction/addMember.action" 
-		method="post" id="my_form">
-		<table align="center">
-			<tr>
-				<td>아이디</td>
-				<td><input type="text"  name="userid" id="userid">
-				<span id ="useridcheck"></span></td>
-				<td></td>
-			</tr>
-			<tr>
-				<td><label>비밀번호</label></td>
-				<td><input type="password"  name="pw" ></td>
+		<section id="content">
+		<form action="/auction/addMember.action" method="post" id="my_form">
+			<table align="center">
+				<tr>
+					<td>아이디</td>
+					<td><input type="text" name="userid" id="userid"> <span
+						id="useridcheck"></span></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td><label>비밀번호</label></td>
+					<td><input type="password" name="pw"></td>
 
-			</tr>
-			
-			<tr>
-				<td>이메일</td>
-				<td><input type="text" name="email"></td>
-			</tr>
-			<tr>
-				<td>이름</td>
-				<td><input type="text" name="name"></td>
-			</tr>
-			<tr>
-					<td>
-						<input type="submit" value="회원가입" id="addMember"/>
-					</td>
-					<td>
-						<input type="reset" value="취소"/>
-					</td>
-			</tr>
-		</table>
-	</form>
-		
-	</section>
+				</tr>
+
+				<tr>
+					<td>이메일</td>
+					<td><input type="text" name="email"></td>
+				</tr>
+				<tr>
+					<td>이름</td>
+					<td><input type="text" name="name"></td>
+				</tr>
+				<tr>
+					<td><input type="submit" value="회원가입" id="addMember" /></td>
+					<td><input type="reset" value="취소" /></td>
+				</tr>
+			</table>
+		</form>
+
+		</section>
 	</p>
 </body>
 </html>

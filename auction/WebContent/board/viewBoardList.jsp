@@ -18,9 +18,7 @@
 
 	<ul>
 		<header>
-			<p>
-				<font color="black" style="font-size: 27px">경매사이트</font>
-			</p>
+			<h1>경매사이트</h1>
 
 			<ui>
 			<li><c:choose>
@@ -78,25 +76,7 @@
 	</nav>
 	<!-- end of top nav -->
 
-	<section id="content">
-		<p align="center">
-		<c:choose>
-	<c:when test="${sessionScope.MEMBER==null}">
-		<p align="right">
-			<a href="/auction/loginForm.action">
-			로그인
-			</a>
-		</p>
-	</c:when>
-	<c:otherwise>
-		<p align="right">
-			${sessionScope.MEMBER.name }님<br/>
-			<a href="/auction/logout.action">
-			<img src="/auction/menu/logout.jpg"/>
-			</a><br/>
-		</p>
-	</c:otherwise>
-</c:choose>
+
 <body>
 <table  align="center"  border="1" bgcolor="pink">
 	<tr>
