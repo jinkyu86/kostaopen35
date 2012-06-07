@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+		
+<mapper namespace="Member">		
+<parameterMap
+   type="kr.or.kosta.betting.member.Member"
+   id="insertParameterMap">
+   	<parameter property="id"/>
+	<parameter property="name"/>
+	<parameter property="pw"/>
+	<parameter property="email"/>
+</parameterMap>
+
+<insert id="insertMember" 
+     parameterMap="insertParameterMap">
+     INSERT INTO member (id,name,pw,email,mineral)
+	 VALUES (?,?,?,?,5000)
+</insert>
+
+<parameterMap
+   type="kr.or.kosta.betting.member.Member"
+   id="updateParameterMap">
+   	<parameter property="name"/>
+   	<parameter property="pw"/>
+	<parameter property="email"/>
+	<parameter property="mineral"/>
+	<parameter property="id"/>
+</parameterMap>
+
+<update id="updateMember" 
+     parameterMap="updateParameterMap">
+     UPDATE  member 
+	 SET name=?, pw=?,email=?,mineral=?
+	 WHERE id=?
+</update>
+
+<parameterMap
+   type="kr.or.kosta.betting.member.Member"
+   id="updateMineralParameterMap">
+   	<parameter property="mineral"/>
+	<parameter property="id"/>
+</parameterMap>
+
+<update id="updateMineralByID" 
+     parameterMap="updateMineralParameterMap">
+     UPDATE member 
+	 SET mineral=?
+	 WHERE id=?
+</update>
+
+<delete id="deleteMember">
+	DELETE FROM member
+	WHERE id=#{id}
+</delete>
+
+<resultMap id="selectResultMap"
+	type="kr.or.kosta.betting.member.Member">
+		<result property="id" column="id"/>
+		<result property="name"	column="name"/>
+		<result property="pw" column="pw"/>
+		<result property="email" column="email"/>
+		<result property="mineral" column="mineral"/>
+</resultMap>
+
+<select id="selectMemberList" resultMap="selectResultMap">
+	SELECT  id AS id
+				   ,name AS name
+				   ,pw AS pw
+				   ,email AS email
+				   ,mineral AS mineral
+	FROM  member
+</select>
+
+<select id="selectMember" resultMap="selectResultMap">
+	 	SELECT  id AS id
+				   ,name AS name
+				   ,pw AS pw
+				   ,email AS email
+				   ,mineral AS mineral
+	FROM  member
+	WHERE id=#{id}
+</select>
+
+<select id="selectMineralByID" resultType="java.lang.Long">
+	 SELECT  mineral
+	 FROM  member
+	 WHERE id=#{id}
+</select>
+
+<select id="selectMemberCount" resultType="java.lang.Integer">
+	 SELECT count(*)
+	 FROM member
+</select>
+
+<select id="selectMemberRanking" resultType="java.lang.Long">
+     SELECT count(*)
+	 FROM member
+	 WHERE mineral &gt; (SELECT mineral FROM member WHERE id=#{id})
+</select>
+
+<resultMap id="selectRankingResultMap"
+	type="kr.or.kosta.betting.member.Member">
+		<result property="rank"	column="rank"/>
+		<result property="id" column="id"/>
+		<result property="mineral" column="mineral"/>
+</resultMap>
+
+<select id="selectMemberRankingList" resultMap="selectRankingResultMap">
+	SELECT  rank() over (ORDER BY mineral DESC) RANK , id, mineral
+	FROM  member
+</select>
+
+</mapper>
