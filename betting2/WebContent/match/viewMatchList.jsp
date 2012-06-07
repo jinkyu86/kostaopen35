@@ -180,7 +180,7 @@
 	<p align="center">
 		${PAGE_LINK_TAG }
 	</p>
-	<table border="0" align="center">
+	<table border="0" align="center" style="margin:auto">
 		<tr>
 			<th>
 				<a href="/betting/addMatchForm.action">

@@ -138,7 +138,7 @@
 				<td><input type="password" name="pw" /></td>
 			</tr>
 		</table>
-		<table border="0" align="center">
+		<table border="0" align="center" style="margin:auto">
 			<tr>
 				<td><input type="submit" value="로그인" /></td>
 				<td><input type="reset" value="취소" /></td>

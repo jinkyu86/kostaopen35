@@ -131,7 +131,7 @@
 	<aop:config proxy-target-class="true">
 		<aop:aspect id="errorlog1"  ref="errorlog">
 			
-			<aop:pointcut id="publicmethod1"  
+			<aop:pointcut id="publicmethod100"  
 				expression="execution(* kr.or.kosta.betting.*.*Service.*(..))"/>
 			<aop:around 
 				     pointcut-ref="publicmethod100"
