@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd">
+	
+
+	
+	<bean id="teamDAO"
+	class="kr.or.kosta.betting.team.TeamDAO">
+		<property name="sqlSessionTemplate"
+				ref ="sqlSessionTemplate"/>		
+	</bean>
+	
+	<bean id="locDAO"
+	class="kr.or.kosta.betting.loc.LocDAO">
+		<property name="sqlSessionTemplate"
+				ref ="sqlSessionTemplate"/>	
+	</bean>
+	
+	<bean id="matchDAO"
+	class="kr.or.kosta.betting.match.MatchDAO">
+		<property name="sqlSessionTemplate"
+				ref ="sqlSessionTemplate"/>	
+	</bean>
+	
+	<bean id="bettingDAO"
+	class="kr.or.kosta.betting.betting.BettingDAO">
+		<property name="sqlSessionTemplate"
+				ref ="sqlSessionTemplate"/>	
+	</bean>
+	
+	<bean id="memberDAO"
+	class="kr.or.kosta.betting.member.MemberDAO">
+		<property name="sqlSessionTemplate"
+				ref ="sqlSessionTemplate"/>	
+	</bean>
+	
+	<bean id="memberBetDataDAO"
+	class="kr.or.kosta.betting.memberbetdata.MemberBetDataDAO">
+		<property name="sqlSessionTemplate"
+				ref ="sqlSessionTemplate"/>	
+	</bean>
+	
+	<bean id="matchService"
+	class="kr.or.kosta.betting.match.MatchService">
+		<constructor-arg>
+			<ref bean="matchDAO"/>
+		</constructor-arg>
+		<constructor-arg>
+			<ref bean="memberDAO"/>
+		</constructor-arg>
+		<constructor-arg>
+			<ref bean="teamDAO"/>
+		</constructor-arg>
+		<constructor-arg>
+			<ref bean="locDAO"/>
+		</constructor-arg>
+		<constructor-arg>
+			<ref bean="bettingDAO"/>
+		</constructor-arg>
+	</bean>
+	
+	<bean id="bettingService"
+	class="kr.or.kosta.betting.betting.BettingService">
+		<constructor-arg>
+			<ref bean="matchDAO"/>
+		</constructor-arg>
+		<constructor-arg>
+			<ref bean="memberDAO"/>
+		</constructor-arg>
+		<constructor-arg>
+			<ref bean="memberBetDataDAO"/>
+		</constructor-arg>
+		<constructor-arg>
+			<ref bean="bettingDAO"/>
+		</constructor-arg>
+	</bean>
+	
+	<bean id="memberBetDataService"
+	class="kr.or.kosta.betting.memberbetdata.MemberBetDataService">
+		<constructor-arg>
+			<ref bean="matchDAO"/>
+		</constructor-arg>
+		<constructor-arg>
+			<ref bean="memberDAO"/>
+		</constructor-arg>
+		<constructor-arg>
+			<ref bean="memberBetDataDAO"/>
+		</constructor-arg>
+		<constructor-arg>
+			<ref bean="bettingDAO"/>
+		</constructor-arg>
+	</bean>
+	
+	<bean id="memberService"
+	class="kr.or.kosta.betting.member.MemberService">
+		<constructor-arg>
+			<ref bean="memberDAO"/>
+		</constructor-arg>
+	</bean>
+	
+	<bean id="dataSource"
+	class=
+	"org.springframework.jdbc.datasource.SimpleDriverDataSource">
+		<property name="driverClass" 
+			value="oracle.jdbc.driver.OracleDriver"/>
+		<property name="url"
+			value="jdbc:oracle:thin:@127.0.0.1:1521:XE"/>
+		<property name="username" value="scott"/>
+		<property name="password" value="tiger"/>
+	</bean>
+	
+	<bean id="sqlSessionFactory"
+		class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"/>
+		<property name="configLocation" 
+			value="/WEB-INF/classes/sqlmap-config.xml"/>	
+	</bean>
+	
+	<bean id="sqlSessionTemplate"
+		class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg ref="sqlSessionFactory"/>
+	</bean>
+	 
+	<bean id="errorlog"
+		class="kr.or.kosta.betting.aop.ExceptionAdvice"/>
+
+	<aop:config proxy-target-class="true">
+		<aop:aspect id="loggingAspect1"  ref="errorlog">
+			
+			<aop:pointcut id="publicmethod1"  
+				expression="execution(* kr.or.kosta.betting.*.*Service.*(..))"/>
+			<aop:around 
+				     pointcut-ref="publicmethod1"
+					 method="aroundException"/>
+			</aop:aspect>
+	</aop:config>
+	
+	
+	<bean id="loginlog" 
+		class="kr.or.kosta.betting.aop.LoginAdvice"/>
+		
+	<aop:config proxy-target-class="true">
+		<aop:aspect id="loggingAspect1" ref="loginlog">
+			<aop:pointcut id="publicmethod1"
+				expression="execution( * kr.or.kosta.betting.betting.BettingService.bettingGame(..))"/>
+			<aop:pointcut id="publicmethod2"
+				expression="execution( * kr.or.kosta.betting.memberbetdata.MemberBetDataService.view*(..))"/>
+			<aop:pointcut id="publicmethod3"
+				expression="execution( * kr.or.kosta.betting.match.*Service.*Form(..))"/>
+			<aop:pointcut id="publicmethod4"
+				expression="execution( * kr.or.kosta.betting.member.*Service.editForm(..))"/>
+			<aop:pointcut id="publicmethod5"
+				expression="execution( * kr.or.kosta.betting.member.*Service.viewMember(..))"/>
+			<aop:pointcut id="publicmethod6"
+				expression="execution( * kr.or.kosta.betting.member.*Service.viewMemberList(..))"/>
+			<aop:pointcut id="publicmethod7"
+				expression="execution( * kr.or.kosta.betting.*.*Service.remove*(..))"/>
+			
+			<aop:around pointcut-ref="publicmethod1"
+				method="aroundLogin"/>	
+			<aop:around pointcut-ref="publicmethod2"
+				method="aroundLogin"/>	
+			<aop:around pointcut-ref="publicmethod3"
+				method="aroundLogin"/>	
+			<aop:around pointcut-ref="publicmethod4"
+				method="aroundLogin"/>	
+			<aop:around pointcut-ref="publicmethod5"
+				method="aroundLogin"/>
+			<aop:around pointcut-ref="publicmethod6"
+				method="aroundLogin"/>
+			<aop:around pointcut-ref="publicmethod7"
+				method="aroundLogin"/>		
+		</aop:aspect>
+	</aop:config>
+</beans>
