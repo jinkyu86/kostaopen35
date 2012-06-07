@@ -129,12 +129,12 @@
 		class="kr.or.kosta.betting.aop.ExceptionAdvice"/>
 
 	<aop:config proxy-target-class="true">
-		<aop:aspect id="loggingAspect1"  ref="errorlog">
+		<aop:aspect id="errorlog1"  ref="errorlog">
 			
 			<aop:pointcut id="publicmethod1"  
 				expression="execution(* kr.or.kosta.betting.*.*Service.*(..))"/>
 			<aop:around 
-				     pointcut-ref="publicmethod1"
+				     pointcut-ref="publicmethod100"
 					 method="aroundException"/>
 			</aop:aspect>
 	</aop:config>
