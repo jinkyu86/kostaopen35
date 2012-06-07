@@ -4,7 +4,7 @@
 	"http://mybatis.org/dtd/mybatis-3-config.dtd">
 		
 <configuration>
-<!-- 
+ 
 	<environments default="development">
 		<environment id="development">
 			
@@ -22,7 +22,7 @@
 
 </environment>
 </environments>
- -->
+ 
 <mappers>
 	<mapper resource="Buy.xml" />
 	<mapper resource="Good.xml" />
