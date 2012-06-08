@@ -58,8 +58,18 @@ public class GoodService implements ModelDriven, ServletContextAware, ServletReq
 	private int index;
 	
 	private Good good=new Good();
+	private int maxPage;
 	
 	
+	
+	public int getMaxPage() {
+		return maxPage;
+	}
+
+	public void setMaxPage(int maxPage) {
+		this.maxPage = maxPage;
+	}
+
 	public GoodService(IGoodDAO goodDAO) {
 		super();
 		System.out.println("GoodService(GoodDAO)")	;
@@ -214,8 +224,11 @@ public class GoodService implements ModelDriven, ServletContextAware, ServletReq
 		
 		GOOD_LIST=goodDAO.selectGoodList(length,page);
 		int goodCount=goodDAO.selectGoodListCount();	
-		PAGE_LINK_TAG=PageUtil.generate(page, goodCount, length,
-				"/moviesystem/viewGoodList.action");
+		PAGE_LINK_TAG=PageUtil.generate(page, goodCount, length,"/moviesystem/viewGoodList.action");
+		maxPage=(goodCount/length);
+		if(goodCount%length!=0){
+			maxPage++;
+		}
 		return "success";
 	}
 	
