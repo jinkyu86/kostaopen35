@@ -36,11 +36,20 @@
 
 	<body>
 		<div data-role="page">
-			<div data-role="header">
-				<div data-role="controlgroup" data-type="horizontal" >
-					<a href="/moviesystem/mmember/mloginForm.action" data-role="button" >Login</a>
-					<a href="/moviesystem/mmember/maddMemberForm.action" data-role="button">Join</a>
+		
+		<div data-role="header">
+			<c:if test="${LOGIN_MEMBER==null}">
+				<div data-role="controlgroup" data-theme="e"  data-type="horizontal" >
+					<a href="moviesystem/mmember/mloginForm.action" data-role="button" >Login</a>
+					<a href="moviesystem/mmember/maddMemberForm.action" data-role="button">Join</a>
 				</div>
+			</c:if>
+			<c:if test="${LOGIN_MEMBER!=null}">
+				<div data-role="controlgroup"  data-type="horizontal" >
+					<a href="moviesystem/mmember/mmypage.action" data-role="button" >MyPage</a>
+					<a href="moviesystem/mlogout.action" data-role="button">Logout</a>
+				</div>
+				</c:if>				
 			</div><!-- end header 1-->
 			
 			<div data-role="header">
@@ -54,7 +63,7 @@
 			</div><!-- end header2 -->
 			
 			<div data-role="content">
-				<form action="/moviesystem/login.action" method="post">
+				<form action="/moviesystem/mlogin.action" method="post">
 					
 					<div data-role="fieldcontain">
 						<label for="userid">아이디:</label>
@@ -65,16 +74,17 @@
 						<label for="pw">패스워드:</label>
 						<input id="pw" type="password" name="pw" value=""/>
 					</div>
-					
-					<div data-role="navbar">
+					<input type="submit" value="로그인"/>
+
+				</form>
+				
+			<!--  <div data-role="navbar">
 					<ul>
 						<li><a href="moviesystem/mmember/mfindIdForm.action" >아이디찾기</a></li>
 						<li><a href="moviesystem/mmember/mfindPwForm.action" >비밀번호찾기</a></li>
 					</ul>
-					</div>
-					<input type="submit" value="로그인"/>
-
-				</form>
+					</div>-->
+					
 			</div><!-- end content -->
 		</div><!-- end page -->
 	</body>
