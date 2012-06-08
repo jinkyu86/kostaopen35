@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+		
+<mapper namespace="Qa">		
+
+<parameterMap id="insertParameterMap" type="kr.or.kosta.bookchange.board.Qa">
+	<parameter property="member.email"/>
+	<parameter property="qaContent"/>
+	<parameter property="board.boardNo"/>
+</parameterMap>
+<insert id="insertQa" parameterMap="insertParameterMap" >
+	insert into tb_qa (qa_no, email, qa_content, board_no)
+	values (qa_seq.nextval,?,?,?)
+</insert>
+
+<parameterMap id="updateParameterMap" type="kr.or.kosta.bookchange.board.Qa">
+	<parameter property="qaContent"/>
+	<parameter property="qaNo"/>
+</parameterMap>
+	
+<update id="updateQa" parameterMap="updateParameterMap">
+	update tb_qa
+	set qa_content=#{qaContent}
+    where qa_no=#{qaNo}
+</update>
+
+<delete id="deleteQa">
+	delete tb_qa where qa_no=#{qaNo}
+</delete>
+
+<delete id="deleteQaByBoardNo">
+	delete tb_qa where board_no=#{boardNo}
+</delete>
+
+<resultMap id="selectResultMap" type="kr.or.kosta.bookchange.board.Qa">
+	<result property="member.email" column="email"/>
+	<result property="qaContent" column="qa_content"/>
+	<result property="qaNo" column="qa_no"/>
+	<result property="board.boardNo" column="board_no"/>
+</resultMap>
+
+<select id="selectQaList" resultMap="selectResultMap">
+	select q.email as email, 
+		   qa_content as qa_content,
+		   qa_no as qa_no, 
+		   q.board_no as board_no
+	from tb_qa q 
+	JOIN tb_member m ON m.email=q.email
+	JOIN tb_board b ON b.board_no=q.board_no
+	WHERE q.board_no=#{boardNo}
+	ORDER BY q.qa_no ASC
+</select>
+
+<select id="selectQaCount" resultType="java.lang.Integer">
+	select count(qa_no)
+	from tb_qa q 
+	JOIN tb_member m ON m.email=q.email
+	JOIN tb_board b ON b.board_no=q.board_no
+	WHERE q.board_no=#{boardNo}
+</select>
+
+</mapper>
