@@ -313,7 +313,7 @@
 				</param>	
 
 				<result name="success">
-				 	 /index.jsp
+				 	 /left.jsp
 		  		</result>
 				
 				
@@ -324,7 +324,7 @@
 		
 
 				<result name="success">
-				 /index.jsp		
+				 /left.jsp		
 		  		</result>
 				
 				
