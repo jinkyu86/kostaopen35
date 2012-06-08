@@ -1,75 +1,83 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="utf-8"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"  %>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib  prefix="c"  uri="http://java.sun.com/jsp/jstl/core" %>
  
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<title>로그인</title>
-<link rel="stylesheet" href="/moviesystem/css/Layout.css">
-<script src="http://code.jquery.com/jquery-1.7.1.js"></script>
-<script src="/moviesystem/js/common.jsp"></script>
-	<script type="text/javascript">
-	 <c:if test="${ERROR!=null}">
-	 	alert("${ERROR}");
-	 </c:if>
-		$(document).ready(function(){
-			$("#member_info").css('background-color','#C4E2FF');
-			$("#member_login").css('background-color','#EBFBFF');
+<!DOCTYPE html> 
+<html> 
+	<head>
+		<title>로그인</title>
+		<meta charset="euc-kr"/> 	
+		<meta name="viewport" 
+				content="width=device-width, initial-scale=1.0, 
+							maximum-scale=1.0, minimum-scale=1.0, 
+							user-scalable=no"/>
+		
+		<link rel="shortcut icon" href="../image/icon.png">
+		<link rel="apple-touch-icon" href="../image/icon.png">
 
+		<!-- 
+		<link href="http://code.jquery.com/mobile/latest/jquery.mobile.min.css" 
+			rel="stylesheet" type="text/css" />
+		<script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
+		<script src="http://code.jquery.com/mobile/latest/jquery.mobile.min.js"></script>
+		-->
+		
+		<link href="../framework/jquery.mobile-1.0.css" 
+			rel="stylesheet" type="text/css" />
+		<script src="../framework/jquery-1.6.4.js"></script>
+		<script src="../framework/jquery.mobile-1.0.js"></script>
+		
+		<script type="text/javascript">
+	 		<c:if test="${ERROR!=null}">
+	 			alert("${ERROR}");
+	 		</c:if>
+		</script>
+	
+	</head> 
 
-		});
-	</script>
-	
-</head>
-<body>
-<table width="90%" align="center">
-	<!-- 상단 메뉴 시작 -->
-	<tr>
-		<td colspan="2">
-			<jsp:include page="/common/top.jsp"></jsp:include>
-		</td>
-	</tr>
-	<!-- 상단 메뉴 끝 -->
-	
-	<tr>
-		<!-- 좌측 메뉴 시작 -->
-		<td rowspan="2" valign="top" style="width:20%">
-			<jsp:include page="left.jsp"></jsp:include>
-		</td>
-		<!-- 좌측 메뉴 끝 -->
-		<td>
-			<div class="menu_title" ><font size="5">Login</font>	</div>
+	<body>
+		<div data-role="page">
+			<div data-role="header">
+				<div data-role="controlgroup" data-type="horizontal" >
+					<a href="/moviesystem/mmember/mloginForm.action" data-role="button" >Login</a>
+					<a href="/moviesystem/mmember/maddMemberForm.action" data-role="button">Join</a>
+				</div>
+			</div><!-- end header 1-->
 			
-			<form action="/moviesystem/login.action" method="post">
-				<table class="table_style" style="width:50%">
-				<tr>
-					<td>ID:</td>
-					<td><input type="text" name="userid" tabindex="1"></td>
-					<!-- <td rowspan="2" "><input type="submit" value="로그인" tabindex="3"></td> -->
-				</tr>
-				<tr>
-					<td id="pw">PASSWORD:</td>
-					<td><input type="password" name="pw" tabindex="2"></td>
-				</tr>
-				</table>
-				<input type="submit" value="로그인" tabindex="3">
-			</form>		
+			<div data-role="header">
+				<div data-role="navbar">
+					<ul>
+						<li><a href="#">Movie</a></li>
+						<li><a href="#">Reservation</a></li>
+						<li><a href="/moviesystem/mgood/mViewGoodList.action" class="ui-btn-active">Shopping</a></li>
+					</ul>
+				</div>
+			</div><!-- end header2 -->
 			
-			
-		</td>
-			<tr>
-				<td colspan="2">
-				<a href="/moviesystem/addMemberForm.action">
-				<font size=2 >회원가입 |</font></a>
-				<a href="/moviesystem/findIdForm.action">
-				<font size=2 >아이디</a>
-				/<a href="/moviesystem/findPwForm.action">비밀번호</a> 찾기</font>
-				</td>
-			</tr>
-		</tr>
-	</table>
-</body>
+			<div data-role="content">
+				<form action="/moviesystem/login.action" method="post">
+					
+					<div data-role="fieldcontain">
+						<label for="userid">아이디:</label>
+						<input id="userid" type="text" name="userid" value=""/>
+					</div>
+					
+					<div data-role="fieldcontain">
+						<label for="pw">패스워드:</label>
+						<input id="pw" type="password" name="pw" value=""/>
+					</div>
+					
+					<div data-role="navbar">
+					<ul>
+						<li><a href="moviesystem/mmember/mfindIdForm.action" >아이디찾기</a></li>
+						<li><a href="moviesystem/mmember/mfindPwForm.action" >비밀번호찾기</a></li>
+					</ul>
+					</div>
+					<input type="submit" value="로그인"/>
+
+				</form>
+			</div><!-- end content -->
+		</div><!-- end page -->
+	</body>
 </html>
+
+ 
