@@ -18,8 +18,16 @@ a{text-decoration:none;}
 	alert("${ERROR}");
 </c:if>
 
-function change(){
-	
+function change(form){
+	 var result= confirm("책을 교환 하시겠습니까?");
+	 if(result==true){
+		 form.submit();
+		 return true;
+	 }else{
+		 event.preventDefault();
+		 return false;
+	 }
+	 
 	
 }
 </script>
@@ -66,10 +74,11 @@ function change(){
        <td><a href="/bookchange/viewBoard.action?boardNo=${good.boardNo}"><small>${good.boardTitle}</small></a></td>
        <td align="center"><small>${good.condition.conditionIng}</small></td>
        <td>
-       	<form action="/bookchange/addChange.action" method="post" target="main" >
+       	<form action="/bookchange/addChange.action"
+       	 method="post" target="main" onSubmit="change(this)" >
        	<input type="hidden" name="demandBoardNo" value="${good.boardNo}">
        	<input type="hidden" name="agreeBoardNo" value="${BOARD.boardNo}">
-       	<input type="button"   value="교환신청">
+       	<input type="submit"   value="교환신청" >
        	</form>
        	</td>
       </tr>
