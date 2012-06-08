@@ -17,7 +17,7 @@
 		<global-results><!--모든 Action에 설정-->
 		<result name="error">/error/error.jsp</result>
 		<!--loginForm리턴시 /login/login.jsp로 이동 -->
-		<result name="loginForm">/member/login.jsp</result>
+		<result name="loginForm">/mmember/login.jsp</result>
 		</global-results>
 		
 		<!-- mobile web -->
@@ -190,11 +190,24 @@
 			<result name="login">/member/login.jsp</result>
 		</action>
 		
+		<action name="mviewMemberList" class="kr.or.kosta.moviesystem.member.MemberService" 
+		method="viewMemberList">
+			<result name="success">/mmember/viewMemberList.jsp</result>
+			<result name="login">/mmember/login.jsp</result>
+		</action>
+		
 		<action name="addMemberForm" class="kr.or.kosta.moviesystem.member.MemberService" method="addMemberForm">
 			<param name="aliases">
 			#{'userNum':'userNum'}
 			 </param>
 			<result name="success">/member/addMember.jsp</result>
+		</action>
+		
+		<action name="maddMemberForm" class="kr.or.kosta.moviesystem.member.MemberService" method="addMemberForm">
+			<param name="aliases">
+			#{'userNum':'userNum'}
+			 </param>
+			<result name="success">/mmember/addMember.jsp</result>
 		</action>
 		
 		<action name="editMemberForm" class="kr.or.kosta.moviesystem.member.MemberService" method="editMemberForm">
@@ -205,7 +218,15 @@
 			 </param>
 			<result name="success">/member/editMember.jsp</result>
 		</action>
-		
+
+		<action name="meditMemberForm" class="kr.or.kosta.moviesystem.member.MemberService" method="editMemberForm">
+			<param name="aliases">
+			#{'userNum':'userNum',
+			  'userid':'userid'}
+			
+			 </param>
+			<result name="success">/mmember/editMember.jsp</result>
+		</action>	
 		<action name="editMember" class="kr.or.kosta.moviesystem.member.MemberService" method="editMember">
 			<param name="aliases">
 			#{
@@ -216,11 +237,28 @@
 			<result name="success">/member/editMember.jsp</result>
 		</action>
 		
+		<action name="meditMember" class="kr.or.kosta.moviesystem.member.MemberService" method="editMember">
+			<param name="aliases">
+			#{
+			   'userNum':'member.userNum',
+			   'userNum':'userNum'			  
+			   }
+			 </param>
+			<result name="success">/mmember/editMember.jsp</result>
+		</action>		
+		
 		<action name="dropMemberForm" class="kr.or.kosta.moviesystem.member.MemberService" method="dropMemberForm">
 			<param name="aliases">
 			#{'userNum':'userNum'}
 			 </param>
 			<result name="success">/member/dropMember.jsp</result>
+		</action>
+
+		<action name="mdropMemberForm" class="kr.or.kosta.moviesystem.member.MemberService" method="dropMemberForm">
+			<param name="aliases">
+			#{'userNum':'userNum'}
+			 </param>
+			<result name="success">/mmember/dropMember.jsp</result>
 		</action>
 		
 		<action name="dropMember" class="kr.or.kosta.moviesystem.member.MemberService" method="dropMember">
@@ -233,6 +271,16 @@
 			<result name="success">/main.jsp</result>
 		</action>
 		
+		<action name="mdropMember" class="kr.or.kosta.moviesystem.member.MemberService" method="dropMember">
+			<param name="aliases">
+			#{
+			 'userNum':'member.userNum',
+			   'userNum':'userNum'		  
+			   }
+			 </param>
+			<result name="success">/mmain.jsp</result>
+		</action>
+		
 		<action name="addMember" class="kr.or.kosta.moviesystem.member.MemberService" method="addMember">
 			<param name="aliases">
 			#{
@@ -243,12 +291,29 @@
 			<result name="success">/member/login.jsp</result>
 		</action>
 		
+		<action name="maddMember" class="kr.or.kosta.moviesystem.member.MemberService" method="addMember">
+			<param name="aliases">
+			#{
+			   'userNum':'userNum',
+			   'userNum':'member.userNum'
+			   }
+			 </param>
+			<result name="success">/mmember/login.jsp</result>
+		</action>		
+		
 		<action name="viewMember" class="kr.or.kosta.moviesystem.member.MemberService" method="viewMember">
 			<param name="aliases">
 			#{'userNum':'userNum'}
 			 </param>
 			<result name="success">/member/viewMember.jsp</result>
 		</action>
+		
+		<action name="mviewMember" class="kr.or.kosta.moviesystem.member.MemberService" method="viewMember">
+			<param name="aliases">
+			#{'userNum':'userNum'}
+			 </param>
+			<result name="success">/mmember/viewMember.jsp</result>
+		</action>		
 		
 		<action name="loginForm" class="kr.or.kosta.moviesystem.member.MemberService" method="loginForm">
 			<param name="aliases">
@@ -257,11 +322,24 @@
 			<result name="success">/member/login.jsp</result>
 		</action>
 		
+		<action name="mloginForm" class="kr.or.kosta.moviesystem.member.MemberService" method="loginForm">
+			<param name="aliases">
+			#{'userid':'userid'}
+			 </param>
+			<result name="success">/mmember/login.jsp</result>
+		</action>		
+		
 		<action name="login" class="kr.or.kosta.moviesystem.member.MemberService" method="login">
 			<!--<result name="success" type="chain">main</result>-->
 			<result name="success" type="chain">mViewCartList</result><!--임의로..선희 0605-->
 			<result name="login">/member/login.jsp</result>
 		</action>
+		
+		<action name="mlogin" class="kr.or.kosta.moviesystem.member.MemberService" method="login">
+			<!--<result name="success" type="chain">main</result>-->
+			<result name="success" type="chain">mViewCartList</result><!--임의로..선희 0605-->
+			<result name="login">/mmember/login.jsp</result>
+		</action>		
 		
 		<action name="findIdForm" class="kr.or.kosta.moviesystem.member.MemberService" method="findIdForm">
 			<result name="success">/member/findId.jsp</result>
@@ -274,6 +352,14 @@
 			<result name="success">/member/resultFindId.jsp</result>
 			<result name="findId">/member/findId.jsp</result>
 		</action>
+		
+		<action name="mfindId" class="kr.or.kosta.moviesystem.member.MemberService" method="findId">
+			<param name="aliases">
+			#{'name':'name','email':'email'}
+			 </param>
+			<result name="success">/mmember/resultFindId.jsp</result>
+			<result name="findId">/mmember/findId.jsp</result>
+		</action>		
 		
 		<action name="findPwForm" class="kr.or.kosta.moviesystem.member.MemberService" method="findPwForm">
 			<param name="aliases">
@@ -290,8 +376,28 @@
 			<result name="findPw">/member/findPw.jsp</result>
 		</action>
 		
+		<action name="mfindPwForm" class="kr.or.kosta.moviesystem.member.MemberService" method="findPwForm">
+			<param name="aliases">
+			#{'userid':'userid'}
+			 </param>
+			<result name="success">/mmember/findPw.jsp</result>
+		</action>
+		
+		<action name="mfindPw" class="kr.or.kosta.moviesystem.member.MemberService" method="findPw">
+			<param name="aliases">
+			#{'name':'name','email':'email','userid':'userid'}
+			 </param>
+			<result name="success">/mmember/resultFindPw.jsp</result>
+			<result name="findPw">/mmember/findPw.jsp</result>
+		</action>
+		
 		<action name="mypage" class="kr.or.kosta.moviesystem.member.MemberService" method="mypage">
 			<result name="success">/member/mypage.jsp</result>
+			<!--<result name="login">/member/login.jsp</result>-->
+		</action>
+		
+		<action name="mmypage" class="kr.or.kosta.moviesystem.member.MemberService" method="mypage">
+			<result name="success">/mmember/mypage.jsp</result>
 			<!--<result name="login">/member/login.jsp</result>-->
 		</action>
 		
@@ -299,6 +405,10 @@
 		<action name="logoutMember" class="kr.or.kosta.moviesystem.member.MemberService" method="logoutMember">
 			<result name="success" type="chain">main</result>
 		</action>
+		
+		<action name="mlogoutMember" class="kr.or.kosta.moviesystem.member.MemberService" method="logoutMember">
+			<result name="success" type="chain">mmain</result>
+		</action>		
 		
 		<action name="searchMemberList" class="kr.or.kosta.moviesystem.member.MemberService" method="searchMemberList">
 			<param name="aliases">
@@ -308,6 +418,16 @@
 			<result name="success">/member/searchMemberList.jsp</result>
 			<result name="login">/member/login.jsp</result>
 		</action>
+		
+		<action name="msearchMemberList" class="kr.or.kosta.moviesystem.member.MemberService" method="searchMemberList">
+			<param name="aliases">
+			#{'keyword':'keyword',
+				'column':'column'}
+			 </param>
+			<result name="success">/mmember/searchMemberList.jsp</result>
+			<result name="login">/mmember/login.jsp</result>
+		</action>
+		
 		<action name="checkMemberID" class="kr.or.kosta.moviesystem.member.MemberService" method="checkMemberID">
 			<param name="aliases">
 			#{'userid':'userid'}
@@ -321,8 +441,13 @@
 				</param>
 			</result>		
 		</action>
+		
 		<action name="main" class="kr.or.kosta.moviesystem.movie.MovieService" method="main">
 			<result name="success">main.jsp</result>
+		</action>
+		
+		<action name="mmain" class="kr.or.kosta.moviesystem.movie.MovieService" method="main">
+			<result name="success">mmain.jsp</result>
 		</action>
 		<action name="viewMovieList" class="kr.or.kosta.moviesystem.movie.MovieService" method="viewMovieList">
 			<result name="success">/movie/viewMovieList.jsp</result>
