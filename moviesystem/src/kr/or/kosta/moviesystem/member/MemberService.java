@@ -41,9 +41,20 @@ ServletResponseAware,SessionAware,IService {
 	private InputStream resultStream;
 	private String name;
 	private String email;
+	private int maxPage;
 	
 	
 	
+	
+	
+	public int getMaxPage() {
+		return maxPage;
+	}
+
+	public void setMaxPage(int maxPage) {
+		this.maxPage = maxPage;
+	}
+
 	@Override
 	public Map getSession() {
 		// TODO Auto-generated method stub
@@ -322,6 +333,11 @@ ServletResponseAware,SessionAware,IService {
 		int memberCount=memberDAO.selectMemberListCount();
 		PAGE_LINK_TAG=
 				PageUtil.generate(page,memberCount,length,"/moviesystem/viewMemberList.action");
+		
+		maxPage=(memberCount/length);
+		if(memberCount%length!=0){
+			maxPage++;
+		}
 		return "success";
 		}
 	}
