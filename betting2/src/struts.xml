@@ -50,11 +50,27 @@
 			</result>
 		</action>
 		
+		<action name="mLoginForm"
+			class="kr.or.kosta.betting.member.MemberService"
+		  method="loginForm">
+			<result name="success">
+				/member/mLogin.jsp
+			</result>
+		</action>
+		
 		<action name="login"
 			class="kr.or.kosta.betting.member.MemberService"
 		  	method="login">
 		  	<result name="success" type="chain">
 				viewHome
+			</result>
+		</action>
+		
+		<action name="mLogin"
+			class="kr.or.kosta.betting.member.MemberService"
+		  	method="login">
+		  	<result name="success" type="chain">
+				mViewHome
 			</result>
 		</action>
 		
@@ -103,6 +119,14 @@
 			</result>
 		</action>
 		
+		<action name="mLogout"
+			class="kr.or.kosta.betting.member.MemberService"
+		  	method="logout">
+		  	<result name="success">
+				mindex.jsp
+			</result>
+		</action>
+		
 		<action name="removeMember"
 			class="kr.or.kosta.betting.member.MemberService"
 		  	method="removeMember">
@@ -119,6 +143,14 @@
 		  	method="viewHome">
 		  	<result name="success">
 				index.jsp
+			</result>
+		</action>
+		
+		<action name="mViewHome"
+			class="kr.or.kosta.betting.member.MemberService"
+		  	method="viewHome">
+		  	<result name="success">
+				mindex.jsp
 			</result>
 		</action>
 		
@@ -225,9 +257,16 @@
 		<action name="viewMatchListToVistor" 
 		  class="kr.or.kosta.betting.match.MatchService"
 		  method="viewMatchListToVistor">
-		
 			<result name="success">
 				/match/viewMatchListToVistor.jsp
+			</result>
+		</action>
+		
+		<action name="mViewMatchListToVistor" 
+		  class="kr.or.kosta.betting.match.MatchService"
+		  method="viewMatchListToVistor">
+			<result name="success">
+				/match/mViewMatchListToVistor.jsp
 			</result>
 		</action>
 		

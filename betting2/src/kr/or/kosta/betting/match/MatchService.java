@@ -35,6 +35,7 @@ import kr.or.kosta.betting.util.PageUtil;
  */
 public class MatchService implements ModelDriven,IService
 	,SessionAware{
+	private int maxPage;
 	private IMatch matchDAO;
 	private IMember memberDAO;
 	private ITeam teamDAO;
@@ -69,6 +70,15 @@ public class MatchService implements ModelDriven,IService
 		this.teamDAO = teamDAO;
 		this.locDAO = locDAO;
 		this.bettingDAO = bettingDAO;
+	}
+	
+	
+	public int getMaxPage() {
+		return maxPage;
+	}
+
+	public void setMaxPage(int maxPage) {
+		this.maxPage = maxPage;
 	}
 
 	public int getCheckbox() {
@@ -246,7 +256,7 @@ public class MatchService implements ModelDriven,IService
 			MINERAL = memberDAO.selectMineralByID(ID);
 			RANK = memberDAO.selectMemberRanking(ID);
 		}
-		int length=10;
+		int length=5;
 		if(page==0){
 			page=1;
 		}
@@ -254,6 +264,10 @@ public class MatchService implements ModelDriven,IService
 		int matchCount = matchDAO.selectMatchCount();
 		PAGE_LINK_TAG = PageUtil.generate(page, matchCount, length,
 			"viewMatchListToVistor.action");
+		maxPage=(matchCount/length);
+		if(matchCount%length!=0){
+			maxPage++;
+		}
 		return "success";
 //		HttpSession session = request.getSession();
 //		Member member1 = (Member) session.getAttribute("LOGIN_MEMBER");
