@@ -26,7 +26,7 @@ a{text-decoration:none;}
 	    <c:when test="${sessionScope.LOGIN_EMAIL==null}">
 	     <fieldset>
 	     <table align="left" cellpadding="0" cellspacing="0" border="0" >
-	     <form action="/bookchange/login.action" method="post" target="_self">
+	     <form action="/bookchange/login.action" method="post">
 		 <tr>
 		 <td>Email</td>
 		 <td><input type="text" name="email"></td>

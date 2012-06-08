@@ -15,12 +15,12 @@
 </script>
 </head>
 	<frameset rows="100,*" border="0">
-		<frame src="top.jsp" name="top">	
+		<frame src="top.jsp" name="top" scrolling="no"> 
 	
 	<frameset cols="280,*" border="0">
-		<frame src="left.jsp" name="left">
+		<frame src="left.jsp" name="left" scrolling="no"> 
 	
-		<frame src="/bookchange/boardListAtMain.action" name="main">
+		<frame src="/bookchange/boardListAtMain.action" name="main" > 
 	</frameset>
 	</frameset>
 </html>
