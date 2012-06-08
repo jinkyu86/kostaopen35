@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+	<mapper namespace="Member">
+	<parameterMap
+	   type="kr.or.kosta.bookchange.member.Member"
+	   id="insertParameterMap">
+	   	<parameter property="email"/>
+		<parameter property="tel"/>
+		<parameter property="address"/>
+		<parameter property="pw"/>
+	</parameterMap>
+	
+	<insert id="insertMember" 
+	     parameterMap="insertParameterMap">
+	     INSERT  INTO  tb_member
+		                   (email,tel,address,pw)
+	    VALUES (?,?,?,?)
+	</insert>
+	
+	<parameterMap
+	   type="kr.or.kosta.bookchange.member.Member"
+	   id="updateParameterMap">
+		<parameter property="tel"/>
+		<parameter property="address"/>
+		<parameter property="pw"/>	
+	   	<parameter property="email"/>
+		</parameterMap>
+	
+	<update id="updateMember" 
+	     parameterMap="updateParameterMap">
+	     update  tb_member
+		 set tel=?,address=?,pw=?
+		 where email=?
+	    
+	</update>
+	<parameterMap
+	   type="kr.or.kosta.bookchange.member.Member"
+	   id="deleteParameterMap">
+		<parameter property="email"/>
+		</parameterMap>
+	
+	<delete id="deleteMember" 
+	     parameterMap="deleteParameterMap">
+	     delete from tb_member where email=?
+	    
+	</delete>
+	
+	<resultMap id="selectResultMap" type="kr.or.kosta.bookchange.member.Member">
+		<result property="email" column="email"/>
+		<result property="address" column="address"/>
+		<result property="pw" column="pw"/>
+		<result property="tel" column="tel"/>
+	</resultMap>
+	<select id="selectMember" resultMap="selectResultMap">
+		select 
+		email as email,
+		address as address,
+		pw as pw, 
+		tel as tel
+ 		from tb_member
+	</select>
+	<select id="selectMemberCount" resultType="java.lang.Integer">
+		select count(*) from tb_member
+	</select>
+	<select id="selectMemberCountemail" resultType="java.lang.Integer">
+		select count(email) from tb_member where email=#{email}
+	</select>
+	
+	<select id="selectMemberemail" resultMap="selectResultMap">
+		select 
+		email as email,
+		address as address,
+		pw as pw, 
+		tel as tel
+ 		from tb_member
+		where email=#{email}
+	</select>
+	
+	<select id="selectMemberListByEmail" resultMap="selectResultMap">
+	select 
+		email as email,
+		address as address,
+		pw as pw, 
+		tel as tel
+ 		from tb_member
+		where email like #{email}
+	</select>
+	<resultMap id="selectResultPwMap" type="kr.or.kosta.bookchange.member.Member">
+		<result property="pw" column="pw"/>
+		<result property="email" column="email"/>
+		<result property="tel" column="tel"/>
+	</resultMap>
+		
+	<select id="selectMemberListByPw" resultMap="selectResultPwMap">
+	select 
+		pw as pw
+		from tb_member
+		where email=#{email} and tel=#{tel}
+	</select>
+	<resultMap id="selectResultTelMap" type="kr.or.kosta.bookchange.member.Member">
+		<result property="email" column="email"/>
+		<result property="tel" column="tel"/>
+	</resultMap>
+
+		<select id="selectMemberListByTel" resultMap="selectResultTelMap">
+	select 
+		email as email
+ 		from tb_member
+		where tel=#{tel}
+	</select>		
+</mapper>

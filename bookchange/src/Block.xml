@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+	<mapper namespace="Block">
+
+	<delete id="deleteBlock">
+		     delete from tb_block where block_No=#{blockNo}	    
+	</delete>
+	
+	<parameterMap type="kr.or.kosta.bookchange.member.Block"
+	   id="insertParameterMap">
+	 
+		<parameter property="member.email"/>
+		<parameter property="blockmember.email"/>
+		<parameter property="blockContent"/>
+
+	</parameterMap>
+
+	
+	<insert id="insertBlock" 
+	     parameterMap="insertParameterMap">
+    
+
+	
+	    INSERT  INTO  tb_block
+		                   (block_no,register_email,block_email,block_content,blockcondition_result)
+	    VALUES (block_seq.nextval,?,?,?,0)
+	</insert>
+
+	<parameterMap
+	   type="kr.or.kosta.bookchange.member.Block"
+	   id="updateParameterMap">
+	   	
+		<parameter property="blockCondition.blockConditionResult"/>
+	    <parameter property="blockNo"/>
+	
+	</parameterMap>
+	
+	<update id="updateBlock" 
+	     parameterMap="updateParameterMap">
+	     
+		 update  tb_block
+		 set blockCondition_result=?
+		 where block_no=?	    
+	
+	</update>
+		
+
+
+    <resultMap id="selectResultMap" type="kr.or.kosta.bookchange.member.Block">
+		<result property="blockNo" column="block_no"/>
+		<result property="member.email" column="register_email"/>
+		<result property="blockmember.email" column="block_email"/>
+		<result property="blockContent" column="block_content"/>
+		<result property="blockCondition.blockConditionResult" column="Result"/>
+	</resultMap>
+	<select id="selectBlock" resultMap="selectResultMap">
+		select 
+		block_no as block_no,
+		block_content as block_content,
+		block_email as block_email,
+		register_email as register_email,
+		blockCondition_Result as Result
+		from tb_block 
+	</select>
+		
+	<select id="selectBlockCount" resultType="java.lang.Integer">
+		select count(*) from tb_block
+	</select>
+
+	<select id="myselectBlock" resultMap="selectResultMap">
+		select 
+		block_no as block_no,
+		block_content as block_content,
+		block_email as block_email,
+		register_email as register_email,
+		blockCondition_Result as Result
+		from tb_block
+		where register_email=#{email} 
+	</select>
+	
+	<select id="selectBlockbyResult" resultMap="selectResultMap">
+		select 
+		block_no as block_no,
+		block_content as block_content,
+		block_email as block_email,
+		register_email as register_email,
+		blockCondition_Result as Result
+		from tb_block
+		where blockCondition_Result=#{resultNo} 
+	</select>
+    <select id="selectBlockResultCount" resultType="java.lang.Integer">
+		select count(*) from tb_block where blockCondition_Result=#{resultNo}
+	</select>
+
+		<!--
+	<resultMap id="selectResultMap" type="kr.or.kosta.bookchange.member.Member">
+		<result property="email" column="email"/>
+		<result property="address" column="address"/>
+		<result property="pw" column="pw"/>
+		<result property="tel" column="tel"/>
+	</resultMap>
+	<select id="selectMember" resultMap="selectResultMap">
+		select 
+		email as email,
+		address as address,
+		pw as pw, 
+		tel as tel
+ 		from tb_member
+	</select>
+	
+	<select id="selectMemberCount" resultType="java.lang.Integer">
+		select count(*) from tb_member
+	</select>
+	<select id="selectMemberCountemail" resultType="java.lang.Integer">
+		select count(email) from tb_member where email=#{email}
+	</select>
+	
+	<select id="selectMemberemail" resultMap="selectResultMap">
+		select 
+		email as email,
+		address as address,
+		pw as pw, 
+		tel as tel
+ 		from tb_member
+		where email=#{email}
+	</select>
+	
+	<select id="selectMemberListByEmail" resultMap="selectResultMap">
+	select 
+		email as email,
+		address as address,
+		pw as pw, 
+		tel as tel
+ 		from tb_member
+		where email like #{email}
+	</select>
+	<resultMap id="selectResultPwMap" type="kr.or.kosta.bookchange.member.Member">
+		<result property="pw" column="pw"/>
+		<result property="email" column="email"/>
+		<result property="tel" column="tel"/>
+	</resultMap>
+		
+	<select id="selectMemberListByPw" resultMap="selectResultPwMap">
+	select 
+		pw as pw
+		from tb_member
+		where email=#{email} and tel=#{tel}
+	</select>
+	<resultMap id="selectResultTelMap" type="kr.or.kosta.bookchange.member.Member">
+		<result property="email" column="email"/>
+		<result property="tel" column="tel"/>
+	</resultMap>
+
+		<select id="selectMemberListByTel" resultMap="selectResultTelMap">
+	select 
+		email as email
+ 		from tb_member
+		where tel=#{tel}
+	</select>	
+-->
+</mapper>

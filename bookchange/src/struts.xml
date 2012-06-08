@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+	"http://struts.apache.org/dtds/struts-2.0.dtd">
+		
+		
+<struts>
+	<constant name="struts.i18n.encoding" value="utf-8"/>
+	<constant name="struts.action.extension" value="action"/>
+	<constant name="struts.enable.DynamicMethodInvocation" value="true"/>
+	<constant name="struts.devMode" value="true"/>
+	<constant name="struts.objectFactory" value="spring"/>
+	<package name="default" namespace="/" extends="struts-default">
+		
+		<!--error 리턴시 error.jsp로 이동 모든 Action에 다 설정-->
+		<global-results> <!-- 모든 Action에 설정-->
+		  <result name="error">/error/error.jsp</result>
+		  <!--loginForm 리턴시 login.jsp로 이동-->
+		  <result name="loginForm">/error/login.jsp</result>
+		</global-results>
+		
+		<action name="viewBoardList" class="kr.or.kosta.bookchange.board.BoardService" method="viewBoardList">
+			<result name="success">/board/viewBoardList.jsp</result>
+		</action>
+		<action name="viewBoard" class="kr.or.kosta.bookchange.board.BoardService" method="viewBoard">
+			<param name="aliases">
+				#{'boardNo':'boardNo'}
+			</param>
+			<result name="success">/board/viewBoard.jsp</result>
+		</action>
+		<action name="boardListAtMain" class="kr.or.kosta.bookchange.board.BoardService" method="boardListAtMain">
+			<result name="success">/board/boardListAtMain.jsp</result>
+		</action>
+		<action name="addBoardForm" class="kr.or.kosta.bookchange.board.BoardService" method="addBoardForm">
+			<result name="success">/board/addBoard.jsp</result>
+		</action>
+		<action name="addBoard" class="kr.or.kosta.bookchange.board.BoardService" method="addBoard">
+			<param name="aliases">
+				#{'email':'board.member.email',
+				  'categoryNo':'board.category.categoryNo',
+				  'dealNo':'board.deal.dealNo',
+				  'boardTitle':'board.boardTitle',
+				  'boardWant':'board.boardWant',
+				  'boardContent':'board.boardContent'}
+			</param>
+			
+			<result type="stream">
+		  	 		<param name="inputName">
+		  	 			resultStream
+					</param>
+					<param name="contextType">
+						text/html;charset=UTF-8
+					</param>
+				</result>
+		</action>
+		<action name="editBoardForm" class="kr.or.kosta.bookchange.board.BoardService" method="editBoardForm">
+			<param name="aliases">
+				#{'boardNo':'boardNo','board.boardNo'}
+			</param>
+			<result name="success">/board/editBoard.jsp</result>
+		</action>
+		<action name="editBoard" class="kr.or.kosta.bookchange.board.BoardService" method="editBoard">
+			<param name="aliases">
+				#{'boardNo':'board.boardNo','boardNo',
+				  'email':'board.member.email',
+				  'categoryNo':'board.category.categoryNo',
+				  'dealNo':'board.deal.dealNo',
+				  'boardTitle':'board.boardTitle',
+				  'boardWant':'board.boardWant',
+				  'boardContent':'board.boardContent',
+				  'conditionResult':'board.condition.conditionResult'}
+			</param>
+			
+			<result type="stream">
+		  	 		<param name="inputName">
+		  	 			resultStream
+					</param>
+					<param name="contextType">
+						text/html;charset=UTF-8
+					</param>
+				</result>
+		</action>
+		<action name="removeBoard" class="kr.or.kosta.bookchange.board.BoardService" method="removeBoard">
+			<param name="aliases">
+				#{'boardNo':'boardNo'}
+			</param>
+			<result name="success" type="chain">viewBoardList</result>
+		</action>
+		<action name="searchBoardListWhenAdd" class="kr.or.kosta.bookchange.board.BoardService" method="searchBoardListWhenAdd">
+			<param name="aliases">
+				#{'boardNo':'boardNo','board.boardNo'}
+			</param>
+			<result name="fail" type="chain">viewBoard</result>
+			<result name="success">/board/viewBoardListWhenAdd.jsp</result>
+		</action>
+		<action name="viewBoardWhenCancel" class="kr.or.kosta.bookchange.board.BoardService" method="viewBoardWhenCancel">
+			<param name="aliases">
+				#{'boardNo':'boardNo','board.boardNo',
+				  'agreeBoardNo':'AGREE_BOARD_NO'}
+			</param>
+			<result name="success">/board/viewBoardWhenCancel.jsp</result>
+		</action>
+		<action name="viewBoardWhenAgree" class="kr.or.kosta.bookchange.board.BoardService" method="viewBoardWhenAgree">
+			<param name="aliases">
+				#{'boardNo':'boardNo','board.boardNo',
+				  'agreeBoardNo':'AGREE_BOARD_NO'}
+			</param>
+			<result name="success">/board/viewBoardWhenAgree.jsp</result>
+		</action>
+		<action name="searchBoardList" class="kr.or.kosta.bookchange.board.BoardService" method="searchBoardList">
+			<param name="aliases">
+				#{'categoryNo':'CATEGORY'}		  
+			</param>
+			<result name="success">/board/viewBoardList.jsp</result>
+		</action>			
+		<action name="viewMemberInfo" class="kr.or.kosta.bookchange.board.BoardService" method="viewMemberInfo">
+			<result name="success">/board/viewMemberInfo.jsp</result>
+		</action>
+		<action name="addQa" class="kr.or.kosta.bookchange.board.QaService" method="addQa">
+			<param name="aliases">
+				#{'qaContent':'qa.qaContent',
+				  'email':'qa.member.email',
+				  'boardNo':'qa.board.boardNo'}
+			</param>
+			<result name="success" type="chain">viewBoard</result>
+		</action>
+		<action name="editQa" class="kr.or.kosta.bookchange.board.QaService" method="editQa">
+			<param name="aliases">
+				#{'qaNo':'qaNo',
+				  'qaContent':'qa.qaContent',
+				  'email':'qa.member.email',
+				  'boardNo':'qa.board.boardNo'}
+			</param>
+			<result name="success" type="chain">viewBoard</result>
+		</action>
+		<action name="editQaForm" class="kr.or.kosta.bookchange.board.QaService" method="editQaForm">
+			<param name="aliases">
+				#{'qaNo':'qaNo',
+				  'qaContent':'qa.qaContent',
+				  'email':'qa.member.email',
+				  'boardNo':'qa.board.boardNo'}
+			</param>
+			<result name="success" type="chain">viewBoard</result>
+		</action>		
+		<action name="removeQa" class="kr.or.kosta.bookchange.board.QaService" method="removeQa">
+			<param name="aliases">
+				#{'boardNo':'boardNo',
+				  'qaNo':'qaNo'}
+			</param>
+			<result name="success" type="chain">viewBoard</result>
+		</action>
+		
+		
+		<action name="acceptChangeList" class="kr.or.kosta.bookchange.change.ChangeService" 
+			method="acceptChangeList">
+			<result name="success">/change/acceptChangeList.jsp</result>
+		</action>
+		<action name="requestChangeList" class="kr.or.kosta.bookchange.change.ChangeService" 
+			method="requestChangeList">
+			<result name="success">/change/requestChangeList.jsp</result>
+		</action>
+		<action name="matchChangeList" class="kr.or.kosta.bookchange.change.ChangeService" 
+			method="matchChangeList">
+			<result name="success">/change/matchChangeList.jsp</result>
+		</action>
+		<action name="matchChangeResultList" class="kr.or.kosta.bookchange.change.ChangeService" 
+			method="matchChangeResultList">
+			<result name="success">/change/matchChangeResultList.jsp</result>
+		</action>
+		<action name="addChange" class="kr.or.kosta.bookchange.change.ChangeService" 
+			method="addChange">
+			<param name="aliases">
+			#{'demandBoardNo':'change.demandBoard.boardNo', 'agreeBoardNo':'change.agreeBoard.boardNo'}
+			</param>
+			<result name="success" type="chain">requestChangeList</result>
+		</action>
+		<action name="matchChange" class="kr.or.kosta.bookchange.change.ChangeService" 
+			method="matchChange">
+			<param name="aliases">
+			#{'demandBoardNo':'change.demandBoard.boardNo', 'agreeBoardNo':'change.agreeBoard.boardNo'}
+			</param>
+			<result name="success" type="chain">matchChangeList</result>
+			<result name="fail" type="chain">matchChangeList</result>
+		</action>
+		<action name="cancelChange" class="kr.or.kosta.bookchange.change.ChangeService" 
+			method="cancelChange">
+			<param name="aliases">
+			#{'demandBoardNo':'change.demandBoard.boardNo', 'agreeBoardNo':'change.agreeBoard.boardNo'}
+			</param>
+			<result name="success" type="chain">requestChangeList</result>
+		</action>
+		<action name="completeChange" class="kr.or.kosta.bookchange.change.ChangeService" 
+			method="completeChange">
+			<param name="aliases">
+			#{'ChangeNo':'ChangeNo', 'BoardNo':'BoardNo'}
+			</param>
+			<result name="success" type="chain">matchChangeResultList</result>
+		</action>
+
+			<action name="addMember"
+		 	 class="kr.or.kosta.bookchange.member.MemberService" 
+		 	 method="addMember">
+				<param name="aliases">
+		  		#{'email':'member.email',
+					'pw':'member.pw',
+					'address':'member.address',
+					'tel':'member.tel'}
+				</param>		  
+				<result name="success" type="chain">
+		  		boardListAtMain
+				</result>
+		</action>
+		<action name="addMemberForm"
+		 	 class="kr.or.kosta.bookchange.member.MemberService" 
+		 	 method="addMemberForm">
+				<result name="success">
+		  		   /member/addMember.jsp
+				</result>
+		</action>
+<!--block-->		
+		<action name="addBlock"
+		 	 class="kr.or.kosta.bookchange.member.BlockService" 
+		 	 method="addBlock">
+				<param name="aliases">
+		  		#{'registeremail':'block.member.email',
+				   'blockemail':'block.blockmember.email',
+					'tel':'block.member.tel',
+					'blockcontent':'block.member.blockContent'}
+				</param>		  
+				<result name="success" type="chain">
+		  		boardListAtMain
+				</result>
+		</action>
+		<action name="addBlockForm"
+		 	 class="kr.or.kosta.bookchange.member.BlockService" 
+		 	 method="addBlockForm">
+				<result name="success">
+		  		   /block/addBlock.jsp
+				</result>
+		</action>
+
+	<action name="viewBlockList"
+		 	 class="kr.or.kosta.bookchange.member.BlockService" 
+		 	 method="searchBlockList">
+		  	<result name="success">
+		  		viewBlockList.jsp
+			</result>
+		</action>
+		
+	<!-- member start-->	
+		
+		<action name="viewMemberPwAndEmail"
+		 	 class="kr.or.kosta.bookchange.member.MemberService" 
+		 	 method="viewMemberPwAndEmail">
+		
+		  	<result name="success">
+		  		 /member/IdAndPw.jsp
+			</result>
+		</action>
+		
+		<action name="viewMemberPw"
+		 	 class="kr.or.kosta.bookchange.member.MemberService" 
+		 	 method="viewMemberPw">
+		  	<param name="aliases">
+		  		#{'tel':'tel',
+				  'email':'email'}
+				</param>
+		  	<result name="success" type="chain">
+		  		logout
+			</result>
+		</action>
+		
+
+		
+		<action name="viewMemberEmail"
+		 	 class="kr.or.kosta.bookchange.member.MemberService" 
+		 	 method="viewMemberEmail">
+		    	<param name="aliases">
+		  		#{'tel':'tel'}
+				</param>
+		  	<result name="success" type="chain">
+		  		 logout
+			</result>
+		</action>
+		
+		<action name="removeMember"
+		 	 class="kr.or.kosta.bookchange.member.MemberService" 
+		 	 method="removeMember">
+			<param name="aliases">
+		  		#{'email':'email',
+		  		  'pw':'pw'}				  
+				</param>				
+			<result name="success" type="chain">
+		  		 logout
+			</result>
+		</action>
+		
+		<action name="removeMemberForm"
+		 	 class="kr.or.kosta.bookchange.member.MemberService" 
+		 	 method="removeMemberForm">
+			<result name="success">
+		  		 /member/removeMember.jsp
+			</result>
+		</action>
+		<action name="addMember"
+		 	 class="kr.or.kosta.bookchange.member.MemberService" 
+		 	 method="addMember">
+				<param name="aliases">
+		  		#{'email':'member.email',
+					'pw':'member.pw',
+					'address':'member.address',
+					'tel':'member.tel'}
+				</param>		  
+				<result name="success" type="chain">
+		  		boardListAtMain
+				</result>
+		</action>
+		<action name="addMemberForm"
+		 	 class="kr.or.kosta.bookchange.member.MemberService" 
+		 	 method="addMemberForm">
+				<result name="success">
+		  		   /member/addMember.jsp
+				</result>
+		</action>
+		<action name="checkMemberEmail"
+		 	 class="kr.or.kosta.bookchange.member.MemberService" 
+		 	 method="checkMemberEmail">
+				<param name="aliases">
+		  		#{'email':'email'}
+				</param>	
+				<result name="success" type="chain">
+					/board/viewBoardList.jsp
+		  		</result>
+		</action>
+		<action name="editMember"
+		 	 class="kr.or.kosta.bookchange.member.MemberService" 
+		 	 method="editMember">
+				<param name="aliases">
+		  		#{'email':'email',
+				  'tel':'member.tel',
+				  'address':'member.address',
+				  'pw':'member.pw'}
+				</param>	
+				<result name="success" type="chain">
+					boardListAtMain
+		  		</result>
+		</action>
+		
+		<action name="editMemberForm"
+		 	 class="kr.or.kosta.bookchange.member.MemberService" 
+		 	 method="editMemberForm">
+		
+		 			
+				<result name="success">
+					/member/editmember.jsp
+		  		</result>
+		</action>
+	
+		<action name="login"
+		 	 class="kr.or.kosta.bookchange.member.MemberService" 
+		 	 method="login">
+				<param name="aliases">
+		  		#{'email':'email',
+				  'pw':'pw'}
+				</param>	
+
+				<result name="success">
+				 	 /index.jsp
+		  		</result>
+				
+				
+		</action>	
+				<action name="logout"
+		 	 class="kr.or.kosta.bookchange.member.MemberService" 
+		 	 method="logout">
+		
+
+				<result name="success">
+				 /index.jsp		
+		  		</result>
+				
+				
+		</action>
+				<action name="viewMember"
+		 	 class="kr.or.kosta.bookchange.member.MemberService" 
+		 	 method="viewMember">
+				<param name="aliases">
+		  		#{'email':'email','member.email',
+				  'pw':'pw','member.pw',
+				  'address':'address','member.address',
+				  'tel':'tel','member.tel'}
+				</param>	
+
+				<result name="success">
+				 	 /member/myInfo.jsp
+		  		</result>				
+		</action>		
+	</package>
+</struts>

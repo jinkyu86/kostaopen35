@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+		
+<mapper namespace="Board">		
+<parameterMap
+   type="kr.or.kosta.bookchange.board.Board"
+   id="insertParameterMap">   	
+	<parameter property="boardTitle"/>
+	<parameter property="boardWant"/>
+	<parameter property="boardPhoto"/>
+	<parameter property="boardContent"/>
+	<parameter property="member.email"/>
+	<parameter property="category.categoryNo"/>
+	<parameter property="deal.dealNo"/>
+</parameterMap>
+
+<insert id="insertBoard" 
+     parameterMap="insertParameterMap">
+     insert into tb_board
+				(board_no,board_title,board_want,board_photo,board_content,
+				 email,category_no,deal_no,condition_result)
+	 values(board_seq.nextval,?,?,?,?,?,?,?,0)
+</insert>
+
+<parameterMap
+   type="kr.or.kosta.bookchange.board.Board"
+   id="updateParameterMap">   	  	
+	<parameter property="boardTitle"/>
+	<parameter property="boardWant"/>
+	<parameter property="boardPhoto"/>
+	<parameter property="boardContent"/>
+	<parameter property="category.categoryNo"/>
+	<parameter property="deal.dealNo"/>
+	<parameter property="boardNo"/> 
+</parameterMap>
+<update id="updateBoard" 
+     parameterMap="updateParameterMap">
+    update tb_board
+	set board_title=?, board_want=?, board_photo=?, board_content=?,
+	    category_no=?, deal_no=?
+	where board_no=?
+</update>
+
+<delete id="deleteBoard">
+	delete from tb_board where board_no=#{boardNo}
+</delete>
+
+<delete id="deleteBoardByEmail">
+	delete from tb_board where email=#{email}
+</delete>
+
+<resultMap id="selectResultMap" type="kr.or.kosta.bookchange.board.Board">
+	<result property="boardNo" column="board_no"/>
+	<result property="boardTitle" column="board_title"/>
+	<result property="boardPhoto" column="board_photo"/>
+	<result property="member.email" column="email"/>
+	<result property="category.categoryNo" column="category_no"/>
+	<result property="condition.conditionResult" column="condition_result"/>
+	<result property="boardWant" column="board_want"/>
+	<result property="boardContent" column="board_content"/>
+	<result property="deal.dealNo" column="dealNo"/>
+	<result property="category.categoryName" column="category_name"/>
+	<result property="condition.conditionIng" column="condition_ing"/>
+	<result property="deal.dealWay" column="deal_way"/>
+	<result property="member.tel" column="tel"/>
+	<result property="member.address" column="address"/>
+</resultMap>
+<select id="selectBoard" resultMap="selectResultMap">
+	select board_no as board_no, 
+		   board_title as board_title, 
+		   board_photo as board_photo, 
+		   m.email as email, 
+		   b.category_no as category_no, 
+		   b.condition_result as condition_result,
+		   b.board_want as board_want, 
+		   b.board_content as board_content, 
+		   d.deal_no as deal_no,
+		   c.category_name as category_name, 
+		   c2.condition_ing as condition_ing, 
+		   d.deal_way as deal_way, 
+		   m.tel as tel, 
+		   m.address as address
+	 from tb_board b
+	 JOIN tb_member m  on b.email=m.email
+	 JOIN tb_category c ON  b.category_no=c.category_no
+	 JOIN tb_condition c2 ON b.condition_result=c2.condition_result
+	 JOIN tb_deal d ON b.deal_no=d.deal_no 
+	 where b.board_no=#{boardNo}
+</select>
+
+<select id="selectBoardList" resultMap="selectResultMap">
+	select board_no as board_no, 
+		   board_title as board_title, 
+		   board_photo as board_photo, 
+		   m.email as email, 
+		   b.category_no as category_no, 
+		   b.condition_result as condition_result,
+		   b.board_want as board_want, 
+		   b.board_content as board_content, 
+		   d.deal_no as deal_no,
+		   c.category_name as category_name, 
+		   c2.condition_ing as condition_ing, 
+		   d.deal_way as deal_way, 
+		   m.tel as tel, 
+		   m.address as address
+	 from tb_board b
+	 JOIN tb_member m  on b.email=m.email
+	 JOIN tb_category c ON  b.category_no=c.category_no
+	 JOIN tb_condition c2 ON b.condition_result=c2.condition_result
+	 JOIN tb_deal d ON b.deal_no=d.deal_no
+	 ORDER BY board_no DESC 
+</select>
+
+<select id="selectBoardCount" resultType="java.lang.Integer">
+	select count(board_no)
+	from tb_board b
+	JOIN tb_member m ON m.email=b.email
+	JOIN tb_category c ON b.category_no=c.category_no
+	JOIN tb_condition c2 ON b.condition_result=c2.condition_result
+</select>
+
+<select id="selectBoardListByCategory" resultMap="selectResultMap">
+	select board_no as board_no, 
+		   board_title as board_title, 
+		   board_photo as board_photo, 
+		   m.email as email, 
+		   b.category_no as category_no, 
+		   b.condition_result as condition_result,
+		   b.board_want as board_want, 
+		   b.board_content as board_content, 
+		   d.deal_no as deal_no,
+		   c.category_name as category_name, 
+		   c2.condition_ing as condition_ing, 
+		   d.deal_way as deal_way, 
+		   m.tel as tel, 
+		   m.address as address
+	 from tb_board b
+	 JOIN tb_member m  on b.email=m.email
+	 JOIN tb_category c ON  b.category_no=c.category_no
+	 JOIN tb_condition c2 ON b.condition_result=c2.condition_result
+	 JOIN tb_deal d ON b.deal_no=d.deal_no
+	 WHERE b.category_no=#{category_no}
+	 ORDER BY board_no DESC 
+</select>
+
+<select id="selectBoardListByCategoryCount" resultType="java.lang.Integer">
+	SELECT count(*) 
+	FROM tb_board b
+	JOIN tb_member m ON m.email=b.email
+	WHERE category_no=#{category_no}
+</select>
+
+<select id="selectBoardListByTitle" resultMap="selectResultMap">
+	select board_no as board_no, 
+		   board_title as board_title, 
+		   board_photo as board_photo, 
+		   m.email as email, 
+		   b.category_no as category_no, 
+		   b.condition_result as condition_result,
+		   b.board_want as board_want, 
+		   b.board_content as board_content, 
+		   d.deal_no as deal_no,
+		   c.category_name as category_name, 
+		   c2.condition_ing as condition_ing, 
+		   d.deal_way as deal_way, 
+		   m.tel as tel, 
+		   m.address as address
+	 from tb_board b
+	 JOIN tb_member m  on b.email=m.email
+	 JOIN tb_category c ON  b.category_no=c.category_no
+	 JOIN tb_condition c2 ON b.condition_result=c2.condition_result
+	 JOIN tb_deal d ON b.deal_no=d.deal_no
+	 WHERE b.board_title like #{title}
+	 ORDER BY board_no DESC 
+</select>
+
+<select id="selectBoardListByTitleCount" resultType="java.lang.Integer">
+	SELECT count(*) 
+	FROM tb_board b
+	JOIN tb_member m ON m.email=b.email
+	WHERE board_title like #{title}
+</select>
+
+<select id="selectBoardListByEmail" resultMap="selectResultMap">
+	select board_no as board_no, 
+		   board_title as board_title, 
+		   board_photo as board_photo, 
+		   m.email as email, 
+		   b.category_no as category_no, 
+		   b.condition_result as condition_result,
+		   b.board_want as board_want, 
+		   b.board_content as board_content, 
+		   d.deal_no as deal_no,
+		   c.category_name as category_name, 
+		   c2.condition_ing as condition_ing, 
+		   d.deal_way as deal_way, 
+		   m.tel as tel, 
+		   m.address as address
+	 from tb_board b
+	 JOIN tb_member m  on b.email=m.email
+	 JOIN tb_category c ON  b.category_no=c.category_no
+	 JOIN tb_condition c2 ON b.condition_result=c2.condition_result
+	 JOIN tb_deal d ON b.deal_no=d.deal_no
+	 WHERE b.email like #{email}
+	 ORDER BY board_no DESC 
+</select>
+
+<select id="selectBoardListByEmailCount" resultType="java.lang.Integer">
+	select count(*)
+	 from tb_board b
+	 JOIN tb_member m  on b.email=m.email
+	 JOIN tb_category c ON  b.category_no=c.category_no
+	 JOIN tb_condition c2 ON b.condition_result=c2.condition_result
+	 JOIN tb_deal d ON b.deal_no=d.deal_no
+	 WHERE b.email like #{email} 
+</select>
+
+<select id="selectBoardListByEmailWhenDelete" resultMap="selectResultMap">
+	select board_no as board_no, 
+		   board_title as board_title, 
+		   board_photo as board_photo, 
+		   m.email as email, 
+		   b.category_no as category_no, 
+		   b.condition_result as condition_result,
+		   b.board_want as board_want, 
+		   b.board_content as board_content, 
+		   d.deal_no as deal_no,
+		   c.category_name as category_name, 
+		   c2.condition_ing as condition_ing, 
+		   d.deal_way as deal_way, 
+		   m.tel as tel, 
+		   m.address as address
+	 from tb_board b
+	 JOIN tb_member m  on b.email=m.email
+	 JOIN tb_category c ON  b.category_no=c.category_no
+	 JOIN tb_condition c2 ON b.condition_result=c2.condition_result
+	 JOIN tb_deal d ON b.deal_no=d.deal_no
+	 WHERE b.email=#{email}
+	 ORDER BY board_no DESC 
+</select>
+
+<select id="selectBoardListByCategoryAndTitle" resultMap="selectResultMap">
+	select board_no as board_no, 
+		   board_title as board_title, 
+		   board_photo as board_photo, 
+		   m.email as email, 
+		   b.category_no as category_no, 
+		   b.condition_result as condition_result,
+		   b.board_want as board_want, 
+		   b.board_content as board_content, 
+		   d.deal_no as deal_no,
+		   c.category_name as category_name, 
+		   c2.condition_ing as condition_ing, 
+		   d.deal_way as deal_way, 
+		   m.tel as tel, 
+		   m.address as address
+	 from tb_board b
+	 JOIN tb_member m  on b.email=m.email
+	 JOIN tb_category c ON  b.category_no=c.category_no
+	 JOIN tb_condition c2 ON b.condition_result=c2.condition_result
+	 JOIN tb_deal d ON b.deal_no=d.deal_no
+	 WHERE b.category_no=#{categoryNo}
+	 AND b.board_title like #{title}
+	 ORDER BY board_no DESC 
+</select>
+
+<select id="selectBoardListByCategoryAndTitleCount" resultType="java.lang.Integer">
+	select count(*)
+	 from tb_board b
+	 JOIN tb_member m  on b.email=m.email
+	 JOIN tb_category c ON  b.category_no=c.category_no
+	 JOIN tb_condition c2 ON b.condition_result=c2.condition_result
+	 JOIN tb_deal d ON b.deal_no=d.deal_no
+	 WHERE b.category_no=#{categoryNo}
+	 AND b.board_title like #{title}
+</select>
+
+<select id="selectBoardListByCategoryAndEmail" resultMap="selectResultMap">
+	select board_no as board_no, 
+		   board_title as board_title, 
+		   board_photo as board_photo, 
+		   m.email as email, 
+		   b.category_no as category_no, 
+		   b.condition_result as condition_result,
+		   b.board_want as board_want, 
+		   b.board_content as board_content, 
+		   d.deal_no as deal_no,
+		   c.category_name as category_name, 
+		   c2.condition_ing as condition_ing, 
+		   d.deal_way as deal_way, 
+		   m.tel as tel, 
+		   m.address as address
+	 from tb_board b
+	 JOIN tb_member m  on b.email=m.email
+	 JOIN tb_category c ON  b.category_no=c.category_no
+	 JOIN tb_condition c2 ON b.condition_result=c2.condition_result
+	 JOIN tb_deal d ON b.deal_no=d.deal_no
+	 WHERE b.category_no=#{categoryNo}
+	 AND b.email like #{email}
+	 ORDER BY board_no DESC 
+</select>
+
+<select id="selectBoardListByCategoryAndEmailCount" resultType="java.lang.Integer">
+	select count(*)
+	 from tb_board b
+	 JOIN tb_member m  on b.email=m.email
+	 JOIN tb_category c ON  b.category_no=c.category_no
+	 JOIN tb_condition c2 ON b.condition_result=c2.condition_result
+	 JOIN tb_deal d ON b.deal_no=d.deal_no
+	 WHERE b.category_no=#{categoryNo}
+	 AND b.email like #{email}
+</select>
+
+<select id="selectBoardListByEmailWhenAdd" resultMap="selectResultMap">
+	select board_no as board_no, 
+		   board_title as board_title, 
+		   board_photo as board_photo, 
+		   m.email as email, 
+		   b.category_no as category_no, 
+		   b.condition_result as condition_result,
+		   b.board_want as board_want, 
+		   b.board_content as board_content, 
+		   d.deal_no as deal_no,
+		   c.category_name as category_name, 
+		   c2.condition_ing as condition_ing, 
+		   d.deal_way as deal_way, 
+		   m.tel as tel, 
+		   m.address as address
+	 from tb_board b
+	 JOIN tb_member m  on b.email=m.email
+	 JOIN tb_category c ON  b.category_no=c.category_no
+	 JOIN tb_condition c2 ON b.condition_result=c2.condition_result
+	 JOIN tb_deal d ON b.deal_no=d.deal_no
+	 WHERE b.condition_result=0
+	 AND b.email like #{email}
+	 ORDER BY board_no DESC 
+</select>
+
+<select id="selectBoardListByEmailWhenAddCount" resultType="java.lang.Integer">
+	select count(*)
+	 from tb_board b
+	 JOIN tb_member m  on b.email=m.email
+	 JOIN tb_category c ON  b.category_no=c.category_no
+	 JOIN tb_condition c2 ON b.condition_result=c2.condition_result
+	 JOIN tb_deal d ON b.deal_no=d.deal_no
+	 WHERE b.condition_result=0
+	 AND b.email like #{email}
+</select>
+
+<resultMap id="viewMemberMap" type="kr.or.kosta.bookchange.member.Member">
+	<result property="email" column="email"/>
+	<result property="tel" column="tel"/>
+	<result property="address" column="address"/>	
+</resultMap>
+<select id="viewMemberInfo" resultMap="viewMemberMap">
+	select email as email, 
+	 	   tel as tel, 
+		   address as address 
+	from tb_member 
+	where email=#{email}
+</select>
+
+</mapper>
