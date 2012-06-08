@@ -1,93 +1,78 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"  %>
-<%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<title>물품 관리 페이지</title>
-<link rel="stylesheet" href="/moviesystem/css/Layout.css">
-<script src="http://code.jquery.com/jquery-1.7.1.js"></script>
-<script src="/moviesystem/js/common.jsp"></script>
-<script type="text/javascript">
-	$(document).ready(function(){
-		$('#my_page').css('background-color','#C4E2FF');
-		$('#top_row').css('background-color','#C4E2FF');
-		$('#good_management').css('background-color','#ebfbff');
-	});
-</script>
-</head>
-<body>
-<table width="90%" align="center">
-	<!-- 상단 메뉴 시작 -->
-	<tr colspan="2">
-		<td>
-			<jsp:include page="/common/top.jsp"></jsp:include>
-		</td>
-	</tr>
-	<!-- 상단 메뉴 끝 -->
-</table>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-
-<table width="90%" align="center">
-	<tr>
-		<!-- 좌측 메뉴 시작 -->
-		<td valign="top" style="width:20%">
-			<jsp:include page="/member/MypagLeft.jsp"></jsp:include>
-		</td>
-		<!-- 좌측 메뉴 끝 -->
+<!DOCTYPE html> 
+<html> 
+	<head>
+		<title>물품 관리 페이지</title>
+		<meta charset="UTF-8"/> 	
+		<meta name="viewport" 
+				content="width=device-width, initial-scale=1.0, 
+							maximum-scale=1.0, minimum-scale=1.0, 
+							user-scalable=no"/>
 		
-		<td align="center">
+		<link rel="shortcut icon" href="../image/icon.png">
+		<link rel="apple-touch-icon" href="../image/icon.png">
 
-			<table class="table_style" align="center">
-				<tr id="top_row">
-					<th>상품번호</th>
-					<th>상품이미지</th>
-					<th>상품명</th>
-					<th>상품가격</th>
-					<th>기타</th>
-				</tr>
-				
-				<c:forEach var="good" items="${GOOD_LIST}" varStatus="i">	
-				<tr>
-					<td>${good.gnum}</td>
-					<td>
-						<a href="/moviesystem/editGoodForm.action?gnum=${good.gnum }">
-							<img src="/moviesystem/gphoto/${good.photo}" width="100" height="100">
-						</a>
-					</td>
-					<td>${good.gname}</td>
-					<td>${good.gprice}</td>
-					<td>
-						<form action="/moviesystem/deleteGood.action" method="post">
-							<input type="hidden" name="gnum" value="${good.gnum}"/>
-							<input type="submit" value="물건삭제"/>
-						</form>
-					</td>
-				</tr>
-				</c:forEach>
-			</table>
+ 
+		<link href="http://code.jquery.com/mobile/latest/jquery.mobile.min.css" 
+			rel="stylesheet" type="text/css" />
+		<script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
+		<script src="http://code.jquery.com/mobile/latest/jquery.mobile.min.js"></script>
+	 	<!--  
+		<link href="../framework/jquery.mobile-1.0.css" rel="stylesheet" type="text/css" />
+		<script src="../framework/jquery-1.6.4.js"></script>
+		<script src="../framework/jquery.mobile-1.0.js"></script>
+		-->
+	</head> 
+
+	<body>
+		<div data-role="page">
+			<div data-role="header">
+				<div data-role="controlgroup" data-type="horizontal">
+					<a href="#" data-role="button" >Logout</a>
+					<a href="/moviesystem/mMypage.action" data-role="button">MyPage</a>		
+				</div>
+			</div><!-- end header 1-->
 			
-			</form>
-			<p align="center">
-				${PAGE_LINK_TAG}
-			</p>
+			<div data-role="header">
+				<div data-role="navbar">
+					<ul>
+						<li><a href="#">Movie</a></li>
+						<li><a href="#">Reservation</a></li>
+						<li><a href="/moviesystem/mgood/mViewGoodList.action" class="ui-btn-active">Shopping</a></li>
+					</ul>
+				</div>
+			</div><!-- end header2 -->
 			
-			<table align="center">
-			<tr>
-			<td>
-			<form action="/moviesystem/addGoodForm.action" method="post">
-				<input type="submit" value="물건추가"/>
-			</form>
-			</td>
-			</tr>
-			</table>
-			</form>
+			<div data-role="content">
+					<ul data-role="listview"  data-split-icon="delete">
+						<c:forEach var="good" items="${GOOD_LIST}" varStatus="i">	
+							<li>
+								<a href="/moviesystem/mgood/mEditGoodForm.action?gnum=${good.gnum}"><img src="../gphoto/${good.photo}"/>
+									<h3> 
+										물품번호 : ${good.gnum} <br/>
+										상 품 명 : ${good.gname} <br/>
+										가     격 : ${good.gprice}
+									</h3>
+								</a>
+							</li>
+						</c:forEach>
+					</ul>
+			</div><!-- end content -->
 
-		</td>
-	</tr>
-</table>
-
-</body>
+			<div data-role="footer" data-position="fixed">
+				<div data-role="navbar" >
+					<ul>
+						<c:if test="${page!=1}">
+						<li><a href="/moviesystem/mgood/mViewManageGoodList.action?page=${page-1}" data-icon="arrow-l">Prev</a></li>
+						</c:if>
+						<c:if test="${page<maxPage }">
+						<li><a href="/moviesystem/mgood/mViewManageGoodList.action?page=${page+1}" data-icon="arrow-r" >Next</a></li>
+						</c:if>
+					</ul>
+				</div>
+			</div><!-- end footer -->		
+		</div><!-- end page -->
+	</body>
 </html>

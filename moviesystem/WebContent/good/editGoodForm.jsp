@@ -1,97 +1,80 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<title>물건 정보 수정</title>
-<link rel="stylesheet" href="/moviesystem/css/Layout.css">
-<script src="http://code.jquery.com/jquery-1.7.1.js"></script>
-<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.js"></script>
-<script src="/moviesystem/js/common.jsp"></script>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<script type="text/javascript">
-$(document).ready(function(){
-	$("#my_form").validate({
-		rules:{
-			gname:{
-				required:true,
-				minlength:2
-			},
-			gprice:{
-				digits:true,
-				range:[1,99999999]
-			}
-		},
-		messages:{
-			gname:{
-				required:"상품명은 필수입력사항 입니다.",
-				minlength:"상품명을 정확하게 입력해주세요."
-			},
-			gprice:{
-				digits:"숫자 정수를 입력해주세요.",
-				range:"가격범위를 초과했습니다."
-			}
-		}
-	});
-});
+<!DOCTYPE html> 
+<html> 
+	<head>
+		<title>물건 정보 수정</title>
+		<meta charset="UTF-8"/> 	
+		<meta name="viewport" 
+				content="width=device-width, initial-scale=1.0, 
+							maximum-scale=1.0, minimum-scale=1.0, 
+							user-scalable=no"/>
+		
+		<link rel="shortcut icon" href="../image/icon.png">
+		<link rel="apple-touch-icon" href="../image/icon.png">
 
-</script>
-<script type="text/javascript">
-	$(document).ready(function(){
-		$('#my_page').css('background-color','#C4E2FF');
-		$('.top_row').css('background-color','#C4E2FF');
-		$('#good_management').css('background-color','#ebfbff');
-	});
-</script>
-</head>
-<body>
+ 
+		<link href="http://code.jquery.com/mobile/latest/jquery.mobile.min.css" 
+			rel="stylesheet" type="text/css" />
+		<script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
+		<script src="http://code.jquery.com/mobile/latest/jquery.mobile.min.js"></script>
+	 		
+		<!--
+		<link href="../framework/jquery.mobile-1.0.css" rel="stylesheet" type="text/css" />
+		<script src="../framework/jquery-1.6.4.js"></script>
+		<script src="../framework/jquery.mobile-1.0.js"></script>
+		-->
 
-<table width="90%" align="center">
-	<!-- 상단 메뉴 시작 -->
-	<tr>
-		<td colspan="2">
-			<jsp:include page="/common/top.jsp"></jsp:include>
-		</td>
-	</tr>
-	<!-- 상단 메뉴 끝 -->
-	<tr>
-		<!-- 좌측 메뉴 시작 -->
-		<td valign="top" style="width:20%">
-			<jsp:include page="/member/MypagLeft.jsp"></jsp:include>
-		</td>
-		<!-- 좌측 메뉴 끝 -->
-<td>
-<form action="/moviesystem/editGood.action" method="post" id="my_form">
-<h1 align="center">물건정보수정</h1>
-<table class="table_style" align="center">
-	<tr>
-		<td rowspan=4 width="200"><img src="/moviesystem/gphoto/${GOOD.photo}" width="200" height="200"></td>
-		<th class="top_row" width="80">상품명</th>
-		<td><input type="text" name="gname" value="${GOOD.gname}"/></td>
-	</tr>
-	<tr>
-		<th class="top_row">상품 가격</th>
-		<td><input type="text" name="gprice" value="${GOOD.gprice}"></td>
-	</tr>
-	<tr>
-		<th class="top_row">상품 이미지</th>
-		<td><input type="text" name="photo" value="${GOOD.photo}"></td>
-	</tr>
-	<tr>
-		<th class="top_row">상품 설명</th>
-		<td width="500">
-			<textarea style="WIDTH:70%" name="detail">${GOOD.detail}</textarea>
-		</td>
-	</tr>
-</table>
-	
-<input type="hidden" name="gnum" value="${GOOD.gnum }"/>
-<input type="submit" value="수정하기"/>
-</form>
+	</head> 
 
-</td>
-</table>
-</body>
+	<body>
+		<div data-role="page">
+			<div data-role="header">
+				<div data-role="controlgroup" data-type="horizontal">
+					<a href="#" data-role="button" >Logout</a>
+					<a href="/moviesystem/mMypage.action" data-role="button">MyPage</a>		
+				</div>
+			</div><!-- end header 1-->
+			
+			<div data-role="header">
+				<div data-role="navbar">
+					<ul>
+						<li><a href="#">Movie</a></li>
+						<li><a href="#">Reservation</a></li>
+						<li><a href="/moviesystem/mgood/mViewGoodList.action" class="ui-btn-active">Shopping</a></li>
+					</ul>
+				</div>
+			</div><!-- end header2 -->
+
+			<div data-role="content">
+			<form action="/moviesystem/mEditGood.action" >
+				<ul data-role="listview" data-insert="true">
+					<li>
+						<img src="../gphoto/${GOOD.photo}" />
+						<input type="submit" value="정보수정" />
+						<input type="hidden" name="gnum" value="${GOOD.gnum }"/>
+					</li>
+					<li data-role="list-divider">상품명</li>
+					<li><input type="text" name="gname" required value="${GOOD.gname}" data-mini="true"/></li>
+					<li data-role="list-divider">가격</li>
+					<li><input type="text" name="gprice" value="${GOOD.gprice}" data-mini="true"/> </li>
+					<li data-role="list-divider">이미지</li>
+					<li><input type="text" name="photo" value="${GOOD.photo}" data-mini="true"/> </li>
+					<li data-role="list-divider">상품설명</li>
+					<li><textarea data-mini="true" name="detail"  required >${GOOD.detail}</textarea></li>
+				</ul><br/>
+			</form>
+			<form action="/moviesystem/mDeleteGood.action" method="post">
+				<input type="hidden" name="gnum" value="${good.gnum}"/>
+				<input type="submit" value="삭제" data-inline="true" data-theme="d"/>
+			</form>
+			</div><!-- end content -->
+
+			<div data-role="footer" data-position="fixed">
+				
+			</div><!-- end footer -->		
+				
+		</div><!-- end page -->
+	</body>
 </html>
