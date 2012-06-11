@@ -217,6 +217,7 @@
 		  		   /member/addMember.jsp
 				</result>
 		</action>
+
 <!--block-->		
 		<action name="addBlock"
 		 	 class="kr.or.kosta.bookchange.member.BlockService" 
