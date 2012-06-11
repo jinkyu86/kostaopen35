@@ -30,21 +30,20 @@
 	</head> 
 
 	<body>
-		<div data-role="page">
-		
-		<div data-role="header">
-			<c:if test="${LOGIN_MEMBER==null}">
-				<div data-role="controlgroup" data-theme="e"  data-type="horizontal" >
-					<a href="moviesystem/mmember/mloginForm.action" data-role="button" >Login</a>
-					<a href="moviesystem/mmember/maddMemberForm.action" data-role="button">Join</a>
-				</div>
-			</c:if>
-			<c:if test="${LOGIN_MEMBER!=null}">
-				<div data-role="controlgroup"  data-type="horizontal" >
-					<a href="moviesystem/mmember/mmypage.action" data-role="button" >MyPage</a>
-					<a href="moviesystem/mlogout.action" data-role="button">Logout</a>
-				</div>
-				</c:if>				
+		<div data-role="page">		
+			<div data-role="header">
+				<div data-role="controlgroup" data-type="horizontal" >
+					<c:choose>
+					<c:when test="${LOGIN_MEMBER==null}">			
+							<a href="/moviesystem/mmember/mloginForm.action" data-role="button" >Login</a>
+							<a href="/moviesystem/mmember/maddMemberForm.action" data-role="button">Join</a>
+					</c:when>
+					<c:otherwise>
+							<a href="/moviesystem/mmember/mmypage.action" data-role="button" >MyPage</a>
+							<a href="/moviesystem/mlogoutMember.action" data-role="button">Logout</a>
+					</c:otherwise>	
+					</c:choose>						
+				</div>				
 			</div><!-- end header 1-->
 			
 			<div data-role="header">
@@ -65,7 +64,7 @@
 		    <a href="/moviesystem/mViewCanceledBuyList.action" data-role="button">Canceled Buy List</a>
 		    
 		     <c:if  test="${LOGIN_MEMBER.userid=='mmanager'}">
-		      <a href="/moviesystem/mViewMemberList.action" data-role="button">Member Manage</a>
+		      <a href="/moviesystem/mviewMemberList.action" data-role="button">Member Management</a>
 		      <a href="/moviesystem/mViewManageGoodList.action" data-role="button">Good Management</a>
 		      <a href="/moviesystem/mAdminMovieList.action" data-role="button">Movie List</a>
 		    </c:if>
