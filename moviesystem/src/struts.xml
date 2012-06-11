@@ -144,7 +144,7 @@
 		</action>-->
 		
 		<action name="mviewMemberList" class="kr.or.kosta.moviesystem.member.MemberService" 
-		method="mViewMemberList">
+		method="viewMemberList">
 			<result name="success">/mmember/viewMemberList.jsp</result>
 			<result name="login">/mmember/login.jsp</result>
 		</action>		
