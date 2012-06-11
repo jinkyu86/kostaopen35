@@ -28,41 +28,126 @@
 		-->
 </script>
 <body>
-	<div data-role="content">
-		<div data-role="collapsible-set">
-			<div data-role="collapsible">
-				<h3>물건 번호</h3>
-				<p>${GOOD.gNum }</p>
-			</div>
-			<div data-role="collapsible">
-				<h3>물건 이름</h3>
-				<p>${GOOD.gName }</p>
-			</div>
-			<div data-role="collapsible">
-				<h3>상세 설명</h3>
-				<p>${GOOD.detail}</p>
-			</div>
-			<div data-role="collapsible" >
-				<h3>이미지</h3>
-				<p><img src="/auction/gphoto/${GOOD.img }" height="100" width="100"/></p>
-			</div>
+	<div data-role="page">
+		<div data-role="content">
+			<form id="my_form" method="post" action="/auction/editGood.action">
+				
+				<div data-role="fieldcontain">
+					<label for="gnum">물품 번호</label>
+					<input id="gnum" type="text" name="gnum" value="${GOOD.gNum}" readonly="readonly"/>
+				</div>
+				<div data-role="fieldcontain">
+					<label for="gname">물품명:</label>
+					<input id="gname" type="text" name="gname" value="${GOOD.gName}"/>
+				</div>
+				<div data-role="fieldcontain">
+					<label for="detail">상세설명:</label>
+					<textarea id="detail" name="detail">${GOOD.detail }</textarea>
+				</div>
+				<div data-role="fieldcontain">
+					<label for="img">이미지:</label>
+					<input id="img" type="text" name="img" value="${GOOD.img }"/>
+				</div>
+				<div data-role="fieldcontain">
+					<input id="submit" type="submit" value="전송"/>
+					<input id="reset" type="reset" value="취소"/>
+				</div>
+			</form>
 		</div>
 	</div>
-	
-	<div data-role="footer" data-position="fixed">
-		<div data-role="navbar" data-iconpos="top">
+	<ul>
+		<header>
+			<h1>경매사이트</h1>
+
+			<ui>
+			<li><c:choose>
+					<c:when test="${sessionScope.MEMBER==null}">
+						<p align="right">
+							<a href="/auction/loginForm.action"> <font color=black>로그인</font>
+							</a>
+							<br/>
+							 <a href="/auction/addMemberForm.action"> <font color=black>회원가입</font>
+							</a>
+						</p>
+					</c:when>
+					<c:otherwise>
+						<p align="right">
+							${sessionScope.MEMBER.name }님 안녕
+							<br/> 
+							<a href="/auction/logout.action"> 
+							<font color=black>로그 아웃</font>
+							</a>
+							<br/>
+							<a href="/auction/viewMember.action"> 
+							<font color=black>회원 정보</font>
+							</a>
+						</p>
+					</c:otherwise>
+				</c:choose></li>
+			</ui>
+		</header>
+	</ul>
+	<nav>
+		<!-- top nav -->
+		<div class="menu">
 			<ul>
-				<li><a
-					href="/auction/meditGoodForm.action?gnum=${GOOD.gNum}"
-					data-icon="gear">물품수정</a></li>
-				<li><a href="/auction/mremoveGood.action?gnum=${GOOD.gNum}"
-					data-icon="delete">물품삭제</a></li>
-				<li><a href="/auction/maddAuctionForm.action?gnum=${GOOD.gNum}"
-					data-icon="plus">경매추가</a></li>	
-				<li><a href="/auction/mviewGoodList.action"
-					data-icon="home">물품리스트</a></li>
+				<li><a href="/auction/home.jsp">홈</a></li>
+				<li><a href="/auction/viewAuctionList.action"> <font
+						color=white>경매 보기</font>
+				</a>
+				
+					
+						<c:if test="${sessionScope.MEMBER.userid=='admin'}">
+							<li><a href="/auction/viewGoodList.action"> <font color=white>물품
+									관리 목록 보기</font>
+							</a></li>
+							<li><a href="/auction/viewMemberList.action"> <font color=white>회원
+									목록 보기</font>
+							</a></li>
+						</c:if>
+						<li><a href="/auction/viewBoardList.action"> <font color=white>게시물
+								목록 보기</font>
+						</a></li>
+					
+				
 			</ul>
 		</div>
-	</div>
+	</nav>
+	<!-- end of top nav -->
+
+	<section id="content">
+		<p align="center">
+		<h1 align="center">물품 정보 수정</h1>
+	<form action="/auction/editGood.action" method="post" id="my_form">
+				<table border="1" align="center">
+					<tr>
+						<td>물품 번호</td>
+						<td><input type="text" name="gnum" value="${GOOD.gNum}" readonly="readonly"/></td>
+					</tr>
+					<tr>
+						<td>물품명</td>
+						<td><input type="text" name="gname" value="${GOOD.gName}" /></td>
+					</tr>
+					<tr>
+						<td>상세설명</td>
+						<td><textarea name="detail" >${GOOD.detail}</textarea></td>
+					</tr>
+					<tr>
+						<td>이미지</td>
+						<td><input text="text" name="img" value="${GOOD.img}"/></td>
+					</tr>
+			</table>
+		<center>
+			<input type="submit" value="물건 정보 수정"/>
+			<input type="reset" value="입력취소"/>
+		</center>
+	</form>
+<p align="center">
+	<a href="/auction/viewGoodList.action">
+	    <img src="/auction/menu/viewGoodList.jpg"/>
+	</a>
+</p>
+		</p>
+	</section>			
 </body>
 </html>
