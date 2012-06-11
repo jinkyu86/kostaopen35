@@ -542,7 +542,7 @@ public class MatchService implements ModelDriven,IService
 			MINERAL = memberDAO.selectMineralByID(ID);
 			RANK = memberDAO.selectMemberRanking(ID);
 		}
-		int length=10;
+		int length=5;
 		if(page==0){
 			page=1;
 		}
@@ -550,6 +550,10 @@ public class MatchService implements ModelDriven,IService
 		int matchCount = matchDAO.selectMatchCount();
 		PAGE_LINK_TAG = PageUtil.generate(page, matchCount, length,
 			"viewMatchList.action");
+		maxPage=(matchCount/length);
+		if(matchCount%length!=0){
+			maxPage++;
+		}
 		return "success";
 //		HttpSession session = request.getSession();
 //		Member member1 = (Member) session.getAttribute("LOGIN_MEMBER");
