@@ -46,7 +46,18 @@
 			</div><!-- end header2 -->
 
 			<div data-role="content">
-					<ul data-role="listview" data-filter="true">
+			
+					<table align="center" border="0">
+						<tr>		
+							<form action="/moviesystem/mSearchGoodList.action" method="post">
+								<td>상품명 : </td>
+								<td><input type="text" name="keyword"/></td>
+								<td><input type="submit" value="검색"/></td>
+							</form>
+						</tr>
+					</table><br/>
+			
+					<ul data-role="listview">
 						<c:forEach var="good" items="${GOOD_LIST}" varStatus="i">	
 							<li>
 								<a href="/moviesystem/mgood/mViewGood.action?gnum=${good.gnum}"><img src="./gphoto/${good.photo}"/>
