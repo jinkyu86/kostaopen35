@@ -6,6 +6,7 @@
 <configuration>
 	
 <mappers>
+	<mapper resource="Block.xml"/>
 	<mapper resource="Board.xml"/>
 	<mapper resource="Category.xml"/>
 	<mapper resource="Deal.xml"/>
