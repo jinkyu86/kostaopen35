@@ -34,7 +34,7 @@ contentType="text/html; charset=UTF-8"
 <body>
 	<div data-role="page">
 		<div data-role="header">
-			<h2>경기일정</h2>
+			<h2>경기 일정 추가</h2>
 			<a href="" data-icon="arrow-l" data-rel="back">이전</a>
 			<c:choose>
 				<c:when test="${sessionScope.LOGIN_MEMBER==null}">
@@ -47,47 +47,73 @@ contentType="text/html; charset=UTF-8"
 			</c:choose>
 		</div>
 		<div data-role="content">
-			<ul data-role="listview">
-				<c:forEach  var="match"  items="${MATCH_LIST}">
-					<li>
-						<p align="center">
-						<img src="/betting/teamphoto/M${match.homeTeam.photo }" />
-						VS
-						<img src="/betting/teamphoto/M${match.awayTeam.photo }" />
-						</p>
-						<p>경기장소 : ${match.loc.loc}</p>
-						<p>경기시작시간 : ${match.matchTime}</p>
-						<p>경기결과 : 
-						<c:choose>
-							<c:when test="${match.winTeam.num == null}">
-								<strong>진행중</strong>
-							</c:when>
-							<c:when test="${match.winTeam.num == '9'}">
-								<strong>무승부</strong>
-							</c:when>
-							<c:when test="${match.winTeam.num == '10'}">
-								<strong>취소</strong>
-							</c:when>
-							<c:otherwise>
-									<strong>${match.winTeam.name}승</strong><br/>
-									스코어 : <strong>${match.score}</strong>
-							</c:otherwise>
-					</c:choose>
-					</p>
-					</li>
-					</c:forEach>
-				</ul>
+			<form action="/betting/mAddMatch.action" method="post">
+			<table style="margin:auto">
+				<tr>
+					<th>경기번호</th>
+					<td><input type="text" name="matchno" 
+							value="${MATCH.num}" readOnly="readOnly" /></td>
+					</tr>
+				<tr>
+					<th>홈팀</th>
+					<td>
+					<select name="hometeamno" data-native-menu="false">
+						<c:forEach var="team" items="${TEAM_LIST }" end="7">
+							<option value="${team.num}"
+								<c:if test="${MATCH.homeTeam.num eq team.num}">
+								selected="selected"
+								</c:if>
+								>${team.name}
+							</option>
+						</c:forEach>
+				 	</select>
+					</td>
+				</tr>
+				<tr>
+					<th>어웨이팀</th>
+					<td>
+						<select name="awayteamno" data-native-menu="false">
+						<c:forEach var="team" items="${TEAM_LIST }" end="7">
+							<option value="${team.num}"
+							<c:if test="${MATCH.awayTeam.num eq team.num}">
+								selected="selected"
+							</c:if>
+							>${team.name}
+							</option>
+						</c:forEach>
+				 		</select>
+					</td>
+				</tr>
+				<tr>
+					<th>경기장소</th>
+					<td>
+						<select name="locno" data-native-menu="false">
+				 		<c:forEach var="loc" items="${LOC_LIST }">
+							<option value="${loc.num}"
+							<c:if test="${MATCH.loc.num eq loc.num}">
+								selected="selected"
+							</c:if>
+							>
+								${loc.loc}
+							</option>
+						</c:forEach>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<th>경기시작시간</th>
+					<td><input type="text" name="matchtime" 
+						value="${MATCH.matchTime}" /></td>
+				</tr>
+		</table>
+		<input type="submit" value="데이터 추가"/>
+		<input type="reset" value="취소"/>
+		</form>
 		</div>
 		<div data-role="footer" data-position="fixed">
 			<div data-role="navbar" data-iconpos="top">
 				<ul>
 				<li><a href="/betting/mViewHome.action" data-icon="home">Home</a></li>
-				<c:if test="${page!=1}">
-					<li><a href="/betting/mViewMatchListToVistor.action?page=${page-1}" data-icon="arrow-l">이전</a></li>
-				</c:if>
-				<c:if test="${page<maxPage }">
-					<li><a href="/betting/mViewMatchListToVistor.action?page=${page+1}" data-icon="arrow-r">다음</a></li>
-				</c:if>
 				</ul>
 			</div>
 		</div>

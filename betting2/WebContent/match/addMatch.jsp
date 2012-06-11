@@ -128,7 +128,7 @@
 		<section id="content">
 	<form action="/betting/addMatch.action" method="post">
 	<h3 align="center">경기 데이터 삽입</h3>
-	<table border="1" align="center" style="margin:auto">
+	<table style="margin:auto">
 		<tr>
 			<th>홈팀</th>
 			<td>

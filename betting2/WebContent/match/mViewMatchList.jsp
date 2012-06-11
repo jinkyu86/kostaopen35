@@ -49,7 +49,7 @@ contentType="text/html; charset=UTF-8"
 		<div data-role="content">
 			<ul data-role="listview">
 				<c:forEach  var="match"  items="${MATCH_LIST}">
-					<li>
+					<li><a href="/betting/mEditMatchForm.action?matchno=${match.num }">
 						<p align="center">
 						<img src="/betting/teamphoto/M${match.homeTeam.photo }" />
 						VS
@@ -74,7 +74,7 @@ contentType="text/html; charset=UTF-8"
 							</c:otherwise>
 					</c:choose>
 					</p>
-					</li>
+					</a></li>
 					</c:forEach>
 				</ul>
 		</div>
@@ -82,11 +82,12 @@ contentType="text/html; charset=UTF-8"
 			<div data-role="navbar" data-iconpos="top">
 				<ul>
 				<li><a href="/betting/mViewHome.action" data-icon="home">Home</a></li>
+				<li><a href="/betting/mAddMatch.action" data-icon="plus">일정 추가</a></li>
 				<c:if test="${page!=1}">
-					<li><a href="/betting/mViewMatchListToVistor.action?page=${page-1}" data-icon="arrow-l">이전</a></li>
+					<li><a href="/betting/mViewMatchList.action?page=${page-1}" data-icon="arrow-l">이전</a></li>
 				</c:if>
 				<c:if test="${page<maxPage }">
-					<li><a href="/betting/mViewMatchListToVistor.action?page=${page+1}" data-icon="arrow-r">다음</a></li>
+					<li><a href="/betting/mViewMatchList.action?page=${page+1}" data-icon="arrow-r">다음</a></li>
 				</c:if>
 				</ul>
 			</div>
