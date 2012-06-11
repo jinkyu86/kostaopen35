@@ -32,7 +32,7 @@ a{text-decoration:none;}
         <td><img src="/bookchange/bookimg/${change.agreeBoard.boardPhoto}" height="100" width="100"></td>
         <td align="center">${change.demandBoard.member.email}</td>
         <td align="center">
-		<a href="/bookchange/viewBoardWhenAgree.action?boardNo=${change.demandBoard.boardNo}&agreeBoardNo=${change.agreeBoard.boardNo}">
+		<a href="/bookchange/viewBoard.action?boardNo=${change.demandBoard.boardNo}">
 		<img src="/bookchange/bookimg/${change.demandBoard.boardPhoto}"height="100" width="100"></a></td>
 		<td align="center">${change.changeDate}</td>
        </tr>

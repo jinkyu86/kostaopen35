@@ -21,6 +21,12 @@
 			}			
 		});
 	});
+	
+
+	 function clearData(textarea){
+	  textarea.value = '';
+	 }
+
 </script>
 </head>
 <body> 
@@ -28,7 +34,7 @@
  <input type="hidden" name="email" value="${sessionScope.LOGIN_EMAIL.email}"/>
  <input type="hidden" name="boardNo" value="${BOARD.boardNo}"/>
   <p align="center">
-  <textarea name="qaContent" cols="60" rows="3"></textarea>
+  <textarea name="qaContent" cols="60" rows="3" onmousedown="clearData(this)">댓글을 입력해주세요</textarea>
   <input type="submit" value="댓글등록">
   </p> 
  </form> 

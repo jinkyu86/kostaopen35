@@ -14,6 +14,17 @@ a{text-decoration:none;}
 	<c:if test="${ERROR!=null}">
 	alert("${ERROR}");
 	</c:if>
+	
+function complete(form){
+	var result=confirm("교환 완료하시겠습니까?");
+	if(result==true){
+		form.submit();
+		return true;
+	}else{
+		event.preventDefault();
+		return false;
+	}
+}
 </script>
 </head>
 <body topmargin="0" leftmargin="0" bgcolor="#FFFFFF">
@@ -35,7 +46,7 @@ a{text-decoration:none;}
         <td align="center">
         <a href="/bookchange/viewMemberInfo.action?email=${change.agreeBoard.member.email}">${change.agreeBoard.member.email}</a></td>
         <td align="center">
-		<a href="/bookchange/viewBoardWhenAgree.action?boardNo=${change.agreeBoard.boardNo}&agreeBoardNo=${change.demandBoard.boardNo}&WhenAgree=a">
+		<a href="/bookchange/viewBoard.action?boardNo=${change.agreeBoard.boardNo}">
 		<img src="/bookchange/bookimg/${change.agreeBoard.boardPhoto}"height="100" width="100"></a></td>
 		<td align="center">${change.changeDate}</td>
 		<td align="center">
@@ -49,7 +60,7 @@ a{text-decoration:none;}
         </c:choose>        
 		</td>		
 		<td>
-       		<form action="/bookchange/completeChange.action" method="post">
+       		<form action="/bookchange/completeChange.action" method="post" onSubmit="complete(this)">
        		<input type="hidden" name="ChangeNo" value="${change.agreeBoard.boardNo}">
        		<input type="hidden" name="BoardNo" value="${change.demandBoard.boardNo}">
        		<input type="hidden" name="conditionResult" value="${change.agreeBoard.condition.conditionResult}">

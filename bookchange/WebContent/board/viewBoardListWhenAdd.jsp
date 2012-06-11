@@ -19,13 +19,13 @@ a{text-decoration:none;}
 </c:if>
 
 function change(form){
-	 var result= confirm("책을 교환 하시겠습니까?");
-	 if(result==true){
-		 form.submit();
-		 return true;
+	 var result= confirm("책을 교환 하시겠습니까?"); /* confirm문구 물어보고 yes면 true, no면 false 리턴 */
+	 if(result==true){ 
+		 form.submit(); /* submit()해서 진행시킴.  */
+		 return true; /* true를 리턴하는 건 다음 단계로 넘어가겠다는 말임. */
 	 }else{
-		 event.preventDefault();
-		 return false;
+		 event.preventDefault(); /* no면 이벤트 중지시킴. */ 
+		 return false; /* 원래 화면으로 복귀. 다음 단계 안 감 */
 	 }
 	 
 	
@@ -75,7 +75,7 @@ function change(form){
        <td align="center"><small>${good.condition.conditionIng}</small></td>
        <td>
        	<form action="/bookchange/addChange.action"
-       	 method="post" target="main" onSubmit="change(this)" >
+       	 method="post" target="main" onSubmit="change(this)" > <!-- 확인창 띄우기 위한 onSubmit 추가, 메서드는 change, 인자는 form 자신! -->
        	<input type="hidden" name="demandBoardNo" value="${good.boardNo}">
        	<input type="hidden" name="agreeBoardNo" value="${BOARD.boardNo}">
        	<input type="submit"   value="교환신청" >

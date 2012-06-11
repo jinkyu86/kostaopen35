@@ -16,10 +16,47 @@ a{text-decoration:none;}
 	alert("${ERROR}");
 </c:if>
 
+function change(form){
+	var result=confirm("삭제하시겠습니까?");
+	if(result==true){
+		form.submit();
+		return true;
+	}else{
+		event.preventDefault();
+		return false;
+	}
+}
+
+function ok(form){
+	var result=confirm("교환신청을 수락하시겠습니까?");
+	if(result==true){
+		form.submit();
+		return true;
+	}else{
+		event.preventDefault();
+		return false;
+	}
+}
+
+
+function cancel(form){
+	var result=confirm("교환신청을 취소하시겠습니까?");
+	if(result==true){
+		form.submit();
+		return true;
+	}else{
+		event.preventDefault();
+		return false;
+	}
+}
+
+
 </script>
+
 </head>
 <body topmargin="0" leftmargin="0" bgcolor="#FFFFFF">
 <table>
+	<tr>
 	 <td width="550" height="600" valign="top">
 	 	
 	 	 <table align="center" border="0">
@@ -36,41 +73,68 @@ a{text-decoration:none;}
 		<td align="left"><a href="/bookchange/searchBoardList.action?categoryNo=9&column=title&keyword="><small>유아/아동</small></a></td></tr>
  </table>
 	 	
-	 	
+<c:if test="${sessionScope.LOGIN_EMAIL!=null}">	 	
 <c:choose>
-  <c:when test="${sessionScope.LOGIN_EMAIL==null}">
-	 <table align="center">
-	 </table>
-  </c:when> 
-  <c:when test="${sessionScope.LOGIN_EMAIL!=null}">
-  <table align="center">
-  <tr>
-   	<c:choose>
-   	<c:when test="${sessionScope.LOGIN_EMAIL.email==BOARD.member.email}">
-   	 <form action="/bookchange/editBoardForm.action" method="post">
-	  <input type="hidden" name="boardNo" value="${BOARD.boardNo}">
-  <td><input type="submit" value="수정"></td>
-	 </form>	 
-	  <form action="/bookchange/removeBoard.action" method="post" target="main">
+  <c:when test="${sessionScope.LOGIN_EMAIL.email==BOARD.member.email}">
+  
+	  <table align="center">
+	  <tr>   	
+	   <td>	 
+	   <form action="/bookchange/editBoardForm.action" method="post">
+		  <input type="hidden" name="boardNo" value="${BOARD.boardNo}">
+	  	  <input type="submit" value="수정">
+	  </form>
+	  </td>
+   
+      <td>	 	 
+	  <form action="/bookchange/removeBoard.action" method="post" target="main" onSubmit="change(this)">
 	  <input type="hidden" name="boardNo" value="${BOARD.boardNo}"/>
 	  <input type="hidden" name="conditionResult" value="${BOARD.condition.conditionResult}"/>
-  <td><input type="submit" value="삭제"></td>
-	 </form>
+ 	  <input type="submit" value="삭제">
+ 	  </form>
+ 	  </td>
+ 	  </tr>
+ 	  </table>
+	 
 	</c:when>
 	
-	<c:otherwise>
-	 
+	<c:when test="${sessionScope.LOGIN_EMAIL.email != BOARD.member.email}">
+	<c:choose>
+	
+	<c:when test="${WhenAgree!=null}">
+	
+	 <table align="center">
+	 <tr><td>
+	  <form action="/bookchange/matchChange.action" method="post" onSubmit="ok(this)">
+	   <input type="hidden" name="demandBoardNo" value="${BOARD.boardNo}">
+	   <input type="hidden" name="conditionResult" value="${BOARD.condition.conditionResult}">
+	   <input type="hidden" name="agreeBoardNo" value="${agreeBoardNo}">
+	 <input type="submit" value="교환신청수락"> </form></td></tr></table>	 	
+	  
+	</c:when>
+	
+	<c:when test="${WhenCancel!=null}">
+	 <table align="center">
+	 <tr><td>
+	 <form action="/bookchange/cancelChange.action" method="post" onSubmit="cancel(this)">
+	   <input type="hidden" name="demandBoardNo" value="${DEMAND_BOARD_NO}"><!-- 이게 상대방 게시물 번호 -->	   
+	   <input type="submit" value="교환신청취소"></form></td></tr></table>  
+	
+	</c:when>
+	
+	<c:when test="${BOARD.condition.conditionResult == 0 || BOARD.condition.conditionResult == 1}">
+	<table align="center"><tr>	 
    	<td><form action="/bookchange/searchBoardListWhenAdd.action" method="post" target="main"> 
 	   <input type="hidden" name="boardNo" value="${BOARD.boardNo}">
-	  <input type="hidden" name="keyword" value="${sessionScope.LOGIN_EMAIL.email}"></td>
-	  <td><input type="submit" value="교환신청"></td></tr>	  
-	  </form>	  
-	</c:otherwise>
-		
-	</c:choose>
-	</table>	 	
-   	</c:when>
+	  <input type="hidden" name="keyword" value="${sessionScope.LOGIN_EMAIL.email}">
+	  <input type="submit" value="교환신청"></form></td></tr>	
+	</table>
+	</c:when>   	
  </c:choose>
+ </c:when>
+ 
+ </c:choose>
+ </c:if>
  
  
 	 	<table bordercolor="#E6E6FA" align="center" border="1">
