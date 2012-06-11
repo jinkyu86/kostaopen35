@@ -44,9 +44,19 @@ public class BuyService implements ModelDriven, ServletContextAware, ServletRequ
 	private int buynum;
 	private Buy BUY;
 	private Buy buy=new Buy();
-	private String[] chkbox;	
+	private String[] chkbox;
+	private int maxPage;	
 	
-    public BuyService() {
+	
+    public int getMaxPage() {
+		return maxPage;
+	}
+
+	public void setMaxPage(int maxPage) {
+		this.maxPage = maxPage;
+	}
+
+	public BuyService() {
         super();
     }
 	
@@ -186,7 +196,10 @@ public class BuyService implements ModelDriven, ServletContextAware, ServletRequ
 		
 		BUY_LIST=buyDAO.selectBuyList(userid,length, page);
 		int buyCount=buyDAO.selectBuyCountByUerid(userid);
-	
+		maxPage=(buyCount/length);
+		if(buyCount%length!=0){
+			maxPage++;
+		}
 		PAGE_LINK_TAG=PageUtil.generate(page, buyCount, length, 
 				"/moviesystem/viewBuyList.action?userid="+userid);
 		return "success";
