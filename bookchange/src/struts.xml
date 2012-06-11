@@ -246,6 +246,35 @@
 		  		viewBlockList.jsp
 			</result>
 		</action>
+	<action name="selectMyBlockList"
+		 	 class="kr.or.kosta.bookchange.member.BlockService" 
+		 	 method="selectMyBlockList">
+		 	 <param name="aliases">
+		  		#{'email':'member.email'}
+				</param>
+		  	<result name="success">
+		  		viewMyBlockList.jsp
+			</result>
+		</action>
+	
+	<action name="selectBlockList"
+		 	 class="kr.or.kosta.bookchange.member.BlockService" 
+		 	 method="selectBlockList">
+		
+		  	<result name="success">
+		  		viewBlockList.jsp
+			</result>
+		</action>	
+	<action name="removeBlock"
+		 	 class="kr.or.kosta.bookchange.member.BlockService" 
+		 	 method="removeBlock">
+		  	<param name="aliases">
+		  		#{'blockNo':'blockNo'}
+				</param>
+		  	<result name="success">
+		  		removeBlock.jsp
+			</result>
+		</action>
 		
 	<!-- member start-->	
 		
