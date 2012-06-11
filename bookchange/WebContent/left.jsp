@@ -26,7 +26,7 @@ a{text-decoration:none;}
 	    <c:when test="${sessionScope.LOGIN_EMAIL==null}">
 	     <fieldset>
 	     <table align="left" cellpadding="0" cellspacing="0" border="0" >
-	     <form action="/bookchange/login.action" method="post">
+	     <form action="/bookchange/login.action" method="post" target="_self">
 		 <tr>
 		 <td>Email</td>
 		 <td><input type="text" name="email"></td>
@@ -57,7 +57,7 @@ a{text-decoration:none;}
 	   <c:otherwise>
 	    <fieldset>
 	 	<table cellpadding="0" cellspacing="0" border="0">
-	    <form action="/bookchange/logout.action" method="post" target="index.jsp">
+	    <form action="/bookchange/logout.action" method="post" target="_self">
 		<tr>
 		 <td>${sessionScope.LOGIN_EMAIL.email}님이 로그인하였습니다.</td>
 		</tr>
@@ -175,7 +175,14 @@ a{text-decoration:none;}
       <input type="submit" value="신고내역보러가기">
     </form> -->
     </td>
-    </tr>  
+    </tr>
+    
+    <tr>
+     <td>
+     <a href="/bookchange/viewBlockList.action" target="main"><img src="webimg/black.gif" border="0" width="40" height="40"><font color="black"><b>  신고리스트(관리자용)</b></font></a>
+     
+    </td>
+    </tr>    
 	   
 	    </c:when>
 		<%-- <c:otherwise>
