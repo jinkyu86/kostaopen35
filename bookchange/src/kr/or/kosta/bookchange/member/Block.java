@@ -55,11 +55,16 @@ public class Block {
 	public void setBlockContent(String blockContent) {
 		this.blockContent = blockContent;
 	}
+
 	@Override
 	public String toString() {
-		return "Block [member=" + member + ", blockCondition=" + blockCondition
-				+ ", blockNo=" + blockNo + ", blockContent=" + blockContent
-				+ "]";
+		return "Block [member=" + member + ", blockmember=" + blockmember
+				+ ", blockCondition=" + blockCondition + ", blockNo=" + blockNo
+				+ ", blockContent=" + blockContent + "]";
 	}
 
+	
 }
+
+
+
