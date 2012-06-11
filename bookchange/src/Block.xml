@@ -96,6 +96,7 @@
 		select count(*) from tb_block where blockCondition_Result=#{resultNo}
 	</select>
 
+
 		<!--
 	<resultMap id="selectResultMap" type="kr.or.kosta.bookchange.member.Member">
 		<result property="email" column="email"/>
