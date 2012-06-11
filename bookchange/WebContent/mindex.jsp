@@ -32,6 +32,8 @@
 					</c:forEach>
 				</ul>
 			</div>
+			<c:choose>
+			<c:when test="${sessionScope.LOGIN_EMAIL==null}">
 			<div data-role="footer" data-position="fixed" >
 				<div data-role="navbar" class="nav-glyphish-example">
 					<ul>
@@ -40,6 +42,20 @@
 					</ul>
 				</div>
 			</div>
+			</c:when>
+			<c:otherwise>
+			<div data-role="footer" data-position="fixed" >
+				<div data-role="navbar" class="nav-glyphish-example">
+					<ul>
+						<li><a href="#" data-icon="plus">로그아웃</a></li>
+						<li><a href="#" data-icon="plus">내 정보</a></li>
+						<li><a href="#" data-icon="plus">물품등록</a></li>
+						<li><a href="#" data-icon="plus">교환정보</a></li>
+					</ul>
+				</div>
+			</div>
+			</c:otherwise>
+			</c:choose>
 		</div>
 	</body>
 </html>
