@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="Good">
+<parameterMap type="kr.or.kosta.moviesystem.good.Good" id="insertParameterMap">
+	<parameter property="gnum"/>
+	<parameter property="gname"/>
+	<parameter property="detail"/>
+	<parameter property="gprice"/>
+	<parameter property="photo"/>
+</parameterMap>
+
+<insert id="insertGood" parameterMap="insertParameterMap">
+	<selectKey keyProperty="gnum" resultType="java.lang.String" order="BEFORE">
+		select SQ_GOOD.NEXTVAL from dual
+	</selectKey>
+	INSERT INTO good 
+	(g_num,g_name,detail,g_price,photo) 
+	VALUES(?,?,?,?,?)
+</insert>
+	
+<parameterMap type="kr.or.kosta.moviesystem.good.Good" id="updateParameterMap">
+	<parameter property="gname"/>
+	<parameter property="detail"/>
+	<parameter property="gprice"/>
+	<parameter property="photo"/>
+	<parameter property="gnum"/>
+</parameterMap>
+
+<update id="editGood" parameterMap="updateParameterMap">
+	UPDATE good 
+	SET g_name=?,detail=?,g_price=?,photo=? 
+	WHERE g_num=?
+</update>
+
+<delete id="deleteGood">
+	DELETE FROM good 
+	WHERE g_num=#{g_num}
+</delete>
+
+<resultMap id="selectResultMap" type="kr.or.kosta.moviesystem.good.Good">
+	<result property="gnum" column="g_num"/>
+	<result property="gname" column="g_name"/>
+	<result property="detail" column="detail"/>
+	<result property="gprice" column="g_price"/>
+	<result property="photo" column="photo"/>
+</resultMap>
+
+<select id="selectGood" resultMap="selectResultMap">
+	SELECT g_num,g_name,detail,g_price,photo 
+	FROM good 
+	WHERE g_num=#{g_num}
+</select>
+
+<select id="selectGoodList" resultMap="selectResultMap">
+	SELECT g_num,g_name,detail,g_price,photo 
+	FROM good
+</select>
+
+<select id="selectGoodListCount" resultType="java.lang.Integer">
+	SELECT count(g_num) 
+	FROM good
+</select>
+
+<select id="selectGoodListByName" resultMap="selectResultMap">
+	SELECT g_num,g_name,detail,g_price,photo 
+	FROM good 
+	WHERE g_name like #{g_num}
+</select>
+
+<select id="selectGoodListByNameCount" resultType="java.lang.Integer">
+	SELECT count(*)
+	FROM good 
+	WHERE g_name like #{g_num}
+</select>
+
+</mapper>	

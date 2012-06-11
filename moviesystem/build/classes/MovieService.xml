@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="MovieService">	
+<resultMap id="resultMapSelectMovieList" type="kr.or.kosta.moviesystem.movie.Movie">
+	<result property="mnum" column="m_num"/>
+	<result property="mname" column="m_name"/>
+	<result property="launchDate" column="launch_date"/>
+	<result property="genre" column="genre"/>
+	<result property="poster" column="poster"/>
+	<result property="endDate" column="end_date"/>
+	<result property="mprice" column="m_price"/>
+	<result property="content" column="content"/>
+</resultMap>
+<select id="selectMovieListTotal" resultMap="resultMapSelectMovieList">
+	select m_num, m_name, launch_date, genre, poster, end_date, m_price, content
+	from MOVIE
+	where 1=1
+	order by launch_date desc
+</select>
+<select id="selectMovieListTotalCnt" resultType="java.lang.Integer">
+	select count(m_num) 
+	from MOVIE 
+	where 1=1
+</select>
+<select id="selectMovieListScreen" resultMap="resultMapSelectMovieList">
+	select m_num, m_name, launch_date, genre, poster, end_date, m_price, content
+	from MOVIE
+	where 1=1 and launch_date<![CDATA[<]]><![CDATA[=]]>sysdate
+	order by launch_date desc
+</select>
+<select id="selectMovieListScreenCnt" resultType="java.lang.Integer">
+	select count(m_num) 
+	from MOVIE 
+	where 1=1 and launch_date<![CDATA[<]]><![CDATA[=]]>sysdate
+</select>
+
+<select id="selectMovieListSchedule" resultMap="resultMapSelectMovieList">
+	select m_num, m_name, launch_date, genre, poster, end_date, m_price, content
+	from MOVIE
+	where 1=1 and launch_date<![CDATA[>]]>sysdate
+	order by launch_date desc
+</select>
+<select id="selectMovieListScheduleCnt" resultType="java.lang.Integer">
+	select count(m_num) 
+	from MOVIE 
+	where 1=1 and launch_date<![CDATA[>]]>sysdate
+</select>
+
+<select id="selectMovieListReservation" resultMap="resultMapSelectMovieList">
+	select m_num, m_name, launch_date, genre, poster, end_date, m_price, content
+	from MOVIE
+	where 1=1 and end_date<![CDATA[>]]>sysdate
+		and m_num in (select m_num from screening_time where to_date(time,'yyyy-mm-dd') <![CDATA[>]]><![CDATA[=]]> to_date(sysdate, 'yyyy-mm-dd'))
+	order by launch_date desc
+</select>
+<select id="selectMovieListReservationCnt" resultType="java.lang.Integer">
+	select count(m_num) 
+	from MOVIE 
+	where 1=1 and end_date<![CDATA[>]]>sysdate
+</select>
+
+<select id="selectMovieRanking" resultMap="resultMapSelectMovieList">
+	select m_num, m_name, launch_date, genre, poster, end_date, m_price, content
+	from MOVIE m 
+	order by (select count(*) from reservation where m_num=m.m_num) desc
+</select>
+<select id="selectMovie" resultMap="resultMapSelectMovieList">
+	select m_num, m_name, launch_date, genre, poster, end_date, m_price, content
+	from MOVIE
+	where m_num=#{mnum}
+</select>
+<select id="selectMovieListByMname" resultMap="resultMapSelectMovieList">
+	select m_num, m_name, launch_date, genre, poster, end_date, m_price, content
+	from MOVIE
+	where m_name like #{mname}
+</select>
+<select id="selectMovieListByMnameCount" resultType="java.lang.Integer">
+	select count(m_num)
+	from MOVIE
+	where m_num like #{mnum}
+</select>
+
+<select id="selectMovieListByGenre" resultMap="resultMapSelectMovieList">
+	select m_num, m_name, launch_date, genre, poster, end_date, m_price, content
+	from MOVIE
+	where genre like #{genre}
+</select>
+<select id="selectMovieListByGenreCount" resultType="java.lang.Integer">
+	select count(m_num)
+	from MOVIE
+	where genre like #{genre}
+</select>
+
+<select id="selectMovieListByContent" resultMap="resultMapSelectMovieList">
+	select m_num, m_name, launch_date, genre, poster, end_date, m_price, content
+	from MOVIE
+	where content like #{content}
+</select>
+<select id="selectMovieListByContentCount" resultType="java.lang.Integer">
+	select count(m_num)
+	from MOVIE
+	where content like #{content}
+</select>
+
+<parameterMap type="kr.or.kosta.moviesystem.movie.Movie" id="addParameterMap">
+	<parameter property="mname"/>
+	<parameter property="launchDate"/>
+	<parameter property="genre"/>
+	<parameter property="poster"/>
+	<parameter property="endDate"/>
+	<parameter property="mprice"/>
+	<parameter property="content"/>
+</parameterMap>
+<insert id="addMovie" parameterMap="addParameterMap">
+	insert into MOVIE(m_num, m_name, launch_date, genre, poster, end_date, m_price, content)
+	values(m_seq.nextval, ?, ?, ?, ?, ?, ?, ?)
+</insert>
+
+<parameterMap type="kr.or.kosta.moviesystem.movie.Movie" id="editParameterMap">
+	<parameter property="mname"/>
+	<parameter property="launchDate"/>
+	<parameter property="genre"/>
+	<parameter property="poster"/>
+	<parameter property="endDate"/>
+	<parameter property="mprice"/>
+	<parameter property="content"/>
+	<parameter property="mnum"/>
+</parameterMap>
+<update id="editMovie" parameterMap="editParameterMap">
+	update MOVIE set m_name=?, launch_date=?, genre=?, poster=?, end_date=?
+		, m_price=?, content=? 
+	where m_num=?
+</update>
+
+<delete id="removeMovie">
+	delete from Movie where m_num=#{mnum}
+</delete>
+
+<resultMap id="selectResultMovie" type="kr.or.kosta.moviesystem.movie.Movie">
+		<result property="mname" column="m_name"/>
+		<result property="mnum" column="m_num"/>
+		<result property="screenTime.time" column="time"/>
+		<result property="screenTime.scrnum" column="scrnum"/>
+		
+</resultMap>
+
+<select id="selectMovieList" resultMap="selectResultMovie">
+		select  m.m_name as m_name ,
+					 m.m_num as m_num,
+					 s.time as time,
+					 s.scr_num as scrnum
+		from  screening_time s JOIN movie m
+		on s.m_num=m.m_num
+		where  s.time>sysdate
+</select>
+
+
+<select id="selectMovieNum" resultMap="resultMapSelectMovieList">
+	select m_num, m_name, launch_date, genre, poster, end_date, m_price, content
+	from MOVIE
+	where m_name=#{mname}
+</select>
+
+
+</mapper>

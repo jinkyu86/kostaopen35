@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="Buy">
+	<parameterMap type="kr.or.kosta.moviesystem.buy.Buy" id="insertParameterMap">
+		<parameter property="good.gnum"/>
+		<parameter property="qty"/>
+		<parameter property="member.userid"/>
+		<parameter property="totalPrice"/>
+	</parameterMap>
+	
+	<insert id="insertBuy" parameterMap="insertParameterMap">
+		INSERT INTO buy 
+		(buy_num,g_num,qty,userid,buy_date,pay_state,total_price) 
+		VALUES(SQ_BUY.NEXTVAL,?,?,?,SYSDATE,0,?)
+	</insert>
+	
+	<update id="cancelBuy">
+		UPDATE buy 
+		SET pay_state=1,cancel_date=SYSDATE 
+		WHERE buy_num=#{buy_num}
+	</update>
+	
+	<resultMap id="selectResultMap" type="kr.or.kosta.moviesystem.buy.Buy">
+		<result property="member.userNum" column="userNum"/>
+		<result property="member.userid" column="userid"/>
+		<result property="member.name" column="name"/>
+		<result property="member.email" column="email"/>
+		<result property="member.phone" column="phone"/>
+		<result property="member.zipcode" column="zipcode"/>
+		<result property="member.addr" column="addr"/>
+		<result property="good.gnum" column="gnum"/>
+		<result property="good.gname" column="gname"/>
+		<result property="good.detail" column="detail"/>
+		<result property="good.gprice" column="gprice"/>
+		<result property="good.photo" column="photo"/>
+		<result property="buynum"	column="buynum"/>
+		<result property="qty" column="qty"/>
+		<result property="buyDate" column="buyDate"/>
+		<result property="cancelbuyDate" column="cancelDate"/>
+		<result property="payState" column="payState"/>
+		<result property="totalPrice" column="totalPrice"/>
+	</resultMap>
+	
+	<select id="selectBuyList" resultMap="selectResultMap">
+		SELECT m.user_num as userNum,
+				m.userid as userid,
+				m.name as name,
+				m.email as email,
+				m.phone as phone,
+				m.zipcode as zipcode,
+				m.addr as addr,
+				g.g_num as gnum,
+				g_name as gname,
+				g.detail as detail,
+				g.g_price as gprice,
+				g.photo as photo,
+				b.buy_num as buynum,
+				b.qty as qty,
+				b.buy_date as buyDate,
+				b.cancel_date as cancelDate,
+				b.pay_state as payState,
+				b.total_price as totalPrice
+				FROM member m JOIN buy b ON m.userid=b.userid
+				JOIN good g ON g.g_num=b.g_num
+				WHERE m.userid=#{userid} AND pay_state=0 
+				ORDER BY buy_date DESC 
+	</select>
+	
+	<select id="selectBuyCountByUerid" resultType="java.lang.Integer">
+				SELECT count(buy_num)
+				FROM member m JOIN buy b ON m.userid=b.userid
+				JOIN good g ON g.g_num=b.g_num
+				WHERE m.userid=#{userid} AND pay_state=0 
+				ORDER BY buy_date DESC 
+	</select>
+	
+	<select id="selectCancelableBuyList" resultMap="selectResultMap">
+		SELECT m.user_num as userNum,
+				m.userid as userid,
+				m.name as name,
+				m.email as email,
+				m.phone as phone,
+				m.zipcode as zipcode,
+				m.addr as addr,
+				g.g_num as gnum,
+				g_name as gname,
+				g.detail as detail,
+				g.g_price as gprice,
+				g.photo as photo,
+				b.buy_num as buynum,
+				b.qty as qty,
+				b.buy_date as buyDate,
+				b.cancel_date as cancelDate,
+				b.pay_state as payState,
+				b.total_price as totalPrice
+				FROM member m JOIN buy b ON m.userid=b.userid
+				JOIN good g ON g.g_num=b.g_num
+				WHERE m.userid=#{userid} AND pay_state=0 AND buy_date BETWEEN sysdate-7 AND sysdate
+				ORDER BY buy_date DESC 
+	</select>
+	
+	<select id="selectCancelableBuyListCount" resultType="java.lang.Integer">
+				SELECT count(buy_num)
+				FROM member m JOIN buy b ON m.userid=b.userid
+				JOIN good g ON g.g_num=b.g_num
+				WHERE m.userid=#{userid} AND pay_state=0 AND buy_date BETWEEN sysdate-7 AND sysdate
+				ORDER BY buy_date DESC 
+	</select>
+	
+	<select id="selectCanceledBuyList" resultMap="selectResultMap">
+				SELECT m.user_num as userNum,
+				m.userid as userid,
+				m.name as name,
+				m.email as email,
+				m.phone as phone,
+				m.zipcode as zipcode,
+				m.addr as addr,
+				g.g_num as gnum,
+				g_name as gname,
+				g.detail as detail,
+				g.g_price as gprice,
+				g.photo as photo,
+				b.buy_num as buynum,
+				b.qty as qty,
+				b.buy_date as buyDate,
+				b.cancel_date as cancelDate,
+				b.pay_state as payState,
+				b.total_price as totalPrice
+				FROM member m JOIN buy b ON m.userid=b.userid
+				JOIN good g ON g.g_num=b.g_num
+				WHERE m.userid=#{userid} AND pay_state=1 
+				ORDER BY cancel_date DESC
+	</select>
+
+	<select id="selectCanceledBuyListCount" resultType="java.lang.Integer">
+				SELECT count(buy_num)
+				FROM member m JOIN buy b ON m.userid=b.userid
+				JOIN good g ON g.g_num=b.g_num
+				WHERE m.userid=#{userid} AND pay_state=1 
+				ORDER BY cancel_date DESC
+	</select>
+</mapper>

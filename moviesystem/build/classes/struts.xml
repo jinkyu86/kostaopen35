@@ -1,0 +1,570 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+"-//Aparche Software Foundation//DTD Struts Configuration 2.0//EN"
+"http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<constant name="struts.i18n.encoding" value="utf-8"/>
+	<constant name="struts.action.extension" value="action"/>
+	<constant name="struts.enable.DynamicMethodInvocation" value="true"/>
+	<constant name="struts.devMode" value="false"/>
+		<!-- 필요한 객체가 있으면 스프링을 통해서 얻도록 설정 -->
+	<constant name="struts.objectFactory"	value="spring"/>
+	<package name="default" namespace="/" extends="struts-default">
+	
+		<!--error리턴시 error.jsp로 이동 모든 Action에 다 설정-->
+		<global-results><!--모든 Action에 설정-->
+		<result name="error">/error/error.jsp</result>
+		<!--loginForm리턴시 /login/login.jsp로 이동 -->
+		<result name="loginForm">/mmember/login.jsp</result>
+		</global-results>
+		
+		<!-- web -->
+		<action name="viewGoodList" class="kr.or.kosta.moviesystem.good.GoodService" method="viewGoodList">
+			<result name="success">/good/viewGoodList.jsp</result>
+		</action>
+		
+		<action name="viewGood" class="kr.or.kosta.moviesystem.good.GoodService" method="viewGood">
+			<param name="aliases">
+				#{'gnum':'gnum'}
+			</param>
+			<result name="success">/good/viewGood.jsp</result>
+		</action>
+		
+		<action name="viewCartList" class="kr.or.kosta.moviesystem.good.GoodService" method="viewCartList">
+			<result name="success">/good/viewCartList.jsp</result>
+		</action>
+		
+		<action name="addCartList" class="kr.or.kosta.moviesystem.good.GoodService" method="addCartList">
+			<param name="aliases">
+				#{'gnum':'gnum',
+				'qty':'qty'}
+			</param>
+			<result name="success" type="chain">viewCartList</result>
+		</action>
+		
+		<action name="editCartList" class="kr.or.kosta.moviesystem.good.GoodService" method="editCartList">
+			<param name="aliases">
+				#{'index':'index'}
+			</param>
+			<result name="success" type="chain">viewCartList</result>
+		</action>
+		
+		<action name="removeCartList" class="kr.or.kosta.moviesystem.good.GoodService" method="removeCartList">
+			<param name="aliases">
+				#{'index':'index'}
+			</param>
+			<result name="success" type="chain">viewCartList</result>
+		</action>
+		
+		<action name="searchGoodList" class="kr.or.kosta.moviesystem.good.GoodService" method="searchGoodList">
+			<param name="aliases">
+				#{'keyword':'keyword'}
+			</param>
+			<result name="success">/good/viewGoodList.jsp</result>
+		</action>
+		
+		<action name="viewManageGoodList" class="kr.or.kosta.moviesystem.good.GoodService" method="viewManageGoodList">
+			<result name="success">/good/viewManageGoodList.jsp</result>
+		</action>
+		
+		<action name="addGoodForm" class="kr.or.kosta.moviesystem.good.GoodService" method="addGoodForm">
+			<result name="success">/good/addGood.jsp</result>
+		</action>
+		
+		<action name="addGood" class="kr.or.kosta.moviesystem.good.GoodService" method="addGood">
+			<result type="stream">
+		  	 	<param name="inputName">resultStream</param>
+				<param name="contentType">text/html;charset=UTF-8</param>
+			</result>
+		</action>
+		
+		<action name="deleteGood" class="kr.or.kosta.moviesystem.good.GoodService" method="deleteGood">
+			<param name="aliases">
+				#{'gnum':'gnum'}
+			</param>
+			<result name="success" type="chain">viewManageGoodList</result>
+		</action>
+		
+		<action name="editGoodForm" class="kr.or.kosta.moviesystem.good.GoodService" method="editGoodForm">
+			<param name="aliases">
+				#{'gnum':'gnum'}
+			</param>
+			<result name="success">/good/editGoodForm.jsp</result>
+		</action>
+		
+		<action name="editGood" class="kr.or.kosta.moviesystem.good.GoodService" method="editGood">
+			<param name="aliases">
+				#{'gnum':'gnum', 
+				'gnum':'good.gnum'}
+			</param>
+			<result name="success" type="chain">editGoodForm</result>
+		</action>
+		
+		
+		<action name="viewBuyList" class="kr.or.kosta.moviesystem.buy.BuyService" method="viewBuyList">
+			<result name="success">/buy/viewBuyList.jsp</result>
+		</action>
+		
+		<action name="addBuy" class="kr.or.kosta.moviesystem.buy.BuyService" method="addBuy">
+			<!--<result name="login">/member/login.jsp</result>-->
+			<result name="success" type="chain">completeBuy</result>
+		</action>
+		
+		<action name="completeBuy" class="kr.or.kosta.moviesystem.buy.BuyService" method="completeBuy">
+			<result name="success">/buy/completebuy.jsp</result>
+		</action>
+		
+		<action name="cancelBuyListForm" class="kr.or.kosta.moviesystem.buy.BuyService" method="cancelBuyListForm">
+			<result name="success">/buy/cancelBuy.jsp</result>
+		</action>
+		
+		<action name="cancelBuy" class="kr.or.kosta.moviesystem.buy.BuyService" method="cancelBuy">
+			<param name="aliases">
+				#{'chkbox':'chkbox'}
+			</param>
+			<result name="success" type="chain">cancelBuyListForm</result>
+		</action>
+		
+		<action name="viewCanceledBuyList" class="kr.or.kosta.moviesystem.buy.BuyService" method="viewCanceledBuyList">
+			<result name="success">/buy/viewCanceledBuyList.jsp</result>
+		</action>
+		
+		<action name="viewMemberList" class="kr.or.kosta.moviesystem.member.MemberService" 
+		method="viewMemberList">
+			<result name="success">/member/viewMemberList.jsp</result>
+			<result name="login">/member/login.jsp</result>
+		</action>
+		
+		<!--<action name="mviewMemberList" class="kr.or.kosta.moviesystem.member.MemberService" 
+		method="viewMemberList">
+			<result name="success">/mmember/viewMemberList.jsp</result>
+			<result name="login">/mmember/login.jsp</result>
+		</action>-->
+		
+		<action name="mviewMemberList" class="kr.or.kosta.moviesystem.member.MemberService" 
+		method="viewMemberList">
+			<result name="success">/mmember/viewMemberList.jsp</result>
+			<result name="login">/mmember/login.jsp</result>
+		</action>		
+		
+		<action name="addMemberForm" class="kr.or.kosta.moviesystem.member.MemberService" method="addMemberForm">
+			<param name="aliases">
+			#{'userNum':'userNum'}
+			 </param>
+			<result name="success">/member/addMember.jsp</result>
+		</action>
+		
+		<action name="maddMemberForm" class="kr.or.kosta.moviesystem.member.MemberService" method="addMemberForm">
+			<param name="aliases">
+			#{'userNum':'userNum'}
+			 </param>
+			<result name="success">/mmember/addMember.jsp</result>
+		</action>
+		
+		<action name="editMemberForm" class="kr.or.kosta.moviesystem.member.MemberService" method="editMemberForm">
+			<param name="aliases">
+			#{'userNum':'userNum',
+			  'userid':'userid'}
+			
+			 </param>
+			<result name="success">/member/editMember.jsp</result>
+		</action>
+
+		<action name="meditMemberForm" class="kr.or.kosta.moviesystem.member.MemberService" method="editMemberForm">
+			<param name="aliases">
+			#{'userNum':'userNum',
+			  'userid':'userid'}
+			
+			 </param>
+			<result name="success">/mmember/editMember.jsp</result>
+		</action>	
+		<action name="editMember" class="kr.or.kosta.moviesystem.member.MemberService" method="editMember">
+			<param name="aliases">
+			#{
+			   'userNum':'member.userNum',
+			   'userNum':'userNum'			  
+			   }
+			 </param>
+			<result name="success">/member/editMember.jsp</result>
+		</action>
+		
+		<action name="meditMember" class="kr.or.kosta.moviesystem.member.MemberService" method="editMember">
+			<param name="aliases">
+			#{
+			   'userNum':'member.userNum',
+			   'userNum':'userNum'			  
+			   }
+			 </param>
+			<result name="success">/mmember/editMember.jsp</result>
+		</action>		
+		
+		<action name="dropMemberForm" class="kr.or.kosta.moviesystem.member.MemberService" method="dropMemberForm">
+			<param name="aliases">
+			#{'userNum':'userNum'}
+			 </param>
+			<result name="success">/member/dropMember.jsp</result>
+		</action>
+
+		<action name="mdropMemberForm" class="kr.or.kosta.moviesystem.member.MemberService" method="dropMemberForm">
+			<param name="aliases">
+			#{'userNum':'userNum'}
+			 </param>
+			<result name="success">/mmember/dropMember.jsp</result>
+		</action>
+		
+		<action name="dropMember" class="kr.or.kosta.moviesystem.member.MemberService" method="dropMember">
+			<param name="aliases">
+			#{
+			 'userNum':'member.userNum',
+			   'userNum':'userNum'		  
+			   }
+			 </param>
+			<result name="success">/main.jsp</result>
+		</action>
+		
+		<action name="mdropMember" class="kr.or.kosta.moviesystem.member.MemberService" method="dropMember">
+			<param name="aliases">
+			#{
+			 'userNum':'member.userNum',
+			   'userNum':'userNum'		  
+			   }
+			 </param>
+			<result name="success">/mmain.jsp</result>
+		</action>
+		
+		<action name="addMember" class="kr.or.kosta.moviesystem.member.MemberService" method="addMember">
+			<param name="aliases">
+			#{
+			   'userNum':'userNum',
+			   'userNum':'member.userNum'
+			   }
+			 </param>
+			<result name="success">/member/login.jsp</result>
+		</action>
+		
+		<action name="maddMember" class="kr.or.kosta.moviesystem.member.MemberService" method="addMember">
+			<param name="aliases">
+			#{
+			   'userNum':'userNum',
+			   'userNum':'member.userNum'
+			   }
+			 </param>
+			<result name="success">/mmember/login.jsp</result>
+		</action>		
+		
+		<action name="viewMember" class="kr.or.kosta.moviesystem.member.MemberService" method="viewMember">
+			<param name="aliases">
+			#{'userNum':'userNum'}
+			 </param>
+			<result name="success">/member/viewMember.jsp</result>
+		</action>
+		
+		<action name="mviewMember" class="kr.or.kosta.moviesystem.member.MemberService" method="viewMember">
+			<param name="aliases">
+			#{'userNum':'userNum'}
+			 </param>
+			<result name="success">/mmember/viewMember.jsp</result>
+		</action>		
+		
+		<action name="loginForm" class="kr.or.kosta.moviesystem.member.MemberService" method="loginForm">
+			<param name="aliases">
+			#{'userid':'userid'}
+			 </param>
+			<result name="success">/member/login.jsp</result>
+		</action>
+		
+		<action name="mloginForm" class="kr.or.kosta.moviesystem.member.MemberService" method="loginForm">
+			<param name="aliases">
+			#{'userid':'userid'}
+			 </param>
+			<result name="success">/mmember/login.jsp</result>
+		</action>		
+		
+		<action name="login" class="kr.or.kosta.moviesystem.member.MemberService" method="login">
+			<result name="success" type="chain">main</result>
+			<result name="login">/member/login.jsp</result>
+		</action>
+		
+		<action name="mlogin" class="kr.or.kosta.moviesystem.member.MemberService" method="login">
+			<result name="success" type="chain">mmain</result>
+			
+			<result name="login">/mmember/login.jsp</result>
+		</action>		
+		
+		<action name="findIdForm" class="kr.or.kosta.moviesystem.member.MemberService" method="findIdForm">
+			<result name="success">/member/findId.jsp</result>
+		</action>
+		
+		<action name="findId" class="kr.or.kosta.moviesystem.member.MemberService" method="findId">
+			<param name="aliases">
+			#{'name':'name','email':'email'}
+			 </param>
+			<result name="success">/member/resultFindId.jsp</result>
+			<result name="findId">/member/findId.jsp</result>
+		</action>
+		
+		<action name="mfindId" class="kr.or.kosta.moviesystem.member.MemberService" method="findId">
+			<param name="aliases">
+			#{'name':'name','email':'email'}
+			 </param>
+			<result name="success">/mmember/resultFindId.jsp</result>
+			<result name="findId">/mmember/findId.jsp</result>
+		</action>		
+		
+		<action name="findPwForm" class="kr.or.kosta.moviesystem.member.MemberService" method="findPwForm">
+			<param name="aliases">
+			#{'userid':'userid'}
+			 </param>
+			<result name="success">/member/findPw.jsp</result>
+		</action>
+		
+		<action name="findPw" class="kr.or.kosta.moviesystem.member.MemberService" method="findPw">
+			<param name="aliases">
+			#{'name':'name','email':'email','userid':'userid'}
+			 </param>
+			<result name="success">/member/resultFindPw.jsp</result>
+			<result name="findPw">/member/findPw.jsp</result>
+		</action>
+		
+		<action name="mfindPwForm" class="kr.or.kosta.moviesystem.member.MemberService" method="findPwForm">
+			<param name="aliases">
+			#{'userid':'userid'}
+			 </param>
+			<result name="success">/mmember/findPw.jsp</result>
+		</action>
+		
+		<action name="mfindPw" class="kr.or.kosta.moviesystem.member.MemberService" method="findPw">
+			<param name="aliases">
+			#{'name':'name','email':'email','userid':'userid'}
+			 </param>
+			<result name="success">/mmember/resultFindPw.jsp</result>
+			<result name="findPw">/mmember/findPw.jsp</result>
+		</action>
+		
+		<action name="mypage" class="kr.or.kosta.moviesystem.member.MemberService" method="mypage">
+			<result name="success">/member/mypage.jsp</result>
+			<!--<result name="login">/member/login.jsp</result>-->
+		</action>
+		
+		<action name="mmypage" class="kr.or.kosta.moviesystem.member.MemberService" method="mypage">
+			<result name="success">/mmember/mypage.jsp</result>
+			<!--<result name="login">/member/login.jsp</result>-->
+		</action>
+		
+		
+		<action name="logoutMember" class="kr.or.kosta.moviesystem.member.MemberService" method="logoutMember">
+			<result name="success" type="chain">main</result>
+		</action>
+		
+		<action name="mlogoutMember" class="kr.or.kosta.moviesystem.member.MemberService" method="logoutMember">
+			<result name="success" type="chain">mmain</result>
+		</action>		
+		
+		<action name="searchMemberList" class="kr.or.kosta.moviesystem.member.MemberService" method="searchMemberList">
+			<param name="aliases">
+			#{'keyword':'keyword',
+				'column':'column'}
+			 </param>
+			<result name="success">/member/searchMemberList.jsp</result>
+			<result name="login">/member/login.jsp</result>
+		</action>
+		
+		<action name="msearchMemberList" class="kr.or.kosta.moviesystem.member.MemberService" method="searchMemberList">
+			<param name="aliases">
+			#{'keyword':'keyword',
+				'column':'column'}
+			 </param>
+			<result name="success">/mmember/searchMemberList.jsp</result>
+			<result name="login">/mmember/login.jsp</result>
+		</action>
+		
+		<action name="checkMemberID" class="kr.or.kosta.moviesystem.member.MemberService" method="checkMemberID">
+			<param name="aliases">
+			#{'userid':'userid'}
+			 </param>
+				<result type="stream">
+				<param name="contentType">
+					text/html;charset=UTF-8
+				</param>
+				<param name="inputName">
+					resultStream
+				</param>
+			</result>		
+		</action>
+		
+		<action name="main" class="kr.or.kosta.moviesystem.movie.MovieService" method="main">
+			<result name="success">main.jsp</result>
+		</action>
+		
+		<action name="mmain" class="kr.or.kosta.moviesystem.movie.MovieService" method="main">
+			<result name="success">mmain.jsp</result>
+		</action>
+		<action name="viewMovieList" class="kr.or.kosta.moviesystem.movie.MovieService" method="viewMovieList">
+			<result name="success">/movie/viewMovieList.jsp</result>
+		</action>
+		<action name="rankingMovieList" class="kr.or.kosta.moviesystem.movie.MovieService" method="rankingMovieList">
+			<result name="success">/movie/viewMovieRank.jsp</result>
+		</action>
+		<action name="viewMovie" class="kr.or.kosta.moviesystem.movie.MovieService" method="viewMovie">
+			<param name="aliases">
+				#{'mnum':'mnum','gubun':'gubun'}
+			</param>
+			<result name="success">/movie/viewMovie.jsp</result>
+		</action>
+		<action name="editMemberForm" class="kr.or.kosta.moviesystem.member.MemberService" method="editMemberForm">
+			<result name="success">/member/editMember.jsp</result>
+		</action>
+		<action name="adminMovieList" class="kr.or.kosta.moviesystem.movie.MovieService" method="adminMovieList">
+			<param name="aliases">
+				#{'gubun':'gubun','method':'method'}
+			</param>
+			<result name="success">/movie/adminMovieList.jsp</result>
+		</action>
+		<action name="adminRankingList" class="kr.or.kosta.moviesystem.movie.MovieService" method="adminRankingList">
+			<result name="success">/movie/adminMovieList.jsp</result>
+		</action>
+		<action name="adminMovie" class="kr.or.kosta.moviesystem.movie.MovieService" method="adminMovie">
+			<param name="aliases">
+				#{'gubun':'gubun','mnum':'mnum'}
+			</param>
+			<result name="success">/movie/adminMovie.jsp</result>
+		</action>
+		<action name="addMovieForm" class="kr.or.kosta.moviesystem.movie.MovieService" method="addMovieForm">
+			<result name="success">/movie/addMovie.jsp</result>
+		</action>
+		<action name="editMovieForm" class="kr.or.kosta.moviesystem.movie.MovieService" method="editMovieForm">
+			<param name="aliases">
+				#{'gubun':'gufun','mnum':'mnum'}
+			</param>
+			<result name="success">/movie/addMovie.jsp</result>
+		</action>
+		<action name="searchMovieList" class="kr.or.kosta.moviesystem.movie.MovieService" method="searchMovieList">
+			<param name="aliases">
+				#{'schCode':'schCode','schString':'schString'}
+			</param>
+			<result name="success">/movie/viewMovieList.jsp</result>
+		</action>
+		
+		<action name="adminMovieListSch" class="kr.or.kosta.moviesystem.movie.MovieService" method="adminMovieListSch">
+			<param name="aliases">
+				#{'gubun':'gubun','schCode':'schCode','schString':'schString'}
+			</param>
+			<result name="success">/movie/adminMovieList.jsp</result>
+		</action>
+		
+		<!-- mobile web -->
+
+		<action name="mSearchGoodList" class="kr.or.kosta.moviesystem.good.GoodService" method="searchGoodList">
+			<param name="aliases">
+				#{'keyword':'keyword'}
+			</param>
+			<result name="success">/mgood/viewGoodList.jsp</result>
+		</action>
+		
+		<action name="mAddGoodForm" class="kr.or.kosta.moviesystem.good.GoodService" method="addGoodForm">
+			<result name="success">/mgood/addGood.jsp</result>
+		</action>
+		
+		<action name="mAddGood" class="kr.or.kosta.moviesystem.good.GoodService" method="addGood">
+			<result type="stream">
+		  	 	<param name="inputName">resultStream</param>
+				<param name="contentType">text/html;charset=UTF-8</param>
+			</result>
+		</action>
+		
+		<action name="mEditGood" class="kr.or.kosta.moviesystem.good.GoodService" method="editGood">
+			<param name="aliases">
+				#{'gnum':'gnum', 
+				'gnum':'good.gnum'}
+			</param>
+			<result name="success" type="chain">mEditGoodForm</result>
+		</action>
+		
+		<action name="mEditGoodForm" class="kr.or.kosta.moviesystem.good.GoodService" method="editGoodForm">
+			<param name="aliases">
+				#{'gnum':'gnum'}
+			</param>
+			<result name="success">/mgood/editGoodForm.jsp</result>
+		</action>
+		
+		<action name="mViewManageGoodList" class="kr.or.kosta.moviesystem.good.GoodService" method="viewManageGoodList">
+			<result name="success">/mgood/viewManageGoodList.jsp</result>
+		</action>
+		
+		<action name="mCancelBuyListForm" class="kr.or.kosta.moviesystem.buy.BuyService" method="cancelBuyListForm">
+			<result name="success">/mbuy/cancelBuy.jsp</result>
+		</action>
+		
+		<action name="mCancelBuy" class="kr.or.kosta.moviesystem.buy.BuyService" method="cancelBuy">
+			<param name="aliases">
+				#{'chkbox':'chkbox'}
+			</param>
+			<result name="success" type="chain">mCancelBuyListForm</result>
+		</action>
+
+		<action name="mViewCanceledBuyList" class="kr.or.kosta.moviesystem.buy.BuyService" method="viewCanceledBuyList">
+			<result name="success">/mbuy/viewCanceledBuyList.jsp</result>
+		</action>
+		
+		<action name="mViewBuyList" class="kr.or.kosta.moviesystem.buy.BuyService" method="viewBuyList">
+			<result name="success">/mbuy/viewBuyList.jsp</result>
+		</action>
+		
+		<action name="mCompleteBuy" class="kr.or.kosta.moviesystem.buy.BuyService" method="completeBuy">
+			<result name="success">/mbuy/completebuy.jsp</result>
+		</action>
+		
+		<action name="mAddBuy" class="kr.or.kosta.moviesystem.buy.BuyService" method="addBuy">
+			<!--<result name="login">/member/login.jsp</result>-->
+			<result name="success" type="chain">mCompleteBuy</result>
+		</action>
+		
+		<action name="mRemoveCartList" class="kr.or.kosta.moviesystem.good.GoodService" method="removeCartList">
+			<param name="aliases">
+				#{'index':'index'}
+			</param>
+			<result name="success" type="chain">mViewCartList</result>
+		</action>
+		
+		<action name="mEditCartList" class="kr.or.kosta.moviesystem.good.GoodService" method="editCartList">
+			<param name="aliases">
+				#{'index':'index'}
+			</param>
+			<result name="success" type="chain">mViewCartList</result>
+		</action>
+		
+		<action name="mViewGoodList" class="kr.or.kosta.moviesystem.good.GoodService" method="viewGoodList">
+			<result name="success">/mgood/viewGoodList.jsp</result>
+		</action>
+		
+		<action name="mViewGood" class="kr.or.kosta.moviesystem.good.GoodService" method="viewGood">
+			<param name="aliases">
+				#{'gnum':'gnum'}
+			</param>
+			<result name="success">/mgood/viewGood.jsp</result>
+		</action>
+		
+		<action name="mAddCartList" class="kr.or.kosta.moviesystem.good.GoodService" method="addCartList">
+			<param name="aliases">
+				#{'gnum':'gnum',
+				'qty':'qty'}
+			</param>
+			<result name="success" type="chain">mViewCartList</result>
+		</action>
+		
+		<action name="mViewCartList" class="kr.or.kosta.moviesystem.good.GoodService" method="viewCartList">
+			<result name="success">/mgood/viewCartList.jsp</result>
+		</action>
+		
+		<action name="mDeleteGood" class="kr.or.kosta.moviesystem.good.GoodService" method="deleteGood">
+			<param name="aliases">
+				#{'gnum':'gnum'}
+			</param>
+			<result name="success" type="chain">mViewManageGoodList</result>
+		</action>
+
+		
+	</package>
+</struts>
