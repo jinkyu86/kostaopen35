@@ -1,113 +1,60 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!DOCTYPE html>
 <html>
-<html lang="en">
 <head>
-<title>viewGoodList</title>
-<link rel="stylesheet" href="styles.css" type="text/css" media="screen" />
-<link rel="stylesheet" type="text/css" href="print.css" media="print" />
-<!--[if IE]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
-<script type="text/javascript">
- <c:if test="${SUCCESS!=null}">
- alert("${SUCCESS}");
-</c:if>
+<title>jQuery Mobile</title>
+<meta charset="euc-kr" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, 
+							maximum-scale=1.0, minimum-scale=1.0, 
+							user-scalable=no" />
+
+<link rel="shortcut icon" href="../image/icon.png">
+<link rel="apple-touch-icon" href="../image/icon.png">
+
+
+<link href="http://code.jquery.com/mobile/latest/jquery.mobile.min.css"
+	rel="stylesheet" type="text/css" />
+<script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
+<script src="http://code.jquery.com/mobile/latest/jquery.mobile.min.js"></script>
+
+<!--
+		<link href="../framework/jquery.mobile-1.0.css" 
+			rel="stylesheet" type="text/css" />
+		<script src="../framework/jquery-1.6.4.js"></script>
+		<script src="../framework/jquery.mobile-1.0.js"></script>
+		-->
 </script>
 </head>
 <body>
+	<div data-role="page">
+		<div data-role="header">
+			<h1>물품 리스트</h1>
+		</div>
 
-	<ul>
-		<header>
-			<h1>경매사이트</h1>
 
-			<ui>
-			<li><c:choose>
-					<c:when test="${sessionScope.MEMBER==null}">
-						<p align="right">
-							<a href="/auction/loginForm.action"> <font color=black>로그인</font>
-							</a>
-							<br/>
-							 <a href="/auction/addMemberForm.action"> <font color=black>회원가입</font>
-							</a>
-						</p>
-					</c:when>
-					<c:otherwise>
-						<p align="right">
-							${sessionScope.MEMBER.name }님 안녕
-							<br/> 
-							<a href="/auction/logout.action"> 
-							<font color=black>로그 아웃</font>
-							</a>
-							<br/>
-							<a href="/auction/viewMember.action"> 
-							<font color=black>회원 정보</font>
-							</a>
-						</p>
-					</c:otherwise>
-				</c:choose></li>
-			</ui>
-		</header>
-	</ul>
-	<nav>
-		<!-- top nav -->
-		<div class="menu">
-			<ul>
-				<li><a href="/auction/home.jsp">홈</a></li>
-				<li><a href="/auction/viewAuctionList.action"> <font
-						color=white>경매 보기</font>
-				</a>
-				
-					
-						<c:if test="${sessionScope.MEMBER.userid=='admin'}">
-							<li><a href="/auction/viewGoodList.action"> <font color=white>물품
-									관리 목록 보기</font>
-							</a></li>
-							<li><a href="/auction/viewMemberList.action"> <font color=white>회원
-									목록 보기</font>
-							</a></li>
-						</c:if>
-						<li><a href="/auction/viewBoardList.action"> <font color=white>게시물
-								목록 보기</font>
-						</a></li>
-					
-				
+		<div data-role="content">
+			<ul data-role="listview" >
+				<c:forEach var="good" items="${GOOD_LIST }">
+					<li>
+					<a href="/auction/mviewGood.action?gnum=${good.gNum}"><img src="/auction/gphoto/${good.img }"" height="100" width="100"/><h3>${good.gName}</h3></a>
+					</li>
+				</c:forEach>
 			</ul>
 		</div>
-	</nav>
-	<!-- end of top nav -->
 
-	<section id="content">
-		<p align="center">
-		<table border="1" align="center">
-	<tr>
-		<th colspan="2"><h3>물품 목록</h3></th>
-		<tr>
-			<th>번호</th>
-			<th>이름</th>
-		</tr>
-	<c:forEach var="GOOD" items="${GOOD_LIST}">
-<tr>
-	<td>${GOOD.gNum}</td>
-	<td>
-		<a href="/auction/viewGood.action?gNum=${GOOD.gNum}">
-		${GOOD.gName}
-		</a>
-	</td>
-</tr>
-</c:forEach>
-</table>
-<p align="center">
-	${PAGE_LINK_TAG}
-</p>
-<p align="center">
-	<a href="/auction/addGoodForm.action">
-		<img src="/auction/menu/addGood.jpg"/>
-	</a>
-   <a href="/auction/viewAuctionList.action">
-   		<img src="/auction/menu/viewAuctionList.jpg"/>
-   	</a> 
-</p>
-		</p>
-	</section>			
+		<div data-role="footer" data-position="fixed">
+			<div data-role="navbar" data-iconpos="left">
+				<ul>
+					<li><a href="/auction/maddGoodList.action"
+						data-icon="plus">물품추가</a></li>
+					<li><a href="/auction/home.jsp"
+						data-icon="home">홈 화면</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
 </body>
 </html>
