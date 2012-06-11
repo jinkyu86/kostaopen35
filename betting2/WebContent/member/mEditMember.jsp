@@ -121,6 +121,7 @@ contentType="text/html; charset=UTF-8"
 			<div data-role="navbar" data-iconpos="top">
 				<ul>
 					<li><a href="/betting/mViewHome.action" data-icon="home">Home</a></li>
+					<li><a href="/betting/mRemoveMember.action?ID=${MEMBER.id }" data-icon="delete">일정 삭제</a></li>
 				</ul>
 			</div>
 		</div>
