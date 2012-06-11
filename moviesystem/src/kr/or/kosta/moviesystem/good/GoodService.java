@@ -344,6 +344,10 @@ public class GoodService implements ModelDriven, ServletContextAware, ServletReq
 		
 		GOOD_LIST=goodDAO.selectGoodList(length,page);
 		int goodCount=goodDAO.selectGoodListCount();
+		maxPage=(goodCount/length);
+		if(goodCount%length!=0){
+			maxPage++;
+		}
 		
 		PAGE_LINK_TAG=PageUtil.generate(page, goodCount, length, 
 				"/moviesystem/viewManageGoodList.action");
