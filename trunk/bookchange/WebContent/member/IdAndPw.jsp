@@ -58,8 +58,7 @@
 	 <td width="550" height="600" valign="top" bgcolor="#FFFFFF">
 	 	<fieldset>
 	 	<li><div class="txt01"><h4 align="center">Email & Password 찾기</h4></div></li>
-	 	<form id="phone" action="/bookchange/MemberService" method="post">
-		<input type="hidden" name="method" value="viewMemberEmail">
+	 	<form id="phone" action="/bookchange/MemberService/viewMemberEmail.action">
 		<ul><li><div> 가입시 입력했던 전화번호를 입력하세요.('-'생략하고 숫자만 입력)</div></ul>
 	 	<ul><li><div><input type="text" name="tel"/><input type="submit" value="Email찾기"/></div></li></ul>
 		</form>

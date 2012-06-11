@@ -27,8 +27,7 @@
 		<ul><li><div> 핸드폰번호</div>${LOGIN_EMAIL.tel}</li></ul>
 	  </form>
 	 <li><div class="txt01"><h4 align="center">정보를 확인 하시고 탈퇴를 원하시면 비밀번호를 입력해주세요.</h4></div></li>
-	 <form action="/bookchange/MemberService" method="post">
-	  <input type="hidden" name="method" value="removeMember">
+	 <form action="/bookchange/MemberService/removeMember.action">
 	  <input type="hidden" name="email" value="${sessionScope.LOGIN_EMAIL.email}">
 	 	<ul><li><div> 비밀번호</div><input type="password"name="pw"/></li></ul>
 	 	<ul><input type="submit" value="탈퇴"/></ul>

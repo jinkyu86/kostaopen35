@@ -180,7 +180,7 @@ a{text-decoration:none;}
 	    </c:when>
 		<%-- <c:otherwise>
 		  <tr>
-	      <td><a href="">
+	      <td><a href="/bookchange/BlockService?method=addBlock.action">
 	      <img align="right" src="webimg/block.GIF" title="신고하기" border="0" width="230"/></a></td>
 	      </tr>
 		</c:otherwise> --%>
