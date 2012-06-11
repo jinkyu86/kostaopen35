@@ -43,8 +43,7 @@
 					</c:otherwise>	
 					</c:choose>						
 				</div>				
-			</div><!-- end header 1-->
-			</div><!-- end header 1-->
+			</div><!-- end header 1-->		
 			
 			<div data-role="header">
 				<div data-role="navbar">
@@ -57,7 +56,7 @@
 			</div><!-- end header2 -->
 
 			<div data-role="content">
-				<ul data-role="listview">
+				<ul data-role="listview" data-filter="true">
 				<!-- JSTL의 forEach태그를 이용해서 for문을 실행
 				전체 항생리스트:${STUDENT_LIST}
 				학생들의 학번(studno) 이름(name)-->
@@ -71,7 +70,7 @@
 				</c:forEach>
 				</ul>
 			</div>
-			<div data-role="footer" data-position="fixed">
+			<!--  <div data-role="footer" data-position="fixed">
 				<div data-role="navbar" >
 					<ul>
 						<c:if test="${page!=1}">
@@ -82,7 +81,7 @@
 						</c:if>
 					</ul>
 				</div>
-			</div>
+			</div>-->	
 			
 		</div>
 	</body>
