@@ -48,7 +48,7 @@
 		<div data-role="footer" data-position="fixed">
 			<div data-role="navbar" data-iconpos="left">
 				<ul>
-					<li><a href="/auction/maddGoodList.action"
+					<li><a href="/auction/maddGoodForm.action"
 						data-icon="plus">물품추가</a></li>
 					<li><a href="/auction/home.jsp"
 						data-icon="home">홈 화면</a></li>

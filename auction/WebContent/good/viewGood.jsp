@@ -55,7 +55,7 @@
 				<li><a
 					href="/auction/meditGoodForm.action?gnum=${GOOD.gNum}"
 					data-icon="gear">물품수정</a></li>
-				<li><a href="/auction/removeGood.action?gnum=${GOOD.gNum }"
+				<li><a href="/auction/mremoveGood.action?gnum=${GOOD.gNum }"
 					data-icon="delete">물품삭제</a></li>
 				<li><a href="/auction/mviewGoodList.action"
 					data-icon="home">물품리스트</a></li>
