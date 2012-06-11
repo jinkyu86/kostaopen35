@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE struts PUBLIC
 	"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
-	"http://struts.apache.org/dtds/struts-2.0.dtd">
-		
-		
+	"http://struts.apache.org/dtds/struts-2.0.dtd">		
 <struts>
 	<constant name="struts.i18n.encoding" value="utf-8"/>
 	<constant name="struts.action.extension" value="action"/>
@@ -93,20 +91,7 @@
 			<result name="fail" type="chain">viewBoard</result>
 			<result name="success">/board/viewBoardListWhenAdd.jsp</result>
 		</action>
-		<action name="viewBoardWhenCancel" class="kr.or.kosta.bookchange.board.BoardService" method="viewBoardWhenCancel">
-			<param name="aliases">
-				#{'boardNo':'boardNo','board.boardNo',
-				  'agreeBoardNo':'AGREE_BOARD_NO'}
-			</param>
-			<result name="success">/board/viewBoardWhenCancel.jsp</result>
-		</action>
-		<action name="viewBoardWhenAgree" class="kr.or.kosta.bookchange.board.BoardService" method="viewBoardWhenAgree">
-			<param name="aliases">
-				#{'boardNo':'boardNo','board.boardNo',
-				  'agreeBoardNo':'AGREE_BOARD_NO'}
-			</param>
-			<result name="success">/board/viewBoardWhenAgree.jsp</result>
-		</action>
+		
 		<action name="searchBoardList" class="kr.or.kosta.bookchange.board.BoardService" method="searchBoardList">
 			<param name="aliases">
 				#{'categoryNo':'CATEGORY'}		  
@@ -185,7 +170,7 @@
 		<action name="cancelChange" class="kr.or.kosta.bookchange.change.ChangeService" 
 			method="cancelChange">
 			<param name="aliases">
-			#{'demandBoardNo':'change.demandBoard.boardNo', 'agreeBoardNo':'change.agreeBoard.boardNo'}
+			#{'demandBoardNo':'demandBoardNo'}
 			</param>
 			<result name="success" type="chain">requestChangeList</result>
 		</action>
