@@ -34,14 +34,14 @@ public class BlockService implements IService,ModelDriven,ServletContextAware,Se
 	private BlockCondition blockCondition;
 	private String email;
 	private String ERROR;
-	private String Page_Link_Tag;
+	private String PAGE_LINK_TAG;
 	private Member LOGIN_EMAIL;
 	private Member blockmember;
 	private Member member;
 
 	private int resultNo;
 	private int blockNo;
-	
+	private List<Block> MyBlockList;
 	private List<Block> BlockList;
 	
 	private ServletContext context;
@@ -52,6 +52,26 @@ public class BlockService implements IService,ModelDriven,ServletContextAware,Se
 	private Block BLOCK=new Block();
 	private BlockCondition BLOCKCONDITION= new BlockCondition();
 	
+	
+	public List<Block> getMyBlockList() {
+		return MyBlockList;
+	}
+	public void setMyBlockList(List<Block> myBlockList) {
+		MyBlockList = myBlockList;
+	}
+	public String getPAGE_LINK_TAG() {
+		return PAGE_LINK_TAG;
+	}
+	public void setPAGE_LINK_TAG(String pAGE_LINK_TAG) {
+		PAGE_LINK_TAG = pAGE_LINK_TAG;
+	}
+
+	public int getBlockNo() {
+		return blockNo;
+	}
+	public void setBlockNo(int blockNo) {
+		this.blockNo = blockNo;
+	}
 	public Member getMember() {
 		return member;
 	}
@@ -103,12 +123,7 @@ public class BlockService implements IService,ModelDriven,ServletContextAware,Se
 		this.blockCondition = blockCondition;
 	}
 
-	public String getPage_Link_Tag() {
-		return Page_Link_Tag;
-	}
-	public void setPage_Link_Tag(String page_Link_Tag) {
-		Page_Link_Tag = page_Link_Tag;
-	}
+
 	public String getEmail() {
 		return email;
 	}
@@ -261,12 +276,32 @@ public class BlockService implements IService,ModelDriven,ServletContextAware,Se
 			return ERROR;
 		}
 		String memberEmail=member.getEmail();
-		List<Block>BlockList=blockDAO.selectMyBlockList(length, page, memberEmail);
+		MyBlockList=blockDAO.selectMyBlockList(length, page, memberEmail);
 		
 	
 		int blockCount=blockDAO.selectBlockCount();
 		
-		 Page_Link_Tag = PageUtil.generate(page, blockCount, length, "/bookchange/BlockService?method=selectMyBlockList"+BlockList);
+		PAGE_LINK_TAG = PageUtil.generate(page, blockCount, length, "/bookchange/BlockService?method=selectMyBlockList"+BlockList);
+		
+		return "success";
+	}
+	/**
+	 * 내가 신고한 불량회원 리스트 보기
+	 * @return
+	 * @throws Exception
+	 */
+	public String selectBlockList() throws Exception {
+	
+	
+		int page=1;
+		int length=10;
+		
+		BlockList=blockDAO.selectBlockList(page, length);
+		
+	
+		int blockCount=blockDAO.selectBlockCount();
+		
+		PAGE_LINK_TAG = PageUtil.generate(page, blockCount, length, "/bookchange/BlockService?method=selectBlockList"+BlockList);
 		
 		return "success";
 	}
@@ -384,8 +419,8 @@ public class BlockService implements IService,ModelDriven,ServletContextAware,Se
 				BlockCount=
 						blockDAO.selectBlockbyResultCount(resultNo);				
 		}
-		 Page_Link_Tag = PageUtil.generate(page, BlockCount, length, "/BlockService?" +
-				"method=searchBlockList&keyword="+BlockList);
+		 PAGE_LINK_TAG = PageUtil.generate(page, BlockCount, length, "/BlockService?" +
+				"method=searchBlockList&keyword=viewBlockList"+BlockList);
 			
 	
 		 return "success";
