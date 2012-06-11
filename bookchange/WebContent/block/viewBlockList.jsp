@@ -21,27 +21,25 @@ a{text-decoration:none;}
 	 <td width="550" height="600" valign="top">
 	 
 	 <h5 align="center">신고내역보기</h5>
-	  <input type="hidden" name="email" value="${sessionScope.LOGIN_EMAIL.email}">
+	 
 	  <table bordercolor="#E6E6FA" border="1" align="center">
 	   <tr align="center">
 	   	<th>Email</th>
 	    <th>신고대상</th>
 	    <th>현재상태</th>
 	   </tr>
-	   <c:if test="${LOGIN_EMAIL.email}">
-	  <c:forEach var="block" items="${MyBlockList}">
+	  <c:forEach var="block" items="${BlockList}">
        <tr>
         <td align="center">${block.member.email}</td>
         <td align="center">${block.blockmember.email}</a></td>
 		<td align="center">${block.blockCondition.blockConditionIng}</td>
        </tr>
       </c:forEach>
-      </c:if>
       </table>
      
 	  <p align="center">
-		${MYPAGE_LINK_TAG} <br/><br/>
-		<a href="/bookchange/BlockService?method=addBlockForm.action" target="main"><b>신고하기</b><img src="webimg/black.gif" width="30" height="30" border="0"></a>
+		${PAGE_LINK_TAG} <br/><br/>
+		<a href="/bookchange/BlockService?method=addBlockForm" target="main"><b>신고하기</b><img src="webimg/black.gif" width="30" height="30" border="0"></a>
 	  </p>  
 	  </td>	  
 	  </table>
