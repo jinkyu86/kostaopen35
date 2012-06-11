@@ -40,7 +40,7 @@
 				<div data-role="controlgroup" data-type="horizontal" >
 					<c:choose>
 					<c:when test="${LOGIN_MEMBER==null}">			
-							<a href="/moviesystem/mmember/mloginForm.action" data-role="button" >Login</a>
+							<a href="/moviesystem/mmember/mloginForm.action" data-role="button">Login</a>
 							<a href="/moviesystem/mmember/maddMemberForm.action" data-role="button">Join</a>
 					</c:when>
 					<c:otherwise>
