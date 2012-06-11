@@ -14,6 +14,15 @@
 </script>
 </head>
 <body>
-
+ <form action="/bookchange/removeBlock.action" method="post" target="main">
+ 	  <table bordercolor="#E6E6FA" border="1" align="center">
+  <c:if test="${LOGIN_EMAIL.email}">
+         <tr>
+         <ul><li><div> 삭제할 번호 입력</div><<textarea cols="40" rows="15" name="blockcontent">${block.blockNo}</textarea></li></ul>
+         <ul><div><input type="submit" value="삭제"/></div></ul>	
+        </tr>
+  </c:if>
+  </table>
+ </form>
 </body>
 </html>

@@ -21,8 +21,7 @@
 	 <div class="txt01"><h4 align="center">MY INFORMATION</h4></div>
 	 </fieldset>
 	 <fieldset style="width:100; height:30">
-	  <form action="/bookchange/MemberService" method="post">
-	  <input type="hidden" name="method" value="viewMember">
+	  <form action="/bookchange/MemberService/viewMember.action">
 	  <input type="hidden" name="email" value="${sessionScope.LOGIN_EMAIL.email}">
 	 	<ul><li><div> 이메일</div>${MEMBER.email}</li></ul>
 		<ul><li><div> 주소</div></li>${MEMBER.address}</ul>

@@ -10,8 +10,7 @@
 <body>
 <h1 align="center">전체 맴버 리스트</h1>
 	<table border="2" align="left">		 
-	<form action="/bookchange/MemberService" method="post">
-	  <input type="hidden" name="method" value="searchMemberList">
+	<form action="/bookchange/MemberService/searchMemberList.action">
      <select name="email">
      	<option value="email">이메일</option>
      </select>

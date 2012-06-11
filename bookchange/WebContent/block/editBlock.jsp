@@ -20,8 +20,7 @@
 	 <td width="550" height="600" valign="top" bgcolor="#FFFFFF">
 	 	<fieldset>
 	 	<div class="txt01"><h4 align="center">신고하기</h4></div>
-	 	 <form action="/bookchange/editBlock" method="post" target="main">
-	
+	 	 <form action="/bookchange/editBlock.action" method="post" target="main">
 		  <input type="hidden" name="registeremail" value="${sessionScope.LOGIN_EMAIL.email}">
 		  <ul><li><div> Email</div>  ${LOGIN_EMAIL.email}</li></ul>
 		  <ul><li><div> 연락처</div>  ${LOGIN_EMAIL.tel}</li></ul>

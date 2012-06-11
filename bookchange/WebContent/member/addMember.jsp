@@ -73,8 +73,7 @@
 	 <td width="550" height="600" valign="top" bgcolor="#FFFFFF">
 	 <fieldset>
 	 <li><div class="txt01"><h4 align="center">회원가입</h4></div></li>
-	  <form id="add_member" action="/bookchange/MemberService"method="post">
-		<input type="hidden" name="method" value="addMember">
+	  <form id="add_member" action="/bookchange/MemberService/addMember.action">
 	 	<ul><li><div> 이메일</div><input id="email" type="text" name="email"/>
 	 	<br><span id="emailcheck"></span></li></ul>
 		<ul><li><div> 비밀번호(영어,숫자를 4자리 이상 입력)</div><input id="pw" type="password" name="pw"/></li></ul>
@@ -82,8 +81,7 @@
 		<ul><li><div> 핸드폰번호('-'생략하고 번호만 입력)</div><input type="text" name="tel"/></li></ul>
 		<ul><div><input type="submit" value="가입"/></div></ul>				
 	 </form>
-	 <form action="/bookchange/BoardService"method="post">
-		<input type="hidden" name="method" value="boardListAtMain">
+	 <form action="/bookchange/BoardService/boardListAtMain.action">
 	 	<ul><div><input type="submit" value="취소"/></div></ul>				
 	 </form>
 	 </fieldset>
