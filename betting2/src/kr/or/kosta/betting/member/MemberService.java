@@ -28,6 +28,7 @@ import kr.or.kosta.betting.util.PageUtil;
  */
 public class MemberService implements ModelDriven,IService
 	,SessionAware{
+	private int maxPage;
 	private IMember memberDAO;
 	private Map session;
 	private Member member = new Member();
@@ -49,6 +50,15 @@ public class MemberService implements ModelDriven,IService
 	public MemberService(IMember memberDAO) {
 		super();
 		this.memberDAO = memberDAO;
+	}
+	
+	
+	public int getMaxPage() {
+		return maxPage;
+	}
+
+	public void setMaxPage(int maxPage) {
+		this.maxPage = maxPage;
 	}
 
 	public InputStream getResultStream() {
@@ -237,42 +247,6 @@ public class MemberService implements ModelDriven,IService
 //		
 	}
 
-	public String viewMember() throws Exception{
-		Member member = (Member)session.get("LOGIN_MEMBER");
-		if(member!=null){
-			String ID = member.getId();
-			MEMBER = memberDAO.selectMemberByID(ID);
-			MINERAL = memberDAO.selectMineralByID(ID);
-			RANK = memberDAO.selectMemberRanking(ID);
-		}
-		MEMBER =memberDAO.selectMemberByID(id);
-		return "success";
-		
-//		HttpSession session = request.getSession();
-//		Member member1 = (Member) session.getAttribute("LOGIN_MEMBER");
-//		if (member1 != null) {
-//			String ID = member1.getId();
-//		
-//			long mineral=MemberDAO.selectMineralByID(ID);
-//			request.setAttribute("MINERAL", mineral);
-//		
-//			long rank =MemberDAO.selectMemberRanking(ID);
-//			request.setAttribute("RANK", rank);
-//		}
-//			
-//		String id=request.getParameter("ID");
-//		Member member=MemberDAO.selectMemberByID(id);
-//		
-//		request.setAttribute("MEMBER", member);
-//
-//		RequestDispatcher rd = request
-//				.getRequestDispatcher("/member/editMember.jsp");
-//		rd.forward(request, response);
-		
-		
-		
-	}
-
 	public String addMember() throws Exception {
 
 		/**
@@ -371,15 +345,8 @@ public class MemberService implements ModelDriven,IService
 		 * @param response
 		 */
 		memberDAO.updateMember(member);
-		Member member = (Member)session.get("LOGIN_MEMBER");
-		String ID = member.getId();
-		if(ID.equals("kosta100")){
-			SUCCESS = member.getId()+"님의 정보를 수정하였습니다.";
-			return "success1";
-		}else{
-			SUCCESS = member.getId()+"님의 정보를 수정하였습니다.";
-			return "success";
-		}
+		SUCCESS = member.getId()+"님의 정보를 수정하였습니다.";
+		return "success";
 //		String id = request.getParameter("id");
 //		String name = request.getParameter("name");
 //		String pw = request.getParameter("pw");
@@ -409,8 +376,13 @@ public class MemberService implements ModelDriven,IService
 		 * @param request
 		 * @param response
 		 */
-		Member member = (Member)session.get("LOGIN_MEMBER");
-		String ID = member.getId();
+		String ID = null;
+		if(id!=null){
+			ID=id;
+		}else{
+			Member member = (Member)session.get("LOGIN_MEMBER");
+			ID=member.getId();
+		}
 		MEMBER = memberDAO.selectMemberByID(ID);
 		MINERAL = memberDAO.selectMineralByID(ID);
 		RANK = memberDAO.selectMemberRanking(ID);
@@ -633,6 +605,10 @@ public class MemberService implements ModelDriven,IService
 		int MemberCount = memberDAO.selectMemberCount();
 		PAGE_LINK_TAG = PageUtil.generate(page, MemberCount, length,
 				"/betting/viewMemberRankingListForm.action");
+		maxPage=(MemberCount/length);
+		if(MemberCount%length!=0){
+			maxPage++;
+		}
 		return "success";
 //		HttpSession session = request.getSession();
 //		Member member1 = (Member) session.getAttribute("LOGIN_MEMBER");
