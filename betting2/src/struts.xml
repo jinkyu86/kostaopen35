@@ -82,33 +82,58 @@
 			</result>
 		</action>
 		
+		<action name="mAddMemberForm"
+			class="kr.or.kosta.betting.member.MemberService"
+		  	method="addMemberForm">
+		  	<result name="success">
+				member/mAddMember.jsp
+			</result>
+		</action>
+		
 		<action name="addMember"
 			class="kr.or.kosta.betting.member.MemberService"
 		  	method="addMember">
-		  	<result name="success">
-				index.jsp
+		  	<result name="success" type="chain">
+				viewHome
+			</result>
+		</action>
+		
+		<action name="mAddMember"
+			class="kr.or.kosta.betting.member.MemberService"
+		  	method="addMember">
+		  	<result name="success" type="chain">
+				mViewHome
 			</result>
 		</action>
 		
 		<action name="editMemberForm"
 			class="kr.or.kosta.betting.member.MemberService"
 		  	method="editMemberForm">
+		  	<param name="aliases">
+		  		#{'ID':'id'}
+			</param>
 		  	<result name="success">
 				member/editMember.jsp
+			</result>
+		</action>
+		
+		<action name="mEditMemberForm"
+			class="kr.or.kosta.betting.member.MemberService"
+		  	method="editMemberForm">
+		  	<param name="aliases">
+		  		#{'ID':'id'}
+			</param>
+		  	<result name="success">
+				member/mEditMember.jsp
 			</result>
 		</action>
 		
 		<action name="editMember"
 			class="kr.or.kosta.betting.member.MemberService"
 		  	method="editMember">
-		  		
 		  	<result name="success" type="chain">
 				editMemberForm
 			</result>
-			<result name="success1" type="chain">
-				viewMember
-			</result>
-			
 		</action>
 		
 		<action name="logout"
@@ -138,6 +163,17 @@
 			</result>
 		</action>
 		
+		<action name="mRemoveMember"
+			class="kr.or.kosta.betting.member.MemberService"
+		  	method="removeMember">
+		  	<param name="aliases">
+		  		#{'ID':'id'}
+			</param>
+		  	<result name="success">
+				mindex.jsp
+			</result>
+		</action>
+		
 		<action name="viewHome"
 			class="kr.or.kosta.betting.member.MemberService"
 		  	method="viewHome">
@@ -154,17 +190,6 @@
 			</result>
 		</action>
 		
-		<action name="viewMember"
-			class="kr.or.kosta.betting.member.MemberService"
-		  	method="viewMember">
-		  	<param name="aliases">
-		  		#{'ID':'id'}
-			</param>
-		  	<result name="success">
-				member/viewMember.jsp
-			</result>
-		</action>
-			
 		<action name="viewMemberRankingListForm"
 			class="kr.or.kosta.betting.member.MemberService"
 		  	method="viewMemberRankingListForm">
@@ -173,11 +198,28 @@
 			</result>
 		</action>
 		
+		<action name="mViewMemberRankingListForm"
+			class="kr.or.kosta.betting.member.MemberService"
+		  	method="viewMemberRankingListForm">
+		  	<result name="success">
+				member/mViewMemberRank.jsp
+			</result>
+		</action>
+		
+		
 		<action name="viewMemberList"
 			class="kr.or.kosta.betting.member.MemberService"
 		  	method="viewMemberList">
 		  	<result name="success">
 				member/viewMemberList.jsp
+			</result>
+		</action>
+		
+		<action name="mViewMemberList"
+			class="kr.or.kosta.betting.member.MemberService"
+		  	method="viewMemberList">
+		  	<result name="success">
+				member/mViewMemberList.jsp
 			</result>
 		</action>
 		
@@ -195,11 +237,33 @@
 			</result>
 		</action>
 		
+		<action name="mAddMatch" 
+		  class="kr.or.kosta.betting.match.MatchService"
+		  method="addMatch">
+		  	<param name="aliases">
+		  		#{'hometeamno':'match.homeTeam.num',
+					'awayteamno':'match.awayTeam.num',
+					'locno':'match.loc.num',
+					'matchtime':'match.matchTime'}
+			</param>
+			<result name="success" type="chain">
+				mViewMatchList
+			</result>
+		</action>
+		
 		<action name="addMatchForm" 
 		  class="kr.or.kosta.betting.match.MatchService"
 		  method="addMatchForm">
 			<result name="success">
 				/match/addMatch.jsp
+			</result>
+		</action>
+		
+		<action name="mAddMatchForm" 
+		  class="kr.or.kosta.betting.match.MatchService"
+		  method="addMatchForm">
+			<result name="success">
+				/match/mAddMatch.jsp
 			</result>
 		</action>
 		
@@ -212,6 +276,17 @@
 			</param>	
 			<result name="success">
 				/match/editMatch.jsp
+			</result>
+		</action>
+		
+		<action name="mEditMatchForm" 
+		  class="kr.or.kosta.betting.match.MatchService"
+		  method="editMatchForm">
+		  	<param name="aliases">
+		  		#{'matchno':'matchno'}
+			</param>	
+			<result name="success">
+				/match/mEditMatch.jsp
 			</result>
 		</action>
 		
@@ -234,6 +309,25 @@
 			</result>
 		</action>
 		
+		<action name="mEditMatch" 
+		  class="kr.or.kosta.betting.match.MatchService"
+		  method="editMatch">
+		  	<param name="aliases">
+		  		#{
+				'matchno':'matchno',
+				   'matchno':'match.num',
+					'hometeamno':'match.homeTeam.num',
+					'awayteamno':'match.awayTeam.num',
+					'winteamno':'match.winTeam.num',
+					'locno':'match.loc.num',
+					'matchtime':'match.matchTime',
+					'checkbox':'checkbox'}
+			</param>
+			<result name="success" type="chain">
+				mEditMatchForm
+			</result>
+		</action>
+		
 		<action name="removeMatch" 
 		  class="kr.or.kosta.betting.match.MatchService"
 		  method="removeMatch">
@@ -245,12 +339,30 @@
 			</result>
 		</action>
 		
+		<action name="mRemoveMatch" 
+		  class="kr.or.kosta.betting.match.MatchService"
+		  method="removeMatch">
+		  	<param name="aliases">
+		  		#{'matchno':'matchno'}
+			</param>	
+			<result name="success" type="chain">
+				mViewMatchList
+			</result>
+		</action>
+		
 		<action name="viewMatchList" 
 		  class="kr.or.kosta.betting.match.MatchService"
 		  method="viewMatchList">
-		
 			<result name="success">
 				/match/viewMatchList.jsp
+			</result>
+		</action>
+		
+		<action name="mViewMatchList" 
+		  class="kr.or.kosta.betting.match.MatchService"
+		  method="viewMatchList">
+			<result name="success">
+				/match/mViewMatchList.jsp
 			</result>
 		</action>
 		
