@@ -33,5 +33,6 @@ public class BlockCondition {
 		return "BlockCondition [blockConditionResult=" + blockConditionResult
 				+ ", blockConditionIng=" + blockConditionIng + "]";
 	}
+	
 
 }
