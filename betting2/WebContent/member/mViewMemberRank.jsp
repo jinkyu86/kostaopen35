@@ -7,6 +7,11 @@ contentType="text/html; charset=UTF-8"
 <!DOCTYPE html> 
 <html> 
 	<head>
+		<script type="text/javascript">
+		 	<c:if test="${SUCCESS!=null}">
+ 			alert("${SUCCESS}");
+			</c:if>
+		</script>
 		<title>Betting</title>
 		<meta charset="euc-kr" /> 	
 		<meta name="viewport" 
@@ -29,12 +34,13 @@ contentType="text/html; charset=UTF-8"
 		<script src="../framework/jquery-1.6.4.js"></script>
 		<script src="../framework/jquery.mobile-1.0.js"></script>
 		-->
+
 		
 	</head>
 <body>
 	<div data-role="page">
 		<div data-role="header">
-			<h2>Login</h2>
+			<h2>Betting</h2>
 			<a href="" data-icon="arrow-l" data-rel="back">이전</a>
 			<c:choose>
 				<c:when test="${sessionScope.LOGIN_MEMBER==null}">
@@ -47,23 +53,24 @@ contentType="text/html; charset=UTF-8"
 			</c:choose>
 		</div>
 		<div data-role="content">
-		<form action="/betting/mLogin.action" method="post">
-			<table style="margin:auto">
-			<tr>
-				<td>아이디</td>
-				<td><input type="text" name="id" /></td>
-			</tr>
-			<tr>
-				<td>비밀번호</td>
-				<td><input type="password" name="pw" /></td>
-			</tr>
-			</table>
-			<input type="submit" value="로그인" />
-			<input type="reset" value="취소" />
-		</form>
+			<ul data-role="listview">
+				<c:forEach  var="member"  items="${MEMBER_LIST}">
+					<li data-role="list-divider">${member.rank} 위</li>
+					<li>ID : ${member.id} <p align="right">미네랄 : ${member.mineral}</p></li>
+				</c:forEach>
+			</ul>
 		</div>
 		<div data-role="footer" data-position="fixed">
 			<div data-role="navbar" data-iconpos="top">
+				<ul>
+				<li><a href="/betting/mViewHome.action" data-icon="home">Home</a></li>
+				<c:if test="${page!=1}">
+					<li><a href="/betting/mViewMemberRankingListForm.action?page=${page-1}" data-icon="arrow-l">이전</a></li>
+				</c:if>
+				<c:if test="${page<maxPage }">
+					<li><a href="/betting/mViewMemberRankingListForm.action?page=${page+1}" data-icon="arrow-r">다음</a></li>
+				</c:if>
+				</ul>
 			</div>
 		</div>
 	</div>

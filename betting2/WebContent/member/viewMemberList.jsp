@@ -138,7 +138,7 @@
 				<c:forEach var="member" items="${MEMBER_LIST}">
 				<tr>
 					<td align="center">
-						<a href="/betting/viewMember.action?ID=${member.id}">
+						<a href="/betting/editMemberForm.action?ID=${member.id}">
 							${member.id}
 						</a>
 					</td>
