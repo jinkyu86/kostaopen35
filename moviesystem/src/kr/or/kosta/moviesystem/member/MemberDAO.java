@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
@@ -117,6 +118,19 @@ public class MemberDAO extends SqlSessionDaoSupport implements IMemberDAO{
 			
 		return memberList;
 	 }
+	
+	@Override
+	public  List<Member> selectMemberList(){
+		SqlSession session=null;
+		List<Member>memberList=null;
+	
+		session = getSqlSession();
+		memberList=
+				session.selectList("Member.selectMemberList");
+		
+		return memberList;
+		
+	}
 
 
 	/**

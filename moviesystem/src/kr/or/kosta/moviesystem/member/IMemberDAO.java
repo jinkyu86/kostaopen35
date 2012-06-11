@@ -38,4 +38,6 @@ public interface IMemberDAO {
 
 	Member findMemberPw(String email, String name, String userid);
 
+	List<Member> selectMemberList();
+
 }

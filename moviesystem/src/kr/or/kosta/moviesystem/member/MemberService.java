@@ -341,6 +341,20 @@ ServletResponseAware,SessionAware,IService {
 		return "success";
 		}
 	}
+	
+	public String mViewMemberList() throws Exception{
+		
+		MEMBER=(Member)session.get("LOGIN_MEMBER");		
+		
+		if(!MEMBER.getUserid().equals("mmanager")){
+			request.setAttribute("ERROR","관리자만 접근가능한 페이지입니다.");
+			return "login";
+		}
+		else{
+		MEMBER_LIST=memberDAO.selectMemberList();
+			}
+		return "success";
+		}
 
 	public String viewMember() throws Exception{
 		
