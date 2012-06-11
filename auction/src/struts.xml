@@ -33,6 +33,19 @@
                 auction/viewAuction.jsp
             </result>
         </action>
+		<action name="mviewAuction" class="kr.or.kosta.auction.auction.AuctionService"
+         method="viewAuction">
+            <param name="aliases">
+                #{ 'anum':'auction.anum',
+                'anum':'anum',
+                'img':'auction.good.img',
+                'gName':'auction.good.gName'
+                }
+            </param>
+            <result name="success">
+                mauction/viewAuction.jsp
+            </result>
+        </action>
         
         
         <action name="viewAuctionList"
@@ -43,6 +56,14 @@
                 /auction/viewAuctionList.jsp
             </result>
         </action>
+		<action name="mviewAuctionList"
+         class="kr.or.kosta.auction.auction.AuctionService"
+         method="viewAuctionList">
+            
+            <result name="success">
+                /mauction/viewAuctionList.jsp
+            </result>
+        </action>
         
         <action name="removeAuction"
          class="kr.or.kosta.auction.auction.AuctionService"
@@ -51,11 +72,24 @@
                 /auction/viewAuctionList.jsp
             </result>
         </action>
+		<action name="mremoveAuction"
+         class="kr.or.kosta.auction.auction.AuctionService"
+         method="removeAuction">
+            <result name="success">
+                /mauction/viewAuctionList.jsp
+            </result>
+        </action>
         
         <action name="addAuctionForm" class="kr.or.kosta.auction.auction.AuctionService"
          method="addAuctionForm">
             <result name="success">
                 /auction/addAuction.jsp
+            </result>
+        </action>
+		<action name="maddAuctionForm" class="kr.or.kosta.auction.auction.AuctionService"
+         method="addAuctionForm">
+            <result name="success">
+                /mauction/addAuction.jsp
             </result>
         </action>
         
@@ -69,6 +103,18 @@
             </param>
             <result name="success" type="chain">
                 viewAuction
+            </result>
+        </action>
+		<action name="maddBoard" class="kr.or.kosta.auction.auction.AuctionService" method="addAuction">
+            <param name="aliases">
+                #{'gNum':'auction.good.gNum'
+                'gName':'auction.good.gName'
+                'detail':'auction.good.detail'
+                'img':'auction.good.img'
+                }
+            </param>
+            <result name="success" type="chain">
+                mviewAuction
             </result>
         </action>
         
@@ -235,6 +281,15 @@
                 /good/viewGoodList.jsp
             </result>
         </action>
+<<<<<<< .mine
+		<action name="mviewGoodList"
+         class="kr.or.kosta.auction.good.GoodService"
+         method="viewGoodList">
+           <result name="success">
+                /mgood/viewGoodList.jsp
+            </result>
+        </action>
+=======
 		
 		<action name="mviewGoodList"
          class="kr.or.kosta.auction.good.AndroidGoodService"
@@ -248,6 +303,7 @@
 					</param>
 			</result>
         </action>
+>>>>>>> .r1681
         
         <action name="viewGood"
          class="kr.or.kosta.auction.good.GoodService"
@@ -257,6 +313,16 @@
             </param>
             <result name="success">
                 /good/viewGood.jsp
+            </result>
+        </action>
+		<action name="mviewGood"
+         class="kr.or.kosta.auction.good.GoodService"
+         method="viewGood">
+            <param name="aliases">
+                #{ 'gNum':'gnum'}
+            </param>
+            <result name="success">
+                /mgood/viewGood.jsp
             </result>
         </action>
         
@@ -270,11 +336,27 @@
                 viewGoodList
             </result>
         </action>
+		<action name="mremoveGood"
+         class="kr.or.kosta.auction.good.GoodService"
+         method="removeGood">
+            <param name="aliases">
+                #{ 'gNum':'gnum'}
+            </param>
+            <result name="success" type="chain">
+                mviewGoodList
+            </result>
+        </action>
         
         <action name="addGoodForm" class="kr.or.kosta.auction.good.GoodService"
          method="addGoodForm">
             <result name="success">
                 /good/addGood.jsp
+            </result>
+        </action>
+		<action name="maddGoodForm" class="kr.or.kosta.auction.good.GoodService"
+         method="addGoodForm">
+            <result name="success">
+                /mgood/addGood.jsp
             </result>
         </action>
         
@@ -291,6 +373,19 @@
                 viewGood
             </result>
         </action>
+		<action name="maddGood" class="kr.or.kosta.auction.good.GoodService"
+         method="addGood">
+            <param name="aliases">
+                #{'gNum':'gnum',
+                'gNum':'good.gnum',
+                'gname':'good.gname',
+                'detail':'good.detail',
+                'img':'good.img'}
+            </param>
+            <result name="success" type="chain">
+                mviewGood
+            </result>
+        </action>
         
         <action name="editGoodForm" class="kr.or.kosta.auction.good.GoodService"
          method="editGoodForm">
@@ -299,6 +394,15 @@
             </param>
             <result name="success">
                 /good/editGood.jsp
+            </result>
+        </action>
+		<action name="meditGoodForm" class="kr.or.kosta.auction.good.GoodService"
+         method="editGoodForm">
+            <param name="aliases">
+                #{'gnum':'gnum'}
+            </param>
+            <result name="success">
+                /mgood/editGood.jsp
             </result>
         </action>
         
@@ -313,6 +417,19 @@
             </param>
             <result name="success" type="chain">
                 viewGood
+            </result>
+        </action>
+		<action name="meditGood" class="kr.or.kosta.auction.good.GoodService"
+         method="editGood">
+            <param name="aliases">
+                #{'gnum':'gnum',
+                'gnum':'good.gnum',
+                'gname':'good.gname',
+                'detail':'good.detail',
+                'img':'good.img'}
+            </param>
+            <result name="success" type="chain">
+                mviewGood
             </result>
         </action>
         
