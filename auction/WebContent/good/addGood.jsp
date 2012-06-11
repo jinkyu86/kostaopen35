@@ -31,11 +31,6 @@
 	<div data-role="page">
 		<div data-role="content">
 			<form id="my_form" method="post" action="/auction/maddGood.action">
-				
-				<div data-role="fieldcontain">
-					<label for="gnum">물품 번호</label>
-					<input id="gnum" type="text" name="gnum" />
-				</div>
 				<div data-role="fieldcontain">
 					<label for="gname">물품명:</label>
 					<input id="gname" type="text" name="gname" />
