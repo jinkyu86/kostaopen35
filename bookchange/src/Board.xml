@@ -338,6 +338,19 @@
 	 ORDER BY board_no DESC 
 </select>
 
+<resultMap id="changeResultMap" type="kr.or.kosta.bookchange.change.Change">
+	<result property="changeNo" column="change_no"/>
+	<result property="demandBoard.boardNo" column="demand_board"/>
+	<result property="agreeBoard.boardNo" column="agree_board"/>	
+</resultMap>
+<select id="selectChangeListByMyBoardNo" resultMap="changeResultMap">
+	select change_no as change_no, agree_board_no as agree_board, demand_board_no as demand_board
+	FROM tb_change c
+	JOIN tb_board b ON c.agree_board_no=b.board_no
+	JOIN tb_board b ON c.demand_board_no=b.board_no 
+	where demand_board_no=#{myBoardNo} AND agree_board_no=#{boardNo} AND c.condition_result=1
+</select>
+
 <select id="selectBoardListByEmailWhenAddCount" resultType="java.lang.Integer">
 	select count(*)
 	 from tb_board b

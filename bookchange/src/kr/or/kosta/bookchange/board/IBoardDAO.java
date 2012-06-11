@@ -2,6 +2,7 @@ package kr.or.kosta.bookchange.board;
 
 import java.util.List;
 
+import kr.or.kosta.bookchange.change.Change;
 import kr.or.kosta.bookchange.member.Member;
 
 public interface IBoardDAO {
@@ -50,5 +51,7 @@ public interface IBoardDAO {
 	void deleteBoardbyEmail(String email);
 
 	List<Board> selectBoardListbyEmailWhenDelete(String email);
+
+	Change selectChangeListByMyBoardNo(String valueOf, String boardNo);
 
 }

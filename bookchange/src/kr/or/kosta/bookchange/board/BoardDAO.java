@@ -7,6 +7,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 
+import kr.or.kosta.bookchange.change.Change;
 import kr.or.kosta.bookchange.member.Member;
 
 public class BoardDAO extends SqlSessionDaoSupport implements IBoardDAO {
@@ -1127,5 +1128,19 @@ public class BoardDAO extends SqlSessionDaoSupport implements IBoardDAO {
 			e.printStackTrace();
 		}		
 		return boardList;*/
+	}
+	@Override
+	public Change selectChangeListByMyBoardNo(String myBoardNo, String boardNo){
+		SqlSession session=null;
+		Change change=null;
+		
+		session = getSqlSession();
+		
+		HashMap<String,String> parameters=new HashMap<String,String>();
+		parameters.put("myBoardNo", myBoardNo);
+		parameters.put("boardNo", boardNo);
+		change=session.selectOne("Board.selectChangeListByMyBoardNo",parameters);
+		return change;
+		
 	}
 }

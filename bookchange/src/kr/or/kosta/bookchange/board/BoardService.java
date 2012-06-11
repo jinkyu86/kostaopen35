@@ -24,6 +24,7 @@ import org.apache.struts2.util.ServletContextAware;
 
 import com.opensymphony.xwork2.ModelDriven;
 
+import kr.or.kosta.bookchange.change.Change;
 import kr.or.kosta.bookchange.change.Condition;
 import kr.or.kosta.bookchange.member.Member;
 import kr.or.kosta.bookchange.member.MemberDAO;
@@ -66,8 +67,90 @@ public class BoardService implements ModelDriven, ServletContextAware, ServletRe
 	private String[] fileContentType;
 	private InputStream resultStream;
 	private String WhenAgree;
+	private String WhenCancel;
+	private List<Board> boardList;
+	private Change change;
+	private Change change2;
+	private int DEMAND_BOARD_NO;
+	private int agreeBoardNo;
 	
 	
+	
+
+
+
+	public int getAgreeBoardNo() {
+		return agreeBoardNo;
+	}
+
+
+
+	public void setAgreeBoardNo(int agreeBoardNo) {
+		this.agreeBoardNo = agreeBoardNo;
+	}
+
+
+
+	public int getDEMAND_BOARD_NO() {
+		return DEMAND_BOARD_NO;
+	}
+
+
+
+	public void setDEMAND_BOARD_NO(int dEMAND_BOARD_NO) {
+		DEMAND_BOARD_NO = dEMAND_BOARD_NO;
+	}
+
+
+
+	public Change getChange() {
+		return change;
+	}
+
+
+
+	public void setChange(Change change) {
+		this.change = change;
+	}
+
+
+
+	public Change getChange2() {
+		return change2;
+	}
+
+
+
+	public void setChange2(Change change2) {
+		this.change2 = change2;
+	}
+
+
+
+	public List<Board> getBoardList() {
+		return boardList;
+	}
+
+
+
+	public void setBoardList(List<Board> boardList) {
+		this.boardList = boardList;
+	}
+
+
+
+	public String getWhenCancel() {
+		return WhenCancel;
+	}
+
+
+
+	public void setWhenCancel(String whenCancel) {
+		WhenCancel = whenCancel;
+	}
+
+
+
 	public String getWhenAgree() {
 		return WhenAgree;
 	}
@@ -465,6 +548,34 @@ public class BoardService implements ModelDriven, ServletContextAware, ServletRe
 	/**
 	 * 게시물 보기	 */
 	public String viewBoard() throws Exception {
+		
+		LOGIN_EMAIL=(Member) session.get("LOGIN_EMAIL");
+		
+		if(LOGIN_EMAIL!=null){
+			//먼저 내가 올린 게시글 번호 리턴받음
+			boardList=boardDAO.selectBoardListbyEmailWhenDelete(LOGIN_EMAIL.getEmail());
+			//내가 올린 글이 없으면 그냥 넘어가면 됨
+			if(boardList!=null){
+				for(int i=0; i<boardList.size(); i++){
+					change=boardDAO.selectChangeListByMyBoardNo(String.valueOf(boardList.get(i).getBoardNo()), boardNo);
+					//이 게시물에게 내가 교환요청을 했다면 change가 존재, 아니면 null
+					if(change!=null){
+						DEMAND_BOARD_NO=change.getDemandBoard().getBoardNo();
+						WhenCancel="hey";
+						break;
+					}
+					//이 게시글이 나에게 요청했는지 체크해봄
+					//이 게시글이 내 책에 교환요청했다면 change2가 존재, 아니면 null
+					change2=boardDAO.selectChangeListByMyBoardNo(boardNo, String.valueOf(boardList.get(i).getBoardNo()));
+					if(change2!=null){
+						agreeBoardNo=change2.getAgreeBoard().getBoardNo();
+						WhenAgree="hello";
+						break;
+					}
+				}
+			}			
+		}		
+		
 		BOARD=boardDAO.selectBoard(boardNo);
 		
 		QA_COUNT=qaDAO.selectQaCount(boardNo);
@@ -590,62 +701,7 @@ public class BoardService implements ModelDriven, ServletContextAware, ServletRe
 				"/bookchange/searchBoardListWhenAdd.action?keyword="+keyword);
 		
 		return "success";
+		
 		}
-	}
-
-	/**
-	 * 게시물 보기 요청 수락할때 ㅋ */
-	public String viewBoardWhenAgree() throws Exception {
-		
-		BOARD=boardDAO.selectBoard(boardNo);
-		
-		QA_COUNT=qaDAO.selectQaCount(boardNo);
-		int length=10;
-		//여기부턴 댓글 리스트
-		
-		if(QA_COUNT%10==0){
-			qapage=QA_COUNT/length;
-		}else{
-			qapage=(QA_COUNT/length)+1;
-		}
-		
-		if(page!=0){
-			qapage=page;
-		}
-				
-		QA_LIST=qaDAO.selectQaList(length, qapage, boardNo);
-		
-		PAGE_LINK_TAG=PageUtil.generate(qapage, QA_COUNT, length, "/bookchange/viewBoard.action?boardNo="+boardNo);
-		//댓글 리스트 조회 완료
-
-		return "success";
-	}
-
-	/**
-	 * 게시물 보기 취소할때	 */
-	public String viewBoardWhenCancel() throws Exception {
-		
-		BOARD=boardDAO.selectBoard(boardNo);
-		
-		QA_COUNT=qaDAO.selectQaCount(boardNo);
-		int length=10;
-		//여기부턴 댓글 리스트
-		
-		if(QA_COUNT%10==0){
-			qapage=QA_COUNT/length;
-		}else{
-			qapage=(QA_COUNT/length)+1;
-		}
-		
-		if(page!=0){
-			qapage=page;
-		}
-				
-		QA_LIST=qaDAO.selectQaList(length, qapage, boardNo);
-		
-		PAGE_LINK_TAG=PageUtil.generate(qapage, QA_COUNT, length, "/bookchange/viewBoard.action?boardNo="+boardNo);
-		//댓글 리스트 조회 완료
-		
-		return "success";
 	}
 }
