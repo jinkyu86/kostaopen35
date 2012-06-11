@@ -20,59 +20,6 @@
 		<result name="loginForm">/mmember/login.jsp</result>
 		</global-results>
 		
-		<!-- mobile web -->
-		<action name="mViewBuyList" class="kr.or.kosta.moviesystem.buy.BuyService" method="viewBuyList">
-			<result name="success">/mbuy/viewBuyList.jsp</result>
-		</action>
-		
-		<action name="mCompleteBuy" class="kr.or.kosta.moviesystem.buy.BuyService" method="completeBuy">
-			<result name="success">/mbuy/completebuy.jsp</result>
-		</action>
-		
-		<action name="mAddBuy" class="kr.or.kosta.moviesystem.buy.BuyService" method="addBuy">
-			<!--<result name="login">/member/login.jsp</result>-->
-			<result name="success" type="chain">mCompleteBuy</result>
-		</action>
-		
-		<action name="mRemoveCartList" class="kr.or.kosta.moviesystem.good.GoodService" method="removeCartList">
-			<param name="aliases">
-				#{'index':'index'}
-			</param>
-			<result name="success" type="chain">mViewCartList</result>
-		</action>
-		
-		<action name="mEditCartList" class="kr.or.kosta.moviesystem.good.GoodService" method="editCartList">
-			<param name="aliases">
-				#{'index':'index'}
-			</param>
-			<result name="success" type="chain">mViewCartList</result>
-		</action>
-		
-		<action name="mViewGoodList" class="kr.or.kosta.moviesystem.good.GoodService" method="viewGoodList">
-			<result name="success">/mgood/viewGoodList.jsp</result>
-		</action>
-		
-		<action name="mViewGood" class="kr.or.kosta.moviesystem.good.GoodService" method="viewGood">
-			<param name="aliases">
-				#{'gnum':'gnum'}
-			</param>
-			<result name="success">/mgood/viewGood.jsp</result>
-		</action>
-		
-		<action name="mAddCartList" class="kr.or.kosta.moviesystem.good.GoodService" method="addCartList">
-			<param name="aliases">
-				#{'gnum':'gnum',
-				'qty':'qty'}
-			</param>
-			<result name="success" type="chain">mViewCartList</result>
-		</action>
-		
-		<action name="mViewCartList" class="kr.or.kosta.moviesystem.good.GoodService" method="viewCartList">
-			<result name="success">/mgood/viewCartList.jsp</result>
-		</action>
-		
-		
-		
 		<!-- web -->
 		<action name="viewGoodList" class="kr.or.kosta.moviesystem.good.GoodService" method="viewGoodList">
 			<result name="success">/good/viewGoodList.jsp</result>
@@ -499,6 +446,7 @@
 			</param>
 			<result name="success">/movie/viewMovieList.jsp</result>
 		</action>
+		
 		<action name="adminMovieListSch" class="kr.or.kosta.moviesystem.movie.MovieService" method="adminMovieListSch">
 			<param name="aliases">
 				#{'gubun':'gubun','schCode':'schCode','schString':'schString'}
@@ -506,6 +454,116 @@
 			<result name="success">/movie/adminMovieList.jsp</result>
 		</action>
 		
+		<!-- mobile web -->
+
+		<action name="mSearchGoodList" class="kr.or.kosta.moviesystem.good.GoodService" method="searchGoodList">
+			<param name="aliases">
+				#{'keyword':'keyword'}
+			</param>
+			<result name="success">/mgood/viewGoodList.jsp</result>
+		</action>
+		
+		<action name="mAddGoodForm" class="kr.or.kosta.moviesystem.good.GoodService" method="addGoodForm">
+			<result name="success">/mgood/addGood.jsp</result>
+		</action>
+		
+		<action name="mAddGood" class="kr.or.kosta.moviesystem.good.GoodService" method="addGood">
+			<result type="stream">
+		  	 	<param name="inputName">resultStream</param>
+				<param name="contentType">text/html;charset=UTF-8</param>
+			</result>
+		</action>
+		
+		<action name="mEditGood" class="kr.or.kosta.moviesystem.good.GoodService" method="editGood">
+			<param name="aliases">
+				#{'gnum':'gnum', 
+				'gnum':'good.gnum'}
+			</param>
+			<result name="success" type="chain">mEditGoodForm</result>
+		</action>
+		
+		<action name="mEditGoodForm" class="kr.or.kosta.moviesystem.good.GoodService" method="editGoodForm">
+			<param name="aliases">
+				#{'gnum':'gnum'}
+			</param>
+			<result name="success">/mgood/editGoodForm.jsp</result>
+		</action>
+		
+		<action name="mViewManageGoodList" class="kr.or.kosta.moviesystem.good.GoodService" method="viewManageGoodList">
+			<result name="success">/mgood/viewManageGoodList.jsp</result>
+		</action>
+		
+		<action name="mCancelBuyListForm" class="kr.or.kosta.moviesystem.buy.BuyService" method="cancelBuyListForm">
+			<result name="success">/mbuy/cancelBuy.jsp</result>
+		</action>
+		
+		<action name="mCancelBuy" class="kr.or.kosta.moviesystem.buy.BuyService" method="cancelBuy">
+			<param name="aliases">
+				#{'chkbox':'chkbox'}
+			</param>
+			<result name="success" type="chain">mCancelBuyListForm</result>
+		</action>
+
+		<action name="mViewCanceledBuyList" class="kr.or.kosta.moviesystem.buy.BuyService" method="viewCanceledBuyList">
+			<result name="success">/mbuy/viewCanceledBuyList.jsp</result>
+		</action>
+		
+		<action name="mViewBuyList" class="kr.or.kosta.moviesystem.buy.BuyService" method="viewBuyList">
+			<result name="success">/mbuy/viewBuyList.jsp</result>
+		</action>
+		
+		<action name="mCompleteBuy" class="kr.or.kosta.moviesystem.buy.BuyService" method="completeBuy">
+			<result name="success">/mbuy/completebuy.jsp</result>
+		</action>
+		
+		<action name="mAddBuy" class="kr.or.kosta.moviesystem.buy.BuyService" method="addBuy">
+			<!--<result name="login">/member/login.jsp</result>-->
+			<result name="success" type="chain">mCompleteBuy</result>
+		</action>
+		
+		<action name="mRemoveCartList" class="kr.or.kosta.moviesystem.good.GoodService" method="removeCartList">
+			<param name="aliases">
+				#{'index':'index'}
+			</param>
+			<result name="success" type="chain">mViewCartList</result>
+		</action>
+		
+		<action name="mEditCartList" class="kr.or.kosta.moviesystem.good.GoodService" method="editCartList">
+			<param name="aliases">
+				#{'index':'index'}
+			</param>
+			<result name="success" type="chain">mViewCartList</result>
+		</action>
+		
+		<action name="mViewGoodList" class="kr.or.kosta.moviesystem.good.GoodService" method="viewGoodList">
+			<result name="success">/mgood/viewGoodList.jsp</result>
+		</action>
+		
+		<action name="mViewGood" class="kr.or.kosta.moviesystem.good.GoodService" method="viewGood">
+			<param name="aliases">
+				#{'gnum':'gnum'}
+			</param>
+			<result name="success">/mgood/viewGood.jsp</result>
+		</action>
+		
+		<action name="mAddCartList" class="kr.or.kosta.moviesystem.good.GoodService" method="addCartList">
+			<param name="aliases">
+				#{'gnum':'gnum',
+				'qty':'qty'}
+			</param>
+			<result name="success" type="chain">mViewCartList</result>
+		</action>
+		
+		<action name="mViewCartList" class="kr.or.kosta.moviesystem.good.GoodService" method="viewCartList">
+			<result name="success">/mgood/viewCartList.jsp</result>
+		</action>
+		
+		<action name="mDeleteGood" class="kr.or.kosta.moviesystem.good.GoodService" method="deleteGood">
+			<param name="aliases">
+				#{'gnum':'gnum'}
+			</param>
+			<result name="success" type="chain">mViewManageGoodList</result>
+		</action>
 
 		
 	</package>
