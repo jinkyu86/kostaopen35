@@ -1,5 +1,5 @@
 package kr.or.kosta.auction.good;
-
+ 
 public class Good {
 
 	private String gNum;
