@@ -17,7 +17,6 @@ contentType="text/html; charset=UTF-8"
 		<link rel="shortcut icon" href="../image/item_image27.png">
 		<link rel="apple-touch-icon" href="../image/item_image27.png">
 
-		 
 		<link href="http://code.jquery.com/mobile/latest/jquery.mobile.min.css" 
 			rel="stylesheet" type="text/css" />
 		<script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
@@ -37,7 +36,7 @@ contentType="text/html; charset=UTF-8"
 			#password_row label.error { display:none !important; }
 		</style>
 		<script src="http://code.jquery.com/jquery-1.7.js"></script>
-		<script  src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.js"></script>
+		<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.js"></script>
 		<script src="/betting/member/jquery.validate.password.js"></script>
 		<script type="text/javascript">
         $(document).ready(function () {

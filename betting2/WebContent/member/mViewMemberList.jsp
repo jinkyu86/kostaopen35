@@ -34,7 +34,7 @@ contentType="text/html; charset=UTF-8"
 <body>
 	<div data-role="page">
 		<div data-role="header">
-			<h2>Login</h2>
+			<h2>경기일정</h2>
 			<a href="" data-icon="arrow-l" data-rel="back">이전</a>
 			<c:choose>
 				<c:when test="${sessionScope.LOGIN_MEMBER==null}">
@@ -47,25 +47,26 @@ contentType="text/html; charset=UTF-8"
 			</c:choose>
 		</div>
 		<div data-role="content">
-		<form action="/betting/mLogin.action" method="post">
-			<table style="margin:auto">
-			<tr>
-				<td>아이디</td>
-				<td><input type="text" name="id" /></td>
-			</tr>
-			<tr>
-				<td>비밀번호</td>
-				<td><input type="password" name="pw" /></td>
-			</tr>
-			</table>
-			<input type="submit" value="로그인" />
-			<input type="reset" value="취소" />
-		</form>
+			<ul data-role="listview">
+				<c:forEach  var="member"  items="${MEMBER_LIST}">
+					<li><a href="/betting/mEditMemberForm.action?ID=${member.id}">
+						<h3>ID : ${member.id}</h3>
+						<p>이름 : ${member.name}</p>
+						<p>이메일 : ${member.email}</p>
+					</a></li>
+					</c:forEach>
+				</ul>
 		</div>
 		<div data-role="footer" data-position="fixed">
 			<div data-role="navbar" data-iconpos="top">
 				<ul>
-					<li><a href="/betting/mViewHome.action" data-icon="home">Home</a></li>
+				<li><a href="/betting/mViewHome.action" data-icon="home">Home</a></li>
+				<c:if test="${page!=1}">
+					<li><a href="/betting/mViewMemberList.action?page=${page-1}" data-icon="arrow-l">이전</a></li>
+				</c:if>
+				<c:if test="${page<maxPage }">
+					<li><a href="/betting/mViewMemberList.action?page=${page+1}" data-icon="arrow-r">다음</a></li>
+				</c:if>
 				</ul>
 			</div>
 		</div>
