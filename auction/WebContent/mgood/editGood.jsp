@@ -27,34 +27,33 @@
 		<script src="../framework/jquery.mobile-1.0.js"></script>
 		-->
 </script>
-</head>
 <body>
 	<div data-role="page">
-		<div data-role="header">
-			<h1>물품 리스트</h1>
-		</div>
-
-
 		<div data-role="content">
-			<ul data-role="listview" >
-				<c:forEach var="good" items="${GOOD_LIST }">
-					<li>
-					<a href="/auction/mviewGood.action?gnum=${good.gNum}"><img src="/auction/gphoto/${good.img }"" height="100" width="100"/><h3>${good.gName}</h3></a>
-					</li>
-				</c:forEach>
-			</ul>
+			<form id="my_form" method="post" action="/auction/meditGood.action">
+				
+				<div data-role="fieldcontain">
+					<label for="gnum">물품 번호</label>
+					<input id="gnum" type="text" name="gnum" value="${GOOD.gNum}" readonly="readonly"/>
+				</div>
+				<div data-role="fieldcontain">
+					<label for="gname">물품명:</label>
+					<input id="gname" type="text" name="gname" value="${GOOD.gName}"/>
+				</div>
+				<div data-role="fieldcontain">
+					<label for="detail">상세설명:</label>
+					<textarea id="detail" name="detail">${GOOD.detail }</textarea>
+				</div>
+				<div data-role="fieldcontain">
+					<label for="img">이미지:</label>
+					<input id="img" type="text" name="img" value="${GOOD.img }"/>
+				</div>
+				<div data-role="fieldcontain">
+					<input id="submit" type="submit" value="전송"/>
+					<input id="reset" type="reset" value="취소"/>
+				</div>
+			</form>
 		</div>
-
-		<div data-role="footer" data-position="fixed">
-			<div data-role="navbar" data-iconpos="left">
-				<ul>
-					<li><a href="/auction/maddGoodForm.action"
-						data-icon="plus">물품추가</a></li>
-					<li><a href="/auction/home.jsp"
-						data-icon="home">홈 화면</a></li>
-				</ul>
-			</div>
-		</div>
-	</div>
+	</div>		
 </body>
 </html>

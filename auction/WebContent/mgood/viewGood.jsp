@@ -27,34 +27,41 @@
 		<script src="../framework/jquery.mobile-1.0.js"></script>
 		-->
 </script>
-</head>
 <body>
-	<div data-role="page">
-		<div data-role="header">
-			<h1>물품 리스트</h1>
-		</div>
-
-
-		<div data-role="content">
-			<ul data-role="listview" >
-				<c:forEach var="good" items="${GOOD_LIST }">
-					<li>
-					<a href="/auction/mviewGood.action?gnum=${good.gNum}"><img src="/auction/gphoto/${good.img }"" height="100" width="100"/><h3>${good.gName}</h3></a>
-					</li>
-				</c:forEach>
-			</ul>
-		</div>
-
-		<div data-role="footer" data-position="fixed">
-			<div data-role="navbar" data-iconpos="left">
-				<ul>
-					<li><a href="/auction/maddGoodForm.action"
-						data-icon="plus">물품추가</a></li>
-					<li><a href="/auction/home.jsp"
-						data-icon="home">홈 화면</a></li>
-				</ul>
+	<div data-role="content">
+		<div data-role="collapsible-set">
+			<div data-role="collapsible">
+				<h3>물품번호</h3>
+				<p>${GOOD.gNum }</p>
 			</div>
+			<div data-role="collapsible">
+				<h3>물품명</h3>
+				<p>${GOOD.gName}</p>
+			</div>
+			<div data-role="collapsible" data-collapsed="true">
+				<h3>상세설명</h3>
+				<p>${GOOD.detail}</p>
+			</div>
+			<div data-role="collapsible" data-collapsed="true">
+				<h3>사진</h3>
+				<p><img src="/auction/gphoto/${GOOD.img}" height="100" weight="100"/></p>
+			</div>
+		</div>
+	</div>
+	
+	<div data-role="footer" data-position="fixed">
+		<div data-role="navbar" data-iconpos="top">
+			<ul>
+				<li><a
+					href="/auction/meditGoodForm.action?gnum=${GOOD.gNum}"
+					data-icon="gear">물품수정</a></li>
+				<li><a href="/auction/mremoveGood.action?gnum=${GOOD.gNum }"
+					data-icon="delete">물품삭제</a></li>
+				<li><a href="/auction/mviewGoodList.action"
+					data-icon="home">물품리스트</a></li>
+			</ul>
 		</div>
 	</div>
 </body>
 </html>
+
