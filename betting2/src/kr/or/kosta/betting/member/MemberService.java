@@ -529,7 +529,7 @@ public class MemberService implements ModelDriven,IService
 		 * @param request
 		 * @param response
 		 */
-		int length=10;
+		int length=5;
 		if(page==0){
 			page=1;
 		}
@@ -541,9 +541,13 @@ public class MemberService implements ModelDriven,IService
 			RANK = memberDAO.selectMemberRanking(ID);
 		}
 		MEMBER_LIST = memberDAO.selectMemberList(length, page);
-		int MemberCount = memberDAO.selectMemberCount();
-		PAGE_LINK_TAG = PageUtil.generate(page, MemberCount, length,
+		int memberCount = memberDAO.selectMemberCount();
+		PAGE_LINK_TAG = PageUtil.generate(page, memberCount, length,
 				"/betting/viewMemberList.action");
+		maxPage=(memberCount/length);
+		if(memberCount%length!=0){
+			maxPage++;
+		}
 		return "success";
 //		HttpSession session = request.getSession();
 //		Member member1 = (Member) session.getAttribute("LOGIN_MEMBER");
