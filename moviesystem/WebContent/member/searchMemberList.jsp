@@ -5,7 +5,7 @@
 <!DOCTYPE html>            
 <html> 
 	<head>
-		<title>회원 리스트</title>
+		<title>회원검색</title>
 		<meta charset="euc-kr" /> 	
 		<meta name="viewport" 
 				content="width=device-width, initial-scale=1.0, 

@@ -6,7 +6,7 @@
 <!DOCTYPE html> 
 <html> 
 	<head>
-		<title>로그인</title>
+		<title>아아디찾기</title>
 		<meta charset="euc-kr"/> 	
 		<meta name="viewport" 
 				content="width=device-width, initial-scale=1.0, 
