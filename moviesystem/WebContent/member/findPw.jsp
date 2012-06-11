@@ -40,11 +40,18 @@
 		<div data-role="page">
 			<div data-role="header">
 				<div data-role="controlgroup" data-type="horizontal" >
-					<a href="#" data-role="button" >Login</a>
-					<a href="#" data-role="button">Join</a>
-				</div>
-			</div><!-- end header 1-->
-			
+					<c:choose>
+					<c:when test="${LOGIN_MEMBER==null}">			
+							<a href="/moviesystem/mmember/mloginForm.action" data-role="button" >Login</a>
+							<a href="/moviesystem/mmember/maddMemberForm.action" data-role="button">Join</a>
+					</c:when>
+					<c:otherwise>
+							<a href="/moviesystem/mmember/mmypage.action" data-role="button" >MyPage</a>
+							<a href="/moviesystem/mlogoutMember.action" data-role="button">Logout</a>
+					</c:otherwise>	
+					</c:choose>						
+				</div>				
+			</div><!-- end header 1-->		
 			<div data-role="header">
 				<div data-role="navbar">
 					<ul>
