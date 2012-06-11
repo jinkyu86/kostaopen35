@@ -56,7 +56,7 @@
 			</div><!-- end header2 -->
 
 			<div data-role="content">
-				<ul data-role="listview" data-filter="true">
+				<ul data-role="listview">
 				<!-- JSTL의 forEach태그를 이용해서 for문을 실행
 				전체 항생리스트:${STUDENT_LIST}
 				학생들의 학번(studno) 이름(name)-->
@@ -70,18 +70,19 @@
 				</c:forEach>
 				</ul>
 			</div>
-			<!--  <div data-role="footer" data-position="fixed">
+			<div data-role="footer" data-position="fixed">
 				<div data-role="navbar" >
 					<ul>
 						<c:if test="${page!=1}">
 						<li><a href="/moviesystem/mmember/mviewMemberList.action?page=${page-1}" data-icon="arrow-l">이전</a></li>
 						</c:if>
+						<li><a href="/moviesystem/mmember/msearchMemberList.action" data-icon="search">회원찾기</a>
 						<c:if test="${page<maxPage }">
 						<li><a href="/moviesystem/mmember/mviewMemberList.action?page=${page+1}" data-icon="arrow-r" >다음</a></li>
 						</c:if>
 					</ul>
 				</div>
-			</div>-->	
+			</div>
 			
 		</div>
 	</body>

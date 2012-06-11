@@ -56,11 +56,9 @@
 			</div><!-- end header2 -->
 
 			<div data-role="content">
-			
-			<table class="sch_style" style="margin-bottom:10px;" align="center">
 			<form action="/moviesystem/msearchMemberList.action" method="post">
-				<tr>
-					
+			<table class="sch_style" style="margin-bottom:10px;" align="center">			
+				<tr>					
 					<td align="center">						
 							<select name="column">
 								<option value="name">이름</option>
@@ -71,11 +69,10 @@
 					</td>
 					<td>
 						<input type="text" name="keyword"></td>
-						<td><input type="submit" value="검색"/></td>
-						
-				</tr>
-				</form>
+						<td><input type="submit" value="검색"/></td>						
+				</tr>				
 			</table>
+			</form>
 				<ul data-role="listview" >
 				<!-- JSTL의 forEach태그를 이용해서 for문을 실행
 				전체 항생리스트:${STUDENT_LIST}
@@ -90,7 +87,7 @@
 				</c:forEach>
 				</ul>
 			</div>
-			<!--  <div data-role="footer" data-position="fixed">
+			<div data-role="footer" data-position="fixed">
 				<div data-role="navbar" >
 					<ul>
 						<c:if test="${page!=1}">
@@ -101,7 +98,7 @@
 						</c:if>
 					</ul>
 				</div>
-			</div>-->	
+			</div>	
 			
 		</div>
 	</body>
