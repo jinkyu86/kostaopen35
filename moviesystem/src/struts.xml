@@ -398,7 +398,7 @@
 			<result name="success">main.jsp</result>
 		</action>
 		
-		<action name="mmain" class="kr.or.kosta.moviesystem.movie.MovieService" method="main">
+		<action name="mmain" class="kr.or.kosta.moviesystem.movie.MovieService" method="mviewMovieList">
 			<result name="success">mmain.jsp</result>
 		</action>
 		<action name="viewMovieList" class="kr.or.kosta.moviesystem.movie.MovieService" method="viewMovieList">
