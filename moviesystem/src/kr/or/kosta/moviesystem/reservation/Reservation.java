@@ -2,6 +2,8 @@ package kr.or.kosta.moviesystem.reservation;
 
 import java.util.Date;
 
+import com.opensymphony.xwork2.ModelDriven;
+
 import kr.or.kosta.moviesystem.member.Member;
 import kr.or.kosta.moviesystem.movie.Movie;
 import kr.or.kosta.moviesystem.screentime.ScreenTime;

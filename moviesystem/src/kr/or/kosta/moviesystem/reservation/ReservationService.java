@@ -1,5 +1,6 @@
 package kr.or.kosta.moviesystem.reservation;
 
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -61,6 +62,7 @@ ServletContextAware, ServletRequestAware, ServletResponseAware, SessionAware {
 	private String PAGE_LINK_TAG;
 	private String userid;
 	private String resnum;
+	private IReservationDAO reservationDAO;
 //	int reservationCount;
 	ScreenTime screenTime = new ScreenTime();
 	ScreenTime SCREENTIME;
@@ -69,6 +71,7 @@ ServletContextAware, ServletRequestAware, ServletResponseAware, SessionAware {
 	List<Reservation>RESERVATION_LIST;
 	List<Movie>MOVIE_LIST;
 	List<ScreenTime>SCREENTIME_LIST;
+	private int maxPage;
 	
 	
 	
@@ -84,6 +87,16 @@ ServletContextAware, ServletRequestAware, ServletResponseAware, SessionAware {
 	
 	public List<Movie> getMOVIE_LIST() {
 		return MOVIE_LIST;
+	}
+
+
+	public int getMaxPage() {
+		return maxPage;
+	}
+
+
+	public void setMaxPage(int maxPage) {
+		this.maxPage = maxPage;
 	}
 
 
@@ -294,6 +307,17 @@ ServletContextAware, ServletRequestAware, ServletResponseAware, SessionAware {
 	//SessionAware메서드-세션에 저장된 속성들을 넘겨줌/추가할 속성이 있으면 맵에 추가
 	//삭제/수정할 속성이 있으면 삭제 수정
 
+	public ReservationService(IReservationDAO reservationDAO) {
+		super();
+		this.reservationDAO = reservationDAO;
+	}
+	
+//	public ReservationService(IScreenTimeDAO screenTimeDAO) {
+//		super();
+//		this.screenTimeDAO = screenTimeDAO;
+//	}
+
+
 	public Member getMember() {
 		return member;
 	}
@@ -421,7 +445,7 @@ public String viewReservationSeat() throws Exception {
 		member=(Member)session.get("LOGIN_MEMBER");
 		userid=member.getUserid();
 		//id와 scrnum을 조회해서 좌석을 알아낸다.		
-		RESERVATION_LIST=ReservationDAO.selectSeatNumByScrnumAndUserid(scrnum,userid);
+		RESERVATION_LIST=reservationDAO.selectSeatNumByScrnumAndUserid(scrnum,userid);
 
 		System.out.println("reservationList = "+RESERVATION_LIST);
 		System.out.println("---viewReservationSeat종료---");
@@ -491,7 +515,7 @@ public String InsertReservation() throws Exception {
 	for(int i=0;i<SeatNumList.size();i++){
 		reservation.setSeatnum(SeatNumList.get(i));
 		System.out.println("for문의 i값"+i);
-		ReservationDAO.insertReservation(reservation);
+		reservationDAO.insertReservation(reservation);
 		
 	}
 	System.out.println("---InsertReservation 성공--");
@@ -549,7 +573,7 @@ public String InsertReservation() throws Exception {
 		
 		System.out.print("SeatNumList의 값을 찍어보자 = "+SeatNumList);
 		if(count>1){
-			TotalSeatList=ReservationDAO.selectTotalList(scrnum);	
+			TotalSeatList=reservationDAO.selectTotalList(scrnum);	
 			
 			for(int i=0;i<SeatNumList.size();i++){
 				TotalSeatList.set(SeatNumList.get(i)-1, 1);
@@ -619,7 +643,7 @@ public String InsertReservation() throws Exception {
 //		ArrayList<Integer>SeatNumList=new ArrayList<Integer>();
 		
 		
-		TotalSeatList=ReservationDAO.selectTotalList(scrnum);
+		TotalSeatList=reservationDAO.selectTotalList(scrnum);
 
 		System.out.println("======TotalSeatList======"+TotalSeatList);
 		System.out.println("viewSeatListByScrnum종료");
@@ -673,7 +697,7 @@ public String InsertReservation() throws Exception {
 
 	public String viewCancelByResNum() throws IOException, ServletException{
 		
-		ReservationDAO.cancelReservation(resnum);
+		reservationDAO.cancelReservation(resnum);
 		
 		return "success";
 
@@ -682,7 +706,7 @@ public String InsertReservation() throws Exception {
 
 	public String viewReservationByResNumForm() throws Exception {
 		resnum = request.getParameter("resnum");
-	    RESERVATION = ReservationDAO.selectReservation(resnum);
+	    RESERVATION = reservationDAO.selectReservation(resnum);
 //		Reservation reservation= new Reservation();
 //		reservation.setResnum(resnum);
 		 System.out.println("resnum"+resnum);
@@ -717,7 +741,7 @@ public String InsertReservation() throws Exception {
 	    mnum=MOVIE.getMnum();
 //		request.setAttribute("mname",mname);
 	    //userid와 mnom으로 group by time 으로 된 정보의 time sum(total_price) count(res_qty)
-	    RESERVATION_LIST = ReservationDAO.selectReservationTime(userid,mnum);
+	    RESERVATION_LIST = reservationDAO.selectReservationTime(userid,mnum);
 //		request.setAttribute("reservationList",reservationList);
 //		RequestDispatcher rd=request.getRequestDispatcher(
 //					"/reservation/viewReservationTime.jsp");
@@ -730,7 +754,7 @@ public String InsertReservation() throws Exception {
 	public String viewReservationByResNum() throws Exception {
 		resnum = request.getParameter("resnum");	
 		
-		ReservationDAO.cancelReservation(resnum);
+		reservationDAO.cancelReservation(resnum);
 		
 		return "success";
 		
@@ -850,7 +874,7 @@ public String InsertReservation() throws Exception {
 		
 			//ReservationDAO reservationDAO=new ReservationDAO();
 			//내가보는 영화중 가장 최근에 예약한 예약번호를 알아낸후
-			String rnum= ReservationDAO.selectReservationResNum(scrnum);
+			String rnum= reservationDAO.selectReservationResNum(scrnum);
 			System.out.println(rnum);
 			
 			//그 예약번호의 첫번째 좌석과 좌석수를 얻어와서
@@ -859,8 +883,8 @@ public String InsertReservation() throws Exception {
 			reservation.setTotalPrice(resQty*8000);
 	    }else{
 	    	long resnum=Integer.parseInt(rnum);
-	    	long snum= ReservationDAO.selectReservationSeatNum(resnum);
-			long qty= ReservationDAO.selectReservationQty(resnum);
+	    	long snum= reservationDAO.selectReservationSeatNum(resnum);
+			long qty= reservationDAO.selectReservationQty(resnum);
 			System.out.println("rnum"+rnum+"snum="+snum+" qty="+qty);
 			//지금 예매하는 사람의 좌석을 지정해준다.
 			reservation.setSeatnum(snum+qty);
@@ -872,7 +896,7 @@ public String InsertReservation() throws Exception {
 		
 		
 		//DB저장
-		ReservationDAO.insertReservation(reservation);
+	    reservationDAO.insertReservation(reservation);
 		
 		RequestDispatcher rd=
 				request.getRequestDispatcher(
@@ -940,7 +964,7 @@ public String InsertReservation() throws Exception {
 		//1.StudentDAO에서 페이지에 해당하는 학생조회 메서들 호출
 		System.out.println("member 세션 출력"+member);
 		
-		RESERVATION_LIST=ReservationDAO.selectReservationList(length,page,member.getUserid());
+		RESERVATION_LIST=reservationDAO.selectReservationList(length,page,member.getUserid());
 		//2.request에 1의 page에 해당하는 학생 정보 저장
 		System.out.println("성공"+RESERVATION_LIST);
 		
@@ -949,7 +973,7 @@ public String InsertReservation() throws Exception {
 		System.out.println("성공"+RESERVATION_LIST);
 		
 		//페이지에 해당하는 학생수 조회
-		int reservationCount=ReservationDAO.selectReservationCount(member.getUserid());
+		int reservationCount=reservationDAO.selectReservationCount(member.getUserid());
 		System.out.println("reservationCount"+reservationCount);
 		//다른페이지로 이동하는 링크테그 만듬
 //		PageUtil.generate(현제페이지,전체건수,한페이지당보여줄row수,주소)
@@ -961,7 +985,10 @@ public String InsertReservation() throws Exception {
 		
 		String pageLinkTag=PageUtil.generate(page, reservationCount, length, "ReservationService?method=viewReservationListById");
 		request.setAttribute("PAGE_LINK_TAG",pageLinkTag);
-		
+		maxPage=(reservationCount/length);
+		if(reservationCount%length!=0){
+			maxPage++;
+		}
 		System.out.println("---viewReservationListById종료---");
 		return "success";
 		

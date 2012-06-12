@@ -19,15 +19,13 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 
-
-
 import kr.or.kosta.moviesystem.member.Member;
 import kr.or.kosta.moviesystem.movie.Movie;
 import kr.or.kosta.moviesystem.screentime.ScreenTime;
 import kr.or.kosta.moviesystem.util.ConnectionUtil;
 
 
-public class ReservationDAO {
+public class ReservationDAO implements IReservationDAO{
 
 	
 	private static String resource="sqlmap-config.xml";
@@ -62,7 +60,8 @@ public class ReservationDAO {
     VALUES (res_seq.nextval,?,           ?,      sysdate,         ?,           ?,               ?             ,'결제완료',        ?)
 </insert>
 	 */
-	public static void insertReservation(Reservation reservation) {
+	@Override
+	public void insertReservation(Reservation reservation) {
 		
 		SqlSession session= null;
 		try{
@@ -118,8 +117,8 @@ public class ReservationDAO {
 	 * 출력=영화이름
 	 
 	 */
-	
-	public static List<Reservation> selectReservationList(int length,int page,String memberid){//반환값을 ArrayList로 한다.
+	@Override
+	public List<Reservation> selectReservationList(int length,int page,String memberid){//반환값을 ArrayList로 한다.
 		SqlSession session=null;
 		List<Reservation> reservationList=null;
 		try{
@@ -142,8 +141,8 @@ public class ReservationDAO {
 	 * userid와 mnom으로 group by time 으로 된 정보의 time sum(total_price) count(res_qty)
 
 	 */
-	
-	public static List<Reservation> selectReservationTime(String userid, String mnum) {
+	@Override
+	public List<Reservation> selectReservationTime(String userid, String mnum) {
 		SqlSession session = null;
 		List<Reservation>reservationList=null;
 		try{
@@ -165,7 +164,8 @@ public class ReservationDAO {
 	 * 회원아이디로 예매내역을 찾을 수 있는 메서드
 
 	 */
-	public static ArrayList<Reservation> selectReservationList(String memberid) {
+	@Override
+	public ArrayList<Reservation> selectReservationList(String memberid) {
 		Connection con=null;
 		PreparedStatement psmt=null;
 		String sql=null;
@@ -222,7 +222,8 @@ public class ReservationDAO {
 	 * 회원아이디로 찾은 예매목록의 수를 찾을 수 있는 기능
 	 * 
 	 */
-	public static int selectReservationCount(String userid) {
+	@Override
+	public int selectReservationCount(String userid) {
 		SqlSession session=null;
 		Integer count=null;
 		try{
@@ -245,7 +246,8 @@ public class ReservationDAO {
 	 * 
 	 * 
 	 */
-	public static long selectReservationSeatNum(long Res_num) {
+	@Override
+	public long selectReservationSeatNum(long Res_num) {
 		Connection con =null;
 		PreparedStatement psmt=null;
 		String sql=null;//쿼리문 저장할 곳
@@ -276,7 +278,8 @@ public class ReservationDAO {
 	 * 
 	 * 
 	 */
-	public static long selectReservationQty(long res_num) {
+	@Override
+	public long selectReservationQty(long res_num) {
 		Connection con =null;
 		PreparedStatement psmt=null;
 		String sql=null;//쿼리문 저장할 곳
@@ -307,7 +310,9 @@ public class ReservationDAO {
 	 * 
 	 * 
 	 */
-	public static String selectReservationResNum(String scr_num) {
+	@Override
+	
+	public String selectReservationResNum(String scr_num) {
 		Connection con =null;
 		PreparedStatement psmt=null;
 		String sql=null;//쿼리문 저장할 곳
@@ -343,7 +348,8 @@ public class ReservationDAO {
 	 * @param userid
 	 * @param resnum
 	 */
-	public static Reservation selectReservation(String resnum) {
+	@Override
+	public Reservation selectReservation(String resnum) {
 		Connection con =null;
 		PreparedStatement psmt=null;
 		String sql=null;//쿼리문 저장할 곳
@@ -399,7 +405,8 @@ public class ReservationDAO {
 	 * @param userid
 	 * @param resnum
 	 */
-	public static void removeReservation(String resnum) {
+	@Override
+	public void removeReservation(String resnum) {
 		 Connection con=null;
 		  PreparedStatement psmt=null;
 		  
@@ -420,8 +427,8 @@ public class ReservationDAO {
 		
 	
 	}
-		
-	public static void cancelReservation(String resnum) {
+	@Override
+	public void cancelReservation(String resnum) {
 		 Connection con=null;
 		  PreparedStatement psmt=null;
 		  
@@ -447,7 +454,8 @@ public class ReservationDAO {
 	 * 예매목록 업데이트(수정) 기능
 
 	 */
-	public static void updateReservation(Reservation reservation) {
+	@Override
+	public  void updateReservation(Reservation reservation) {
 		/* default generated stub */;
 		 Connection con=null;
 		  PreparedStatement psmt=null;
@@ -476,7 +484,8 @@ public class ReservationDAO {
 	 * SCR_NUM으로 예약한 좌석 번호를 찾기
 	 * 
 	 */
-	public static List<Reservation> selectSeatNumByScrnumAndUserid(String scrnum,String userid) {
+	@Override
+	public List<Reservation> selectSeatNumByScrnumAndUserid(String scrnum,String userid) {
 		SqlSession session = null;
 		List<Reservation>reservationList=null;
 		try{
@@ -505,7 +514,8 @@ public class ReservationDAO {
 		FROM reservation
 		WHERE scr_num = #{scrnum}
 	 */
-	public static List selectSeatNumByScrnum(String scrnum) {
+	@Override
+	public List selectSeatNumByScrnum(String scrnum) {
 		System.out.println("selectSeatNumByScrnum:scrnum="+scrnum);
 		SqlSession session=null;
 		List<Reservation> reservationList=null;
@@ -528,10 +538,12 @@ public class ReservationDAO {
 	 *Total seatList
 	 * 
 	 */
-	public static List selectTotalList(String scrnum) {
+	
+	@Override
+	public List selectTotalList(String scrnum) {
 		List<Reservation>SelectSeatList=null;
 		System.out.println("scrnum="+scrnum);
-		SelectSeatList=ReservationDAO.selectSeatNumByScrnum(scrnum);
+		SelectSeatList=this.selectSeatNumByScrnum(scrnum);
 		
 		ArrayList<Integer>TotalSeatList=new ArrayList<Integer>();
 		System.out.println("SelectSeatList="+SelectSeatList);
