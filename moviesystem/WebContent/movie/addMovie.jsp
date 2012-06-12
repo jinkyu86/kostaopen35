@@ -31,7 +31,6 @@
 </c:choose>
 <script>
 	$(function(){
-		memcheck('${LOGIN_MEMBER.userid}');
 		$('#member_manage').css('background-color','#C4E2FF');
 		$('#movie_List').css('background-color','#EBFBFF');
 		$('#movie_list').click(function(){
@@ -39,8 +38,8 @@
 		});
 		$('#cancel').click(function(){history.back();});
 		
-		$("#confirm").click(function(event){
-			//alert($('#method').val());
+		$("#confirm").click(function(){
+			alert("##");
 			if($('#movie_name').val()==''){
 				alert('영화이름을 입력하세요.');
 				$('#movie_name').focus();
@@ -77,27 +76,9 @@
 				return false;
 			}
 			//alert($('#method').val());
-			
-			$("#movie_poster").uploadifyUpload();
-			event.preventDefault();
-		});
-		$("#movie_poster").uploadify({
-			cancelImg : '/moviesystem/uploadify/cancel.png',
-			uploader : '/moviesystem/uploadify/uploadify.swf',
-			script : '/moviesystem/MovieService?method=MovieImgUpload',
-			//sizeLimit : 20097152,
-			multi : false,
-			auto : false,
-			fileExt : '*.jpg;*.jpeg;*.png;*.gif',
-			fileDexc : 'Web Image Files(.jpg, .gif, .png)',
-			buttonText : 'Select Photo',
-			onComplete : function(event, queueID, fileObj, response, data){
-				//업로드 완료 되었을 때 할일
-				alert(response+"를 서버에 저장했습니다.");
-				$("#poster_name").val(response);
-				// form의 action 설정된 서블릿으로 입력정보 전송
-				$('#movie_form').submit();
-			}
+			$('#movie_form').submit();
+			//$("#movie_poster").uploadifyUpload();
+			//event.preventDefault();
 		});
 	});
 </script>
@@ -124,7 +105,7 @@
 		<td>
 			<form name="movie_form" id="movie_form" method="post">
 			<input type="hidden" name="mnum" value="${Movie.mnum}">
-			<input type="hidden" name="poster_name" id="poster_name">
+			<input type="hidden" name="poster_name" id="poster_name" value="${Movie.poster}">
 			<table class="table_style" align="right" border="1px" cellspacing="0" bgcolor="#ffffff">
 				<tr>
 					<td style="width:15%;text-align:center">영화명</td>
