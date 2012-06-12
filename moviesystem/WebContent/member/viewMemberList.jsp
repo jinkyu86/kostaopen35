@@ -26,8 +26,7 @@
 			<jsp:include page="/common/top.jsp"></jsp:include>
 		</td>
 	</tr>
-	<!-- 상단 메뉴 끝 -->
-	
+	<!-- 상단 메뉴 끝 -->	
 	<tr>
 		<!-- 좌측 메뉴 시작 -->
 		<td rowspan="2" valign="top" style="width:20%">

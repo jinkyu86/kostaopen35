@@ -80,7 +80,6 @@
 			</c:forEach>
 		</table>
 			<table align="center">
-
 		</td>
 		</tr>
 		</table>

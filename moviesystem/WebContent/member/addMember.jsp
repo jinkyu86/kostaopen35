@@ -17,13 +17,13 @@
 
 
 	$(document).ready(function(){
-		
 		$("#member_info").css('background-color','#C4E2FF');
 		$("#member_join").css('background-color','#EBFBFF');
-		
+	
 		$("#userid").change(function(){
+		//userid에 입력한 갓을 리턴
 		var userid=$("#userid").val();
-		$.ajax('/moviesystem/checkMemberID.action',{
+	$.ajax('/moviesystem/checkMemberID.action',{
 		data:{"userid":userid},
 		success:function(data){
 			$('#idcheck').html(data);
@@ -81,10 +81,9 @@
 		</td>
 		<!-- 좌측 메뉴 끝 -->
 		<td>
-			<form id="my_form" action="/moviesystem/addMember.action" method="post">
 			<div class="menu_title" ><font size="5">Join</font></div>
 			<table class="table_style" style="width:80%">
-			
+				<form id="my_form" action="/moviesystem/addMember.action" method="post">
 				<tr>
 					<td><label>아이디</label></td>
 					<td><input type="text" name="userid" id="userid"/>
@@ -126,10 +125,8 @@
 				</td>
 				</tr>
 				</table>
-
-		</form>
+			</form>
 		</td>
-		</tr>
-
+	</tr>
 </body>
 </html>

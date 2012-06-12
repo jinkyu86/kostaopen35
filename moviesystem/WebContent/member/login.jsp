@@ -42,21 +42,23 @@
 		<!-- 좌측 메뉴 끝 -->
 		<td>
 			<div class="menu_title" ><font size="5">Login</font>	</div>
-			<table class="table_style" style="width:50%">
-				<form action="/moviesystem/login.action" method="post">
+			
+			<form action="/moviesystem/login.action" method="post">
+				<table class="table_style" style="width:50%">
 				<tr>
 					<td>ID:</td>
 					<td><input type="text" name="userid" tabindex="1"></td>
-					<td rowspan="2" ">
-					<input type="submit" value="로그인" tabindex="3">
-					</td>
+					<!-- <td rowspan="2" "><input type="submit" value="로그인" tabindex="3"></td> -->
 				</tr>
 				<tr>
 					<td id="pw">PASSWORD:</td>
 					<td><input type="password" name="pw" tabindex="2"></td>
 				</tr>
-				</form>		
-			</table>
+				</table>
+				<input type="submit" value="로그인" tabindex="3">
+			</form>		
+			
+			
 		</td>
 			<tr>
 				<td colspan="2">

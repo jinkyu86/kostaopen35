@@ -57,10 +57,10 @@
 				  		<input type="submit" value="회원탈퇴"/>
 				  	</td>
 				  	</tr>
-			</table>
-		</form>
-	</td>
-	</tr>
-</table>
+				</table>
+			</form>
+		</td>
+		</tr>
+	</table>
 </body>
 </html>

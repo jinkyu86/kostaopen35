@@ -38,9 +38,7 @@
 		<tr>
 			
 			<td>${MEMBER.userid}님의 비밀번호는<font color="blue"> ${MEMBER.pw}</font>입니다.</td>
-		</tr>
-	
-			
+		</tr>			
 	</table>
 	</td>
 		<tr>

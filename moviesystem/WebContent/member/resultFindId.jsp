@@ -37,8 +37,7 @@
 			<div class="menu_title" >Find Id</div>
 			<table class="table_style" align="right">
 		
-		<tr>
-			
+		<tr>			
 			<td>${MEMBER.name}님의 아이디는<font color="blue"> ${MEMBER.userid}</font>입니다.</td>
 		</tr>
 		
