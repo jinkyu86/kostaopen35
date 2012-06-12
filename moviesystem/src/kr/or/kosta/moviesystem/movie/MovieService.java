@@ -73,13 +73,22 @@ ServletResponseAware,SessionAware,IService{
 	private String movie_edate;
 	private int MaxPage;
 	
+	private List<ScreenTime> SCREENTIME_LIST ;
 	
 	
 	/* getter/setter Ω√¿€ */	
+	
+	
 	@Override
 	public Map getSession() {
 		// TODO Auto-generated method stub
 		return session;
+	}
+	public List<ScreenTime> getSCREENTIME_LIST() {
+		return SCREENTIME_LIST;
+	}
+	public void setSCREENTIME_LIST(List<ScreenTime> sCREENTIME_LIST) {
+		SCREENTIME_LIST = sCREENTIME_LIST;
 	}
 	public int getMaxPage() {
 		return MaxPage;
@@ -375,6 +384,17 @@ ServletResponseAware,SessionAware,IService{
 			gubun = "total";
 		}
 		System.out.println(mnum);
+		MOVIE = movieDAO.selectMovie(mnum);
+		return "success";
+	}
+	
+	public String mviewMovie() throws Exception {
+		if(gubun==null || gubun==""){
+			gubun = "total";
+		}
+		//System.out.println(mnum);
+		SCREENTIME_LIST = ScreenTimeDAO.selectScreen(mnum);
+		//System.out.println(SCREENTIME_LIST);
 		MOVIE = movieDAO.selectMovie(mnum);
 		return "success";
 	}
