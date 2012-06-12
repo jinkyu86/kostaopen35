@@ -297,6 +297,10 @@
 			<result name="success">/member/findId.jsp</result>
 		</action>
 		
+		<action name="mfindIdForm" class="kr.or.kosta.moviesystem.member.MemberService" method="findIdForm">
+			<result name="success">/mmember/findId.jsp</result>
+		</action>
+		
 		<action name="findId" class="kr.or.kosta.moviesystem.member.MemberService" method="findId">
 			<param name="aliases">
 			#{'name':'name','email':'email'}
@@ -304,6 +308,7 @@
 			<result name="success">/member/resultFindId.jsp</result>
 			<result name="findId">/member/findId.jsp</result>
 		</action>
+		
 		
 		<action name="mfindId" class="kr.or.kosta.moviesystem.member.MemberService" method="findId">
 			<param name="aliases">
@@ -359,7 +364,7 @@
 		</action>
 		
 		<action name="mlogoutMember" class="kr.or.kosta.moviesystem.member.MemberService" method="logoutMember">
-			<result name="success" type="chain">mmain</result>
+			<result name="success" type="redirectAction">mmain</result>
 		</action>		
 		
 		<action name="searchMemberList" class="kr.or.kosta.moviesystem.member.MemberService" method="searchMemberList">
