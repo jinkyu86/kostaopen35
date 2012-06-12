@@ -36,10 +36,10 @@
 				<div data-role="navbar">
 					<ul>
 						<c:if test="${page != 1 }">
-							<li><a href="/moviesystem/mviewMovieList.action?page=${page-1}" data-icon="arrow-l">이전</a></li>
+							<li><a href="/moviesystem/mmain.action?page=${page-1}" data-icon="arrow-l">이전</a></li>
 						</c:if>
 						<c:if test="${page<MaxPage}">
-							<li><a href="/moviesystem/mviewMovieList.action?page=${page+1}" data-icon="arrow-r">다음</a></li>
+							<li><a href="/moviesystem/mmain.action?page=${page+1}" data-icon="arrow-r">다음</a></li>
 						</c:if>
 					</ul>
 				</div>
