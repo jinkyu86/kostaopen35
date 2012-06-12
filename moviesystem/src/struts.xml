@@ -418,6 +418,14 @@
 			</param>
 			<result name="success">/movie/viewMovie.jsp</result>
 		</action>
+		
+		<action name="mviewMovie" class="kr.or.kosta.moviesystem.movie.MovieService" method="mviewMovie">
+			<param name="aliases">
+				#{'mnum':'mnum','gubun':'gubun'}
+			</param>
+			<result name="success">/movie/mviewMovie.jsp</result>
+		</action>
+		
 		<action name="editMemberForm" class="kr.or.kosta.moviesystem.member.MemberService" method="editMemberForm">
 			<result name="success">/member/editMember.jsp</result>
 		</action>
