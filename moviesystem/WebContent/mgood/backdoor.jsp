@@ -8,6 +8,6 @@
 	</head>
 	<body>
 	
-		<a href="/moviesystem/login.action?userid=mmanager&pw=1234">사용자계정으로 로그인</a>
+		<a href="/moviesystem/mlogin.action?userid=mmanager&pw=1234">사용자계정으로 로그인</a>
 	</body>
 </html>

@@ -14,16 +14,17 @@
 		<link rel="shortcut icon" href="../image/icon.png">
 		<link rel="apple-touch-icon" href="../image/icon.png">
 
+<!--  
 		<link href="http://code.jquery.com/mobile/latest/jquery.mobile.min.css" 
 			rel="stylesheet" type="text/css" />
 		<script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
 		<script src="http://code.jquery.com/mobile/latest/jquery.mobile.min.js"></script>
-			
-		<!--  
+-->			
+		
 		<link href="../framework/jquery.mobile-1.0.css" rel="stylesheet" type="text/css" />
 		<script src="../framework/jquery-1.6.4.js"></script>
 		<script src="../framework/jquery.mobile-1.0.js"></script>
-		-->
+		
 	</head> 
 
 	<body>
@@ -67,6 +68,9 @@
 						<input type="submit" value="결제하기" />
 					</form>
 				</c:if>
+				
+				<a href="/moviesystem/mViewGoodList.action" data-role="button">쇼핑하러가기</a>
+				
 			</div><!-- end content -->
 
 			<div data-role="footer" data-position="fixed">
