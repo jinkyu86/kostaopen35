@@ -2,7 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 			<div data-role="header">
-
 				<a href="#" data-icon="arrow-l" data-rel="back"  data-role="button">이전</a>
 				
 				<div data-role="controlgroup" data-type="horizontal" align="right">
