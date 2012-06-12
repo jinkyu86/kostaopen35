@@ -28,15 +28,9 @@
 
 	<body>
 		<div data-role="page">
-			<div data-role="header">
-				<div data-role="controlgroup" data-type="horizontal">
-					<a href="#" data-role="button" >Logout</a>
-					<a href="/moviesystem/mMypage.action" data-role="button">MyPage</a>		
-				</div>
-			</div><!-- end header 1-->
-			
+		
+			<jsp:include page="/common/mHeader.jsp"></jsp:include>
 
-			
 			<div data-role="content">
 					<ul data-role="listview"  data-split-icon="delete">
 						<c:forEach var="good" items="${GOOD_LIST}" varStatus="i">	
