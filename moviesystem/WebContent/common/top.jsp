@@ -28,7 +28,7 @@
 			<table class="sub_menu" align="center">
 				<tr id="movie_sub" class="sub_menu_tr">
 					<td class="movie_menu" id="moviemenu1"><A HREF="/moviesystem/viewMovieList.action?gubun=total">Movie Info</A></td>
-					<td class="movie_menu" id="moviemenu2"><A HREF="/moviesystem/MovieService?method=rankingMovieList">Movie Ranking</A></td>
+					<td class="movie_menu" id="moviemenu2"><A HREF="/moviesystem/rankingMovieList.action">Movie Ranking</A></td>
 				</tr>
 				<tr id="reservation_sub" class="sub_menu_tr">
 					<td class="reservation_menu"><a href="/moviesystem/addReservationForm.action">Reservation</a></td>
