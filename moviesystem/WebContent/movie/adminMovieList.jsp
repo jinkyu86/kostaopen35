@@ -15,7 +15,6 @@
 <script src="/moviesystem/js/common.jsp"></script>
 <script>
 	$(function(){
-		memcheck('${LOGIN_MEMBER.userid}');
 		$('#member_manage').css('background-color','#C4E2FF');
 		$('#movie_List').css('background-color','#EBFBFF');
 		$('#button').click(function(){
