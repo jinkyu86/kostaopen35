@@ -21,19 +21,10 @@
 	</head>
 	<body>
 		<div data-role="page">
-			<div data-role="header">
-				<a href="#" data-icon="arrow-l" data-rel="back">이전</a>
-				<h1>List Filter</h1>
-				<a href="/moviesystem/member/mlogin.jsp">로그인</a>
-			</div>
-			<div data-role="header">
-				<div data-role="navbar" data-iconpos="left">
-					<ul>
-						<li><a href="mmain.jsp" class="ui-btn-active">영화</a></li>
-						<li><a href="mgood.jsp">쇼핑</a></li>
-					</ul>
-				</div>
-			</div>
+
+			
+			<jsp:include page="/common/mHeader.jsp"></jsp:include>
+			
 			<div data-role="content" style="height:100%">
 				<ul data-role="listview">
 					<c:forEach var="movieList" items="${MOVIE_LIST}">
