@@ -566,5 +566,88 @@
 		</action>
 
 		
+		
+		<action name="mviewCancelByResNum" 
+				class="kr.or.kosta.moviesystem.reservation.ReservationService" 
+				method="viewCancelByResNum">
+			<param name="aliases">
+			</param>
+			<!--파라메터이름과 속서의 이름이 다를때 어떤 이름의 파라메터를 어떤이름의 속성에 대입할지 설정-->
+			<result name="success" type="chain">mviewReservationListById</result>
+		</action>
+<action name="mviewReservationSeat" 
+				class="kr.or.kosta.moviesystem.reservation.ReservationService" 
+				method="viewReservationSeat">
+			<param name="aliases">
+			</param>
+			<!--파라메터이름과 속서의 이름이 다를때 어떤 이름의 파라메터를 어떤이름의 속성에 대입할지 설정-->
+			<result name="success">/mreservation/viewSeatList.jsp</result>
+		</action>
+<action name="mviewReservationTimeForm" 
+				class="kr.or.kosta.moviesystem.reservation.ReservationService" 
+				method="viewReservationTimeForm">
+			<param name="aliases">
+			</param>
+			<!--파라메터이름과 속서의 이름이 다를때 어떤 이름의 파라메터를 어떤이름의 속성에 대입할지 설정-->
+			<result name="success">/mreservation/viewReservationTime.jsp</result>
+		</action>	
+
+<action name="mviewReservationListById" 
+				class="kr.or.kosta.moviesystem.reservation.ReservationService" 
+				method="viewReservationListById">
+			<param name="aliases">
+			</param>
+			<!--파라메터이름과 속서의 이름이 다를때 어떤 이름의 파라메터를 어떤이름의 속성에 대입할지 설정-->
+			<result name="success">/mreservation/viewReservationListByid.jsp</result>
+		</action>	
+
+<action name="mInsertReservation" 
+				class="kr.or.kosta.moviesystem.reservation.ReservationService" 
+				method="InsertReservation">
+			<param name="aliases">
+			</param>
+			<!--파라메터이름과 속서의 이름이 다를때 어떤 이름의 파라메터를 어떤이름의 속성에 대입할지 설정-->
+			<result name="success"  type="chain">mviewReservationListById</result>
+		</action>	
+
+
+<action name="mSelectSeat" 
+				class="kr.or.kosta.moviesystem.reservation.ReservationService" 
+				method="SelectSeat">
+			<param name="aliases">
+			</param>
+			<!--파라메터이름과 속서의 이름이 다를때 어떤 이름의 파라메터를 어떤이름의 속성에 대입할지 설정-->
+			<result name="resuccess">/mreservation/viewSeatListByScrnum.jsp</result>
+			<result name="success">/mreservation/pay.jsp</result>
+		</action>
+
+
+<action name="mviewSeatListByScrnum" 
+				class="kr.or.kosta.moviesystem.reservation.ReservationService" 
+				method="viewSeatListByScrnum">
+			<param name="aliases">
+			</param>
+			<!--파라메터이름과 속서의 이름이 다를때 어떤 이름의 파라메터를 어떤이름의 속성에 대입할지 설정-->
+			
+			<result name="success">/mreservation/viewSeatListByScrnum.jsp</result>
+		</action>
+
+
+<action name="maddReservationByTimeForm" 
+				class="kr.or.kosta.moviesystem.reservation.ReservationService" 
+				method="addReservationByTimeForm">
+			
+			<result name="success">/mreservation/addReservationByTime.jsp</result>
+			<!--파라메터이름과 속서의 이름이 다를때 어떤 이름의 파라메터를 어떤이름의 속성에 대입할지 설정-->
+			
+		</action>
+
+
+
+		<action name="mviewScreenTimeListBymnum" 
+			  class="kr.or.kosta.moviesystem.screentime.ScreenTimeService" 
+			  method="viewScreenTimeListBymnum">
+			<result name="success">/mreservation/viewScreenTimeListBymnum.jsp</result>
+		</action>	
 	</package>
 </struts>
