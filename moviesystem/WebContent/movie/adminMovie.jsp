@@ -15,7 +15,6 @@
 <script src="/moviesystem/js/common.jsp"></script>
 <script>
 	$(function(){
-		memcheck('${LOGIN_MEMBER.userid}');
 		$('#button').click(function(){
 			$('#method').val('adminMovieList');
 			$('#adminMovie').submit();
