@@ -36,7 +36,7 @@
 	<body>
 		<div data-role="page">
 			<div data-role="header">
-				<h1>List Divider</h1>
+				<h1>예매목록 보기(viewReservationListByid.jsp)</h1>
 			</div>
 
 			<div data-role="content">
@@ -45,11 +45,12 @@
 				학생 한명 꺼내서 각 학생들의 학번 studno 이름 name 출력
 				student/viewStudentList 참조
 				 -->
-				 	<c:forEach  var="reservation"  items="${RESERVATION_LIST}">	
-						<li data-role="list-divider">
+				 	<li data-role="list-divider">
 						영화
 						</li>
-						<li><a href="/moviesystem/viewReservationTimeForm.action?mname=${reservation.movie.mname}">
+				 	<c:forEach  var="reservation"  items="${RESERVATION_LIST}">	
+						
+						<li><a href="/moviesystem/mviewReservationTimeForm.action?mname=${reservation.movie.mname}">
 										${reservation.movie.mname}
 						</a>
 						</li>
@@ -61,11 +62,11 @@
 				<div data-role="navbar">
 					<ul>
 						<c:if test="${page !=1}">
-						<li><a href="/moviesystem/viewReservationListByid.action?page=${page-1}" data-icon="arrow-l">이전</a></li>
+						<li><a href="/moviesystem/mviewReservationListById.action?page=${page-1}" data-icon="arrow-l">이전</a></li>
 						</c:if>
 						
 						<c:if test="${page !=maxPage}">
-						<li><a href="/moviesystem/viewReservationListByid.action?page=${page+1}" data-icon="arrow-r">다음</a></li>
+						<li><a href="/moviesystem/mviewReservationListById.action?page=${page+1}" data-icon="arrow-r">다음</a></li>
 						</c:if>
 					</ul>
 				</div>

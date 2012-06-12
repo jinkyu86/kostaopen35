@@ -32,7 +32,7 @@
 	<body>
 		<div data-role="page">
 			<div data-role="header">
-				<h1>List Divider</h1>
+				<h1>pay.jsp</h1>
 			</div>
 
 			<div data-role="content">
@@ -77,7 +77,7 @@
 			<table border="0" align="center">
 	<tr>
 		<td>결제하기</td>
-		<td><a href="/moviesystem/InsertReservation.action">
+		<td><a href="/moviesystem/mInsertReservation.action">
 		<input type="button" value="확인"/>
 		</a></td>
 	</tr>
