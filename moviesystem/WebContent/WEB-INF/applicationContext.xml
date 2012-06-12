@@ -98,6 +98,7 @@
 			<aop:pointcut id="publicmethod6" expression="execution(* kr.or.kosta.moviesystem.movie.MovieService.admin*(..))"/>
 			<aop:pointcut id="publicmethod7" expression="execution(* kr.or.kosta.moviesystem.movie.MovieService.addMovieForm(..))"/>
 			<aop:pointcut id="publicmethod8" expression="execution(* kr.or.kosta.moviesystem.movie.MovieService.editMovieForm(..))"/>
+			
 						
 			<aop:around pointcut-ref="publicmethod1" method="aroundLogin"/>
 			<aop:around pointcut-ref="publicmethod2" method="aroundLogin"/>
