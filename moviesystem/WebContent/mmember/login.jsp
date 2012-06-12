@@ -51,19 +51,24 @@
 						<label for="pw">패스워드:</label>
 						<input id="pw" type="password" name="pw" value=""/>
 					</div>
+					<div data-role="navbar">
+						<ul>
+							<li><a href="/moviesystem/mmember/mfindIdForm.action" >아이디찾기</a></li>
+							<li><a href="/moviesystem/mmember/mfindPwForm.action" >비밀번호찾기</a></li>
+						</ul>
+					</div>
 					<input type="submit" value="로그인"/>
-				</form>
+				</form>					
+			</div><!-- end content -->
 			
-			<div data-role="footer">
+			<!--<div data-role="footer">
 				  <div data-role="navbar">
 					<ul>
 						<li><a href="/moviesystem/mmember/mfindIdForm.action" >아이디찾기</a></li>
 						<li><a href="/moviesystem/mmember/mfindPwForm.action" >비밀번호찾기</a></li>
 					</ul>
 				</div>
-			</div>
-					
-			</div><!-- end content -->
+			</div> end footer -->
 		</div><!-- end page -->
 	</body>
 </html>
