@@ -288,7 +288,7 @@
 		</action>
 		
 		<action name="mlogin" class="kr.or.kosta.moviesystem.member.MemberService" method="login">
-			<result name="success" type="chain">mmain</result>
+			<result name="success"  type="redirectAction">mmain</result>
 			
 			<result name="login">/mmember/login.jsp</result>
 		</action>		
