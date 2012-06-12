@@ -82,7 +82,7 @@
 					<td>장르 : ${MOVIE.genre}</td>
 				</tr>
 				<tr>
-					<td>개봉일 : ${MOVIE.launchDate}</td>
+					<td>개봉일 : <fmt:formatDate value="${movieList.launchDate}" pattern="yyyy-MM-dd"/></td>
 				</tr>
 				<tr>
 					<td>가격 : ${MOVIE.mprice}</td>
