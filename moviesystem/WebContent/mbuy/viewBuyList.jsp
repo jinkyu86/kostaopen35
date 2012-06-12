@@ -31,23 +31,8 @@
 	</head> 
 
 	<body>
-		<div data-role="page" id="one">
-			<div data-role="header" id="h1">
-				<div data-role="controlgroup" data-type="horizontal">
-					<a href="#" data-role="button" >Logout</a>
-					<a href="/moviesystem/mMypage.action" data-role="button">MyPage</a>		
-				</div>
-			</div><!-- end header 1-->
-			
-			<div data-role="header" id="h2">
-				<div data-role="navbar">
-					<ul>
-						<li><a href="#">Movie</a></li>
-						<li><a href="#">Reservation</a></li>
-						<li><a href="/moviesystem/mgood/mViewGoodList.action" class="ui-btn-active">Shopping</a></li>
-					</ul>
-				</div>
-			</div><!-- end header2 -->
+		<div data-role="page" >
+			<jsp:include page="/common/mHeader.jsp"></jsp:include>
 
 			<div data-role="content">
 				

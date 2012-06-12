@@ -29,22 +29,8 @@
 
 	<body>
 		<div data-role="page">
-			<div data-role="header">
-				<div data-role="controlgroup" data-type="horizontal" >
-					<a href="#" data-role="button" >Login</a>
-					<a href="#" data-role="button">Join</a>
-				</div>
-			</div><!-- end header -->
-			
-			<div data-role="header">
-				<div data-role="navbar">
-					<ul>
-						<li><a href="#">Movie</a></li>
-						<li><a href="#">Reservation</a></li>
-						<li><a href="/moviesystem/mgood/mViewGoodList.action" class="ui-btn-active">Shopping</a></li>
-					</ul>
-				</div>
-			</div>
+		
+			<jsp:include page="/common/mHeader.jsp"></jsp:include>
 
 			<div data-role="content" align="center">
 				<h3 align="center">결제가 완료되었습니다.</h3><br/>
