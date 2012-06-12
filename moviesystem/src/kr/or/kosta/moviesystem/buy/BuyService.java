@@ -219,7 +219,10 @@ public class BuyService implements ModelDriven, ServletContextAware, ServletRequ
 		
 		BUY_LIST=buyDAO.selectCancelableBuyList(userid,length, page);
 		int buyCount=buyDAO.selectCancelableBuyListCount(userid);
-		
+		maxPage=(buyCount/length);
+		if(buyCount%length!=0){
+			maxPage++;
+		}
 		PAGE_LINK_TAG=PageUtil.generate(page, buyCount, length, 
 				"/moviesystem/cancelBuyListForm.action?userid="+userid);
 		return "success";
@@ -247,7 +250,10 @@ public class BuyService implements ModelDriven, ServletContextAware, ServletRequ
 		
 		BUY_LIST=buyDAO.selectCanceledBuyList(userid,length, page);
 		int buyCount=buyDAO.selectCanceledBuyListCount(userid);
-		
+		maxPage=(buyCount/length);
+		if(buyCount%length!=0){
+			maxPage++;
+		}
 		PAGE_LINK_TAG=PageUtil.generate(page, buyCount, length, 
 				"/moviesystem/viewCanceledBuyList.action?userid="+userid);
 
