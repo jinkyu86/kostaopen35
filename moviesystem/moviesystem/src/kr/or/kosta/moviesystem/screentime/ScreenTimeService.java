@@ -3,24 +3,31 @@ package kr.or.kosta.moviesystem.screentime;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.apache.struts2.interceptor.SessionAware;
+
+import kr.or.kosta.moviesystem.member.Member;
 
 import com.opensymphony.xwork2.ModelDriven;
 
 /**
  * Servlet implementation class ScreenTimeService
  */
-public class ScreenTimeService implements ModelDriven {
+public class ScreenTimeService implements ModelDriven,SessionAware {
 	private static final long serialVersionUID = 1L;
 	private List<ScreenTime> SCREENTIME_LIST ;
 	private String mnum;
 	private String mname;
-	
+	private Map session; 
+	private Member member=new Member();
 	
 	
 	@Override
@@ -31,7 +38,31 @@ public class ScreenTimeService implements ModelDriven {
   
 	
 	
-    public String getMname() {
+    public Member getMember() {
+		return member;
+	}
+
+
+
+	public void setMember(Member member) {
+		this.member = member;
+	}
+
+
+
+	public Map getSession() {
+		return session;
+	}
+
+
+
+	public void setSession(Map session) {
+		this.session = session;
+	}
+
+
+
+	public String getMname() {
 		return mname;
 	}
 
@@ -76,6 +107,10 @@ public class ScreenTimeService implements ModelDriven {
     	System.out.println("viewScreenTimeListBymnum실행 ");
     	System.out.println("영화를 선택해서 해당 영화의 시간을 보여주기 위한 곳");
 		System.out.println("mnum==== "+mnum+"==");
+		
+//		Member member=new Member();
+		member.setUserid("1");
+		session.put("LOGIN_MEMBER",member);
 		SCREENTIME_LIST=ScreenTimeDAO.selectScreen(mnum);
 		ScreenTime SCREEN_LIST_MNAME ;
 		SCREEN_LIST_MNAME=SCREENTIME_LIST.get(0);
