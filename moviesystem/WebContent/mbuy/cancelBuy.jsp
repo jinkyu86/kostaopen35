@@ -15,15 +15,16 @@
 		<link rel="shortcut icon" href="../image/icon.png">
 		<link rel="apple-touch-icon" href="../image/icon.png">
 
+<!-- 
 		<link href="http://code.jquery.com/mobile/latest/jquery.mobile.min.css" rel="stylesheet" type="text/css" />
 		<script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
 		<script src="http://code.jquery.com/mobile/latest/jquery.mobile.min.js"></script>
+-->		
 		
-		<!-- 
 		<link href="../framework/jquery.mobile-1.0.css" rel="stylesheet" type="text/css" />
 		<script src="../framework/jquery-1.6.4.js"></script>
 		<script src="../framework/jquery.mobile-1.0.js"></script>
-		 -->
+		 
 	</head> 
 
 	<body>
@@ -66,10 +67,10 @@
 				<div data-role="navbar" >
 					<ul>
 						<c:if test="${page!=1}">
-						<li><a href="/moviesystem/mbuy/mViewBuyList.action?page=${page-1}" data-icon="arrow-l">Prev</a></li>
+						<li><a href="/moviesystem/mbuy/mCancelBuyListForm.action?page=${page-1}" data-icon="arrow-l">Prev</a></li>
 						</c:if>
 						<c:if test="${page<maxPage }">
-						<li><a href="/moviesystem/mbuy/mViewBuyList.action?page=${page+1}" data-icon="arrow-r" >Next</a></li>
+						<li><a href="/moviesystem/mbuy/mCancelBuyListForm.action?page=${page+1}" data-icon="arrow-r" >Next</a></li>
 						</c:if>
 					</ul>
 				</div>

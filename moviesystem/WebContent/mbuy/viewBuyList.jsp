@@ -74,7 +74,6 @@
 						</c:if>
 					</ul>
 				</div>
-				 
 			</div><!-- end footer -->		
 		</div><!-- end page -->
 	
