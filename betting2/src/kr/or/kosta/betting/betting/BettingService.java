@@ -237,13 +237,13 @@ public class BettingService implements ModelDriven,IService
 //			bettingGame(request,response);
 //		}
 //	}
-	//베팅 테이블 삽입 메서드
-	public String insertBetting() throws Exception {
-
-		bettingDAO.insertHomeBetting(matchno);
-		bettingDAO.insertAwayBetting(matchno);
-		SUCCESS = "경기정보가 베팅 테이블에 삽입 되었습니다.";
-		return "success";
+//	//베팅 테이블 삽입 메서드
+//	public String insertBetting() throws Exception {
+//
+//		bettingDAO.insertHomeBetting(matchno);
+//		bettingDAO.insertAwayBetting(matchno);
+//		SUCCESS = "경기정보가 베팅 테이블에 삽입 되었습니다.";
+//		return "success";
 //		String matchNum = request.getParameter("matchno");
 //		
 //		BettingDAO.insertHomeBetting(matchNum);
@@ -253,7 +253,7 @@ public class BettingService implements ModelDriven,IService
 //				.getRequestDispatcher("/MatchService?method=viewMatchList");
 //		rd.forward(request, response);
 		
-	}
+//	}
 
 	//오늘자 베팅 리스트 조회
 	public String todayBettingList() throws Exception{
