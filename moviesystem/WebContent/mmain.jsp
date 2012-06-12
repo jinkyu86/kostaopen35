@@ -27,7 +27,7 @@
 			<div data-role="content" >
 				<ul data-role="listview">
 					<c:forEach var="movieList" items="${MOVIE_LIST}">
-						<li><a href="#"><img src="movieimg/${movieList.poster}" style="width:180px;height:220px;"/> 제목 : ${movieList.mname}<br/> 장르 : ${movieList.genre}<br/>개봉일 : <fmt:formatDate value="${movieList.launchDate}" pattern="yyyy-MM-dd"/></a></li>
+						<li><a href="/moviesystem/mviewMovie.action?mnum=${movieList.mnum}"><img src="movieimg/${movieList.poster}" style="width:180px;height:220px;"/> 제목 : ${movieList.mname}<br/> 장르 : ${movieList.genre}<br/>개봉일 : <fmt:formatDate value="${movieList.launchDate}" pattern="yyyy-MM-dd"/></a></li>
 						
 					</c:forEach>
 				</ul>
