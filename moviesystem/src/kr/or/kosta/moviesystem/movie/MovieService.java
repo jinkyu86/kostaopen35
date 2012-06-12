@@ -71,14 +71,21 @@ ServletResponseAware,SessionAware,IService{
 	private String schString;
 	private String movie_sdate;
 	private String movie_edate;
+	private int MaxPage;
 	
 	
 	
-	/* getter/setter 시작 */
+	/* getter/setter 시작 */	
 	@Override
 	public Map getSession() {
 		// TODO Auto-generated method stub
 		return session;
+	}
+	public int getMaxPage() {
+		return MaxPage;
+	}
+	public void setMaxPage(int maxPage) {
+		MaxPage = maxPage;
 	}
 	@Override
 	public void setSession(Map<String, Object> session) {
@@ -399,6 +406,28 @@ ServletResponseAware,SessionAware,IService{
 		
 		return "success";
 	}
+	
+	public String mviewMovieList() throws Exception {
+		int length = 5;
+		String pageLink = "mviewMovieList.action?gubun="+gubun;
+		if(page==0){
+			page = 1;
+		}
+		if(gubun=="" || gubun==null){
+			gubun = "total";
+		}
+		if(method=="" || method==null){
+			method = "viewMovieList";
+		}
+		
+		int MovieCnt = movieDAO.selectMovieCount(gubun);
+		MaxPage=(MovieCnt/length)+1;
+		MOVIE_LIST = movieDAO.selectMovieList(page, length, gubun);
+				
+		
+		return "success";
+	}
+	
 	
 	public String main() throws Exception{
 		SCREENMOVIE_LIST = movieDAO.selectMovieList(1, 3, "screen");
