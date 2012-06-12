@@ -29,10 +29,22 @@
 				<ul data-role="listview">
 					<c:forEach var="movieList" items="${MOVIE_LIST}">
 						<li><a href="#"><img src="movieimg/${movieList.poster}" style="width:180px;height:220px;"/> 제목 : ${movieList.mname}<br/> 장르 : ${movieList.genre}<br/>개봉일 : <fmt:formatDate value="${movieList.launchDate}" pattern="yyyy-MM-dd"/></a></li>
+						
 					</c:forEach>
 				</ul>
 			</div>
-			
+			<div data-role="footer">
+				<div data-role="navbar">
+					<ul>
+						<c:if test="${page != 1 }">
+							<li><a href="/moviesystem/mviewMovieList.action?page=${page-1}" data-icon="arrow-l">이전</a></li>
+						</c:if>
+						<c:if test="${page<MaxPage}">
+							<li><a href="/moviesystem/mviewMovieList.action?page=${page+1}" data-icon="arrow-r">다음</a></li>
+						</c:if>
+					</ul>
+				</div>
+			</div>
 			<div data-role="footer" data-position="fixde">
 				<h3>Kosta JAVA 6 Team</h3>
 			</div>
