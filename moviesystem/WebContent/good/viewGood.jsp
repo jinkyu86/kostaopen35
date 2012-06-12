@@ -1,76 +1,91 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<title>물건 조회</title>
+<link rel="stylesheet" href="/moviesystem/css/Layout.css">
+<script src="http://code.jquery.com/jquery-1.7.1.js"></script>
+<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.js"></script>
+<script src="/moviesystem/js/common.jsp"></script>
 
-<!DOCTYPE html> 
-<html> 
-	<head>
-		<title>물건조회</title>
-		<meta charset="UTF-8"/> 	
-		<meta name="viewport" 
-				content="width=device-width, initial-scale=1.0, 
-							maximum-scale=1.0, minimum-scale=1.0, 
-							user-scalable=no"/>
-		
-		<link rel="shortcut icon" href="../image/icon.png">
-		<link rel="apple-touch-icon" href="../image/icon.png">
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#my_form").validate({
+		rules:{
+			qty:{
+				digits:true,
+				range:[1,100]
+			}
+		},
+		messages:{
+			qty:{
+				digits:"숫자 정수를 입력해주세요.",
+				range:"1 이상 100 이하의 값을 입력해주세요."
+			}
+		},
+		errorPlacement: function(error, element) {     
+			error.appendTo( $("#qtymsg") );
+			}
+	});
+});
 
- 
-		<link href="http://code.jquery.com/mobile/latest/jquery.mobile.min.css" 
-			rel="stylesheet" type="text/css" />
-		<script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
-		<script src="http://code.jquery.com/mobile/latest/jquery.mobile.min.js"></script>
-	 		
-		<!--
-		<link href="../framework/jquery.mobile-1.0.css" rel="stylesheet" type="text/css" />
-		<script src="../framework/jquery-1.6.4.js"></script>
-		<script src="../framework/jquery.mobile-1.0.js"></script>
-		-->
+</script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('#my_page').css('background-color','#C4E2FF');
+		$('.top_row').css('background-color','#C4E2FF');
+	});
+</script>
+</head>
+<body>
 
-	</head> 
+<table width="90%" align="center">
+	<!-- 상단 메뉴 시작 -->
+	<tr>
+		<td colspan="3">
+			<jsp:include page="/common/top.jsp"></jsp:include>
+		</td>
+	</tr>
+	<!-- 상단 메뉴 끝 -->
+	<tr>
+<td width=10%></td>
+<td>
 
-	<body>
-		<div data-role="page">
-			<div data-role="header">
-				<div data-role="controlgroup" data-type="horizontal" >
-					<a href="#" data-role="button" >Login</a>
-					<a href="#" data-role="button">Join</a>
-				</div>
-			</div><!-- end header -->
+<table class="table_style" align="center">
+	<tr>
+		<td rowspan=3 width="200"><img src="/moviesystem/gphoto/${GOOD.photo}" width="200" height="200"></td>
+		<th class="top_row" width="80">상품명</th><td>${GOOD.gname}</td>
+	</tr>
+	<tr>
+		<th class="top_row">상품 가격</th><td>${GOOD.gprice}</td>
+	</tr>
+	<tr>
+		<th class="top_row">상품 설명</th><td width="500">${GOOD.detail}</td>
+	</tr>
+
+</table>
+
+<table border="0" align="center">
+	<form action="/moviesystem/addCartList.action"  method="post"  id="my_form"  align="center">
+		<input type="hidden"name="gnum" value="${GOOD.gnum}"/>
+		<tr>
+			<td  width="300" align="center">
+				수량 : <input type="text" name="qty"  value="1" id="qty" size="6"/>
+				<input type="submit" value="장바구니 담기"/>
+			</td>
+		</tr>
+		<tr>
+			<td align="center"><div id="qtymsg"></div></td>
 			
-			<div data-role="header">
-				<div data-role="navbar">
-					<ul>
-						<li><a href="#">Movie</a></li>
-						<li><a href="#">Reservation</a></li>
-						<li><a href="/moviesystem/mgood/mViewGoodList.action" class="ui-btn-active">Shopping</a></li>
-					</ul>
-				</div>
-			</div>
-
-			<div data-role="content">
-				<ul data-role="listview" data-insert="true">
-					<li>
-						<img src="./gphoto/${GOOD.photo}" />
-						<form action="/moviesystem/mAddCartList.action"  method="post" >
-							<label for="qty">수량 : </label>
-							<input name="qty" type="number" min="1" max="100" step="1" value="1" />
-							<input type="submit" value="장바구니 담기" data-inline="true"/>
-							<input type="hidden"name="gnum" value="${GOOD.gnum}"/>
-						</form>
-					</li>
-					<li data-role="list-divider">상품명</li>
-					<li>${GOOD.gname}</li>
-					<li data-role="list-divider">가격</li>
-					<li>${GOOD.gprice}</li>
-					<li data-role="list-divider">상품설명</li>
-					<li>${GOOD.detail}</li>
-				</ul>
-			</div><!-- end content -->
-
-			<div data-role="footer" data-position="fixed">
-				
-			</div><!-- end footer -->		
-				
-		</div><!-- end page -->
-	</body>
+		</tr>
+	</form>
+</table>
+</td>
+<td width=10%></td>
+</tr>
+</table>
+</body>
 </html>
