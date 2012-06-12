@@ -14,19 +14,19 @@
 		<link rel="shortcut icon" href="../image/icon.png">
 		<link rel="apple-touch-icon" href="../image/icon.png">
 
-		<!-- 
+<!--  
 		<link href="http://code.jquery.com/mobile/latest/jquery.mobile.min.css" 
 			rel="stylesheet" type="text/css" />
 		<script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
-		<script src="http://code.jquery.com/mobile/latest/jquery.mobile.min.js"></script>
-		-->
-		
+		<script src="http://code.jquery.com/mobile/latest/jquery.mobile.min.js"></script> -->
+
+
 		<link href="../framework/jquery.mobile-1.0.css" 
 			rel="stylesheet" type="text/css" />
 		<script src="../framework/jquery-1.6.4.js"></script>
-		<script src="../framework/jquery.mobile-1.0.js"></script>
+		<script src="../framework/jquery.mobile-1.0.js"></script>		
 		
-		<script type="text/javascript">
+ 		<script type="text/javascript">
 	 		<c:if test="${ERROR!=null}">
 	 			alert("${ERROR}");
 	 		</c:if>
@@ -52,15 +52,16 @@
 						<input id="pw" type="password" name="pw" value=""/>
 					</div>
 					<input type="submit" value="로그인"/>
-
 				</form>
-				
-			<!--  <div data-role="navbar">
+			
+			<div data-role="footer">
+				  <div data-role="navbar">
 					<ul>
-						<li><a href="moviesystem/mmember/mfindIdForm.action" >아이디찾기</a></li>
-						<li><a href="moviesystem/mmember/mfindPwForm.action" >비밀번호찾기</a></li>
+						<li><a href="/moviesystem/mmember/mfindIdForm.action" >아이디찾기</a></li>
+						<li><a href="/moviesystem/mmember/mfindPwForm.action" >비밀번호찾기</a></li>
 					</ul>
-					</div>-->
+				</div>
+			</div>
 					
 			</div><!-- end content -->
 		</div><!-- end page -->
