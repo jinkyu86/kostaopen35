@@ -31,12 +31,13 @@
 			<jsp:include page="/common/mHeader.jsp"></jsp:include>
 			
 			<div data-role="content">
-					<table align="center" border="0">
+					<table align="center"  width=100%>
 						<tr>		
 							<form action="/moviesystem/mSearchGoodList.action" method="post">
-								<td>상품명 : </td>
-								<td><input type="text" name="keyword"/></td>
-								<td><input type="submit" value="검색"/></td>
+								
+								<td width=50%><input type="text" name="keyword"/></td>
+								<td width=10%></td>
+								<td width=40%><input type="submit" value="상품검색"/></td>
 							</form>
 						</tr>
 					</table><br/>

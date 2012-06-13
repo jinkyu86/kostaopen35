@@ -41,7 +41,7 @@
 						<form action="/moviesystem/mAddCartList.action"  method="post" >
 							<table width=100%>
 								<tr>
-									<td width=20%>수량 :</td>
+									<td width=20%>수량</td>
 									<td width=40%><input name="qty" type="number" min="1" max="100" step="1" value="1" size=10/></td>
 									<td width=10%></td>
 									<td width=30%><input type="submit" value="장바구니 담기" data-inline="true" ui-btn-pos="right"/></td>
