@@ -50,11 +50,18 @@
 							</img>
 						</h3>
 						<p>
+							
 							<form action="/moviesystem/mEditCartList.action" method="post">
-								<input name="qty" type="number" min="1" max="100" step="1" value="${buy.qty}" />
-								<input type="submit" value="수량변경"/>
-								<input type="hidden" name="index"  value="${i.count-1}"/>	
+								<table width=100%>
+									<tr>
+										<input type="hidden" name="index"  value="${i.count-1}"/>
+										<td width=45%><input name="qty" type="number" min="1" max="100" step="1" value="${buy.qty}" /></td>
+										<td width=10%></td>
+										<td width=45%><input type="submit" value="수량변경"/></td>
+									</tr>
+								</table>
 							</form>	
+							
 							<form action="/moviesystem/mRemoveCartList.action" method="post">
 								<input type="hidden" name="index"  value="${i.count-1}"/>
 								<input type="submit" value="삭제" data-theme="e "/>
