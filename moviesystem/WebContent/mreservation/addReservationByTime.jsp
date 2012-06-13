@@ -16,7 +16,7 @@
 		<link rel="shortcut icon" href="../image/icon.png">
 		<link rel="apple-touch-icon" href="../image/icon.png">
 
-		<!-- 
+		<!--  
 		<link href="http://code.jquery.com/mobile/latest/jquery.mobile.min.css" 
 			rel="stylesheet" type="text/css" />
 		<script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
@@ -49,12 +49,12 @@
 						</tr>
 						<tr>
 							<td>영화명</td>
-							<td><input type="text"name="mname"value="${mname}"
+							<td><input type="text"name="mname"value="${MOVIE.mname}"
 					readOnly="readOnly"/></td>
 						</tr>
 						<tr>
 							<td>시간</td>
-							<td><input type="text"name="time"value="${time}"
+							<td><input type="text"name="time"value="${MOVIE.time}"
 					readOnly="readOnly"/></td>
 						</tr>
 					</table>	
