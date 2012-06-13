@@ -35,7 +35,8 @@
 			<jsp:include page="/common/mHeader.jsp"></jsp:include>
 
 			<div data-role="content">
-				
+					<h3 align="center">구매리스트</h3>
+					
 					<ul data-role="listview" data-inset="true">
 						<li data-role="list-divider">
 							<table width=100% style="table-layout:fixed">

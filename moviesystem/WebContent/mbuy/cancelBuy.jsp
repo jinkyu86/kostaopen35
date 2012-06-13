@@ -32,16 +32,18 @@
 			<jsp:include page="/common/mHeader.jsp"></jsp:include>
 
 			<div data-role="content">
+				<h3 align="center">구매 물품 취소</h3>
+				
 				<form action="/moviesystem/mCancelBuy.action" method="post">
 					<ul data-role="listview" data-inset="true">
 						<li data-role="list-divider" >
 							<table width=100% style="table-layout:fixed">
 								<tr>
 									<th width=30%>상품명</th>
-									<th width=20%>개수</th>
+									<th width=10%>개수</th>
 									<th width=20%>가격</th>
 									<th width=20%>구매일</th>
-									<th width=30%>선택</th>
+									<th width=20%>선택</th>
 								</tr>
 							</table>
 						</li>	

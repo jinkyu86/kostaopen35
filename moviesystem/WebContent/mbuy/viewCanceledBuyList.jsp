@@ -32,6 +32,9 @@
 			<jsp:include page="/common/mHeader.jsp"></jsp:include>
 
 			<div data-role="content">
+				
+				<h3 align="center">물품 취소 내역</h3>
+				
 					<ul data-role="listview" data-inset="true">
 						<li data-role="list-divider">
 							<table width=100% style="table-layout:fixed">
