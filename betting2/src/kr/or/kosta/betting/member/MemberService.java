@@ -417,18 +417,21 @@ public class MemberService implements ModelDriven,IService
 		 * @param request
 		 * @param response
 		 */
-		String id = member.getId();
-		String pw = member.getPw();
-		Member member1 = memberDAO.selectMemberByID(id);
-		if (member1 == null) {
-			SUCCESS = "존재하지 않는 아이디 입니다.";
-		} else {
-
-			if (!member1.getPw().equals(pw)) {
-				SUCCESS="비밀번호가 틀립니다.";
+		if(session.get("LOGIN_MEMBER")==null){
+			String id = member.getId();
+			String pw = member.getPw();
+			System.out.println("아이디"+id);
+			Member member1 = memberDAO.selectMemberByID(id);
+			if (member1 == null) {
+				SUCCESS = "존재하지 않는 아이디 입니다.";
 			} else {
-				session.put("LOGIN_MEMBER", member1);
-				SUCCESS = member.getId()+"님 환영합니다.";
+
+				if (!member1.getPw().equals(pw)) {
+					SUCCESS="비밀번호가 틀립니다.";
+				} else {
+					session.put("LOGIN_MEMBER", member1);
+					SUCCESS = member.getId()+"님 환영합니다.";
+				}
 			}
 		}
 		return "success";
