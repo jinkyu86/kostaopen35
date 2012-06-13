@@ -6,6 +6,18 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd">
 		
+	
+	<bean id="blockDAO" class="kr.or.kosta.bookchange.member.BlockDAO">
+		<property name="sqlSessionTemplate">
+      	  <ref bean="sqlSessionTemplate"/>
+    	</property>
+	</bean>
+		
+	<bean id="BlockService" class="kr.or.kosta.bookchange.member.BlockService">
+	 <constructor-arg>
+	  <ref bean="blockDAO"/>
+	 </constructor-arg>
+	</bean>
 
 	<bean id="dealDAO" class="kr.or.kosta.bookchange.board.DealDAO">
 		<property name="sqlSessionTemplate">
@@ -66,18 +78,6 @@
 	<bean id="MemberService" class="kr.or.kosta.bookchange.member.MemberService">
 	 <constructor-arg>
 	  <ref bean="memberDAO"/>
-	 </constructor-arg>
-	</bean>
-	
-	<bean id="blockDAO" class="kr.or.kosta.bookchange.member.BlockDAO">
-		<property name="sqlSessionTemplate">
-      	  <ref bean="sqlSessionTemplate"/>
-    	</property>
-	</bean>
-		
-	<bean id="BlockService" class="kr.or.kosta.bookchange.member.BlockService">
-	 <constructor-arg>
-	  <ref bean="blockDAO"/>
 	 </constructor-arg>
 	</bean>
 
