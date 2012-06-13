@@ -17,6 +17,8 @@
 		  <result name="loginForm">/error/login.jsp</result>
 		</global-results>
 		
+ <!--Board struts 시작-->
+		
 		<action name="viewBoardList" class="kr.or.kosta.bookchange.board.BoardService" method="viewBoardList">
 			<result name="success">/board/viewBoardList.jsp</result>
 		</action>
@@ -134,24 +136,180 @@
 			</param>
 			<result name="success" type="chain">viewBoard</result>
 		</action>
+ <!--Board struts 끝-->
+		
+ <!--Board 웹앱용 struts 시작-->
+ 	    <action name="mviewBoardList" class="kr.or.kosta.bookchange.board.BoardService" method="viewBoardList">
+			<result name="success">/mindex.jsp</result>
+		</action>
+		
+		<action name="mviewBoard" class="kr.or.kosta.bookchange.board.BoardService" method="viewBoard">
+			<param name="aliases">
+				#{'boardNo':'boardNo'}
+			</param>
+			<result name="success">/mboard/viewBoard.jsp</result>
+		</action>
+		
+		<action name="maddQa" class="kr.or.kosta.bookchange.board.QaService" method="addQa">
+			<param name="aliases">
+				#{'qaContent':'qa.qaContent',
+				  'email':'qa.member.email',
+				  'boardNo':'qa.board.boardNo'}
+			</param>
+			<result name="success" type="chain">mviewBoard</result>
+		</action>
+ 
+		<action name="meditQaForm" class="kr.or.kosta.bookchange.board.QaService" method="editQaForm">
+			<param name="aliases">
+				#{'qaNo':'qaNo',
+				  'qaContent':'qa.qaContent',
+				  'email':'qa.member.email',
+				  'boardNo':'qa.board.boardNo'}
+			</param>
+			<result name="success" type="chain">mviewBoard</result>
+		</action>
+		
+		<action name="meditQa" class="kr.or.kosta.bookchange.board.QaService" method="editQa">
+			<param name="aliases">
+				#{'qaNo':'qaNo',
+				  'qaContent':'qa.qaContent',
+				  'email':'qa.member.email',
+				  'boardNo':'qa.board.boardNo'}
+			</param>
+			<result name="success" type="chain">mviewBoard</result>
+		</action>
+		
+		<action name="mremoveQa" class="kr.or.kosta.bookchange.board.QaService" method="removeQa">
+			<param name="aliases">
+				#{'boardNo':'boardNo',
+				  'qaNo':'qaNo'}
+			</param>
+			<result name="success" type="chain">mviewBoard</result>
+		</action>
+		
+		<action name="msearchBoardList" class="kr.or.kosta.bookchange.board.BoardService" method="searchBoardList">
+			<param name="aliases">
+				#{'categoryNo':'CATEGORY'}		  
+			</param>
+			<result name="success">/mboard/viewBoardList.jsp</result>
+		</action>
+		
+		<action name="mviewMemberInfo" class="kr.or.kosta.bookchange.board.BoardService" method="viewMemberInfo">
+			<result name="success">/mboard/viewMemberInfo.jsp</result>
+		</action>
+		
+		<action name="meditBoardForm" class="kr.or.kosta.bookchange.board.BoardService" method="editBoardForm">
+			<param name="aliases">
+				#{'boardNo':'boardNo','board.boardNo'}
+			</param>
+			<result name="success">/mboard/editBoard.jsp</result>
+		</action>
+		
+		<action name="mremoveBoard" class="kr.or.kosta.bookchange.board.BoardService" method="removeBoard">
+			<param name="aliases">
+				#{'boardNo':'boardNo'}
+			</param>
+			<result name="success" type="chain">mviewBoardList</result>
+		</action>
+		
+		<action name="msearchBoardListWhenAdd" class="kr.or.kosta.bookchange.board.BoardService" method="searchBoardListWhenAdd">
+			<param name="aliases">
+				#{'boardNo':'boardNo','board.boardNo'}
+			</param>
+			<result name="fail" type="chain">mviewBoard</result>
+			<result name="success">/mboard/viewBoardListWhenAdd.jsp</result>
+		</action>
+		
+		<action name="maddBoardForm" class="kr.or.kosta.bookchange.board.BoardService" method="addBoardForm">
+			<result name="success">/mboard/addBoard.jsp</result>
+		</action>
+		
+		<action name="maddBoard" class="kr.or.kosta.bookchange.board.BoardService" method="addBoard">
+			<param name="aliases">
+				#{'email':'board.member.email',
+				  'categoryNo':'board.category.categoryNo',
+				  'dealNo':'board.deal.dealNo',
+				  'boardTitle':'board.boardTitle',
+				  'boardWant':'board.boardWant',
+				  'boardContent':'board.boardContent'}
+			</param>
+			
+			<result type="stream">
+		  	 		<param name="inputName">
+		  	 			resultStream
+					</param>
+					<param name="contextType">
+						text/html;charset=UTF-8
+					</param>
+				</result>
+		</action>
+		
+		<action name="meditBoard" class="kr.or.kosta.bookchange.board.BoardService" method="editBoard">
+			<param name="aliases">
+				#{'boardNo':'board.boardNo','boardNo',
+				  'email':'board.member.email',
+				  'categoryNo':'board.category.categoryNo',
+				  'dealNo':'board.deal.dealNo',
+				  'boardTitle':'board.boardTitle',
+				  'boardWant':'board.boardWant',
+				  'boardContent':'board.boardContent',
+				  'conditionResult':'board.condition.conditionResult'}
+			</param>
+			
+			<result type="stream">
+		  	 		<param name="inputName">
+		  	 			resultStream
+					</param>
+					<param name="contextType">
+						text/html;charset=UTF-8
+					</param>
+				</result>
+		</action>
+		
+ <!--Board 웹앱용 struts 끝-->
+ 
 		
 		
 		<action name="acceptChangeList" class="kr.or.kosta.bookchange.change.ChangeService" 
 			method="acceptChangeList">
 			<result name="success">/change/acceptChangeList.jsp</result>
 		</action>
+		
+		<action name="macceptChangeList" class="kr.or.kosta.bookchange.change.ChangeService" 
+			method="acceptChangeList">
+			<result name="success">/mchange/acceptChangeList.jsp</result>
+		</action>
+		
 		<action name="requestChangeList" class="kr.or.kosta.bookchange.change.ChangeService" 
 			method="requestChangeList">
 			<result name="success">/change/requestChangeList.jsp</result>
 		</action>
+		
+		<action name="mrequestChangeList" class="kr.or.kosta.bookchange.change.ChangeService" 
+			method="requestChangeList">
+			<result name="success">/mchange/requestChangeList.jsp</result>
+		</action>
+		
 		<action name="matchChangeList" class="kr.or.kosta.bookchange.change.ChangeService" 
 			method="matchChangeList">
 			<result name="success">/change/matchChangeList.jsp</result>
 		</action>
+		
+		<action name="mmatchChangeList" class="kr.or.kosta.bookchange.change.ChangeService" 
+			method="matchChangeList">
+			<result name="success">/mchange/matchChangeList.jsp</result>
+		</action>
+		
 		<action name="matchChangeResultList" class="kr.or.kosta.bookchange.change.ChangeService" 
 			method="matchChangeResultList">
 			<result name="success">/change/matchChangeResultList.jsp</result>
 		</action>
+		
+		<action name="mmatchChangeResultList" class="kr.or.kosta.bookchange.change.ChangeService" 
+			method="matchChangeResultList">
+			<result name="success">/mchange/matchChangeResultList.jsp</result>
+		</action>
+		
 		<action name="addChange" class="kr.or.kosta.bookchange.change.ChangeService" 
 			method="addChange">
 			<param name="aliases">
@@ -159,6 +317,15 @@
 			</param>
 			<result name="success" type="chain">requestChangeList</result>
 		</action>
+		
+		<action name="maddChange" class="kr.or.kosta.bookchange.change.ChangeService" 
+			method="addChange">
+			<param name="aliases">
+			#{'demandBoardNo':'change.demandBoard.boardNo', 'agreeBoardNo':'change.agreeBoard.boardNo'}
+			</param>
+			<result name="success" type="chain">mrequestChangeList</result>
+		</action>
+		
 		<action name="matchChange" class="kr.or.kosta.bookchange.change.ChangeService" 
 			method="matchChange">
 			<param name="aliases">
@@ -167,6 +334,16 @@
 			<result name="success" type="chain">matchChangeList</result>
 			<result name="fail" type="chain">matchChangeList</result>
 		</action>
+		
+		<action name="mmatchChange" class="kr.or.kosta.bookchange.change.ChangeService" 
+			method="matchChange">
+			<param name="aliases">
+			#{'demandBoardNo':'change.demandBoard.boardNo', 'agreeBoardNo':'change.agreeBoard.boardNo'}
+			</param>
+			<result name="success" type="chain">mmatchChangeList</result>
+			<result name="fail" type="chain">mmatchChangeList</result>
+		</action>
+		
 		<action name="cancelChange" class="kr.or.kosta.bookchange.change.ChangeService" 
 			method="cancelChange">
 			<param name="aliases">
@@ -174,12 +351,29 @@
 			</param>
 			<result name="success" type="chain">requestChangeList</result>
 		</action>
+		
+		<action name="mcancelChange" class="kr.or.kosta.bookchange.change.ChangeService" 
+			method="cancelChange">
+			<param name="aliases">
+			#{'demandBoardNo':'demandBoardNo'}
+			</param>
+			<result name="success" type="chain">mrequestChangeList</result>
+		</action>
+		
 		<action name="completeChange" class="kr.or.kosta.bookchange.change.ChangeService" 
 			method="completeChange">
 			<param name="aliases">
 			#{'ChangeNo':'ChangeNo', 'BoardNo':'BoardNo'}
 			</param>
 			<result name="success" type="chain">matchChangeResultList</result>
+		</action>
+		
+		<action name="mcompleteChange" class="kr.or.kosta.bookchange.change.ChangeService" 
+			method="completeChange">
+			<param name="aliases">
+			#{'ChangeNo':'ChangeNo', 'BoardNo':'BoardNo'}
+			</param>
+			<result name="success" type="chain">mmatchChangeResultList</result>
 		</action>
 		
 		<action name="viewMemberPwAndEmail"
@@ -228,6 +422,18 @@
 			</result>
 		</action>
 		
+		<action name="mremoveMember"
+		 	 class="kr.or.kosta.bookchange.member.MemberService" 
+		 	 method="removeMember">
+			<param name="aliases">
+		  		#{'email':'email',
+		  		  'pw':'pw'}				  
+				</param>				
+			<result name="success" type="chain">
+		  		 mviewBoardList
+			</result>
+		</action>
+		
 		<action name="removeMemberForm"
 		 	 class="kr.or.kosta.bookchange.member.MemberService" 
 		 	 method="removeMemberForm">
@@ -248,6 +454,21 @@
 		  		boardListAtMain
 				</result>
 		</action>
+		
+		<action name="maddMember"
+		 	 class="kr.or.kosta.bookchange.member.MemberService" 
+		 	 method="addMember">
+				<param name="aliases">
+		  		#{'email':'member.email',
+					'pw':'member.pw',
+					'address':'member.address',
+					'tel':'member.tel'}
+				</param>		  
+				<result name="success" type="chain">
+		  		mviewBoardList
+				</result>
+		</action>
+		
 		<action name="addMemberForm"
 		 	 class="kr.or.kosta.bookchange.member.MemberService" 
 		 	 method="addMemberForm">
@@ -255,16 +476,29 @@
 		  		   /member/addMember.jsp
 				</result>
 		</action>
+		
 		<action name="checkMemberEmail"
 		 	 class="kr.or.kosta.bookchange.member.MemberService" 
 		 	 method="checkMemberEmail">
 				<param name="aliases">
 		  		#{'email':'email'}
 				</param>	
-				<result name="success" type="chain">
-					/board/viewBoardList.jsp
+				<result name="success">
+					/index.jsp
 		  		</result>
 		</action>
+		
+		<action name="mcheckMemberEmail"
+		 	 class="kr.or.kosta.bookchange.member.MemberService" 
+		 	 method="checkMemberEmail">
+				<param name="aliases">
+		  		#{'email':'email'}
+				</param>	
+				<result name="success" type="chain">
+					/mindex.jsp
+		  		</result>
+		</action>
+		
 		<action name="editMember"
 		 	 class="kr.or.kosta.bookchange.member.MemberService" 
 		 	 method="editMember">
@@ -279,6 +513,20 @@
 		  		</result>
 		</action>
 		
+		<action name="meditMember"
+		 	 class="kr.or.kosta.bookchange.member.MemberService" 
+		 	 method="editMember">
+				<param name="aliases">
+		  		#{'email':'email',
+				  'tel':'member.tel',
+				  'address':'member.address',
+				  'pw':'member.pw'}
+				</param>	
+				<result name="success" type="chain">
+					mviewBoardList
+		  		</result>
+		</action>
+		
 		<action name="editMemberForm"
 		 	 class="kr.or.kosta.bookchange.member.MemberService" 
 		 	 method="editMemberForm">
@@ -286,6 +534,16 @@
 		 			
 				<result name="success">
 					/member/editmember.jsp
+		  		</result>
+		</action>
+		
+		<action name="meditMemberForm"
+		 	 class="kr.or.kosta.bookchange.member.MemberService" 
+		 	 method="editMemberForm">
+		
+		 			
+				<result name="success">
+					/mmember/meditMember.jsp
 		  		</result>
 		</action>
 	
@@ -303,18 +561,38 @@
 				
 				
 		</action>	
-				<action name="logout"
+		<action name="mlogin"
 		 	 class="kr.or.kosta.bookchange.member.MemberService" 
-		 	 method="logout">
-		
+		 	 method="login">
+				<param name="aliases">
+		  		#{'email':'email',
+				  'pw':'pw'}
+				</param>	
 
-				<result name="success">
-				 /left.jsp		
+				<result name="success" type="chain">
+				 	 mviewBoardList
 		  		</result>
 				
 				
+		</action>	
+				
+		<action name="logout"
+		 	 class="kr.or.kosta.bookchange.member.MemberService" 
+		 	 method="logout">
+				<result name="success">
+				 /left.jsp		
+		  		</result>				
 		</action>
-				<action name="viewMember"
+		
+		<action name="mlogout"
+		 	 class="kr.or.kosta.bookchange.member.MemberService" 
+		 	 method="logout">
+				<result name="success" type="chain">
+				 mviewBoardList
+		  		</result>				
+		</action>
+		
+		<action name="viewMember"
 		 	 class="kr.or.kosta.bookchange.member.MemberService" 
 		 	 method="viewMember">
 				<param name="aliases">
@@ -327,6 +605,21 @@
 				<result name="success">
 				 	 /member/myInfo.jsp
 		  		</result>				
-		</action>		
+		</action>
+		
+		<action name="mviewMember"
+		 	 class="kr.or.kosta.bookchange.member.MemberService" 
+		 	 method="viewMember">
+				<param name="aliases">
+		  		#{'email':'email','member.email',
+				  'pw':'pw','member.pw',
+				  'address':'address','member.address',
+				  'tel':'tel','member.tel'}
+				</param>
+				
+				<result name="success">
+				 	 /mmember/mMyInfo.jsp
+		  		</result>				
+		</action>				
 	</package>
 </struts>

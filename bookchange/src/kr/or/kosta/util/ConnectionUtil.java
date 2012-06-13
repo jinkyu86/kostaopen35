@@ -11,7 +11,7 @@ public class ConnectionUtil {
 			System.out.println("JDBC Driver 연동 성공");
 			
 			con=DriverManager.getConnection(
-					"jdbc:oracle:thin:@192.168.1.52:1521:XE","first","tiger");
+					"jdbc:oracle:thin:@192.168.0.81:1521:XE","first","tiger");
 			System.out.println("데이터베이스 연결 성공");
 		} catch (Exception e) {
 			e.printStackTrace();

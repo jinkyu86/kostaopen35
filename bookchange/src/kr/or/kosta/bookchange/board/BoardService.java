@@ -73,9 +73,23 @@ public class BoardService implements ModelDriven, ServletContextAware, ServletRe
 	private Change change2;
 	private int DEMAND_BOARD_NO;
 	private int agreeBoardNo;
-	
-	
-	
+	private int maxPage;
+
+	public Map getSession() {
+		return session;
+	}
+
+
+
+	public int getMaxPage() {
+		return maxPage;
+	}
+
+
+
+	public void setMaxPage(int maxPage) {
+		this.maxPage = maxPage;
+	}
 
 
 
@@ -591,6 +605,11 @@ public class BoardService implements ModelDriven, ServletContextAware, ServletRe
 		if(page!=0){
 			qapage=page;
 		}
+		
+		maxPage=(QA_COUNT/length);
+		if(QA_COUNT%length!=0){
+			maxPage++;
+		}
 				
 		QA_LIST=qaDAO.selectQaList(length, qapage, boardNo);
 		
@@ -601,7 +620,7 @@ public class BoardService implements ModelDriven, ServletContextAware, ServletRe
 
 	/**	 * 게시물 전체 리스트 보기	  */
 	public String viewBoardList() throws Exception {
-
+				
 		int length=10;		
 		if(page==0){
 			page=1;
@@ -613,6 +632,11 @@ public class BoardService implements ModelDriven, ServletContextAware, ServletRe
 		
 		int boardCount=boardDAO.selectBoardCount();		
 		PAGE_LINK_TAG=PageUtil.generate(page, boardCount, length, "/bookchange/viewBoardList.action");
+		
+		maxPage=(boardCount/length);
+		if(boardCount%length!=0){
+			maxPage++;
+		}
 		
 		return "success";
 	}

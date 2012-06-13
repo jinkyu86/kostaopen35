@@ -239,8 +239,7 @@ public class MemberService implements IService,ModelDriven,ServletContextAware,S
 	 * @param request
 	 * @param response
 	 */
-	public String checkMemberEmail(HttpServletRequest request,
-			HttpServletResponse response)throws IOException,ServletException {
+	public String checkMemberEmail()throws IOException,ServletException {
 		
 		member=memberDAO.selectMemberemail(email);
 		
@@ -286,6 +285,8 @@ public class MemberService implements IService,ModelDriven,ServletContextAware,S
 	public String editMemberForm()throws Exception {
 		/* default generated stub */;
 		LOGIN_EMAIL=(Member)session.get("LOGIN_EMAIL");
+		email=LOGIN_EMAIL.getEmail();
+		MEMBER=memberDAO.selectMemberemail(email);
 		return "success";
 	}
 
@@ -310,7 +311,7 @@ public class MemberService implements IService,ModelDriven,ServletContextAware,S
 			}else {
 				
 				session.put("LOGIN_EMAIL",member);
-				
+		
 			}
 	
 		}
@@ -337,7 +338,8 @@ public class MemberService implements IService,ModelDriven,ServletContextAware,S
 	 */
 	public String logout() throws Exception{
 		HttpSession session=request.getSession();
-		session.invalidate();//세션 강제 종료
+		//session.invalidate();//세션 강제 종료
+		session.removeAttribute("LOGIN_EMAIL");
 		System.out.println("로그아웃되었습니다");
 		
 		return "success";
@@ -373,6 +375,7 @@ public class MemberService implements IService,ModelDriven,ServletContextAware,S
 		
 			memberDAO.deleteMember(email);
 			System.out.println("회원이 삭제 되었습니다.");
+			session.clear();
 			ERROR="탈퇴되었습니다.";
 			
 //			RequestDispatcher rd=request.getRequestDispatcher("/main.jsp");
