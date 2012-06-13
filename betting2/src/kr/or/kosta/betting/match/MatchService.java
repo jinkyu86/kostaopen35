@@ -583,7 +583,14 @@ public class MatchService implements ModelDriven,IService
 //		rd.forward(request, response);
 
 	}
+	//베팅 테이블 삽입 메서드
+	public String insertBetting() throws Exception {
 
-
+		bettingDAO.insertHomeBetting(matchno);
+		bettingDAO.insertAwayBetting(matchno);
+		SUCCESS = "경기정보가 베팅 테이블에 삽입 되었습니다.";
+		return "success";
+		//클래스가 다를경우 <result name="success" type="redirectAction">
+	}
 
 }
