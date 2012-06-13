@@ -23,7 +23,6 @@
 				<div data-role="navbar">
 					<ul>
 						<li><a href="/moviesystem/mmain.action">Movie</a></li>
-						<li><a href="/moviesystem/mAddReservationForm.action">Reservation</a></li>
 						<li><a href="/moviesystem/mViewGoodList.action">Shopping</a></li>
 					</ul>
 				</div>
