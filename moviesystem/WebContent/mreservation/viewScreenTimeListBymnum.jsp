@@ -32,9 +32,7 @@
 
 	<body>
 		<div data-role="page">
-			<div data-role="header">
-				<h1>List Divider</h1>
-			</div>
+			<jsp:include page="/common/mHeader.jsp"></jsp:include>
 
 			<div data-role="content">
 				<ul data-role="listview">
