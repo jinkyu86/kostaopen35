@@ -281,7 +281,7 @@
                 /good/viewGoodList.jsp
             </result>
         </action>
-<<<<<<< .mine
+
 		<action name="mviewGoodList"
          class="kr.or.kosta.auction.good.GoodService"
          method="viewGoodList">
@@ -289,7 +289,7 @@
                 /mgood/viewGoodList.jsp
             </result>
         </action>
-=======
+
 		
 		<action name="mviewGoodList"
          class="kr.or.kosta.auction.good.AndroidGoodService"
@@ -303,7 +303,7 @@
 					</param>
 			</result>
         </action>
->>>>>>> .r1681
+
         
         <action name="viewGood"
          class="kr.or.kosta.auction.good.GoodService"
