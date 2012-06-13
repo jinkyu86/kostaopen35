@@ -33,6 +33,7 @@
 	 	-->	
 
 		<script>
+		
 		$(document).ready(function () {
 			 $('#uplodify').uploadify({
 			 	cancelImg: '/moviesystem/uploadify/cancel.png',
@@ -71,6 +72,8 @@
 			    	 event.preventDefault();
 			    });
 		});
+		
+
     </script>
 	</head> 
 
@@ -88,7 +91,7 @@
 				
 				<div data-role="fieldcontain">	
 					<label for="gprice">가격 : </label>
-					<input type="text" id="gprice" name="gprice" required value="" data-mini="true"/>
+					<input type="number" id="gprice" name="gprice" min="1" max="1000000" value="${GOOD.gprice}" data-mini="true" required/>
 				</div>
 		
 				<div data-role="fieldcontain">	

@@ -36,7 +36,7 @@
 			<form action="/moviesystem/mEditGood.action" method="post">
 			
 				<div data-role="fieldcontain">
-					<img src="../gphoto/${GOOD.photo}" width=50 height=50/>
+					<img src="/gphoto/${GOOD.photo}" width=50 height=50/>
 				</div>
 					
 				<div data-role="fieldcontain">	
@@ -46,17 +46,17 @@
 				
 				<div data-role="fieldcontain">	
 					<label for="gprice">가격 : </label>
-					<input type="text" id="gprice" name="gprice" required value="${GOOD.gprice}" data-mini="true"/>
+					<input type="number" id="gprice" name="gprice" min="1" max="1000000" value="${GOOD.gprice}" data-mini="true" required/>
 				</div>
 				
 				<div data-role="fieldcontain">	
 					<label for="photo">이미지 : </label>
-					<input type="text" id="photo" name="photo" required value="${GOOD.photo}" data-mini="true"/>
+					<input type="text" id="photo" name="photo"  value="${GOOD.photo}" data-mini="true"/>
 				</div>
 				
 				<div data-role="fieldcontain">	
 					<label for="detail">상품설명 : </label>
-					<textarea id="detail" data-mini="true" name="detail">${GOOD.detail}</textarea>
+					<textarea id="detail" data-mini="true" name="detail" >${GOOD.detail}</textarea>
 				</div>
 				<input type="hidden" name="gnum" value="${GOOD.gnum}"/>
 				<input type="submit" data-role="button" value="정보수정" />

@@ -38,12 +38,14 @@
 							
 								<a href="/moviesystem/mEditGoodForm.action?gnum=${good.gnum}">
 									
-									<img src="../gphoto/${good.photo}" width=50 height=50 />
+									<img src="/moviesystem/gphoto/${good.photo}">
+									
 									<h3> 
 										물품번호 : ${good.gnum} <br/>
 										상 품 명 : ${good.gname} <br/>
 										가     격 : ${good.gprice}
 									</h3>
+									</img>
 								</a>
 								
 								<a href="/moviesystem/mDeleteGood.action?gnum=${good.gnum}">..</a>

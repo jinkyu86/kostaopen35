@@ -44,9 +44,10 @@
 						</c:otherwise>
 					</c:choose>
 						<h3>
+							<img src="/moviesystem/gphoto/${buy.good.photo}" style="width:50px;height:50px" align="right">
 							${buy.good.gname} ${buy.good.gprice} 원<br/>
 							${buy.qty} 개, ${buy.qty*buy.good.gprice} 원
-							<img src="./gphoto/${buy.good.photo}" style="width:50px;height:50px" align="right"/>
+							</img>
 						</h3>
 						<p>
 							<form action="/moviesystem/mEditCartList.action" method="post">
@@ -56,16 +57,18 @@
 							</form>	
 							<form action="/moviesystem/mRemoveCartList.action" method="post">
 								<input type="hidden" name="index"  value="${i.count-1}"/>
-								<input type="submit" value="삭제"/>
+								<input type="submit" value="삭제" data-theme="e "/>
 							</form>
 						</p>
 					</div>
 				</c:forEach>
 				</div>
 				
+				
 				<c:if test="${sessionScope.CART_LIST[0] ne null}">
+					<hr/>
 					<form action="/moviesystem/mAddBuy.action" method="post">
-						<input type="submit" value="결제하기" />
+						<input type="submit" value="결제하기"  data-theme="b"/>
 					</form>
 				</c:if>
 				

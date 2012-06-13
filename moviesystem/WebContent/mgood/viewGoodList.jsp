@@ -44,8 +44,10 @@
 					<ul data-role="listview">
 						<c:forEach var="good" items="${GOOD_LIST}">	
 							<li>
-								<a href="/moviesystem/mViewGood.action?gnum=${good.gnum}"><img src="../gphoto/${good.photo}"/>
-									<h3>${good.gname}</h3>
+								<a href="/moviesystem/mViewGood.action?gnum=${good.gnum}">
+									<img src="/moviesystem/gphoto/${good.photo}" width=100 height=100>
+									<h5>${good.gname}</h5>
+									</img>
 								</a>
 							</li>
 						</c:forEach>
