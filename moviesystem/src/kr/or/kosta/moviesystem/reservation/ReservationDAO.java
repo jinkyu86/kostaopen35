@@ -541,8 +541,9 @@ public class ReservationDAO implements IReservationDAO{
 	
 	@Override
 	public List selectTotalList(String scrnum) {
+		System.out.println("scrnum#="+scrnum);
 		List<Reservation>SelectSeatList=null;
-		System.out.println("scrnum="+scrnum);
+		
 		SelectSeatList=this.selectSeatNumByScrnum(scrnum);
 		
 		ArrayList<Integer>TotalSeatList=new ArrayList<Integer>();
