@@ -26,36 +26,41 @@ a{text-decoration:none;}
 	   <tr align="center">
 	   	<th>Email</th>
 	    <th>신고대상</th>
+	    <th>신고내용</th>
 	    <th>현재상태</th>
-	   </tr>
-	  <c:forEach var="block" items="${BlockList}">
-       <tr>
-        <td align="center">${block.member.email}</td>
-        <td align="center">${block.blockmember.email}</td>
-		<td align="center">${block.blockCondition.blockConditionIng}</td>
-       </tr>
-      </c:forEach>
+	   </tr>     
+	   <tr>      
+        <td align="center">${BLOCK.member.email}</td>
+        <td align="center">${BLOCK.blockmember.email}</td>
+		<td align="center">${BLOCK.blockContent}</td>
+		<td align="center">${BLOCK.blockCondition.blockConditionIng}</td>
+     </tr>
+    	</td>  
       </table>
-     <table align="center" >
-     
-     	 <tr>
-     	  <form action="/bookchange/searchBlockList.action" method="post">
-     	   <select name="keyword">
-     			<option value="0">접수완료</option>
-     			<option value="1">검토중</option>
-     			<option value="2">신고사유 해당 안됨</option>
-     			<option value="3">블랙리스트 등록</option>
-     		</select>
-     		 <input type="submit" value="검색"/>
-     		</tr>
-     	
-     </table>
-	  <p align="center">
-		${PAGE_LINK_TAG} <br/><br/>
+ 	<table align="center"  cellpadding="50" >
+	<tr>
+     <td>
+      <form action="/bookchange/updateBlock.action">
+	  <input type="hidden" name="blockNo" value="${BLOCK.blockNo}">
+	  <input type="hidden" name="conditionResult" value="2">
+	  <input type="submit" value="신고해당안됨" >
+	  </form> 
+	  </td> 
+      <td>
+	   <form action="/bookchange/updateBlock.action">
+	  <input type="hidden" name="blockNo" value="${BLOCK.blockNo}">
+	  <input type="hidden" name="conditionResult" value="3">
+	  <input type="submit" value="신고처리완료">
+	   </form>
+	   </td>
+	  </tr>
+    	</table>
 
-	  </p>  
-	  
+	
+
 	  </table>
+
+
 	  
 </body>
 </html>

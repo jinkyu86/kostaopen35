@@ -20,42 +20,26 @@ a{text-decoration:none;}
 	<table>
 	 <td width="550" height="600" valign="top">
 	 
-	 <h5 align="center">신고내역보기</h5>
+	 <h5 align="center">불량 이용자 현황</h5>
 	 
 	  <table bordercolor="#E6E6FA" border="1" align="center">
 	   <tr align="center">
-	   	<th>Email</th>
-	    <th>신고대상</th>
-	    <th>현재상태</th>
-	   </tr>
-	  <c:forEach var="block" items="${BlockList}">
-       <tr>
-        <td align="center">${block.member.email}</td>
-        <td align="center">${block.blockmember.email}</td>
-		<td align="center">${block.blockCondition.blockConditionIng}</td>
-       </tr>
-      </c:forEach>
-      </table>
-     <table align="center" >
+	   </tr>     
+	       <c:forEach var="BLOCK" items="${BlockList}" >
+	   <tr>      
+    
+        <td align="center">${BLOCK.blockmember.email}</td>
+        
+     </tr>
      
-     	 <tr>
-     	  <form action="/bookchange/searchBlockList.action" method="post">
-     	   <select name="keyword">
-     			<option value="0">접수완료</option>
-     			<option value="1">검토중</option>
-     			<option value="2">신고사유 해당 안됨</option>
-     			<option value="3">블랙리스트 등록</option>
-     		</select>
-     		 <input type="submit" value="검색"/>
-     		</tr>
-     	
-     </table>
-	  <p align="center">
+     </c:forEach>
+</table>
+ <p align="center">
 		${PAGE_LINK_TAG} <br/><br/>
 
 	  </p>  
-	  
-	  </table>
-	  
+</td>
+</table>
+
 </body>
 </html>
