@@ -266,7 +266,7 @@ ServletResponseAware,SessionAware,IService{
 	
 	public MovieService(IMovieDAO movieDAO) {
 		super();
-		System.out.println("movieDAO확인");
+		//System.out.println("movieDAO확인");
 		this.movieDAO = movieDAO;
 	}
 
@@ -383,7 +383,7 @@ ServletResponseAware,SessionAware,IService{
 		if(gubun==null || gubun==""){
 			gubun = "total";
 		}
-		System.out.println(mnum);
+		//System.out.println(mnum);
 		MOVIE = movieDAO.selectMovie(mnum);
 		return "success";
 	}
@@ -533,7 +533,7 @@ ServletResponseAware,SessionAware,IService{
 			e.printStackTrace();
 		}
 		//movie.setPoster("");
-		System.out.println("movie : "+movie);
+		//System.out.println("movie : "+movie);
 		movieDAO.editMovie(movie);
 		return "success";		
 	}
