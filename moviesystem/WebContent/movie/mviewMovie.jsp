@@ -40,9 +40,10 @@
 					<li>${MOVIE.content}</li>
 				</ul>
 				<ul data-role="listview" style="margin-top:1%">
+					<!-- <li>${LOGIN_MEMBER}</li> -->
 					<li data-role="list-divider">상영시간 표</li>
 					<c:forEach var="scrList" items="${SCREENTIME_LIST}">
-						<li>${scrList.time}</li>
+						<li><a href="/moviesystem/maddReservationByTimeForm.action?mnum=${MOVIE.mnum}&scrnum=${scrList.scrnum}">${scrList.time}</a></li>
 					</c:forEach>
 				</ul>
 			</div>
