@@ -17,37 +17,82 @@
 			rel="stylesheet" type="text/css" />
 		<script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
 		<script src="http://code.jquery.com/mobile/latest/jquery.mobile.min.js"></script>
+		
+		<script src="http://code.jquery.com/jquery-1.7.js"></script>
+		<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.js"></script>
+				
+		<script>
+				$(document).ready(function(){
+					$("#edit_member").validate({
+						rules:{
+							email:{
+								required:true,
+								email:true
+							},
+							address:{
+								required:true
+							},
+							tel:{
+								required:true,
+								digits:true
+							},
+							pw:{
+								required:true,
+								minlength:4
+							}
+						},
+						messages:{
+							email:{
+								required:"email을 입력해주세요.",
+								email:"메일 형식에 맞게 써주세요."
+							},
+							address:{
+								required:"주소를 입력해주세요."
+							},
+							tel:{
+								required:"전화번호를 입력해주세요.",
+								digits:"숫자만 입력해주세요."
+							},
+							pw:{
+								required:"비밀번호를 입력해주세요.",
+								minlength:"4자 이상 입력해주세요."
+							}
+						}
+					});
+				});
+		</script>
+
 	</head>
 	<body>
 		<div data-role="page">
 			<div data-role="header">
-				<a href="#" data-icon="arrow-l">이전</a>
+				<a href="#" data-rel="back" data-icon="arrow-l">이전</a>
 				<h1>정보수정</h1>
 			</div>
 			<div data-role="content">	
-				<form action="#" method="post">
-				<input type="hidden" name="method" value="editMember">
+				<form id="edit_member" action="/bookchange/meditMember.action" method="post" data-ajax="false">
+				
 	 			<input type="hidden" name="email" value="${sessionScope.LOGIN_EMAIL.email}">
 					<table style="width:100%">
 						<tr>
 							<td>Email</td>
-							<td><p>${LOGIN_EMAIL.email}</p></td>
+							<td><p>${MEMBER.email}</p></td>
 						</tr>
 						<tr>
 							<td>패스워드</td>
-							<td><input type="password" name="pw" value="${LOGIN_EMAIL.pw}"/></td>
+							<td><input type="password" name="pw" value="${MEMBER.pw}"/></td>
 						</tr>
 						<tr>
 							<td>주소</td>
-							<td><input type="text" name="address" value="${LOGIN_EMAIL.address}"/></td>
+							<td><input type="text" name="address" value="${MEMBER.address}"/></td>
 						</tr>
 						<tr>
-							<td>핸드폰번호</td>
-							<td><input type="tel" name="tel" pattern="(010)-\d{4}-\d{4}" value="${LOGIN_EMAIL.tel}"/></td>
+							<td>핸드폰번호('-'생략하고 번호만 입력)</td>
+							<td><input type="text" name="tel" value="${MEMBER.tel}"/></td>
 						</tr>
 					</table>
 					<input type="submit" value="정보수정" data-icon="arrow-r"/>
-					<input type="reset" value="취소" data-icon="arrow-r"/>
+					
 				</form>
 			</div>
 		</div>

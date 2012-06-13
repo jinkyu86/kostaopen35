@@ -57,8 +57,8 @@
 	 $("#email").change(function(){ 
 		//email에 입력한 값 리턴
 	 	var email=$("#email").val();
-		$.ajax("/bookchange/MemberService",{
-			data:{"method":"checkMemberEmail","email":email},
+		$.ajax("/bookchange/checkMemberEmail.action",{
+			data:{"email":email},
 			success:function(data){
 			$("#emailcheck").html(data);
 			}

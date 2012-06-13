@@ -17,27 +17,28 @@
 			rel="stylesheet" type="text/css" />
 		<script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
 		<script src="http://code.jquery.com/mobile/latest/jquery.mobile.min.js"></script>
+		<style type="text/css">
+		a{text-decoration:none;}
+		</style>
 	</head>
 	<body>
 		<div data-role="page">
 			<div data-role="header">
-				<a href="#" data-icon="arrow-l" data-rel="back">이전</a>
-				<h1>Login</h1>
+				<a href="#" data-rel="back" data-icon="arrow-l">이전</a>
+				<h1>상대방 정보</h1>
 			</div>
-			<div data-role="content">	
-				<form action="/bookchange/mlogin.action" method="post" data-ajax="false">
-					<table style="width:100%">
-						<tr>
-							<td>Email</td>
-							<td><input type="email" name="email"/></td>
-						</tr>
-						<tr>
-							<td>패스워드</td>
-							<td><input type="password" name="pw"/></td>
-						</tr>
-					</table>
-					<input type="submit" value="로그인" data-icon="arrow-r"/>
-				</form>
+			<div data-role="content" align="center">
+				 <table>
+				 <tr>
+				 <td><b>email</b></td><td>${MEMBER.email}</td>
+				 </tr>
+				 <tr>
+				 <td><b>주소</b></td><td>${MEMBER.address}</td>
+				 </tr>
+				 <tr>
+				 <td><b>전화번호</b></td><td>${MEMBER.tel}</td>
+				 </tr>	 
+				 </table>
 			</div>
 		</div>
 	</body>

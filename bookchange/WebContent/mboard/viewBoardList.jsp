@@ -20,25 +20,20 @@
 		<script src="http://code.jquery.com/jquery-1.7.js"></script>
 		<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.js"></script>
 		
-		<script type="text/javascript">
-			<c:if test="${ERROR!=null}">
-			alert("${ERROR}");
-			</c:if>
-		</script>
-		
 	</head>
 	<body>
 		<div data-role="page">
 			<div data-role="header">
 				<a href="#" data-rel="back" data-icon="arrow-l">이전</a>
-				<h1>Book List</h1>
+				<h1>등록한 책 목록</h1>
 			</div>
 			<div data-role="content">
 				<ul data-role="listview">
 					<c:forEach var="board" items="${BOARD_LIST}">
-						<li><a href="/bookchange/mviewBoard.action?boardNo=${board.boardNo}" data-ajax="false"><img src="/bookchange/bookimg/${board.boardPhoto}" width="80" height="80"/>
+						<li>
+						<a href="/bookchange/mviewBoard.action?boardNo=${board.boardNo}" rel="external" data-ajax="false"><img src="/bookchange/bookimg/${board.boardPhoto}" width="80" height="80"/>
 						${board.boardTitle}<br/>
-						<c:choose>						 							
+						 <c:choose>						 							
 					 	 		<c:when test="${board.condition.conditionIng eq '교환중' || board.condition.conditionIng eq '교환완료' }">
 					 	 		<font color="red"><b><small>(${board.condition.conditionIng})</small></b></font>
 					 	 		</c:when>
@@ -46,7 +41,8 @@
 					 	 		<small>(${board.condition.conditionIng})</small>
 					 	 		</c:otherwise>					 	 	
 					 	 </c:choose>
-						</a></li>
+					 	 </a>
+						</li>		
 					</c:forEach>
 				</ul>
 				<br/>
@@ -60,30 +56,6 @@
 				</div>
 				
 			</div>
-			<c:choose>
-			<c:when test="${sessionScope.LOGIN_EMAIL==null}">
-			<div data-role="footer" data-position="fixed" >
-				<div data-role="navbar" class="nav-glyphish-example">
-					<ul>
-						<li><a href="/bookchange/mmember/mlogin.jsp" data-icon="plus" data-ajax="false">로그인</a></li>
-						<li><a href="/bookchange/mmember/maddMember.jsp" data-icon="plus" data-ajax="false">회원가입</a></li>
-					</ul>
-				</div>
-			</div>
-			</c:when>
-			<c:otherwise>
-			<div data-role="footer" data-position="fixed" >
-				<div data-role="navbar" class="nav-glyphish-example">
-					<ul>
-						<li><a href="/bookchange/mlogout.action" data-ajax="false" data-icon="plus">로그아웃</a></li>
-						<li><a href="/bookchange/mviewMember.action" rel="external" data-ajax="false" data-icon="plus">내 정보</a></li>
-						<li><a href="/bookchange/maddBoardForm.action" data-icon="plus" rel="external" data-ajax="false">물품등록</a></li>
-						<li><a href="/bookchange/mboard/exchangeinfo.jsp" rel="external" data-ajax="false" data-icon="plus">교환정보</a></li>
-					</ul>
-				</div>
-			</div>
-			</c:otherwise>
-			</c:choose>
 		</div>
 	</body>
 </html>

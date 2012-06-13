@@ -59,7 +59,7 @@ a{text-decoration:none;}
  	 		<c:otherwise>
  	 		${good.condition.conditionIng}
  	 		</c:otherwise>
- 	 		</c:choose>
+ 	 	</c:choose>
        </small></td>
       </tr>
      </c:forEach>

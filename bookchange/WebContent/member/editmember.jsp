@@ -59,14 +59,13 @@ $(document).ready(function(){
 	 <td width="550" height="600" valign="top" bgcolor="#FFFFFF">
 	 <fieldset>
 	 <li><div class="txt01"><h4 align="center">정보수정</h4></div></li>
-	  <form id="edit_member" action="/bookchange/MemberService"method="post">
-		<input type="hidden" name="method" value="editMember">
+	  <form id="edit_member" action="/bookchange/editMember.action"method="post">
 	 	<input type="hidden" name="email" value="${sessionScope.LOGIN_EMAIL.email}">
-	 	<ul><li><div> 이메일</div>${LOGIN_EMAIL.email}</li></ul>
+	 	<ul><li><div> 이메일</div>${MEMBER.email}</li></ul>
 	 	<ul><li><div> 비밀번호 (영어,숫자를 4자리 이상 입력)</div><input type="password"name="pw"/></li></ul>
-		<ul><li><div> 현재주소</div>${LOGIN_EMAIL.address}</ul>
+		<ul><li><div> 현재주소</div>${MEMBER.address}</ul>
 		<ul><li><div> 주소</div><input type="text"name="address" size="50"/></li></ul>
-		<ul><li><div> 현재 핸드폰번호</div>${LOGIN_EMAIL.tel}</ul>
+		<ul><li><div> 현재 핸드폰번호</div>${MEMBER.tel}</ul>
 		<ul><li><div> 핸드폰번호 ('-'생략하고 번호만 입력)</div><input type="text"name="tel"/></li></ul>
 		<ul><input type="submit" value="수정완료"/></ul>				
 		</form>

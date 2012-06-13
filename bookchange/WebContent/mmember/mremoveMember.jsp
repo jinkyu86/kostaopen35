@@ -25,7 +25,7 @@
 				<h1>회원탈퇴</h1>
 			</div>
 			<div data-role="content">	
-				<form action="#" method="post">
+				<form action="/bookchange/mremoveMember.action" method="post">
 				<input type="hidden" name="method" value="removeMember">
 	 			<input type="hidden" name="email" value="${sessionScope.LOGIN_EMAIL.email}">
 					<table style="width:100%">

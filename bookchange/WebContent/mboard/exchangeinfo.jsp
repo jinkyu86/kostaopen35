@@ -21,23 +21,18 @@
 	<body>
 		<div data-role="page">
 			<div data-role="header">
-				<a href="#" data-icon="arrow-l" data-rel="back">이전</a>
-				<h1>Login</h1>
+				<a href="/bookchange/mviewBoardList.action" data-icon="arrow-l" data-ajax="false">이전</a>
+				<h1>교환정보</h1>
 			</div>
 			<div data-role="content">	
-				<form action="/bookchange/mlogin.action" method="post" data-ajax="false">
-					<table style="width:100%">
-						<tr>
-							<td>Email</td>
-							<td><input type="email" name="email"/></td>
-						</tr>
-						<tr>
-							<td>패스워드</td>
-							<td><input type="password" name="pw"/></td>
-						</tr>
-					</table>
-					<input type="submit" value="로그인" data-icon="arrow-r"/>
-				</form>
+				<ul data-role="listview" data-inset="true">
+				 <li><a href="/bookchange/msearchBoardList.action?categoryNo&column=email&keyword=${sessionScope.LOGIN_EMAIL.email}">등록한 책 목록</a></li>
+				 <li><a href="/bookchange/mrequestChangeList.action">요구한 신청내역</a></li>
+				 <li><a href="/bookchange/macceptChangeList.action">들어온 신청내역</a></li>
+				 <li><a href="/bookchange/mmatchChangeList.action">교환진행중인 책</a></li>
+				 <li><a href="/bookchange/mmatchChangeResultList.action">교환완료된 책</a></li>
+				 <li><a href="/bookchange/BlockService?method=selectMyBlockList">신고하기</a></li>
+				</ul>
 			</div>
 		</div>
 	</body>

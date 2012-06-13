@@ -52,7 +52,7 @@ function complete(form){
 		<td align="center">
 		<c:choose>
         <c:when test="${change.agreeBoard.condition.conditionResult eq 2}">
-                교환<br>완료<br><font color="red"><b>대기</font>
+                교환<br>완료<br><font color="red"><b>대기</b></font>
         </c:when>
         <c:otherwise>
         		교환완료<br><font color="red"><b>완료</b></font>
@@ -63,7 +63,7 @@ function complete(form){
        		<form action="/bookchange/completeChange.action" method="post" onSubmit="complete(this)">
        		<input type="hidden" name="ChangeNo" value="${change.agreeBoard.boardNo}">
        		<input type="hidden" name="BoardNo" value="${change.demandBoard.boardNo}">
-       		<input type="hidden" name="conditionResult" value="${change.agreeBoard.condition.conditionResult}">
+       		<input type="hidden" name="conditionResult" value="${change.demandBoard.condition.conditionResult}">
        		<input type="submit" value="완료확정">
        		</form>
        	</td>
