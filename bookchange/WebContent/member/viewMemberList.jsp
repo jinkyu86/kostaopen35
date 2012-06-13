@@ -29,7 +29,7 @@
  <c:forEach var="member" items="${MEMBER_LIST}">
 
 
-   <a href="/bookchange/MemberService?method=viewMemberList&email=${member.email}">
+   <a href="/bookchange/MemberService/viewMemberList&email.action=${member.email}">
 	 </a>
 
  	<tr> 
