@@ -642,10 +642,10 @@ public String InsertReservation() throws Exception {
 //		List<Integer>TotalSeatList=new ArrayList<Integer>();
 //		ArrayList<Integer>SeatNumList=new ArrayList<Integer>();
 		
-		
+		System.out.println("scrnum : "+scrnum);
 		TotalSeatList=reservationDAO.selectTotalList(scrnum);
 
-		System.out.println("======TotalSeatList======"+TotalSeatList);
+		System.out.println("TotalSeatList======"+TotalSeatList);
 		System.out.println("viewSeatListByScrnum종료");
 		return "success";
 		
@@ -789,17 +789,19 @@ public String InsertReservation() throws Exception {
 	
 	
 	public String addReservationByTimeForm() throws Exception {
-		System.out.println("addReservationByTimeForm실행 ");
-		System.out.println("로그인 정보와,영화시간,영화이름,영화번호,상영번호를 얻어옴");
+		//System.out.println("addReservationByTimeForm실행 ");
+		//System.out.println("로그인 정보와,영화시간,영화이름,영화번호,상영번호를 얻어옴");
 			//session.put("LOGIN_MEMBER", member);
-		    member=(Member)session.get("LOGIN_MEMBER");
-			System.out.println("member = "+member);
-			System.out.println("time"+time);
-			System.out.println("mname"+mname);
-			System.out.println("mnum"+mnum);
-			System.out.println("scrnum"+scrnum);
-			System.out.println("addReservationByTimeForm종료 ");
-			return "success";
+		member=(Member)session.get("LOGIN_MEMBER");
+		SCREENTIME_LIST = ScreenTimeDAO.selectScreen(mnum);
+		MOVIE = movieDAO.selectMovie(mnum);
+			//System.out.println("member = "+member);
+			//System.out.println("time"+time);
+			//System.out.println("mname"+mname);
+			//System.out.println("mnum"+mnum);
+			//System.out.println("scrnum"+scrnum);
+			//System.out.println("addReservationByTimeForm종료 ");
+		return "success";
 	}
 	
 	
