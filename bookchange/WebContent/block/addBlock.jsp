@@ -25,10 +25,14 @@
 		  <ul><li><div> 연락처</div>  ${LOGIN_EMAIL.tel}</li></ul>
 	 	  <ul><li><div> 내용</div><textarea cols="40" rows="15" name="blockcontent"></textarea></li></ul>
 	 	  <ul><li><div> 신고 대상</div><input type="text" name="blockemail"></ul>
-	 	  <ul><div><input type="submit" value="신고접수"/></div></ul>	
+	 	  <ul><li><div><input type="submit" value="신고접수"/></div></li></ul>	
 	 	  </form>
 	 	</fieldset>
 	 </td>
+	  <p align="center">
+		${PAGE_LINK_TAG} <br/><br/>
+
+	  </p>  	 
 	</table>
 </body>
 </html>
