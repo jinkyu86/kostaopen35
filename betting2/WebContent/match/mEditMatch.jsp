@@ -121,8 +121,8 @@ contentType="text/html; charset=UTF-8"
 				 	</select>
 				 	<div data-role="fieldcontain">
 				 		<fieldset data-role="controlgroup" >
-				 			<legend><strong>결과수정시 체크</strong></legend>
-				 			<input type="checkbox" name="checkbox" value="1"/>
+				 			<label for="check"><strong>결과수정시 체크</strong></label>
+				 			<input id="check" type="checkbox" name="checkbox" value="1"/>
 				 		</fieldset>
 				 	</div>
 					</td>
@@ -144,7 +144,7 @@ contentType="text/html; charset=UTF-8"
 		<c:otherwise>
 			<tr>
 				<th>
-					<a href="/betting/insertBetting.action?matchno=${MATCH.num }" data-role="button">
+					<a href="/betting/mInsertBetting.action?matchno=${MATCH.num }" data-role="button">
 					 	베팅테이블 데이터 입력
 					</a>
 				</th>

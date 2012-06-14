@@ -82,7 +82,7 @@ contentType="text/html; charset=UTF-8"
 			<div data-role="navbar" data-iconpos="top">
 				<ul>
 				<li><a href="/betting/mViewHome.action" data-icon="home">Home</a></li>
-				<li><a href="/betting/mAddMatch.action" data-icon="plus">일정 추가</a></li>
+				<li><a href="/betting/mAddMatchForm.action" data-icon="plus">일정 추가</a></li>
 				<c:if test="${page!=1}">
 					<li><a href="/betting/mViewMatchList.action?page=${page-1}" data-icon="arrow-l">이전</a></li>
 				</c:if>

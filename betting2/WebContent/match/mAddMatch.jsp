@@ -50,20 +50,12 @@ contentType="text/html; charset=UTF-8"
 			<form action="/betting/mAddMatch.action" method="post">
 			<table style="margin:auto">
 				<tr>
-					<th>경기번호</th>
-					<td><input type="text" name="matchno" 
-							value="${MATCH.num}" readOnly="readOnly" /></td>
-					</tr>
-				<tr>
 					<th>홈팀</th>
 					<td>
 					<select name="hometeamno" data-native-menu="false">
 						<c:forEach var="team" items="${TEAM_LIST }" end="7">
-							<option value="${team.num}"
-								<c:if test="${MATCH.homeTeam.num eq team.num}">
-								selected="selected"
-								</c:if>
-								>${team.name}
+							<option value="${team.num}">
+								${team.name}
 							</option>
 						</c:forEach>
 				 	</select>
@@ -74,11 +66,8 @@ contentType="text/html; charset=UTF-8"
 					<td>
 						<select name="awayteamno" data-native-menu="false">
 						<c:forEach var="team" items="${TEAM_LIST }" end="7">
-							<option value="${team.num}"
-							<c:if test="${MATCH.awayTeam.num eq team.num}">
-								selected="selected"
-							</c:if>
-							>${team.name}
+							<option value="${team.num}">
+								${team.name}
 							</option>
 						</c:forEach>
 				 		</select>
@@ -89,11 +78,7 @@ contentType="text/html; charset=UTF-8"
 					<td>
 						<select name="locno" data-native-menu="false">
 				 		<c:forEach var="loc" items="${LOC_LIST }">
-							<option value="${loc.num}"
-							<c:if test="${MATCH.loc.num eq loc.num}">
-								selected="selected"
-							</c:if>
-							>
+							<option value="${loc.num}">
 								${loc.loc}
 							</option>
 						</c:forEach>
@@ -103,7 +88,7 @@ contentType="text/html; charset=UTF-8"
 				<tr>
 					<th>경기시작시간</th>
 					<td><input type="text" name="matchtime" 
-						value="${MATCH.matchTime}" /></td>
+						value="yyyy/mm/dd hh24:mi:ss" /></td>
 				</tr>
 		</table>
 		<input type="submit" value="데이터 추가"/>
