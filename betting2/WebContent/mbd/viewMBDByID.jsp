@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html >
 <html lang="en">
 <head >
@@ -138,11 +139,6 @@
 				<img src="/betting/teamphoto/${BETTING_AWAY.match.awayTeam.photo }" />
 			</td>
 		</tr>
-		<tr>
-			<td align="center">${BETTING_HOME.match.homeTeam.name }</td>
-			<th align="center">팀 명</th>
-			<td align="center">${BETTING_AWAY.match.awayTeam.name}</td>
-		</tr>
 		<tr>	
 			<td align="center">${BETTING_HOME.batRating}</td>
 			<th align="center">예상 배당률</th>
@@ -212,9 +208,8 @@
 			<td align="center" colspan="2">
 				<input type="text" readOnly="readOnly"
 				 name="emineral" 
-				 value="<fmt:formatNumber 
-				                      value='${MBD.betMineral*MBD.betting.batRating }'
-				                     maxFractionDigits='0'/>"/>
+				 value="<fmt:formatNumber value='${MBD.betMineral*MBD.betting.batRating }' maxFractionDigits='0'/>"
+				 />
 			
 			</td>
 		</tr>
