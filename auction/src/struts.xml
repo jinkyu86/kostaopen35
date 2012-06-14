@@ -289,21 +289,6 @@
                 /mgood/viewGoodList.jsp
             </result>
         </action>
-
-		
-		<action name="mviewGoodList"
-         class="kr.or.kosta.auction.good.AndroidGoodService"
-         method="viewGoodList">
-            <result name="success"  type="stream">
-		  		   <param name="contentType">
-		  		   	  text/html;charset=UTF-8
-					 </param>	
-					<param name="inputName">
-    					inputStream
-					</param>
-			</result>
-        </action>
-
         
         <action name="viewGood"
          class="kr.or.kosta.auction.good.GoodService"
