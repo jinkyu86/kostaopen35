@@ -129,6 +129,17 @@
                 viewAuctionList
             </result>
         </action>
+		<action name="maddMember"
+         class="kr.or.kosta.auction.member.MemberService"
+         method="addMember">
+            <param name="aliases">
+                #{      'userid':'userid',
+                'userid':'member.userid'}
+            </param>
+            <result name="success" type="chain">
+                mviewAuctionList
+            </result>
+        </action>
         
         <action name="addMemberForm"
          class="kr.or.kosta.auction.member.MemberService"
@@ -137,12 +148,26 @@
                 /member/addMember.jsp
             </result>
         </action>
+		<action name="maddMemberForm"
+         class="kr.or.kosta.auction.member.MemberService"
+         method="addMemberForm">
+            <result name="success">
+                /mmember/addMember.jsp
+            </result>
+        </action>
         
         <action name="viewMemberList"
          class="kr.or.kosta.auction.member.MemberService"
          method="viewMemberList">
             <result name="success">
                 /member/viewMemberList.jsp
+            </result>
+        </action>
+		<action name="mviewMemberList"
+         class="kr.or.kosta.auction.member.MemberService"
+         method="viewMemberList">
+            <result name="success">
+                /mmember/viewMemberList.jsp
             </result>
         </action>
         
@@ -154,6 +179,16 @@
             </param>
             <result name="success">
                 /member/viewMember.jsp
+            </result>
+        </action>
+		<action name="mviewMember"
+         class="kr.or.kosta.auction.member.MemberService"
+         method="viewMember">
+            <param name="aliases">
+                #{'userid':'userid'}
+            </param>
+            <result name="success">
+                /mmember/viewMember.jsp
             </result>
         </action>
         
@@ -169,6 +204,18 @@
                 viewMember
             </result>
         </action>
+		<action name="meditMember"
+         class="kr.or.kosta.auction.member.MemberService"
+         method="editMember">
+            <param name="aliases">
+                #{
+                'userid':'userid',
+                'userid':'member.userid'}
+            </param>
+            <result name="success" type="chain">
+                mviewMember
+            </result>
+        </action>
         
         <action name="editMemberForm"
          class="kr.or.kosta.auction.member.MemberService"
@@ -178,6 +225,16 @@
             </param>
             <result name="success">
                 /member/editMember.jsp
+            </result>
+        </action>
+		<action name="meditMemberForm"
+         class="kr.or.kosta.auction.member.MemberService"
+         method="editMemberForm">
+            <param name="aliases">
+                #{'userid':'userid'}
+            </param>
+            <result name="success">
+                /mmember/editMember.jsp
             </result>
         </action>
         
@@ -191,11 +248,27 @@
                 viewAuctionList
             </result>
         </action>
+		<action name="mremoveMember"
+         class="kr.or.kosta.auction.member.MemberService"
+         method="removeMember">
+            <param name="aliases">
+                #{'userid':'userid'}
+            </param>
+            <result name="success" type="chain">
+                mviewAuctionList
+            </result>
+        </action>
         
         <action name="loginForm" class="kr.or.kosta.auction.member.MemberService"
          method="loginForm">
             <result name="success">
                 member/login.jsp
+            </result>
+        </action>
+		<action name="mloginForm" class="kr.or.kosta.auction.member.MemberService"
+         method="loginForm">
+            <result name="success">
+                mmember/login.jsp
             </result>
         </action>
         
@@ -217,6 +290,24 @@
 			 	</param>               
             </result>
         </action>
+		<action name="mlogin" class="kr.or.kosta.auction.member.MemberService"
+         method="login">
+            <param name="aliases">
+                #{'userid':'member.userid',
+                'pw':'member.pw',
+                
+                'userid':'userid',
+                'pw':'pw',
+                
+                }
+                
+            </param>
+            <result name="success" type="redirectAction">
+            	<param name="actionName">
+                   	     mviewAuctionList
+			 	</param>               
+            </result>
+        </action>
         
         <action name="logout" class="kr.or.kosta.auction.member.MemberService"
          method="logout">
@@ -226,11 +317,25 @@
 			 	</param>     
             </result>
         </action>
+		<action name="mlogout" class="kr.or.kosta.auction.member.MemberService"
+         method="logout">
+            <result name="success" type="redirectAction">
+                <param name="actionName">
+                   	     mviewAuctionList
+			 	</param>     
+            </result>
+        </action>		
         
         <action name="editMemberByadmin" class="kr.or.kosta.auction.member.MemberService"
          method="editMemberByadmin">
             <result name="success">
                 member/viewMemberList.jsp
+            </result>
+        </action>
+		<action name="meditMemberByadmin" class="kr.or.kosta.auction.member.MemberService"
+         method="editMemberByadmin">
+            <result name="success">
+                mmember/viewMemberList.jsp
             </result>
         </action>
         

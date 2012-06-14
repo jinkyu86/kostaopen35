@@ -74,6 +74,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			   coin as coin,
 			   emoney as emoney	
 		FROM member
+		ORDER BY name
 		</select>
 		
 </mapper>

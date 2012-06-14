@@ -126,8 +126,7 @@ public class MemberService implements ModelDriven, SessionAware, IService {
 	}
 
 	public String viewMember() throws Exception {
-		Member member = (Member) session.get("MEMBER");
-		MEMBER = memberDAO.selectMember(member.getUserid());
+		MEMBER = memberDAO.selectMember(userid);
 		return "success";
 
 	}
