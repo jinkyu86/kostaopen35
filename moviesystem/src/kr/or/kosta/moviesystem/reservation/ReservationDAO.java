@@ -25,7 +25,7 @@ import kr.or.kosta.moviesystem.screentime.ScreenTime;
 import kr.or.kosta.moviesystem.util.ConnectionUtil;
 
 
-public class ReservationDAO implements IReservationDAO{
+public class ReservationDAO{
 
 	
 	private static String resource="sqlmap-config.xml";
@@ -60,28 +60,24 @@ public class ReservationDAO implements IReservationDAO{
     VALUES (res_seq.nextval,?,           ?,      sysdate,         ?,           ?,               ?             ,'결제완료',        ?)
 </insert>
 	 */
-	
-	@Override
-	public int selectReservationSeatCount(String mnum, String scrnum){
-		int seatcnt = 0;
+	public static int selectReservationSeatCount(String mnum, String scrnum){
 		SqlSession session= null;
-		System.out.println("mnum = "+mnum);
-		System.out.println("scrnum = "+scrnum);
+		Integer seatCnt = 0;
 		try{
 			session = sqlMapper.openSession(true);
-			
-			session.insert("Reservation.selectReservationCount",mnum);	
+			seatCnt=
+				session.selectOne("Reservation.selectReservationCount",mnum+","+scrnum);
+
 		}
+		
 		finally{
 			//Connection을 ConnectionPool에 반납해야지 안끊긴다. 
 			//그리고 이건 무조건 반납해야지 멈추지 않으니 finally에 써주어야한다.
-			System.out.println("돌아간다. 야호~~");
 			session.close();
 		}
-		return seatcnt;
+		return seatCnt;
 	}
-	@Override
-	public void insertReservation(Reservation reservation) {
+	public static void insertReservation(Reservation reservation) {
 		
 		SqlSession session= null;
 		try{
@@ -137,8 +133,8 @@ public class ReservationDAO implements IReservationDAO{
 	 * 출력=영화이름
 	 
 	 */
-	@Override
-	public List<Reservation> selectReservationList(int length,int page,String memberid){//반환값을 ArrayList로 한다.
+
+	public static List<Reservation> selectReservationList(int length,int page,String memberid){//반환값을 ArrayList로 한다.
 		SqlSession session=null;
 		List<Reservation> reservationList=null;
 		try{
@@ -161,8 +157,8 @@ public class ReservationDAO implements IReservationDAO{
 	 * userid와 mnom으로 group by time 으로 된 정보의 time sum(total_price) count(res_qty)
 
 	 */
-	@Override
-	public List<Reservation> selectReservationTime(String userid, String mnum) {
+	
+	public static List<Reservation> selectReservationTime(String userid, String mnum) {
 		SqlSession session = null;
 		List<Reservation>reservationList=null;
 		try{
@@ -184,7 +180,7 @@ public class ReservationDAO implements IReservationDAO{
 	 * 회원아이디로 예매내역을 찾을 수 있는 메서드
 
 	 */
-	@Override
+	
 	public ArrayList<Reservation> selectReservationList(String memberid) {
 		Connection con=null;
 		PreparedStatement psmt=null;
@@ -242,8 +238,8 @@ public class ReservationDAO implements IReservationDAO{
 	 * 회원아이디로 찾은 예매목록의 수를 찾을 수 있는 기능
 	 * 
 	 */
-	@Override
-	public int selectReservationCount(String userid) {
+	
+	public static int selectReservationCount(String userid) {
 		SqlSession session=null;
 		Integer count=null;
 		try{
@@ -266,8 +262,8 @@ public class ReservationDAO implements IReservationDAO{
 	 * 
 	 * 
 	 */
-	@Override
-	public long selectReservationSeatNum(long Res_num) {
+	
+	public static long selectReservationSeatNum(long Res_num) {
 		Connection con =null;
 		PreparedStatement psmt=null;
 		String sql=null;//쿼리문 저장할 곳
@@ -298,8 +294,8 @@ public class ReservationDAO implements IReservationDAO{
 	 * 
 	 * 
 	 */
-	@Override
-	public long selectReservationQty(long res_num) {
+	
+	public static long selectReservationQty(long res_num) {
 		Connection con =null;
 		PreparedStatement psmt=null;
 		String sql=null;//쿼리문 저장할 곳
@@ -330,9 +326,9 @@ public class ReservationDAO implements IReservationDAO{
 	 * 
 	 * 
 	 */
-	@Override
 	
-	public String selectReservationResNum(String scr_num) {
+	
+	public static String selectReservationResNum(String scr_num) {
 		Connection con =null;
 		PreparedStatement psmt=null;
 		String sql=null;//쿼리문 저장할 곳
@@ -368,8 +364,8 @@ public class ReservationDAO implements IReservationDAO{
 	 * @param userid
 	 * @param resnum
 	 */
-	@Override
-	public Reservation selectReservation(String resnum) {
+	
+	public static Reservation selectReservation(String resnum) {
 		Connection con =null;
 		PreparedStatement psmt=null;
 		String sql=null;//쿼리문 저장할 곳
@@ -425,7 +421,7 @@ public class ReservationDAO implements IReservationDAO{
 	 * @param userid
 	 * @param resnum
 	 */
-	@Override
+	
 	public void removeReservation(String resnum) {
 		 Connection con=null;
 		  PreparedStatement psmt=null;
@@ -447,8 +443,8 @@ public class ReservationDAO implements IReservationDAO{
 		
 	
 	}
-	@Override
-	public void cancelReservation(String resnum) {
+	
+	public static void cancelReservation(String resnum) {
 		 Connection con=null;
 		  PreparedStatement psmt=null;
 		  
@@ -474,8 +470,8 @@ public class ReservationDAO implements IReservationDAO{
 	 * 예매목록 업데이트(수정) 기능
 
 	 */
-	@Override
-	public  void updateReservation(Reservation reservation) {
+	
+	public static void updateReservation(Reservation reservation) {
 		/* default generated stub */;
 		 Connection con=null;
 		  PreparedStatement psmt=null;
@@ -504,8 +500,8 @@ public class ReservationDAO implements IReservationDAO{
 	 * SCR_NUM으로 예약한 좌석 번호를 찾기
 	 * 
 	 */
-	@Override
-	public List<Reservation> selectSeatNumByScrnumAndUserid(String scrnum,String userid) {
+	
+	public static List<Reservation> selectSeatNumByScrnumAndUserid(String scrnum,String userid) {
 		SqlSession session = null;
 		List<Reservation>reservationList=null;
 		try{
@@ -534,8 +530,8 @@ public class ReservationDAO implements IReservationDAO{
 		FROM reservation
 		WHERE scr_num = #{scrnum}
 	 */
-	@Override
-	public List selectSeatNumByScrnum(String scrnum) {
+	
+	public static List selectSeatNumByScrnum(String scrnum) {
 		System.out.println("selectSeatNumByScrnum:scrnum="+scrnum);
 		SqlSession session=null;
 		List<Reservation> reservationList=null;
@@ -559,12 +555,12 @@ public class ReservationDAO implements IReservationDAO{
 	 * 
 	 */
 	
-	@Override
-	public List selectTotalList(String scrnum) {
+	
+	public static List selectTotalList(String scrnum) {
 		System.out.println("scrnum#="+scrnum);
 		List<Reservation>SelectSeatList=null;
 		
-		SelectSeatList=this.selectSeatNumByScrnum(scrnum);
+		SelectSeatList=selectSeatNumByScrnum(scrnum);
 		
 		ArrayList<Integer>TotalSeatList=new ArrayList<Integer>();
 		System.out.println("SelectSeatList="+SelectSeatList);
