@@ -314,8 +314,8 @@
 		  method="editMatch">
 		  	<param name="aliases">
 		  		#{
-				'matchno':'matchno',
-				   'matchno':'match.num',
+					'matchno':'matchno',
+					'matchno':'match.num',
 					'hometeamno':'match.homeTeam.num',
 					'awayteamno':'match.awayTeam.num',
 					'winteamno':'match.winTeam.num',
@@ -383,13 +383,24 @@
 		</action>
 		
 		<action name="insertBetting" 
-		  class="kr.or.kosta.betting.betting.BettingService"
+		  class="kr.or.kosta.betting.match.MatchService"
 		  method="insertBetting">
 			<param name="aliases">
 		  		#{'matchno':'matchno'}
 			</param>	
 			<result name="success" type="chain">
 				editMatchForm
+			</result>
+		</action>
+		
+		<action name="mInsertBetting" 
+		  class="kr.or.kosta.betting.match.MatchService"
+		  method="insertBetting">
+			<param name="aliases">
+		  		#{'matchno':'matchno'}
+			</param>	
+			<result name="success" type="chain">
+				mEditMatchForm
 			</result>
 		</action>
 		
@@ -401,11 +412,27 @@
 			</result>
 		</action>
 		
+		<action name="mTodayBettingList" 
+		  class="kr.or.kosta.betting.betting.BettingService"
+		  method="todayBettingList">
+			<result name="success" >
+				/betting/mTodayBettingList.jsp
+			</result>
+		</action>
+		
 		<action name="bettingGameForm" 
 		  class="kr.or.kosta.betting.betting.BettingService"
 		  method="bettingGameForm">
 			<result name="success" >
 				/betting/viewBettingGame.jsp
+			</result>
+		</action>
+		
+		<action name="mBettingGameForm" 
+		  class="kr.or.kosta.betting.betting.BettingService"
+		  method="bettingGameForm">
+			<result name="success" >
+				/betting/mViewBettingGame.jsp
 			</result>
 		</action>
 		
@@ -427,6 +454,24 @@
 			</result>
 		</action>
 		
+		<action name="mBettingGame" 
+		  class="kr.or.kosta.betting.betting.BettingService"
+		  method="bettingGame">
+		  	<param name="aliases">
+		  		#{'districtnum'='districtnum',
+					'matchtime'='matchtime',
+					'betmineral'='betmineral',
+					'home'='home'
+					}
+			</param>	
+			<result name="success" type="chain">
+				mBettingGameForm
+			</result>
+			<result name="login" type="chain">
+				mLoginForm
+			</result>
+		</action>
+		
 		<action name="viewMemberBetDataByIDList" 
 		  class="kr.or.kosta.betting.memberbetdata.MemberBetDataService"
 		  method="viewMemberBetDataByIDList">
@@ -436,6 +481,14 @@
 			<!--<result name="login" type="chain">
 				loginForm
 			</result>-->
+		</action>
+		
+		<action name="mViewMemberBetDataByIDList" 
+		  class="kr.or.kosta.betting.memberbetdata.MemberBetDataService"
+		  method="viewMemberBetDataByIDList">
+		  	<result name="success">
+				/mbd/mViewMBDByIDList.jsp
+			</result>
 		</action>
 		
 		<action name="viewMBDByIDForm" 
@@ -449,6 +502,20 @@
 			</result>
 			<result name="login" type="chain">
 				loginForm
+			</result>
+		</action>
+		
+		<action name="mViewMBDByIDForm" 
+		  class="kr.or.kosta.betting.memberbetdata.MemberBetDataService"
+		  method="viewMBDByIDForm">
+		  	<param name="aliases">
+		  		#{'mbdnum'='mbdnum'}
+			</param>	
+		  	<result name="success">
+				/mbd/mViewMBDByID.jsp
+			</result>
+			<result name="login" type="chain">
+				mLoginForm
 			</result>
 		</action>
 		
