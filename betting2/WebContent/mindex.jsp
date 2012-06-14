@@ -54,21 +54,23 @@ contentType="text/html; charset=UTF-8"
 		</div>
 		<div data-role="content">
 			<a href="/betting/mViewMatchListToVistor.action" data-role="button" >경기일정</a>
-			<a href="" data-role="button" >오늘의 베팅</a>
+			<a href="/betting/mTodayBettingList.action" data-role="button" >오늘의 베팅</a>
 			<a href="/betting/mViewMemberRankingListForm.action" data-role="button" >랭킹</a>
-			<a href="/betting/mViewMatchList.action" data-role="button" >경기관리</a>
-			<a href="/betting/mViewMemberList.action" data-role="button" >맴버관리</a>
+			<c:if test="${sessionScope.LOGIN_MEMBER.id=='kosta100' }">
+				<a href="/betting/mViewMatchList.action" data-role="button" >경기관리</a>
+				<a href="/betting/mViewMemberList.action" data-role="button" >맴버관리</a>
+			</c:if>
 		</div>
 		<div data-role="footer" data-position="fixed">
 			<div data-role="navbar" data-iconpos="top">
 				<ul>
 					<c:choose>
 						<c:when test="${sessionScope.LOGIN_MEMBER==null}">
-						<li><a href="/betting/mAddMemberForm.action" data-icon="plus">회원가입</a></li>
+						<li><a href="/betting/mAddMemberForm.action" data-icon="plus" data-ajax="false">회원가입</a></li>
 					</c:when>
 					<c:otherwise>
 						<li><a href="/betting/mEditMemberForm.action" data-icon="info">회원정보수정</a></li>
-						<li><a href="/betting/mLogout.action" data-icon="search">나의 베팅정보</a></li>
+						<li><a href="/betting/mViewMemberBetDataByIDList.action" data-icon="search">나의 베팅정보</a></li>
 					</c:otherwise>
 					</c:choose>
 				</ul>
