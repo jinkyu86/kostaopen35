@@ -28,20 +28,23 @@ a{text-decoration:none;}
 	    <th>신고대상</th>
 	    <th>현재상태</th>
 	   </tr>
-	   <c:if test="${LOGIN_EMAIL.email}">
+
+	   
+	     <tr>
 	  <c:forEach var="block" items="${MyBlockList}">
-       <tr>
+         <tr>
         <td align="center">${block.member.email}</td>
-        <td align="center">${block.blockmember.email}</a></td>
+        <td align="center">${block.blockmember.email}</td>
 		<td align="center">${block.blockCondition.blockConditionIng}</td>
-       </tr>
+         </tr>
       </c:forEach>
-      </c:if>
+    
+   
       </table>
      
 	  <p align="center">
-		${MYPAGE_LINK_TAG} <br/><br/>
-		<a href="/bookchange/BlockService?method=addBlockForm.action" target="main"><b>신고하기</b><img src="webimg/black.gif" width="30" height="30" border="0"></a>
+		${PAGE_LINK_TAG} <br/><br/>
+		<a href="/bookchange/BlockService/addBlockForm.action" target="main"><b>신고하기</b><img src="webimg/black.gif" width="30" height="30" border="0"></a>
 	  </p>  
 	  </td>	  
 	  </table>
