@@ -35,6 +35,11 @@ contentType="text/html; charset=UTF-8"
 		<style>
 			#password_row label.error { display:none !important; }
 		</style>
+		<script type="text/javascript">
+ 			<c:if test="${SUCCESS!=null}">
+				 alert("${SUCCESS}");
+			</c:if>
+		</script>
 		<script src="http://code.jquery.com/jquery-1.7.js"></script>
 		<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.js"></script>
 		<script src="/betting/member/jquery.validate.password.js"></script>
@@ -49,7 +54,9 @@ contentType="text/html; charset=UTF-8"
 					email:{
 						required:true,
 						email:true
-					}
+					},
+					passward:{password:true},
+					pass_check:{equalTo:"#pw"}
                 },
                 messages: {
                    name: {
@@ -83,7 +90,7 @@ contentType="text/html; charset=UTF-8"
 			</c:choose>
 		</div>
 		<div data-role="content">
-		<form id="edit_member" action="/betting/mEditMember.action" method="post">
+		<form id="edit_member" action="/betting/mEditMember.action" method="post" data-ajax="false">
 			<table style="margin:auto">
 				<tr>
 					<th>ID</th>
@@ -121,7 +128,7 @@ contentType="text/html; charset=UTF-8"
 			<div data-role="navbar" data-iconpos="top">
 				<ul>
 					<li><a href="/betting/mViewHome.action" data-icon="home">Home</a></li>
-					<li><a href="/betting/mRemoveMember.action?ID=${MEMBER.id }" data-icon="delete">일정 삭제</a></li>
+					<li><a href="/betting/mRemoveMember.action?ID=${MEMBER.id }" data-icon="delete">회원 탈퇴</a></li>
 				</ul>
 			</div>
 		</div>

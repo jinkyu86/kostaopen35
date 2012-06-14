@@ -62,7 +62,9 @@ contentType="text/html; charset=UTF-8"
 					email:{
 						required:true,
 						email:true
-					}
+					},
+					passward:{password:true},
+					pass_check:{equalTo:"#pw"}
                 },
                 messages: {
                     id: {
@@ -87,7 +89,7 @@ contentType="text/html; charset=UTF-8"
 				
 				$.ajax('/betting/checkMemberID.action', {
 					data:{"id": id
-					},
+						},
 					success : function(data) {
 						$('#idcheck').html(data);
 					}
@@ -116,7 +118,7 @@ contentType="text/html; charset=UTF-8"
 			</c:choose>
 		</div>
 		<div data-role="content">
-		<form id="add_member" action="/betting/mAddMember.action" method="post">
+		<form id="add_member" action="/betting/mAddMember.action" method="post" data-ajax="false">
 			<table style="margin:auto">
 				<tr>
 					<th>ID</th>

@@ -17,6 +17,11 @@ contentType="text/html; charset=UTF-8"
 		<link rel="shortcut icon" href="../image/item_image27.png">
 		<link rel="apple-touch-icon" href="../image/item_image27.png">
 
+		 <script type="text/javascript">
+ 			<c:if test="${SUCCESS!=null}">
+				 alert("${SUCCESS}");
+			</c:if>
+		</script>
 		 
 		<link href="http://code.jquery.com/mobile/latest/jquery.mobile.min.css" 
 			rel="stylesheet" type="text/css" />
@@ -47,7 +52,7 @@ contentType="text/html; charset=UTF-8"
 			</c:choose>
 		</div>
 		<div data-role="content">
-		<form action="/betting/mLogin.action" method="post">
+		<form action="/betting/mLogin.action" method="post" data-ajax="false">
 			<table style="margin:auto">
 			<tr>
 				<th>아이디</th>
