@@ -14,6 +14,8 @@ contentType="text/html; charset=UTF-8"
 							maximum-scale=1.0, minimum-scale=1.0, 
 							user-scalable=no"/>
 		
+		
+		
 		<link rel="shortcut icon" href="../image/item_image27.png">
 		<link rel="apple-touch-icon" href="../image/item_image27.png">
 
@@ -33,9 +35,15 @@ contentType="text/html; charset=UTF-8"
 		<link rel="stylesheet" href="styles.css" type="text/css" media="screen" />
 		<link rel="stylesheet" type="text/css" href="print.css" media="print" />
 		<link rel="Stylesheet" href="/betting/member/jquery.validate.password.css"/>
+		
 		<style>
 			#password_row label.error { display:none !important; }
 		</style>
+		<script type="text/javascript">
+ 			<c:if test="${SUCCESS!=null}">
+				 alert("${SUCCESS}");
+			</c:if>
+		</script>
 		<script src="http://code.jquery.com/jquery-1.7.js"></script>
 		<script  src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.js"></script>
 		<script src="/betting/member/jquery.validate.password.js"></script>
@@ -86,8 +94,10 @@ contentType="text/html; charset=UTF-8"
 				});
             });
         });
-
+		
+        
 		</script>
+		
 		
 	</head>
 <body>
