@@ -87,7 +87,7 @@
 				   ,d.bet_mineral AS betmineral
 				   ,d.id AS id
 				   ,d.personal_betting_num AS personalbettingnum
-				   ,d.selecting_time AS selectingtime
+				   ,TO_CHAR(d.selecting_time,'yyyy/mm/dd hh24:mi:ss') AS selectingtime
 				   ,d.give_mineral_confirm AS givemineralconfirm
 				   ,e.name AS name
 				   ,e.pw AS pw
@@ -133,7 +133,7 @@
 				   ,d.bet_mineral AS betmineral
 				   ,d.id AS id
 				   ,d.personal_betting_num AS personalbettingnum
-				   ,d.selecting_time AS selectingtime
+				   ,TO_CHAR(d.selecting_time,'yyyy/mm/dd hh24:mi:ss') AS selectingtime
 				   ,d.give_mineral_confirm AS givemineralconfirm
 				   ,e.name AS name
 				   ,e.pw AS pw
