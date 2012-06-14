@@ -55,7 +55,7 @@
 								<td width=10%>${buy.qty}</td>
 								<td width=20%>${buy.good.gprice*buy.qty}</td>
 								<td width=20%><fmt:formatDate value="${buy.buyDate }"pattern="yyyy. MM.dd"/></td>
-								<td width=20%><input type="checkbox" name="chkbox" value="${buy.buynum}"/></td>
+								<td width=20%><label><input type="checkbox" name="chkbox" data-mini="true" value="${buy.buynum}"/></label></td>
 							</tr>
 							</table>
 						</li>
