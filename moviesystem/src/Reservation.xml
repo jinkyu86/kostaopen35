@@ -70,7 +70,10 @@ type="kr.or.kosta.moviesystem.reservation.Reservation">
 				 ON r.m_num=m.m_num
 				 WHERE r.userid = #{userid}
 </select>
-
+<select id="selectReservationCount" resultType="java.lang.Integer">
+    select count(res_num) from RESERVATION
+    where m_num=#{m_num} and scr_num=#{scr_num}
+</select>
 
 
 <resultMap id="selectResultTime" type="kr.or.kosta.moviesystem.reservation.Reservation">
