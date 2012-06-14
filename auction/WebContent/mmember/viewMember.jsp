@@ -27,6 +27,7 @@
 		<script src="../framework/jquery.mobile-1.0.js"></script>
 		-->
 </script>
+</head>
 <body>
 	<div data-role="content">
 		<div data-role="collapsible-set">

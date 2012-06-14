@@ -27,26 +27,35 @@
 		<script src="../framework/jquery.mobile-1.0.js"></script>
 		-->
 </script>
+</head>
 <body>
 	<div data-role="page">
 		<div data-role="content">
-			<form id="my_form" method="post" action="/auction/meditGood.action">
+			<form id="my_form" method="post" action="/auction/meditMember.action">
 				
 				<div data-role="fieldcontain">
-					<label for="gnum">물품 번호</label>
-					<input id="gnum" type="text" name="gnum" value="${GOOD.gNum}" readonly="readonly"/>
+					<label for="userid">아이디:</label>
+					<input id="userid" type="text" name="userid" value="${MEMBER.userid}"/>
 				</div>
 				<div data-role="fieldcontain">
-					<label for="gname">물품명:</label>
-					<input id="gname" type="text" name="gname" value="${GOOD.gName}"/>
+					<label for="name">이름:</label>
+					<input id="name" type="text" name="name" value="${MEMBER.name}"/>
 				</div>
 				<div data-role="fieldcontain">
-					<label for="detail">상세설명:</label>
-					<textarea id="detail" name="detail">${GOOD.detail }</textarea>
+					<label for="pw">비밀번호:</label>
+					<textarea id="pw" name="pw">${MEMBER.pw }</textarea>
 				</div>
 				<div data-role="fieldcontain">
-					<label for="img">이미지:</label>
-					<input id="img" type="text" name="img" value="${GOOD.img }"/>
+					<label for="email">이메일:</label>
+					<input id="email" type="text" name="email" value="${MEMBER.email }"/>
+				</div>
+				<div data-role="fieldcontain">
+					<label for="coin">코인:</label>
+					<input id="coin" type="text" name="coin" value="${MEMBER.coin }"/>
+				</div>
+				<div data-role="fieldcontain">
+					<label for="emoney">e머니:</label>
+					<input id="emoney" type="text" name="emoney" value="${MEMBER.emoney }"/>
 				</div>
 				<div data-role="fieldcontain">
 					<input id="submit" type="submit" value="전송"/>
