@@ -32,6 +32,7 @@ import kr.or.kosta.betting.util.now;
  */
 public class MemberBetDataService implements ModelDriven,IService
 	,SessionAware{
+	private int maxPage;
 	private IMemberBetData memberBetDataDAO;
 	private IBetting bettingDAO;
 	private IMember memberDAO;
@@ -69,6 +70,15 @@ public class MemberBetDataService implements ModelDriven,IService
 		this.bettingDAO = bettingDAO;
 		this.memberDAO = memberDAO;
 		this.matchDAO = matchDAO;
+	}
+
+	
+	public int getMaxPage() {
+		return maxPage;
+	}
+
+	public void setMaxPage(int maxPage) {
+		this.maxPage = maxPage;
 	}
 
 	public String getMethod() {
@@ -706,7 +716,7 @@ public class MemberBetDataService implements ModelDriven,IService
 			MINERAL = memberDAO.selectMineralByID(ID);
 			RANK = memberDAO.selectMemberRanking(ID);
 		
-		int length=10;
+		int length=5;
 		if(page==0){
 			page=1;
 		}
@@ -715,6 +725,10 @@ public class MemberBetDataService implements ModelDriven,IService
 		int mbdCount = memberBetDataDAO.selectMemberBetDataByIDCount(ID);
 		PAGE_LINK_TAG = PageUtil.generate(page, mbdCount, length,
 				"viewMemberBetDataByIDList.action");
+		maxPage=(mbdCount/length);
+		if(mbdCount%length!=0){
+			maxPage++;
+		}
 		return "success";
 	}
 		
