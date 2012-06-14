@@ -80,6 +80,10 @@
 		  	<result name="success">
 				member/addMember.jsp
 			</result>
+			<result name="success">
+				member/addMember.jsp
+			</result>
+			
 		</action>
 		
 		<action name="mAddMemberForm"
@@ -96,6 +100,9 @@
 		  	<result name="success" type="chain">
 				viewHome
 			</result>
+			<result name="error" type="chain">
+				addMemberForm
+			</result>
 		</action>
 		
 		<action name="mAddMember"
@@ -103,6 +110,9 @@
 		  	method="addMember">
 		  	<result name="success" type="chain">
 				mViewHome
+			</result>
+			<result name="error" type="chain">
+				mAddMemberForm
 			</result>
 		</action>
 		
@@ -606,6 +616,66 @@
 			</result>
 			<result name="canclemineral" type="chain">
 				cancleBetting
+			</result>
+		</action>
+		
+		<action name="mCancleBetting" 
+		  class="kr.or.kosta.betting.memberbetdata.MemberBetDataService"
+		  method="cancleBetting">
+		  	<result name="success" type="chain">
+				mViewMemberBetDataByIDList
+			</result>
+			<result name="cancle" type="chain">
+				mViewMBDByIDForm
+			</result>
+			<result name="login" type="chain">
+				mLoginForm
+			</result>
+		</action>
+
+		<action name="mGiveMineral" 
+		  class="kr.or.kosta.betting.memberbetdata.MemberBetDataService"
+		  method="giveMineral">
+			<result name="success" type="chain">
+				mViewMBDByIDForm
+			</result>
+			<result name="login" type="chain">
+				mLoginForm
+			</result>
+		</action>
+		
+		<action name="mRecoveryMineral" 
+		  class="kr.or.kosta.betting.memberbetdata.MemberBetDataService"
+		  method="recoveryMineral">
+			<result name="success" type="chain">
+				mViewMBDByIDForm
+			</result>
+			<result name="login" type="chain">
+				mLoginForm
+			</result>
+		</action>
+		
+		<action name="mMineral" 
+		  class="kr.or.kosta.betting.memberbetdata.MemberBetDataService"
+		  method="mineral">
+		  	<param name="aliases">
+		  		#{'mbdnum'='mbdnum',
+					'home'='home',
+					'away'='away',
+					'matchtime'='matchtime',
+					'emineral'='emineral',
+					'bmineral'='bmineral',
+					'districtnum'='districtnum'
+					}
+			</param>
+			<result name="givemineral" type="chain">
+				mGiveMineral
+			</result>
+			<result name="recoverymineral" type="chain">
+				mRecoveryMineral
+			</result>
+			<result name="canclemineral" type="chain">
+				mCancleBetting
 			</result>
 		</action>
 	</package>
