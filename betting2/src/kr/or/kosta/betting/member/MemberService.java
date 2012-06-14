@@ -255,12 +255,17 @@ public class MemberService implements ModelDriven,IService
 		 * @param request
 		 * @param response
 		 */
-		
-		
-		memberDAO.insultMember(member);
-		SUCCESS = member.getId()
-					+"님 가입을 축하합니다. 5000미네랄이 지급됩니다.";
-		return "success";
+		Member checkuserID = memberDAO.selectMemberByID(member.getId());
+		if (checkuserID == null) {
+			memberDAO.insultMember(member);
+			SUCCESS = member.getId()
+						+"님 가입을 축하합니다. 5000미네랄이 지급됩니다.";
+			return "success";
+		} else {
+			SUCCESS = member.getId()
+					+"는 사용할 수 없는 아이디 입니다.";
+			return "error";
+		}
 //		String id = request.getParameter("id");
 //		String name = request.getParameter("name");
 //		String pw = request.getParameter("pw");
