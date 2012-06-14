@@ -6,8 +6,6 @@ public class ExceptionAdvice {
 	
 	public Object aroundException(ProceedingJoinPoint jp){
 		Object returnValue=null;
-			
-		System.out.println("asdf");
 		
 			//사용자 또는 스트럿츠가 호출한 메서드를 호출
 			//jp.proceed()
