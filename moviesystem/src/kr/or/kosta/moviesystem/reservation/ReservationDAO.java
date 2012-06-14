@@ -60,6 +60,26 @@ public class ReservationDAO implements IReservationDAO{
     VALUES (res_seq.nextval,?,           ?,      sysdate,         ?,           ?,               ?             ,'결제완료',        ?)
 </insert>
 	 */
+	
+	@Override
+	public int selectReservationSeatCount(String mnum, String scrnum){
+		int seatcnt = 0;
+		SqlSession session= null;
+		System.out.println("mnum = "+mnum);
+		System.out.println("scrnum = "+scrnum);
+		try{
+			session = sqlMapper.openSession(true);
+			
+			session.insert("Reservation.selectReservationCount",mnum);	
+		}
+		finally{
+			//Connection을 ConnectionPool에 반납해야지 안끊긴다. 
+			//그리고 이건 무조건 반납해야지 멈추지 않으니 finally에 써주어야한다.
+			System.out.println("돌아간다. 야호~~");
+			session.close();
+		}
+		return seatcnt;
+	}
 	@Override
 	public void insertReservation(Reservation reservation) {
 		
