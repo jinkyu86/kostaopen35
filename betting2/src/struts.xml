@@ -146,6 +146,14 @@
 			</result>
 		</action>
 		
+		<action name="mEditMember"
+			class="kr.or.kosta.betting.member.MemberService"
+		  	method="editMember">
+		  	<result name="success" type="chain">
+				mEditMemberForm
+			</result>
+		</action>
+		
 		<action name="logout"
 			class="kr.or.kosta.betting.member.MemberService"
 		  	method="logout">
