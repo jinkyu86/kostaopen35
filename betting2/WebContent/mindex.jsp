@@ -7,11 +7,7 @@ contentType="text/html; charset=UTF-8"
 <!DOCTYPE html> 
 <html> 
 	<head>
-		<script type="text/javascript">
-		 	<c:if test="${SUCCESS!=null}">
- 			alert("${SUCCESS}");
-			</c:if>
-		</script>
+		
 		<title>Betting</title>
 		<meta charset="euc-kr" /> 	
 		<meta name="viewport" 
@@ -28,6 +24,11 @@ contentType="text/html; charset=UTF-8"
 		<script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
 		<script src="http://code.jquery.com/mobile/latest/jquery.mobile.min.js"></script>
 		
+		<script type="text/javascript">
+		 	<c:if test="${SUCCESS!=null}">
+ 			alert("${SUCCESS}");
+			</c:if>
+		</script>
 		<!--
 		<link href="../framework/jquery.mobile-1.0.css" 
 			rel="stylesheet" type="text/css" />
@@ -69,7 +70,7 @@ contentType="text/html; charset=UTF-8"
 						<li><a href="/betting/mAddMemberForm.action" data-icon="plus" data-ajax="false">회원가입</a></li>
 					</c:when>
 					<c:otherwise>
-						<li><a href="/betting/mEditMemberForm.action" data-icon="info">회원정보수정</a></li>
+						<li><a href="/betting/mEditMemberForm.action" data-icon="info" data-ajax="false">회원정보수정</a></li>
 						<li><a href="/betting/mViewMemberBetDataByIDList.action" data-icon="search">나의 베팅정보</a></li>
 					</c:otherwise>
 					</c:choose>
