@@ -94,7 +94,7 @@ contentType="text/html; charset=UTF-8"
 					</c:choose>
 				</tr>
 			</table>
-			<form action="/betting/mBettingGame.action" method="post" id="betting_form">
+			<form action="/betting/mBettingGame.action" method="post" id="betting_form" data-ajax="false">
 			<input type="hidden" name="home" value="${BETTING_HOME.num }"/>
 			<input type="hidden" name="away" value="${BETTING_AWAY.num }"/>
 			<input type="hidden" name="matchtime" value="${BETTING_HOME.match.matchTime}"/>
