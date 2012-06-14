@@ -38,4 +38,5 @@ public interface IReservationDAO {
 
 	List selectTotalList(String scrnum);
 	
+	int selectReservationSeatCount(String mnum, String scrnum);
 }
