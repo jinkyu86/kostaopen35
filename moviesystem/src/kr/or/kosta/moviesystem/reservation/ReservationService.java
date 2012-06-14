@@ -499,7 +499,14 @@ public String viewReservationSeat() throws Exception {
 
 
 
-
+public String InsertReservation2() throws Exception{
+	member=(Member)session.get("LOGIN_MEMBER");
+	System.out.println(member);
+	System.out.println(mnum);
+	System.out.println(scrnum);
+	System.out.println(resQty);
+	return "success";
+}
 
 public String InsertReservation() throws Exception {
 	System.out.println("---InsertReservation 시작---");
@@ -621,6 +628,7 @@ public String InsertReservation() throws Exception {
 		System.out.println("viewSeatListByScrnum실행");
 		System.out.println("해당 예약정보를 저장");
 		MOVIE=movieDAO.selectMovie(mnum);
+		TotalSeatList=reservationDAO.selectTotalList(scrnum);
 		System.out.println("MOVIE= "+MOVIE);
 		System.out.println("mnum= "+mnum);
 		SCREENTIME=ScreenTimeDAO.selectScreenTimeBySrcNum(scrnum);
@@ -631,6 +639,8 @@ public String InsertReservation() throws Exception {
 		RESERVATION.setResQty(resQty);
 		RESERVATION.setTotalPrice(resQty*8000);
 
+		
+		
 		session.put("RESERVATION",RESERVATION);
 		session.put("COUNT", resQty);
 		session.put("SeatNumList",SeatNumList);
@@ -643,7 +653,7 @@ public String InsertReservation() throws Exception {
 //		ArrayList<Integer>SeatNumList=new ArrayList<Integer>();
 		
 		System.out.println("scrnum : "+scrnum);
-		TotalSeatList=reservationDAO.selectTotalList(scrnum);
+		
 
 		System.out.println("TotalSeatList======"+TotalSeatList);
 		System.out.println("viewSeatListByScrnum종료");
