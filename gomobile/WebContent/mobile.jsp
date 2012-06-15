@@ -7,6 +7,6 @@
 </script>
 </head>
 <body>
-	<h1>mgo.jsp입니다.</h1>
+	<h1>mobile.jsp입니다.</h1>
 </body>
 </html>
