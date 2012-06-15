@@ -61,10 +61,6 @@
 				</ul>
 			</div><!-- end content -->
 
-			<div data-role="footer" data-position="fixed">
-				
-			</div><!-- end footer -->		
-				
 		</div><!-- end page -->
 	</body>
 </html>

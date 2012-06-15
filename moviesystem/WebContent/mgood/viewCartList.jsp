@@ -79,7 +79,7 @@
 					</form>
 				</c:if>
 				
-				<a href="/moviesystem/mViewGoodList.action" data-role="button">쇼핑하러가기</a>
+				<a href="/moviesystem/mViewGoodList.action" data-role="button" data-transition="slide">쇼핑하러가기</a>
 				
 			</div><!-- end content -->
 

@@ -36,7 +36,7 @@
 			<form action="/moviesystem/mEditGood.action" method="post">
 			
 				<div data-role="fieldcontain">
-					<img src="/gphoto/${GOOD.photo}" width=50 height=50/>
+					<img src="/moviesystem/gphoto/${GOOD.photo}" width=50 height=50/>
 				</div>
 					
 				<div data-role="fieldcontain">	
