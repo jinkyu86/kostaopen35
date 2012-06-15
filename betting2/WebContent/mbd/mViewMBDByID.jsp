@@ -54,7 +54,7 @@ contentType="text/html; charset=UTF-8"
 			</c:choose>
 		</div>
 		<div data-role="content">
-		<form action="/betting/mMineral.action" method="post">
+		<form action="/betting/mMineral.action" method="post" data-ajax="false">
 			<table style="margin: auto">
 				<tr>
 					<td align="center">
