@@ -16,6 +16,6 @@ var mobileKeyWords =
 </script>
 </head>
 <body>
-
+	<h1>go.jsp입니다.</h1>
 </body>
 </html>
