@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 			<div data-role="header" data-theme="d">
-				<a href="#" data-icon="arrow-l" data-rel="back"  data-role="button">이전</a>
+				<a href="#" data-icon="arrow-l" data-rel="back"  data-role="button" style="max-width:300px; ">이전</a>
 				
 				<div data-role="controlgroup" data-type="horizontal"  align="right">
 					<c:choose>
@@ -12,7 +12,7 @@
 							<a href="/moviesystem/mmember/maddMemberForm.action" data-role="button">Join</a>
 					</c:when>
 					<c:otherwise>
-							<a href="/moviesystem/mmember/mmypage.action" data-role="button" >MyPage</a>
+							<a href="/moviesystem/mmember/mmypage.action" data-role="button"  data-rel="dialog">MyPage</a>
 							<a href="/moviesystem/mlogoutMember.action" data-role="button">Logout</a>
 					</c:otherwise>	
 					</c:choose>						
