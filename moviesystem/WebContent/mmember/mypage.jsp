@@ -30,23 +30,27 @@
 	</head> 
 
 	<body>
-		<div data-role="page">		
-		<jsp:include page="/common/mHeader.jsp"></jsp:include>
+		<div data-role="dialog">		
 			
-		 <div data-role="content" align="center">
-		    <h3 align="center">${LOGIN_MEMBER.name}님 환영합니다.</h3><br/>
-		    <a href="/moviesystem/meditMemberForm.action"  data-role="button">Edit Member</a>
-		    <a href="/moviesystem/mViewBuyList.action" data-role="button">Buy List</a>
-		    <a href="/moviesystem/mCancelBuyListForm.action" data-role="button">Cancel Buy</a>
-		    <a href="/moviesystem/mViewCanceledBuyList.action" data-role="button">Canceled Buy List</a>
+			<div data-role="header" data-theme="d">
+				<h1>MyPage</h1>
+			</div><!-- end header -->
+			
+		 	<div data-role="content" align="center">
+		  	  <h3 align="center">${LOGIN_MEMBER.name}님 환영합니다.</h3><br/>
+		    	<a href="/moviesystem/meditMemberForm.action"  data-role="button">Edit Member</a>
+		    	<a href="/moviesystem/mViewBuyList.action" data-role="button">Buy List</a>
+		   	 	<a href="/moviesystem/mCancelBuyListForm.action" data-role="button">Cancel Buy</a>
+		    	<a href="/moviesystem/mViewCanceledBuyList.action" data-role="button">Canceled Buy List</a>
 		    
-		     <c:if  test="${LOGIN_MEMBER.userid=='mmanager'}">
-		      <a href="/moviesystem/mviewMemberList.action" data-role="button">Member Management</a>
-		      <a href="/moviesystem/mViewManageGoodList.action" data-role="button">Good Management</a>
-		      <a href="/moviesystem/mAdminMovieList.action" data-role="button">Movie List</a>
-		    </c:if>
+		     	<c:if  test="${LOGIN_MEMBER.userid=='mmanager'}">
+		      		<a href="/moviesystem/mviewMemberList.action" data-role="button">Member Management</a>
+		      		<a href="/moviesystem/mViewManageGoodList.action" data-role="button">Good Management</a>
+		      		<a href="/moviesystem/mAdminMovieList.action" data-role="button">Movie List</a>
+		    	</c:if>
 		   </div><!-- end content -->
-		</div><!-- end page -->
+		   
+		</div><!-- end dialog -->
 	</body>
 </html>
 
