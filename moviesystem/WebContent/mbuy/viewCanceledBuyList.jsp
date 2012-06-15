@@ -67,10 +67,10 @@
 				<div data-role="navbar" >
 					<ul>
 						<c:if test="${page!=1}">
-						<li><a href="/moviesystem/mbuy/mViewCanceledBuyList.action?page=${page-1}" data-icon="arrow-l">Prev</a></li>
+						<li><a href="/moviesystem/mbuy/mViewCanceledBuyList.action?page=${page-1}" data-icon="arrow-l" data-transition="slide">Prev</a></li>
 						</c:if>
 						<c:if test="${page<maxPage }">
-						<li><a href="/moviesystem/mbuy/mViewCanceledBuyList.action?page=${page+1}" data-icon="arrow-r" >Next</a></li>
+						<li><a href="/moviesystem/mbuy/mViewCanceledBuyList.action?page=${page+1}" data-icon="arrow-r" data-transition="slide">Next</a></li>
 						</c:if>
 					</ul>
 				</div>

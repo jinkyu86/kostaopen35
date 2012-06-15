@@ -68,31 +68,15 @@
 				<div data-role="navbar" >
 					<ul>
 						<c:if test="${page!=1}">
-						<li><a href="/moviesystem/mbuy/mViewBuyList.action?page=${page-1}" data-icon="arrow-l">Prev</a></li>
+						<li><a href="/moviesystem/mbuy/mViewBuyList.action?page=${page-1}" data-icon="arrow-l" data-transition="slide">Prev</a></li>
 						</c:if>
 						<c:if test="${page<maxPage }">
-						<li><a href="/moviesystem/mbuy/mViewBuyList.action?page=${page+1}" data-icon="arrow-r" >Next</a></li>
+						<li><a href="/moviesystem/mbuy/mViewBuyList.action?page=${page+1}" data-icon="arrow-r"  data-transition="slide">Next</a></li>
 						</c:if>
 					</ul>
 				</div>
 			</div><!-- end footer -->		
 		</div><!-- end page -->
-	
-	<!--  
-	<div data-role="page" id="popup">
 
-		<div data-role="header" data-theme="e">
-			<h3>My Page</h3>
-		</div>
-
-		<div data-role="content" data-theme="d">	
-			<a href="/moviesystem/mbuy/mCancelBuyListForm.action" data-role="button" data-direction="reverse" data-theme="b">Cancel Buy</a>	
-			<a href="/moviesystem/mbuy/mViewCanceledBuyList.action" data-role="button" data-direction="reverse" data-theme="b">Canceled Buy List</a>	
-		</div>
-	
-		<div data-role="footer">
-		</div>
-	</div>
-	-->
 	</body>
 </html>

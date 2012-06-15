@@ -34,7 +34,7 @@
 
 			<div data-role="content" align="center">
 				<h3 align="center">결제가 완료되었습니다.</h3><br/>
-				<a href="/moviesystem/mViewBuyList.action">구매내역 보기</a>
+				<a href="/moviesystem/mViewBuyList.action" data-transition="slide">구매내역 보기</a>
 			</div><!-- end content -->
 
 			<div data-role="footer" data-position="fixed">
