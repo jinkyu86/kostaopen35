@@ -8,12 +8,12 @@
 				<div data-role="controlgroup" data-type="horizontal"  align="right">
 					<c:choose>
 					<c:when test="${LOGIN_MEMBER==null}">			
-							<a href="/moviesystem/mmember/mloginForm.action" data-role="button" >Login</a>
-							<a href="/moviesystem/mmember/maddMemberForm.action" data-role="button">Join</a>
+							<a href="/moviesystem/mmember/mloginForm.action" data-role="button" data-transition="slide">Login</a>
+							<a href="/moviesystem/mmember/maddMemberForm.action" data-role="button" data-transition="slide">Join</a>
 					</c:when>
 					<c:otherwise>
-							<a href="/moviesystem/mmember/mmypage.action" data-role="button"  data-rel="dialog">MyPage</a>
-							<a href="/moviesystem/mlogoutMember.action" data-role="button">Logout</a>
+							<a href="/moviesystem/mmember/mmypage.action" data-role="button"  data-rel="dialog" data-transition="slide">MyPage</a>
+							<a href="/moviesystem/mlogoutMember.action" data-role="button" data-transition="slide">Logout</a>
 					</c:otherwise>	
 					</c:choose>						
 				</div>	
@@ -22,8 +22,8 @@
 			<div data-role="header" >
 				<div data-role="navbar" >
 					<ul>
-						<li><a href="/moviesystem/mmain.action">Movie</a></li>
-						<li><a href="/moviesystem/mViewGoodList.action">Shopping</a></li>
+						<li><a href="/moviesystem/mmain.action" data-transition="slide">Movie</a></li>
+						<li><a href="/moviesystem/mViewGoodList.action" data-transition="slide">Shopping</a></li>
 					</ul>
 				</div>
 			</div><!-- end header2 -->
