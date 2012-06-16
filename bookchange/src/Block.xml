@@ -23,10 +23,8 @@
 	<insert id="insertBlock" 
 	     parameterMap="insertParameterMap">
     
-
-	
-	    INSERT  INTO  tb_block
-		                   (block_no,register_email,block_email,block_content,blockcondition_result)
+	INSERT  INTO  tb_block
+		(block_no,register_email,block_email,block_content,blockcondition_result)
 	    VALUES (block_seq.nextval,?,?,?,0)
 	</insert>
 
@@ -58,21 +56,66 @@
 		<result property="blockCondition.blockConditionResult" column="Result"/>
 		<result property="blockCondition.blockConditionIng" column="Ing"/>
 	</resultMap>
-	<select id="selectBlock" resultMap="selectResultMap">
+	<select id="selectBlockList" resultMap="selectResultMap">
 		select 
 		block_no as block_no,
 		block_content as block_content,
 		block_email as block_email,
 		register_email as register_email,
-		blockCondition_Result as Result
-		from tb_block 
+		blockCondition_Ing as Ing
+		from tb_block b,tb_blockCondition c
+		where b.blockCondition_Result=c.blockCondition_Result
 	</select>
+		
 		
 	<select id="selectBlockCount" resultType="java.lang.Integer">
 		select count(*) from tb_block
 	</select>
 
-	<select id="myselectBlock" resultMap="selectResultMap">
+	<select id="selectMyBlockList" resultMap="selectResultMap">
+		select
+		register_email as register_email,
+		block_email as block_email,
+		block_content as block_content,
+		c.blockCondition_Ing as Ing,
+		b.blockCondition_Result as Result
+		from tb_block b,tb_blockcondition c
+		where b.blockCondition_Result=c.blockCondition_Result
+		and register_email=#{email}
+	</select>
+	
+	<select id="selectBlockbyblockno" resultMap="selectResultMap">
+		select 
+		block_no as block_no,
+		block_content as block_content,
+		block_email as block_email,
+		register_email as register_email,
+		b.blockCondition_Result as Result,
+		c.blockCondition_Ing as Ing
+		from tb_block b,tb_blockcondition c
+		where  b.blockCondition_Result=c.blockCondition_Result
+		and block_no=#{blockNo} 
+	</select>
+
+	<select id="selectBlockbyResult" resultMap="selectResultMap">
+		select 
+		block_no as block_no,
+		block_content as block_content,
+		block_email as block_email,
+		register_email as register_email,
+		b.blockCondition_Result as Result,
+		blockCondition_Ing as Ing
+		from tb_block b,tb_blockcondition c
+		where  b.blockCondition_Result=c.blockCondition_Result
+		and b.blockCondition_Result=#{resultNo}
+	</select>
+	<select id="selectBlockbyResultCount" resultType="java.lang.Integer">
+		select count(*)
+	    from tb_block b,tb_blockcondition c
+		where  b.blockCondition_Result=c.blockCondition_Result
+		and b.blockCondition_Result=#{resultNo} 
+	</select>
+		<select id="selectBlockbyResulting" resultMap="selectResultMap">
 		select 
 		block_no as block_no,
 		block_content as block_content,
@@ -82,88 +125,12 @@
 		blockCondition_Ing as Ing
 		from tb_block b,tb_blockcondition c
 		where b.blockCondition_Result=c.blockCondition_Result
-		and register_email=#{email} 
+		and b.blockCondition_Result=#{resulting} 
 	</select>
-	
-	<select id="selectBlockbyResult" resultMap="selectResultMap">
-		select 
-		block_no as block_no,
-		block_content as block_content,
-		block_email as block_email,
-		register_email as register_email,
-		blockCondition_Result as Result
-		from tb_block
-		where blockCondition_Result=#{resultNo} 
+     <select id="selectBlockResultCounting" resultType="java.lang.Integer">
+		select count(*) from tb_blockcondition b,tb_block c 
+		where b.blockCondition_Result=c.blockCondition_Result
+		and c.blockCondition_Result=#{resultno}
 	</select>
 
-<!--    <select id="selectBlockResultCounting" resultType="java.lang.Integer">
-		select count(*) from tb_block where blockCondition_Ing=#{resultcount}
-	</select>-->
-
-		<!--
-	<resultMap id="selectResultMap" type="kr.or.kosta.bookchange.member.Member">
-		<result property="email" column="email"/>
-		<result property="address" column="address"/>
-		<result property="pw" column="pw"/>
-		<result property="tel" column="tel"/>
-	</resultMap>
-	<select id="selectMember" resultMap="selectResultMap">
-		select 
-		email as email,
-		address as address,
-		pw as pw, 
-		tel as tel
- 		from tb_member
-	</select>
-	
-	<select id="selectMemberCount" resultType="java.lang.Integer">
-		select count(*) from tb_member
-	</select>
-	<select id="selectMemberCountemail" resultType="java.lang.Integer">
-		select count(email) from tb_member where email=#{email}
-	</select>
-	
-	<select id="selectMemberemail" resultMap="selectResultMap">
-		select 
-		email as email,
-		address as address,
-		pw as pw, 
-		tel as tel
- 		from tb_member
-		where email=#{email}
-	</select>
-	
-	<select id="selectMemberListByEmail" resultMap="selectResultMap">
-	select 
-		email as email,
-		address as address,
-		pw as pw, 
-		tel as tel
- 		from tb_member
-		where email like #{email}
-	</select>
-	<resultMap id="selectResultPwMap" type="kr.or.kosta.bookchange.member.Member">
-		<result property="pw" column="pw"/>
-		<result property="email" column="email"/>
-		<result property="tel" column="tel"/>
-	</resultMap>
-		
-	<select id="selectMemberListByPw" resultMap="selectResultPwMap">
-	select 
-		pw as pw
-		from tb_member
-		where email=#{email} and tel=#{tel}
-	</select>
-	<resultMap id="selectResultTelMap" type="kr.or.kosta.bookchange.member.Member">
-		<result property="email" column="email"/>
-		<result property="tel" column="tel"/>
-	</resultMap>
-
-		<select id="selectMemberListByTel" resultMap="selectResultTelMap">
-	select 
-		email as email
- 		from tb_member
-		where tel=#{tel}
-	</select>	
--->
 </mapper>
