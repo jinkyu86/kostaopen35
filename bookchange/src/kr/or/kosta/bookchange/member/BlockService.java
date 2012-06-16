@@ -1,18 +1,14 @@
 package kr.or.kosta.bookchange.member;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+
+import kr.or.kosta.aop.IService;
+import kr.or.kosta.util.PageUtil;
 
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.ServletResponseAware;
@@ -20,9 +16,6 @@ import org.apache.struts2.interceptor.SessionAware;
 import org.apache.struts2.util.ServletContextAware;
 
 import com.opensymphony.xwork2.ModelDriven;
-
-import kr.or.kosta.aop.IService;
-import kr.or.kosta.util.PageUtil;
 
 
 public class BlockService implements IService,ModelDriven,ServletContextAware,ServletRequestAware,ServletResponseAware,SessionAware{
@@ -37,22 +30,84 @@ public class BlockService implements IService,ModelDriven,ServletContextAware,Se
 	private String PAGE_LINK_TAG;
 	private Member LOGIN_EMAIL;
 	private Member blockmember;
-	private Member member;
-
-	private int resultNo;
-	private int blockNo;
+	private Member member =new Member();
+	private String keyword;
+	private String resultNo;
+	private String blockNo;
 	private List<Block> MyBlockList;
 	private List<Block> BlockList;
-	
+	private List<Block> BlockResultList;
+	private String resultno;
+	private int length;
+	private int page;
+	private String Resultselect;
 	private ServletContext context;
 	private HttpServletRequest request;
 	private HttpServletResponse response;
-	
+	private int BlockCount;
 	private Map session;
 	private Block BLOCK=new Block();
 	private BlockCondition BLOCKCONDITION= new BlockCondition();
+
+	private String conditionResult;
 	
 	
+	
+
+	public int getBlockCount() {
+		return BlockCount;
+	}
+	public void setBlockCount(int blockCount) {
+		BlockCount = blockCount;
+	}
+	public String getResultno() {
+		return resultno;
+	}
+	public void setResultno(String resultno) {
+		this.resultno = resultno;
+	}
+	public String getResultselect() {
+		return Resultselect;
+	}
+	public void setResultselect(String resultselect) {
+		Resultselect = resultselect;
+	}
+	public List<Block> getBlockResultList() {
+		return BlockResultList;
+	}
+	public void setBlockResultList(List<Block> blockResultList) {
+		BlockResultList = blockResultList;
+	}
+	public int getLength() {
+		return length;
+	}
+	public void setLength(int length) {
+		this.length = length;
+	}
+	public String getConditionResult() {
+		return conditionResult;
+	}
+	public void setConditionResult(String conditionResult) {
+		this.conditionResult = conditionResult;
+	}
+	public int getPage() {
+		return page;
+	}
+	public void setPage(int page) {
+		this.page = page;
+	}
+	public String getBlockNo() {
+		return blockNo;
+	}
+	public void setBlockNo(String blockNo) {
+		this.blockNo = blockNo;
+	}
+	public String getKeyword() {
+		return keyword;
+	}
+	public void setKeyword(String keyword) {
+		this.keyword = keyword;
+	}
 	public List<Block> getMyBlockList() {
 		return MyBlockList;
 	}
@@ -66,12 +121,6 @@ public class BlockService implements IService,ModelDriven,ServletContextAware,Se
 		PAGE_LINK_TAG = pAGE_LINK_TAG;
 	}
 
-	public int getBlockNo() {
-		return blockNo;
-	}
-	public void setBlockNo(int blockNo) {
-		this.blockNo = blockNo;
-	}
 	public Member getMember() {
 		return member;
 	}
@@ -84,20 +133,12 @@ public class BlockService implements IService,ModelDriven,ServletContextAware,Se
 	public void setBlockmember(Member blockmember) {
 		this.blockmember = blockmember;
 	}
-	public int getResultNo() {
+	public String getResultNo() {
 		return resultNo;
 	}
-	public void setResultNo(int resultNo) {
+	public void setResultNo(String resultNo) {
 		this.resultNo = resultNo;
 	}
-	public int getBlockno() {
-		return blockNo;
-	}
-	public void setBlockno(int blockno) {
-		this.blockNo = blockno;
-	}
-
-
 	
 	@Override
 	public Object getModel() {
@@ -233,75 +274,63 @@ public class BlockService implements IService,ModelDriven,ServletContextAware,Se
 		// TODO Auto-generated method stub
 		super.finalize();
 	}
-//	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//		doPost(request,response);
-//	}
-//	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//		request.setCharacterEncoding("utf-8");
-//		String method=request.getParameter("method");
-//		if (method==null) {
-//			method="searchBlockList";
-//		}if("addBlock".equals(method)){
-//			addBlock(request,response);
-//		}else if("editBlock".equals(method)){
-//			editBlock(request, response);
-//		}else if("removeBlock".equals(method)){
-//			removeBlock(request, response);
-//		}else if("searchBlockList".equals(method)){
-//			searchBlockList(request, response);
-//		}else if("addBlockForm".equals(method)){
-//			addBlockForm(request,response);
-//		}else if("selectMyBlockList".equals(method)){
-//			selectMyBlockList(request,response);
-//		}
-//	}
+	
+	
+	public BlockService(IBlockDAO blockDAO) {
+		super();
+		this.blockDAO = blockDAO;
+	}
+
 	/**
 	 * 내가 신고한 불량회원 리스트 보기
 	 * @return
 	 * @throws Exception
 	 */
-	public String selectMyBlockList() throws Exception {
+	public String viewMyBlockList() throws Exception {
 	
-		LOGIN_EMAIL=(Member)session.get("LOGIN_EMAIL");
+		member=(Member)session.get("LOGIN_EMAIL");
 	
-		int page=1;
+		if(page==0){
+			page=1;
+		}
 		int length=10;
 		
 		if(request.getParameter("page")!=null){
 			page=Integer.parseInt(request.getParameter("page"));
 		}
 		if(member==null){
-			RequestDispatcher rd=request.getRequestDispatcher("");
-			rd.forward(request, response);
+		
 			return ERROR;
 		}
-		String memberEmail=member.getEmail();
-		MyBlockList=blockDAO.selectMyBlockList(length, page, memberEmail);
+		email=member.getEmail();
+		MyBlockList=blockDAO.selectMyBlockList(length, page,  email);
 		
 	
 		int blockCount=blockDAO.selectBlockCount();
 		
-		PAGE_LINK_TAG = PageUtil.generate(page, blockCount, length, "/bookchange/BlockService?method=selectMyBlockList"+BlockList);
+		PAGE_LINK_TAG = PageUtil.generate(page, blockCount, length, "/bookchange/viewMyBlockList.action");
 		
 		return "success";
 	}
 	/**
-	 * 내가 신고한 불량회원 리스트 보기
+	 * (관리자모드) 불량회원 리스트 보기
 	 * @return
 	 * @throws Exception
 	 */
-	public String selectBlockList() throws Exception {
+	public String viewBlockList() throws Exception {
 	
 	
-		int page=1;
+		if(page==0){
+			page=1;
+		}
 		int length=10;
 		
 		BlockList=blockDAO.selectBlockList(page, length);
 		
 	
-		int blockCount=blockDAO.selectBlockCount();
+		BlockCount=blockDAO.selectBlockCount();
 		
-		PAGE_LINK_TAG = PageUtil.generate(page, blockCount, length, "/bookchange/BlockService?method=selectBlockList"+BlockList);
+		PAGE_LINK_TAG = PageUtil.generate(page, BlockCount, length, "/bookchange/viewBlockList.action");
 		
 		return "success";
 	}
@@ -319,20 +348,6 @@ public class BlockService implements IService,ModelDriven,ServletContextAware,Se
 	public String addBlock() throws Exception {
 		
 
-//		String blockcontent=request.getParameter("blockcontent");
-//		String blockemail=request.getParameter("blockemail");
-//		String registeremail=request.getParameter("registeremail");
-//		
-//		Block block=new Block();
-//		block.setBlockContent(blockcontent);
-//		
-//		Member member=new Member();
-//		member.setEmail(blockemail);
-//		block.setBlockmember(member);
-//		
-//		Member member2=new Member();
-//		member2.setEmail(registeremail);
-//		block.setMember(member2);
 //		
 		blockDAO.insertBlock(block);
 		
@@ -348,19 +363,12 @@ public class BlockService implements IService,ModelDriven,ServletContextAware,Se
 	 * @param response
 	 */
 	public String editBlock()throws Exception{
+	
 
-//		String blockConditionresult=request.getParameter("blockConditionresult");
-//		String blockNo=request.getParameter("blockNo");
-//		
-//		Block block=new Block();
-//		block.setBlockNo(Integer.parseInt(blockNo));
-//		
-//		BlockCondition blockCondition=new BlockCondition();
-//		blockCondition.setBlockConditionResult(Integer.parseInt(blockConditionresult));
-//		block.setBlockCondition(blockCondition);
+		block=blockDAO.viewBlock(blockNo);
 		
-
-		
+		BLOCKCONDITION.setBlockConditionIng(conditionResult);
+		block.setBlockCondition(BLOCKCONDITION);
 		blockDAO.updateBlock(block);
 		
 		return "success";
@@ -374,13 +382,47 @@ public class BlockService implements IService,ModelDriven,ServletContextAware,Se
 	 * @param response
 	 */
 	public String removeBlock() throws Exception {
-//		String blockno=request.getParameter("blockNo");
-//		
-//		Block block= new Block();
-//		block.setBlockNo(Integer.parseInt(blockno));
+	
+		return "success";
+	}
+	/**
+	 * (관리자모드)불량회원 처리상황 변경(대기중-->검토중)
+	 * @return
+	 * @throws Exception
+	 */
+	public String viewBlock() throws Exception {
+		BLOCK=blockDAO.viewBlock(blockNo);
+		if(BLOCK.getBlockCondition().getBlockConditionResult().equals("0")){
+			BLOCKCONDITION.setBlockConditionIng("1");
+			BLOCK.setBlockCondition(blockCondition);
+			blockDAO.updateBlock(BLOCK);
+			BLOCK=blockDAO.viewBlock(blockNo);
+
+		}
+
+		return "success";	
+	}
+
+	/**
+	 * 신고상태(신고완료리스트)
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	public String viewBlockResult() throws Exception {
 		
-		blockDAO.deleteBlock(blockNo);
+		//기본 페이지
+		if(page==0){
+			page=1;
+		}
+		page=5;
+		length=10;
+	
+		    BlockResultList=blockDAO.selectBlockbyResult(length, page, "3");
+			BlockCount=blockDAO.selectBlockbyResultCount("3");
 		
+		PAGE_LINK_TAG = PageUtil.generate(page, BlockCount, length, "/bookchange/viewBlockResult.action");
+
 		return "success";
 	}
 
@@ -393,40 +435,29 @@ public class BlockService implements IService,ModelDriven,ServletContextAware,Se
 	public String searchBlockList() throws Exception {
 		
 		//기본 페이지
-		int page=1;
+		
 		//페이지 파라미터가 존재
-		if (request.getParameter("page")!=null) {
-			//파라미터 리턴
-			page=Integer.parseInt(request.getParameter("page"));
-			
+		if (page==0) {
+			page=1;
 		}
-		int length=5;
+		int length=10;
+	
 		
 	
-		int BlockCount=0;
 
-		if(request.getParameter("keyword")==null||
-			request.getParameter("keyword").equals("")){
-			    BlockList=
-						blockDAO.selectBlockList(length, page);
-				BlockCount=
-						blockDAO.selectBlockCount();
-				
-		}else{
-				BlockList=
-						blockDAO.selectBlockbyResult(length, page, request.getParameter("keyword"));
-				
-				BlockCount=
-						blockDAO.selectBlockbyResultCount(resultNo);				
-		}
-		 PAGE_LINK_TAG = PageUtil.generate(page, BlockCount, length, "/BlockService?" +
-				"method=searchBlockList&keyword=viewBlockList"+BlockList);
+			   
+		   		BlockList=
+						blockDAO.selectBlockbyResulting(length, page,resultno);
+	
+		   		BlockCount
+		   				=blockDAO.selectBlockbyResultCounting(resultno);
+						
+		
+		 PAGE_LINK_TAG = PageUtil.generate(page, BlockCount, length, "/BlockService/searchBlockList.action?resultno="+resultno);
 			
 	
 		 return "success";
 	
 	}
-
-
-
 }
+

@@ -19,10 +19,15 @@ import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.ServletResponseAware;
 import org.apache.struts2.interceptor.SessionAware;
 import org.apache.struts2.util.ServletContextAware;
+import org.apache.tomcat.jni.Mmap;
 
 import com.opensymphony.xwork2.ModelDriven;
 
 import kr.or.kosta.aop.IService;
+import kr.or.kosta.bookchange.board.Board;
+import kr.or.kosta.bookchange.board.IBoardDAO;
+import kr.or.kosta.bookchange.change.Change;
+import kr.or.kosta.bookchange.change.IChangeDAO;
 import kr.or.kosta.util.PageUtil;
 
 
@@ -32,25 +37,96 @@ public class MemberService implements IService,ModelDriven,ServletContextAware,S
 	private static final long serialVersionUID = 1L;
 	private Member member;
 	private String email;
-	
+	private int countList;
 	private String ERROR;
 	private String pw;
 	private String tel;
 	private Member LOGIN_EMAIL;
 	private String MEMBER_LIST;
 	private List<Member> memberList;
-	
+	private String keyword;
+	private String PAGE_LINK_TAG;
 	private ServletContext context;
 	private HttpServletRequest request;
 	private HttpServletResponse response;
-	
 	private Map session;
-	
+	private String column;
+	private int page;
+	private List<Change> conditionList;
+	private Board board;
+	private Board BOARD=new Board();
+	private Change CHANGE=new Change();
 	private Member MEMBER=new Member();
+	private String list;
+	private String arrlist;
 	
-	public MemberService(){
-		super();
+
+	public String getArrlist() {
+		return arrlist;
 	}
+	public void setArrlist(String arrlist) {
+		this.arrlist = arrlist;
+	}
+	public Board getBoard() {
+		return board;
+	}
+	public void setBoard(Board board) {
+		this.board = board;
+	}
+	public String getList() {
+		return list;
+	}
+	public void setList(String list) {
+		this.list = list;
+	}
+	public List<Change> getConditionList() {
+		return conditionList;
+	}
+	public void setConditionList(List<Change> conditionList) {
+		this.conditionList = conditionList;
+	}
+	public Board getBOARD() {
+		return BOARD;
+	}
+	public void setBOARD(Board bOARD) {
+		BOARD = bOARD;
+	}
+	public Change getCHANGE() {
+		return CHANGE;
+	}
+	public void setCHANGE(Change cHANGE) {
+		CHANGE = cHANGE;
+	}
+	public int getPage() {
+		return page;
+	}
+	public void setPage(int page) {
+		this.page = page;
+	}
+	public String getColumn() {
+		return column;
+	}
+	public void setColumn(String column) {
+		this.column = column;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	public int getCountList() {
+		return countList;
+	}
+	public void setCountList(int countList) {
+		this.countList = countList;
+	}
+	public String getPAGE_LINK_TAG() {
+		return PAGE_LINK_TAG;
+	}
+	public void setPAGE_LINK_TAG(String pAGE_LINK_TAG) {
+		PAGE_LINK_TAG = pAGE_LINK_TAG;
+	}
+
 	public MemberService(IMemberDAO memberDAO) {
 		super();
 		this.memberDAO = memberDAO;
@@ -66,15 +142,16 @@ public class MemberService implements IService,ModelDriven,ServletContextAware,S
 	public IMemberDAO getMemberDAO() {
 		return memberDAO;
 	}
+	public String getKeyword() {
+		return keyword;
+	}
+	public void setKeyword(String keyword) {
+		this.keyword = keyword;
+	}
 	public void setMemberDAO(IMemberDAO memberDAO) {
 		this.memberDAO = memberDAO;
 	}
-	public Member getMember() {
-		return member;
-	}
-	public void setMember(Member member) {
-		this.member = member;
-	}
+
 	public String getEmail() {
 		return email;
 	}
@@ -270,7 +347,7 @@ public class MemberService implements IService,ModelDriven,ServletContextAware,S
 		
 		
 		memberDAO.updateMember(member);
-		
+	
 		ERROR= "정보수정이 완료되었습니다.";
 		
 		return "success";
@@ -350,8 +427,6 @@ public class MemberService implements IService,ModelDriven,ServletContextAware,S
 
 	public String PwInMember() throws Exception{
 
-//			RequestDispatcher rd=request.getRequestDispatcher("/member/outPwkeyword.jsp");
-//			rd.forward(request, response);
 	  return "success";	
 	}
 	
@@ -378,9 +453,7 @@ public class MemberService implements IService,ModelDriven,ServletContextAware,S
 			session.clear();
 			ERROR="탈퇴되었습니다.";
 			
-//			RequestDispatcher rd=request.getRequestDispatcher("/main.jsp");
-//			rd.forward(request, response);
-		 
+
 		}
 		return "success";
 	}
@@ -462,7 +535,7 @@ public class MemberService implements IService,ModelDriven,ServletContextAware,S
 	 * @param request
 	 * @param response
 	 */
-	public void viewMemberList() throws Exception{
+	public String viewMemberList() throws Exception{
 		int page=1;//페이지수
 
 		
@@ -472,25 +545,24 @@ public class MemberService implements IService,ModelDriven,ServletContextAware,S
 		  }
 		int length=5;//페이지내용크기
 
-	    List<Member>memberList=
+	    memberList=
 				memberDAO.selectMemberList(page, length);//맴버호출 
 		  
 		 
 		 int memberCount=memberDAO.selectMemberCount();
-		 String pageLink=PageUtil.generate(page, memberCount, length, 
-				 "/bookchange/MemberService?method=viewMemberList");
-		 request.setAttribute("PAGE_LINK_TAG", pageLink);
+		 PAGE_LINK_TAG=PageUtil.generate(page, memberCount, length, 
+				 "/bookchange/viewMemberList.action");
 		 
+		 return "success";
 	}
 
 	/**
-	 * 회원명단 검색
+	 * (일반 회원)명단 검색
 	 * 
 	 * @param request
 	 * @param response
 	 */
-	public void searchMemberList(HttpServletRequest request,
-			HttpServletResponse response) throws IOException,ServletException{
+	public String searchMemberList() throws Exception{
 		//기본 페이지
 		int page=1;
 		//페이지 파라미터가 존재
@@ -501,11 +573,9 @@ public class MemberService implements IService,ModelDriven,ServletContextAware,S
 		}
 		int length=5;
 		
-		List<Member> memberList=null;
 		int memberCount=0;
 
-		if(request.getParameter("keyword")==null||
-			request.getParameter("keyword").equals("")){
+		if(keyword==null||keyword.equals("")){
 				memberList=
 						memberDAO.selectMemberList(page, length);
 				memberCount=
@@ -513,25 +583,137 @@ public class MemberService implements IService,ModelDriven,ServletContextAware,S
 				
 		}else{
 				memberList=
-							memberDAO.selectMemberListByEmail(length, page, request.getParameter("keyword"));
+							memberDAO.selectMemberListByEmail(length, page, keyword);
 				memberCount=
-						memberDAO.selectMemberCountemail(request.getParameter("keyword"));
+						memberDAO.selectMemberCountemail(keyword);
 				
 							
 		}
-		
-		request.setCharacterEncoding("utf-8");
-		request.setAttribute("MEMBER_LIST",memberList);	
-		String pageLink=
-				PageUtil.generate(page, memberCount, length, "/bookchange/MemberService?" +
-						"method=searchMemberList&keyword=" +
-						request.getParameter("keyword"));
-		request.setAttribute("PAGE_LINK_TAG", pageLink);
+	
+		PAGE_LINK_TAG=
+				PageUtil.generate(page, memberCount, length, "/bookchange/searchMemberList.action?keyword="+keyword);
 
-		RequestDispatcher rd=request.getRequestDispatcher("/member/viewMemberList.jsp");
-		rd.forward(request, response);
+		return "success";
 	}
 
+
+
+	/**
+	 * (관리자전용)회원명단 검색
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	public String adminsearchMemberList() throws Exception{
+		
+		int length=5;
+		
+
+		int memberCount=0;
+
+			if(keyword==null||keyword.equals("")){
+				memberList=
+						memberDAO.selectMemberList(page, length);
+				memberCount=
+						memberDAO.selectMemberCount();
+	    	   conditionList=memberDAO.searchMemberListCondition(page, length);
+	       }
+			else if(keyword!=null){
+	    	 
+				if(column.equals("tel"))
+				  memberList=
+							memberDAO.searchMemberListTel(page, length, keyword);
+				conditionList=memberDAO.searchMemberListCondition(page, length);
+				
+	    		   memberCount=
+					    memberDAO.searchMemberCountTel(keyword);
+	    			if(column.equals("email"))
+	    		    	
+	    		   memberList=
+						memberDAO.searchMemberListEmail(page, length, keyword);			
+	    			conditionList=memberDAO.searchMemberListCondition(page, length);
+	    			
+	    			
+	    				memberCount=
+							memberDAO.searchMemberCountEmail(keyword);
+	    		if (column.equals("pw"))				
+				  memberList=
+						memberDAO.searchMemberListPw(page, length, keyword);
+				  
+	    		  conditionList=memberDAO.searchMemberListCondition(page, length);
+				
+	    		   memberCount=
+							memberDAO.searchMemberCountPw(keyword);
+	    		   
+	    		   
+	    		   
+	    	 }				
+	    	
+				
+			 PAGE_LINK_TAG=PageUtil.generate(page, memberCount, length, "/MemberService/adminsearchMemberList.action?column="+column+"&keyword="+keyword);  
+
+		
+				
+		return "success";
+	}
+	/**
+	 * (일반전용)회원명단 검색
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	public String publicsearchMemberList() throws Exception{
+	
+				
+		int length=5;
+		
+
+		int memberCount=0;
+			
+			if(keyword==null||keyword.equals("")){
+				memberList=
+						memberDAO.selectMemberList(page, length);
+
+	    	
+				memberCount=
+						memberDAO.selectMemberCount();
+	    		  conditionList=memberDAO.searchMemberListCondition(page, length);
+				
+	       }
+			else if(keyword!=null){
+	    	 
+				if(column.equals("tel"))
+				  memberList=
+							memberDAO.searchMemberListTel(page, length, keyword);
+				  conditionList=memberDAO.searchMemberListCondition(page, length);
+				
+	    		   memberCount=
+					    memberDAO.searchMemberCountTel(keyword);
+	    			if(column.equals("email"))
+	    		    	
+	    		   memberList=
+						memberDAO.searchMemberListEmail(page, length, keyword);
+	    			conditionList=memberDAO.searchMemberListCondition(page, length);
+	    				memberCount=
+							memberDAO.searchMemberCountEmail(keyword);
+	    		if (column.equals("pw"))				
+				  memberList=
+						memberDAO.searchMemberListPw(page, length, keyword);
+	    		  conditionList=memberDAO.searchMemberListCondition(page, length);
+	    		   memberCount=
+							memberDAO.searchMemberCountPw(keyword);
+	    
+	    		  
+	    		   
+	    	 }				
+	    	
+				
+			 PAGE_LINK_TAG=PageUtil.generate(page, memberCount, length, "/MemberService/publicsearchMemberList.action?column="+column+"&keyword="+keyword);  
+
+		
+				
+		return "success";
+	}
 
 
 

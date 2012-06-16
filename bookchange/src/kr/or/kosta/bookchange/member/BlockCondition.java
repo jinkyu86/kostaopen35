@@ -5,19 +5,15 @@ public class BlockCondition {
 	/**
 	 * 신고결과(0-신고접수, 1-신고검토, 2-등록완료)
 	 */
-	private int blockConditionResult;
+	private String blockConditionResult;
 
 	/**
 	 * 신고처리상태(신고접수, 신고검토, 등록완료)
 	 */
 	private String blockConditionIng;
 
-	public int getBlockConditionResult() {
+	public String getBlockConditionResult() {
 		return blockConditionResult;
-	}
-
-	public void setBlockConditionResult(int blockConditionResult) {
-		this.blockConditionResult = blockConditionResult;
 	}
 
 	public String getBlockConditionIng() {
@@ -33,6 +29,8 @@ public class BlockCondition {
 		return "BlockCondition [blockConditionResult=" + blockConditionResult
 				+ ", blockConditionIng=" + blockConditionIng + "]";
 	}
+
+
 	
 
 }

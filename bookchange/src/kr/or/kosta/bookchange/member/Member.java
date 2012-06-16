@@ -1,5 +1,7 @@
 package kr.or.kosta.bookchange.member;
 
+import kr.or.kosta.bookchange.change.Change;
+
 public class Member {
 
 	/**
@@ -21,7 +23,16 @@ public class Member {
 	 * 비밀번호
 	 */
 	private String pw;
-    
+    private Change change;
+
+	public Change getChange() {
+		return change;
+	}
+
+	public void setChange(Change change) {
+		this.change = change;
+	}
+
 	public String getEmail() {
 		return email;
 	}
@@ -57,11 +68,8 @@ public class Member {
 	@Override
 	public String toString() {
 		return "Member [email=" + email + ", tel=" + tel + ", address="
-				+ address + ", pw=" + pw + "]";
+				+ address + ", pw=" + pw + ", change=" + change + "]";
 	}
 
-	
 
-
-	
 }

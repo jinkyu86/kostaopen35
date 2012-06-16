@@ -2,9 +2,9 @@ package kr.or.kosta.bookchange.member;
 
 public class Block {
 
-	public Member member;
+	private Member member;
 	private Member blockmember;
-	public BlockCondition blockCondition;
+	private BlockCondition blockCondition;
 	/**
 	 * 신고번호
 	 */
@@ -56,12 +56,31 @@ public class Block {
 		this.blockContent = blockContent;
 	}
 
+
+
+	public String getBlockConditionIng() {
+		return blockCondition.getBlockConditionIng();
+	}
+
+	public void setBlockConditionIng(String blockConditionIng) {
+		blockCondition.setBlockConditionIng(blockConditionIng);
+	}
+
+	public int hashCode() {
+		return blockCondition.hashCode();
+	}
+
+	public boolean equals(Object obj) {
+		return blockCondition.equals(obj);
+	}
+
 	@Override
 	public String toString() {
 		return "Block [member=" + member + ", blockmember=" + blockmember
 				+ ", blockCondition=" + blockCondition + ", blockNo=" + blockNo
 				+ ", blockContent=" + blockContent + "]";
 	}
+
 
 	
 }
