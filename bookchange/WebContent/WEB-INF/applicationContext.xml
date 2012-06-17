@@ -67,12 +67,23 @@
 	  <ref bean="memberDAO"/>
 	 </constructor-arg>
 	</bean>
+		<bean id="blockDAO" class="kr.or.kosta.bookchange.member.BlockDAO">
+		<property name="sqlSessionTemplate">
+      	  <ref bean="sqlSessionTemplate"/>
+    	</property>
+	</bean>
+	<bean id="BlockService" class="kr.or.kosta.bookchange.member.BlockService">
+	 <constructor-arg>
+	  <ref bean="BlockDAO"/>
+	 </constructor-arg>
+	</bean>
+		
 		
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
     <property name="driverClass" value="oracle.jdbc.driver.OracleDriver"/>
-    <property name="url" value="jdbc:oracle:thin:@192.168.0.81:1521:XE"/>
-    <property name="username" value="first"/>
-    <property name="password" value="tiger"/>
+    <property name="url" value="jdbc:oracle:thin:@192.168.0.84:1521:XE"/>
+    <property name="username" value="project"/>
+    <property name="password" value="project"/>
   </bean>
   
   <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
