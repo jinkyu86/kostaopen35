@@ -11,17 +11,20 @@ public interface IMemberDAO {
 	void deleteMember(String email);
 
 	int selectMemberCount();
+	
+	int selectMemberCountEmail(String email);
 
+	Member selectMemberEmail(String email);
+
+	Member selectMemberListByPw(String email, String tel);
+	
+	Member selectMemberEmailTel(String tel);
+	
 	List<Member> selectMemberList(int page, int length);
-
-	int selectMemberCountemail(String email);
-
-	Member selectMemberemail(String email);
 
 	List<Member> selectMemberListByEmail(int page, int length, String email);
 
-	Member selectMemberListByPw(String email, String tel);
+	List<Member> selectMemberListByTel(int page, int length, String tel);
 
-	Member selectMemberemailTel(String tel);
-
+	
 }

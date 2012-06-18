@@ -54,7 +54,7 @@
 		<result property="pw" column="pw"/>
 		<result property="tel" column="tel"/>
 	</resultMap>
-	<select id="selectMember" resultMap="selectResultMap">
+	<select id="selectMemberList" resultMap="selectResultMap">
 		select 
 		email as email,
 		address as address,
@@ -65,11 +65,8 @@
 	<select id="selectMemberCount" resultType="java.lang.Integer">
 		select count(*) from tb_member
 	</select>
-	<select id="selectMemberCountemail" resultType="java.lang.Integer">
-		select count(email) from tb_member where email=#{email}
-	</select>
-	
-	<select id="selectMemberemail" resultMap="selectResultMap">
+
+	<select id="selectMemberEmail" resultMap="selectResultMap">
 		select 
 		email as email,
 		address as address,
@@ -88,27 +85,24 @@
  		from tb_member
 		where email like #{email}
 	</select>
-	<resultMap id="selectResultPwMap" type="kr.or.kosta.bookchange.member.Member">
-		<result property="pw" column="pw"/>
-		<result property="email" column="email"/>
-		<result property="tel" column="tel"/>
-	</resultMap>
+
 		
-	<select id="selectMemberListByPw" resultMap="selectResultPwMap">
+	<select id="selectMemberListByPw" resultMap="selectResultMap">
 	select 
 		pw as pw
 		from tb_member
 		where email=#{email} and tel=#{tel}
 	</select>
-	<resultMap id="selectResultTelMap" type="kr.or.kosta.bookchange.member.Member">
-		<result property="email" column="email"/>
-		<result property="tel" column="tel"/>
-	</resultMap>
 
-		<select id="selectMemberListByTel" resultMap="selectResultTelMap">
+		<select id="selectMemberListByTel" resultMap="selectResultMap">
 	select 
 		email as email
  		from tb_member
 		where tel=#{tel}
-	</select>		
+	</select>
+
+	<select id="selectMemberCountEmail" resultType="java.lang.Integer">
+		select count(email) from tb_member where email=#{email}
+	</select>
+			
 </mapper>

@@ -197,26 +197,6 @@
 			<result name="success" type="chain">matchChangeResultList</result>
 		</action>
 
-			<action name="addMember"
-		 	 class="kr.or.kosta.bookchange.member.MemberService" 
-		 	 method="addMember">
-				<param name="aliases">
-		  		#{'email':'member.email',
-					'pw':'member.pw',
-					'address':'member.address',
-					'tel':'member.tel'}
-				</param>		  
-				<result name="success" type="chain">
-		  		boardListAtMain
-				</result>
-		</action>
-		<action name="addMemberForm"
-		 	 class="kr.or.kosta.bookchange.member.MemberService" 
-		 	 method="addMemberForm">
-				<result name="success">
-		  		   /member/addMember.jsp
-				</result>
-		</action>
 
 <!--block-->		
 		<action name="addBlock"
@@ -266,164 +246,10 @@
 		  		viewBlockList.jsp
 			</result>
 		</action>	
-	<action name="removeBlock"
-		 	 class="kr.or.kosta.bookchange.member.BlockService" 
-		 	 method="removeBlock">
-		  	<param name="aliases">
-		  		#{'blockNo':'blockNo'}
-				</param>
-		  	<result name="success">
-		  		removeBlock.jsp
-			</result>
-		</action>
-
-		<action name="viewMemberPwAndEmail"
-		 	 class="kr.or.kosta.bookchange.member.MemberService" 
-		 	 method="viewMemberPwAndEmail">
-		
-		  	<result name="success">
-		  		 /member/IdAndPw.jsp
-			</result>
-		</action>
-		
-		<action name="viewMemberPw"
-		 	 class="kr.or.kosta.bookchange.member.MemberService" 
-		 	 method="viewMemberPw">
-		  	<param name="aliases">
-		  		#{'tel':'tel',
-				  'email':'email'}
-				</param>
-		  	<result name="success" type="chain">
-		  		logout
-			</result>
-		</action>
-		
-
-		
-		<action name="viewMemberEmail"
-		 	 class="kr.or.kosta.bookchange.member.MemberService" 
-		 	 method="viewMemberEmail">
-		    	<param name="aliases">
-		  		#{'tel':'tel'}
-				</param>
-		  	<result name="success" type="chain">
-		  		 logout
-			</result>
-		</action>
-		
-		<action name="removeMember"
-		 	 class="kr.or.kosta.bookchange.member.MemberService" 
-		 	 method="removeMember">
-			<param name="aliases">
-		  		#{'email':'email',
-		  		  'pw':'pw'}				  
-				</param>				
-			<result name="success" type="chain">
-		  		 logout
-			</result>
-		</action>
-		
-		<action name="removeMemberForm"
-		 	 class="kr.or.kosta.bookchange.member.MemberService" 
-		 	 method="removeMemberForm">
-			<result name="success">
-		  		 /member/removeMember.jsp
-			</result>
-		</action>
-		<action name="addMember"
-		 	 class="kr.or.kosta.bookchange.member.MemberService" 
-		 	 method="addMember">
-				<param name="aliases">
-		  		#{'email':'member.email',
-					'pw':'member.pw',
-					'address':'member.address',
-					'tel':'member.tel'}
-				</param>		  
-				<result name="success" type="chain">
-		  		boardListAtMain
-				</result>
-		</action>
-		<action name="addMemberForm"
-		 	 class="kr.or.kosta.bookchange.member.MemberService" 
-		 	 method="addMemberForm">
-				<result name="success">
-		  		   /member/addMember.jsp
-				</result>
-		</action>
-		<action name="checkMemberEmail"
-		 	 class="kr.or.kosta.bookchange.member.MemberService" 
-		 	 method="checkMemberEmail">
-				<param name="aliases">
-		  		#{'email':'email'}
-				</param>	
-				<result name="success" type="chain">
-					/board/viewBoardList.jsp
-		  		</result>
-		</action>
-		<action name="editMember"
-		 	 class="kr.or.kosta.bookchange.member.MemberService" 
-		 	 method="editMember">
-				<param name="aliases">
-		  		#{'email':'email',
-				  'tel':'member.tel',
-				  'address':'member.address',
-				  'pw':'member.pw'}
-				</param>	
-				<result name="success" type="chain">
-					boardListAtMain
-		  		</result>
-		</action>
-		
-		<action name="editMemberForm"
-		 	 class="kr.or.kosta.bookchange.member.MemberService" 
-		 	 method="editMemberForm">
-		
-		 			
-				<result name="success">
-					/member/editmember.jsp
-		  		</result>
-		</action>
 	
-		<action name="login"
-		 	 class="kr.or.kosta.bookchange.member.MemberService" 
-		 	 method="login">
-				<param name="aliases">
-		  		#{'email':'email',
-				  'pw':'pw'}
-				</param>	
 
-				<result name="success">
-				 	 /left.jsp
-		  		</result>
-				
-				
-		</action>	
-				<action name="logout"
-		 	 class="kr.or.kosta.bookchange.member.MemberService" 
-		 	 method="logout">
-		
 
-				<result name="success">
-				 /index.jsp		
-		  		</result>
-				
-				
-		</action>
-				<action name="viewMember"
-		 	 class="kr.or.kosta.bookchange.member.MemberService" 
-		 	 method="viewMember">
-				<param name="aliases">
-		  		#{'email':'email','member.email',
-				  'pw':'pw','member.pw',
-				  'address':'address','member.address',
-				  'tel':'tel','member.tel'}
-				</param>	
-
-				<result name="success">
-				 	 /member/myInfo.jsp
-		  		</result>				
-		</action>
-			<action name="viewBlockList"
+					<action name="viewBlockList"
 		 	 class="kr.or.kosta.bookchange.member.BlockService" 
 		 	 method="viewBlockList">
 		  	<result name="success">
@@ -462,17 +288,7 @@
 		  		/block/viewBlock.jsp
 			</result>
 		</action>	
-		
-		<action name="viewBlock"
-		 	 class="kr.or.kosta.bookchange.member.BlockService" 
-		 	 method="viewBlock">
-				<param name="aliases">
-		  		#{'blockNo':'blockNo'}
-				</param>
-		  	<result name="success">
-		  		/block/viewBlock.jsp
-			</result>
-		</action>	
+
 		
 		<action name="viewBlockResult"
 		 	 class="kr.or.kosta.bookchange.member.BlockService" 
@@ -507,6 +323,156 @@
 		  		removeBlock.jsp
 			</result>
 		</action>
-					
+
+	
+	
+	<action name="viewMemberPwAndEmail"
+		 	 class="kr.or.kosta.bookchange.member.MemberService" 
+		 	 method="viewMemberPwAndEmail">
+		
+		  	<result name="success">
+		  		 /member/IdAndPw.jsp
+			</result>
+		</action>
+		<action name="removeMemberForm"
+		 	 class="kr.or.kosta.bookchange.member.MemberService" 
+		 	 method="removeMemberForm">
+			<result name="success">
+		  		 /member/removeMember.jsp
+			</result>
+		</action>
+			
+		<action name="addMember"
+		 	 class="kr.or.kosta.bookchange.member.MemberService" 
+		 	 method="addMember">
+				<param name="aliases">
+		  		#{'email':'member.email',
+					'pw':'member.pw',
+					'address':'member.address',
+					'tel':'member.tel'}
+				</param>		  
+				<result name="success" type="chain">
+		  		boardListAtMain
+				</result>
+		</action>
+			<action name="addMemberForm"
+		 	 class="kr.or.kosta.bookchange.member.MemberService" 
+		 	 method="addMemberForm">
+				<result name="success">
+		  		   /member/addMember.jsp
+				</result>
+		</action>
+		<action name="editMember"
+		 	 class="kr.or.kosta.bookchange.member.MemberService" 
+		 	 method="editMember">
+				<param name="aliases">
+		  		#{'email':'email',
+				  'tel':'member.tel',
+				  'address':'member.address',
+				  'pw':'member.pw'}
+				</param>	
+				<result name="success" type="chain">
+					boardListAtMain
+		  		</result>
+		</action>
+		<action name="editMemberForm"
+		 	 class="kr.or.kosta.bookchange.member.MemberService" 
+		 	 method="editMemberForm">
+		
+		 			
+				<result name="success">
+					/member/editmember.jsp
+		  		</result>
+		</action>
+	
+		<action name="login"
+		 	 class="kr.or.kosta.bookchange.member.MemberService" 
+		 	 method="login">
+				<param name="aliases">
+		  		#{'email':'email',
+				  'pw':'pw'}
+				</param>	
+
+				<result name="success">
+				 	 /left.jsp
+		  		</result>
+	     </action>
+		<action name="logout"
+		 	 class="kr.or.kosta.bookchange.member.MemberService" 
+		 	 method="logout">
+		
+
+				<result name="success">
+				 /index.jsp		
+		  		</result>
+				
+				
+		</action>
+				<action name="removeMember"
+		 	 class="kr.or.kosta.bookchange.member.MemberService" 
+		 	 method="removeMember">
+			<param name="aliases">
+		  		#{'email':'email',
+		  		  'pw':'pw'}				  
+				</param>				
+			<result name="success" type="chain">
+		  		 logout
+			</result>		
+		</action>
+				
+
+		<action name="viewMemberPw"
+		 	 class="kr.or.kosta.bookchange.member.MemberService" 
+		 	 method="viewMemberPw">
+		  	<param name="aliases">
+		  		#{'tel':'tel',
+				  'email':'email'}
+				</param>
+		  	<result name="success" type="chain">
+		  		logout
+			</result>
+		</action>
+		
+
+		
+		<action name="viewMemberEmail"
+		 	 class="kr.or.kosta.bookchange.member.MemberService" 
+		 	 method="viewMemberEmail">
+		    	<param name="aliases">
+		  		#{'tel':'tel'}
+				</param>
+		  	<result name="success" type="chain">
+		  		 logout
+			</result>
+		</action>
+		
+
+
+			<action name="viewMember"
+		 	 class="kr.or.kosta.bookchange.member.MemberService" 
+		 	 method="viewMember">
+				<param name="aliases">
+		  		#{'email':'email','member.email',
+				  'pw':'pw','member.pw',
+				  'address':'address','member.address',
+				  'tel':'tel','member.tel'}
+				</param>	
+
+				<result name="success">
+				 	 /member/myInfo.jsp
+		  		</result>			
+	
+		</action>	
+
+		<action name="checkMemberEmail"
+		 	 class="kr.or.kosta.bookchange.member.MemberService" 
+		 	 method="checkMemberEmail">
+				<param name="aliases">
+		  		#{'email':'email'}
+				</param>	
+				<result name="success" type="chain">
+					/board/viewBoardList.jsp
+		  		</result>
+		</action>						
 	</package>
 </struts>

@@ -30,9 +30,9 @@ public class MemberService implements IService,ModelDriven,ServletContextAware,S
 	private IMemberDAO memberDAO;
 
 	private static final long serialVersionUID = 1L;
+	
 	private Member member;
 	private String email;
-	
 	private String ERROR;
 	private String pw;
 	private String tel;
@@ -255,7 +255,7 @@ public class MemberService implements IService,ModelDriven,ServletContextAware,S
 	public String checkMemberEmail(HttpServletRequest request,
 			HttpServletResponse response)throws IOException,ServletException {
 		
-		member=memberDAO.selectMemberemail(email);
+		member=memberDAO.selectMemberEmail(email);
 		
 		
 		if (member==null) {
@@ -305,7 +305,7 @@ public class MemberService implements IService,ModelDriven,ServletContextAware,S
 	public String login() throws Exception {
 		/* default generated stub */;
 		
-		member =memberDAO.selectMemberemail(email);
+		member =memberDAO.selectMemberEmail(email);
 		
 		if (member==null) {
 			ERROR="존재하지 않는 아이디";
@@ -400,7 +400,7 @@ public class MemberService implements IService,ModelDriven,ServletContextAware,S
 			return "loginForm";
 		}else{
 			email=LOGIN_EMAIL.getEmail();
-			MEMBER=memberDAO.selectMemberemail(email);
+			MEMBER=memberDAO.selectMemberEmail(email);
 		
 		}
 		return "success";
@@ -415,7 +415,7 @@ public class MemberService implements IService,ModelDriven,ServletContextAware,S
 	
 	public String viewMemberEmail()throws Exception {
 	       	   
-		      member=memberDAO.selectMemberemailTel(tel);
+		      member=memberDAO.selectMemberEmailTel(tel);
 		
 		
 			if(tel==null||tel.equals("")){
@@ -514,7 +514,7 @@ public class MemberService implements IService,ModelDriven,ServletContextAware,S
 				memberList=
 							memberDAO.selectMemberListByEmail(length, page, keyword);
 				memberCount=
-						memberDAO.selectMemberCountemail(keyword);
+						memberDAO.selectMemberCountEmail(keyword);
 				
 							
 		}
