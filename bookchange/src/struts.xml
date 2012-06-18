@@ -12,10 +12,10 @@
 	<constant name="struts.objectFactory" value="spring"/>
 	<package name="default" namespace="/" extends="struts-default">
 		
-		<!--error 리턴시 error.jsp로 이동 모든 Action에 다 설정-->
-		<global-results> <!-- 모든 Action에 설정-->
+
+		<global-results> 
 		  <result name="error">/error/error.jsp</result>
-		  <!--loginForm 리턴시 login.jsp로 이동-->
+
 		  <result name="loginForm">/error/login.jsp</result>
 		</global-results>
 		
@@ -276,9 +276,7 @@
 		  		removeBlock.jsp
 			</result>
 		</action>
-		
-	<!-- member start-->	
-		
+
 		<action name="viewMemberPwAndEmail"
 		 	 class="kr.or.kosta.bookchange.member.MemberService" 
 		 	 method="viewMemberPwAndEmail">
@@ -395,7 +393,7 @@
 				</param>	
 
 				<result name="success">
-				 	 /index.jsp
+				 	 /left.jsp
 		  		</result>
 				
 				
@@ -424,6 +422,91 @@
 				<result name="success">
 				 	 /member/myInfo.jsp
 		  		</result>				
-		</action>		
+		</action>
+			<action name="viewBlockList"
+		 	 class="kr.or.kosta.bookchange.member.BlockService" 
+		 	 method="viewBlockList">
+		  	<result name="success">
+		  		/block/viewBlockList.jsp
+			</result>
+		</action>
+		
+	<action name="viewMyBlockList"
+		 	 class="kr.or.kosta.bookchange.member.BlockService" 
+		 	 method="viewMyBlockList">
+		 	 
+		  	<result name="success">
+		  		/block/viewMyBlockList.jsp
+			</result>
+		</action>
+
+    	<action name="searchBlockList"
+		 	 class="kr.or.kosta.bookchange.member.BlockService" 
+		 	 method="searchBlockList">
+				<param name="aliases">
+		  	    #{'resultNo':'resultNo'}
+				</param>
+		  	<result name="success">
+		  		/block/viewBlockList.jsp
+			</result>
+		</action>	
+  
+        
+	   <action name="viewBlock"
+		 	 class="kr.or.kosta.bookchange.member.BlockService" 
+		 	 method="viewBlock">
+				<param name="aliases">
+		  		#{'blockNo':'blockNo'}
+				</param>
+		  	<result name="success">
+		  		/block/viewBlock.jsp
+			</result>
+		</action>	
+		
+		<action name="viewBlock"
+		 	 class="kr.or.kosta.bookchange.member.BlockService" 
+		 	 method="viewBlock">
+				<param name="aliases">
+		  		#{'blockNo':'blockNo'}
+				</param>
+		  	<result name="success">
+		  		/block/viewBlock.jsp
+			</result>
+		</action>	
+		
+		<action name="viewBlockResult"
+		 	 class="kr.or.kosta.bookchange.member.BlockService" 
+		 	 method="viewBlockResult">
+				<param name="aliases">
+		  		#{'resultNo':'resultNo'}
+				</param>
+		  	<result name="success">
+		  		/block/viewresultBlock.jsp
+			</result>
+		</action>	
+	
+	   <action name="updateBlock"
+		 	 class="kr.or.kosta.bookchange.member.BlockService" 
+		 	 method="editBlock">
+				<param name="aliases">
+		  		#{'blockNo':'blockNo',
+				  'conditionResult':'conditionResult'}
+				</param>
+		  	<result name="success" type="chain">
+		  		viewBlockList
+			</result>
+		</action>	
+
+	<action name="removeBlock"
+		 	 class="kr.or.kosta.bookchange.member.BlockService" 
+		 	 method="removeBlock">
+		  	<param name="aliases">
+		  		#{'blockNo':'blockNo'}
+				</param>
+		  	<result name="success">
+		  		removeBlock.jsp
+			</result>
+		</action>
+					
 	</package>
 </struts>

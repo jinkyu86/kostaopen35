@@ -21,5 +21,6 @@ public interface IBlockDAO {
 
 	List<Block> selectBlockbyResult(int length, int page, String resultNo);
 
+
 	
 }

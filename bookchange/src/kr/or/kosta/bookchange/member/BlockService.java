@@ -38,11 +38,19 @@ public class BlockService implements IService,ModelDriven,ServletContextAware,Se
 	private Member LOGIN_EMAIL;
 	private Member blockmember;
 	private Member member;
-
+	private String keyword;
 	private int resultNo;
 	private int blockNo;
 	private List<Block> MyBlockList;
 	private List<Block> BlockList;
+	private List<Block> ingBlockList;
+	private List<BlockCondition> conBlockList;
+	private String resultNum;
+	private String resultName;
+	private int resultcount;
+	
+	private int page;
+	private int length;
 	
 	private ServletContext context;
 	private HttpServletRequest request;
@@ -53,6 +61,60 @@ public class BlockService implements IService,ModelDriven,ServletContextAware,Se
 	private BlockCondition BLOCKCONDITION= new BlockCondition();
 	
 	
+	
+	public BlockService(IBlockDAO blockDAO) {
+		super();
+		this.blockDAO = blockDAO;
+	}
+	public int getResultcount() {
+		return resultcount;
+	}
+	public void setResultcount(int resultcount) {
+		this.resultcount = resultcount;
+	}
+	public String getResultNum() {
+		return resultNum;
+	}
+	public void setResultNum(String resultNum) {
+		this.resultNum = resultNum;
+	}
+	public String getResultName() {
+		return resultName;
+	}
+	public void setResultName(String resultName) {
+		this.resultName = resultName;
+	}
+	public int getPage() {
+		return page;
+	}
+	public void setPage(int page) {
+		this.page = page;
+	}
+	public int getLength() {
+		return length;
+	}
+	public void setLength(int length) {
+		this.length = length;
+	}
+
+	public List<Block> getIngBlockList() {
+		return ingBlockList;
+	}
+	public void setIngBlockList(List<Block> ingBlockList) {
+		this.ingBlockList = ingBlockList;
+	}
+	public List<BlockCondition> getConBlockList() {
+		return conBlockList;
+	}
+	public void setConBlockList(List<BlockCondition> conBlockList) {
+		this.conBlockList = conBlockList;
+	}
+	public String getKeyword() {
+		return keyword;
+	}
+	public void setKeyword(String keyword) {
+		this.keyword = keyword;
+	}
 	public List<Block> getMyBlockList() {
 		return MyBlockList;
 	}
@@ -122,7 +184,7 @@ public class BlockService implements IService,ModelDriven,ServletContextAware,Se
 	public void setBlockCondition(BlockCondition blockCondition) {
 		this.blockCondition = blockCondition;
 	}
-
+	
 
 	public String getEmail() {
 		return email;
@@ -405,8 +467,7 @@ public class BlockService implements IService,ModelDriven,ServletContextAware,Se
 	
 		int BlockCount=0;
 
-		if(request.getParameter("keyword")==null||
-			request.getParameter("keyword").equals("")){
+		if(keyword==null||keyword.equals("")){
 			    BlockList=
 						blockDAO.selectBlockList(length, page);
 				BlockCount=
@@ -426,7 +487,5 @@ public class BlockService implements IService,ModelDriven,ServletContextAware,Se
 		 return "success";
 	
 	}
-
-
 
 }

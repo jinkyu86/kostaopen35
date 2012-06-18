@@ -17,6 +17,7 @@ a{text-decoration:none;}
 </script>
 </head>
 <body topmargin="0" leftmargin="0" bgcolor="#FFFFFF">
+
 	<table>
 	 <td width="550" height="600" valign="top">
 	 
@@ -31,18 +32,39 @@ a{text-decoration:none;}
 	  <c:forEach var="block" items="${BlockList}">
        <tr>
         <td align="center">${block.member.email}</td>
-        <td align="center">${block.blockmember.email}</a></td>
+        <td align="center"> <a href="/bookchange/viewBlock.action?blockNo=${block.blockNo }" target="main">${block.blockmember.email}</a></td>
 		<td align="center">${block.blockCondition.blockConditionIng}</td>
        </tr>
-      </c:forEach>
+		</c:forEach>
       </table>
+      
+      <table align="center"><tr><td>
+     <form action="/bookchange/searchBlockResultListing.action"method="post">
+		 <select name="keyword">
+	   <option value="">전체</option>
+	    <c:forEach var="resultNum" items="${ingBlockList}">
+	    	<c:when test="${resultNum.resultName}">	  
+		       <option value="0">접수완료</option>
+			   <option value="1">검토중</option>
+			   <option value="2">신고사유해당안됨</option>
+			   <option value="3">블랙리스트등록</option>
+		        
+  		</c:when>
+  		</c:forEach>
+  		</select>
+  		  <input type="submit" value="검색"/>
+		   
+	
+	</form></td></tr>
+    </table>
      
 	  <p align="center">
-		${PAGE_LINK_TAG} <br/><br/>
-		<a href="/bookchange/BlockService?method=addBlockForm" target="main"><b>신고하기</b><img src="webimg/black.gif" width="30" height="30" border="0"></a>
+		${PAGE_LINK_TAG} <br/><br/>		
 	  </p>  
-	  </td>	  
+	  </td>	 
+
 	  </table>
-	  
+	
+
 </body>
 </html>

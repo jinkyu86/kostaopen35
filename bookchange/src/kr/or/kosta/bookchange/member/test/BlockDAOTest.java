@@ -1,17 +1,19 @@
 package kr.or.kosta.bookchange.member.test;
 
-import static org.junit.Assert.*;
-
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
-import org.junit.Test;
-
 import kr.or.kosta.bookchange.board.Board;
+import kr.or.kosta.bookchange.board.BoardService;
 import kr.or.kosta.bookchange.member.Block;
 import kr.or.kosta.bookchange.member.BlockCondition;
 import kr.or.kosta.bookchange.member.BlockDAO;
 import kr.or.kosta.bookchange.member.Member;
-import kr.or.kosta.bookchange.member.MemberDAO;
+
+import org.junit.Test;
+import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.mock.web.MockHttpServletResponse;
 
 public class BlockDAOTest extends BlockDAO {
 
@@ -81,5 +83,9 @@ public class BlockDAOTest extends BlockDAO {
 	    BlockDAO dao=new BlockDAO();
 		int list=dao.selectBlockbyResultCount(0);
 		System.out.println(list);
+	}
+	@Test
+	public void testselectCountByResulting(){
+	
 	}
 }
