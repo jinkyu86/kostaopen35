@@ -73,77 +73,25 @@ public class MemberDAO extends SqlSessionDaoSupport implements IMemberDAO{
 		return count;
 	}
 
-	/**
-	 * (관리자 전용)회원명단 조회
-	 * 
-	 * @param length
-	 * @param page
-	 */
-	@Override
-	public List <Member> selectMemberList(
-			 int page,int length){
-		SqlSession session=getSqlSession();
-		List<Member> memberList;
-			
-		RowBounds rowBounds=new RowBounds((page-1)*length,length);
-		memberList=session.selectList("selectMember",null,rowBounds);
-				
-		return memberList;
-	}
 
-
-
-	/**
-	 * 전체 회원 수 보기(이메일)
-	 */
-	@Override
-	public int selectMemberCountemail(String email){
-		Integer count=null;
-		SqlSession session =null;
-		session=getSqlSession();
-
-		count=session.selectOne("Member.selectMemberCountemail",email);
-		return count;
-	}
-
-	
 	/**
 	 * 회원정보보기
 	 * 
 	 * @param email
 	 */
 	@Override
-	public Member selectMemberemail(String email){
+	public Member selectMemberEmail(String email){
 		Member member=null;
 		SqlSession session =null;
 		session=getSqlSession();
 
-		member=session.selectOne("selectMemberemail",email);
+		member=session.selectOne("selectMemberEmail",email);
 		return member;
 	}
 	
 	
 	
 
-	/**
-	 * 전체 명단 (이메일로 검색)
-	 * 
-	 * @param length
-	 * @param page
-	 */
-	
-	@Override
-	public List <Member> selectMemberListByEmail(
-			 int page,int length,String email){
-		 
-		List<Member> memberList;
-		SqlSession session=getSqlSession();
-	
-			RowBounds rowBounds=new RowBounds((page-1)*length,length);
-			memberList=session.selectList("Member.selectMemberListByEmail","%"+email+"%",rowBounds);
-				
-		return memberList;
-	}
 
 	/**
 	 * 회원 비밀번호 리턴(전화번호와 이메일로 검색)
@@ -172,16 +120,87 @@ public class MemberDAO extends SqlSessionDaoSupport implements IMemberDAO{
 	 * @throws ServletException
 	 */
 	@Override
-	public  Member selectMemberemailTel(String tel){
+	public  Member selectMemberEmailTel(String tel){
 		Member member=null;
 		SqlSession session =null;
 		session=getSqlSession();
 	
-		member=session.selectOne("selectMemberListByTel",tel);
+		member=session.selectOne("Member.selectMemberEmailTel",tel);
 		return member;
 	}
+
+
+	/**
+	 * (관리자 전용)회원명단 조회
+	 * 
+	 * @param length
+	 * @param page
+	 */
+	@Override
+	public List <Member> selectMemberList(
+			 int page,int length){
+		SqlSession session=getSqlSession();
+		List<Member> memberList;
+			
+		RowBounds rowBounds=new RowBounds((page-1)*length,length);
+		memberList=session.selectList("Member.selectMemberList",null,rowBounds);
+				
+		return memberList;
+	}
+
+	/**
+	 * 전체 명단 (전화번호로 검색)
+	 * 
+	 * @param length
+	 * @param page
+	 */
 	
+	@Override
+	public List <Member> selectMemberListByTel(
+			 int page,int length,String tel){
+		 
+		List<Member> memberList;
+		SqlSession session=getSqlSession();
+	
+			RowBounds rowBounds=new RowBounds((page-1)*length,length);
+			memberList=session.selectList("Member.selectMemberListByTel","%"+tel+"%",rowBounds);
+				
+		return memberList;
+	}
+	/**
+	 * 전체 명단 (이메일로 검색)
+	 * 
+	 * @param length
+	 * @param page
+	 */
+	
+	@Override
+	public List<Member> selectMemberListByEmail(int page, int length, String email){
+
+		 
+		List<Member> memberList;
+		SqlSession session=getSqlSession();
+	
+			RowBounds rowBounds=new RowBounds((page-1)*length,length);
+			memberList=session.selectList("Member.selectMemberListByEmail",email,rowBounds);
+				
+		return memberList;
+	}
+	/**
+	 * 이메일 갯수 
+	 * 
+	 * @param length
+	 * @param page
+	 */
 	
 
+	@Override
+	public int selectMemberCountEmail(String email) {
+		Integer count=null;
+		SqlSession session =null;
+		session=getSqlSession();
+		count=session.selectOne("Member.selectMemberCount",email);
+		return count;
+	}
 
 }

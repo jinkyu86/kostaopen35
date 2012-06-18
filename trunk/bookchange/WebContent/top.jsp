@@ -18,18 +18,23 @@ a{text-decoration:none;}
 </script>
 </head>
 <body topmargin="20" leftmargin="100" bottommargin="0" bgcolor="#FFFFFF">
-		<table cellpadding="0" cellspacing="0" border="0">
+		
+			<table cellpadding="0" cellspacing="0" border="0">
 		<tr>
-			
+		
 			<td><a href="/bookchange/boardListAtMain.action" target="main"><b>HOME</b><img src="webimg/home.jpg" border="0" width="50" height="50"/></a></td>
 			<td width="70"></td>
 			<td><a href="/bookchange/viewBoardList.action" target="main"><b>BOARD</b><img src="webimg/Book.jpg" border="0" width="50" height="50"/></a></td>
 			<td width="70"></td>
 			<td><a href="/bookchange/addBoardForm.action" target="main"><b>JOIN</b><img src="webimg/join.png" border="0" width="50" height="50"/></a></td>
 			<td width="70"></td>
-			<td><a href="/bookchange/viewMember.action" target="main"><b>MY INFO</b><img src="webimg/info.jpg" border="0" width="50" height="50"/></a></td>
-			
+			<td><a href="/bookchange/searchMemberList.action" target="main"><b>MEMBER SHIP</b><img src="webimg/info.jpg" border="0" width="50" height="50"/></a></td>
+			<td width="70"></td>
+			<td><a href="/bookchange/searchMemberList.action" target="main"><b>MEMBER ADMIN</b><img src="webimg/info.jpg" border="0" width="50" height="50"/></a></td>
+			<td width="70"></td>
+	
 		</tr>
 		</table>
+
 </body>
 </html>
