@@ -39,15 +39,28 @@ public class MemberService implements IService,ModelDriven,ServletContextAware,S
 	private Member LOGIN_EMAIL;
 	private String MEMBER_LIST;
 	private List<Member> memberList;
-	
+	private String keyword;
 	private ServletContext context;
 	private HttpServletRequest request;
 	private HttpServletResponse response;
-	
+	private String PAGE_LINK_TAG;
 	private Map session;
 	
+	public String getPAGE_LINK_TAG() {
+		return PAGE_LINK_TAG;
+	}
+	public void setPAGE_LINK_TAG(String pAGE_LINK_TAG) {
+		PAGE_LINK_TAG = pAGE_LINK_TAG;
+	}
+
 	private Member MEMBER=new Member();
 	
+	public String getKeyword() {
+		return keyword;
+	}
+	public void setKeyword(String keyword) {
+		this.keyword = keyword;
+	}
 	public MemberService(){
 		super();
 	}
@@ -263,13 +276,7 @@ public class MemberService implements IService,ModelDriven,ServletContextAware,S
 	 * @param response
 	 */
 	public String editMember() throws Exception{
-		/* default generated stub */;
-//		String email=request.getParameter("email");
-//		String address=request.getParameter("address");
-//		String pw=request.getParameter("pw");
-//		String tel=request.getParameter("tel");
-		
-		
+
 		memberDAO.updateMember(member);
 		
 		ERROR= "정보수정이 완료되었습니다.";
@@ -348,8 +355,7 @@ public class MemberService implements IService,ModelDriven,ServletContextAware,S
 
 	public String PwInMember() throws Exception{
 
-//			RequestDispatcher rd=request.getRequestDispatcher("/member/outPwkeyword.jsp");
-//			rd.forward(request, response);
+
 	  return "success";	
 	}
 	
@@ -375,9 +381,7 @@ public class MemberService implements IService,ModelDriven,ServletContextAware,S
 			System.out.println("회원이 삭제 되었습니다.");
 			ERROR="탈퇴되었습니다.";
 			
-//			RequestDispatcher rd=request.getRequestDispatcher("/main.jsp");
-//			rd.forward(request, response);
-		 
+	 
 		}
 		return "success";
 	}
@@ -486,8 +490,7 @@ public class MemberService implements IService,ModelDriven,ServletContextAware,S
 	 * @param request
 	 * @param response
 	 */
-	public void searchMemberList(HttpServletRequest request,
-			HttpServletResponse response) throws IOException,ServletException{
+	public String searchMemberList() throws Exception{
 		//기본 페이지
 		int page=1;
 		//페이지 파라미터가 존재
@@ -501,8 +504,7 @@ public class MemberService implements IService,ModelDriven,ServletContextAware,S
 		List<Member> memberList=null;
 		int memberCount=0;
 
-		if(request.getParameter("keyword")==null||
-			request.getParameter("keyword").equals("")){
+		if(keyword==null||keyword.equals("")){
 				memberList=
 						memberDAO.selectMemberList(page, length);
 				memberCount=
@@ -510,23 +512,16 @@ public class MemberService implements IService,ModelDriven,ServletContextAware,S
 				
 		}else{
 				memberList=
-							memberDAO.selectMemberListByEmail(length, page, request.getParameter("keyword"));
+							memberDAO.selectMemberListByEmail(length, page, keyword);
 				memberCount=
-						memberDAO.selectMemberCountemail(request.getParameter("keyword"));
+						memberDAO.selectMemberCountemail(keyword);
 				
 							
 		}
 		
-		request.setCharacterEncoding("utf-8");
-		request.setAttribute("MEMBER_LIST",memberList);	
-		String pageLink=
-				PageUtil.generate(page, memberCount, length, "/bookchange/MemberService?" +
-						"method=searchMemberList&keyword=" +
-						request.getParameter("keyword"));
-		request.setAttribute("PAGE_LINK_TAG", pageLink);
-
-		RequestDispatcher rd=request.getRequestDispatcher("/member/viewMemberList.jsp");
-		rd.forward(request, response);
+		 PAGE_LINK_TAG=
+				PageUtil.generate(page, memberCount, length, "/bookchange/MemberService/searchMemberList&keyword="+keyword);
+		 return "success";
 	}
 
 

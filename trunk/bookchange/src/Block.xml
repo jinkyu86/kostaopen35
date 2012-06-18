@@ -56,6 +56,7 @@
 		<result property="blockmember.email" column="block_email"/>
 		<result property="blockContent" column="block_content"/>
 		<result property="blockCondition.blockConditionResult" column="Result"/>
+		<result property="blockCondition.blockConditionIng" column="Ing"/>
 	</resultMap>
 	<select id="selectBlock" resultMap="selectResultMap">
 		select 
@@ -77,9 +78,11 @@
 		block_content as block_content,
 		block_email as block_email,
 		register_email as register_email,
-		blockCondition_Result as Result
-		from tb_block
-		where register_email=#{email} 
+		b.blockCondition_Result as Result,
+		blockCondition_Ing as Ing
+		from tb_block b,tb_blockcondition c
+		where b.blockCondition_Result=c.blockCondition_Result
+		and register_email=#{email} 
 	</select>
 	
 	<select id="selectBlockbyResult" resultMap="selectResultMap">
@@ -92,10 +95,10 @@
 		from tb_block
 		where blockCondition_Result=#{resultNo} 
 	</select>
-    <select id="selectBlockResultCount" resultType="java.lang.Integer">
-		select count(*) from tb_block where blockCondition_Result=#{resultNo}
-	</select>
 
+<!--    <select id="selectBlockResultCounting" resultType="java.lang.Integer">
+		select count(*) from tb_block where blockCondition_Ing=#{resultcount}
+	</select>-->
 
 		<!--
 	<resultMap id="selectResultMap" type="kr.or.kosta.bookchange.member.Member">

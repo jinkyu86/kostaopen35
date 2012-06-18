@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.io.Resources;
@@ -19,6 +20,8 @@ import kr.or.kosta.util.ConnectionUtil;
 
 public class BlockDAO extends SqlSessionDaoSupport implements IBlockDAO {
 
+	/*게시물을 테이블에 insert하고
+	 * insert한 게시물 번호 리턴*/
 	/**
 	 * 내가 등록한 불량 회원 검색
 	 * 

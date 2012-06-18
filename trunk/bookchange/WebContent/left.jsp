@@ -26,7 +26,7 @@ a{text-decoration:none;}
 	    <c:when test="${sessionScope.LOGIN_EMAIL==null}">
 	     <fieldset>
 	     <table align="left" cellpadding="0" cellspacing="0" border="0" >
-	     <form action="/bookchange/login.action" method="post" target="index.jsp">
+	     <form action="/bookchange/login.action" method="post" target="_self">
 		 <tr>
 		 <td>Email</td>
 		 <td><input type="text" name="email"></td>
@@ -57,7 +57,7 @@ a{text-decoration:none;}
 	   <c:otherwise>
 	    <fieldset>
 	 	<table cellpadding="0" cellspacing="0" border="0">
-	    <form action="/bookchange/logout.action" method="post" target="index.jsp">
+	    <form action="/bookchange/logout.action" method="post" target="_self">
 		<tr>
 		 <td>${sessionScope.LOGIN_EMAIL.email}님이 로그인하였습니다.</td>
 		</tr>
@@ -168,19 +168,34 @@ a{text-decoration:none;}
 		
 	   <tr>
     <td>
-     <a href="/bookchange/BlockService?method=selectMyBlockList" target="main"><img src="webimg/blocklist.png" border="0" width="40" height="40"><font color="black"><b>  신고하기</b></font></a>
+     <a href="/bookchange/viewMyBlockList.action" target="main"><img src="webimg/blocklist.png" border="0" width="40" height="40"><font color="black"><b>  신고하기</b></font></a>
      
     <!-- <form action="/bookchange/BlockService" method="post" target="main">
       <input type="hidden" name="method" value="selectMyBlockList">
       <input type="submit" value="신고내역보러가기">
     </form> -->
     </td>
+    </tr>
+  	
+  	   <tr>
+    <td>
+     <a href="/bookchange/viewBlockResult.action" target="main"><img src="webimg/blocklist.png" border="0" width="40" height="40"><font color="black"><b> 최종 불량 이용자 </b></font></a>
+
+    </td>
     </tr>  
+    
+    <tr>
+     <td>
+     	<c:if test="${sessionScope.LOGIN_EMAIL.email eq 'admin@gmail.com'}" >
+     <a href="/bookchange/viewBlockList.action" target="main"><img src="webimg/black.gif" border="0" width="40" height="40"><font color="black"><b>  신고리스트(관리자용)</b></font></a>
+     </c:if>
+    </td>
+    </tr>    
 	   
 	    </c:when>
 		<%-- <c:otherwise>
 		  <tr>
-	      <td><a href="/bookchange/BlockService?method=addBlock.action">
+	      <td><a href="">
 	      <img align="right" src="webimg/block.GIF" title="신고하기" border="0" width="230"/></a></td>
 	      </tr>
 		</c:otherwise> --%>
