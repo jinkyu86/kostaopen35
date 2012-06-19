@@ -16,7 +16,7 @@ public class ConnectionUtil {
 			
 			
 			con = DriverManager.getConnection
-					("jdbc.:oracle:thin:@192.168.0.28:1521:XE","scott","tiger");
+					("jdbc.:oracle:thin:@192.168.0.50:1521:XE","scott","tiger");
 			
 			System.out.println("데이터베이스 연결");
 
