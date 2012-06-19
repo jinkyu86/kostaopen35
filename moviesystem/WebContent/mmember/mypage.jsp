@@ -42,7 +42,7 @@
 		    	<a href="/moviesystem/mViewBuyList.action" data-role="button" data-transition="slide">Buy List</a>
 		   	 	<a href="/moviesystem/mCancelBuyListForm.action" data-role="button" data-transition="slide">Cancel Buy</a>
 		    	<a href="/moviesystem/mViewCanceledBuyList.action" data-role="button" data-transition="slide">Canceled Buy List</a>
-		    
+		    	<a href="/moviesystem/mviewReservationListById.action" data-role="button" data-transition="slide">ResercationList</a>
 		     	<c:if  test="${LOGIN_MEMBER.userid=='mmanager'}">
 		      		<a href="/moviesystem/mviewMemberList.action" data-role="button" data-transition="slide">Member Management</a>
 		      		<a href="/moviesystem/mViewManageGoodList.action" data-role="button" data-transition="slide">Good Management</a>
