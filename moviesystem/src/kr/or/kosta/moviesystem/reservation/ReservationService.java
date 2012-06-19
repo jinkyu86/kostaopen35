@@ -451,7 +451,7 @@ public class ReservationService implements ModelDriven, ServletContextAware,
 		// HttpSession session=request.getSession();
 		// Member member=(Member)session.getAttribute("LOGIN_MEMBER");
 		member = (Member) session.get("LOGIN_MEMBER");
-
+		System.out.println("member" + member);
 		reservation = (Reservation) session.get("reservation");
 		reservation.setMember(member);
 		SeatNumList = (ArrayList<Integer>) session.get("SeatNumList");
