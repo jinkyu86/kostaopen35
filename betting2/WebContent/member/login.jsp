@@ -10,9 +10,20 @@
 <!--[if IE]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 <script type="text/javascript">
  <c:if test="${SUCCESS!=null}">
- alert("${SUCCESS}");
+ 	alert("${SUCCESS}");
 </c:if>
+
+var mobileKeyWords =
+	new Array("iPhone", "iPod", "IEMobile", "Mobile", "lgtelecom", "PPC", "BlackBerry", "SCH-", "SPH-", "LG-", "CANU", "IM-" ,"EV-","Nokia")
+  for (var word in mobileKeyWords){
+    if (navigator.userAgent.match(mobileKeyWords[word]) != null){
+      parent.window.location.href="/betting/member/mLogin.jsp";
+      break;
+    }
+  }
 </script>
+
+
 </head>
 <body style="text-align:center">
 	<ul id="center1" style="text-align:center">
