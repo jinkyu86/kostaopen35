@@ -12,7 +12,6 @@
  <c:if test="${SUCCESS!=null}">
  alert("${SUCCESS}");
 </c:if>
-
 var mobileKeyWords =
 	new Array("iPhone", "iPod", "IEMobile", "Mobile", "lgtelecom", "PPC", "BlackBerry", "SCH-", "SPH-", "LG-", "CANU", "IM-" ,"EV-","Nokia")
   for (var word in mobileKeyWords){
@@ -20,7 +19,6 @@ var mobileKeyWords =
       parent.window.location.href="/betting/merror/error.jsp";
       break;
     }
-
   }
 </script>
 </head>
