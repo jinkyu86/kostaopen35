@@ -296,7 +296,6 @@ public class MemberService implements ModelDriven,IService
 	 * @throws ServletException
 	 */
 	public String addMemberForm() throws Exception{
-		SUCCESS="우히히히";
 		return "success";
 //		List<Member> memberList = MemberDAO.selectMemberList(1, 5);
 //
