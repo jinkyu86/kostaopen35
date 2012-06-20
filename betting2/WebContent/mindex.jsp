@@ -59,7 +59,7 @@ contentType="text/html; charset=UTF-8"
 			<a href="/betting/mViewMemberRankingListForm.action" data-role="button" >랭킹</a>
 			<c:if test="${sessionScope.LOGIN_MEMBER.id=='kosta100' }">
 				<a href="/betting/mViewMatchList.action" data-role="button" >경기관리</a>
-				<a href="/betting/mViewMemberList.action" data-role="button" >맴버관리</a>
+				<a href="/betting/mViewMemberList.action" data-role="button" data-ajax="false">맴버관리</a>
 			</c:if>
 		</div>
 		<div data-role="footer" data-position="fixed">
