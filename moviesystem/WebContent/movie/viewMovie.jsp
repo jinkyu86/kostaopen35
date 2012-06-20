@@ -105,6 +105,15 @@
 						${MOVIE.content}	
 					</td>
 				</tr>
+				
+			</table>
+			<div>상영시간</div>
+			<table class="table_style" align="right">
+				<c:forEach var="scrList" items="${SCREENTIME_LIST}">
+				<tr>
+					<td>${scrList.time}</td>
+				</tr>
+				</c:forEach>
 			</table>
 		</td>
 	</tr>
