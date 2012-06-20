@@ -6,34 +6,86 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.struts2.interceptor.ServletRequestAware;
+import org.apache.struts2.interceptor.ServletResponseAware;
 import org.apache.struts2.interceptor.SessionAware;
+import org.apache.struts2.util.ServletContextAware;
 
+import kr.or.kosta.moviesystem.aop.IService;
 import kr.or.kosta.moviesystem.member.Member;
+import kr.or.kosta.moviesystem.movie.IMovieDAO;
+import kr.or.kosta.moviesystem.movie.Movie;
 
 import com.opensymphony.xwork2.ModelDriven;
 
 /**
  * Servlet implementation class ScreenTimeService
  */
-public class ScreenTimeService implements ModelDriven,SessionAware {
+public class ScreenTimeService implements ModelDriven,ServletContextAware,ServletRequestAware,
+ServletResponseAware,SessionAware,IService{
 	private static final long serialVersionUID = 1L;
 	private List<ScreenTime> SCREENTIME_LIST ;
 	private String mnum;
 	private String mname;
 	private Map session; 
 	private Member member=new Member();
+	private IScreenTimeDAO screentimeDAO;
+	private ScreenTime screentime = new ScreenTime();
 	
+	private ServletContext servletContext;
+	private HttpServletRequest request;
+	private HttpServletResponse response;
+	
+	
+	
+	
+	@Override
+	public Map getSession() {
+		return session;
+	}
 	
 	@Override
 	public Object getModel() {
 		// TODO Auto-generated method stub
-		return null;
+		return screentime;
+	}
+	
+	@Override
+	public void setSession(Map<String, Object> session) {
+		// TODO Auto-generated method stub
+		this.session=session;	
+	}
+
+	@Override
+	public void setServletResponse(HttpServletResponse response) {
+		// TODO Auto-generated method stub
+		this.response = response;
+	}
+
+	@Override
+	public void setServletRequest(HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		this.request = request;
+	}
+	
+	public HttpServletRequest getRequest() {
+		return request;
+	}
+	public ServletContext getServletContext() {
+		return servletContext;
+	}
+	
+	@Override
+	public void setServletContext(ServletContext context) {
+		// TODO Auto-generated method stub
+		this.servletContext=context;	
 	}
   
 	
@@ -47,19 +99,6 @@ public class ScreenTimeService implements ModelDriven,SessionAware {
 	public void setMember(Member member) {
 		this.member = member;
 	}
-
-
-
-	public Map getSession() {
-		return session;
-	}
-
-
-
-	public void setSession(Map session) {
-		this.session = session;
-	}
-
 
 
 	public String getMname() {
@@ -90,18 +129,20 @@ public class ScreenTimeService implements ModelDriven,SessionAware {
 		return mnum;
 	}
 
-
-
 	public void setMnum(String mnum) {
 		this.mnum = mnum;
 	}
 
-
-
+	
 	public ScreenTimeService() {
         super();
         // TODO Auto-generated constructor stub
     }
+	public ScreenTimeService(IScreenTimeDAO screentimeDAO) {
+		super();
+		//System.out.println("movieDAO확인");
+		this.screentimeDAO = screentimeDAO;
+	}
 	
     public String viewScreenTimeListBymnum() throws Exception {
     	System.out.println("viewScreenTimeListBymnum실행 ");
@@ -111,7 +152,7 @@ public class ScreenTimeService implements ModelDriven,SessionAware {
 //		Member member=new Member();
 		member.setUserid("1");
 		session.put("LOGIN_MEMBER",member);
-		SCREENTIME_LIST=ScreenTimeDAO.selectScreen(mnum);
+		SCREENTIME_LIST=screentimeDAO.selectScreen(mnum);
 		ScreenTime SCREEN_LIST_MNAME ;
 		SCREEN_LIST_MNAME=SCREENTIME_LIST.get(0);
 		mname=SCREEN_LIST_MNAME.getMovie().getMname();
@@ -121,6 +162,5 @@ public class ScreenTimeService implements ModelDriven,SessionAware {
 
 	}
 
-
-
+	
 }
