@@ -44,8 +44,10 @@ import com.opensymphony.xwork2.ModelDriven;
 
 import kr.or.kosta.moviesystem.aop.IService;
 import kr.or.kosta.moviesystem.member.Member;
+import kr.or.kosta.moviesystem.screentime.IScreenTimeDAO;
 import kr.or.kosta.moviesystem.screentime.ScreenTime;
 import kr.or.kosta.moviesystem.screentime.ScreenTimeDAO;
+import kr.or.kosta.moviesystem.screentime.ScreenTimeService;
 import kr.or.kosta.moviesystem.util.PageUtil;
 
 public class MovieService implements ModelDriven,ServletContextAware,ServletRequestAware,
@@ -72,6 +74,7 @@ ServletResponseAware,SessionAware,IService{
 	private String movie_sdate;
 	private String movie_edate;
 	private int MaxPage;
+	private IScreenTimeDAO screentimeDAO;
 	
 	private List<ScreenTime> SCREENTIME_LIST ;
 	
@@ -144,7 +147,15 @@ ServletResponseAware,SessionAware,IService{
 	public List<Movie> getMOVIE_LIST() {
 		return MOVIE_LIST;
 	}
-
+	
+	public void setScreentimeDAO(IScreenTimeDAO screentimeDAO) {
+		this.screentimeDAO = screentimeDAO;
+	}
+	
+	public IScreenTimeDAO getScreentimeDAO() {
+		return screentimeDAO;
+	}
+	
 	public void setMOVIE_LIST(List<Movie> mOVIE_LIST) {
 		MOVIE_LIST = mOVIE_LIST;
 	}
@@ -385,6 +396,7 @@ ServletResponseAware,SessionAware,IService{
 		}
 		//System.out.println(mnum);
 		MOVIE = movieDAO.selectMovie(mnum);
+		SCREENTIME_LIST = screentimeDAO.selectScreen(mnum);
 		return "success";
 	}
 	
@@ -393,7 +405,7 @@ ServletResponseAware,SessionAware,IService{
 			gubun = "total";
 		}
 		//System.out.println(mnum);
-		SCREENTIME_LIST = ScreenTimeDAO.selectScreen(mnum);
+		SCREENTIME_LIST = screentimeDAO.selectScreen(mnum);
 		//System.out.println(SCREENTIME_LIST);
 		MOVIE = movieDAO.selectMovie(mnum);
 		return "success";
@@ -554,5 +566,5 @@ ServletResponseAware,SessionAware,IService{
 		
 		RequestDispatcher rd = request.getRequestDispatcher("/MovieService?method=adminMovieList");
 		rd.forward(request, response);
-	}	
+	}
 }
