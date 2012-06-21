@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    <ListView
+        android:id="@+id/StudList"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        />
+	<TableLayout
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="horizontal">
+	    <TableRow
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content">
+	        <TextView 
+	            android:id="@+id/pre"
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:text="이전"/>
+	        <TextView
+	            android:id="@+id/next"
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:text="다음"/>
+	    </TableRow>
+	</TableLayout>
+</LinearLayout>
