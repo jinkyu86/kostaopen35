@@ -6,12 +6,16 @@
         android:id="@+id/MovieImg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"/>
+        android:maxWidth="110px" 
+        android:maxHeight="90px"
+        android:layout_alignParentLeft="true"
+        android:adjustViewBounds="true"/>
 	<TableLayout
 	    android:id="@+id/MovieInfo"
 	    android:layout_width="fill_parent"
 	    android:layout_height="wrap_content"
 	    android:stretchColumns="1"
+	    android:layout_toRightOf="@id/MovieImg"
 	    android:orientation="horizontal">
 	    <TableRow
 	        android:layout_width="fill_parent"
