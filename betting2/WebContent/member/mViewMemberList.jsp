@@ -49,7 +49,7 @@ contentType="text/html; charset=UTF-8"
 		<div data-role="content">
 			<ul data-role="listview">
 				<c:forEach  var="member"  items="${MEMBER_LIST}">
-					<li><a href="/betting/mEditMemberForm.action?ID=${member.id}">
+					<li><a href="/betting/mEditMemberForm.action?ID=${member.id}" data-ajax="false">
 						<h3>ID : ${member.id}</h3>
 						<p>이름 : ${member.name}</p>
 						<p>이메일 : ${member.email}</p>
