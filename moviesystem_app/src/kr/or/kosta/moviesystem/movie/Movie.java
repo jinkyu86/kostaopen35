@@ -2,11 +2,12 @@ package kr.or.kosta.moviesystem.movie;
 
 
 
+import java.io.Serializable;
 import java.util.Date;
 
 import kr.or.kosta.moviesystem.screentime.ScreenTime;
 
-public class Movie {
+public class Movie implements Serializable{
 
 	public ScreenTime screenTime;
 
