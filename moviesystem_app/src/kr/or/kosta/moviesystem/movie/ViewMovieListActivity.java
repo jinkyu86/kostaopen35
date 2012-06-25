@@ -153,7 +153,7 @@ public class ViewMovieListActivity extends Activity {
     		Movie selectMovie=movieList.get(position);
     		System.out.println(selectMovie);
     		Intent intent=new Intent(ViewMovieListActivity.this,ViewMovieActivity.class);
-    		intent.putExtra("Movie", selectMovie);
+    		intent.putExtra("MOVIE", selectMovie);
     		startActivity(intent);
     	}
 	};
