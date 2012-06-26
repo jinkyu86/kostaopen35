@@ -80,8 +80,10 @@
 	    android:layout_below="@id/layout1"
 	    />
 	<Button
+	    android:id="@+id/reserv"
 	    android:layout_width="fill_parent"
 	    android:layout_height="wrap_content"
 	    android:layout_below="@id/mContent"
+	    android:onClick="mOnClick"
 	    android:text="예매"/>
 </RelativeLayout>
