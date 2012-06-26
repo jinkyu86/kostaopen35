@@ -78,5 +78,10 @@
 	    android:layout_width="fill_parent"
 	    android:layout_height="wrap_content"
 	    android:layout_below="@id/layout1"
-	    />"
+	    />
+	<Button
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_below="@id/mContent"
+	    android:text="예매"/>
 </RelativeLayout>
