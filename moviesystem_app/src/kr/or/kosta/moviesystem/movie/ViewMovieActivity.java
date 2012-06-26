@@ -55,7 +55,6 @@ public class ViewMovieActivity extends Activity{
 			InputStream is = url.openStream();
 			drawable = Drawable.createFromStream(is, "none");
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return drawable;
