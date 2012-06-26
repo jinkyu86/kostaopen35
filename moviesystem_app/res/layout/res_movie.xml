@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    <TableLayout
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:stretchColumns="1"
+		android:orientation="horizontal">
+		<TableRow>
+		    <TextView
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:text="영화명"/>
+		    <EditText
+		        android:id="@+id/mTitle"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"/>
+		</TableRow>
+		<TableRow>
+		    <TextView
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:text="아이디"/>
+		    <EditText
+		        android:id="@+id/MemId"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"/>
+		</TableRow>
+		<TableRow>
+		    <TextView
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:text="시간"/>
+		    <Spinner 
+		        android:id="@+id/ScreenTime"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"/>
+		</TableRow>
+    </TableLayout>
+</RelativeLayout>
