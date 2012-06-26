@@ -151,7 +151,6 @@ public class ViewMovieListActivity extends Activity {
 		public void onItemClick(AdapterView parent,
     			View view,int position,long id){
     		Movie selectMovie=movieList.get(position);
-    		System.out.println(selectMovie);
     		Intent intent=new Intent(ViewMovieListActivity.this,ViewMovieActivity.class);
     		intent.putExtra("MOVIE", selectMovie);
     		startActivity(intent);
