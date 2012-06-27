@@ -15,6 +15,7 @@ import org.json.JSONObject;
 import kr.or.kosta.moviesystem.R;
 import kr.or.kosta.moviesystem.movie.Movie;
 import kr.or.kosta.moviesystem.screentime.ScreenTime;
+import kr.or.kosta.moviesystem.screentime.ScreenTimeAdapter;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -29,6 +30,8 @@ public class ReservationActivity extends Activity{
 	private String mnum;
 	private Movie movie;
 	private ArrayList<ScreenTime> screentimeList;
+	private ScreenTime screentime;
+	private ScreenTimeAdapter scrtimeAdapter;
 	@Override
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
@@ -37,6 +40,7 @@ public class ReservationActivity extends Activity{
 		Intent intent = getIntent();
 		movie = new Movie();
 		screentimeList = new ArrayList<ScreenTime>();
+		
 		spScreentimeList = (Spinner)findViewById(R.id.ScreenTime);
 		mTitle = (EditText)findViewById(R.id.mTitle);
 		memId = (EditText)findViewById(R.id.MemId);
@@ -46,7 +50,21 @@ public class ReservationActivity extends Activity{
 		viewMovie();	
 		
 		mTitle.setText(movie.getMname());
+		scrtimeAdapter = new ScreenTimeAdapter(this,R.layout.screentime_item,screentimeList);
+		spScreentimeList.setAdapter(scrtimeAdapter);
 		
+		scrtimeAdapter.notifyDataSetChanged();
+		int equalScrtIndex=0;
+		
+		for(int i=0; i<screentimeList.size();i++){
+			ScreenTime scr = screentimeList.get(i);
+			String scrnum=movie.getMnum();
+			if(scr.getMovie().getMnum().equals(scrnum)){
+				equalScrtIndex = i;
+				break;
+			}
+		}
+		spScreentimeList.setSelection(equalScrtIndex);
 	}
 	
 	public void viewMovie(){
@@ -59,7 +77,6 @@ public class ReservationActivity extends Activity{
 		}
 		
 		HttpURLConnection conn;
-		System.out.println("#1");
 		
 		 try {
 	        	conn = (HttpURLConnection) url.openConnection();
@@ -79,12 +96,32 @@ public class ReservationActivity extends Activity{
 	        		is.close();
 	        		
 	        		JSONObject jsonObject = new JSONObject(strJson);
-	        		JSONObject movieObject = jsonObject.getJSONObject("MOVIE");
-	        		System.out.println("movieObject : "+movieObject);
-	        		JSONArray screentimeJSONArray = jsonObject.getJSONArray("SCREEN_TIME");
-	        		System.out.println("screentimeJSONArray : "+screentimeJSONArray);
+	        		System.out.println("jsonObject : "+jsonObject);
 	        		
-	        		for(int i=0; i<screentimeJSONArray.length(); i++){}
+	        		JSONObject movieObject = jsonObject.getJSONObject("MOVIE");
+	        		//System.out.println("movieObject : "+movieObject);
+	        		movie.setMnum(movieObject.getString("mnum"));
+	        		movie.setMname(movieObject.getString("mname"));
+	        		movie.setGenre(movieObject.getString("genre"));
+	        		
+	        		JSONArray screentimeJSONArray = jsonObject.getJSONArray("SCREENTIME_LIST");
+	        		System.out.println("screentimeJSONArray.length() : "+screentimeJSONArray.length());
+	        		
+	        		for(int i=0; i<screentimeJSONArray.length(); i++){
+	        			JSONObject screentimeObject = screentimeJSONArray.getJSONObject(i);
+	        			JSONObject movieInfoObject = screentimeObject.getJSONObject("movie");
+	        			ScreenTime scrtime = new ScreenTime();
+	        			scrtime.setScrnum(screentimeObject.getString("scrnum"));
+	        			scrtime.setTime(screentimeObject.getString("time"));
+	        			
+	        			Movie movieInfo = new Movie();
+	        			movieInfo.setMnum(movieInfoObject.getString("mnum"));
+	        			movieInfo.setMname(movieInfoObject.getString("mname"));
+	        			
+	        			scrtime.setMovie(movieInfo);
+	        			
+	        			screentimeList.add(scrtime);
+	        		}
 	        	}
 		 }catch(Exception e){
 			 e.printStackTrace();
