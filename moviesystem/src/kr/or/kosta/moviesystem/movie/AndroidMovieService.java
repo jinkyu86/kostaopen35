@@ -421,12 +421,14 @@ ServletResponseAware,SessionAware,IService{
 		SCREENTIME_LIST = screentimeDAO.selectScreen(mnum);
 		//System.out.println(SCREENTIME_LIST);
 		MOVIE = movieDAO.selectMovie(mnum);
-		System.out.println("mviewMovie : MOVIE : "+MOVIE);
+		
 		JSONObject jsonObject = new JSONObject();
 		
 		jsonObject.put("MOVIE", MOVIE);
 		
+		//System.out.println("mviewMovie : SCREENTIME_LIST : "+SCREENTIME_LIST);
 		JSONArray screentimeList =JSONArray.fromObject(SCREENTIME_LIST);
+		
 		jsonObject.put("SCREENTIME_LIST", screentimeList);
 		
 		
