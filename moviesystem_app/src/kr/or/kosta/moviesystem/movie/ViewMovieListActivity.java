@@ -105,6 +105,7 @@ public class ViewMovieListActivity extends Activity {
         		
         		for(int i=0; i<JsonMovieArray.length();i++){
         			JSONObject movieObject = JsonMovieArray.getJSONObject(i);
+        			//System.out.println(movieObject);
         			//개봉일과 상영 종료일의 날짜를 JsonObject로 저장
         			JSONObject lunDateObject = movieObject.getJSONObject("launchDate");
         			JSONObject endDateObject = movieObject.getJSONObject("endDate");
