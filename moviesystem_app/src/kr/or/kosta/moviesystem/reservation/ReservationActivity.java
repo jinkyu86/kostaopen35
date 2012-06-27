@@ -80,8 +80,9 @@ public class ReservationActivity extends Activity{
 	        		
 	        		JSONObject jsonObject = new JSONObject(strJson);
 	        		JSONObject movieObject = jsonObject.getJSONObject("MOVIE");
-	        		JSONArray screentimeJSONArray = jsonObject.getJSONArray("SCREEN_TIME");
 	        		System.out.println("movieObject : "+movieObject);
+	        		JSONArray screentimeJSONArray = jsonObject.getJSONArray("SCREEN_TIME");
+	        		System.out.println("screentimeJSONArray : "+screentimeJSONArray);
 	        		
 	        		for(int i=0; i<screentimeJSONArray.length(); i++){}
 	        	}
