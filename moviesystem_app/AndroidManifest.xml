@@ -3,20 +3,53 @@
     package="kr.or.kosta.moviesystem"
     android:versionCode="1"
     android:versionName="1.0" >
+<uses-permission android:name="android.permission.INTERNET"/>
 	<uses-permission
               android:name="android.permission.INTERNET"/>
     <application
         android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name" >
+        android:label="@string/app_name" 
+        android:debuggable="true">
+        
+        <activity
+            android:name=".android.good.ViewGoodList"
+            android:label="@string/app_name" >
+        </activity>
+        
+		<activity
+            android:name=".android.good.ViewGood"
+            android:label="@string/app_name" >
+        </activity>
+        
+        <activity
+            android:name=".android.good.ViewCartList"
+            android:label="@string/app_name" >
+        </activity>
+        
+        <activity
+            android:name=".android.good.QtyDialog"
+            android:label="@string/app_name">
+		</activity>
+		
+        <activity
+            android:name=".android.buy.ViewBuyList"
+            android:label="@string/app_name">
+        </activity>
+        
+        <activity 
+            android:name=".android.member.Login"
+            android:label="@string/app_name">
+        </activity>
+               
         <activity
             android:name=".movie.ViewMovieListActivity"
             android:label="@string/app_name" >
-            <intent-filter>
+			<intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".movie.ViewMovieActivity"
             android:label="@string/app_name" >
@@ -25,6 +58,7 @@
             android:name=".reservation.ReservationActivity"
             android:label="@string/app_name" >
         </activity>
+
     </application>
 
 </manifest>
