@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="#ffffff" >
+	<TableLayout 
+	    android:layout_width="fill_parent"
+   		android:layout_height="wrap_content" >
+	    <TableRow >
+	        <TextView 
+	            android:id="@+id/txtUserNum"
+	            android:layout_width="fill_parent"
+	            android:layout_height="fill_parent"
+	            android:layout_marginRight="30px"
+	            android:textSize="20sp"
+	            android:textColor="#FF1493"/>
+	        
+	       <TextView 
+	            android:id="@+id/txtUserid"
+	            android:layout_width="wrap_content"
+	            android:layout_height="fill_parent"
+	            android:textSize="20sp"
+	            android:textColor="#FF1493"
+	            android:layout_marginRight="30px"/>
+	       
+	       <TextView 
+	            android:id="@+id/txtName"
+	            android:layout_width="wrap_content"
+	            android:layout_height="fill_parent"
+	            android:textSize="20sp"
+	            android:textColor="#FF1493"/>
+	    </TableRow>
+	    
+	</TableLayout>
+    
+
+</LinearLayout>
