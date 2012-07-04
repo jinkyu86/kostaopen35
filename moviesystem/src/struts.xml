@@ -19,7 +19,7 @@
 		<!--loginForm리턴시 /login/login.jsp로 이동 -->
 		<result name="loginForm">/mmember/login.jsp</result>
 		</global-results>
-		
+
 		<!-- web -->
 		<action name="viewGoodList" class="kr.or.kosta.moviesystem.good.GoodService" method="viewGoodList">
 			<result name="success">/good/viewGoodList.jsp</result>
@@ -283,12 +283,12 @@
 		</action>		
 		
 		<action name="login" class="kr.or.kosta.moviesystem.member.MemberService" method="login">
-			<result name="success" type="chain">main</result>
+			<result name="success" type="redirectAction">main</result>
 			<result name="login">/member/login.jsp</result>
 		</action>
 		
 		<action name="mlogin" class="kr.or.kosta.moviesystem.member.MemberService" method="login">
-			<result name="success"  type="redirectAction">mmain</result>
+			<result name="success"  type="redirectAction">mmain</result><!-- 06.12 mmain으로 수정 -->
 			
 			<result name="login">/mmember/login.jsp</result>
 		</action>		
@@ -685,12 +685,227 @@
 			
 		</action>
 
-
-
 		<action name="mviewScreenTimeListBymnum" 
 			  class="kr.or.kosta.moviesystem.screentime.ScreenTimeService" 
 			  method="viewScreenTimeListBymnum">
 			<result name="success">/mreservation/viewScreenTimeListBymnum.jsp</result>
 		</action>	
+		
+		
+		<!-- app -->
+		
+		<action name="AndroidViewGoodList" class="kr.or.kosta.moviesystem.good.AndroidGoodService" method="viewGoodList">
+			<result name="success"  type="stream">
+		  		   <param name="contentType">
+		  		   	  text/html;charset=UTF-8
+					 </param>	
+					<param name="inputName">
+    					inputStream
+					</param>
+			</result>
+		</action>
+		
+		<action name="AndroidAddCartList" class="kr.or.kosta.moviesystem.good.AndroidGoodService" method="addCartList">
+			<param name="aliases">
+				#{'gnum':'gnum',
+				'qty':'qty'}
+			</param>
+			<result name="success"  type="stream">
+		  		   <param name="contentType">
+		  		   	  text/html;charset=UTF-8
+					 </param>	
+					<param name="inputName">
+    					inputStream
+					</param>
+			</result>
+		</action>
+		
+		<action name="AndroidViewCartList" class="kr.or.kosta.moviesystem.good.AndroidGoodService" method="viewCartList">
+			<result name="success"  type="stream">
+		  		   <param name="contentType">
+		  		   	  text/html;charset=UTF-8
+					 </param>	
+					<param name="inputName">
+    					inputStream
+					</param>
+			</result>
+		</action>
+		
+		<action name="AndroidEditCartList" class="kr.or.kosta.moviesystem.good.AndroidGoodService" method="editCartList">
+			<param name="aliases">
+				#{'index':'index',
+				'qty':'qty'}
+			</param>
+			<result name="success"  type="stream">
+		  		   <param name="contentType">
+		  		   	  text/html;charset=UTF-8
+					 </param>	
+					<param name="inputName">
+    					inputStream
+					</param>
+			</result>
+		</action>
+		
+		<action name="AndroidRemoveCartList" class="kr.or.kosta.moviesystem.good.AndroidGoodService" method="removeCartList">
+			<param name="aliases">
+				#{'index':'index'}
+			</param>
+			<result name="success"  type="stream">
+		  		   <param name="contentType">
+		  		   	  text/html;charset=UTF-8
+					 </param>	
+					<param name="inputName">
+    					inputStream
+					</param>
+			</result>
+		</action>
+		
+		<action name="AndroidViewBuyList" class="kr.or.kosta.moviesystem.buy.AndroidBuyService" method="viewBuyList">
+			<result name="success"  type="stream">
+		  		   <param name="contentType">
+		  		   	  text/html;charset=UTF-8
+					 </param>	
+					<param name="inputName">
+    					inputStream
+					</param>
+			</result>
+		</action>
+		
+		<action name="AndroidAddBuy" class="kr.or.kosta.moviesystem.buy.AndroidBuyService" method="addBuy">
+			<result name="success"  type="stream">
+		  		   <param name="contentType">
+		  		   	  text/html;charset=UTF-8
+					 </param>	
+					<param name="inputName">
+    					inputStream
+					</param>
+			</result>
+		</action>
+		
+		<action name="AndroidCompleteBuy" class="kr.or.kosta.moviesystem.buy.AndroidBuyService" method="completeBuy">
+			<result name="success"  type="stream">
+		  		   <param name="contentType">
+		  		   	  text/html;charset=UTF-8
+					 </param>	
+					<param name="inputName">
+    					inputStream
+					</param>
+			</result>
+		</action>
+		
+		<action name="AndroidCancelBuyListForm" class="kr.or.kosta.moviesystem.buy.AndroidBuyService" method="cancelBuyListForm">
+			<result name="success"  type="stream">
+		  		   <param name="contentType">
+		  		   	  text/html;charset=UTF-8
+					 </param>	
+					<param name="inputName">
+    					inputStream
+					</param>
+			</result>
+		</action>
+		
+		<action name="AndroidCancelBuy" class="kr.or.kosta.moviesystem.buy.AndroidBuyService" method="cancelBuy">
+			<param name="aliases">
+				#{'chkbox':'chkbox'}
+			</param>
+			<result name="success"  type="stream">
+		  		   <param name="contentType">
+		  		   	  text/html;charset=UTF-8
+					 </param>	
+					<param name="inputName">
+    					inputStream
+					</param>
+			</result>
+		</action>
+		
+		<action name="AndroidViewCanceledBuyList" class="kr.or.kosta.moviesystem.buy.AndroidBuyService" method="viewCanceledBuyList">
+			<result name="success"  type="stream">
+		  		   <param name="contentType">
+		  		   	  text/html;charset=UTF-8
+					 </param>	
+					<param name="inputName">
+    					inputStream
+					</param>
+			</result>
+		</action>
+		
+		<action name="AndroidLogin" class="kr.or.kosta.moviesystem.member.AndroidMemberService" method="login">
+			<!-- 
+			<result name="success" type="redirectAction">main</result>
+			<result name="login">/member/login.jsp</result>
+			 -->
+			 <param name="aliases">
+				#{'userid':'userid',
+				'pw':'pw'}
+			</param>
+			 <result name="success"  type="stream">
+		  		   <param name="contentType">
+		  		   	  text/html;charset=UTF-8
+					 </param>	
+					<param name="inputName">
+    					inputStream
+					</param>
+			</result>
+		</action>
+		
+		<action name="AndroidLogoutMember" class="kr.or.kosta.moviesystem.member.AndroidMemberService" method="logoutMember">
+			<result name="success"  type="stream">
+		  		   <param name="contentType">
+		  		   	  text/html;charset=UTF-8
+					 </param>	
+					<param name="inputName">
+    					inputStream
+					</param>
+			</result>
+		</action>
+		
+		<!-- 	
+		
+		
+		<action name="searchGoodList" class="kr.or.kosta.moviesystem.good.GoodService" method="searchGoodList">
+			<param name="aliases">
+				#{'keyword':'keyword'}
+			</param>
+			<result name="success">/good/viewGoodList.jsp</result>
+		</action>
+		
+		<action name="viewManageGoodList" class="kr.or.kosta.moviesystem.good.GoodService" method="viewManageGoodList">
+			<result name="success">/good/viewManageGoodList.jsp</result>
+		</action>
+		
+		<action name="addGoodForm" class="kr.or.kosta.moviesystem.good.GoodService" method="addGoodForm">
+			<result name="success">/good/addGood.jsp</result>
+		</action>
+		
+		<action name="addGood" class="kr.or.kosta.moviesystem.good.GoodService" method="addGood">
+			<result type="stream">
+		  	 	<param name="inputName">resultStream</param>
+				<param name="contentType">text/html;charset=UTF-8</param>
+			</result>
+		</action>
+		
+		<action name="deleteGood" class="kr.or.kosta.moviesystem.good.GoodService" method="deleteGood">
+			<param name="aliases">
+				#{'gnum':'gnum'}
+			</param>
+			<result name="success" type="chain">viewManageGoodList</result>
+		</action>
+		
+		<action name="editGoodForm" class="kr.or.kosta.moviesystem.good.GoodService" method="editGoodForm">
+			<param name="aliases">
+				#{'gnum':'gnum'}
+			</param>
+			<result name="success">/good/editGoodForm.jsp</result>
+		</action>
+		
+		<action name="editGood" class="kr.or.kosta.moviesystem.good.GoodService" method="editGood">
+			<param name="aliases">
+				#{'gnum':'gnum', 
+				'gnum':'good.gnum'}
+			</param>
+			<result name="success" type="chain">editGoodForm</result>
+		</action>
+		
+		-->
 	</package>
 </struts>
