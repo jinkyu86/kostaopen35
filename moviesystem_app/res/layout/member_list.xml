@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <ListView
+        android:id="@+id/lstMemberList"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+
+        <TextView 
+            android:id="@+id/prePage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|left"
+            android:textSize="10dp"
+            android:onClick="onClick"
+            android:text="&lt;이전 페이지"/>
+        
+        <TextView 
+            android:id="@+id/nextPage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:textSize="10dp"
+            android:onClick="onClick"
+            android:text="다음 페이지&gt;"/>
+        
+</LinearLayout>
