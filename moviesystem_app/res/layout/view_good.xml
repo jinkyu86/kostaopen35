@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" 
+    android:background="#BEEFFF"
+    >
+    
+    <TextView
+        	android:id="@+id/title"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:gravity="center"
+            android:textColor="#ffffff"
+            android:background="#0064ff"
+            android:textSize="20sp"
+            android:text="물건 정보" 
+            android:padding="5px"
+            />
+    
+        <TableLayout
+    	android:id="@+id/table"
+        android:layout_width="fill_parent"
+    	android:layout_height="wrap_content" 
+    	android:layout_below="@id/title"
+    	 android:stretchColumns="1"
+    >
+    
+        <TableRow>           
+        	<TextView
+          	  	android:layout_width="wrap_content"
+          	  	android:layout_height="wrap_content"
+           	 	android:text="상품명"
+           	 	android:textColor="#000000"
+           	 	android:textSize="15sp"
+           	 	android:layout_margin="10px"
+           	 />
+			<TextView
+			    android:id="@+id/txtgname"
+            	android:layout_width="fill_parent"
+            	android:layout_height="wrap_content"
+            	android:background="#ffffff"
+            	android:textColor="#000000"
+            	android:textSize="15sp"
+            	android:layout_margin="10px"
+           	 />
+    </TableRow>
+    
+    <TableRow>           
+        	<TextView
+          	  	android:layout_width="wrap_content"
+          	  	android:layout_height="wrap_content"
+           	 	android:text="상품가격"
+           	 	android:textColor="#000000"
+           	 	android:textSize="15sp"
+           	 	android:layout_margin="10px"
+           	 />
+			<TextView
+			    android:id="@+id/txtgprice"
+            	android:layout_width="fill_parent"
+            	android:layout_height="wrap_content"
+            	android:background="#ffffff"
+            	android:textColor="#000000"
+            	android:textSize="15sp"
+            	android:layout_margin="10px"
+           	 />
+    </TableRow>
+    <TableRow>           
+        	<TextView
+          	  	android:layout_width="wrap_content"
+          	  	android:layout_height="wrap_content"
+           	 	android:text="상품설명"
+           	 	android:textColor="#000000"
+           	 	android:textSize="15sp"
+           	 	android:layout_margin="10px"
+           	 />
+			<TextView
+			    android:id="@+id/txtdetail"
+            	android:layout_width="40px"
+            	android:layout_height="wrap_content"
+            	android:background="#ffffff"
+            	android:textColor="#000000"
+            	android:textSize="10sp"
+            	android:layout_margin="10px"
+           	 />
+    </TableRow>    
+</TableLayout>
+
+    <Button 
+        android:id="@+id/btnaddcartlist"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_below="@id/table"
+		android:textSize="15sp"
+		android:padding="10px"	
+		android:layout_centerHorizontal="true"
+		android:onClick="mOnClick"
+		android:text="장바구니에 담기"
+        />
+
+</RelativeLayout>
